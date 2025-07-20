@@ -1,5 +1,10 @@
 {
-  "username": "yair",
-  "password": "$2b$12$1JkXzxN/ExnXZNKgtKFkEu9VA0DptavdaGQR3yaOXLkcY52eA11/C",
-  "familySide": "admin"
+  "users": [
+    {
+      "username": "yair.benabou",
+      "password": "$2b$10$dXJ/0T7IfXk8kZa5xbtZ5u2j2kpZboV43Tdbm1a5ufTfLRwYnhq1e", // "your_password" bcrypt
+      "role": "admin",
+      "familyAccess": "all"
+    }
+  ]
 }
