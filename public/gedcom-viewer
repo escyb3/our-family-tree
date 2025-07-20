@@ -1,35 +1,58 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>צפייה בעץ המשפחה</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>עץ משפחה לפי צד</title>
+  <script src="https://unpkg.com/@hpcc-js/wasm@1.14.0/dist/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gedcom-parser@2.0.0/dist/gedcom.min.js"></script>
   <style>
-    #tree-container {
-      direction: ltr;
-      background: #fff;
-      border: 1px solid #ccc;
-      overflow-x: auto;
-      padding: 20px;
-      max-height: 80vh;
-    }
+    body { font-family: sans-serif; padding: 20px; direction: rtl; }
+    #tree-container { width: 100%; height: 600px; border: 1px solid #ccc; overflow: auto; }
   </style>
 </head>
 <body>
-  <main>
-    <h1>עץ משפחת Ben Abou</h1>
-    <div id="tree-container">
-      <pre id="gedcom-data">טוען עץ...</pre>
-    </div>
-  </main>
+  <h1>עץ המשפחה</h1>
+  <div id="tree-container">טוען את העץ...</div>
 
   <script>
-    fetch('/gedcom')
-      .then((res) => res.text())
-      .then((data) => {
-        document.getElementById('gedcom-data').textContent = data;
-      });
+    const urlParams = new URLSearchParams(window.location.search);
+    const side = urlParams.get("side") || null;
+
+    // מיפוי בין צדדים לשמות קבצים
+    const gedcomFiles = {
+      "BenAbou": "/data/BenAbou.ged",
+      "Elharrar": "/data/Elharrar.ged",
+      "Malca": "/data/Malca.ged",
+      "BenDavid": "/data/BenDavid.ged",
+      "Bromberg": "/data/Bromberg.ged",
+      "Barenbaum": "/data/Barenbaum.ged",
+      "FassSchneck": "/data/FassSchneck.ged",
+      "Weinberger": "/data/Weinberger.ged",
+      "Leibner": "/data/Leibner.ged",
+      "vanderVelde": "/data/vanderVelde.ged",
+      "Behr": "/data/Behr.ged",
+      "deVries": "/data/deVries.ged",
+      "Italiaander": "/data/Italiaander.ged",
+      "Izaks": "/data/Izaks.ged",
+      "Chapon": "/data/Chapon.ged"
+    };
+
+    if (!side || !gedcomFiles[side]) {
+      document.getElementById("tree-container").innerText = "שגיאה: אין צד משפחה מוגדר או שהוא לא קיים.";
+    } else {
+      fetch(gedcomFiles[side])
+        .then(res => res.text())
+        .then(text => {
+          const parsed = GEDCOM.parse(text);
+          renderTree(parsed);
+        });
+    }
+
+    function renderTree(data) {
+      const container = document.getElementById("tree-container");
+      container.innerHTML = "<pre>" + JSON.stringify(data, null, 2) + "</pre>";
+      // כאן אפשר לשלב גם ויזואליזציה
+    }
   </script>
 </body>
 </html>
