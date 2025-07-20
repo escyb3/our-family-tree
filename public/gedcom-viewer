@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>צפייה בעץ המשפחה</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    #tree-container {
+      direction: ltr;
+      background: #fff;
+      border: 1px solid #ccc;
+      overflow-x: auto;
+      padding: 20px;
+      max-height: 80vh;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>עץ משפחת Ben Abou</h1>
+    <div id="tree-container">
+      <pre id="gedcom-data">טוען עץ...</pre>
+    </div>
+  </main>
+
+  <script>
+    fetch('/gedcom')
+      .then((res) => res.text())
+      .then((data) => {
+        document.getElementById('gedcom-data').textContent = data;
+      });
+  </script>
+</body>
+</html>
