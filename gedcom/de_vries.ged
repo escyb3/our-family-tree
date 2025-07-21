@@ -1,0 +1,6110 @@
+0 HEAD
+1 SOUR ChatGPT-GEDCOM
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+1 LANG Hebrew
+0 @I501889@ INDI
+1 _UPD 17 FEB 2025 10:41:42 GMT -0500 
+1 NAME Aron /de Vries/
+2 GIVN Aron
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 14 NOV 1865
+2 PLAC Harlingen, Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE 23 NOV 1942
+2 PLAC Oswiecim, Oświęcim County, Lesser Poland Voivodeship, Poland
+1 FAMC @F500692@
+1 SOUR @S500087@
+2 PAGE https://www.myheritage.co.il/profile-OYYV72HL4OV5DQMPGOKAN7Q3ZWCTFWA-10500076/aron-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT kluveld Family Site, מנוהל ע"י amanda kluveld
+2 EVEN Smart Matching
+3 ROLE 10500076
+1 RIN MH:I501889
+1 _UID 67B366C2268967766D1766E32812436A
+
+0 @I505741@ INDI
+1 _UPD 12 MAY 2025 23:38:39 GMT -0500 
+1 NAME Elisabeth /de Vries/
+2 GIVN Elisabeth
+2 SURN de Vries
+1 SEX F
+1 DEAT Y
+1 FAMS @F501755@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1863755108&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Elisabeth van Coevorden (לבית de Vries)
+בעל: Bernard van Coevorden
+2 EVEN Record
+3 ROLE 40001:1863755108:
+1 RIN MH:I505741
+1 _UID 6822CCCE8B7FEDC29CDF7AA3D5CE9392
+
+0 @I501823@ INDI
+1 _UPD 13 FEB 2025 05:55:28 GMT -0500 
+1 NAME Bernard (Benno) /van Coevorden/
+2 GIVN Bernard (Benno)
+2 SURN van Coevorden
+1 SEX M
+1 BIRT
+2 DATE 23 JUL 1923
+2 PLAC Assen, Drenthe, The Netherlands
+1 DEAT Y
+2 DATE 21 OCT 1958
+2 PLAC Haarlem, North Holland, The Netherlands
+1 FAMS @F501755@
+1 FAMC @F500668@
+1 SOUR @S500154@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6AFGYECOWDZUBAB62ZA34HESLFI-1500345/bernard-benno-van-coevorden
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500345
+1 SOUR @S500155@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7IWHBHKQSXHVSFEMZDVDGV5AFXA-12500003/bernard-benno-van-coevorden
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 12500003
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1863755101&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Bernard van Coevorden
+לידה: 1924 - Assen, Drenthe, Netherlands
+פטירה: 24 בינו’ 1958 - Haarlem, North Holland, Netherlands
+הורים: Joel van Coevorden, Froukje van Coevorden (לבית
+4 CONC  Behr)
+אשה: Elisabeth van Coevorden (לבית de Vries)
+אחות: Jette Mary Hiegentlich (לבית van Coevorden)
+2 EVEN Record
+3 ROLE 40001:1863755101:
+1 RIN MH:I501823
+1 _UID 67ADDDADDDEDC134250F0257ECC01829
+
+0 @I500873@ INDI
+1 _UPD 10 APR 2025 03:12:57 GMT -0500 
+1 NAME Jansje /de Vries/
+2 GIVN Jansje
+2 SURN de Vries
+2 _MARNM Wurms
+1 SEX F
+1 BIRT
+2 DATE 12 FEB 1852
+2 PLAC Amsterdam, Noord-Holland, Nederland
+1 DEAT Y
+2 DATE 21 MAR 1943
+2 PLAC Westerbork, Midden-Drenthe, Drenthe, The Netherlands
+1 OCCU Zonder
+1 RESI
+2 DATE BET 2 DEC 1852 AND 1860
+2 ADDR
+3 ADR1 Kuinre, Overijssel, Netherlands
+1 FAMS @F500419@
+1 FAMC @F500326@
+1 SOUR @S500073@
+2 PAGE Jansje de Vries
+2 QUAY 3
+2 DATA
+3 DATE 18 JUN 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500292@
+2 QUAY 3
+2 DATA
+3 DATE 10 APR 2025
+3 TEXT תמונה אישית של Jansje Wurms (geboren de Vries) נוספה באמצעות Photo Discovery™
+2 EVEN Discovery
+1 RIN MH:I500873
+1 _UID 6671636619C224DD82A85956F88FDF06
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTA0NmI1NDRjYmVlZDg2YzQwYzE3YzFjOWEzODE5N2NmMmYxOGNkZTdjODMzYjVkMzczYzU0ZWQ1OTEyZDk5NDImZT0xNzUzNjEwNDAw/158/944/6912/501873_3700717f7s98p87699d1lp_A.jpg
+2 _FILESIZE 35216
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501868
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501873
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTQwYmQwYTU0MmE4ODkzMzNjNDI1NTc5NzJiNTMwN2E2M2FhYzAzNThkZGMyOWYxOWJhNTdmY2E1YzM2ODU1M2EmZT0xNzUzNjEwNDAw/158/944/6912/501868_4157206897n1w687897dfc_A.jpg
+2 _FILESIZE 35259
+2 TITL 500961_423440bwac2f0p63b0fzme_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501868
+
+0 @I501140@ INDI
+1 _UPD 11 AUG 2024 04:34:31 GMT -0500 
+1 NAME Wolf /Wurms/
+2 GIVN Wolf
+2 SURN Wurms
+1 SEX M
+1 BIRT
+2 DATE 11 JUN 1853
+2 PLAC Amsterdam
+1 DEAT Y
+2 DATE 12 AUG 1924
+2 PLAC Amsterdam
+2 AGE 71
+1 OCCU Cigarmager
+1 FAMS @F500419@
+1 FAMC @F500421@
+1 SOUR @S500091@
+2 PAGE Wolf Wurms
+2 QUAY 3
+2 DATA
+3 DATE 11 AUG 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 NOTE Wolf var født i Amsterdam, men flyttede til Groningen, hvor han i 1875 blev gift med Jansje de Vries. Parret flyttede senere til Amsterdam, hvor de er indskrevet den 6. april 1876.
+1 RIN MH:I501140
+1 _UID 66B88552C4DD91299E76F6B0B8FC99F1
+
+0 @I504178@ INDI
+1 _UPD 8 APR 2025 13:01:29 GMT -0500 
+1 NAME Rebecca /de Vries/
+2 GIVN Rebecca
+2 SURN de Vries
+2 _MARNM Gokkes
+1 SEX F
+1 BIRT
+2 DATE 18 OCT 1825
+2 PLAC Harlingen (Netherlands)
+1 DEAT Y
+1 FAMC @F501326@
+1 SOUR @S500011@
+2 PAGE https://www.myheritage.co.il/profile-1624749394-1500098/rebecca-gokkes-לבית-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT בן אבו Web Site, מנוהל ע"י יאיר בן אבו
+2 EVEN Smart Matching
+3 ROLE 1500098
+1 RIN MH:I504178
+1 _UID 67F564757A8E8E5533E07EBD07E4CDAA
+
+0 @I502794@ INDI
+1 _UPD 8 MAR 2025 22:51:38 GMT -0500 
+1 NAME Berend /de Vries/
+2 GIVN Berend
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1750
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19516720/berend-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19516720
+1 RIN MH:I502794
+1 _UID 67CD1E230B7215633D161F6BDFBF048C
+
+0 @I501359@ INDI
+1 _UPD 2 APR 2025 06:43:18 GMT -0500 
+1 NAME Marianne Philip /de Vries/
+2 GIVN Marianne Philip
+2 SURN de Vries
+2 _MARNM Groenstad
+1 SEX F
+1 BIRT
+2 DATE 1763
+2 PLAC Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 8 FEB 1814
+2 PLAC Amsterdam, Noord-Holland, Netherlands
+2 AGE 50-51
+1 FAMS @F500499@
+1 FAMC @F500940@
+1 SOUR @S500112@
+2 PAGE Marianne Philip Groenstad (geboren de Vries)
+2 QUAY 3
+2 DATA
+3 DATE 29 בנוב’ 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19550007/marianne-betje-philip-xx-de-vries-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19550007
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1502153/marjanne-philip-groenstad-geboren-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502153
+1 RIN MH:I501359
+1 _UID 6749B58F4BC2C61E9958A13FFB063C35
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTliNDZjODVjNjc2OTBlYTU1MDA4MTAwNzIyMjIxMmE0Yzg4ZDc1NDhmZDk3MjNlZjE2MjVjYzgxOTI1MTNiMDUmZT0xNzUzNjEwNDAw/158/944/6912/501025_3414421ydc7sh1i2dhc065_A.jpg
+2 _FILESIZE 3486
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501024
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501025
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPThhNzZjMzljNWZiZWJjYzQyYjc0YWQxN2QzYjQ4NDY0MzM5YzQ3MjE2YTA2MjgwODU1MTUyYTA4ZjNjYWU0YWYmZT0xNzUzNjEwNDAw/158/944/6912/501024_694417cnd1dg72j11c5061_A.jpg
+2 _FILESIZE 3488
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501024
+
+0 @I501358@ INDI
+1 _UPD 8 MAR 2025 22:44:27 GMT -0500 
+1 NAME Samuel Zanwil Eliaser Leizer /Groenstad/
+2 GIVN Samuel Zanwil Eliaser Leizer
+2 SURN Groenstad
+1 SEX M
+1 BIRT
+2 DATE 1762
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 DEAT Y
+2 DATE 1 JAN 1799
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+2 AGE 36-37
+1 FAMS @F500499@
+1 FAMC @F500939@
+1 SOUR @S500112@
+2 PAGE Samuel Zanwil Eliaser Leizer Groenstad
+2 QUAY 3
+2 DATA
+3 DATE 29 בנוב’ 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=204443169&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Samuel / Zanwil Eliazer / Leizer Groenstad
+לידה: 1762 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+פטירה: 1 בינו’ 1799 - Amsterdam, Government of Amsterdam, Nort
+4 CONC h Holland, The Netherlands
+אב: Eliazer Samuel
+אשה: Marianne / Betje Philip de Vries
+ילדים: Philip Samuel Groenstad, Eliazer / Leizer Salomon Groenstad, Hermanus Emanuel / Mendele Samuel / Za
+4 CONC nwil Groenstad
+2 EVEN Record
+3 ROLE 40000:204443169:
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1502152/samuel-leendert-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502152
+1 RIN MH:I501358
+1 _UID 6749B58F2B3ED61A9958A13FFB063C35
+
+0 @I502857@ INDI
+1 _UPD 8 MAR 2025 23:12:03 GMT -0500 
+1 NAME Salomon /de Vries/
+2 GIVN Salomon
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 22 FEB 1905
+2 PLAC Groningen, Groningen, Nederland
+1 DEAT Y
+2 DATE 30 SEP 1942
+1 FAMC @F500954@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1904082029&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Salomon de Vries
+לידה: 22 בפבר’ 1905 - Groningen, Groningen, Nederland
+פטירה: 30 בספט’ 1942
+הורים: Levie de Vries, Creesia van Zanten
+אחים ואחיות: Leentje van Coevo
+4 CONC rden (לבית de Vries), Rebecca de Vries, Jozef de Vries, Izak de Vries, Rebekka de Vries, Klaartje Hess (לבית Bollegraaf)
+2 EVEN Record
+3 ROLE 40001:1904082029:
+1 RIN MH:I502857
+1 _UID 67CD231F96E240DF7CFBC37DFB720ED3
+
+0 @I502797@ INDI
+1 _UPD 8 MAR 2025 22:51:42 GMT -0500 
+1 NAME David Moses /de Vries/
+2 GIVN David Moses
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1750
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19638873/david-moses-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19638873
+1 RIN MH:I502797
+1 _UID 67CD1E23CFC9F5663D161F6BDFBF048C
+
+0 @I504032@ INDI
+1 _UPD 8 APR 2025 07:01:50 GMT -0500 
+1 NAME Aaltje Joëline /de Vries/
+2 GIVN Aaltje Joëline
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 13 APR 1925
+2 PLAC Emmen
+1 DEAT Y
+2 DATE 9 JUL 1943
+2 PLAC Sobibor (Polen)
+1 FAMC @F501302@
+1 SOUR @S500277@
+2 PAGE https://www.myheritage.com/profile-OYYV6T5MMS2QZRQYNTMZ4V2AKWHUIVA-1000032/aaltje-joeline-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000032
+1 RIN MH:I504032
+1 _UID 67F5102B4D4D627366559AF959FEC66E
+
+0 @I502755@ INDI
+1 _UPD 8 MAR 2025 22:50:35 GMT -0500 
+1 NAME Philip /de Vries/
+2 GIVN Philip
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1735
+1 DEAT Y
+1 FAMS @F500940@
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19550121/philip-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19550121
+1 RIN MH:I502755
+1 _UID 67CD1CD0BB18A1C4E59E5D856B751F65
+
+0 @I502756@ INDI
+1 _UPD 8 MAR 2025 22:45:06 GMT -0500 
+1 NAME Heintje Philip /Philip/
+2 GIVN Heintje Philip
+2 SURN Philip
+2 _MARNM de Vries
+1 SEX F
+1 DEAT Y
+1 FAMS @F500940@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19550122/heintje-philip-philip-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19550122
+1 RIN MH:I502756
+1 _UID 67CD1CD1044561C6E59E5D856B751F65
+
+0 @I500089@ INDI
+1 _UPD 27 FEB 2025 06:37:18 GMT -0500 
+1 NAME Maria /de Vries/
+2 GIVN Maria
+2 SURN de Vries
+2 _MARNM Van der velde
+1 SEX F
+1 BIRT
+2 DATE 7 AUG 1896
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+1 DEAT Y
+2 DATE 17 JUL 1943
+2 PLAC Sobibór, Włodawa County, Lublin Voivodeship, Poland
+2 CAUS שואה
+1 EVEN Spouse: Mozes Jesaja van der Velde
+2 TYPE MARR
+2 DATE 12 MAR 1919
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 FAMS @F500019@
+1 FAMC @F500035@
+1 SOUR @S500060@
+2 QUAY 4
+2 DATA
+3 TEXT Maria DE VRIES&amp;lt;br&amp;gt;לידה: 7 באוג’ 1896&amp;lt;br&amp;gt;פטירה: 17 ביולי 1943&amp;lt;br&amp;gt;אב: Benjamin DE VRIES&amp;lt;br&amp;gt;אם: Betje BEHR&amp;lt;br&amp;gt
+4 CONC ;אחים ואחיות: Heiman Izaäc DE VRIES, Aaron DE VRIES, Jacob DE VRIES
+2 EVEN Record
+3 ROLE 14100:1607160356:
+1 SOUR @S500183@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6YQUCYFSYMMGUI2BVDFAEEULVYY-4504251/maria-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 4504251
+1 RIN MH:I500089
+1 _UID 64636FC0193A575231232496AE69C46F
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWU5YzNlY2YzNDg0YWM5ZmIwNzVjM2MxMjZmMTA2ZTQzMTI5MWFiODYxZGYwNjkwMDVmZTVlMmFhZjI4NjQyZGEmZT0xNzUzNjEwNDAw/158/944/6912/500085_381529cv6t61464qb15bcz_A.jpg
+2 _FILESIZE 79179
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500084
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500085
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWFmNzc0YTJkYTc5NTQ1Y2NlMDdlOGY3MjMyZWFkZTA3ODM1NTQwODRmZDAzOTViYzYzNzUwYzMxYTYzYmY4ZTgmZT0xNzUzNjEwNDAw/158/944/6912/500084_498149x5c6a64qn3bes116_A.jpg
+2 _FILESIZE 107479
+2 TITL תמונה1אמא סבתא יוליה
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 1 147 644 790
+2 _PHOTO_RIN MH:P500084
+
+0 @I500045@ INDI
+1 _UPD 21 FEB 2025 08:19:08 GMT -0500 
+1 NAME Mozes Jesaja /van der Velde/
+2 GIVN Mozes Jesaja
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 30 MAR 1895
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+2 NOTE Spouse: Barend Meiboom
+1 DEAT Y
+2 DATE 17 JUL 1943
+2 PLAC Sobibór, Włodawa County, Lublin Voivodeship, Poland
+2 CAUS שואה
+1 EVEN Spouse: Maria de Vries
+2 TYPE MARR
+2 DATE 12 MAR 1919
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 BURI
+2 PLAC Sobibor Death Camp, Lublin, Poland
+1 OCCU boekhouder
+1 FAMS @F500019@
+1 FAMC @F500040@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Mozes Jesaja van der Velde&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 30 במרץ 1895 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;נישוא
+4 CONC ן: בן/בת זוג: Maria de Vries - 12 במרץ 1919 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;פטירה: 17 ביולי 1943 - Sobibór, Włodawa County, L
+4 CONC ublin Voivodeship, Poland&amp;lt;br&amp;gt;אב: Benjamin van der Velde&amp;lt;br&amp;gt;אם: Flora Italiaander&amp;lt;br&amp;gt;אשה: Maria de Vries&amp;lt;br&amp;gt;ילדים: Hans van der Velde
+4 CONC , &lt;פרטי&gt; van der Velde, Emile van der Velde&amp;lt;br&amp;gt;אחים ואחיות: Jonas Jacob van der Velde, Clara Eva van der Velde, Zippora Elisabeth van der Velde, Max van der Bilt (ל
+4 CONC ית van der Velde), NN van der Velde, Sara Jeannette Salomons (לבית van der Velde), Andries Salomon van der Velde, David Hartog van der Velde
+2 EVEN Record
+3 ROLE 40000:195244855:
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500034/mozes-jesaja-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500034
+1 RIN MH:I500045
+1 _UID 645E225FC300D497D21921288C7B221C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTg0NTFmYjJlYzVjMWMzYThlMzMwMjYyODZiNjQ2ODQxYjIwZWU3MGE5Y2FhZmIxZGY1MWMwZjNhZThhZjg2YmQmZT0xNzUzNjEwNDAw/158/944/6912/500578_729631c42kg1630nl87z1g_A.jpg
+2 _FILESIZE 40753
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500577
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500578
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTlmZmI2NDlmMWNiNzBiMTY2ZWZhN2M2ZmMxY2M5MzIyMTExOWQ5ZDNlOThhNDk5ZTlmYzQ0NWRiZTYwNjBkNWImZT0xNzUzNjEwNDAw/158/944/6912/500577_8317252c43v6z10878w2c1_A.jpg
+2 _FILESIZE 68578
+2 TITL thumbnail_image
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 411 0 911 500
+2 _PHOTO_RIN MH:P500577
+
+0 @I502805@ INDI
+1 _UPD 8 MAR 2025 22:51:55 GMT -0500 
+1 NAME Heintje Eliazer Levy /de Vries/
+2 GIVN Heintje Eliazer Levy
+2 SURN de Vries
+2 _MARNM de Vries
+1 SEX F
+1 BIRT
+2 DATE ABT 1760
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19574599/heintje-eliazer-levy-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19574599
+1 RIN MH:I502805
+1 _UID 67CD1E263869656E3D161F6BDFBF048C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWRlMDIzNzU4ZjNjZGI3NTI4MGFmYTkxYTA1MmFkMmQzZTI2ZmNhNDUyNjYxNmMyOTdiZWRjMTI2ZjE5YTA2OGUmZT0xNzUzNjEwNDAw/158/944/6912/501063_209661q7bua7761691de8c_A.jpg
+2 _FILESIZE 3850
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501062
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501063
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWY1MWM2NTIyNzgyNWYyMGVmMzYyZDMxMTY1ZTc4MzE4ZTEzZmY2NjhlNjhjMzIwNGU1NmUxNTk4YzVkMWJmNDImZT0xNzUzNjEwNDAw/158/944/6912/501062_533804ta1ue1c9g77d6g16_A.jpg
+2 _FILESIZE 3853
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501062
+
+0 @I504176@ INDI
+1 _UPD 8 APR 2025 13:01:28 GMT -0500 
+1 NAME Lea Benjamin /de Vries/
+2 GIVN Lea Benjamin
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 30 JUN 1816
+2 PLAC Gorinchem, Zuid-Holland, Nederland
+1 DEAT Y
+2 DATE 2 JAN 1900
+2 PLAC Amsterdam, The Netherlands
+1 FAMC @F501326@
+1 SOUR @S500011@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6FIFUUCMXO56TRN727UU7BWZBMQ-1500099/lea-benjamin-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT בן אבו Web Site, מנוהל ע"י יאיר בן אבו
+2 EVEN Smart Matching
+3 ROLE 1500099
+1 RIN MH:I504176
+1 _UID 67F5647524EF3E5333E07EBD07E4CDAA
+
+0 @I500809@ INDI
+1 _UPD 4 JUN 2024 08:12:27 GMT -0500 
+1 NAME Louis / Levie /de Vries/
+2 GIVN Louis / Levie
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 28 JAN 1819
+2 PLAC Rotterdam, Government of Rotterdam, South Holland, Netherlands
+1 DEAT Y
+2 DATE 4 JUN 1820
+2 PLAC Rotterdam, Government of Rotterdam, South Holland, Netherlands
+1 FAMC @F500254@
+1 SOUR @S500066@
+2 PAGE Louis / Levie de Vries
+2 QUAY 3
+2 DATA
+3 DATE 4 JUN 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 NOTE Kind:
+Levie de Vries
+Vader:
+Wolf de Vries
+Geslacht:
+Man
+Moeder:
+Jansje van Sluijs
+Geslacht:
+Vrouw
+Gebeurtenis:
+Geboorte
+Datum:
+donderdag 28 januari 1819
+Rotterdam
+
+Overledene:
+Louis d
+2 CONC e Vries
+Geboorteplaats:
+Rotterdam
+Leeftijd:
+1 jaar en 3 mnd
+Vader:
+Benjamin de Vries
+Moeder:
+Jansje van der Sluis
+Gebeurtenis:
+Overlijden
+Datum:
+zondag 4 juni 1820
+Rotterdam
+1 RIN MH:I500809
+1 _UID 665F125EB3E523C97DB0BD6D5FB20D78
+
+0 @I500810@ INDI
+1 _UPD 4 JUN 2024 08:12:28 GMT -0500 
+1 NAME Rebecca Benjamin /de Vries/
+2 GIVN Rebecca Benjamin
+2 NICK Rebekka
+2 SURN de Vries
+2 _MARNM Gokkes
+1 SEX F
+1 BIRT
+2 DATE 18 OCT 1825
+2 PLAC Harlingen (Fr.)
+1 EVEN Echtgeno(o)t(e): Jacob Joseph Gokkes
+2 TYPE MARR
+2 DATE 18 APR 1850
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+1 FAMS @F500327@
+1 FAMC @F500254@
+1 SOUR @S500066@
+2 PAGE Rebecca Benjamin "Rebekka" de Vries
+2 QUAY 3
+2 DATA
+3 DATE 4 JUN 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I500810
+1 _UID 665F125EC9D143CC7DB0BD6D5FB20D78
+
+0 @I500874@ INDI
+1 _UPD 20 APR 2025 06:43:12 GMT -0500 
+1 NAME Jacob Joseph /Gokkes/
+2 GIVN Jacob Joseph
+2 SURN Gokkes
+1 SEX M
+1 DEAT Y
+2 PLAC Blokzijl, Steenwijkerland, Overijssel, The Netherlands
+2 CAUS Stillborn
+1 BIRT
+2 DATE 23 OCT 1825
+2 PLAC Blokzijl, Steenwijkerland, Overijssel, The Netherlands
+1 OCCU Verkoper, Venter.
+1 FAMS @F500327@
+1 FAMC @F500330@
+1 SOUR @S500073@
+2 PAGE Jacob Joseph Gokkes
+2 QUAY 3
+2 DATA
+3 DATE 18 JUN 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500299@
+2 QUAY 3
+2 DATA
+3 DATE 20 APR 2025
+3 TEXT תמונה אישית של Jacob 'Joseph' GOKKES נוספה באמצעות Photo Discovery™
+2 EVEN Discovery
+1 RIN MH:I500874
+1 _UID 667163662FA814DF82A85956F88FDF06
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWU3YzVlNzYxMzI4MDlmZWUyNDk2NTMwYjg5YzMwZDNhZWVkMTZhMTAyNjhiOTMyYzU1MTI2MmE3OTFiZTE2MWUmZT0xNzUzNjEwNDAw/158/944/6912/501998_25105440kd1fa6qc6p68dy_A.jpg
+2 _FILESIZE 8803
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501995
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501998
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWY1Y2IxMjZhZGI0ZmYwY2M5YjMwYmM4MmRmMjVjNjA0MmE4OTM3YzVmYTliNWZlZmU0NDMzYzVkMTllOTJjNWQmZT0xNzUzNjEwNDAw/158/944/6912/501995_389872b8f604163xdlgcdd_A.jpg
+2 _FILESIZE 8832
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501995
+
+0 @I500101@ INDI
+1 _UPD 10 JAN 2025 05:26:40 GMT -0500 
+1 NAME Isaak /de Vries/
+2 GIVN Isaak
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 23 AUG 1831
+2 PLAC Harlingen, Friesland, Nederland
+1 DEAT Y
+2 DATE 6 JAN 1912
+2 PLAC Harlingen, Friesland, Nederland
+1 FAMS @F500038@
+1 FAMS @F500562@
+1 FAMC @F500254@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Izaak de Vries&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;כינוי: Izak Isaac Isaak&amp;lt;br&amp;gt;לידה: 23 באוג’ 1831 - Harlingen, Friesland, The Netherlands&amp;lt;br&amp;gt;נ
+4 CONC שואין: בן/בת זוג: Klara de Vries (לבית Speijer) - 15 במאי 1856 - Harlingen, Harlingen, Friesland, The Netherlands&amp;lt;br&amp;gt;פטירה: 6 בינו’ 1912 - Harlingen, Frie
+4 CONC sland, The Netherlands&amp;lt;br&amp;gt;אב: Benjamin Wolf Liepman de Vries&amp;lt;br&amp;gt;אם: Jansje Isaak van der Sluis&amp;lt;br&amp;gt;אשה: Klara de Vries (לבית Speijer)&amp;lt;br&amp;
+4 CONC gt;ילדים: Eliazar de Vries, Aron de Vries, Jantje de Vries, Mietje de Vries, Pietje Polak (לבית de Vries), Kaatje de Vries, Mozes Eleazar de Vries, Saartje de Vries, Benjamin de Vries, Jacob 
+4 CONC de Vries&amp;lt;br&amp;gt;אחים ואחיות: Lea Benjamin de Vries, Louis / Levie de Vries, Hendrika de Vries, Rebecca Benjamin de Vries, Lipman de Vries, TWEELING, Pietje de Vries, TWEELING, Jaco
+4 CONC b Benjamin de Vries
+2 EVEN Record
+3 ROLE 40000:106233122:
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Isaak De Vries&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 23 באוג’ 1831 - Harlingen, Friesland, Nederland&amp;lt;br&amp;gt;נישואין: Klaartje Speijer15 במאי 1856
+	
+	
+4 CONC Harlingen, Friesland, Nederland
+
+
+
+
+
+	
+	
+	
+		
+	
+
+
+&amp;lt;br&amp;gt;פטירה: 6 בינו’ 1912 - Harlingen, Friesland, Nederland&amp;lt;br&amp;gt;אב: Benjamin Wolf Liepman de Vries&amp;lt;
+4 CONC br&amp;gt;אם: Jansje van der Sluis&amp;lt;br&amp;gt;ילדים: Benjamin de VriesSaartje de Vries&amp;lt;br&amp;gt;הערות: Archiefnaam: Tresoar, Frysk Histoarysk en LetterkundichDeel/Akte: 20Akt
+4 CONC eplaats: Harlingen,FR,NLDInventarisnr.: 2018Datum: May 15, 1856Archiefnaam: Drents ArchiefAkteplaats: Assen,DR,NLDInventarisnr.: 1887Deel/Akte: 44Datum: August  7, 1887&amp;lt;br&amp;gt;מקור: &lt;
+4 CONC a&gt;View the original record&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cas
+4 CONC es, the link to the original record will not work.
+2 EVEN Record
+3 ROLE 10838:9421539:
+1 SOUR @S500011@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6FIFUUCMXO56TRN727UU7BWZBMQ-1500092/isaak-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT בן אבו Web Site, מנוהל ע"י יאיר בן אבו
+2 EVEN Smart Matching
+3 ROLE 1500092
+1 SOUR @S500124@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7DK5HCHV2COE4GVAKVHWLJKMU3Q-1500449/izak-izaak-isaak-izak-isaac-isaak-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Wurms Web Site, מנוהל ע"י Hennie Wurms
+2 EVEN Smart Matching
+3 ROLE 1500449
+1 RIN MH:I500101
+1 _UID 646CA18784141E796F1AC9F5FAD7D939
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTNhOGI3ZGZhYjM3NmY3NmY4NjRhOWUwYWZiOWExN2EwZjE0MDVjODhjOGJlNmJjN2QzZjQwNzFiMDM2ZGMxOWEmZT0xNzUzNjEwNDAw/158/944/6912/500580_51249816783ff1v06t6b80_A.jpg
+2 _FILESIZE 6543
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500579
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500580
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTU1YjFjNjFkYjU4YzRlY2JlOTZhNmM3MWNjNjVjMzFmMzRmYWZmNDIyZWMzYzgwZDJmNTQwNTkwZWMyMmM4YWImZT0xNzUzNjEwNDAw/158/944/6912/500579_56021070m801m1bf683eft_A.jpg
+2 _FILESIZE 6543
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500579
+
+0 @I500102@ INDI
+1 _UPD 17 MAR 2025 02:06:21 GMT -0500 
+1 NAME Klaartje /Speijer/
+2 GIVN Klaartje
+2 SURN Speijer
+2 _MARNM de Vries
+1 SEX F
+1 BIRT
+2 DATE 31 DEC 1836
+2 PLAC Harlingen, Friesland, the Netherlands
+1 DEAT Y
+2 DATE 16 AUG 1920
+2 PLAC Harlingen, Friesland, the Netherlands
+1 FAMS @F500038@
+1 FAMC @F501008@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Klara de Vries (לבית Speijer)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;כינוי: Klaartje Speyer&amp;lt;br&amp;gt;לידה: 31 בדצמ’ 1836 - Harlingen, Friesland, The Netherlands&
+4 CONC amp;lt;br&amp;gt;נישואין: בן/בת זוג: Izaak de Vries - 15 במאי 1856 - Harlingen, Harlingen, Friesland, The Netherlands&amp;lt;br&amp;gt;פטירה: 16 באוג’ 1920 - Harlingen, Ha
+4 CONC rlingen, Friesland, The Netherlands&amp;lt;br&amp;gt;אב: Eliazar Liepman Aaron Speijer&amp;lt;br&amp;gt;אם: Saartje Jochems Speijer (לבית de Vos)&amp;lt;br&amp;gt;בעל: Izaak de Vries&amp;lt
+4 CONC ;br&amp;gt;ילדים: Eliazar de Vries, Aron de Vries, Jantje de Vries, Mietje de Vries, Pietje Polak (לבית de Vries), Kaatje de Vries, Mozes Eleazar de Vries, Saartje de Vries, Benjamin de Vries
+4 CONC , Jacob de Vries&amp;lt;br&amp;gt;אחים ואחיות: Jochum Speijer, Mietje Speijer, Grietje Speijer, Aron Speijer, Akke Speijer, Judikje Spijer, Emanuel Speijer, Abraham Speijer Speyer
+2 EVEN Record
+3 ROLE 40000:106233193:
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Klaartje Speijer&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 31 בדצמ’ 1836 - Harlingen, Friesland, Nederland&amp;lt;br&amp;gt;נישואין: Isaak de Vries1856-05-15Harlingen, 
+4 CONC Friesland, Nederland&amp;lt;br&amp;gt;פטירה: 16 באוג’ 1920 - Harlingen, Friesland, Nederland&amp;lt;br&amp;gt;אב: Eliazer Aron Spijer&amp;lt;br&amp;gt;אם: Sara Jochums de Vos&amp;lt;br&
+4 CONC amp;gt;ילדים: Benjamin de VriesSaartje de Vries&amp;lt;br&amp;gt;הערות: Archiefnaam: Tresoar, Frysk Histoarysk en LetterkundichDeel/Akte: 20Akteplaats: Harlingen,FR,NLDInventarisnr.: 2018Dat
+4 CONC um: May 15, 1856Archiefnaam: Drents ArchiefAkteplaats: Assen,DR,NLDInventarisnr.: 1887Deel/Akte: 44Datum: August  7, 1887&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&lt;/a&gt; on &lt;
+4 CONC a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the original record will not wo
+4 CONC rk.
+2 EVEN Record
+3 ROLE 10838:9395819:
+1 RIN MH:I500102
+1 _UID 646CA1BA98493CC98842434052C02419
+
+0 @I501142@ INDI
+1 _UPD 11 AUG 2024 04:33:07 GMT -0500 
+1 NAME Jesajas Mozes /de Vries/
+2 GIVN Jesajas Mozes
+2 SURN de Vries
+1 SEX M
+1 FAMS @F500420@
+1 SOUR @S500091@
+2 PAGE Jesajas Mozes de Vries
+2 QUAY 3
+2 DATA
+3 DATE 11 AUG 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I501142
+1 _UID 66B885530AE551319E76F6B0B8FC99F1
+
+0 @I501143@ INDI
+1 _UPD 11 AUG 2024 04:33:07 GMT -0500 
+1 NAME Fokkletje /Salomon/
+2 GIVN Fokkletje
+2 SURN Salomon
+2 _MARNM de Vries
+1 SEX F
+1 FAMS @F500420@
+1 SOUR @S500091@
+2 PAGE Fokkletje Salomon
+2 QUAY 3
+2 DATA
+3 DATE 11 AUG 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I501143
+1 _UID 66B885531F1361349E76F6B0B8FC99F1
+
+0 @I500098@ INDI
+1 _UPD 29 NOV 2024 06:36:51 GMT -0500 
+1 NAME Benjamin /de Vries/
+2 GIVN Benjamin
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 1 OCT 1858
+2 PLAC Harlingen, Frise, Pays-Bas
+1 DEAT Y
+2 DATE 27 AUG 1906
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+1 EVEN Spouse: Roosje (Rozet) Kijzer
+2 TYPE MARR
+2 DATE 17 DEC 1902
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 FAMS @F500035@
+1 FAMC @F500038@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Benjamin de Vries&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 1 באוק’ 1858 - Harlingen, Frise, Pays-Bas&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Roosje Kijzer - 17 בד
+4 CONC מ’ 1902 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;פטירה: 27 באוג’ 1906 - Harlingen, Harlingen, Friesland, The Netherlands&amp;lt;br&amp;gt;א
+4 CONC ב: Izaak de Vries&amp;lt;br&amp;gt;אם: Klara de Vries (לבית Speijer)&amp;lt;br&amp;gt;נשים: Betje Behr, Roosje Kijzer&amp;lt;br&amp;gt;ילדים: Klaartje de Vries, Heiman Izaäc de Vries,
+4 CONC  Jacob de Vries, Maria de Vries, Aäron de Vries&amp;lt;br&amp;gt;אחים ואחיות: Eliazar de Vries, Aron de Vries, Jantje de Vries, Mietje de Vries, Pietje Polak (לבית de Vries), Kaatje de 
+4 CONC Vries, Mozes Eleazar de Vries, Saartje de Vries, Jacob de Vries
+2 EVEN Record
+3 ROLE 40000:125962542:
+1 SOUR @S500060@
+2 QUAY 4
+2 DATA
+3 TEXT Benjamin DE VRIES&amp;lt;br&amp;gt;לידה: 1 באוק’ 1858&amp;lt;br&amp;gt;נישואין: נישואין ל: Betje BEHR7 באוג’ 1887
+	
+	 Assen, Drenthe, Netherlands
+
+
+
+
+
+	
+	
+	
+		
+	
+4 CONC 
+
+
+&amp;lt;br&amp;gt;נישואין: נישואין ל: Roosje KIJZER17 בדצמ’ 1902&amp;lt;br&amp;gt;פטירה: 27 באוג’ 1906&amp;lt;br&amp;gt;אב: Izaak DE VRIES&amp;lt;br&amp;gt;אם: K
+4 CONC lara SPEIJER&amp;lt;br&amp;gt;בני זוג: Roosje KIJZER, Betje BEHR&amp;lt;br&amp;gt;ילדים: Maria DE VRIES, Aaron DE VRIES, Heiman Izaäc DE VRIES, Jacob DE VRIES&amp;lt;br&amp;gt;אחים ו
+4 CONC חיות: Aron DE VRIES, Jantje DE VRIES, Mietje DE VRIES, Pietje DE VRIES, Kaatje DE VRIES, Saartje DE VRIES, Eliazar DE VRIES, Jacob DE VRIES, Mozes Eleazar DE VRIES
+2 EVEN Record
+3 ROLE 14100:1607161892:
+1 SOUR @S500183@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6YQUCYFSYMMGUI2BVDFAEEULVYY-4504249/benjamin-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 4504249
+1 SOUR @S500184@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7DNGPGE6CTCIVU5BG47YLZGPQBA-1004490/benjamin-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1004490
+1 RIN MH:I500098
+1 _UID 646C9EE150DA61033FE8783606332823
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTRmM2U5NWNmNzM4YzYzZjIwMTllMTFmM2I4MGMxZDU1MjMxN2ViOGEzNTUwMzBjYjY4YjgwZGQ2NjQyYjY0ODkmZT0xNzUzNjEwNDAw/158/944/6912/500089_2701384fcd666dn16y519j_A.jpg
+2 _FILESIZE 30729
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500088
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500089
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWNkYWVlZTJkZTMyYjA4ZThiNjVjYzgyNTc3YWQyMDY3ZTdkMTc1OTU0OTBmYTYwNmRkMTk1MGNlNGNhYTFiNGYmZT0xNzUzNjEwNDAw/158/944/6912/500088_541068ec4686f1k6c2918g_A.jpg
+2 _FILESIZE 32588
+2 TITL בנימין דה פריס
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 28 0 434 406
+2 _PHOTO_RIN MH:P500088
+
+0 @I500097@ INDI
+1 _UPD 23 JUN 2024 12:49:13 GMT -0500 
+1 NAME Betje /Behr/
+2 GIVN Betje
+2 SURN Behr
+2 _MARNM de Vries
+1 SEX F
+1 BIRT
+2 DATE 12 NOV 1864
+2 PLAC Assen, Drenthe, Netherlands
+1 DEAT Y
+2 DATE 19 FEB 1899
+2 PLAC Harlingen, Friesland, Netherlands
+2 CAUS מחלה
+1 EVEN Spouse: Benjamin de Vries
+2 TYPE MARR
+2 DATE 7 AUG 1887
+2 PLAC Assen, Drenthe, Netherlands
+1 FAMS @F500035@
+1 FAMC @F500039@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Betje Behr&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 12 בנוב’ 1864 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;נישואין: Benjamin de Vries1887-08-07Assen, Drenthe, Nede
+4 CONC rland&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: Maria Philip Groenstad&amp;lt;br&amp;gt;הערות: Archiefnaam: Drents ArchiefAkteplaats: Assen,DR,NLDInventarisnr.: 1887
+4 CONC Deel/Akte: 44Datum: August  7, 1887Inventarisnr.: 1864Deel/Akte: 180Akteplaats: Assen,DR,NLDArchiefnaam: Drents ArchiefDatum: November 12, 1864&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original re
+4 CONC cord&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the origi
+4 CONC nal record will not work.
+2 EVEN Record
+3 ROLE 10838:9276325:
+1 SOUR @S500060@
+2 QUAY 4
+2 DATA
+3 TEXT Betje BEHR&amp;lt;br&amp;gt;לידה: 12 בנוב’ 1864
+	
+	 Assen, Drenthe, Netherlands
+
+
+
+
+
+	
+	
+	
+		
+	
+
+
+&amp;lt;br&amp;gt;נישואין: נישואין ל: Benjamin DE VRIES7 באוג’ 
+4 CONC 1887
+	
+	 Assen, Drenthe, Netherlands
+
+&amp;lt;br&amp;gt;פטירה: 19 בפבר’ 1899
+	
+	 Harlingen, Friesland, Netherlands
+
+&amp;lt;br&amp;gt;בעל: Benjamin DE VRIES&amp;lt;br&amp;gt;י
+4 CONC לדים: Aaron DE VRIES, Jacob DE VRIES, Maria DE VRIES, Heiman Izaäc DE VRIES
+2 EVEN Record
+3 ROLE 14100:1607163091:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Betje Behr&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 12 בנוב’ 1864 - Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Benjamin de Vries - 7 בא
+4 CONC ג’ 1887 - Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;פטירה: 19 בפבר’ 1899 - Harlingen, Friesland, Netherlands&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: M
+4 CONC arie Philip Behr (לבית Groenstad)&amp;lt;br&amp;gt;בעל: Benjamin de Vries&amp;lt;br&amp;gt;ילדים: Klaartje de Vries, Heiman Izaäc de Vries, Jacob de Vries, Maria de Vries, Aäron de Vries
+4 CONC &amp;lt;br&amp;gt;אחים ואחיות: Salina Behr, Hinderina Behr, Philippus Behr, Abraham Izak Behr, Saartje Behr, Samuel Behr (לבית BEHR), Kaatje aCathan (לבית Behr)
+2 EVEN Record
+3 ROLE 40000:20624597:
+1 SOUR @S500181@
+2 PAGE https://www.myheritage.co.il/profile-OYYV74VTDB7BUSZNMXFWTYK26XRSJSA-1500365/betje-vries-geboren-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500365
+1 SOUR @S500183@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6YQUCYFSYMMGUI2BVDFAEEULVYY-4504250/betje-de-vries-born-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 4504250
+1 SOUR @S500184@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7DNGPGE6CTCIVU5BG47YLZGPQBA-1004491/betje-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1004491
+1 SOUR @S500197@
+2 PAGE https://www.myheritage.com/profile-OYYV7PJF3CW6GAHMOV4QX6VCZDY34VY-1500087/betje-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500087
+1 RIN MH:I500097
+1 _UID 646C9EB8CC8EB37D093E4E4C32828A1A
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTc1NzliMmFhMTFlMWViZTVkYTg1N2JjYzRhYWU5ZGM2MTc5YjgxMTNmNmU5MGNhNDQ0OGQ0ZjhlZjhkMDUzNjYmZT0xNzUzNjEwNDAw/158/944/6912/500091_5348695u13mcz68f18m46z_A.jpg
+2 _FILESIZE 26931
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500090
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500091
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTY4YmY1YWU3YTE2NGUxZTc2M2VlODQ0ZjA2ZmNiZjQ0ODU3NTAyNjFlOWVhMGU1ZTY4ZDY0NWI3ZDEzMzZlZTAmZT0xNzUzNjEwNDAw/158/944/6912/500090_7744818f6456e21w4c8n10_A.jpg
+2 _FILESIZE 31688
+2 TITL בתיה בער
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 10 380 390
+2 _PHOTO_RIN MH:P500090
+
+0 @I502769@ INDI
+1 _UPD 8 MAR 2025 22:51:05 GMT -0500 
+1 NAME Elias /de Vries/
+2 GIVN Elias
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1700
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19628365/elias-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19628365
+1 RIN MH:I502769
+1 _UID 67CD1E1D7AF0C54A3D161F6BDFBF048C
+
+0 @I502678@ INDI
+1 _UPD 6 MAR 2025 07:44:01 GMT -0500 
+1 NAME Jacob /de Vries/
+2 GIVN Jacob
+2 SURN de Vries
+1 SEX M
+1 FAMS @F500905@
+1 SOUR @S500205@
+2 QUAY 4
+2 DATA
+3 TEXT Jacob de Vries&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: סביבות 1787 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;פטירה: 2 באוג’ 1859 - Blokzijl, Overij
+4 CONC ssel, Netherlands&amp;lt;br&amp;gt;גיל: 72&amp;lt;br&amp;gt;בעל: Jozeph Gokkes&amp;lt;br&amp;gt;בת: Leentje de Vries&amp;lt;br&amp;gt;מקור: אוסף:Blokzijl, registers van overlijdensמו
+4 CONC סד:Historisch Centrum Overijsselארכיון:0123# רישום:1406מספר מסמך:24מקום המקור:Blokzijl, Overijssel, Netherlandsתאריך מקור:1859-08-03תאריך הכרך:1843-01-0
+4 CONC 1הערות:Provenance: 0123.1406_54_141_MAISI_AKT.txt via HCO (txt2csv csv2a2a)תמונות:Source image
+2 EVEN Record
+3 ROLE 10563:33026092-F:
+1 RIN MH:I502678
+1 _UID 67C9A6A0E4AF9AC3A41F19B93683F953
+
+0 @I502679@ INDI
+1 _UPD 6 MAR 2025 07:44:02 GMT -0500 
+1 NAME Magdelena /Cohen/
+2 GIVN Magdelena
+2 SURN Cohen
+1 SEX F
+1 FAMS @F500905@
+1 SOUR @S500205@
+2 QUAY 4
+2 DATA
+3 TEXT Magdelena Cohen&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: סביבות 1787 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;פטירה: 2 באוג’ 1859 - Blokzijl, Overi
+4 CONC jssel, Netherlands&amp;lt;br&amp;gt;גיל: 72&amp;lt;br&amp;gt;בעל: Jozeph Gokkes&amp;lt;br&amp;gt;בת: Leentje de Vries&amp;lt;br&amp;gt;מקור: אוסף:Blokzijl, registers van overlijdensמ
+4 CONC סד:Historisch Centrum Overijsselארכיון:0123# רישום:1406מספר מסמך:24מקום המקור:Blokzijl, Overijssel, Netherlandsתאריך מקור:1859-08-03תאריך הכרך:1843-01-
+4 CONC 01הערות:Provenance: 0123.1406_54_141_MAISI_AKT.txt via HCO (txt2csv csv2a2a)תמונות:Source image
+2 EVEN Record
+3 ROLE 10563:33026092-M:
+1 RIN MH:I502679
+1 _UID 67C9A6A138697AC5A41F19B93683F953
+
+0 @I500652@ INDI
+1 _UPD 21 MAY 2024 09:11:59 GMT -0500 
+1 NAME Mietje /de Vries/
+2 GIVN Mietje
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 11 APR 1870
+2 PLAC Harlingen, Frise, Pays-Bas
+1 DEAT Y
+2 DATE 2 JAN 1941
+2 PLAC The Hague, The Hague, South Holland, Netherlands
+1 FAMC @F500038@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Mietje de Vries&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 11 באפר’ 1870 - Harlingen, Frise, Pays-Bas&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Aäron Pais - 21 בינ
+4 CONC ו’ 1892 - Harlingen, Harlingen, Friesland, The Netherlands&amp;lt;br&amp;gt;פטירה: 2 בינו’ 1941 - The Hague, The Hague, South Holland, Netherlands&amp;lt;br&amp;gt;אב: Izaak de Vries&a
+4 CONC mp;lt;br&amp;gt;אם: Klara de Vries (לבית Speijer)&amp;lt;br&amp;gt;בעל: Aäron Pais&amp;lt;br&amp;gt;ילדים: Racheltje Pais, Raphaël Pais, Izaak Pais, Clara Pais&amp;lt;br&amp;gt;אחי
+4 CONC  ואחיות: Eliazar de Vries, Aron de Vries, Kaatje de Vries, Jantje de Vries, Pietje Polak (לבית de Vries), Benjamin de Vries, Mozes Eleazar de Vries, Saartje de Vries, Jacob de Vries
+2 EVEN Record
+3 ROLE 40000:125968408:
+1 RIN MH:I500652
+1 _UID 664CABA7AAD0C0A63DCDFFBF7E48BC56
+
+0 @I502757@ INDI
+1 _UPD 8 MAR 2025 22:52:22 GMT -0500 
+1 NAME unknown /de Vries/
+2 GIVN unknown
+2 SURN de Vries
+1 SEX U
+1 DEAT Y
+1 FAMS @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19639780/placeholder-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19639780
+1 RIN MH:I502757
+1 _UID 67CD1E1B31D9553D3D161F6BDFBF048C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTdhYzMzMTllYTU0YzIwM2UyYWU2NGUzNzYxZWVjNGU5N2I2OGUxODBjMmYyNGY3NjhmZWRkMzljNWMxMTliNTkmZT0xNzUzNjEwNDAw/158/944/6912/501027_93847732r11bln6d6coe77_A.jpg
+2 _FILESIZE 2121
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501026
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501027
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTNhMjMzNTZjYjVjMmU2MzU3Y2NlMDk4MjRlZWE3MThhNmViZDE0NWNiMDM2MWM0ZDAzMzk5YTk2ZWRlMjliYmImZT0xNzUzNjEwNDAw/158/944/6912/501026_00357713kc4b1e7ly726d6_A.jpg
+2 _FILESIZE 2105
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501026
+
+0 @I502775@ INDI
+1 _UPD 8 MAR 2025 22:51:12 GMT -0500 
+1 NAME Isaac /de Vries/
+2 GIVN Isaac
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1730
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19551284/isaac-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19551284
+1 RIN MH:I502775
+1 _UID 67CD1E1EA55155503D161F6BDFBF048C
+
+0 @I502815@ INDI
+1 _UPD 8 MAR 2025 22:52:12 GMT -0500 
+1 NAME David /de Vries/
+2 GIVN David
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1767
+2 PLAC Gulik, Jülich, Cologne, North Rhine-Westphalia, Germany
+1 DEAT Y
+2 DATE 1 FEB 1850
+2 PLAC Gorinchem, South Holland, Netherlands
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19538676/david-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19538676
+1 RIN MH:I502815
+1 _UID 67CD1E29CB20F5783D161F6BDFBF048C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWU4NTVkMDlmMzE3YTM1MWU3MDY5NWRhOTNmZWM5NGJkMzIwZDFjZmRjYzY4Yjg2YTBiZDE5ZWI0MmYwZGMzNmEmZT0xNzUzNjEwNDAw/158/944/6912/501075_501858jdr60cle7b717717_A.jpg
+2 _FILESIZE 4589
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501074
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501075
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTkyNzY4MzhlZGYyMTFjMmIxMTljMjE1M2VmOWVhNzYyYTVkM2VjMjU0NmJiMDU0MDU2YzA3N2U4ZjVlNjgxZjImZT0xNzUzNjEwNDAw/158/944/6912/501074_791034e9ca11efd6777i1l_A.jpg
+2 _FILESIZE 4604
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501074
+
+0 @I504026@ INDI
+1 _UPD 8 APR 2025 04:56:35 GMT -0500 
+1 NAME Aaltje /de Vries/
+2 GIVN Aaltje
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 1924
+2 PLAC Emmen
+1 DEAT Y
+2 DATE 19 JUN 1924
+2 PLAC Emmen
+2 NOTE Aktenummer: 211
+1 FAMC @F501302@
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500281/aaltje-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Family tree, מנוהל ע"י Shelly Galpert
+2 EVEN Smart Matching
+3 ROLE 1500281
+1 SOUR @S500277@
+2 PAGE https://www.myheritage.com/profile-OYYV6T5MMS2QZRQYNTMZ4V2AKWHUIVA-1000025/aaltje-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000025
+1 SOUR @S500077@
+2 PAGE https://www.myheritage.com/profile-OYYV6EKZSR5VGXFPXXN53ZTSPF6WXMY-13040038/aaltje-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 13040038
+1 RIN MH:I504026
+1 _UID 67F4F2D24B7050B116FD6A66BD508D42
+
+0 @I502800@ INDI
+1 _UPD 8 MAR 2025 22:51:48 GMT -0500 
+1 NAME Izaak Nathan /de Vries/
+2 GIVN Izaak Nathan
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1758
+2 PLAC Harmen, Germany
+1 DEAT Y
+2 DATE 6 OCT 1848
+2 PLAC Winsum, Groningen, Netherlands
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19607007/izaak-nathan-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19607007
+1 RIN MH:I502800
+1 _UID 67CD1E24AD99C5693D161F6BDFBF048C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWM2ODBmZDk5NzEwZjZmOTk1ZWNkZjY1MjNhODJlZTJjZmFmZjE0N2YwNzFkMDVjMzkwYzkyNTFkOGIzMzAyOTYmZT0xNzUzNjEwNDAw/158/944/6912/501059_2073496de11706crrh9773_A.jpg
+2 _FILESIZE 3964
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501058
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501059
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTM5NDFiMTYyZGIxYTdjOWZjMjRlOTY5MDYyNDJlZGJmMWIxZDY3MTMzNjM4YzUyNWY0ZTlmOWI1NThlN2I2MTUmZT0xNzUzNjEwNDAw/158/944/6912/501058_654315i7keh63h11dac679_A.jpg
+2 _FILESIZE 3984
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501058
+
+0 @I502798@ INDI
+1 _UPD 8 MAR 2025 22:51:43 GMT -0500 
+1 NAME Eliazar Joseph /de Vries/
+2 GIVN Eliazar Joseph
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1755
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19639941/eliazar-joseph-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19639941
+1 RIN MH:I502798
+1 _UID 67CD1E2420C1F5673D161F6BDFBF048C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWJmNjQyNTY4ZjA5Y2M1Y2NjMDc2NzZmNDYzMjg1YTRjNjljYTRkNjRiOTBhMTAxODFhMDY0NjJiZjg2M2JkZDYmZT0xNzUzNjEwNDAw/158/944/6912/501055_409518e6lg351cixdf77h1_A.jpg
+2 _FILESIZE 4589
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501054
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501055
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTdmZWI1M2QzNzE1MWQyMGNiNzU3MTRkNGNiZTlkYWVhODhkMThkMzY5Nzk1MWFlZTg1YzQ1MjFiMGQyODMzOWImZT0xNzUzNjEwNDAw/158/944/6912/501054_9572171eed7ym37c10675o_A.jpg
+2 _FILESIZE 4604
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501054
+
+0 @I500658@ INDI
+1 _UPD 21 MAY 2024 09:12:04 GMT -0500 
+1 NAME Heiman Asser /de Vries/
+2 GIVN Heiman Asser
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 24 OCT 1899
+2 PLAC Harlingen, Frise, Pays-Bas
+1 DEAT Y
+2 DATE 31 MAR 1943
+2 PLAC Central Europe
+1 FAMC @F500253@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Heiman Asser de Vries&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 24 באוק’ 1899 - Harlingen, Frise, Pays-Bas&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Martha Marie de Lee
+4 CONC uw - 9 בספט’ 1925 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;פטירה: 31 במרץ 1943 - Central Europe&amp;lt;br&amp;gt;אב: Jacob de Vries&amp;lt;br&
+4 CONC amp;gt;אם: Elize Odewald&amp;lt;br&amp;gt;אשה: Martha Marie de Leeuw&amp;lt;br&amp;gt;אחים ואחיות: Izaak de Vries, Klaartje de Vries
+2 EVEN Record
+3 ROLE 40000:106045685:
+1 RIN MH:I500658
+1 _UID 664CABA8DC7960AE3DCDFFBF7E48BC56
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTlkZjAyNjEwZWVmMGFiNjY5Y2VjYmI2YzYzODQ2MDI4MjExYzQxZDgwODJiZGM3YjE3OGVlZDBkNmQyZDMxNDImZT0xNzUzNjEwNDAw/158/944/6912/500232_509289d9114vaccfb466b6_A.jpg
+2 _FILESIZE 108856
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500231
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500232
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTIxM2FlMmRjNWNiZmVlOWE2Mzc3ZDVkMWE5Yjc3YWRhZTBmNDE0MWFmMTcyMWIzMzhlYTE1YzkzZmNlYjRhMGQmZT0xNzUzNjEwNDAw/158/944/6912/500231_116333a1rb3b41u636rr8c_A.jpg
+2 _FILESIZE 108382
+2 TITL dheimandevries_large
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500231
+
+0 @I502777@ INDI
+1 _UPD 8 MAR 2025 22:51:15 GMT -0500 
+1 NAME Isak /de Vries/
+2 GIVN Isak
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1730
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19574602/isak-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19574602
+1 RIN MH:I502777
+1 _UID 67CD1E1F13BF45523D161F6BDFBF048C
+
+0 @I501893@ INDI
+1 _UPD 17 FEB 2025 10:41:45 GMT -0500 
+1 NAME Katje Izaak /de Vries/
+2 GIVN Katje Izaak
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 25 MAR 1875
+2 PLAC Harlingen, Friesland, the Netherlands
+1 DEAT Y
+2 DATE 13 JUL 1875
+2 PLAC Harlingen, Harlingen, Friesland, Netherlands
+1 FAMC @F500692@
+1 SOUR @S500087@
+2 PAGE https://www.myheritage.co.il/profile-OYYV72HL4OV5DQMPGOKAN7Q3ZWCTFWA-10500017/katje-izaak-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT kluveld Family Site, מנוהל ע"י amanda kluveld
+2 EVEN Smart Matching
+3 ROLE 10500017
+1 RIN MH:I501893
+1 _UID 67B366C2DB83D77A6D1766E32812436A
+
+0 @I502389@ INDI
+1 _UPD 27 FEB 2025 06:38:35 GMT -0500 
+1 NAME Johanna /de Vries/
+2 GIVN Johanna
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 14 NOV 1919
+2 PLAC Harlingen, Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE 31 OCT 1944
+2 PLAC Oswiecim, Oświęcim County, Lesser Poland Voivodeship, Poland
+1 FAMC @F500826@
+1 SOUR @S500185@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6HKGW7ZTU6V5RFM43NYI4BD2POY-1500011/johanna-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500011
+1 RIN MH:I502389
+1 _UID 67C05CC82C2E4AEB8337608592BCDBBF
+
+0 @I502856@ INDI
+1 _UPD 10 APR 2025 03:12:57 GMT -0500 
+1 NAME Jozef /de Vries/
+2 GIVN Jozef
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 11 OCT 1902
+2 PLAC Groningen, Netherlands
+1 DEAT Y
+2 DATE 14 FEB 1944
+2 PLAC Oświęcim, Chrzanów, Małopolska, Poland
+1 FAMC @F500954@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1740624349&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Jozef de Vries
+לידה: 11 באוק’ 1902 - Groningen, Netherlands
+פטירה: 14 בפבר’ 1944 - Oświęcim, Chrzanów, Małopolska, Poland
+הורים: Levie de Vries, Creesia van Zanten
+אשה
+4 CONC : Geeske de Vries (לבית Visser)
+אחים ואחיות: Leentje van Coevorden (לבית de Vries), Rebecca de Vries, Salomon de Vries, Izak de Vries, Rebekka de Vries, Klaartje Hess (לבית Bolle
+4 CONC graaf)
+2 EVEN Record
+3 ROLE 40001:1740624349:
+1 SOUR @S500296@
+2 QUAY 3
+2 DATA
+3 DATE 10 APR 2025
+3 TEXT תמונה אישית של Jozef de Vries נוספה באמצעות Photo Discovery™
+2 EVEN Discovery
+1 RIN MH:I502856
+1 _UID 67CD231F648180DE7CFBC37DFB720ED3
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTc3ZjdlY2Y0OWQ5ZjVmMjI4NjBjMjYwYTlkYTI1ZWY4ZGQxNzE3ZDlhMmEwY2NmMDYwYTA1YTg0MzlkOGZmNzcmZT0xNzUzNjEwNDAw/158/944/6912/501883_986646dc778a69lz17l99f_A.jpg
+2 _FILESIZE 59436
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501869
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501883
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWRiMmNlNWEwZjRlMjFmYjMzZmVhMjljYjQyZGM2YzRmZDgyNjk4NjU5YTEwZDM2MTE2Nzg1NmJkNDY1NmM2ZTImZT0xNzUzNjEwNDAw/158/944/6912/501869_96954381747f768k2dc599_A.jpg
+2 _FILESIZE 59126
+2 TITL 507682_906011412d00q582rt5fy2
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501869
+
+0 @I501888@ INDI
+1 _UPD 17 FEB 2025 10:41:42 GMT -0500 
+1 NAME Benjamin Izaak /de Vries/
+2 GIVN Benjamin Izaak
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 1 OCT 1858
+2 PLAC Harlingen, Frise, Pays-Bas
+1 DEAT Y
+2 DATE 27 AUG 1906
+2 PLAC Harlingen, Friesland, the Netherlands
+1 FAMC @F500692@
+1 SOUR @S500087@
+2 PAGE https://www.myheritage.co.il/profile-OYYV72HL4OV5DQMPGOKAN7Q3ZWCTFWA-10500011/benjamin-izaak-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT kluveld Family Site, מנוהל ע"י amanda kluveld
+2 EVEN Smart Matching
+3 ROLE 10500011
+1 RIN MH:I501888
+1 _UID 67B366C1EBC2A7756D1766E32812436A
+
+0 @I502780@ INDI
+1 _UPD 8 MAR 2025 22:51:19 GMT -0500 
+1 NAME Levie Siemon /de Vries/
+2 GIVN Levie Siemon
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1735
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19525820/levie-siemon-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19525820
+1 RIN MH:I502780
+1 _UID 67CD1E1FAD32C5553D161F6BDFBF048C
+
+0 @I501124@ INDI
+1 _UPD 23 JUL 2024 00:33:13 GMT -0500 
+1 NAME Liepman /de Vries/
+2 GIVN Liepman
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 13 SEP 1827
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+1 EVEN Echtgeno(o)t(e): Aaltje Engeltje David Parser
+2 TYPE MARR
+2 DATE 28 AUG 1853
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+1 FAMC @F500254@
+1 SOUR @S500087@
+2 PAGE Liepman de Vries
+2 QUAY 3
+2 DATA
+3 DATE 23 JUL 2024
+3 TEXT התווסף באמצעות Smart Match
+2 EVEN Discovery
+1 RIN MH:I501124
+1 _UID 669F4098E5147EB904CF5EB06C532EB0
+
+0 @I504177@ INDI
+1 _UPD 8 APR 2025 13:01:29 GMT -0500 
+1 NAME Hendrika /de Vries/
+2 GIVN Hendrika
+2 SURN de Vries
+2 _MARNM Druif
+1 SEX F
+1 BIRT
+2 DATE 27 SEP 1823
+2 PLAC Den Helder, Noord-Holland, Nederland
+1 DEAT Y
+2 DATE 24 AUG 1910
+2 PLAC Rotterdam, Zuid-Holland, Nederland
+1 FAMC @F501326@
+1 SOUR @S500011@
+2 PAGE https://www.myheritage.co.il/profile-1624749394-1500100/hendrika-druif-לבית-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT בן אבו Web Site, מנוהל ע"י יאיר בן אבו
+2 EVEN Smart Matching
+3 ROLE 1500100
+1 RIN MH:I504177
+1 _UID 67F564754FD6CE5433E07EBD07E4CDAA
+
+0 @I502787@ INDI
+1 _UPD 8 MAR 2025 22:51:28 GMT -0500 
+1 NAME Levie /de Vries/
+2 GIVN Levie
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1740
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19580864/levie-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19580864
+1 RIN MH:I502787
+1 _UID 67CD1E2144CCE55C3D161F6BDFBF048C
+
+0 @I501516@ INDI
+1 _UPD 13 MAR 2025 11:38:46 GMT -0500 
+1 NAME Liepman Benjamin /de Vries/
+2 GIVN Liepman Benjamin
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 1827
+2 PLAC Harlingen, Friesland, the Netherlands
+1 DEAT Y
+1 FAMC @F500254@
+1 SOUR @S500124@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7DK5HCHV2COE4GVAKVHWLJKMU3Q-1500450/liepman-benjamin-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Wurms Web Site, מנוהל ע"י Hennie Wurms
+2 EVEN Smart Matching
+3 ROLE 1500450
+1 RIN MH:I501516
+1 _UID 6781041DDCA11A01C2A6F97527284072
+
+0 @I504041@ INDI
+1 _UPD 8 APR 2025 07:12:07 GMT -0500 
+1 NAME Benjamin /de Vries/
+2 GIVN Benjamin
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 29 JUL 1908
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+1 DEAT Y
+2 DATE 15 FEB 1945
+2 PLAC Buchenwald, Weimar, Thuringia, Germany
+1 FAMS @F501308@
+1 FAMC @F501305@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=155495782&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Benjamin de Vries
+לידה: 29 ביולי 1908 - Harlingen, Harlingen, Friesland, The Netherlands
+פטירה: 15 בפבר’ 1945 - Buchenwald, Weimar, Thuringia, Germany
+אב: Mozes Eleazar de Vries
+
+4 CONC אם: Gertruida Swart
+אשה: Henriette de Vries (לבית Franken)
+בן/בת: Mozes Eliazar Jakob de Vries
+אחים ואחיות: Klara van Buuren (לבית de Vries), Alexander Lion de Vries
+2 EVEN Record
+3 ROLE 40000:155495782:
+1 SOUR @S500121@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7VDVKG4I5AB5Z3U3O4ZVSC6VP3I-17049781/benjamin-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Genealogie Boon - van der Mark Website, מנוהל ע"י Brigitte Boon - van der Mark
+2 EVEN Smart Matching
+3 ROLE 17049781
+1 RIN MH:I504041
+1 _UID 67F5123C2FE15096CAFC43F69D375087
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTllZTg5NmNlOTQyMmY4YzA5ODRhNzlhZDQ1ZDcwOWRiMzA1ZGNlODdmNDY1MDNkNGY1YTM4Y2MwZDBlMGUwMjEmZT0xNzUzNjEwNDAw/158/944/6912/501685_787973jf6x17912a1ik275_A.jpg
+2 _FILESIZE 2379
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501684
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501685
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTQ0ZDU3ZjMyZGJiZTJmZGIwNzhmMTk1MjNkMGVjZDAxMWNmNjUzMWZiYzgyZGU2MjllZGEwZWZmOWUxNzlkOGUmZT0xNzUzNjEwNDAw/158/944/6912/501684_808656e2e79161mff52l27_A.jpg
+2 _FILESIZE 2379
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501684
+
+0 @I504047@ INDI
+1 _UPD 8 APR 2025 07:12:08 GMT -0500 
+1 NAME Henriette /Franken/
+2 GIVN Henriette
+2 SURN Franken
+2 _MARNM de Vries
+1 SEX F
+1 BIRT
+2 DATE 20 DEC 1909
+1 DEAT Y
+2 DATE 11 JUN 1943
+2 PLAC Sobibor (exterminationcamp), Lublin Voivodeship, Poland
+1 FAMS @F501308@
+1 SOUR @S500121@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7VDVKG4I5AB5Z3U3O4ZVSC6VP3I-17049802/henriette-franken-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Genealogie Boon - van der Mark Website, מנוהל ע"י Brigitte Boon - van der Mark
+2 EVEN Smart Matching
+3 ROLE 17049802
+1 RIN MH:I504047
+1 _UID 67F51296539FA6271ED3874EA3621152
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTVmMjlmMzJhY2RlNjY3ODRiZTRhNTY4NTlhOWE3MjlmYmY5MDNmNDQwMmQzNzE2YzI3MzI3ZWZkN2M0YzhhYjcmZT0xNzUzNjEwNDAw/158/944/6912/501687_443244lf2a8z296177i115_A.jpg
+2 _FILESIZE 2584
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501686
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501687
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTViNjYzMTliNjJhZDI0NGNlMGZmNGI4MzFlYjdkMTRmMjc1ODMxMzY5NjExMzlhYjM1MzYwZWYyMTI5NDM3YmUmZT0xNzUzNjEwNDAw/158/944/6912/501686_1195116015117f2d45729f_A.jpg
+2 _FILESIZE 2584
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501686
+
+0 @I504193@ INDI
+1 _UPD 8 APR 2025 13:04:02 GMT -0500 
+1 NAME Abraham Liepman /de Vries/
+2 GIVN Abraham Liepman
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 4 NOV 1787
+2 PLAC Harlingen, Friesland, Nederland
+1 DEAT Y
+2 DATE 9 JUN 1864
+2 PLAC Lemsterland, Friesland, Netherlands
+1 FAMC @F501328@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1282444829&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Abraham Liepman de Vries
+לידה: 4 בנוב’ 1787 - Harlingen, Friesland, Nederland
+פטירה: 9 ביוני 1864 - Lemsterland, Friesland, Netherlands
+הורים: Liepman Levie Benjamins de Vries
+4 CONC , Henderina Meijers de Vries (לבית Reindorp)
+אשה: Sara Jacobs de Vries
+ילדים: Anna Kramer (לבית de Vries), Pietje Abrahams Mendels (לבית de Vries), Judichje de Vries, Jacob Abraham
+4 CONC  de Vries, Henderina Mendels (לבית Abrahams de Vries)
+אחים ואחיות: Leip Levie Liepman de Vries, Benjamin Wolf Liepman de Vries, Jacob Liepman de Vries, Meijer Liepman de Vries, Pietje Le
+4 CONC ipmans Kramer (לבית de Vries)
+2 EVEN Record
+3 ROLE 40001:1282444829:
+1 RIN MH:I504193
+1 _UID 67F5650E53162A01C6E1CED0AC22E10A
+
+0 @I500649@ INDI
+1 _UPD 21 MAY 2024 09:13:36 GMT -0500 
+1 NAME Saartje /de Vries/
+2 GIVN Saartje
+2 SURN de Vries
+2 _MARNM Speijer‏‎
+1 SEX F
+1 BIRT
+2 DATE 4 OCT 1860
+2 PLAC Harlingen, Friesland, Nederland
+1 DEAT Y
+2 DATE 8 JUL 1938
+2 PLAC Harlingen, Friesland, Nederland
+1 FAMC @F500038@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Saartje de Vries&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 4 באוק’ 1860 - Harlingen, Frise, Pays-Bas&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Elkan Aäron Speijer‏
+4 CONC ‎ - 1 באפר’ 1880 - Harlingen, Harlingen, Friesland, The Netherlands&amp;lt;br&amp;gt;פטירה: 8 ביולי 1938 - Harlingen, Friesland, The Netherlands&amp;lt;br&amp;gt;אב: Izaak de Vries
+4 CONC &amp;lt;br&amp;gt;אם: Klara de Vries (לבית Speijer)&amp;lt;br&amp;gt;בעל: Elkan Aäron Speijer‏‎&amp;lt;br&amp;gt;ילדים: Klaartje Speijer, Schoontje Cohen (לבית Speijer), Aron El
+4 CONC kan Speyer (לבית Speijer), Jansje Speijer, Klaartje Speijer, Izaäk Speijer, Judik Italie (לבית Speijer), Klaartje Eva Speijer, Pietje Speijer, Mietje Speijer, Michiel Speijer, Elize Speijer&a
+4 CONC mp;lt;br&amp;gt;אחים ואחיות: Eliazar de Vries, Aron de Vries, Kaatje de Vries, Jantje de Vries, Mietje de Vries, Pietje Polak (לבית de Vries), Benjamin de Vries, Mozes Eleazar de Vries, 
+4 CONC Jacob de Vries
+2 EVEN Record
+3 ROLE 40000:125964376:
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Saartje De Vries&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 4 באוק’ 1860 - Harlingen, Friesland, Nederland&amp;lt;br&amp;gt;נישואין: Elkan Aron Speyer1880-04-01Harlingen
+4 CONC , Friesland, Nederland&amp;lt;br&amp;gt;פטירה: 8 ביולי 1938 - Harlingen, Friesland, Nederland&amp;lt;br&amp;gt;אב: Isaak de Vries&amp;lt;br&amp;gt;אם: Klaartje Speijer&amp;lt;br&amp;gt;
+4 CONC לדים: Klaartje SpeyerSchoontje SpeijerAron SpeyerKlaartje SpeyerKind SpeyerIzaak SpeyerJudik SpeyerKlaartje Eva SpeyerJansje SpeyerPietje SpeyerMietje SpeyerMichiel Speyer&amp;lt;br&amp;gt;הער
+4 CONC ות: Deel/Akte: 12Archiefnaam: Tresoar, Frysk Histoarysk en LetterkundichInventarisnr.: 2030Akteplaats: Harlingen,FR,NLDDatum: April  1, 1880&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original rec
+4 CONC ord&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the origin
+4 CONC al record will not work.
+2 EVEN Record
+3 ROLE 10838:9422112:
+1 RIN MH:I500649
+1 _UID 664CABA725FA50A33DCDFFBF7E48BC56
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTA5NGQ5NzRlNmEzMWE3N2NmZjk0M2NhYTU1Zjk5YzM1OWE4MWI2Y2U2ZjM4MTNiYTQzYmRkZjY4OWJiNmQ0Y2EmZT0xNzUzNjEwNDAw/158/944/6912/500230_750003a61b611a1y46clc9_A.jpg
+2 _FILESIZE 78954
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500229
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500230
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTBkMjBjZGViMWEzOWQ4N2Y1NDdlMjg5ZDVmNzQ2ZDBjNTE2Nzc5YzQ3YmM5Yzk1MjIxMGFhZmM5NmUyZjM1YmUmZT0xNzUzNjEwNDAw/158/944/6912/500229_313135unc6241sbjaca1n6_A.jpg
+2 _FILESIZE 78925
+2 TITL _75_006_saartje_de_vries_1860-1938_large
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500229
+
+0 @I504180@ INDI
+1 _UPD 8 APR 2025 13:01:30 GMT -0500 
+1 NAME Jacob /de Vries/
+2 GIVN Jacob
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 20 JUL 1834
+2 PLAC Harlingen, Friesland, Nederland
+1 DEAT Y
+2 DATE EST 1865
+1 FAMC @F501326@
+1 SOUR @S500011@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6FIFUUCMXO56TRN727UU7BWZBMQ-1500103/jacob-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT בן אבו Web Site, מנוהל ע"י יאיר בן אבו
+2 EVEN Smart Matching
+3 ROLE 1500103
+1 RIN MH:I504180
+1 _UID 67F56475D378FE5733E07EBD07E4CDAA
+
+0 @I504042@ INDI
+1 _UPD 8 APR 2025 07:11:23 GMT -0500 
+1 NAME Salomon /de Vries/
+2 GIVN Salomon
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 16 FEB 1906
+2 PLAC Harlingen, Friesland, the Netherlands
+1 DEAT Y
+2 DATE 31 MAR 1943
+2 PLAC Seibersdorf (Zebrzydowice, concentrationcamp), Silesian, Poland
+1 FAMS @F501307@
+1 FAMC @F501305@
+1 SOUR @S500121@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7VDVKG4I5AB5Z3U3O4ZVSC6VP3I-17049783/salomon-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Genealogie Boon - van der Mark Website, מנוהל ע"י Brigitte Boon - van der Mark
+2 EVEN Smart Matching
+3 ROLE 17049783
+1 RIN MH:I504042
+1 _UID 67F512687A6381C69B6BC832334CFF41
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWZlNGUzOTE4YmQ5M2U3YTg1YjkzNGUyM2JjNWY2OGM3YTc1MTU5MmFmZTlkZmI0MGM2ZjdiZWUyNzZlOWY4ZTEmZT0xNzUzNjEwNDAw/158/944/6912/501673_428406abh65fl1z1a766w2_A.jpg
+2 _FILESIZE 2787
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501672
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501673
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWMxMDQ4ODYxOTU3NzFmOTI0N2Q0ZGFlMjU0MzhiNTUwZDdlODNiZmMzYjBlNDg0ZmYxOTZmNmNiYWU5MGI3MzkmZT0xNzUzNjEwNDAw/158/944/6912/501672_52151316616257fdjjak5r_A.jpg
+2 _FILESIZE 2788
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501672
+
+0 @I504046@ INDI
+1 _UPD 8 APR 2025 07:11:46 GMT -0500 
+1 NAME Marianne /Walg/
+2 GIVN Marianne
+2 SURN Walg
+2 _MARNM de Vries
+1 SEX F
+1 BIRT
+2 DATE 2 SEP 1898
+2 PLAC Amsterdam, North Holland, the Netherlands
+1 DEAT Y
+2 DATE 10 SEP 1942
+2 PLAC Auschwitz (Oswiecim, concentrationcamp), Poland
+1 FAMS @F501307@
+1 SOUR @S500121@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7VDVKG4I5AB5Z3U3O4ZVSC6VP3I-17049810/marianne-walg-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Genealogie Boon - van der Mark Website, מנוהל ע"י Brigitte Boon - van der Mark
+2 EVEN Smart Matching
+3 ROLE 17049810
+1 RIN MH:I504046
+1 _UID 67F51280F40A5B1C1783103A9692472D
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPThhNTNmZjI0YTY1Njg0YzRiMjcyOTUzMTM1MGRiMTE3ZDJhZTcwM2I1MmE4ZDg2NzA0Njc5NTUzZGIxMWFkNmQmZT0xNzUzNjEwNDAw/158/944/6912/501683_591606s15f2363b106r178_A.jpg
+2 _FILESIZE 2671
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501682
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501683
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTBhYjAxN2E0M2I4NmUwZWYxMDY3NjMyMGVhNWVlZTE3ZjQ0NzY4YWY2NDczYWNjOTBlMTNhMTRhOGYzMTg1YzImZT0xNzUzNjEwNDAw/158/944/6912/501682_87445651typ87f6l132vi1_A.jpg
+2 _FILESIZE 2671
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501682
+
+0 @I502393@ INDI
+1 _UPD 27 FEB 2025 06:38:37 GMT -0500 
+1 NAME Judith /de Vries/
+2 GIVN Judith
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 7 SEP 1926
+2 PLAC Avereest, Avereest, Overijssel, Netherlands
+1 DEAT Y
+2 DATE 9 JUL 1943
+2 PLAC Sobibór, Włodawa County, Lublin Voivodeship, Poland
+1 FAMC @F500826@
+1 SOUR @S500185@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6HKGW7ZTU6V5RFM43NYI4BD2POY-1500014/judith-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500014
+1 RIN MH:I502393
+1 _UID 67C05CC937A0CAEF8337608592BCDBBF
+
+0 @I502782@ INDI
+1 _UPD 8 MAR 2025 22:51:22 GMT -0500 
+1 NAME Isaac /de Vries/
+2 GIVN Isaac
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1735
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19580258/isaac-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19580258
+1 RIN MH:I502782
+1 _UID 67CD1E20246705573D161F6BDFBF048C
+
+0 @I500655@ INDI
+1 _UPD 21 MAY 2024 09:12:01 GMT -0500 
+1 NAME Kaatje /de Vries/
+2 GIVN Kaatje
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 25 MAR 1875
+2 PLAC Harlingen, Frise, Pays-Bas
+1 DEAT Y
+2 DATE 13 JUL 1875
+2 PLAC Harlingen, Harlingen, Friesland, Netherlands
+1 FAMC @F500038@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Kaatje de Vries&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 25 במרץ 1875 - Harlingen, Frise, Pays-Bas&amp;lt;br&amp;gt;פטירה: 13 ביולי 1875 - Harlingen, Harlingen, Fries
+4 CONC land, Netherlands&amp;lt;br&amp;gt;אב: Izaak de Vries&amp;lt;br&amp;gt;אם: Klara de Vries (לבית Speijer)&amp;lt;br&amp;gt;אחים ואחיות: Eliazar de Vries, Aron de Vries, Jantje de Vrie
+4 CONC s, Saartje de Vries, Mietje de Vries, Pietje Polak (לבית de Vries), Benjamin de Vries, Mozes Eleazar de Vries, Jacob de Vries
+2 EVEN Record
+3 ROLE 40000:254267724:
+1 RIN MH:I500655
+1 _UID 664CABA8538510AB3DCDFFBF7E48BC56
+
+0 @I500651@ INDI
+1 _UPD 21 MAY 2024 09:11:58 GMT -0500 
+1 NAME Jantje /de Vries/
+2 GIVN Jantje
+2 SURN de Vries
+2 _MARNM Pais
+1 SEX F
+1 BIRT
+2 DATE 14 JUL 1868
+2 PLAC Harlingen, Frise, Pays-Bas
+1 DEAT Y
+2 DATE 23 NOV 1942
+2 PLAC Oswiecim, Oświęcim County, Lesser Poland Voivodeship, Poland
+1 FAMC @F500038@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Jantje de Vries&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 14 ביולי 1868 - Harlingen, Frise, Pays-Bas&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Benjamin Raphaël Pais -
+4 CONC  31 באוג’ 1890 - Harlingen, Harlingen, Friesland, Netherlands&amp;lt;br&amp;gt;פטירה: 23 בנוב’ 1942 - Oswiecim, Oświęcim County, Lesser Poland Voivodeship, Poland&amp;lt;br&amp;gt;
+4 CONC ב: Izaak de Vries&amp;lt;br&amp;gt;אם: Klara de Vries (לבית Speijer)&amp;lt;br&amp;gt;בעל: Benjamin Raphaël Pais&amp;lt;br&amp;gt;ילדים: Racheltje Pais, Sara Johanna Cohen (לבית P
+4 CONC ais), Clara Pais, Raphaël Pais&amp;lt;br&amp;gt;אחים ואחיות: Eliazar de Vries, Aron de Vries, Kaatje de Vries, Saartje de Vries, Mietje de Vries, Pietje Polak (לבית de Vries), Benjamin 
+4 CONC de Vries, Mozes Eleazar de Vries, Jacob de Vries
+2 EVEN Record
+3 ROLE 40000:125968242:
+1 RIN MH:I500651
+1 _UID 664CABA77D5C10A53DCDFFBF7E48BC56
+
+0 @I500772@ INDI
+1 _UPD 27 FEB 2025 06:37:47 GMT -0500 
+1 NAME Jacob /de Vries/
+2 GIVN Jacob
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 7 AUG 1893
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+1 DEAT Y
+2 DATE 31 MAR 1944
+2 PLAC Midden-Europa
+1 EVEN Spouse: Catharina Walg
+2 TYPE MARR
+2 DATE 15 DEC 1920
+2 PLAC Leerdam, Leerdam, South Holland, The Netherlands
+1 OCCU Koopman
+1 FAMS @F500825@
+1 FAMC @F500035@
+1 SOUR @S500060@
+2 QUAY 4
+2 DATA
+3 TEXT Jacob DE VRIES&amp;lt;br&amp;gt;לידה: 7 באוג’ 1893&amp;lt;br&amp;gt;פטירה: 31 במרץ 1944
+	
+	 Central Europe
+
+
+
+
+
+	
+	
+	
+		
+	
+
+
+&amp;lt;br&amp;gt;אב: Benjamin DE VRIES&amp;lt
+4 CONC ;br&amp;gt;אם: Betje BEHR&amp;lt;br&amp;gt;אחים ואחיות: Heiman Izaäc DE VRIES, Aaron DE VRIES, Maria DE VRIES
+2 EVEN Record
+3 ROLE 14100:1607160259:
+1 SOUR @S500090@
+2 QUAY 3
+2 DATA
+3 DATE 4 AUG 2024
+3 TEXT תמונה אישית של Jacob de Vries נוספה באמצעות Photo Discovery™
+2 EVEN Discovery
+1 SOUR @S500183@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6YQUCYFSYMMGUI2BVDFAEEULVYY-4504252/jacob-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 4504252
+1 SOUR @S500184@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7DNGPGE6CTCIVU5BG47YLZGPQBA-1004489/jacob-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1004489
+1 RIN MH:I500772
+1 _UID 6659CB2CE099564B1F695E7F9A34BE46
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQzODg2NDk3MmU1NTkxZjMyMDU1ZjViMTk3NTJjMzJiMjM2NjA1YWZlNmY2MDc5MTYzZWZmZTUxZDMwOGFmZTYmZT0xNzUzNjEwNDAw/158/944/6912/500360_1672563k417tf10y6a6169_A.jpg
+2 _FILESIZE 151128
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500357
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500360
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTRlMjBlMTU5MjgxNDY4NDE1Yzg4ZTgzMjMwZGQ1ODMyZTBkOThhN2RhMjRmNjA3MDdjNmExYjQzNzM2ZTUwYmYmZT0xNzUzNjEwNDAw/158/944/6912/500357_1302247w9vaqb20f664176_A.jpg
+2 _FILESIZE 151139
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500357
+
+0 @I502386@ INDI
+1 _UPD 27 FEB 2025 06:37:48 GMT -0500 
+1 NAME Catharina /Walg/
+2 GIVN Catharina
+2 SURN Walg
+2 _MARNM de Vries
+1 SEX F
+1 BIRT
+2 DATE 20 NOV 1894
+2 PLAC Leerdam
+1 DEAT Y
+2 DATE 15 DEC 1942
+2 PLAC Auschwitz
+1 FAMS @F500825@
+1 SOUR @S500184@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7DNGPGE6CTCIVU5BG47YLZGPQBA-1004484/catharina-walg
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1004484
+1 RIN MH:I502386
+1 _UID 67C05C9B25722A42D783C59849BD0D63
+
+0 @I502792@ INDI
+1 _UPD 8 MAR 2025 22:51:36 GMT -0500 
+1 NAME Levi Izaks /de Vries/
+2 GIVN Levi Izaks
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE BEF 1747
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19604885/levi-izaks-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19604885
+1 RIN MH:I502792
+1 _UID 67CD1E22827825613D161F6BDFBF048C
+
+0 @I504040@ INDI
+1 _UPD 8 APR 2025 07:12:30 GMT -0500 
+1 NAME Alexander Lion /de Vries/
+2 GIVN Alexander Lion
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 21 APR 1912
+2 PLAC Harlingen, Friesland, the Netherlands
+1 DEAT Y
+2 DATE 10 AUG 1942
+2 PLAC Auschwitz (Oswiecim, concentrationcamp), Poland
+1 OCCU
+2 DATE 17 JUL 1942
+1 RESI
+2 DATE APR 1942
+2 ADDR
+3 CITY Leeuwarden
+3 CTRY the Netherlands
+1 FAMC @F501305@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=125965072&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Alexander Lion de Vries
+לידה: 21 באפר’ 1912 - Harlingen, Frise, Pays-Bas
+פטירה: 10 באוג’ 1942 - Oświęcim, Voïvodie de Petite-Pologne, Pologne
+אב: Mozes Eleazar de Vries
+אם:
+4 CONC  Gertruida Swart
+אחים ואחיות: Klara van Buuren (לבית de Vries), Benjamin de Vries
+2 EVEN Record
+3 ROLE 40000:125965072:
+1 SOUR @S500121@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7VDVKG4I5AB5Z3U3O4ZVSC6VP3I-17049782/alexander-lion-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Genealogie Boon - van der Mark Website, מנוהל ע"י Brigitte Boon - van der Mark
+2 EVEN Smart Matching
+3 ROLE 17049782
+1 RIN MH:I504040
+1 _UID 67F5123BEB0DE095CAFC43F69D375087
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTI4ZGFlMGZmNzc5ZDJjOTE5MTYzY2M4MTU1ZmI1MmE0MjY0ZmE1Mzg5NmQ2MTU0OGRmZmU5ZGNlMzE1NDBmOGImZT0xNzUzNjEwNDAw/158/944/6912/501691_6006941l1a627o5ewf811q_A.jpg
+2 _FILESIZE 2958
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501690
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501691
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTg4Mjk2MTUzMjg1ZGQ3OTllNTcwYTI0ZDQyNTIyZWFjMDIyMjEwMGI2ODhmZTc5NjU3ZmYxNDM1MGFhNGZjZTkmZT0xNzUzNjEwNDAw/158/944/6912/501690_7806211256b1n01sa7fdbl_A.jpg
+2 _FILESIZE 2959
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501690
+
+0 @I504188@ INDI
+1 _UPD 8 APR 2025 13:02:50 GMT -0500 
+1 NAME Pietje /de Vries/
+2 GIVN Pietje
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 15 SEP 1827
+2 PLAC Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE BEF 1880
+1 FAMC @F501326@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=387325339&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Pietje de Vries, TWEELING
+לידה: 15 בספט’ 1827 - Harlingen, Friesland, Netherlands
+פטירה: לפני 1880
+אב: Benjamin Wolf Liepman de Vries
+אם: Jansje Isaak van der Sluis
+בעל: Elia
+4 CONC s Blindeman
+אחים ואחיות: Lea Benjamin de Vries, Louis / Levie de Vries, Hendrika de Vries, Rebecca Benjamin de Vries, Lipman de Vries, TWEELING, Izaak de Vries, Jacob Benjamin de Vries
+2 EVEN Record
+3 ROLE 40000:387325339:
+1 RIN MH:I504188
+1 _UID 67F564C645C9083D2BFDA739F5256BAA
+
+0 @I502810@ INDI
+1 _UPD 8 MAR 2025 22:52:02 GMT -0500 
+1 NAME Jacob /de Vries/
+2 GIVN Jacob
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1770
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19634937/jacob-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19634937
+1 RIN MH:I502810
+1 _UID 67CD1E27EEF785733D161F6BDFBF048C
+
+0 @I504039@ INDI
+1 _UPD 8 APR 2025 07:11:22 GMT -0500 
+1 NAME Klara /de Vries/
+2 GIVN Klara
+2 SURN de Vries
+2 _MARNM van Buuren
+1 SEX F
+1 BIRT
+2 DATE 22 NOV 1904
+2 PLAC Harlingen, Frise, Pays-Bas
+1 DEAT Y
+2 DATE 12 OCT 1942
+2 PLAC Gmina Oświęcim, Lesser Poland Voivodeship, Poland
+1 FAMS @F501306@
+1 FAMC @F501305@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=125965250&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Klara van Buuren (לבית de Vries)
+לידה: 22 בנוב’ 1904 - Harlingen, Frise, Pays-Bas
+פטירה: 12 באוק’ 1942 - Gmina Oświęcim, Lesser Poland Voivodeship, Poland
+אב: Mozes Eleaza
+4 CONC r de Vries
+אם: Gertruida Swart
+בעל: Jacob van Buuren
+ילדים: Sallie van Buuren, Geertruida Arieta van Buuren
+אחים ואחיות: Alexander Lion de Vries, Benjamin de Vries
+2 EVEN Record
+3 ROLE 40000:125965250:
+1 SOUR @S500121@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7VDVKG4I5AB5Z3U3O4ZVSC6VP3I-17049780/klara-de-vries-van-buuren
+2 QUAY 3
+2 DATA
+3 TEXT Genealogie Boon - van der Mark Website, מנוהל ע"י Brigitte Boon - van der Mark
+2 EVEN Smart Matching
+3 ROLE 17049780
+1 RIN MH:I504039
+1 _UID 67F5123BB4531094CAFC43F69D375087
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQ0MWRmZmEyNDUzY2VmNmExOTMwOGM5MDBhYTA0ZjU1MDYwY2NhM2MxYTkxNTBlNWFmODc2NDI3Y2JlMDAyYWQmZT0xNzUzNjEwNDAw/158/944/6912/501671_818173y7w1o7kf696z5261_A.jpg
+2 _FILESIZE 3387
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501670
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501671
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTQ4YTU0N2MxOTU0MGUzYTA0YjZhNmRkMTI4YmVlOTQ5YmU5ZTE0OGY0YWYzODdjMDQ5ZWVlOTZjYWRhOTZmOWImZT0xNzUzNjEwNDAw/158/944/6912/501670_198542012e766f1196h6u5_A.jpg
+2 _FILESIZE 3392
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501670
+
+0 @I504043@ INDI
+1 _UPD 8 APR 2025 07:11:25 GMT -0500 
+1 NAME Jacob /van Buuren/
+2 GIVN Jacob
+2 SURN van Buuren
+1 SEX M
+1 BIRT
+2 DATE 26 DEC 1907
+2 PLAC Amsterdam, North Holland, the Netherlands
+1 DEAT Y
+2 DATE 31 JAN 1943
+2 PLAC Auschwitz (Oswiecim, concentrationcamp), Poland
+1 FAMS @F501306@
+1 SOUR @S500121@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7VDVKG4I5AB5Z3U3O4ZVSC6VP3I-17049784/jacob-van-buuren
+2 QUAY 3
+2 DATA
+3 TEXT Genealogie Boon - van der Mark Website, מנוהל ע"י Brigitte Boon - van der Mark
+2 EVEN Smart Matching
+3 ROLE 17049784
+1 RIN MH:I504043
+1 _UID 67F51268B64791C79B6BC832334CFF41
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTViMWIyYWFjNDMwNTQwNDc0YWQwODE3NDFiNTlmNGIzNDJmNzU5MjlmMzk0ZDQyNmM0ZDc3MDc4YjkxNjNiYzAmZT0xNzUzNjEwNDAw/158/944/6912/501677_5023307c5fr6w611cyw620_A.jpg
+2 _FILESIZE 2057
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501676
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501677
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTc4NjY2OGU4NTEzYjlhODYyZjg5M2M1ZThhOGFmMzVjMjE1ZDQ4MTI0ODBhMWMxNGQxMjRiYjYxYzhhZjViYjUmZT0xNzUzNjEwNDAw/158/944/6912/501676_219145hw2cx715k0f66611_A.jpg
+2 _FILESIZE 2057
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501676
+
+0 @I502770@ INDI
+1 _UPD 8 MAR 2025 22:51:06 GMT -0500 
+1 NAME Arend /de Vries/
+2 GIVN Arend
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1710
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19630807/arend-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19630807
+1 RIN MH:I502770
+1 _UID 67CD1E1DA8C7B54B3D161F6BDFBF048C
+
+0 @I500650@ INDI
+1 _UPD 21 MAY 2024 09:11:58 GMT -0500 
+1 NAME Aron /de Vries/
+2 GIVN Aron
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 14 NOV 1865
+2 PLAC Harlingen, Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE 23 NOV 1942
+2 PLAC Oswiecim, Oświęcim County, Lesser Poland Voivodeship, Poland
+1 FAMC @F500038@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Aron de Vries&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 14 בנוב’ 1865 - Harlingen, Harlingen, Friesland, Netherlands&amp;lt;br&amp;gt;פטירה: 23 בנוב’ 1942 - Oswiecim,
+4 CONC  Oświęcim County, Lesser Poland Voivodeship, Poland&amp;lt;br&amp;gt;אב: Izaak de Vries&amp;lt;br&amp;gt;אם: Klara de Vries (לבית Speijer)&amp;lt;br&amp;gt;אשה: Grietje de Wilde&amp;lt;br
+4 CONC &amp;gt;ילדים: Cato de Vries, Izaak de Vries, Klara de Vries, Hanna De Jong (לבית de Vries), Benjamin de Vries&amp;lt;br&amp;gt;אחים ואחיות: Eliazar de Vries, Jantje de Vries, Saart
+4 CONC je de Vries, Mietje de Vries, Pietje Polak (לבית de Vries), Kaatje de Vries, Benjamin de Vries, Mozes Eleazar de Vries, Jacob de Vries
+2 EVEN Record
+3 ROLE 40000:254267676:
+1 RIN MH:I500650
+1 _UID 664CABA751E680A43DCDFFBF7E48BC56
+
+0 @I502812@ INDI
+1 _UPD 8 MAR 2025 22:52:06 GMT -0500 
+1 NAME Sara Israel /de Vries/
+2 GIVN Sara Israel
+2 SURN de Vries
+2 _MARNM van Oss
+1 SEX F
+1 BIRT
+2 DATE 1770
+2 PLAC Oude-Tonge, Oostflakkee, South Holland, The Netherlands
+1 DEAT Y
+2 DATE AFT 1834
+2 PLAC Oude Tonge, Goeree-Overflakke, Zuid-Holland
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19565211/sara-israel-de-vries-van-oss
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19565211
+1 RIN MH:I502812
+1 _UID 67CD1E28AA7415753D161F6BDFBF048C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWE2MDM3MGU0ODdjMDc2NTBhMDU4ODg5NTRhN2E2MWY3OTljYjYxZDFhYjg4NDU5NGZlZmZmZDcxODFmYzQ4ZmImZT0xNzUzNjEwNDAw/158/944/6912/501071_223270z15pd7d1707c6jez_A.jpg
+2 _FILESIZE 3850
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501070
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501071
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTc5OTg5Y2NmZmU2NDI5NDNlNDNkNWY4NTg1Y2I3NDdkMjk1NjU1ZTg5OWI5OTE2MzAyYTdiMDNhM2I0MzQyYTAmZT0xNzUzNjEwNDAw/158/944/6912/501070_151241de6vc035m17771ol_A.jpg
+2 _FILESIZE 3853
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501070
+
+0 @I500807@ INDI
+1 _UPD 4 JUN 2024 08:12:27 GMT -0500 
+1 NAME Hendrika /de Vries/
+2 GIVN Hendrika
+2 SURN de Vries
+2 _MARNM de Vries
+1 SEX F
+1 BIRT
+2 DATE 27 SEP 1822
+2 PLAC Den Helder, Den Helder, North Holland, The Netherlands
+1 DEAT Y
+2 DATE 24 AUG 1910
+2 PLAC Rotterdam, Government of Rotterdam, South Holland, Netherlands
+1 BURI
+2 PLAC Joodse Begraafplaats Toepad, Rotterdam, Rotterdam Municipality, Zuid-Holland, Netherlands
+1 EVEN
+2 TYPE MARR
+2 DATE 11 DEC 1843
+2 PLAC Harlingen, Friesland, Netherlands
+1 EVEN
+2 TYPE MARR
+2 DATE 28 MAR 1874
+2 PLAC Aengwirden, Friesland, Nederland
+1 EVEN Spouse: Mozes Jesajas de Vries
+2 TYPE Marriage
+2 DATE 11 DEC 1843
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+1 FAMS @F500326@
+1 FAMC @F500254@
+1 SOUR @S500066@
+2 PAGE Hendrika de Vries
+2 QUAY 3
+2 DATA
+3 DATE 4 JUN 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I500807
+1 _UID 665F125E894C53C47DB0BD6D5FB20D78
+
+0 @I500872@ INDI
+1 _UPD 11 AUG 2024 04:33:06 GMT -0500 
+1 NAME Mozes Jesajas /de Vries/
+2 GIVN Mozes Jesajas
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 3 FEB 1816
+2 PLAC Kuinre, Steenwijkerland, Overijssel, The Netherlands
+1 DEAT Y
+2 DATE 21 AUG 1869
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+1 FAMS @F500326@
+1 FAMC @F500418@
+1 SOUR @S500073@
+2 PAGE Mozes Jesajas de Vries
+2 QUAY 3
+2 DATA
+3 DATE 18 JUN 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I500872
+1 _UID 66716365C73724D882A85956F88FDF06
+
+0 @I502784@ INDI
+1 _UPD 8 MAR 2025 22:51:24 GMT -0500 
+1 NAME Israel /de Vries/
+2 GIVN Israel
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1735
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19637041/israel-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19637041
+1 RIN MH:I502784
+1 _UID 67CD1E208F5985593D161F6BDFBF048C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTUwNmZlZjMwMWI1MWNlNzY4MjExZThkM2IzMGM1NDgyZGUyYWM4YTI0NzE4MWNmMWE5NWUzZDVlZDUxMmQ2MTAmZT0xNzUzNjEwNDAw/158/944/6912/501043_273013471e1dpc7rr316ec_A.jpg
+2 _FILESIZE 4589
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501042
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501043
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTk1ODMyZjQwOTRjMjI2MjZkZjRhZDAxZGYwZTQwNDc1MzNhYTZkZjVlMzZlN2ZmNjExNDU4M2VmMjRiMDBiYzImZT0xNzUzNjEwNDAw/158/944/6912/501042_109334ub7w467261oed10c_A.jpg
+2 _FILESIZE 4604
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501042
+
+0 @I501891@ INDI
+1 _UPD 17 FEB 2025 10:41:44 GMT -0500 
+1 NAME Mietje Izaak /de Vries/
+2 GIVN Mietje Izaak
+2 SURN de Vries
+2 _MARNM Pais
+1 SEX F
+1 BIRT
+2 DATE 11 APR 1870
+2 PLAC Harlingen, Frise, Pays-Bas
+1 DEAT Y
+2 DATE 2 JAN 1941
+2 PLAC The Hague, The Hague, South Holland, Netherlands
+1 FAMC @F500692@
+1 SOUR @S500087@
+2 PAGE https://www.myheritage.co.il/profile-OYYV72HL4OV5DQMPGOKAN7Q3ZWCTFWA-10500015/mietje-izaak-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT kluveld Family Site, מנוהל ע"י amanda kluveld
+2 EVEN Smart Matching
+3 ROLE 10500015
+1 RIN MH:I501891
+1 _UID 67B366C281C897786D1766E32812436A
+
+0 @I502790@ INDI
+1 _UPD 8 MAR 2025 22:51:33 GMT -0500 
+1 NAME Jesaias Mozes /de Vries/
+2 GIVN Jesaias Mozes
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1745
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19561110/jesaias-mozes-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19561110
+1 RIN MH:I502790
+1 _UID 67CD1E22043D755F3D161F6BDFBF048C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWI4ZjM5MmYxNjA2YjNlYTM1OTRlNTM0ODEzYzYxM2Q1YmNiZjgzZTU0MDY5ZDIwODI1M2I4YmNiNTNlNWRjYmImZT0xNzUzNjEwNDAw/158/944/6912/501049_259863d75cv17xj4d6cew1_A.jpg
+2 _FILESIZE 3850
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501048
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501049
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWYzZjQ1NGM5NzY0MWZiYTgzYzBhMWIyYWFiYjZlMDE3Y2EwNTdhMjk1MGMxMTg3NjNhNGU0M2M2NWFhYzA5OWQmZT0xNzUzNjEwNDAw/158/944/6912/501048_81441326713tdcx5e1s7ke_A.jpg
+2 _FILESIZE 3853
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501048
+
+0 @I502818@ INDI
+1 _UPD 8 MAR 2025 22:52:17 GMT -0500 
+1 NAME Barend Gerrit Mozes /de Vries/
+2 GIVN Barend Gerrit Mozes
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1760
+1 DEAT Y
+2 DATE JAN 1800
+2 PLAC Amsterdam
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19639943/barend-gerrit-mozes-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19639943
+1 RIN MH:I502818
+1 _UID 67CD1E2B0670957B3D161F6BDFBF048C
+
+0 @I501121@ INDI
+1 _UPD 23 JUL 2024 00:33:12 GMT -0500 
+1 NAME Benjamin Wolf Liepman /de Vries/
+2 GIVN Benjamin Wolf Liepman
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 7 MAY 1783
+2 PLAC Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE 5 MAY 1865
+2 PLAC Harlingen, Friesland, Netherlands
+1 FAMC @F500300@
+1 SOUR @S500087@
+2 PAGE Benjamin Wolf Liepman de Vries
+2 QUAY 3
+2 DATA
+3 DATE 23 JUL 2024
+3 TEXT התווסף באמצעות Smart Match
+2 EVEN Discovery
+1 RIN MH:I501121
+1 _UID 669F40986F05EEAD04CF5EB06C532EB0
+
+0 @I504189@ INDI
+1 _UPD 8 APR 2025 13:04:00 GMT -0500 
+1 NAME Liepman Levie Benjamins /de Vries/
+2 GIVN Liepman Levie Benjamins
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 1745
+2 PLAC Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE JAN 1801
+2 PLAC Harlingen, Friesland, Netherlands
+1 FAMS @F501328@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1282444264&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Liepman Levie Benjamins de Vries
+לידה: 1745 - Harlingen, Friesland, Netherlands
+פטירה: ינו’ 1801 - Harlingen, Friesland, Netherlands
+הורים: Benjamin Wolf Levie de Vries, Trijnte Isa
+4 CONC ac de Vries (לבית Hartogs)
+אשה: Henderina Meijers de Vries (לבית Reindorp)
+ילדים: Leip Levie Liepman de Vries, Benjamin Wolf Liepman de Vries, Jacob Liepman de Vries, Abraham Liepman d
+4 CONC e Vries, Meijer Liepman de Vries, Pietje Leipmans Kramer (לבית de Vries)
+אחים ואחיות: Levie Benjamin de Vries, Schoontje Benjamin Wolf Peper (לבית de Vries), Vogeltje Benjamin Zadoks
+4 CONC  Cohen (לבית de Vries)
+2 EVEN Record
+3 ROLE 40001:1282444264:
+1 RIN MH:I504189
+1 _UID 67F5650D68B759FCC6E1CED0AC22E10A
+
+0 @I504190@ INDI
+1 _UPD 8 APR 2025 13:04:00 GMT -0500 
+1 NAME Henderina Meijers /Reindorp/
+2 GIVN Henderina Meijers
+2 SURN Reindorp
+1 SEX F
+1 BIRT
+2 DATE 1755
+2 PLAC Zwolle, Overijssel, Netherlands
+1 DEAT Y
+2 DATE 7 FEB 1840
+2 PLAC Harlingen, Friesland, Netherlands
+1 FAMS @F501328@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1282444405&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Henderina Meijers de Vries (לבית Reindorp)
+לידה: 1755 - Zwolle, Overijssel, Netherlands
+פטירה: 7 בפבר’ 1840 - Harlingen, Friesland, Netherlands
+בעל: Liepman Levie Benjamins de Vr
+4 CONC ies
+ילדים: Leip Levie Liepman de Vries, Benjamin Wolf Liepman de Vries, Jacob Liepman de Vries, Abraham Liepman de Vries, Meijer Liepman de Vries, Pietje Leipmans Kramer (לבית de Vries)
+2 EVEN Record
+3 ROLE 40001:1282444405:
+1 RIN MH:I504190
+1 _UID 67F5650DAD6C49FEC6E1CED0AC22E10A
+
+0 @I500103@ INDI
+1 _UPD 24 MAY 2024 08:15:01 GMT -0500 
+1 NAME יעקב /de Vries/
+2 GIVN יעקב
+2 SURN de Vries
+1 SEX M
+1 DEAT Y
+2 DATE 19 MAY 1930
+2 PLAC Apeldoorn, Gelderland, The Netherlands
+1 BIRT
+2 DATE 3 JAN 1864
+2 PLAC Harlingen, Friesland, the Netherlands
+1 FAMS @F500253@
+1 FAMC @F500038@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Jacob de Vries&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 3 בינו’ 1864 - Harlingen, Friesland, The Netherlands&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Elize Odewald - 
+4 CONC 8 בספט’ 1895 - Slochteren, Slochteren, Groningen, The Netherlands&amp;lt;br&amp;gt;פטירה: 19 במאי 1930 - Apeldoorn, Gelderland, The Netherlands&amp;lt;br&amp;gt;אב: Izaak de Vries&amp
+4 CONC ;lt;br&amp;gt;אם: Klara de Vries (לבית Speijer)&amp;lt;br&amp;gt;אשה: Elize Odewald&amp;lt;br&amp;gt;ילדים: Izaak de Vries, Heiman Asser de Vries, Klaartje de Vries&amp;lt;br&amp;gt;אח
+4 CONC ים ואחיות: Eliazar de Vries, Aron de Vries, Kaatje de Vries, Jantje de Vries, Saartje de Vries, Mietje de Vries, Pietje Polak (לבית de Vries), Benjamin de Vries, Mozes Eleazar de Vries
+2 EVEN Record
+3 ROLE 40000:106045731:
+1 RIN MH:I500103
+1 _UID 646CA206CB84C8DABCD5D145B3215981
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTVhMjMyYzFkZDUzYWM1NTQ5ZTUzNTRmYTAxMjU0NDBiYzMzN2UzYzNhOGVmNjRlNWRkZjk0YTFmNjVlMDE0Y2UmZT0xNzUzNjEwNDAw/158/944/6912/500228_308070cb6e94daf12169ka_A.jpg
+2 _FILESIZE 81886
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500227
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500228
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTM4MTNkMDcwNDU3OTFkMWVmNGRmMGE2YTM2YTM3ZjQzNTE2YTYyZWE5NDQ3ZjhiMWU4YjhiYmE3ZDllNDU2NjAmZT0xNzUzNjEwNDAw/158/944/6912/500227_42151749ac99ka11bu66av_A.jpg
+2 _FILESIZE 81904
+2 TITL _75_011_jacob_de_vries_1864-1930_large
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500227
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTY1NDIwNzhmMTUzYzBlZTRhYTY2OTM0ODM3MzYwNzZjYWIyNDUxNTE2MzA2Yjk4ODE1NDE3MzFjMTNhNGM4ZGImZT0xNzUzNjEwNDAw/158/944/6912/500065_4950891cc1136d4a74h4db_A.jpg
+2 _FILESIZE 4756
+2 TITL jpg
+2 _POSITION 0 0 96 96
+2 _PHOTO_RIN MH:P500065
+
+0 @I500654@ INDI
+1 _UPD 21 MAY 2024 09:12:01 GMT -0500 
+1 NAME Elize /Odewald/
+2 GIVN Elize
+2 SURN Odewald
+2 _MARNM de Vries
+1 SEX F
+1 BIRT
+2 DATE 24 MAR 1873
+2 PLAC Schildwolde, Slochteren, Groningen, Netherlands
+1 DEAT Y
+2 DATE 20 MAR 1943
+2 PLAC Sobibór, Lublin Voivodeship, Poland
+1 FAMS @F500253@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Elize Odewald&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;כינוי: Elise&amp;lt;br&amp;gt;לידה: 24 במרץ 1873 - Schildwolde, Slochteren, Groningen, Netherlands&amp;lt;br&amp;gt;ניש
+4 CONC ואין: בן/בת זוג: Jacob de Vries - 8 בספט’ 1895 - Slochteren, Slochteren, Groningen, The Netherlands&amp;lt;br&amp;gt;פטירה: 20 במרץ 1943 - Sobibór, Lublin Voivodeship, Polan
+4 CONC d&amp;lt;br&amp;gt;אב: Heiman Odewald&amp;lt;br&amp;gt;אם: Henriette / Hente Hausmann&amp;lt;br&amp;gt;בעל: Jacob de Vries&amp;lt;br&amp;gt;ילדים: Izaak de Vries, Heiman Asser de Vries, Kl
+4 CONC aartje de Vries&amp;lt;br&amp;gt;אחים ואחיות: Asser Odewald, Tina Odewald, Hinderina Odewald, Lewina Cohen (לבית Odewald), Asser Odewald, Philip Odewald
+2 EVEN Record
+3 ROLE 40000:106045852:
+1 RIN MH:I500654
+1 _UID 664CABA8133E90A83DCDFFBF7E48BC56
+
+0 @I502384@ INDI
+1 _UPD 27 FEB 2025 06:37:16 GMT -0500 
+1 NAME Lea Sippora /de Vries/
+2 GIVN Lea Sippora
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 4 APR 1932
+2 PLAC Nijmegen, Nijmegen, Gelderland, The Netherlands
+1 DEAT Y
+2 DATE 27 NOV 1942
+2 PLAC Gmina Oświęcim, Oświęcim County, Lesser Poland Voivodeship, Poland
+1 FAMC @F500824@
+1 SOUR @S500183@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6YQUCYFSYMMGUI2BVDFAEEULVYY-4502361/lea-sippora-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 4502361
+1 RIN MH:I502384
+1 _UID 67C05C78ED9A0407A583EE45F0EDAE8A
+
+0 @I502391@ INDI
+1 _UPD 4 MAR 2025 08:06:04 GMT -0500 
+1 NAME Miriam Devora Deveirje /de Vries/
+2 GIVN Miriam Devora Deveirje
+2 SURN de Vries
+2 _MARNM Izraelovich
+1 SEX F
+1 BIRT
+2 DATE 10 JAN 1923
+1 DEAT Y
+2 DATE AUG 2003
+1 FAMS @F500862@
+1 FAMC @F500826@
+1 SOUR @S500185@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6HKGW7ZTU6V5RFM43NYI4BD2POY-1500004/%D7%9E%D7%A8%D7%99%D7%9D
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500004
+1 SOUR @S500195@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7WARGYB75JP5YW3AY256MOJ224Q-1500625/miriam-devora-deveirje-izraelovich
+2 QUAY 3
+2 DATA
+3 TEXT LEV Web Site, מנוהל ע"י Lev
+2 EVEN Smart Matching
+3 ROLE 1500625
+1 RIN MH:I502391
+1 _UID 67C05CC8B063AAED8337608592BCDBBF
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTFhOGVlZGMxNzk2YWY3ZjBjMWEwNmIyMDU1MzU0NTk4Y2Q1MTMwNzQ5ZTE4YWI0MmU2NmYyZjUwMTEzNTZmZjcmZT0xNzUzNjEwNDAw/158/944/6912/500953_68689286741pac7cc017gl_A.jpg
+2 _FILESIZE 3267
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500952
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500953
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTc1NWEyMWY2ODEzZTNjNzU3OTNkZGFlMmQ3MmU3YmE2OTVkYTVmODViMWUxZGVjYTMxZTEwZmRkMTE2M2RjMTEmZT0xNzUzNjEwNDAw/158/944/6912/500952_000285c78470uoy1c6bn8n_A.jpg
+2 _FILESIZE 3266
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500952
+
+0 @I502517@ INDI
+1 _UPD 4 MAR 2025 08:06:20 GMT -0500 
+1 NAME Baruch Aaron /Izraelovich Israeli/
+2 GIVN Baruch Aaron
+2 SURN Izraelovich Israeli
+1 SEX M
+1 BIRT
+2 DATE 1916
+1 DEAT Y
+2 DATE 8 FEB 1995
+2 PLAC Israel
+1 BURI
+2 PLAC Sde Yehoshua (Kfar Samir) Cemetery Megorashei Sfarad Street Haifa, Haifa, Haifa Distric
+1 FAMS @F500862@
+1 SOUR @S500195@
+2 PAGE https://www.myheritage.co.il/profile-890775311-1500620/baruch-aaron-ברוך-אהרון-izraelovich-israeli-ישראלי
+2 QUAY 3
+2 DATA
+3 TEXT LEV Web Site, מנוהל ע"י Lev
+2 EVEN Smart Matching
+3 ROLE 1500620
+1 RIN MH:I502517
+1 _UID 67C708CB3BEB9769C421483FF7D8700E
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTQzMWNjYzhlNDI3YTQzMDBiMTc3NTIwYjJiYzcxMTc1MDUzM2Q4ZWI0MTM3MWE3ODkwZDU0MDM4YzA3NDI2MDMmZT0xNzUzNjEwNDAw/158/944/6912/500955_1268438i71c4cd32r7y670_A.jpg
+2 _FILESIZE 3376
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500954
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500955
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTQyMmNiZDQ4NWY4MmI0M2MzMjQyYmQ2ZWI4YWQ0Nzg5NWY3NTk5YmM0ZGRlZmRjNWNkNzQ5OGJmYTFmNmU2NTMmZT0xNzUzNjEwNDAw/158/944/6912/500954_443098z4807hv71xcc6kch_A.jpg
+2 _FILESIZE 3370
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500954
+
+0 @I504048@ INDI
+1 _UPD 8 APR 2025 07:12:09 GMT -0500 
+1 NAME Mozes Eliazar /de Vries/
+2 GIVN Mozes Eliazar
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 1936
+1 DEAT Y
+2 DATE 11 JUN 1943
+2 PLAC Sobibor (exterminationcamp), Lublin Voivodeship, Poland
+1 FAMC @F501308@
+1 SOUR @S500121@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7VDVKG4I5AB5Z3U3O4ZVSC6VP3I-17049803/mozes-eliazar-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Genealogie Boon - van der Mark Website, מנוהל ע"י Brigitte Boon - van der Mark
+2 EVEN Smart Matching
+3 ROLE 17049803
+1 RIN MH:I504048
+1 _UID 67F51296A8D1362A1ED3874EA3621152
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWY1YTRjYzRmOGJiN2M2NGNlZDc0MDY3OTBmOTNmMTE4ZjgyMDM3YjA2Y2M5NjVmNWYyOWYxMmJkZTVmZmNjYzQmZT0xNzUzNjEwNDAw/158/944/6912/501689_8568552l1wf1os939652g7_A.jpg
+2 _FILESIZE 2556
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501688
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501689
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTUyMGMxYzhjMDU0NWIxZjBiMGVkMTJhMGM3NThmNDhkODU1N2NjMjQ3NGNkMzllY2ZkOTM2MjBhNTA3ZjFkYzAmZT0xNzUzNjEwNDAw/158/944/6912/501688_798820u579x631d12fdk29_A.jpg
+2 _FILESIZE 2556
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501688
+
+0 @I502768@ INDI
+1 _UPD 8 MAR 2025 22:51:04 GMT -0500 
+1 NAME Eliaser Eliezer Leib /de Vries/
+2 GIVN Eliaser Eliezer Leib
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1700
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19583905/eliaser-eliezer-leib-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19583905
+1 RIN MH:I502768
+1 _UID 67CD1E1D4B7A45493D161F6BDFBF048C
+
+0 @I504027@ INDI
+1 _UPD 8 APR 2025 04:56:36 GMT -0500 
+1 NAME Stillborn Child de /de Vries/
+2 GIVN Stillborn Child de
+2 SURN de Vries
+1 SEX U
+1 BIRT
+2 DATE 9 OCT 1922
+2 PLAC Emmen, Drenthe, Nederland
+1 DEAT Y
+2 DATE 9 OCT 1922
+2 PLAC Emmen, Drenthe, Nederland
+1 FAMC @F501302@
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500282/stillborn-child-de-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Family tree, מנוהל ע"י Shelly Galpert
+2 EVEN Smart Matching
+3 ROLE 1500282
+1 RIN MH:I504027
+1 _UID 67F4F2D2811800B216FD6A66BD508D42
+
+0 @I502813@ INDI
+1 _UPD 8 MAR 2025 22:52:09 GMT -0500 
+1 NAME Barend Isaac /de Vries/
+2 GIVN Barend Isaac
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 1769
+2 PLAC Amsterdam, Noord-Holland, Netherlands
+1 DEAT Y
+2 DATE 29 JAN 1823
+2 PLAC Amsterdam, Noord-Holland, Netherlands
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19607176/barend-isaac-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19607176
+1 RIN MH:I502813
+1 _UID 67CD1E290F8865763D161F6BDFBF048C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQzYTJiMmMyYzAyNWJmOTdhNDBjYzFiODg1OTQ1ZTdiOTUwNmQ4ZjRkOTZjZWNkYTQ4YmJhYTNlYmY4ZTM2MDgmZT0xNzUzNjEwNDAw/158/944/6912/501073_93044377aqc77131h6gde3_A.jpg
+2 _FILESIZE 3521
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501072
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501073
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWRkYWVhY2Y0YWZiZmVhMDAwMDQ4Mzk2NTU5YWZiNWFhYWRiZjMzMWUwYTA4NTgzM2IxZWFkMWIxYWY5MWY1MTMmZT0xNzUzNjEwNDAw/158/944/6912/501072_023938enu77o6tdb16c177_A.jpg
+2 _FILESIZE 3525
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501072
+
+0 @I504187@ INDI
+1 _UPD 8 APR 2025 13:02:49 GMT -0500 
+1 NAME Louis / Levie /de Vries/
+2 GIVN Louis / Levie
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 28 JAN 1819
+2 PLAC Rotterdam, Government of Rotterdam, South Holland, Netherlands
+1 DEAT Y
+2 DATE 4 JUN 1820
+2 PLAC Rotterdam, Government of Rotterdam, South Holland, Netherlands
+1 FAMC @F501326@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=314026265&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Louis / Levie de Vries
+לידה: 28 בינו’ 1819 - Rotterdam, Government of Rotterdam, South Holland, Netherlands
+פטירה: 4 ביוני 1820 - Rotterdam, Government of Rotterdam, South Holland,
+4 CONC  Netherlands
+אב: Benjamin Wolf Liepman de Vries
+אם: Jansje Isaak van der Sluis
+אחים ואחיות: Lea Benjamin de Vries, Hendrika de Vries, Rebecca Benjamin de Vries, Lipman de Vries, TWEELING
+4 CONC , Pietje de Vries, TWEELING, Izaak de Vries, Jacob Benjamin de Vries
+2 EVEN Record
+3 ROLE 40000:314026265:
+1 RIN MH:I504187
+1 _UID 67F564C6139A683C2BFDA739F5256BAA
+
+0 @I501120@ INDI
+1 _UPD 23 JUL 2024 00:33:12 GMT -0500 
+1 NAME Leip Levie Liepman /de Vries/
+2 GIVN Leip Levie Liepman
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 28 FEB 1777
+2 PLAC Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE TO 1871
+1 FAMC @F500300@
+1 SOUR @S500087@
+2 PAGE Leip Levie Liepman de Vries
+2 QUAY 3
+2 DATA
+3 DATE 23 JUL 2024
+3 TEXT התווסף באמצעות Smart Match
+2 EVEN Discovery
+1 RIN MH:I501120
+1 _UID 669F409845B37EA904CF5EB06C532EB0
+
+0 @I502803@ INDI
+1 _UPD 8 MAR 2025 22:51:53 GMT -0500 
+1 NAME Samuel /de Vries/
+2 GIVN Samuel
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1760
+2 PLAC Amsterdam, Noord-Holland, Netherlands
+1 DEAT Y
+2 DATE 30 APR 1834
+2 PLAC Zuidland, Bernisse, South Holland, Netherlands
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19565411/samuel-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19565411
+1 RIN MH:I502803
+1 _UID 67CD1E25940F756C3D161F6BDFBF048C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWFhZDVjZmQwMjVhYjEzNDBmYmY2ZDhkOGQ1ZjBlN2NiNGM2MDY5OGUzMGIyNjJhMjRjMjI4M2I4Y2M3YzY0N2ImZT0xNzUzNjEwNDAw/158/944/6912/501061_0769442p161ee7y67d7cke_A.jpg
+2 _FILESIZE 3964
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501060
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501061
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTlkNzkyNDM2MDJmOTUzZjg5MzdmNWE1ODFlNGIxOTYzMjkxYmMxY2YwNmE5Y2RjMDJlNWJjYjkxZTNmOTYxMTImZT0xNzUzNjEwNDAw/158/944/6912/501060_46527371decww1k67scd76_A.jpg
+2 _FILESIZE 3984
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501060
+
+0 @I502388@ INDI
+1 _UPD 27 FEB 2025 06:38:34 GMT -0500 
+1 NAME Betje /de Vries/
+2 GIVN Betje
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 24 DEC 1917
+2 PLAC Harlingen
+1 DEAT Y
+2 DATE AFT 1945
+1 FAMC @F500826@
+1 SOUR @S500185@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6HKGW7ZTU6V5RFM43NYI4BD2POY-1500010/betje-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500010
+1 RIN MH:I502388
+1 _UID 67C05CC7E338DAEA8337608592BCDBBF
+
+0 @I501138@ INDI
+1 _UPD 11 AUG 2024 04:34:31 GMT -0500 
+1 NAME Mozes Jesajas /de Vries/
+2 GIVN Mozes Jesajas
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 1772
+1 DEAT Y
+2 DATE 29 MAY 1835
+2 PLAC Kuinre, Holland
+2 AGE 62-63
+1 FAMS @F500418@
+1 FAMC @F500420@
+1 SOUR @S500091@
+2 PAGE Mozes Jesajas de Vries
+2 QUAY 3
+2 DATA
+3 DATE 11 AUG 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I501138
+1 _UID 66B8855289DF71239E76F6B0B8FC99F1
+
+0 @I501139@ INDI
+1 _UPD 11 AUG 2024 04:34:31 GMT -0500 
+1 NAME Judik Mozes /Blog/
+2 GIVN Judik Mozes
+2 SURN Blog
+2 _MARNM de Vries
+1 SEX F
+1 BIRT
+2 DATE 1784
+2 PLAC Lemmer, Holland
+1 DEAT Y
+2 DATE 26 OCT 1866
+2 PLAC Harlingen, Holland
+2 AGE 81-82
+1 FAMS @F500418@
+1 SOUR @S500091@
+2 PAGE Judik Mozes Blog
+2 QUAY 3
+2 DATA
+3 DATE 11 AUG 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I501139
+1 _UID 66B885529E2781269E76F6B0B8FC99F1
+
+0 @I502781@ INDI
+1 _UPD 8 MAR 2025 22:51:21 GMT -0500 
+1 NAME * Simon Barend Barents /de Vries/
+2 GIVN * Simon Barend Barents
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1735
+2 PLAC Hoogezand ?
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19556456/-simon-barend-barents-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19556456
+1 RIN MH:I502781
+1 _UID 67CD1E1FE26825563D161F6BDFBF048C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTM3OTQyOWFiOWZkOTcxMmYxZjk0OWZmMDYwMGUyYmI0YTgzYmQzMjNmZmY3ODI1ZjExZDA1YzMxYTZlMzk4OTcmZT0xNzUzNjEwNDAw/158/944/6912/501041_153350c6y7ced78pvj411h_A.jpg
+2 _FILESIZE 4589
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501040
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501041
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTEyZjM0YmMxNGEyODBmODdlNDIyZTcyOWIxMjViZTI2OWJkMWIwN2U1NjliMTg2NzFjZmYzMTAwNGUxNzI0MjEmZT0xNzUzNjEwNDAw/158/944/6912/501040_161397k4nqec117l671x7d_A.jpg
+2 _FILESIZE 4604
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501040
+
+0 @I504174@ INDI
+1 _UPD 8 APR 2025 13:03:59 GMT -0500 
+1 NAME Benjamin Wolf Liepman /de Vries/
+2 GIVN Benjamin Wolf Liepman
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 15 APR 1785
+2 PLAC Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE 5 MAY 1865
+2 PLAC Harlingen, Friesland, Netherlands
+1 FAMS @F501326@
+1 FAMC @F501328@
+1 SOUR @S500011@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6FIFUUCMXO56TRN727UU7BWZBMQ-1500094/benjamin-wolf-liepman-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT בן אבו Web Site, מנוהל ע"י יאיר בן אבו
+2 EVEN Smart Matching
+3 ROLE 1500094
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1356623091&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Benjamin Wolf Liepman de Vries
+לידה: 15 באפר’ 1785 - Harlingen, Friesland, Netherlands
+פטירה: 5 במאי 1865 - Harlingen, Friesland, Netherlands
+הורים: Liepman Levie Benjamins de 
+4 CONC Vries, Henderina Meijers de Vries (לבית Reindorp)
+אשה: Jansje Isaäk de Vries (לבית van der Sluis)
+ילדים: Lea Benjamin Coopman (לבית de Vries), Louis de Vries, Hendrika de Vries, R
+4 CONC ebecca Gokkes (לבית de Vries), Lipman de Vries, Pietje Blindeman (לבית de Vries), Isaak de Vries, Ester Benjamin de Vries, Jacob de Vries
+אחים ואחיות: Leip Levie Liepman de Vries, Ja
+4 CONC cob Liepman de Vries, Abraham Liepman de Vries, Meijer Liepman de Vries, Pietje Leipmans Kramer (לבית de Vries)
+2 EVEN Record
+3 ROLE 40001:1356623091:
+1 RIN MH:I504174
+1 _UID 67F56474AB818E5033E07EBD07E4CDAA
+
+0 @I504175@ INDI
+1 _UPD 8 APR 2025 13:02:46 GMT -0500 
+1 NAME Jansje Isaak /van der Sluis/
+2 GIVN Jansje Isaak
+2 SURN van der Sluis
+2 _MARNM de Vries
+1 SEX F
+1 BIRT
+2 DATE JUL 1797
+2 PLAC Amsterdam, Noord-Holland, The Netherlands
+1 DEAT Y
+2 DATE 22 FEB 1875
+2 PLAC Harlingen, Friesland, Nederland
+1 FAMS @F501326@
+1 FAMC @F501327@
+1 SOUR @S500011@
+2 PAGE https://www.myheritage.co.il/profile-1624749394-1500095/jansje-izaak-de-vries-לבית-van-der-sluis
+2 QUAY 3
+2 DATA
+3 TEXT בן אבו Web Site, מנוהל ע"י יאיר בן אבו
+2 EVEN Smart Matching
+3 ROLE 1500095
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=125952378&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Jansje Isaak van der Sluis
+לידה: יולי 1797 - Amsterdam, Noord-Holland, The Netherlands
+פטירה: 22 בפבר’ 1875 - Harlingen, Harlingen, Friesland, The Netherlands
+אב: Isaac Levie van 
+4 CONC der Sluijs
+אם: Lea Levie Fonteijn Lorjé / Lorge
+בעל: Benjamin Wolf Liepman de Vries
+ילדים: Lea Benjamin de Vries, Louis / Levie de Vries, Hendrika de Vries, Rebecca Benjamin de Vries, Lipma
+4 CONC n de Vries, TWEELING, Pietje de Vries, TWEELING, Izaak de Vries, Jacob Benjamin de Vries
+אחים ואחיות: Levie Isaac van der Sluijs, Joseph Isaac van der Sluijs, Naatje van der Sluijs, Sara van
+4 CONC  der Sluijs
+2 EVEN Record
+3 ROLE 40000:125952378:
+1 RIN MH:I504175
+1 _UID 67F56474E6E41E5233E07EBD07E4CDAA
+
+0 @I501892@ INDI
+1 _UPD 17 FEB 2025 10:41:44 GMT -0500 
+1 NAME Pietje Izaak /de Vries/
+2 GIVN Pietje Izaak
+2 SURN de Vries
+2 _MARNM Polak
+1 SEX F
+1 BIRT
+2 DATE 15 MAY 1872
+2 PLAC Harlingen, Friesland, the Netherlands
+1 DEAT Y
+2 DATE 20 MAR 1943
+2 PLAC Sobibor (concentrationcamp), Lublin, Poland
+1 FAMS @F501309@
+1 FAMC @F500692@
+1 SOUR @S500087@
+2 PAGE https://www.myheritage.co.il/profile-OYYV72HL4OV5DQMPGOKAN7Q3ZWCTFWA-10500016/pietje-izaak-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT kluveld Family Site, מנוהל ע"י amanda kluveld
+2 EVEN Smart Matching
+3 ROLE 10500016
+1 SOUR @S500056@
+2 PAGE https://www.myheritage.co.il/research/collection-10562/netherlands-civil-marriages-1811-1940?itemId=1220093&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Izak Polak
+קשר משפחתי: חתן
+לידה: Bolsward, Friesland, Netherlands
+נישואין: 27 במרץ 1900 - Harlingen, Friesland, Netherlands
+כלה: Pietje de Vries (Polak)
+הורי החתן
+4 CONC : Nathan Polak, Saartje Levie
+2 EVEN Record
+3 ROLE 10562:1220093:
+1 RIN MH:I501892
+1 _UID 67B366C2ADF7C7796D1766E32812436A
+
+0 @I504049@ INDI
+1 _UPD 8 APR 2025 07:12:51 GMT -0500 
+1 NAME Izak /Polak/
+2 GIVN Izak
+2 SURN Polak
+1 SEX M
+1 BIRT
+2 PLAC Bolsward, Friesland, Netherlands
+1 DEAT Y
+1 FAMS @F501309@
+1 SOUR @S500056@
+2 PAGE https://www.myheritage.co.il/research/collection-10562/netherlands-civil-marriages-1811-1940?itemId=1220093&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Izak Polak
+קשר משפחתי: חתן
+לידה: Bolsward, Friesland, Netherlands
+נישואין: 27 במרץ 1900 - Harlingen, Friesland, Netherlands
+כלה: Pietje de Vries (Polak)
+הורי החתן
+4 CONC : Nathan Polak, Saartje Levie
+2 EVEN Record
+3 ROLE 10562:1220093:
+1 RIN MH:I504049
+1 _UID 67F512C2C9315B7A8E0B816964C191E5
+
+0 @I502392@ INDI
+1 _UPD 27 FEB 2025 06:38:37 GMT -0500 
+1 NAME Sara /de Vries/
+2 GIVN Sara
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 15 AUG 1924
+2 PLAC Harlingen, Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE 9 JUL 1943
+2 PLAC Sobibór, Włodawa County, Lublin Voivodeship, Poland
+1 FAMC @F500826@
+1 SOUR @S500185@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6HKGW7ZTU6V5RFM43NYI4BD2POY-1500013/sara-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500013
+1 RIN MH:I502392
+1 _UID 67C05CC8F0087AEE8337608592BCDBBF
+
+0 @I500657@ INDI
+1 _UPD 21 MAY 2024 09:12:03 GMT -0500 
+1 NAME Izaak /de Vries/
+2 GIVN Izaak
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 29 APR 1898
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+1 DEAT Y
+2 DATE 28 FEB 1943
+2 PLAC Oswiecim, Oświęcim County, Lesser Poland Voivodeship, Poland
+1 FAMC @F500253@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Izaak de Vries&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 29 באפר’ 1898 - Harlingen, Harlingen, Friesland, The Netherlands&amp;lt;br&amp;gt;פטירה: 28 בפבר’ 1943 - Oswi
+4 CONC ecim, Oświęcim County, Lesser Poland Voivodeship, Poland&amp;lt;br&amp;gt;אב: Jacob de Vries&amp;lt;br&amp;gt;אם: Elize Odewald&amp;lt;br&amp;gt;אחים ואחיות: Heiman Asser de Vries, Kla
+4 CONC artje de Vries
+2 EVEN Record
+3 ROLE 40000:221134815:
+1 RIN MH:I500657
+1 _UID 664CABA8AE39C0AD3DCDFFBF7E48BC56
+
+0 @I502859@ INDI
+1 _UPD 8 MAR 2025 23:12:04 GMT -0500 
+1 NAME Rebekka /de Vries/
+2 GIVN Rebekka
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 11 SEP 1909
+2 PLAC Groningen, Groningen, Netherlands
+1 DEAT Y
+2 DATE 24 FEB 1910
+2 PLAC Groningen, Groningen, Netherlands
+1 FAMC @F500954@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1740400451&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Rebekka de Vries
+לידה: 11 בספט’ 1909 - Groningen, Groningen, Netherlands
+פטירה: 24 בפבר’ 1910 - Groningen, Groningen, Netherlands
+הורים: Levie de Vries, Creesia van Zanten
+א
+4 CONC חים ואחיות: Leentje van Coevorden (לבית de Vries), Rebecca de Vries, Jozef de Vries, Salomon de Vries, Izak de Vries, Klaartje Hess (לבית Bollegraaf)
+2 EVEN Record
+3 ROLE 40001:1740400451:
+1 RIN MH:I502859
+1 _UID 67CD23200816B0E17CFBC37DFB720ED3
+
+0 @I502762@ INDI
+1 _UPD 8 MAR 2025 22:50:57 GMT -0500 
+1 NAME Abraham Jacob /de Vries/
+2 GIVN Abraham Jacob
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1680
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19586358/abraham-jacob-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19586358
+1 RIN MH:I502762
+1 _UID 67CD1E1C2F0C25433D161F6BDFBF048C
+
+0 @I502791@ INDI
+1 _UPD 8 MAR 2025 22:51:35 GMT -0500 
+1 NAME Abraham Nathan /de Vries/
+2 GIVN Abraham Nathan
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 1746
+1 DEAT Y
+2 DATE 9 DEC 1830
+2 PLAC Amsterdam, Government of Amsterdam, Netherlands
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19550098/abraham-nathan-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19550098
+1 RIN MH:I502791
+1 _UID 67CD1E224440A5603D161F6BDFBF048C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTJhYjA2NGM1MTAzNmNhYTExZWJiODgxYTM5ZjljMDdkYjcxMWQwZDdkOGM2NzUzNGUwN2JhYjRmOWM2ZDY5NmImZT0xNzUzNjEwNDAw/158/944/6912/501051_415778t7656r78cdem1k1r_A.jpg
+2 _FILESIZE 4332
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501050
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501051
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWMxMDc2ZTU5YWYwOThjZjIzNDNlZDZhOWY4ZWJhZWJjOTJiMDk5OTliMTcwNDU1ODNiMzE4YzM1YjAwMmVlZDUmZT0xNzUzNjEwNDAw/158/944/6912/501050_26559257x1xlc6dk1j5k7e_A.jpg
+2 _FILESIZE 4328
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501050
+
+0 @I500659@ INDI
+1 _UPD 24 MAY 2024 08:15:03 GMT -0500 
+1 NAME Klaartje /de Vries/
+2 GIVN Klaartje
+2 SURN de Vries
+2 _MARNM van der Velde
+1 SEX F
+1 BIRT
+2 DATE 22 NOV 1901
+2 PLAC Harlingen, Friesland, the Netherlands
+1 DEAT Y
+2 DATE 6 NOV 1979
+2 PLAC Amstelveen, Amstelveen, North Holland, Netherlands
+1 FAMC @F500253@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Klaartje de Vries&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;כינוי: Klara&amp;lt;br&amp;gt;לידה: 22 בנוב’ 1901 - Harlingen, Friesland, The Netherlands&amp;lt;br&amp;gt;נישו
+4 CONC ין: בן/בת זוג: David Hartog van der Velde - 23 באפר’ 1930 - Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;פטירה: 6 בנוב’ 1979 - Amstelv
+4 CONC een, Amstelveen, North Holland, Netherlands&amp;lt;br&amp;gt;אב: Jacob de Vries&amp;lt;br&amp;gt;אם: Elize Odewald&amp;lt;br&amp;gt;בעל: David Hartog van der Velde&amp;lt;br&amp;gt;ילדים: 
+4 CONC &lt;פרטי&gt; van der Velde, מרת אלישבע אברהמס (לבית ון-דר-ולדה)&amp;lt;br&amp;gt;אחים ואחיות: Izaak de Vries, Heiman Asser de Vries
+2 EVEN Record
+3 ROLE 40000:108507834:
+1 RIN MH:I500659
+1 _UID 664CABA9171970AF3DCDFFBF7E48BC56
+
+0 @I502868@ INDI
+1 _UPD 8 MAR 2025 23:12:57 GMT -0500 
+1 NAME Aaltje /de Vries/
+2 GIVN Aaltje
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 23 SEP 1884
+2 PLAC Haarlem, Holland, Netherlands
+1 DEAT Y
+2 DATE 31 AUG 1942
+2 PLAC Auschwitz Concentration Camp
+1 BURI
+2 PLAC Auschwitz Death Camp, Oswiecim, Malopolskie, Poland
+1 FAMS @F500957@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1303179149&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Aaltje van Zanten (לבית de Vries)
+לידה: 23 בספט’ 1884 - Haarlem, Holland, Netherlands
+פטירה: 31 באוג’ 1942 - Auschwitz Concentration Camp
+הורים: Alexander Abraham de Vrie
+4 CONC s, Esther de Vries (לבית Blits)
+בעל: Benjamin van Zanten
+אחים ואחיות: Saartje Haas (לבית de Vries), Lucas de Vries
+2 EVEN Record
+3 ROLE 40001:1303179149:
+1 RIN MH:I502868
+1 _UID 67CD2354C64E241DF2F4DABCD2551208
+
+0 @I502835@ INDI
+1 _UPD 8 MAR 2025 23:16:49 GMT -0500 
+1 NAME Benjamin /van Zanten/
+2 GIVN Benjamin
+2 SURN van Zanten
+1 SEX M
+1 BIRT
+2 DATE 13 DEC 1875
+2 PLAC Middelstum, Loppersum, Groningen, The Netherlands
+1 DEAT Y
+2 DATE 31 AUG 1942
+2 PLAC Gmina Oświęcim, Oświęcim County, Lesser Poland Voivodeship, Poland
+1 BURI
+2 PLAC Auschwitz Death Camp, Oswiecim, Malopolskie, Poland
+1 FAMS @F500956@
+1 FAMS @F500957@
+1 FAMC @F500947@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=260183429&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Benjamin van Zanten
+לידה: 13 בדצמ’ 1875 - Middelstum, Groningen, Netherlands
+פטירה: 1 באוג’ 1942 - Auschwitz Concentration Camp, Oświęcim, Biała, Kraków, Poland
+הורים: Sa
+4 CONC lomon van Zanten, Rebekka van Zanten (לבית van Dam)
+בני זוג: Sara van Zanten (לבית Witteboon), Aaltje van Zanten (לבית de Vries)
+ילדים: Salomon Van Zanten, Pinas Van Zanten, Jon
+4 CONC as Van Zanten, Rachel Van Zanten, Rebekka Roos (לבית Van Zanten)
+אחים ואחיות: Martha Lootsteen (לבית van Zanten), Victor van Zanten, Creesia van Zanten, Bertha van Zanten, Jacob van 
+4 CONC Zanten
+2 EVEN Record
+3 ROLE 40001:260183429:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Benjamin van Zanten&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 13 בדצמ’ 1875 - Middelstum, Loppersum, Groningen, The Netherlands&amp;lt;br&amp;gt;נישואין: בן/בת זוג
+4 CONC : Aaltje de Vries - סביבות 1897 - Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;פטירה: 31 באוג’ 1942 - Gmina Oświęcim, Oświęcim County, Lesse
+4 CONC r Poland Voivodeship, Poland&amp;lt;br&amp;gt;אב: Salomon van Zanten&amp;lt;br&amp;gt;אם: Rebekka van Dam&amp;lt;br&amp;gt;אשה: Aaltje de Vries&amp;lt;br&amp;gt;גרושה: Sara Witteboon&amp;l
+4 CONC t;br&amp;gt;ילדים: Salomon van Zanten, Jonas van Zanten, Rebekka van Zanten, Pinas van Zanten&amp;lt;br&amp;gt;אחים ואחיות: Martha van Zanten, Creesia van Zanten, Victor van Zanten, Ber
+4 CONC tha van Zanten
+2 EVEN Record
+3 ROLE 40000:137357908:
+1 SOUR @S500056@
+2 QUAY 4
+2 DATA
+3 TEXT Abraham David Roos וRebekka van Zanten&amp;lt;br&amp;gt;חתן: Benjamin van Zanten&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;גיל: 30&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;מקצוע: Reiziger&amp;lt;br
+4 CONC &amp;gt;&amp;nbsp;&amp;nbsp;גיל: 22&amp;lt;br&amp;gt;מקור: &lt;br&gt;ספר: Huwelijksregister 1927&lt;br&gt;מוסד: AlleGroningers&lt;br&gt;מספר מסמך: 111&lt;br&gt;מקום המקו
+4 CONC : Groningen, Netherlands&lt;br&gt;תאריך מקור: 1927-03-14&lt;br&gt;תאריך הכרך: 1927-03-14&lt;br&gt;הערות: AkteSoort: huwelijk&lt;br&gt;מקור: &lt;a&gt;לצפייה ברשומ
+4 CONC ה המלאה ב-allegroningers.nl&lt;/a&gt;
+2 EVEN Record
+3 ROLE 10562:1428230-SF:
+1 RIN MH:I502835
+1 _UID 67CD22547E5B661C0062B041630A0D44
+
+0 @I504196@ INDI
+1 _UPD 8 APR 2025 13:04:04 GMT -0500 
+1 NAME Lea Benjamin /de Vries/
+2 GIVN Lea Benjamin
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 30 JUN 1816
+2 PLAC Gorinchem, South Holland, Netherlands
+1 DEAT Y
+1 FAMC @F501326@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=447869121&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Lea Benjamin Coopman (לבית de Vries)
+לידה: 30 ביוני 1816 - Gorinchem, South Holland, Netherlands
+הורים: Benjamin Wolf Liepman de Vries, Jansje Isaäk de Vries (לבית van der Sluis
+4 CONC )
+בעל: Simon Jacob Coopman
+ילדים: Johanna Vega (לבית Koopman), Jacob Coopman, Hendrika Messcher (לבית Coopman), Benjamin Coopman, Meijer Coopman, Benjamin Coopman, Mozes Coopman
+אחי
+4 CONC ם ואחיות: Louis de Vries, Hendrika de Vries, Rebecca Gokkes (לבית de Vries), Lipman de Vries, Pietje Blindeman (לבית de Vries), Isaak de Vries, Ester Benjamin de Vries, Jacob de Vries
+2 EVEN Record
+3 ROLE 40001:447869121:
+1 RIN MH:I504196
+1 _UID 67F5650F082D3A04C6E1CED0AC22E10A
+
+0 @I502383@ INDI
+1 _UPD 27 FEB 2025 06:37:16 GMT -0500 
+1 NAME Betje Marie /de Vries/
+2 GIVN Betje Marie
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 19 JUL 1929
+2 PLAC Nijmegen, Nijmegen, Gelderland, The Netherlands
+1 DEAT Y
+2 DATE 27 NOV 1942
+2 PLAC Gmina Oświęcim, Oświęcim County, Lesser Poland Voivodeship, Poland
+1 FAMC @F500824@
+1 SOUR @S500183@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6YQUCYFSYMMGUI2BVDFAEEULVYY-4502360/betje-marie-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 4502360
+1 RIN MH:I502383
+1 _UID 67C05C78B25D4406A583EE45F0EDAE8A
+
+0 @I501890@ INDI
+1 _UPD 17 FEB 2025 10:41:43 GMT -0500 
+1 NAME Jantje Izaak /de Vries/
+2 GIVN Jantje Izaak
+2 SURN de Vries
+2 _MARNM Pais
+1 SEX F
+1 BIRT
+2 DATE 14 JUL 1868
+2 PLAC Harlingen, Frise, Pays-Bas
+1 DEAT Y
+2 DATE 23 NOV 1942
+2 PLAC Oswiecim, Oświęcim County, Lesser Poland Voivodeship, Poland
+1 FAMC @F500692@
+1 SOUR @S500087@
+2 PAGE https://www.myheritage.co.il/profile-OYYV72HL4OV5DQMPGOKAN7Q3ZWCTFWA-10500014/jantje-izaak-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT kluveld Family Site, מנוהל ע"י amanda kluveld
+2 EVEN Smart Matching
+3 ROLE 10500014
+1 RIN MH:I501890
+1 _UID 67B366C252FA17776D1766E32812436A
+
+0 @I502802@ INDI
+1 _UPD 8 MAR 2025 22:51:50 GMT -0500 
+1 NAME Hanna /de Vries/
+2 GIVN Hanna
+2 SURN de Vries
+2 _MARNM Leefmans
+1 SEX F
+1 BIRT
+2 DATE ABT 1760
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19550823/hanna-de-vries-leefmans
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19550823
+1 RIN MH:I502802
+1 _UID 67CD1E254A45056B3D161F6BDFBF048C
+
+0 @I504194@ INDI
+1 _UPD 8 APR 2025 13:04:03 GMT -0500 
+1 NAME Meijer Liepman /de Vries/
+2 GIVN Meijer Liepman
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 11 OCT 1793
+2 PLAC Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE 28 APR 1871
+2 PLAC Harlingen, Friesland, Netherlands
+1 FAMC @F501328@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1282445002&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Meijer Liepman de Vries
+לידה: 11 באוק’ 1793 - Harlingen, Friesland, Netherlands
+פטירה: 28 באפר’ 1871 - Harlingen, Friesland, Netherlands
+הורים: Liepman Levie Benjamins de Vri
+4 CONC es, Henderina Meijers de Vries (לבית Reindorp)
+אשה: Anna Simons de Vries (לבית de Leeuw)
+אחים ואחיות: Leip Levie Liepman de Vries, Benjamin Wolf Liepman de Vries, Jacob Liepman de
+4 CONC  Vries, Abraham Liepman de Vries, Pietje Leipmans Kramer (לבית de Vries)
+2 EVEN Record
+3 ROLE 40001:1282445002:
+1 RIN MH:I504194
+1 _UID 67F5650E8968FA02C6E1CED0AC22E10A
+
+0 @I501884@ INDI
+1 _UPD 20 APR 2025 11:58:36 GMT -0500 
+1 NAME Jacob Izaak /de Vries/
+2 GIVN Jacob Izaak
+2 SURN de Vries
+1 SEX M
+1 DEAT Y
+2 DATE 19 MAY 1930
+2 PLAC Apeldoorn, Gelderland, The Netherlands
+1 BIRT
+2 DATE 3 JAN 1864
+2 PLAC Harlingen, Friesland, the Netherlands
+1 EVEN Spouse: Elize Odewald
+2 TYPE MARR
+2 DATE 8 SEP 1895
+2 PLAC Slochteren, Slochteren, Groningen, The Netherlands
+1 FAMS @F500691@
+1 FAMC @F500692@
+1 SOUR @S500056@
+2 QUAY 4
+2 DATA
+3 TEXT David Hartog van der Velde וKlaartje de Vries&amp;lt;br&amp;gt;נישואין: 23 באפר’ 1930 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;חתן: David Hartog van der Velde&amp;lt;b
+4 CONC r&amp;gt;&nbsp;&nbsp;לידה: סביבות 1905 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;&nbsp;&nbsp;גיל: 25&amp;lt;br&amp;gt;&nbsp;&nbsp;מקצוע: Boekhouder&amp;lt;br&amp;gt;&n
+4 CONC bsp;&nbsp;אב: Benjamin van der Velde&amp;lt;br&amp;gt;&nbsp;&nbsp;אם: Flora Italiaander&amp;lt;br&amp;gt;כלה: Klaartje de Vries (van der Velde)&amp;lt;br&amp;gt;&nbsp;&nbsp;לידה: סביבו
+4 CONC ת 1902 - Harlingen, Friesland, Netherlands&amp;lt;br&amp;gt;&nbsp;&nbsp;גיל: 28&amp;lt;br&amp;gt;אב: Jacob de Vries&amp;lt;br&amp;gt;אם: Elize Odewald&amp;lt;br&amp;gt;מקור: &amp;lt;br&amp
+4 CONC ;gt;מוסד: Noord-Hollands Archief&amp;lt;br&amp;gt;מספר מסמך: Reg.8B fol. 9v&amp;lt;br&amp;gt;מקום המקור: Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;תאריך מקור
+4 CONC : 1930-04-23&amp;lt;br&amp;gt;תאריך הכרך: 1930-01-31&amp;lt;br&amp;gt;הערות: Provenance: Datadump ExportBS Huwelijk_20180404_114831.csv van NHA, csv2a2a
+2 EVEN Record
+3 ROLE 10562:7511007-SF:
+1 SOUR @S500087@
+2 PAGE https://www.myheritage.co.il/profile-OYYV72HL4OV5DQMPGOKAN7Q3ZWCTFWA-10500013/jacob-izaak-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT kluveld Family Site, מנוהל ע"י amanda kluveld
+2 EVEN Smart Matching
+3 ROLE 10500013
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500027/jacob-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500027
+1 SOUR @S500170@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MQSGFL7XPBJAXKZNEWB2QTQWOQ-8067269/jacob-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 8067269
+1 RIN MH:I501884
+1 _UID 67B365DE21DD2265CD6F7FE0306F160D
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWFlZWJlMWNiODE2MzExZTIxOWUyNDk4NDJiZTdmZjRhM2QwMTU3ZDFkNmM5YWRiNTYyMjI1YjUwMTQ5MTUyY2YmZT0xNzUzNjEwNDAw/158/944/6912/500704_751741af64336631icb2b7_A.jpg
+2 _FILESIZE 4717
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500703
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500704
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTNiNTFmYzdmOGRiNWE2ODU4Y2M2ZTk2MjUwM2YxNWZlOTNkZGNhOGJmNjhlMmM5YzdhMWUyZjY4YzI1M2E1MzMmZT0xNzUzNjEwNDAw/158/944/6912/500703_062291g426jce317bn63c6_A.jpg
+2 _FILESIZE 4717
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500703
+
+0 @I501885@ INDI
+1 _UPD 17 FEB 2025 10:43:05 GMT -0500 
+1 NAME Elize /Odewald/
+2 GIVN Elize
+2 SURN Odewald
+1 SEX F
+1 DEAT Y
+2 DATE 20 MAR 1943
+2 PLAC Sobibór, Lublin Voivodeship, Poland
+1 BIRT
+2 DATE 24 MAR 1873
+2 PLAC Schildwolde, Slochteren, Groningen, Netherlands
+1 EVEN Spouse: Jacob de Vries
+2 TYPE MARR
+2 DATE 8 SEP 1895
+2 PLAC Slochteren, Slochteren, Groningen, The Netherlands
+1 BURI
+2 PLAC Diversen, Netherlands
+1 FAMS @F500691@
+1 FAMC @F500693@
+1 SOUR @S500056@
+2 QUAY 4
+2 DATA
+3 TEXT David Hartog van der Velde וKlaartje de Vries&amp;lt;br&amp;gt;נישואין: 23 באפר’ 1930 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;חתן: David Hartog van der Velde&amp;lt;b
+4 CONC r&amp;gt;&nbsp;&nbsp;לידה: סביבות 1905 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;&nbsp;&nbsp;גיל: 25&amp;lt;br&amp;gt;&nbsp;&nbsp;מקצוע: Boekhouder&amp;lt;br&amp;gt;&n
+4 CONC bsp;&nbsp;אב: Benjamin van der Velde&amp;lt;br&amp;gt;&nbsp;&nbsp;אם: Flora Italiaander&amp;lt;br&amp;gt;כלה: Klaartje de Vries (van der Velde)&amp;lt;br&amp;gt;&nbsp;&nbsp;לידה: סביבו
+4 CONC ת 1902 - Harlingen, Friesland, Netherlands&amp;lt;br&amp;gt;&nbsp;&nbsp;גיל: 28&amp;lt;br&amp;gt;אב: Jacob de Vries&amp;lt;br&amp;gt;אם: Elize Odewald&amp;lt;br&amp;gt;מקור: &amp;lt;br&amp
+4 CONC ;gt;מוסד: Noord-Hollands Archief&amp;lt;br&amp;gt;מספר מסמך: Reg.8B fol. 9v&amp;lt;br&amp;gt;מקום המקור: Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;תאריך מקור
+4 CONC : 1930-04-23&amp;lt;br&amp;gt;תאריך הכרך: 1930-01-31&amp;lt;br&amp;gt;הערות: Provenance: Datadump ExportBS Huwelijk_20180404_114831.csv van NHA, csv2a2a
+2 EVEN Record
+3 ROLE 10562:7511007-SM:
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500028/elize-odewald
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500028
+1 SOUR @S500170@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MQSGFL7XPBJAXKZNEWB2QTQWOQ-8075860/elise-de-vries-%D7%9C%D7%91%D7%99%D7%AA-odewald
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 8075860
+1 RIN MH:I501885
+1 _UID 67B365DE5FE8D267CD6F7FE0306F160D
+
+0 @I502767@ INDI
+1 _UPD 8 MAR 2025 22:51:03 GMT -0500 
+1 NAME Jacob Moses xx /de Vries/
+2 GIVN Jacob Moses xx
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1700
+2 PLAC Winterswijk, Gelderland, The Netherlands
+1 DEAT Y
+2 DATE 22 DEC 1784
+2 PLAC Amersfoort, Utrecht, Netherlands
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19552726/jacob-moses-xx-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19552726
+1 RIN MH:I502767
+1 _UID 67CD1E1D1B3A85483D161F6BDFBF048C
+
+0 @I502796@ INDI
+1 _UPD 8 MAR 2025 22:51:41 GMT -0500 
+1 NAME Mecheline Macheltje Hartog /de Vries/
+2 GIVN Mecheline Macheltje Hartog
+2 SURN de Vries
+2 _MARNM Cohen
+1 SEX F
+1 BIRT
+2 DATE ABT 1750
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19638064/mecheline-macheltje-hartog-de-vries-cohen
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19638064
+1 RIN MH:I502796
+1 _UID 67CD1E238DCC05653D161F6BDFBF048C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTBjNTRiN2EyMzY0OGY1NjA2MzVmZTdlZDIxNzU2NTZkZmRkYzc5NTMxYmNlYWJhYTc3NDY5YWE0YWRkOGQxMjMmZT0xNzUzNjEwNDAw/158/944/6912/501053_8065495ecec6wgqord1771_A.jpg
+2 _FILESIZE 4589
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501052
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501053
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTQ3YTA0MWEyN2NmNDhiMmRlYjQwNDQ4MDY2MDk5ZjIzODhhNWRlN2JmZmFiOTk0NTY4OTU0ODkyOWJhNWM5OTQmZT0xNzUzNjEwNDAw/158/944/6912/501052_727596e7bodv6c41d7t5z1_A.jpg
+2 _FILESIZE 4604
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501052
+
+0 @I502807@ INDI
+1 _UPD 8 MAR 2025 22:51:57 GMT -0500 
+1 NAME Jacob Samuels /de Vries/
+2 GIVN Jacob Samuels
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1790
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19551041/jacob-samuels-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19551041
+1 RIN MH:I502807
+1 _UID 67CD1E26D828F5703D161F6BDFBF048C
+
+0 @I502814@ INDI
+1 _UPD 8 MAR 2025 22:52:10 GMT -0500 
+1 NAME *Lazarus Gosses /de Vries/
+2 GIVN *Lazarus Gosses
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 1769
+2 PLAC Narden
+1 DEAT Y
+2 DATE 15 DEC 1853
+2 PLAC Wildervank, Veendam, Groningen, Netherlands
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19553098/lazarus-gosses-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19553098
+1 RIN MH:I502814
+1 _UID 67CD1E296E6E65773D161F6BDFBF048C
+
+0 @I501895@ INDI
+1 _UPD 8 APR 2025 07:02:29 GMT -0500 
+1 NAME Joost /de Vries/
+2 GIVN Joost
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 5 JUL 1898
+2 PLAC Schagen
+1 DEAT Y
+2 DATE 16 JUL 1943
+2 PLAC Sobibor (Pl)
+1 EVEN Molenstraat Wijk C nummer 100
+2 TYPE Woonde
+2 DATE 5 JUL 1898
+2 PLAC Schagen
+1 OCCU koopman
+2 DATE 19 JUN 1924
+1 OCCU koopman
+2 DATE 7 DEC 1932
+1 FAMS @F501302@
+1 FAMC @F500691@
+1 SOUR @S500087@
+2 PAGE https://www.myheritage.co.il/profile-OYYV72HL4OV5DQMPGOKAN7Q3ZWCTFWA-10500067/izaak-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT kluveld Family Site, מנוהל ע"י amanda kluveld
+2 EVEN Smart Matching
+3 ROLE 10500067
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500045/izaak-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Family tree, מנוהל ע"י Shelly Galpert
+2 EVEN Smart Matching
+3 ROLE 1500045
+1 SOUR @S500277@
+2 PAGE https://www.myheritage.com/profile-OYYV6T5MMS2QZRQYNTMZ4V2AKWHUIVA-1000015/joost-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000015
+1 SOUR @S500077@
+2 PAGE https://www.myheritage.com/profile-OYYV6EKZSR5VGXFPXXN53ZTSPF6WXMY-13040037/joost-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 13040037
+1 RIN MH:I501895
+1 _UID 67B366C34656377C6D1766E32812436A
+
+0 @I504025@ INDI
+1 _UPD 8 APR 2025 07:02:29 GMT -0500 
+1 NAME Roosje Joel /Denneboom/
+2 GIVN Roosje Joel
+2 SURN Denneboom
+2 _MARNM de Vries
+1 SEX F
+1 BIRT
+2 DATE 22 JUN 1895
+2 PLAC Emmen
+1 DEAT Y
+2 DATE 13 DEC 1925
+2 PLAC Groningen, Groningen, Groningen, The Netherlands
+2 NOTE Aktenummer: 432
+1 FAMS @F501302@
+1 FAMC @F501304@
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500280/roosje-joel-denneboom
+2 QUAY 3
+2 DATA
+3 TEXT Family tree, מנוהל ע"י Shelly Galpert
+2 EVEN Smart Matching
+3 ROLE 1500280
+1 SOUR @S500277@
+2 PAGE https://www.myheritage.com/profile-OYYV6T5MMS2QZRQYNTMZ4V2AKWHUIVA-1000016/roosje-denneboom
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000016
+1 SOUR @S500077@
+2 PAGE https://www.myheritage.com/profile-OYYV6EKZSR5VGXFPXXN53ZTSPF6WXMY-13040036/roosje-denneboom
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 13040036
+1 RIN MH:I504025
+1 _UID 67F4F2D1E37870AE16FD6A66BD508D42
+
+0 @I500811@ INDI
+1 _UPD 4 JUN 2024 08:12:28 GMT -0500 
+1 NAME Pietje /de Vries/
+2 GIVN Pietje
+2 SURN de Vries
+2 NSFX TWEELING
+1 SEX F
+1 BIRT
+2 DATE 15 SEP 1827
+2 PLAC Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE BEF 1880
+1 EVEN Echtgeno(o)t(e): Elias Blindeman
+2 TYPE MARR
+2 DATE 28 MAY 1857
+2 PLAC Harlingen, Harlingen, Friesland, Netherlands
+1 FAMC @F500254@
+1 SOUR @S500066@
+2 PAGE Pietje de Vries, TWEELING
+2 QUAY 3
+2 DATA
+3 DATE 4 JUN 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 NOTE Bruidegom
+Elias Blindeman
+Geboorteplaats
+Leeuwarden
+Leeftijd
+26 jaar
+Bruid
+Pietje de Vries
+Geboorteplaats
+Harlingen
+Leeftijd
+29 jaar
+Vader van de bruidegom
+Machiel Elias Blindeman
+Moeder
+2 CONC  van de bruidegom
+Feikje Mozes Wolf
+Vader van de bruid
+Benjamin Lipmans de Vries
+Moeder van de bruid
+Jantje Isaac van der Sluis
+Gebeurtenis
+Huwelijk
+Datum
+28-05-1857
+Harlingen
+1 RIN MH:I500811
+1 _UID 665F125EDD7E33CE7DB0BD6D5FB20D78
+
+0 @I501123@ INDI
+1 _UPD 23 JUL 2024 00:33:12 GMT -0500 
+1 NAME Meijer Liepman /de Vries/
+2 GIVN Meijer Liepman
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 11 OCT 1793
+2 PLAC Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE 28 APR 1871
+2 PLAC Harlingen, Friesland, Netherlands
+1 FAMC @F500300@
+1 SOUR @S500087@
+2 PAGE Meijer Liepman de Vries
+2 QUAY 3
+2 DATA
+3 DATE 23 JUL 2024
+3 TEXT התווסף באמצעות Smart Match
+2 EVEN Discovery
+1 RIN MH:I501123
+1 _UID 669F4098BD773EB504CF5EB06C532EB0
+
+0 @I502855@ INDI
+1 _UPD 8 MAR 2025 23:12:02 GMT -0500 
+1 NAME Rebecca /de Vries/
+2 GIVN Rebecca
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 28 OCT 1899
+2 PLAC Groningen, Groningen, Netherlands
+1 DEAT Y
+2 DATE 22 SEP 1905
+2 PLAC Groningen, Groningen, Netherlands
+1 FAMC @F500954@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1740553061&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Rebecca de Vries
+לידה: 28 באוק’ 1899 - Groningen, Groningen, Netherlands
+פטירה: 22 בספט’ 1905 - Groningen, Groningen, Netherlands
+הורים: Levie de Vries, Creesia van Zanten
+א
+4 CONC חים ואחיות: Leentje van Coevorden (לבית de Vries), Jozef de Vries, Salomon de Vries, Izak de Vries, Rebekka de Vries, Klaartje Hess (לבית Bollegraaf)
+2 EVEN Record
+3 ROLE 40001:1740553061:
+1 RIN MH:I502855
+1 _UID 67CD231F32CF00DD7CFBC37DFB720ED3
+
+0 @I500648@ INDI
+1 _UPD 24 MAY 2024 08:13:24 GMT -0500 
+1 NAME Eliazar /de Vries/
+2 GIVN Eliazar
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 15 FEB 1857
+2 PLAC Harlingen, Frise, Pays-Bas
+1 DEAT Y
+1 FAMC @F500038@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Eliazar de Vries&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 15 בפבר’ 1857 - Harlingen, Frise, Pays-Bas&amp;lt;br&amp;gt;אב: Izaak de Vries&amp;lt;br&amp;gt;אם: Klara de Vries
+4 CONC  (לבית Speijer)&amp;lt;br&amp;gt;אחים ואחיות: Aron de Vries, Kaatje de Vries, Jantje de Vries, Saartje de Vries, Mietje de Vries, Pietje Polak (לבית de Vries), Benjamin de Vries, Moz
+4 CONC es Eleazar de Vries, Jacob de Vries
+2 EVEN Record
+3 ROLE 40000:254265197:
+1 RIN MH:I500648
+1 _UID 664CABA6E38050A23DCDFFBF7E48BC56
+
+0 @I502390@ INDI
+1 _UPD 27 FEB 2025 06:38:36 GMT -0500 
+1 NAME Martha Mathilda /de Vries/
+2 GIVN Martha Mathilda
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 28 MAR 1921
+2 PLAC Harlingen, Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE 9 JUL 1943
+2 PLAC Sobibór, Włodawa County, Lublin Voivodeship, Poland
+1 FAMC @F500826@
+1 SOUR @S500185@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6HKGW7ZTU6V5RFM43NYI4BD2POY-1500012/martha-mathilda-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500012
+1 RIN MH:I502390
+1 _UID 67C05CC869DCFAEC8337608592BCDBBF
+
+0 @I502776@ INDI
+1 _UPD 8 MAR 2025 22:51:15 GMT -0500 
+1 NAME Mozes Alexander /de Vries/
+2 GIVN Mozes Alexander
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1730
+1 DEAT Y
+2 PLAC Loppersum, Groningen, Netherlands
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19563899/mozes-alexander-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19563899
+1 RIN MH:I502776
+1 _UID 67CD1E1ED5ABB5513D161F6BDFBF048C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWVmMDFkNDQzZGE0NDgxYWIyZjY2YTk4MTc0YWJiY2ZiZjUwZDE5YjY0MDhkMjgzYjU2YjM0NGVhODgwOGQyMTImZT0xNzUzNjEwNDAw/158/944/6912/501037_240010e274wkd7s2t16cf1_A.jpg
+2 _FILESIZE 3964
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501036
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501037
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWExYmU3NGU1ODI5NzA4ZjIzZDU0MmRmYTdiMWJkMzJiYTliZjJlNGU0MTJlYThlNmI1YjY0YjE1MDRhMjFmMTkmZT0xNzUzNjEwNDAw/158/944/6912/501036_3597324en61b44drc17r17_A.jpg
+2 _FILESIZE 3984
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501036
+
+0 @I502788@ INDI
+1 _UPD 8 MAR 2025 22:51:30 GMT -0500 
+1 NAME Joseph Abraham /de Vries/
+2 GIVN Joseph Abraham
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1740
+2 PLAC Luberich
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19605601/joseph-abraham-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19605601
+1 RIN MH:I502788
+1 _UID 67CD1E218050355D3D161F6BDFBF048C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTBmY2U5ZGExZmNlMTFhM2RmODM0NjM5Y2NmMmU4OTM3M2NlOWFjNzIwNjI0MTJkYzQyMjhkMDgzODg0YTBkNzEmZT0xNzUzNjEwNDAw/158/944/6912/501047_36117347f1d1ceu675110i_A.jpg
+2 _FILESIZE 4589
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501046
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501047
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWZkYTA4ZjAwYjI4ZGRjOGFmYmVhM2E3MDM1YTE1NmQ5MTgxYjgyZTdmMDdhNjMyYTA3YjJjOWI0MGJiY2ZiNGUmZT0xNzUzNjEwNDAw/158/944/6912/501046_975862vry6c741ek751d17_A.jpg
+2 _FILESIZE 4604
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501046
+
+0 @I504195@ INDI
+1 _UPD 8 APR 2025 13:04:03 GMT -0500 
+1 NAME Pietje Leipmans /de Vries/
+2 GIVN Pietje Leipmans
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 1798
+2 PLAC Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE 1 AUG 1849
+2 PLAC Gouda, Zuid-Holland, Netherlands
+1 FAMC @F501328@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=141790659&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Pietje Leipmans Kramer (לבית de Vries)
+לידה: 1798 - Harlingen, Friesland, Netherlands
+פטירה: 1 באוג’ 1849 - Gouda, Zuid-Holland, Netherlands
+2 EVEN Record
+3 ROLE 40001:141790659:
+1 RIN MH:I504195
+1 _UID 67F5650EC4EF0A03C6E1CED0AC22E10A
+
+0 @I502785@ INDI
+1 _UPD 8 MAR 2025 22:51:26 GMT -0500 
+1 NAME Philip / Peis /de Vries/
+2 GIVN Philip / Peis
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1737
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19602869/philip-peis-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19602869
+1 RIN MH:I502785
+1 _UID 67CD1E20C6C2955A3D161F6BDFBF048C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWY5M2MwY2Y2ZmRhYWQ3NmUzZmQ2MDYzYmVkNWU1N2Q1YjNhYjAxNzcxMmUzZDM3OWUzNDgyYzAzNzFjMDg5OGMmZT0xNzUzNjEwNDAw/158/944/6912/501045_4860567f116kdced7dsmi4_A.jpg
+2 _FILESIZE 3964
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501044
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501045
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWJkNmE4OTBmODA1ZDY0ZjU2MGQ2ZTQ4ZDMxYWU5YTc2NDdjOTliMWNhYzk3ODI0M2IzMWMzZTYyZDljMzFmNTImZT0xNzUzNjEwNDAw/158/944/6912/501044_6867534dc7kkvved1g167o_A.jpg
+2 _FILESIZE 3984
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501044
+
+0 @I500656@ INDI
+1 _UPD 21 MAY 2024 09:12:02 GMT -0500 
+1 NAME Mozes Eleazar /de Vries/
+2 GIVN Mozes Eleazar
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 4 DEC 1876
+2 PLAC Harlingen, Frise, Pays-Bas
+1 DEAT Y
+2 DATE 23 NOV 1942
+2 PLAC Gmina Oświęcim, Lesser Poland Voivodeship, Poland
+1 FAMC @F500038@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Mozes Eleazar de Vries&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;כינוי: Moshe Elazar de Vries&amp;lt;br&amp;gt;לידה: 4 בדצמ’ 1876 - Harlingen, Frise, Pays-Bas&amp;lt;br&amp;gt;נ
+4 CONC ישואין: בן/בת זוג: Gertruida Swart - 15 במרץ 1904 - Zwolle, Zwolle, Overijssel, The Netherlands&amp;lt;br&amp;gt;פטירה: 23 בנוב’ 1942 - Gmina Oświęcim, Lesser Poland Voiv
+4 CONC odeship, Poland&amp;lt;br&amp;gt;אב: Izaak de Vries&amp;lt;br&amp;gt;אם: Klara de Vries (לבית Speijer)&amp;lt;br&amp;gt;אשה: Gertruida Swart&amp;lt;br&amp;gt;ילדים: Klara van Buuren (
+4 CONC בית de Vries), Alexander Lion de Vries, Benjamin de Vries&amp;lt;br&amp;gt;אחים ואחיות: Eliazar de Vries, Aron de Vries, Kaatje de Vries, Jantje de Vries, Saartje de Vries, Mietje de Vri
+4 CONC es, Pietje Polak (לבית de Vries), Benjamin de Vries, Jacob de Vries
+2 EVEN Record
+3 ROLE 40000:125963070:
+1 RIN MH:I500656
+1 _UID 664CABA87FD4B0AC3DCDFFBF7E48BC56
+
+0 @I502858@ INDI
+1 _UPD 8 MAR 2025 23:12:03 GMT -0500 
+1 NAME Izak /de Vries/
+2 GIVN Izak
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 22 FEB 1905
+2 PLAC Groningen, Groningen, Netherlands
+1 DEAT Y
+1 FAMC @F500954@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1740620858&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Izak de Vries
+לידה: 22 בפבר’ 1905 - Groningen, Groningen, Netherlands
+הורים: Levie de Vries, Creesia van Zanten
+אשה: Anna de Vries (לבית Kruizinga)
+אחים ואחיות: Leentje
+4 CONC  van Coevorden (לבית de Vries), Rebecca de Vries, Jozef de Vries, Salomon de Vries, Rebekka de Vries, Klaartje Hess (לבית Bollegraaf)
+2 EVEN Record
+3 ROLE 40001:1740620858:
+1 RIN MH:I502858
+1 _UID 67CD231FC84340E07CFBC37DFB720ED3
+
+0 @I504197@ INDI
+1 _UPD 8 APR 2025 13:04:04 GMT -0500 
+1 NAME Ester Benjamin /de Vries/
+2 GIVN Ester Benjamin
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 23 MAY 1833
+2 PLAC Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE 20 SEP 1833
+1 FAMC @F501326@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=2390327716&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Ester Benjamin de Vries
+לידה: 23 במאי 1833 - Harlingen, Friesland, Netherlands
+פטירה: 20 בספט’ 1833
+הורים: Benjamin Wolf Liepman de Vries, Jansje Isaäk de Vries (לבית van 
+4 CONC der Sluis)
+אחים ואחיות: Lea Benjamin Coopman (לבית de Vries), Louis de Vries, Hendrika de Vries, Rebecca Gokkes (לבית de Vries), Lipman de Vries, Pietje Blindeman (לבית de Vries)
+4 CONC , Isaak de Vries, Jacob de Vries
+2 EVEN Record
+3 ROLE 40001:2390327716:
+1 RIN MH:I504197
+1 _UID 67F5650F43AA3A05C6E1CED0AC22E10A
+
+0 @I501122@ INDI
+1 _UPD 23 JUL 2024 00:33:12 GMT -0500 
+1 NAME Jacob Liepman /de Vries/
+2 GIVN Jacob Liepman
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 1786
+2 PLAC Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE 10 JUL 1830
+2 PLAC Harlingen, Friesland, Netherlands
+1 FAMC @F500300@
+1 SOUR @S500087@
+2 PAGE Jacob Liepman de Vries
+2 QUAY 3
+2 DATA
+3 DATE 23 JUL 2024
+3 TEXT התווסף באמצעות Smart Match
+2 EVEN Discovery
+1 RIN MH:I501122
+1 _UID 669F409896087EB104CF5EB06C532EB0
+
+0 @I504191@ INDI
+1 _UPD 8 APR 2025 13:04:01 GMT -0500 
+1 NAME Leip Levie Liepman /de Vries/
+2 GIVN Leip Levie Liepman
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 28 FEB 1777
+2 PLAC Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE 1870
+1 FAMC @F501328@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1282444757&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Leip Levie Liepman de Vries
+לידה: 28 בפבר’ 1777 - Harlingen, Friesland, Netherlands
+פטירה: 1870
+הורים: Liepman Levie Benjamins de Vries, Henderina Meijers de Vries (לבית Reindo
+4 CONC rp)
+אשה: Marianna de Vries (לבית Stokvis)
+ילדים: Schoone Levie Spier (לבית de Vries), Wilhelmina van Straten (לבית de Vries), Liepman de Vries
+אחים ואחיות: Benjamin Wolf 
+4 CONC Liepman de Vries, Jacob Liepman de Vries, Abraham Liepman de Vries, Meijer Liepman de Vries, Pietje Leipmans Kramer (לבית de Vries)
+2 EVEN Record
+3 ROLE 40001:1282444757:
+1 RIN MH:I504191
+1 _UID 67F5650DE302F9FFC6E1CED0AC22E10A
+
+0 @I502764@ INDI
+1 _UPD 8 MAR 2025 22:50:59 GMT -0500 
+1 NAME Isaac /de Vries/
+2 GIVN Isaac
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1695
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19582964/isaac-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19582964
+1 RIN MH:I502764
+1 _UID 67CD1E1C88E8F5453D161F6BDFBF048C
+
+0 @I500812@ INDI
+1 _UPD 15 JUL 2024 00:06:07 GMT -0500 
+1 NAME Jacob Benjamin /de Vries/
+2 GIVN Jacob Benjamin
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 20 JUL 1834
+2 PLAC Harlingen, Friesland, the Netherlands
+1 EVEN Echtgeno(o)t(e): Kaatje Goudsmit
+2 TYPE MARR
+2 DATE 19 MAR 1863
+2 PLAC Harlingen, Friesland, the Netherlands
+1 FAMC @F500254@
+1 SOUR @S500066@
+2 PAGE Jacob Benjamin de Vries
+2 QUAY 3
+2 DATA
+3 DATE 4 JUN 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I500812
+1 _UID 665F125EF1D793D17DB0BD6D5FB20D78
+
+0 @I500816@ INDI
+1 _UPD 4 JUN 2024 08:12:28 GMT -0500 
+1 NAME Abraham Liepman /de Vries/
+2 GIVN Abraham Liepman
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 1786
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+1 DEAT Y
+2 DATE 9 JUN 1864
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+1 FAMC @F500300@
+1 SOUR @S500066@
+2 PAGE Abraham Liepman de Vries
+2 QUAY 3
+2 DATA
+3 DATE 4 JUN 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I500816
+1 _UID 665F125F55DCA3DD7DB0BD6D5FB20D78
+
+0 @I502783@ INDI
+1 _UPD 8 MAR 2025 22:51:23 GMT -0500 
+1 NAME Mozes Jozef /de Vries/
+2 GIVN Mozes Jozef
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1735
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19602002/mozes-jozef-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19602002
+1 RIN MH:I502783
+1 _UID 67CD1E20598295583D161F6BDFBF048C
+
+0 @I504179@ INDI
+1 _UPD 8 APR 2025 13:01:29 GMT -0500 
+1 NAME Liepman /de Vries/
+2 GIVN Liepman
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 13 SEP 1827
+2 PLAC Harlingen, Friesland, Nederland
+1 DEAT Y
+1 FAMC @F501326@
+1 SOUR @S500011@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6FIFUUCMXO56TRN727UU7BWZBMQ-1500102/liepman-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT בן אבו Web Site, מנוהל ע"י יאיר בן אבו
+2 EVEN Smart Matching
+3 ROLE 1500102
+1 RIN MH:I504179
+1 _UID 67F56475A6CA3E5633E07EBD07E4CDAA
+
+0 @I504192@ INDI
+1 _UPD 8 APR 2025 13:04:01 GMT -0500 
+1 NAME Jacob Liepman /de Vries/
+2 GIVN Jacob Liepman
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 1786
+2 PLAC Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE 10 JUL 1830
+2 PLAC Harlingen, Friesland, Netherlands
+1 FAMC @F501328@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1282444965&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Jacob Liepman de Vries
+לידה: 1786 - Harlingen, Friesland, Netherlands
+פטירה: 10 ביולי 1830 - Harlingen, Friesland, Netherlands
+הורים: Liepman Levie Benjamins de Vries, Henderina Mei
+4 CONC jers de Vries (לבית Reindorp)
+אחים ואחיות: Leip Levie Liepman de Vries, Benjamin Wolf Liepman de Vries, Abraham Liepman de Vries, Meijer Liepman de Vries, Pietje Leipmans Kramer (לבי
+4 CONC  de Vries)
+2 EVEN Record
+3 ROLE 40001:1282444965:
+1 RIN MH:I504192
+1 _UID 67F5650E228D5A00C6E1CED0AC22E10A
+
+0 @I501896@ INDI
+1 _UPD 8 APR 2025 04:57:15 GMT -0500 
+1 NAME Heiman Asser /de Vries/
+2 GIVN Heiman Asser
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 24 OCT 1899
+2 PLAC Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE 31 MAR 1943
+2 PLAC Central Europe
+1 EVEN Spouse: Martha Marie de Leeuw
+2 TYPE MARR
+2 DATE 9 SEP 1925
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 OCCU Slager
+1 FAMS @F500773@
+1 FAMC @F500691@
+1 SOUR @S500087@
+2 PAGE https://www.myheritage.co.il/profile-OYYV72HL4OV5DQMPGOKAN7Q3ZWCTFWA-10500068/heiman-asser-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT kluveld Family Site, מנוהל ע"י amanda kluveld
+2 EVEN Smart Matching
+3 ROLE 10500068
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500044/heiman-asser-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500044
+1 SOUR @S500170@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MQSGFL7XPBJAXKZNEWB2QTQWOQ-8075863/heiman-asser-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 8075863
+1 SOUR @S500056@
+2 PAGE https://www.myheritage.co.il/research/collection-10562/netherlands-civil-marriages-1811-1940?itemId=8514013&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Heiman Asser de Vries
+קשר משפחתי: חתן
+לידה: סביבות 1900 - Harlingen, Friesland, Netherlands
+נישואין: 9 בספט’ 1925 - Amsterdam, North Holland, Netherlands
+כלה: Mar
+4 CONC tha Marie de Leeuw (de Vries)
+הורי החתן: Jacob de Vries, Elize Odewald
+2 EVEN Record
+3 ROLE 10562:8514013:
+1 RIN MH:I501896
+1 _UID 67B366C37871777D6D1766E32812436A
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTBkMzBiNWE3NjA5MjNkYjVkMzRlMmNlZTA0NjYwNmQ5YzU4NmNjOTUzNWIwOGYxZWI5YThhZjI2ODM1MjBmNTgmZT0xNzUzNjEwNDAw/158/944/6912/500708_64894176a3iw81c61n271b_A.jpg
+2 _FILESIZE 109289
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500707
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500708
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPThkMGYwNzQ4ZmViNDQ4MTU5MjRiZWU0Y2MyOWUzMzYwOWRkMGI5MTBjZDNhYzA3NjQ0MTIyOTMxOTUwZmZiMjImZT0xNzUzNjEwNDAw/158/944/6912/500707_970335sl13b17a6a6e627w_A.jpg
+2 _FILESIZE 108999
+2 TITL 501171_409291h65u7i121djwf8b7_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500707
+
+0 @I502215@ INDI
+1 _UPD 8 APR 2025 06:09:14 GMT -0500 
+1 NAME Martha Marie /de Leeuw/
+2 GIVN Martha Marie
+2 SURN de Leeuw
+2 _MARNM de Leeuw
+1 SEX F
+1 BIRT
+2 DATE 11 DEC 1895
+2 PLAC Amsterdam, Hollande-Septentrionale, Pays-Bas
+1 DEAT Y
+2 DATE 16 JUL 1943
+2 PLAC Camp d'extermination de Sobibor, Voïvodie de Lublin, Pologne
+1 FAMS @F500773@
+1 FAMC @F501303@
+1 SOUR @S500170@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MQSGFL7XPBJAXKZNEWB2QTQWOQ-8085493/martha-marie-de-vries-%D7%9C%D7%91%D7%99%D7%AA-de-leeuw
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 8085493
+1 SOUR @S500056@
+2 PAGE https://www.myheritage.co.il/research/collection-10562/netherlands-civil-marriages-1811-1940?itemId=8514013&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Heiman Asser de Vries
+קשר משפחתי: חתן
+לידה: סביבות 1900 - Harlingen, Friesland, Netherlands
+נישואין: 9 בספט’ 1925 - Amsterdam, North Holland, Netherlands
+כלה: Mar
+4 CONC tha Marie de Leeuw (de Vries)
+הורי החתן: Jacob de Vries, Elize Odewald
+2 EVEN Record
+3 ROLE 10562:8514013:
+1 SOUR @S500276@
+2 PAGE https://www.myheritage.com/profile-OYYV7LY7V4LVKBJYCV32W3MNX4AT4YA-2002387/martha-marie-de-leeuw
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 2002387
+1 RIN MH:I502215
+1 _UID 67BE9F6FE486823447EFB6A6D1E8FACD
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTRhODAzMTQ3YjExZjU1MzdmMjg1MzMyMDYwZjM4ZmZmODNjYzcwYWYxM2FiODhiMzVkNGZjODJmNDk4NDM2MTYmZT0xNzUzNjEwNDAw/158/944/6912/501657_405620f5u85fdot31057a6_A.jpg
+2 _FILESIZE 28002
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501656
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501657
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTQyYWYzYzFkM2Q5Y2I4OTIxMjJhODMxNGI0NzVjY2UyNGFlY2JhYTE1Y2NmNTdkNjQ0ZGEwNGQwNzY2MThkZTMmZT0xNzUzNjEwNDAw/158/944/6912/501656_0151726z34p07fad11658b_A.jpg
+2 _FILESIZE 28027
+2 TITL 000400_844943r10e2e8776lzr3d0_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501656
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTEzMWMzMTdjYTA4MjQ5MGJkYjExYmVlZjMwZDM2NTlkODZmYzRhZjJiZTVhMDhjYjlhNzk4MzAwYzBkNGFhZTAmZT0xNzUzNjEwNDAw/158/944/6912/501666_322459w0j23e64ft45k217_A.jpg
+2 _FILESIZE 169052
+2 TITL Naissance
+2 _POSITION 0 0 640 353
+2 _PHOTO_RIN MH:P501666
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTQyNDllYzYyZjY5NDdlMjMyMTEyYzMzMWMyMGQ2NGFkNDliOTFhODViYjUxM2I1ZGI4ZGMzOTJjZjViN2Y3ODEmZT0xNzUzNjEwNDAw/158/944/6912/501667_5979442r08g367e5f1r8x7_A.jpg
+2 _FILESIZE 169052
+2 TITL Naissance
+2 _POSITION 0 0 640 353
+2 _PHOTO_RIN MH:P501667
+
+0 @I502817@ INDI
+1 _UPD 8 MAR 2025 22:52:16 GMT -0500 
+1 NAME Sara Mozes /de Vries/
+2 GIVN Sara Mozes
+2 SURN de Vries
+2 _MARNM de Wolf
+1 SEX F
+1 BIRT
+2 DATE 1763
+2 PLAC Varel, Lower Saxony, Germany
+1 DEAT Y
+2 DATE 19 JUL 1817
+2 PLAC Amsterdam, Noord-Holland, Netherlands
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19575088/sara-mozes-de-vries-de-wolf
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19575088
+1 RIN MH:I502817
+1 _UID 67CD1E2A976EB57A3D161F6BDFBF048C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTllOGRkNjY2YzI2ZjVhNmE4YzMyYWVhMDdiY2IyNmM0NjJlMmRjODIwNWMzYTQyZTQ1ZTE3YmE2YzUyYjg1YjkmZT0xNzUzNjEwNDAw/158/944/6912/501079_87866461ct71dfoe7k7bc7_A.jpg
+2 _FILESIZE 3854
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501078
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501079
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQ1YTI2M2M4NjRkNDczNDJiMmE0NTQ0Y2Q1NjY2NTU1YTdhYmIyNDA3MjAxODg0MDYxZjkxZDIxOTQ5YjE1OWEmZT0xNzUzNjEwNDAw/158/944/6912/501078_0515957z677177luce1ehd_A.jpg
+2 _FILESIZE 3855
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501078
+
+0 @I501873@ INDI
+1 _UPD 13 MAR 2025 11:38:59 GMT -0500 
+1 NAME Klaartje /de Vries/
+2 GIVN Klaartje
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 22 NOV 1901
+2 PLAC Harlingen, Friesland, the Netherlands
+1 EVEN Spouse: David Hartog van der Velde
+2 TYPE MARR
+2 DATE 23 APR 1930
+2 PLAC Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands
+1 DEAT Y
+2 DATE 6 NOV 1979
+2 PLAC Amstelveen, Amstelveen, North Holland, Netherlands
+1 FAMS @F500688@
+1 FAMC @F500691@
+1 SOUR @S500163@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7VQ2ATDMKHQUZR3MU5PPT6FA4UY-1658874/klaartje-van-der-velde-born-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1658874
+1 SOUR @S500056@
+2 QUAY 4
+2 DATA
+3 TEXT David Hartog van der Velde וKlaartje de Vries&amp;lt;br&amp;gt;נישואין: 23 באפר’ 1930 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;חתן: David Hartog van der Velde&amp;lt;b
+4 CONC r&amp;gt;&nbsp;&nbsp;לידה: סביבות 1905 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;&nbsp;&nbsp;גיל: 25&amp;lt;br&amp;gt;&nbsp;&nbsp;מקצוע: Boekhouder&amp;lt;br&amp;gt;&n
+4 CONC bsp;&nbsp;אב: Benjamin van der Velde&amp;lt;br&amp;gt;&nbsp;&nbsp;אם: Flora Italiaander&amp;lt;br&amp;gt;כלה: Klaartje de Vries (van der Velde)&amp;lt;br&amp;gt;&nbsp;&nbsp;לידה: סביבו
+4 CONC ת 1902 - Harlingen, Friesland, Netherlands&amp;lt;br&amp;gt;&nbsp;&nbsp;גיל: 28&amp;lt;br&amp;gt;אב: Jacob de Vries&amp;lt;br&amp;gt;אם: Elize Odewald&amp;lt;br&amp;gt;מקור: &amp;lt;br&amp
+4 CONC ;gt;מוסד: Noord-Hollands Archief&amp;lt;br&amp;gt;מספר מסמך: Reg.8B fol. 9v&amp;lt;br&amp;gt;מקום המקור: Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;תאריך מקור
+4 CONC : 23 באפר’ 1930&amp;lt;br&amp;gt;תאריך הכרך: 31 בינו’ 1930&amp;lt;br&amp;gt;הערות: Provenance: Datadump ExportBS Huwelijk_20180404_114831.csv van NHA, csv2a2a
+2 EVEN Record
+3 ROLE 10562:7511007-S:
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500021/klaartje-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500021
+1 SOUR @S500170@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MQSGFL7XPBJAXKZNEWB2QTQWOQ-8075862/klaartje-van-der-velde-%D7%9C%D7%91%D7%99%D7%AA-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 8075862
+1 RIN MH:I501873
+1 _UID 67B362187BF53F2FC8A622FD70CD0E40
+
+0 @I500673@ INDI
+1 _UPD 21 FEB 2025 08:19:09 GMT -0500 
+1 NAME David Hartog /van der Velde/
+2 GIVN David Hartog
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 5 MAY 1904
+2 PLAC Amsterdam, NH, Netherlands
+1 DEAT Y
+2 DATE 18 SEP 1944
+2 PLAC a/b JUNYO MARU, Indische Oceaan nabij Benkoelen, Westkust Sumatra, Indonesia
+2 CAUS שואה
+1 OCCU Soldaat KNIL
+1 EVEN Spouse: Klaartje v.d.Velde-de Vries (born de Vries)
+2 TYPE MARR
+2 DATE 23 APR 1930
+2 PLAC Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands
+1 FAMS @F500688@
+1 FAMC @F500040@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT David Hartog van der Velde&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 5 במאי 1904 - Amsterdam, NH, Netherlands&amp;lt;br&amp;gt;מקצוע: Soldaat KNIL&amp;lt;br&amp;gt;נישוא
+4 CONC ין: בן/בת זוג: Klaartje de Vries - 23 באפר’ 1930 - Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;פטירה: 18 בספט’ 1944 - a/b JUNYO MARU, 
+4 CONC Indische Oceaan nabij Benkoelen, Westkust Sumatra, Indonesia&amp;lt;br&amp;gt;אב: Benjamin van der Velde&amp;lt;br&amp;gt;אם: Flora Italiaander&amp;lt;br&amp;gt;אשה: Klaartje de Vries&amp;lt;br
+4 CONC &amp;gt;ילדים: &lt;פרטי&gt; van der Velde, מרת אלישבע אברהמס (לבית ון-דר-ולדה)&amp;lt;br&amp;gt;אחים ואחיות: Jonas Jacob van der Velde, Clara Eva van der 
+4 CONC Velde, Zippora Elisabeth van der Velde, Max van der Bilt (לבית van der Velde), Mozes Jesaja van der Velde, NN van der Velde, Sara Jeannette Salomons (לבית van der Velde), Andries Salomon van d
+4 CONC er Velde
+2 EVEN Record
+3 ROLE 40000:108508875:
+1 SOUR @S500125@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6IWFCRWTZPFKTFPQVZMK6KWLIAI-1500133/david-hartog-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500133
+1 SOUR @S500163@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7VQ2ATDMKHQUZR3MU5PPT6FA4UY-1658872/david-hartog-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1658872
+1 SOUR @S500056@
+2 QUAY 4
+2 DATA
+3 TEXT David Hartog van der Velde וKlaartje de Vries&amp;lt;br&amp;gt;חתן: David Hartog van der Velde&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;גיל: 25&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;מקצוע: Boek
+4 CONC houder&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;גיל: 28&amp;lt;br&amp;gt;מקור: &lt;br&gt;מוסד: Noord-Hollands Archief&lt;br&gt;מספר מסמך: Reg.8B fol. 9v&lt;br&gt;מקום המקור: Am
+4 CONC sterdam, North Holland, Netherlands&lt;br&gt;תאריך מקור: 1930-04-23&lt;br&gt;תאריך הכרך: 1930-01-31&lt;br&gt;הערות: Provenance: Datadump ExportBS Huwelijk_20180404_114831.csv va
+4 CONC n NHA, csv2a2a
+2 EVEN Record
+3 ROLE 10562:7511007-:
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500020/david-hartog-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500020
+1 RIN MH:I500673
+1 _UID 664CACD064AA76FE309C51B5ED9AF1A9
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWU2MTE3ZjNhY2FjZGVkYTFlMmJlNDhlNzNiZTk2ZDRiMTk0ZmVhYmJkYzBiMmVhYTkwNTFkNzRlNWYzYTZmMzMmZT0xNzUzNjEwNDAw/158/944/6912/500727_185933yy85b16mkv7b8u7d_A.jpg
+2 _FILESIZE 10029
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500726
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500727
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWI1MjUwNDJhOTM2MTFkOTFiMmQ4OTA0ZWMxMDU5ODFkNmMyOGNiMDE2ODAwZGJjYmU5ZjA3NzNhMjJkZGUxZmMmZT0xNzUzNjEwNDAw/158/944/6912/500726_92241578iy1856827b0chb_A.jpg
+2 _FILESIZE 10028
+2 TITL 500117_8513571771gaay56849c44_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500726
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWRhMGZlZGUyNzU1MTAyNzE4NjFlMzQ1MjBjZDVlNDRlYWM1NjkyZTJmNGIzMzcyOThhZjYzMjFiZGVhNGNjNjcmZT0xNzUzNjEwNDAw/158/944/6912/500243_318668pipd4260a66ec1cc_A.jpg
+2 _FILESIZE 10021
+2 TITL junyo_maru_large
+2 _PHOTO_RIN MH:P500243
+
+0 @I502853@ INDI
+1 _UPD 8 MAR 2025 23:12:01 GMT -0500 
+1 NAME Levie /de Vries/
+2 GIVN Levie
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 3 MAY 1870
+2 PLAC Groningen, Groningen, Netherlands
+1 DEAT Y
+2 DATE 27 APR 1910
+2 PLAC Groningen, Groningen, Netherlands
+1 FAMS @F500954@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1740553046&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Levie de Vries
+לידה: 3 במאי 1870 - Groningen, Groningen, Netherlands
+פטירה: 27 באפר’ 1910 - Groningen, Groningen, Netherlands
+2 EVEN Record
+3 ROLE 40001:1740553046:
+1 RIN MH:I502853
+1 _UID 67CD231E9E2F00D97CFBC37DFB720ED3
+
+0 @I502834@ INDI
+1 _UPD 8 MAR 2025 23:08:39 GMT -0500 
+1 NAME Creesia /van Zanten/
+2 GIVN Creesia
+2 SURN van Zanten
+1 SEX F
+1 BIRT
+2 DATE 28 JAN 1874
+2 PLAC Middelstum, Groningen, Netherlands
+1 DEAT Y
+2 DATE 12 OCT 1942
+2 PLAC Auschwitz Concentration Camp, Oświęcim, Biała, Kraków, Poland
+1 BURI
+2 PLAC Auschwitz Death Camp, Oswiecim, Malopolskie, Poland
+1 FAMS @F500954@
+1 FAMS @F500955@
+1 FAMC @F500947@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1303178471&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Creesia van Zanten
+לידה: 28 בינו’ 1874 - Middelstum, Groningen, Netherlands
+פטירה: 12 באוק’ 1942 - Auschwitz Concentration Camp, Oświęcim, Biała, Kraków, Poland
+הורים: Sa
+4 CONC lomon van Zanten, Rebekka van Zanten (לבית van Dam)
+בני זוג: Levie de Vries, Ruben Bollegraaf
+ילדים: Leentje van Coevorden (לבית de Vries), Rebecca de Vries, Jozef de Vries, Salomon
+4 CONC  de Vries, Izak de Vries, Rebekka de Vries, Klaartje Hess (לבית Bollegraaf)
+אחים ואחיות: Martha Lootsteen (לבית van Zanten), Victor van Zanten, Benjamin van Zanten, Bertha van Zanten
+4 CONC , Jacob van Zanten
+2 EVEN Record
+3 ROLE 40001:1303178471:
+1 RIN MH:I502834
+1 _UID 67CD22544FEE061B0062B041630A0D44
+
+0 @I502382@ INDI
+1 _UPD 27 FEB 2025 06:37:15 GMT -0500 
+1 NAME Sientje Jeannette /de Vries/
+2 GIVN Sientje Jeannette
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 15 MAY 1926
+2 PLAC Nijmegen, Nijmegen, Gelderland, The Netherlands
+1 DEAT Y
+2 DATE 27 NOV 1942
+2 PLAC Gmina Oświęcim, Oświęcim County, Lesser Poland Voivodeship, Poland
+1 FAMC @F500824@
+1 SOUR @S500183@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6YQUCYFSYMMGUI2BVDFAEEULVYY-4502359/sientje-jeannette-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 4502359
+1 RIN MH:I502382
+1 _UID 67C05C7877A64405A583EE45F0EDAE8A
+
+0 @I500805@ INDI
+1 _UPD 4 JUN 2024 08:12:27 GMT -0500 
+1 NAME Liepman Benjamin Cohen /de Vries/
+2 GIVN Liepman Benjamin Cohen
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 1745
+2 PLAC Harlingen, Holland
+1 DEAT Y
+2 DATE JAN 1801
+2 PLAC Harlingen, Holland
+2 AGE 55-56
+1 FAMS @F500300@
+1 FAMC @F500302@
+1 SOUR @S500066@
+2 PAGE Liepman Benjamin Cohen de Vries
+2 QUAY 3
+2 DATA
+3 DATE 4 JUN 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I500805
+1 _UID 665F125E446C13BD7DB0BD6D5FB20D78
+
+0 @I500806@ INDI
+1 _UPD 7 MAY 2025 22:30:57 GMT -0500 
+1 NAME Henderina Meijers /Miejermeijers Bons Reindorp/
+2 GIVN Henderina Meijers
+2 SURN Miejermeijers Bons Reindorp
+2 _MARNM de Vries
+1 SEX F
+1 BIRT
+2 DATE 1755
+2 PLAC Zwolle, Zwolle, Overijssel, The Netherlands
+1 DEAT Y
+2 DATE 7 FEB 1840
+2 PLAC Harlingen, Friesland, The Netherlands
+2 AGE 84-85
+1 FAMS @F500300@
+1 FAMC @F500417@
+1 SOUR @S500066@
+2 PAGE Henderina Meijers MiejerMeijers Bons Reindorp
+2 QUAY 3
+2 DATA
+3 DATE 4 JUN 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=125956862&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Henderina Reindorp
+לידה: 1755 - Zwolle, Zwolle, Overijssel, The Netherlands
+פטירה: 7 בפבר’ 1840 - Harlingen, Friesland, The Netherlands
+אב: Meijer Levie Reindorp‏‎
+אם: Hanna Rei
+4 CONC ndorp
+בעל: Liepman Benjamin Cohen de Vries
+ילדים: Benjamin Wolf Liepman de Vries, Abraham Liepman de Vries, Meijer Liepman de Vries, Levie Liepman de Vries, Betje Liepman de Vries, Jacob Liepm
+4 CONC an de Vries, Pietje Lijpmans de Vries
+אח/אחות: Levie Meijer Reindorp‏‎
+2 EVEN Record
+3 ROLE 40000:125956862:
+1 RIN MH:I500806
+1 _UID 665F125E659973C17DB0BD6D5FB20D78
+
+0 @I502766@ INDI
+1 _UPD 8 MAR 2025 22:51:02 GMT -0500 
+1 NAME Benjamin /de Vries/
+2 GIVN Benjamin
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE ABT 1700
+1 DEAT Y
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19509547/benjamin-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19509547
+1 RIN MH:I502766
+1 _UID 67CD1E1CDF20B5473D161F6BDFBF048C
+
+0 @I501886@ INDI
+1 _UPD 8 APR 2025 13:01:27 GMT -0500 
+1 NAME Isaac Benjamin /de Vries/
+2 GIVN Isaac Benjamin
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 23 AUG 1831
+2 PLAC Harlingen, Friesland, Nederland
+1 DEAT Y
+2 DATE 6 JAN 1912
+2 PLAC Harlingen, Friesland, Nederland
+1 FAMS @F500692@
+1 FAMC @F501326@
+1 SOUR @S500087@
+2 PAGE https://www.myheritage.co.il/profile-OYYV72HL4OV5DQMPGOKAN7Q3ZWCTFWA-10500008/isaac-benjamin-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT kluveld Family Site, מנוהל ע"י amanda kluveld
+2 EVEN Smart Matching
+3 ROLE 10500008
+1 SOUR @S500011@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6FIFUUCMXO56TRN727UU7BWZBMQ-1500092/isaak-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT בן אבו Web Site, מנוהל ע"י יאיר בן אבו
+2 EVEN Smart Matching
+3 ROLE 1500092
+1 RIN MH:I501886
+1 _UID 67B366C183A2F7726D1766E32812436A
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWNmY2NmOTUzNmQ5NWJhOGE3YjBiZDQyMzMzYTU0MWQ4ZTU5NWNhYzc4Y2VhYTNlMjU0MzI2MDFlMzJkMWI2ZDAmZT0xNzUzNjEwNDAw/158/944/6912/501749_698847f19t8611745675d6_A.jpg
+2 _FILESIZE 6543
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501748
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501749
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQyOGJjZTI1MTZkYTkyMjI0ZmM1NmNhODkwODgzYjczNGM1ZDQ4N2Y0NjY1NmIxMDdlY2ZiZDdhYzVjNTVjZDkmZT0xNzUzNjEwNDAw/158/944/6912/501748_235097w74f115656y66ne7_A.jpg
+2 _FILESIZE 6543
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501748
+
+0 @I501887@ INDI
+1 _UPD 17 FEB 2025 10:41:41 GMT -0500 
+1 NAME Klaartje /Speijer/
+2 GIVN Klaartje
+2 SURN Speijer
+2 _MARNM de Vries
+1 SEX F
+1 BIRT
+2 DATE 31 DEC 1836
+2 PLAC Harlingen, Frysland, Netherlands
+1 DEAT Y
+2 DATE 16 AUG 1920
+2 PLAC Harlingen, Frysland, Netherlands
+1 FAMS @F500692@
+1 SOUR @S500087@
+2 PAGE https://www.myheritage.co.il/profile-OYYV72HL4OV5DQMPGOKAN7Q3ZWCTFWA-10500009/klaartje-speijer
+2 QUAY 3
+2 DATA
+3 TEXT kluveld Family Site, מנוהל ע"י amanda kluveld
+2 EVEN Smart Matching
+3 ROLE 10500009
+1 RIN MH:I501887
+1 _UID 67B366C1BB8EF7746D1766E32812436A
+
+0 @I502801@ INDI
+1 _UPD 8 MAR 2025 22:51:49 GMT -0500 
+1 NAME Jacob Mozes /de Vries/
+2 GIVN Jacob Mozes
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 1760
+1 DEAT Y
+2 DATE BEF 1844
+1 FAMC @F500941@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19515638/jacob-mozes-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19515638
+1 RIN MH:I502801
+1 _UID 67CD1E24F413056A3D161F6BDFBF048C
+
+0 @I500773@ INDI
+1 _UPD 27 FEB 2025 06:37:13 GMT -0500 
+1 NAME Aaron /de Vries/
+2 GIVN Aaron
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 21 MAY 1898
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+1 DEAT Y
+2 DATE 31 MAR 1943
+2 PLAC Oswiecim, Oświęcim County, Malopolskie, Poland
+1 EVEN Spouse: Henriette Engelsman
+2 TYPE MARR
+2 DATE 26 MAY 1925
+2 PLAC Amersfoort, Amersfoort, Utrecht, The Netherlands
+1 FAMS @F500824@
+1 FAMC @F500035@
+1 SOUR @S500060@
+2 QUAY 4
+2 DATA
+3 TEXT Aaron DE VRIES&amp;lt;br&amp;gt;לידה: 21 במאי 1898&amp;lt;br&amp;gt;פטירה: 31 במרץ 1943&amp;lt;br&amp;gt;אב: Benjamin DE VRIES&amp;lt;br&amp;gt;אם: Betje BEHR&amp;lt;br&amp;gt;א
+4 CONC ים ואחיות: Heiman Izaäc DE VRIES, Maria DE VRIES, Jacob DE VRIES
+2 EVEN Record
+3 ROLE 14100:1607160448:
+1 SOUR @S500183@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6YQUCYFSYMMGUI2BVDFAEEULVYY-4502358/aaron-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 4502358
+1 RIN MH:I500773
+1 _UID 6659CB2D2D6D564C1F695E7F9A34BE46
+
+0 @I502381@ INDI
+1 _UPD 27 FEB 2025 06:37:15 GMT -0500 
+1 NAME Henriette /Engelsman/
+2 GIVN Henriette
+2 SURN Engelsman
+2 _MARNM de Vries
+1 SEX F
+1 CENS
+2 DATE 22 MAR 1869
+2 PLAC Amersfoort, Utrecht, Nederland
+1 BIRT
+2 DATE 29 MAR 1901
+2 PLAC Enschede, Enschede, Overijssel, The Netherlands
+1 RESI
+2 ADDR
+3 ADR1 H. v. Viandenstraat
+1 EVEN
+2 TYPE MARR
+2 DATE ABT 1925
+2 PLAC Nijmegen, Gelderland, Netherlands
+1 EVEN
+2 TYPE MARR
+2 DATE 26 MAY 1925
+2 PLAC Amersfoort, Utrecht, Nederland
+1 DEAT Y
+2 DATE 27 NOV 1942
+2 PLAC Oswiecim, Oświęcim County, Malopolskie, Poland
+1 FAMS @F500824@
+1 SOUR @S500183@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6YQUCYFSYMMGUI2BVDFAEEULVYY-4502160/henriette-de-vries-born-engelsman
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 4502160
+1 RIN MH:I502381
+1 _UID 67C05C78178A0402A583EE45F0EDAE8A
+
+0 @I500771@ INDI
+1 _UPD 27 FEB 2025 06:38:33 GMT -0500 
+1 NAME Heiman Izaäc /de Vries/
+2 GIVN Heiman Izaäc
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 14 AUG 1891
+2 PLAC Harlingen, Harlingen, Friesland, Netherlands
+1 DEAT Y
+2 DATE 11 JUN 1943
+2 PLAC Amsterdam, Amsterdam, Noord-Holland, Netherlands
+1 FAMS @F500826@
+1 FAMC @F500035@
+1 SOUR @S500060@
+2 QUAY 4
+2 DATA
+3 TEXT Heiman Izaäc DE VRIES&amp;lt;br&amp;gt;לידה: 14 באוג’ 1891&amp;lt;br&amp;gt;פטירה: 11 ביוני 1943&amp;lt;br&amp;gt;אב: Benjamin DE VRIES&amp;lt;br&amp;gt;אם: Betje BEHR&amp;lt;
+4 CONC br&amp;gt;אחים ואחיות: Aaron DE VRIES, Maria DE VRIES, Jacob DE VRIES
+2 EVEN Record
+3 ROLE 14100:1607160257:
+1 SOUR @S500185@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6HKGW7ZTU6V5RFM43NYI4BD2POY-1500008/heiman-izaac-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500008
+1 RIN MH:I500771
+1 _UID 6659CB2C9C19664A1F695E7F9A34BE46
+
+0 @I502387@ INDI
+1 _UPD 27 FEB 2025 06:38:34 GMT -0500 
+1 NAME Leentje //
+2 GIVN Leentje
+2 _MARNM De Vries
+1 SEX F
+1 BIRT
+2 DATE 21 MAR 1884
+2 PLAC Kampen, Kampen, Overijssel, Netherlands
+1 DEAT Y
+2 DATE 11 JUN 1943
+2 PLAC Sobibór, Włodawa County, Lublin Voivodeship, Poland
+1 FAMS @F500826@
+1 SOUR @S500185@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6HKGW7ZTU6V5RFM43NYI4BD2POY-1500009/leentje
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500009
+1 RIN MH:I502387
+1 _UID 67C05CC784D9EAE78337608592BCDBBF
+
+0 @I500808@ INDI
+1 _UPD 4 JUN 2024 08:12:27 GMT -0500 
+1 NAME Lea Benjamin /de Vries/
+2 GIVN Lea Benjamin
+2 SURN de Vries
+2 _MARNM Coopman
+1 SEX F
+1 BIRT
+2 DATE 3 JAN 1816
+2 PLAC Gorinchem, Gorinchem, South Holland, The Netherlands
+1 DEAT Y
+2 DATE 2 JAN 1900
+2 PLAC Amsterdam, The Netherlands
+1 EVEN Echtgeno(o)t(e): Simon Jacob Coopman
+2 TYPE MARR
+2 DATE 5 SEP 1844
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+1 FAMC @F500254@
+1 SOUR @S500066@
+2 PAGE Lea Benjamin de Vries
+2 QUAY 3
+2 DATA
+3 DATE 4 JUN 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 NOTE Kind:
+Lea de Vries
+Geslacht:
+Vrouw
+Geboorteplaats:
+Gorinchem
+Geboortedatum:
+zondag 30 juni 1816
+'''Vondeling: N'''
+Vader:
+Benjamin de Vries
+Moeder:
+Jaane van der Sluis
+Gebeurtenis:
+Geboo
+2 CONC rte
+Datum:
+zondag 30 juni 1816
+Gebeurtenisplaats:
+Gorinchem
+
+Bron	 Burgerlijke stand - Huwelijk
+Archieflocatie	 Tresoar, Frysk Histoarysk en Letterkundich Sintrum
+Algemeen	 Toegangnr: 30-15 
+
+2 CONC Inventarisnr: 2012 
+Gemeente: Harlingen 
+Soort akte: Huwelijksakte 
+Aktenummer: 65 
+Datum: 05-09-1844
+Bruidegom	 Simon Jacob Coopman 
+Leeftijd: 31 
+Geboorteplaats: Amsterdam, provincie Noord-Ho
+2 CONC lland
+Bruid	 Lea Benjamins de Vries 
+Leeftijd: 28 
+Geboorteplaats: Gorinchem, provincie Zuid-Holland
+Vader bruidegom	 Jacob Meyer Coopman
+Moeder bruidegom	 Jansje Simon van der Heyde
+Vader bruid
+2 CONC 	 Benjamin de Vries
+Moeder bruid	 Joane van der Sluis
+1 RIN MH:I500808
+1 _UID 665F125E9DEFA3C67DB0BD6D5FB20D78
+
+0 @I502854@ INDI
+1 _UPD 8 MAR 2025 23:12:01 GMT -0500 
+1 NAME Leentje /de Vries/
+2 GIVN Leentje
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 28 MAR 1897
+2 PLAC Groningen, Groningen, Netherlands
+1 DEAT Y
+2 DATE 15 DEC 1942
+2 PLAC Oświęcim, Chrzanów, Małopolska, Poland
+1 FAMC @F500954@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1740599030&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Leentje van Coevorden (לבית de Vries)
+לידה: 28 במרץ 1897 - Groningen, Groningen, Netherlands
+פטירה: 15 בדצמ’ 1942 - Oświęcim, Chrzanów, Małopolska, Poland
+הורים: Levie 
+4 CONC de Vries, Creesia van Zanten
+בעל: Nathan van Coevorden
+אחים ואחיות: Rebecca de Vries, Jozef de Vries, Salomon de Vries, Izak de Vries, Rebekka de Vries, Klaartje Hess (לבית Bollegraaf
+4 CONC )
+2 EVEN Record
+3 ROLE 40001:1740599030:
+1 RIN MH:I502854
+1 _UID 67CD231EEDD610DC7CFBC37DFB720ED3
+
+0 @I501894@ INDI
+1 _UPD 8 APR 2025 07:10:36 GMT -0500 
+1 NAME Mozes Eliazar /de Vries/
+2 GIVN Mozes Eliazar
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 4 DEC 1876
+2 PLAC Harlingen, Frise, Pays-Bas
+1 DEAT Y
+2 DATE 23 NOV 1942
+2 PLAC Gmina Oświęcim, Lesser Poland Voivodeship, Poland
+1 FAMS @F501305@
+1 FAMC @F500692@
+1 SOUR @S500087@
+2 PAGE https://www.myheritage.co.il/profile-OYYV72HL4OV5DQMPGOKAN7Q3ZWCTFWA-10500001/mozes-eliazar-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT kluveld Family Site, מנוהל ע"י amanda kluveld
+2 EVEN Smart Matching
+3 ROLE 10500001
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=125963070&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Mozes Eleazar de Vries
+לידה: 4 בדצמ’ 1876 - Harlingen, Frise, Pays-Bas
+פטירה: 23 בנוב’ 1942 - Gmina Oświęcim, Lesser Poland Voivodeship, Poland
+אב: Izaak de Vries
+אם: Klara 
+4 CONC de Vries (לבית Speijer)
+אשה: Gertruida Swart
+ילדים: Klara van Buuren (לבית de Vries), Alexander Lion de Vries, Benjamin de Vries
+אחים ואחיות: Eliazar de Vries, Aron de Vries,
+4 CONC  Kaatje de Vries, Jantje de Vries, Saartje de Vries, Mietje de Vries, Pietje Polak (לבית de Vries), Benjamin de Vries, Jacob de Vries
+2 EVEN Record
+3 ROLE 40000:125963070:
+1 RIN MH:I501894
+1 _UID 67B366C3175A577B6D1766E32812436A
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTczMDJlYmQyNjMxN2ZlZTExZGM5M2I0MWY4YWMyNjZhNTFkMDhjNTgxZWE1YjFkMDY5MzljMjM1Y2UxMDA5ZTUmZT0xNzUzNjEwNDAw/158/944/6912/500706_796986636u1b77yh96ycf2_A.jpg
+2 _FILESIZE 4010
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500705
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500706
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTgyYzNmYTg3YTQ1ODY1NjUzOGFjMjkzN2E5OTU0ZDdhZTE0MTk0ZWIxMDNjNTczNDczMGJlOTRmMDc2Y2Y2MmEmZT0xNzUzNjEwNDAw/158/944/6912/500705_46945636ica9e6175662by_A.jpg
+2 _FILESIZE 4016
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500705
+
+0 @I504038@ INDI
+1 _UPD 8 APR 2025 07:11:24 GMT -0500 
+1 NAME Gertruida /Swart/
+2 GIVN Gertruida
+2 SURN Swart
+1 SEX F
+1 BIRT
+2 DATE 17 AUG 1871
+2 PLAC Zwolle, Overijssel, Pays-Bas
+1 DEAT Y
+2 DATE 6 JUN 1942
+2 PLAC Franeker, Friesland, The Netherlands
+1 FAMS @F501305@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=125963071&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Gertruida Swart
+לידה: 17 באוג’ 1871 - Zwolle, Overijssel, Pays-Bas
+פטירה: 6 ביוני 1942 - Franeker, Friesland, The Netherlands
+אב: Salomon Swart
+אם: Betje Stibbe
+בעל: Mozes E
+4 CONC leazar de Vries
+ילדים: Klara van Buuren (לבית de Vries), Alexander Lion de Vries, Benjamin de Vries
+אחים ואחיות: Alexander Swart, Marianna Swart
+2 EVEN Record
+3 ROLE 40000:125963071:
+1 SOUR @S500121@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7VDVKG4I5AB5Z3U3O4ZVSC6VP3I-17049773/truida-swart-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT Genealogie Boon - van der Mark Website, מנוהל ע"י Brigitte Boon - van der Mark
+2 EVEN Smart Matching
+3 ROLE 17049773
+1 RIN MH:I504038
+1 _UID 67F5123B63C10091CAFC43F69D375087
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTk2YzBiMDNhOTQ0NjQwOTJjYzdkNjQ0YmY1ZWJlYWM4NzBkOTU1OGQzZWY1ZGMzOGUxNTIxMTQ3ZmM5NjQxODEmZT0xNzUzNjEwNDAw/158/944/6912/501675_592364f26wc6k6bv572111_A.jpg
+2 _FILESIZE 4506
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501674
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501675
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTU0YWMxYTYzMDkwNDg5MTk0OThkOTY0ZWE2MTkwNThiZmU1MTAzNDY3OGVjMDA3NDJiMjRiNGUzNzg4YjU5ZDImZT0xNzUzNjEwNDAw/158/944/6912/501674_53857176617csb2fjav561_A.jpg
+2 _FILESIZE 4506
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501674
+
+0 @I504037@ INDI
+1 _UPD 20 APR 2025 12:00:09 GMT -0500 
+1 NAME Saartje /de Vries/
+2 GIVN Saartje
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 4 OCT 1860
+2 PLAC Harlingen, Frise, Pays-Bas
+1 DEAT Y
+2 DATE 8 JUL 1938
+2 PLAC Harlingen, Friesland, the Netherlands
+1 FAMC @F500692@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=125964376&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Saartje de Vries
+לידה: 4 באוק’ 1860 - Harlingen, Frise, Pays-Bas
+פטירה: 8 ביולי 1938 - Harlingen, Friesland, The Netherlands
+אב: Izaak de Vries
+אם: Klara de Vries (לבית Spe
+4 CONC ijer)
+בעל: Elkan Aäron Speijer‏‎
+ילדים: Klaartje Speijer, Schoontje Cohen (לבית Speijer), Aron Elkan Speyer (לבית Speijer), Jansje Speijer, Klaartje Speijer, Izaäk Speijer, Judik
+4 CONC  Italie (לבית Speijer), Klaartje Eva Speijer, Pietje Speijer, Mietje Speijer, Michiel Speijer, Elize Speijer
+אחים ואחיות: Eliazar de Vries, Aron de Vries, Jantje de Vries, Mietje de Vrie
+4 CONC s, Pietje Polak (לבית de Vries), Kaatje de Vries, Mozes Eleazar de Vries, Benjamin de Vries, Jacob de Vries
+2 EVEN Record
+3 ROLE 40000:125964376:
+1 RIN MH:I504037
+1 _UID 67F5123B1DF48090CAFC43F69D375087
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTY5ZGFkMmFlMTg0NDg4YjM4MWM1OTBmZmM4NTE1MTQwZWYxYzAyOTdmY2EwMmQ0MDExOGFmYWFmNGU2NmZhMzImZT0xNzUzNjEwNDAw/158/944/6912/501669_10430909p057d203af6191_A.jpg
+2 _FILESIZE 78954
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501668
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501669
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWY1NDZmOGRhNjVmNGVlZjk0YzAwNTM4MWIwNmE3MTljMTIyMDE0OGZlYzIzYWJhNDhmMDRmYzExMDQ2ZmU2YjcmZT0xNzUzNjEwNDAw/158/944/6912/501668_33552466ccx3711279f53e_A.jpg
+2 _FILESIZE 78925
+2 TITL _75_006_saartje_de_vries_1860-1938_large
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501668
+
+0 @I500653@ INDI
+1 _UPD 21 MAY 2024 09:12:00 GMT -0500 
+1 NAME Pietje /de Vries/
+2 GIVN Pietje
+2 SURN de Vries
+2 _MARNM Polak
+1 SEX F
+1 BIRT
+2 DATE 15 MAY 1872
+2 PLAC Harlingen, Frise, Pays-Bas
+1 DEAT Y
+2 DATE 20 MAR 1943
+2 PLAC Sobibór, Włodawa County, Lublin Voivodeship, Poland
+1 FAMC @F500038@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Pietje Polak (לבית de Vries)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 15 במאי 1872 - Harlingen, Frise, Pays-Bas&amp;lt;br&amp;gt;פטירה: 20 במרץ 1943 - Sobibór, W
+4 CONC odawa County, Lublin Voivodeship, Poland&amp;lt;br&amp;gt;אב: Izaak de Vries&amp;lt;br&amp;gt;אם: Klara de Vries (לבית Speijer)&amp;lt;br&amp;gt;בעל: Izak Polak&amp;lt;br&amp;gt;ילדים
+4 CONC : Saartje Polak, Nathan Polak, Izaak Benjamin Polak&amp;lt;br&amp;gt;אחים ואחיות: Eliazar de Vries, Aron de Vries, Kaatje de Vries, Jantje de Vries, Saartje de Vries, Mietje de Vries, Benjam
+4 CONC in de Vries, Mozes Eleazar de Vries, Jacob de Vries
+2 EVEN Record
+3 ROLE 40000:125968774:
+1 RIN MH:I500653
+1 _UID 664CABA7D753F0A73DCDFFBF7E48BC56
+
+0 @I502385@ INDI
+1 _UPD 27 FEB 2025 06:37:17 GMT -0500 
+1 NAME Jeannette Henriette /de Vries/
+2 GIVN Jeannette Henriette
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 1 MAR 1935
+2 PLAC Nijmegen, Nijmegen, Gelderland, The Netherlands
+1 DEAT Y
+2 DATE 27 NOV 1942
+2 PLAC Gmina Oświęcim, Oświęcim County, Lesser Poland Voivodeship, Poland
+1 FAMC @F500824@
+1 SOUR @S500183@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6YQUCYFSYMMGUI2BVDFAEEULVYY-4502362/jeannette-henriette-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 4502362
+1 RIN MH:I502385
+1 _UID 67C05C793685A408A583EE45F0EDAE8A
+
+0 @F501755@ FAM
+1 _UPD 12 MAY 2025 23:38:38 GMT -0500
+1 HUSB @I501823@
+1 WIFE @I505741@
+1 RIN MH:F501755
+1 _UID 6822CCCE947E7DC39CDF7AA3D5CE9392
+1 MARR
+
+0 @F500419@ FAM
+1 _UPD 11 AUG 2024 04:33:06 GMT -0500
+1 HUSB @I501140@
+1 WIFE @I500873@
+1 CHIL @I501141@
+1 RIN MH:F500419
+1 _UID 66B88552C5B7212A9E76F6B0B8FC99F1
+1 MARR
+2 DATE 10 JAN 1875
+2 PLAC Groningen
+
+0 @F500499@ FAM
+1 _UPD 29 NOV 2024 06:37:35 GMT -0500
+1 HUSB @I501358@
+1 WIFE @I501359@
+1 CHIL @I500725@
+1 CHIL @I501360@
+1 CHIL @I503485@
+1 CHIL @I501361@
+1 RIN MH:F500499
+1 _UID 6749B58F2CD6861B9958A13FFB063C35
+1 MARR
+2 DATE 1788
+2 PLAC Amsterdam
+
+0 @F500940@ FAM
+1 _UPD 8 MAR 2025 22:45:05 GMT -0500
+1 HUSB @I502755@
+1 WIFE @I502756@
+1 CHIL @I501359@
+1 RIN MH:F500940
+1 _UID 67CD1CD0C624D1C5E59E5D856B751F65
+
+0 @F500019@ FAM
+1 _UPD 16 MAY 2023 06:57:52 GMT -0500
+1 HUSB @I500045@
+1 WIFE @I500089@
+1 CHIL @I500291@
+1 CHIL @I500292@
+1 CHIL @I500041@
+1 RIN MH:F500019
+1 _UID 645E225FD0397498D21921288C7B221C
+1 MARR
+2 DATE 12 MAR 1919
+2 PLAC Amstelveen, Amstelveen, North Holland, Netherlands
+
+0 @F500327@ FAM
+1 _UPD 18 JUN 2024 05:37:26 GMT -0500
+1 HUSB @I500874@
+1 WIFE @I500810@
+1 CHIL @I500875@
+1 RIN MH:F500327
+1 _UID 667163663060B4E082A85956F88FDF06
+1 MARR
+2 DATE 18 APR 1850
+2 PLAC Harlingen, Friesland, the Netherlands
+
+0 @F500038@ FAM
+1 _UPD 23 MAY 2023 06:21:30 GMT -0500
+1 HUSB @I500101@
+1 WIFE @I500102@
+1 CHIL @I500648@
+1 CHIL @I500098@
+1 CHIL @I500649@
+1 CHIL @I500103@
+1 CHIL @I500650@
+1 CHIL @I500651@
+1 CHIL @I500652@
+1 CHIL @I500653@
+1 CHIL @I500655@
+1 CHIL @I500656@
+1 RIN MH:F500038
+1 _UID 646CA18791278E7A6F1AC9F5FAD7D939
+1 MARR
+2 DATE 15 MAY 1856
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+2 NOTE בן/בת זוג: Izaak de Vries
+
+0 @F500562@ FAM
+1 _UPD 10 JAN 2025 05:27:47 GMT -0500
+1 HUSB @I500101@
+1 RIN MH:F500562
+1 _UID 6781041E2D06FA03C2A6F97527284072
+1 MARR
+
+0 @F500420@ FAM
+1 _UPD 11 AUG 2024 04:33:07 GMT -0500
+1 HUSB @I501142@
+1 WIFE @I501143@
+1 CHIL @I501138@
+1 RIN MH:F500420
+1 _UID 66B885530B8BB1329E76F6B0B8FC99F1
+1 MARR
+
+0 @F500035@ FAM
+1 _UPD 23 MAY 2023 06:09:21 GMT -0500
+1 HUSB @I500098@
+1 WIFE @I500097@
+1 CHIL @I500771@
+1 CHIL @I500772@
+1 CHIL @I500089@
+1 CHIL @I500773@
+1 RIN MH:F500035
+1 _UID 646C9EB8D88BB37E093E4E4C32828A1A
+1 MARR
+2 DATE 7 AUG 1887
+2 PLAC Assen, Drenthe, Netherlands
+2 NOTE נישואין ל: Benjamin DE VRIES
+
+0 @F500905@ FAM
+1 _UPD 6 MAR 2025 07:44:01 GMT -0500
+1 HUSB @I502678@
+1 WIFE @I502679@
+1 CHIL @I500881@
+1 RIN MH:F500905
+1 _UID 67C9A6A0F1BE6AC4A41F19B93683F953
+
+0 @F500941@ FAM
+1 _UPD 8 MAR 2025 22:50:35 GMT -0500
+1 HUSB @I502757@
+1 CHIL @I502758@
+1 CHIL @I502759@
+1 CHIL @I502761@
+1 CHIL @I502762@
+1 CHIL @I502764@
+1 CHIL @I502765@
+1 CHIL @I502766@
+1 CHIL @I502767@
+1 CHIL @I502768@
+1 CHIL @I502769@
+1 CHIL @I502770@
+1 CHIL @I502771@
+1 CHIL @I502773@
+1 CHIL @I502774@
+1 CHIL @I502775@
+1 CHIL @I502776@
+1 CHIL @I502777@
+1 CHIL @I502778@
+1 CHIL @I502779@
+1 CHIL @I502755@
+1 CHIL @I502780@
+1 CHIL @I502781@
+1 CHIL @I502782@
+1 CHIL @I502783@
+1 CHIL @I502784@
+1 CHIL @I502785@
+1 CHIL @I502786@
+1 CHIL @I502787@
+1 CHIL @I502788@
+1 CHIL @I502789@
+1 CHIL @I502790@
+1 CHIL @I502791@
+1 CHIL @I502792@
+1 CHIL @I502793@
+1 CHIL @I502794@
+1 CHIL @I502796@
+1 CHIL @I502797@
+1 CHIL @I502798@
+1 CHIL @I502799@
+1 CHIL @I502800@
+1 CHIL @I502801@
+1 CHIL @I502802@
+1 CHIL @I502803@
+1 CHIL @I502804@
+1 CHIL @I502805@
+1 CHIL @I502806@
+1 CHIL @I502818@
+1 CHIL @I502817@
+1 CHIL @I502816@
+1 CHIL @I502815@
+1 CHIL @I502813@
+1 CHIL @I502814@
+1 CHIL @I502812@
+1 CHIL @I502810@
+1 CHIL @I502811@
+1 CHIL @I502809@
+1 CHIL @I502807@
+1 RIN MH:F500941
+1 _UID 67CD1E1B3C27553E3D161F6BDFBF048C
+
+0 @F501308@ FAM
+1 _UPD 8 APR 2025 07:12:06 GMT -0500
+1 HUSB @I504041@
+1 WIFE @I504047@
+1 CHIL @I504048@
+1 RIN MH:F501308
+1 _UID 67F512965D4566281ED3874EA3621152
+1 MARR
+
+0 @F501307@ FAM
+1 _UPD 8 APR 2025 07:11:45 GMT -0500
+1 HUSB @I504042@
+1 WIFE @I504046@
+1 RIN MH:F501307
+1 _UID 67F512810B492B1D1783103A9692472D
+1 MARR
+
+0 @F500825@ FAM
+1 _UPD 27 FEB 2025 06:37:47 GMT -0500
+1 HUSB @I500772@
+1 WIFE @I502386@
+1 RIN MH:F500825
+1 _UID 67C05C9B31993A43D783C59849BD0D63
+1 MARR
+2 DATE 15 DEC 1920
+2 PLAC Leerdam
+
+0 @F501306@ FAM
+1 _UPD 8 APR 2025 07:11:20 GMT -0500
+1 HUSB @I504043@
+1 WIFE @I504039@
+1 CHIL @I504044@
+1 CHIL @I504045@
+1 RIN MH:F501306
+1 _UID 67F51268BD81C1C89B6BC832334CFF41
+1 MARR
+2 DATE 14 AUG 1929
+2 PLAC Amsterdam, North Holland, the Netherlands
+
+0 @F500326@ FAM
+1 _UPD 18 JUN 2024 05:37:25 GMT -0500
+1 HUSB @I500872@
+1 WIFE @I500807@
+1 CHIL @I500873@
+1 RIN MH:F500326
+1 _UID 66716365C8A5B4D982A85956F88FDF06
+1 MARR
+2 DATE 11 DEC 1843
+2 PLAC Harlingen, Friesland, Netherlands
+2 NOTE Echtgeno(o)t(e): Hendrika de Vries
+
+0 @F501328@ FAM
+1 _UPD 8 APR 2025 13:03:57 GMT -0500
+1 HUSB @I504189@
+1 WIFE @I504190@
+1 CHIL @I504191@
+1 CHIL @I504174@
+1 CHIL @I504192@
+1 CHIL @I504193@
+1 CHIL @I504194@
+1 CHIL @I504195@
+1 RIN MH:F501328
+1 _UID 67F5650D74E5F9FDC6E1CED0AC22E10A
+
+0 @F500253@ FAM
+1 _UPD 21 MAY 2024 09:11:52 GMT -0500
+1 HUSB @I500103@
+1 WIFE @I500654@
+1 CHIL @I500657@
+1 CHIL @I500658@
+1 CHIL @I500659@
+1 RIN MH:F500253
+1 _UID 664CABA8197F90A93DCDFFBF7E48BC56
+1 MARR
+2 DATE 8 SEP 1895
+2 PLAC Slochteren, Slochteren, Groningen, The Netherlands
+2 NOTE בן/בת זוג: Elize Odewald
+
+0 @F500862@ FAM
+1 _UPD 4 MAR 2025 08:06:03 GMT -0500
+1 HUSB @I502517@
+1 WIFE @I502391@
+1 CHIL @I502518@
+1 RIN MH:F500862
+1 _UID 67C708CB45CF576AC421483FF7D8700E
+1 MARR
+
+0 @F500418@ FAM
+1 _UPD 11 AUG 2024 04:33:06 GMT -0500
+1 HUSB @I501138@
+1 WIFE @I501139@
+1 CHIL @I500872@
+1 RIN MH:F500418
+1 _UID 66B885528A7F31249E76F6B0B8FC99F1
+1 MARR
+2 DATE 28 JAN 1814
+2 PLAC Lemmer, Holland
+
+0 @F501326@ FAM
+1 _UPD 8 APR 2025 13:01:24 GMT -0500
+1 HUSB @I504174@
+1 WIFE @I504175@
+1 CHIL @I504176@
+1 CHIL @I504196@
+1 CHIL @I504187@
+1 CHIL @I504177@
+1 CHIL @I504178@
+1 CHIL @I504179@
+1 CHIL @I504188@
+1 CHIL @I501886@
+1 CHIL @I504197@
+1 CHIL @I504180@
+1 RIN MH:F501326
+1 _UID 67F56474B50C6E5133E07EBD07E4CDAA
+
+0 @F501309@ FAM
+1 _UPD 8 APR 2025 07:12:50 GMT -0500
+1 HUSB @I504049@
+1 WIFE @I501892@
+1 RIN MH:F501309
+1 _UID 67F512C2D43FFB7B8E0B816964C191E5
+1 MARR
+2 DATE 27 MAR 1900
+2 PLAC Harlingen, Friesland, Netherlands
+
+0 @F500957@ FAM
+1 _UPD 8 MAR 2025 23:12:52 GMT -0500
+1 HUSB @I502835@
+1 WIFE @I502868@
+1 RIN MH:F500957
+1 _UID 67CD2354CC6C541EF2F4DABCD2551208
+1 MARR
+
+0 @F500691@ FAM
+1 _UPD 17 FEB 2025 10:37:50 GMT -0500
+1 HUSB @I501884@
+1 WIFE @I501885@
+1 CHIL @I501895@
+1 CHIL @I501896@
+1 CHIL @I501873@
+1 RIN MH:F500691
+1 _UID 67B365DE2ABBC266CD6F7FE0306F160D
+
+0 @F501302@ FAM
+1 _UPD 8 APR 2025 04:56:33 GMT -0500
+1 HUSB @I501895@
+1 WIFE @I504025@
+1 CHIL @I504027@
+1 CHIL @I504026@
+1 CHIL @I504032@
+1 RIN MH:F501302
+1 _UID 67F4F2D1F031F0AF16FD6A66BD508D42
+1 MARR
+2 DATE 28 FEB 1922
+2 PLAC Emmen
+2 NOTE Aktenummer: 43
+
+0 @F500773@ FAM
+1 _UPD 25 FEB 2025 22:58:23 GMT -0500
+1 HUSB @I501896@
+1 WIFE @I502215@
+1 RIN MH:F500773
+1 _UID 67BE9F6FED20723547EFB6A6D1E8FACD
+1 MARR
+2 DATE 9 SEP 1925
+2 PLAC Amsterdam, North Holland, Netherlands
+
+0 @F500688@ FAM
+1 _UPD 17 FEB 2025 10:21:44 GMT -0500
+1 HUSB @I500673@
+1 WIFE @I501873@
+1 CHIL @I501872@
+1 CHIL @I501874@
+1 RIN MH:F500688
+1 _UID 67B362188142BF30C8A622FD70CD0E40
+1 MARR
+2 DATE 23 APR 1930
+2 PLAC Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands
+
+0 @F500954@ FAM
+1 _UPD 8 MAR 2025 23:11:58 GMT -0500
+1 HUSB @I502853@
+1 WIFE @I502834@
+1 CHIL @I502854@
+1 CHIL @I502855@
+1 CHIL @I502856@
+1 CHIL @I502857@
+1 CHIL @I502858@
+1 CHIL @I502859@
+1 RIN MH:F500954
+1 _UID 67CD231EA8B7F0DA7CFBC37DFB720ED3
+1 MARR
+2 DATE 8 NOV 1896
+2 PLAC Groningen, Groningen, Netherlands
+
+0 @F500300@ FAM
+1 _UPD 4 JUN 2024 08:10:54 GMT -0500
+1 HUSB @I500805@
+1 WIFE @I500806@
+1 CHIL @I501120@
+1 CHIL @I501121@
+1 CHIL @I500660@
+1 CHIL @I500816@
+1 CHIL @I501122@
+1 CHIL @I501123@
+1 CHIL @I501119@
+1 RIN MH:F500300
+1 _UID 665F125E45FCD3BE7DB0BD6D5FB20D78
+1 MARR
+2 DATE 25 MAY 1777
+2 PLAC Harlingen, Holland
+
+0 @F500692@ FAM
+1 _UPD 17 FEB 2025 10:41:37 GMT -0500
+1 HUSB @I501886@
+1 WIFE @I501887@
+1 CHIL @I501888@
+1 CHIL @I504037@
+1 CHIL @I501884@
+1 CHIL @I501889@
+1 CHIL @I501890@
+1 CHIL @I501891@
+1 CHIL @I501892@
+1 CHIL @I501893@
+1 CHIL @I501894@
+1 RIN MH:F500692
+1 _UID 67B366C18D0F97736D1766E32812436A
+
+0 @F500824@ FAM
+1 _UPD 27 FEB 2025 06:37:12 GMT -0500
+1 HUSB @I500773@
+1 WIFE @I502381@
+1 CHIL @I502382@
+1 CHIL @I502383@
+1 CHIL @I502384@
+1 CHIL @I502385@
+1 RIN MH:F500824
+1 _UID 67C05C782372F403A583EE45F0EDAE8A
+1 MARR
+2 DATE 26 MAY 1925
+2 PLAC Amersfoort, Amersfoort, Utrecht, The Netherlands
+2 NOTE Spouse: Aaron de Vries
+
+0 @F500826@ FAM
+1 _UPD 27 FEB 2025 06:38:31 GMT -0500
+1 HUSB @I500771@
+1 WIFE @I502387@
+1 CHIL @I502388@
+1 CHIL @I502389@
+1 CHIL @I502390@
+1 CHIL @I502391@
+1 CHIL @I502392@
+1 CHIL @I502393@
+1 RIN MH:F500826
+1 _UID 67C05CC792BE7AE88337608592BCDBBF
+1 MARR
+2 DATE 16 MAR 1916
+2 PLAC Amsterdam, Amsterdam, Noord-Holland, Netherlands
+2 NOTE Spouse: Leentje de Vries
+
+0 @F501305@ FAM
+1 _UPD 8 APR 2025 07:10:35 GMT -0500
+1 HUSB @I501894@
+1 WIFE @I504038@
+1 CHIL @I504039@
+1 CHIL @I504042@
+1 CHIL @I504041@
+1 CHIL @I504040@
+1 RIN MH:F501305
+1 _UID 67F5123B6973E092CAFC43F69D375087
+1 MARR
+2 DATE 15 MAR 1904
+2 PLAC Zwolle, Zwolle, Overijssel, The Netherlands
+0 TRLR

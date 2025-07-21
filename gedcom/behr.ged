@@ -1,0 +1,4316 @@
+0 HEAD
+1 SOUR ChatGPT-GEDCOM
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+1 LANG Hebrew
+0 @I500705@ INDI
+1 _UPD 21 MAY 2024 09:22:59 GMT -0500 
+1 NAME Simon /Behr/
+2 GIVN Simon
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 30 NOV 1857
+2 PLAC Assen, Drenthe, Nederland
+1 DEAT Y
+2 DATE 14 DEC 1857
+2 PLAC Assen, Drenthe, Nederland
+1 FAMC @F500039@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Simon Behr&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 30 בנוב’ 1857 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;פטירה: 14 בדצמ’ 1857 - Assen, Drenthe, Nederland&amp;l
+4 CONC t;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: Klaartje Mozes&amp;lt;br&amp;gt;הערות: Archiefnaam: Drents ArchiefInventarisnr.: 1857Deel/Akte: 178Akteplaats: Assen,DR,NLDDatum
+4 CONC : November 30, 1857Inventarisnr.: 1857Deel/Akte: 90Akteplaats: Assen,DR,NLDArchiefnaam: Drents ArchiefDatum: December 14, 1857&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&lt;/a&gt; on
+4 CONC  &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the original record will n
+4 CONC ot work.
+2 EVEN Record
+3 ROLE 10838:9276345:
+1 RIN MH:I500705
+1 _UID 664CAE3B7F840E7450CA808DB376FFD9
+
+0 @I502343@ INDI
+1 _UPD 27 FEB 2025 06:17:44 GMT -0500 
+1 NAME Israel de /Behr/
+2 GIVN Israel de
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 4 APR 1886
+2 PLAC Groningen
+1 DEAT Y
+2 DATE 16 OCT 1903
+2 PLAC Groningen
+1 FAMC @F500814@
+1 SOUR @S500178@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6O3XFHWIX3QYCM277BU2DZRFYAA-2590308/israel-de-behr
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 2590308
+1 RIN MH:I502343
+1 _UID 67C057E229945C57875A3A022DDF21F5
+
+0 @I502374@ INDI
+1 _UPD 27 FEB 2025 06:34:35 GMT -0500 
+1 NAME Hartog /Behr/
+2 GIVN Hartog
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 16 NOV 1880
+2 PLAC Paramaribo, Suriname
+1 DEAT Y
+2 DATE 1 DEC 1920
+2 PLAC Paramaribo, Suriname
+1 BURI
+2 PLAC Paramaribo
+1 FAMC @F500287@
+1 SOUR @S500182@
+2 PAGE Hartog Behr
+2 QUAY 3
+2 DATA
+3 DATE 27 FEB 2025
+3 TEXT התווסף באמצעות Smart Match
+2 EVEN Discovery
+1 RIN MH:I502374
+1 _UID 67C05BDB8628FE55528AD9FF607F6E61
+
+0 @I500699@ INDI
+1 _UPD 27 FEB 2025 06:34:29 GMT -0500 
+1 NAME Mozes /Behr/
+2 GIVN Mozes
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 4 JAN 1848
+2 PLAC Assen, Drenthe, Nederland
+1 DEAT Y
+2 DATE 18 AUG 1912
+2 PLAC Paramaribo, Suriname
+1 OCCU militair
+2 PLAC Koopman
+1 BURI
+2 PLAC Beth Haim, Kwattaweg, Paramaribo, Suriname
+1 FAMS @F500287@
+1 FAMC @F500039@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Mozes Behr&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 4 בינו’ 1848 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: Klaartje Mo
+4 CONC zes&amp;lt;br&amp;gt;הערות: Inventarisnr.: 1848Deel/Akte: 4Archiefnaam: Drents ArchiefAkteplaats: Assen,DR,NLDDatum: January  5, 1848&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&
+4 CONC lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the original r
+4 CONC ecord will not work.
+2 EVEN Record
+3 ROLE 10838:9276349:
+1 SOUR @S500107@
+2 QUAY 3
+2 DATA
+3 DATE 20 NOV 2024
+3 TEXT תמונה אישית של Mozes Behr נוספה באמצעות Photo Discovery™
+2 EVEN Discovery
+1 SOUR @S500182@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7CROBQHNIVI2O3NLEQCEBHO2F3Y-1500010/mozes-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500010
+1 RIN MH:I500699
+1 _UID 664CAE3A667B9E6E50CA808DB376FFD9
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTU1NmVmY2YyOTU2ZjE5YjkwNjUyZDFlNzBmNmQ2N2Q0OTMzYjI3ODY3ZTdkMjc0NGQxNzliMDA4ZTUzMWJiMmUmZT0xNzUzNjEwNDAw/158/944/6912/500500_392502ze29f6c1aym7d351_A.jpg
+2 _FILESIZE 56131
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500482
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500500
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWJmNjk4NDVhNjMwODVkZjlkYjczYzk5Njc0NTg2MDVkYzc4NmZjZjhhZDY2NTQ0ODVkYjI5NGQyMjFiMGViZmQmZT0xNzUzNjEwNDAw/158/944/6912/500482_5977364f96d531d5w7i12b_A.jpg
+2 _FILESIZE 56025
+2 TITL huz35cuq_large
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500482
+
+0 @I500777@ INDI
+1 _UPD 31 MAY 2024 08:08:39 GMT -0500 
+1 NAME Selly Clara /Bueno de Mesquita/
+2 GIVN Selly Clara
+2 SURN Bueno de Mesquita
+2 _MARNM Behr
+1 SEX F
+1 BIRT
+2 DATE 25 OCT 1845
+2 PLAC Paramaribo, Suriname
+1 DEAT Y
+2 DATE 11 DEC 1925
+2 PLAC Paramaribo, Suriname
+2 AGE 80
+1 BURI
+2 DATE 12 DEC 1925
+2 PLAC Paramaribo, Suriname (Joodse Begraafplaats)
+1 FAMS @F500287@
+1 SOUR @S500061@
+2 PAGE Selly Clara Bueno de Mesquita
+2 QUAY 3
+2 DATA
+3 DATE 31 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500182@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7CROBQHNIVI2O3NLEQCEBHO2F3Y-1500011/selly-clara-bueno-de-mesquita
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500011
+1 RIN MH:I500777
+1 _UID 6659CB97C0C4DFE907E9282D95A15162
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTNhYzExMGU1MWI5NDc5NzU1YzAyNDg5ZDZjODBkZjhmMDE2Y2MyOGRkZmQ4M2Y0NDU5MjcxOWRlOWZlYzVjYTgmZT0xNzUzNjEwNDAw/158/944/6912/500264_8642746rf95b60d31oc6c6_A.jpg
+2 _FILESIZE 57646
+2 _DATE 18 SEP 2006
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500261
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500264
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWRiODExNmQzMmI1MWQ4MTgyM2ZmOTk4NDVlMGJjNmFmNzU2MTczMDc4ZGMwZTZlZTVkMzE2MDA1ODM3NzdmNmYmZT0xNzUzNjEwNDAw/158/944/6912/500261_231370ut61x663c9b597vd_A.jpg
+2 _FILESIZE 57376
+2 TITL ric56duh_large
+2 _DATE 18 SEP 2006
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500261
+
+0 @I501801@ INDI
+1 _UPD 29 MAY 2025 06:24:21 GMT -0500 
+1 NAME Sapier Jamie /Behr/
+2 GIVN Sapier Jamie
+2 SURN Behr
+1 SEX F
+1 BIRT
+2 DATE 1992
+1 FAMC @F500660@
+1 NOTE <p>Son-Luca Gustavo Nieto Behr</p>
+<p>Husband- Rafael Nieto Silva<br />June 4 2025 11:38am</p>
+1 RIN MH:I501801
+1 _UID 67AD799F1275F45A48DAA5A9A397E49B
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWRhZWQ4M2UwM2Q4ODU0MGFiMzg4ZDZmMzYwYzA2NzE1Mzg4MzAwZGZmZmUyZDA1ODk5NTIzMjkwOGJmYzVmYjkmZT0xNzUzNjEwNDAw/158/944/6912/502515_0196436j184c2ld24c354i_A.jpg
+2 _FILESIZE 459744
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502514
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502515
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTM2ZTdlNmRiMzJmMDU0OGIyMmFiN2ZiNjcwMTI5ZWEzZjNkMTVjOGMxNmVmYWI3OWViYmJmYjNhMmFiMzkzODEmZT0xNzUzNjEwNDAw/158/944/6912/502514_5109354bu83ro4625cb1c2_A.jpg
+2 _FILESIZE 459897
+2 TITL 491449792_18504195019002721_7260935001786905661_n
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P502514
+
+0 @I500709@ INDI
+1 _UPD 4 MAR 2025 22:47:34 GMT -0500 
+1 NAME Abraham Izak /Behr/
+2 GIVN Abraham Izak
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 25 SEP 1870
+2 PLAC Assen, Drenthe, Netherlands
+1 DEAT Y
+2 DATE 27 JAN 1940
+2 PLAC Assen, Drenthe, Netherlands
+1 OCCU rijwielgrossier
+1 BURI
+2 DATE 27 JAN 1940
+2 PLAC Assen, Drenthe, Netherlands
+1 OCCU Fietsenhandelaar
+1 EVEN Spouse: Jette Bernard
+2 TYPE MARR
+2 DATE 11 JUL 1897
+2 PLAC Assen, Drenthe, Netherlands
+1 RESI
+2 DATE BET 1890 AND 1900
+2 ADDR
+3 ADR1 Assen, Drenthe, Netherlands
+1 FAMS @F500265@
+1 FAMC @F500039@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Abraham Izak Behr&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 25 בספט’ 1870 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;נישואין: Jette Bernard1897-07-11Assen, Drenthe, Ned
+4 CONC erland&amp;lt;br&amp;gt;פטירה: 27 בינו’ 1940 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;מקצוע: rijwielgrossier&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם:
+4 CONC  Maria Philip Groenstad&amp;lt;br&amp;gt;הערות: Deel/Akte: 57Akteplaats: Assen,DR,NLDArchiefnaam: Drents ArchiefInventarisnr.: 1897Datum: July 11, 1897Inventarisnr.: 1870Deel/Akte: 172Akteplaats:
+4 CONC  Assen,DR,NLDArchiefnaam: Drents ArchiefDatum: September 26, 1870Akteplaats: Assen,DR,NLDArchiefnaam: Drents ArchiefInventarisnr.: 1940Deel/Akte: 38Datum: January 29, 1940&amp;lt;br&amp;gt;מקור: &
+4 CONC lt;a&gt;View the original record&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such 
+4 CONC cases, the link to the original record will not work.
+2 EVEN Record
+3 ROLE 10838:9276353:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Abraham Izak Behr&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 25 בספט’ 1870 - Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;מקצוע: Fietsenhandelaar&amp;lt;br&amp;gt;נישוא
+4 CONC ין: בן/בת זוג: Jette Bernard - 11 ביולי 1897 - Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;פטירה: 27 בינו’ 1940 - Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;קבורה: 27 
+4 CONC בינו’ 1940 - Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: Marie Philip Behr (לבית Groenstad)&amp;lt;br&amp;gt;אשה: Jette Bernard&amp
+4 CONC ;lt;br&amp;gt;ילדים: Froukje Behr, Ephraim Behr, Maria Behr, Izak Behr&amp;lt;br&amp;gt;אחים ואחיות: Salina Behr, Hinderina Behr, Philippus Behr, Saartje Behr, Samuel Behr (לבית BEH
+4 CONC R), Kaatje aCathan (לבית Behr), Betje Behr
+2 EVEN Record
+3 ROLE 40000:20624599:
+1 SOUR @S500151@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6HHPLDXITVCOYCVECS23MHKWOKY-1500109/abraham-izak-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500109
+1 SOUR @S500152@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7IGQF6CH42GIRYG24FIWZTYVV3Q-1500008/abraham-izak-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500008
+1 SOUR @S500154@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6AFGYECOWDZUBAB62ZA34HESLFI-1500347/abraham-izak-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500347
+1 SOUR @S500181@
+2 PAGE https://www.myheritage.co.il/profile-OYYV74VTDB7BUSZNMXFWTYK26XRSJSA-1500367/abraham-izak-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500367
+1 SOUR @S500197@
+2 PAGE https://www.myheritage.com/profile-OYYV7PJF3CW6GAHMOV4QX6VCZDY34VY-1500089/abraham-izak-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500089
+1 SOUR @S500205@
+2 QUAY 4
+2 DATA
+3 TEXT Abraham Izak Behr&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;גיל: 64&amp;lt;br&amp;gt;מקצוע: Zonder&amp;lt;br&amp;gt;הערות: Overledene_relatie - Echtgenoot&amp;lt;br&amp;gt;מקו
+4 CONC ר: &lt;br&gt;מוסד: Drents Archief&lt;br&gt;ארכיון: 0167.002&lt;br&gt;# רישום: 1934&lt;br&gt;מספר מסמך: 56&lt;br&gt;מקום המקור: Assen, Drenthe, Netherlands&lt;br&gt;ת
+4 CONC ריך מקור: 1934-03-14&lt;br&gt;תאריך הכרך: 1934-01-31&lt;br&gt;הערות: AkteSoort: Overlijden&lt;br&gt;מקור: &lt;a&gt;לצפייה ברשומה המלאה ב-alledrenten.nl&lt;/
+4 CONC a&gt;&lt;br&gt;תמונות: &lt;a&gt;Source image&lt;/a&gt;
+2 EVEN Record
+3 ROLE 10563:1368397-S:
+1 SOUR @S500423@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7CROQ4ZFXTAEQ5WZ3NTPSEBMUAI-1500014/abraham-izak-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500014
+1 RIN MH:I500709
+1 _UID 664CAE3C47BDDE7850CA808DB376FFD9
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTEwZjU4ZjUyYzJiYTQ1NmRjM2Q2OGEyOWY1MzY5YTZkOTRkZWI1NGQ4YjhhMTliNDlhYmY3MjkxNjgzOWI0NTgmZT0xNzUzNjEwNDAw/158/944/6912/501005_357179146jm5677hr7c4d5_A.jpg
+2 _FILESIZE 54232
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501004
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501005
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTNiNDIxYjQ1NWM3NjNiMWYzZWNlZmZhNDdhY2M2M2I4OWY5M2RkOTc0YTBlNDk1NDk3OWRhNGZlN2UyYjMxNGEmZT0xNzUzNjEwNDAw/158/944/6912/501004_3099047k77c6tc4518367d_A.jpg
+2 _FILESIZE 54206
+2 TITL 500021_808566yu11181o35db6bc4_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501004
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTNiY2ViMTkxMGI5ODEwYmNmZTM0OGY5YjY5MzYzYWI1OTQzMjQxY2YyMzI5MzU2M2FlYzE5Y2U3YzMyNDYxMWImZT0xNzUzNjEwNDAw/158/944/6912/500302_7659447a186d96620r1wyh_A.jpg
+2 _FILESIZE 54248
+2 TITL behr_large
+2 _PHOTO_RIN MH:P500302
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTliZmRhMzZjOWE2Y2E2NDBjYzkxOTRhMGVmMDIxNWI0MzkwNjA3ZmQ4MDFlOGI3OWQyOWNjNWJmMmMyNWY3MmImZT0xNzUzNjEwNDAw/158/944/6912/500655_080302d3621f2addp0ry37_A.jpg
+2 _FILESIZE 54211
+2 TITL 500002_941279d0856z2p556t29x1_W
+2 _PHOTO_RIN MH:P500655
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPThhNjBmMTI0MWExMzhlODZhMzlhOWYwYWYyZmI3ZDIzYzE2NDIzYzJhYzUxMGM3NmFlZjc4ZmNkN2ZlNTA5ZDkmZT0xNzUzNjEwNDAw/158/944/6912/500661_180649b76s1fddba061b7d_A.jpg
+2 _FILESIZE 54224
+2 TITL 500178_6219200109z485651vwjm1_A
+2 _PHOTO_RIN MH:P500661
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTJiMTc3ODljMDgyM2NmZGVkNTdlYzllNWFiYjE0Njg5Nzc5YmU0OTEyODgwN2U0ZWExN2FmN2FiMTBkZjM3M2ImZT0xNzUzNjEwNDAw/158/944/6912/500858_8735232269zc101b87ab75_A.jpg
+2 _FILESIZE 54204
+2 TITL 500259_48880425ua875ddj0f8j4t_V
+2 _PHOTO_RIN MH:P500858
+
+0 @I500727@ INDI
+1 _UPD 6 MAR 2025 07:49:53 GMT -0500 
+1 NAME Jette /Bernard/
+2 GIVN Jette
+2 SURN Bernard
+2 _MARNM Behr
+1 SEX F
+1 BIRT
+2 DATE 24 JUN 1869
+2 PLAC Groningen, The Netherlands
+1 DEAT Y
+2 DATE 13 MAR 1934
+2 PLAC Assen, Drenthe, Netherlands
+2 AGE 65
+1 OCCU Midwife
+1 BURI
+2 DATE 13 MAR 1934
+2 PLAC Assen, Drenthe, Netherlands
+1 EVEN Spouse: Abraham Izak BEHR
+2 TYPE MARR
+2 DATE 11 JUL 1897
+2 PLAC Assen, Drenthe, Netherlands
+1 OCCU Zonder
+1 OCCU Zonder
+1 OCCU vroedvrouw
+1 FAMS @F500265@
+1 FAMC @F500915@
+1 SOUR @S500054@
+2 PAGE Jette Bernard
+2 QUAY 3
+2 DATA
+3 DATE 23 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500151@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6HHPLDXITVCOYCVECS23MHKWOKY-1500110/jette-behr-born-bernard
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500110
+1 SOUR @S500152@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7IGQF6CH42GIRYG24FIWZTYVV3Q-1500009/jette-behr-geboren-bernard
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500009
+1 SOUR @S500154@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6AFGYECOWDZUBAB62ZA34HESLFI-1500348/jette-bernard-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500348
+1 SOUR @S500205@
+2 QUAY 4
+2 DATA
+3 TEXT Jette Bernard&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: סביבות 1870 - Groningen, Netherlands&amp;lt;br&amp;gt;פטירה: 13 במרץ 1934 - Assen, Drenthe, Netherlands&amp;lt
+4 CONC ;br&amp;gt;גיל: 64&amp;lt;br&amp;gt;מקצוע: Zonder&amp;lt;br&amp;gt;בעל: Abraham Izak Behr&amp;lt;br&amp;gt;אב: Ephraim Bernard&amp;lt;br&amp;gt;אם: Frouke van Hessen&amp;lt;br&amp;gt;ה
+4 CONC ערות: Overledene_relatie - Echtgenoot&amp;lt;br&amp;gt;מקור: &amp;lt;br&amp;gt;מוסד: Drents Archief&amp;lt;br&amp;gt;ארכיון: 0167.002&amp;lt;br&amp;gt;# רישום: 1934&amp;lt;br&am
+4 CONC p;gt;מספר מסמך: 56&amp;lt;br&amp;gt;מקום המקור: Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;תאריך מקור: 14 במרץ 1934&amp;lt;br&amp;gt;תאריך הכרך: 31 בינו’
+4 CONC  1934&amp;lt;br&amp;gt;הערות: AkteSoort: Overlijden&amp;lt;br&amp;gt;מקור: &amp;lt;a&amp;gt;לצפייה ברשומה המלאה ב-alledrenten.nl&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;תמונ
+4 CONC ת: &amp;lt;a&amp;gt;Source image&amp;lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 10563:1368397-:
+1 SOUR @S500233@
+2 PAGE https://www.myheritage.co.il/profile-OYYV63K5GFGN5Y2LBPOQPQLEACU5FJQ-1504384/jette-bernard
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1504384
+1 SOUR @S500234@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7B5YZN3OMBZYHBE3VJCJAINAADI-1500532/jette-behr-born-bernard
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500532
+1 RIN MH:I500727
+1 _UID 664F2625B71859ABC18D5B820E509E1B
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWU2ZTIwZDBmOTk1OWE3YTFkNWNmODgwYWFjMTkyOTJhZjhkZjBlNGU3MzkzMzM0MmQ0YzBjYzEzM2JkNzM2OTUmZT0xNzUzNjEwNDAw/158/944/6912/500664_356145n791adbu6n9dd626_A.jpg
+2 _FILESIZE 53899
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500663
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500664
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPThhMzMzMGZhZmFlYTFkOTk2NGNiMzgxOWY0Y2FlOWYyYzViMWI0NGYxNzk1MDkyMWQ4ZTc4MzUxYzJjMmViMjgmZT0xNzUzNjEwNDAw/158/944/6912/500663_6318367d1l7gda2d66bz16_A.jpg
+2 _FILESIZE 53913
+2 TITL 500181_36639951899v4y03661w53_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500663
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTFlODZkNmNiYmJiZjFmNmMzMDI2NTMxOTgyMjIxYzM1MTVjZjU4YzQ3MDY0ZTUzMzkwMzI1NzRlMDgwYWUyOGUmZT0xNzUzNjEwNDAw/158/944/6912/500248_523254093sf4516nb26d62_A.jpg
+2 _FILESIZE 1481713
+2 TITL mam
+2 _PHOTO_RIN MH:P500248
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTkyM2QwYTVmZmMzZjc5Y2FlNWU4ZjNiMWUwMmYwNTA2YWE1N2I4NjJhOWY5NjYyZDEzM2E4MWRkYTAxMDdlNzEmZT0xNzUzNjEwNDAw/158/944/6912/500657_876160d72xd6am6ds71d21_A.jpg
+2 _FILESIZE 53898
+2 TITL 500004_750014952862rby2q3x556_W
+2 _PHOTO_RIN MH:P500657
+
+0 @I505007@ INDI
+1 _UPD 1 MAY 2025 00:11:26 GMT -0500 
+1 NAME Henderina /Behr/
+2 GIVN Henderina
+2 SURN Behr
+2 _MARNM Cohen
+1 SEX F
+1 BIRT
+2 DATE 3 AUG 1902
+2 PLAC Groningen
+1 DEAT Y
+2 DATE 16 FEB 1945
+2 PLAC Bankinang (Ind)
+2 AGE 42
+1 FAMC @F500259@
+1 SOUR @S500353@
+2 PAGE Henderina Cohen (born Behr)
+2 QUAY 3
+2 DATA
+3 DATE 1 MAY 2025
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 NOTE <table class="data_table" style="border-collapse: collapse; border-spacing: 0px; padding: 0px; margin: 0px; list-style-type: none; width: 380px; color: #333333; font-family: Arial, 'Helvetica Neue', H
+2 CONC elvetica, sans-serif; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-trans
+2 CONC form: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: #f9f8f7; text-decoration-thickness: initial; text-decoration-style: initial; text-decor
+2 CONC ation-color: initial;" cellspacing="0">
+<tbody>
+<tr id="family_handprint">
+<td style="margin: 0px; padding: 2px 5px 2px 0px; vertical-align: top; text-align: left;">
+<p style="margin: 0px 0px 8px;
+2 CONC  padding: 0px;">Daughter of&nbsp;<a class="tipped-tip-added" style="color: #1166bb; text-decoration: none; outline: none;" draggable="false" href="https://www.geni.com/people/Philippus-Behr/6000000000
+2 CONC 351804383?through=6000000124247526823" data-offset-x="-10" data-offset-y="-10" data-position="topleft" data-profile-id="6000000000351804383" data-remote-data="/profile/hovercard" data-remote-params="{
+2 CONC id:6000000000351804383}" data-show-delay="800" data-skin="hovercard" data-template="hover.profile">Philippus Behr</a>&nbsp;and&nbsp;<a class="tipped-tip-added" style="color: #1166bb; text-decoration: 
+2 CONC none; outline: none;" draggable="false" href="https://www.geni.com/people/Betje-van-Dam/6000000000351888459?through=6000000124247526823" data-offset-x="-10" data-offset-y="-10" data-position="topleft"
+2 CONC  data-profile-id="6000000000351888459" data-remote-data="/profile/hovercard" data-remote-params="{id:6000000000351888459}" data-show-delay="800" data-skin="hovercard" data-template="hover.profile">Bet
+2 CONC je van Dam</a><br />Wife of&nbsp;<a class="tipped-tip-added" style="color: #1166bb; text-decoration: none; outline: none;" draggable="false" href="https://www.geni.com/people/Abraham-Cohen/60000000184
+2 CONC 34311308?through=6000000124247526823" data-offset-x="-10" data-offset-y="-10" data-position="topleft" data-profile-id="6000000018434311308" data-remote-data="/profile/hovercard" data-remote-params="{i
+2 CONC d:6000000018434311308}" data-show-delay="800" data-skin="hovercard" data-template="hover.profile">Abraham Cohen</a><br />Sister of&nbsp;<a class="tipped-tip-added" style="color: #1166bb; text-decorati
+2 CONC on: none; outline: none;" draggable="false" href="https://www.geni.com/people/Izak-Behr/6000000026366787451?through=6000000124247526823" data-offset-x="-10" data-offset-y="-10" data-position="topleft"
+2 CONC  data-profile-id="6000000026366787451" data-remote-data="/profile/hovercard" data-remote-params="{id:6000000026366787451}" data-show-delay="800" data-skin="hovercard" data-template="hover.profile">Iza
+2 CONC k Behr</a>&nbsp;and&nbsp;<a class="tipped-tip-added" style="color: #1166bb; text-decoration: none; outline: none;" draggable="false" href="https://www.geni.com/people/Marie-Behr/6000000024472941170?th
+2 CONC rough=6000000124247526823" data-offset-x="-10" data-offset-y="-10" data-position="topleft" data-profile-id="6000000024472941170" data-remote-data="/profile/hovercard" data-remote-params="{id:600000002
+2 CONC 4472941170}" data-show-delay="800" data-skin="hovercard" data-template="hover.profile">Marie Behr</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+1 RIN MH:I505007
+1 _UID 6813025A4890FCB89445437D16C5C4A1
+
+0 @I505610@ INDI
+1 _UPD 7 MAY 2025 23:08:02 GMT -0500 
+1 NAME Ester /Behr/
+2 GIVN Ester
+2 SURN Behr
+1 SEX F
+1 BIRT
+2 DATE 10 JUL 1826
+2 PLAC Hoogezand, GR, NL
+1 DEAT Y
+2 DATE 7 OCT 1826
+1 EVEN
+2 TYPE Record Change
+2 DATE 21 JAN 2002
+1 FAMC @F501721@
+1 SOUR @S500411@
+2 PAGE https://www.myheritage.com/profile-OYYV77ZDTXEVMWSDJTEOKK2ONBSQ24A-1500267/ester-behr
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500267
+1 RIN MH:I505610
+1 _UID 681C2E1C8B4A8DF09C65958BCF0FC31D
+
+0 @I505608@ INDI
+1 _UPD 7 MAY 2025 23:08:01 GMT -0500 
+1 NAME Izak Israel Benjamin /Behr/
+2 GIVN Izak Israel Benjamin
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 16 OCT 1818
+2 PLAC Hoogezand, Groningen, Netherlands
+1 OCCU Koopman
+1 RESI
+2 ADDR
+3 ADR1 Tieneweg, Assen, DR (NL) / ,   /
+1 OCCU Koopman
+1 OCCU Merchant
+1 RESI
+2 ADDR
+3 ADR1 Tieneweg, Assen, DR (NL)
+1 EVEN Echtgeno(o)t(e): Marie Philip Groenstad
+2 TYPE Marriage
+2 DATE 27 MAR 1861
+2 PLAC Assen, Drenthe, Netherlands
+1 DEAT Y
+2 DATE 4 JUN 1888
+2 PLAC Assen, Drenthe, Nederland
+1 FAMC @F501721@
+1 SOUR @S500411@
+2 PAGE https://www.myheritage.com/profile-OYYV77ZDTXEVMWSDJTEOKK2ONBSQ24A-1500221/izak-israel-benjamin-isak-behr
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500221
+1 RIN MH:I505608
+1 _UID 681C2E1C26CD0DEE9C65958BCF0FC31D
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTRhNTQ2NjlhMmUzYWQ3ZTAyOGRjMTdlMzMxYjA5MGU0Njc3NTkyNzU2Nzk4OTcwYjIwMDRkODBjNjE5NzRiNmImZT0xNzUzNjEwNDAw/158/944/6912/502460_590743c627v61281m01wwe_A.jpg
+2 _FILESIZE 43961
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502459
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502460
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWI1NWMzMzY3YjVkMmRmNTE4YzIyZDZlMDliNDFkN2YzMDUwYThkNGEzMmQ3YTEzNWQzYmUwNjM5NGYyNzNmNzEmZT0xNzUzNjEwNDAw/158/944/6912/502459_616296r51eecrv22l81660_A.jpg
+2 _FILESIZE 43951
+2 TITL 500160_6285366xxa5ho3f331b5j5_X
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P502459
+
+0 @I500697@ INDI
+1 _UPD 7 MAY 2025 11:53:59 GMT -0500 
+1 NAME Sara /Behr/
+2 GIVN Sara
+2 SURN Behr
+1 SEX F
+1 BIRT
+2 DATE 17 FEB 1844
+2 PLAC Assen, Drenthe, Nederland
+1 DEAT Y
+1 FAMC @F500039@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Sara Behr&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 17 בפבר’ 1844 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: Klaartje 
+4 CONC Mozes&amp;lt;br&amp;gt;הערות: Deel/Akte: 28Archiefnaam: Drents ArchiefInventarisnr.: 1844Akteplaats: Assen,DR,NLDDatum: February 19, 1844&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original rec
+4 CONC ord&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the origin
+4 CONC al record will not work.
+2 EVEN Record
+3 ROLE 10838:9276358:
+1 RIN MH:I500697
+1 _UID 664CAE3A0E24DE6C50CA808DB376FFD9
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWU0ODJiZWI4MjU5MTc4YmE2OGI2MGQyYjRhODM3NDBmMGJlYWViMGU1YTg5NjVmZmQ4MjNjMmM0ZTEzNWQyNjAmZT0xNzUzNjEwNDAw/158/944/6912/502408_749242d20wa68j12t9mb68_A.jpg
+2 _FILESIZE 4584
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502401
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502408
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTdiM2M3Y2JiNmQ3MjIxY2M5ODBhYmViOTRiOThjM2YwZTM0YzQ2NThlYjVlYWEzNzk2YjIyMTEwOWYyMjcxZWMmZT0xNzUzNjEwNDAw/158/944/6912/502401_243961qum8ta25199bfk06_A.jpg
+2 _FILESIZE 116705
+2 TITL Achter Saar,Bertus,Hartog,Jaap
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 80 45 157 147
+2 _PHOTO_RIN MH:P502401
+
+0 @I500696@ INDI
+1 _UPD 20 NOV 2024 08:26:38 GMT -0500 
+1 NAME Izak Israel Benjamin /Behr/
+2 GIVN Izak Israel Benjamin
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 15 NOV 1818
+2 PLAC Hoogeveen, Drenthe, Nederland
+1 DEAT Y
+2 DATE 4 JUN 1888
+2 PLAC Assen, Drenthe, Nederland
+1 OCCU inlands kramer, koopman
+1 RESI
+2 ADDR
+3 ADR1 Tieneweg, Assen, DR (NL)
+1 OCCU Merchant
+1 EVEN Spouse: Marie Philip Groenstad
+2 TYPE MARR
+2 DATE 27 MAR 1861
+2 PLAC Assen, Drenthe, Netherlands
+1 FAMS @F500039@
+1 FAMS @F500286@
+1 FAMC @F500285@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Izak Israel Benjamin Behr&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 16 בנוב’ 1818 - Hoogezand, Groningen, Nederland&amp;lt;br&amp;gt;נישואין 1: Klaartje Mozes1841-10-29Ho
+4 CONC ogezand, Groningen, Nederland&amp;lt;br&amp;gt;נישואין 2: Maria Philip Groenstad1861-03-27Assen, Drenthe, Nederland&amp;lt;br&amp;gt;פטירה: 4 ביוני 1888 - Assen, Drenthe, Nederland&am
+4 CONC p;lt;br&amp;gt;מקצוע: inlands kramer, koopman&amp;lt;br&amp;gt;אב: Israël Benjamins Behr&amp;lt;br&amp;gt;אם: Sara Simons Simons Bollegraaf&amp;lt;br&amp;gt;ילדים from marriage 1: Harto
+4 CONC g BehrSara BehrIsraël BehrMozes BehrKind BehrEsther BehrBenjamin BehrKind BehrKind BehrSimon Behr&amp;lt;br&amp;gt;ילדים from marriage 2: Salina BehrHinderina BehrBetje BehrPhilippus BehrKaatje 
+4 CONC BehrAbraham Izak BehrSaartje BehrSamuel Behr&amp;lt;br&amp;gt;הערות: Inventarisnr.: 1857Deel/Akte: 90Akteplaats: Assen,DR,NLDArchiefnaam: Drents ArchiefDatum: December 14, 1857Inventarisnr.: 1864
+4 CONC Deel/Akte: 180Akteplaats: Assen,DR,NLDArchiefnaam: Drents ArchiefDatum: November 12, 1864Archiefnaam: Drents ArchiefInventarisnr.: 1857Deel/Akte: 178Akteplaats: Assen,DR,NLDDatum: November 30, 1857Arc
+4 CONC hiefnaam: Drents ArchiefAkteplaats: Assen,DR,NLDDeel/Akte: 158Inventarisnr.: 1887Datum: December 23, 1887Archiefnaam: Drents ArchiefDeel/Akte: 10Akt...&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the ori
+4 CONC ginal record&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to t
+4 CONC he original record will not work.
+2 EVEN Record
+3 ROLE 10838:9276355:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Izak Israel Benjamin Behr&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;כינוי: Isak&amp;lt;br&amp;gt;מגורים: Tieneweg, Assen, DR (NL)&amp;lt;br&amp;gt;לידה: 15 בנוב’ 1818 - Hoo
+4 CONC geveen, Drenthe, Nederland&amp;lt;br&amp;gt;מקצוע: Merchant&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Marie Philip Behr (לבית Groenstad) - 27 במרץ 1861 - Assen, Drenthe, Netherla
+4 CONC nds&amp;lt;br&amp;gt;פטירה: 4 ביוני 1888 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;אב: Israël Benjamins de Beer (לבית Behr)&amp;lt;br&amp;gt;אם: Sara Simons Bollegraaf&amp;lt;br&
+4 CONC amp;gt;נשים: Klaartje Hartog van Praag - Behr (לבית Mozes), Marie Philip Behr (לבית Groenstad)&amp;lt;br&amp;gt;ילדים: Salina Behr, Hinderina Behr, Philippus Behr, Abraham Izak Behr, 
+4 CONC Saartje Behr, Samuel Behr (לבית BEHR), Kaatje aCathan (לבית Behr), Betje Behr, Hartog Behr, Sara Behr, Israel Behr, Mozes Behr, (Stillborn) Behr, Esther Behr, Benjamin Behr, Stillborn Behr, (S
+4 CONC tillborn) Behr, Simon Behr&amp;lt;br&amp;gt;אחים ואחיות: Benjamin de Behr, Esther Behr, Hendel Mozes (לבית de Behr), Frouwke Schaap (לבית Behr), Simon de Beer (לבית Behr), Abram 
+4 CONC Behr, Esther/Hester de Beer, Kaatje de Beer, Salomon de Behr, Abraham de Beer
+2 EVEN Record
+3 ROLE 40000:20623785:
+1 SOUR @S500104@
+2 QUAY 3
+2 DATA
+3 DATE 20 NOV 2024
+3 TEXT תמונה אישית של Izak Israel Benjamin "Isak" Behr נוספה באמצעות Photo Discovery™
+2 EVEN Discovery
+1 SOUR @S500197@
+2 PAGE https://www.myheritage.com/profile-OYYV7PJF3CW6GAHMOV4QX6VCZDY34VY-1500065/izak-israel-benjamin-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500065
+1 RIN MH:I500696
+1 _UID 664CAE39CCA82E6B50CA808DB376FFD9
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWJmYWJjMjk4OGQ0ZjdmYTBhMTIwZGM3MDNjOWYxYWQ1MmNjN2Q2MmM0MDBkZWE1ZmZmYjNlNGI3NDljOWIzMDgmZT0xNzUzNjEwNDAw/158/944/6912/500505_193128063ec719e1afq5ud_A.jpg
+2 _FILESIZE 43964
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500489
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500505
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQ5NDBjY2Y2ZmIyNGY1NjMyZTU3MjQ3MTVlZDlkM2ZiNGVmZmUwMmU5MTY5ZmYwNzZjNzYxYzU3MmEyMGZlMTkmZT0xNzUzNjEwNDAw/158/944/6912/500489_435973p1cqd6xlf7d1935z_A.jpg
+2 _FILESIZE 44007
+2 TITL 502341_82288358987544ftkw3978
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500489
+
+0 @I500104@ INDI
+1 _UPD 23 JUN 2024 12:49:11 GMT -0500 
+1 NAME Marie Philip /Groenstad/
+2 GIVN Marie Philip
+2 SURN Groenstad
+2 _MARNM Behr
+1 SEX F
+1 BIRT
+2 DATE 24 OCT 1828
+2 PLAC Hoogezand, Groningen, Netherlands
+1 DEAT Y
+2 DATE 22 DEC 1887
+2 PLAC Assen, Drenthe, Netherlands
+1 EVEN Spouse: Izak Israel Benjamin Behr
+2 TYPE MARR
+2 DATE 27 MAR 1861
+2 PLAC Assen, Drenthe, Netherlands
+1 FAMS @F500039@
+1 FAMC @F500264@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Marie Philip Behr (לבית Groenstad)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;כינוי: Maria&amp;lt;br&amp;gt;לידה: 24 באוק’ 1828 - Hoogezand, Groningen, Netherlands&amp;lt;br
+4 CONC &amp;gt;נישואין: בן/בת זוג: Izak Israel Benjamin Behr - 27 במרץ 1861 - Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;פטירה: 22 בדצמ’ 1887 - Assen, Drenthe, Netherlands&amp;
+4 CONC lt;br&amp;gt;אב: Philip Samuel Groenstad&amp;lt;br&amp;gt;אם: Saartje Groenstad (לבית Salomons)&amp;lt;br&amp;gt;בעל: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;ילדים: Salina Behr, Hin
+4 CONC derina Behr, Philippus Behr, Abraham Izak Behr, Saartje Behr, Samuel Behr (לבית BEHR), Kaatje aCathan (לבית Behr), Betje Behr&amp;lt;br&amp;gt;אחים ואחיות: Eva Hinderina Groenstad, B
+4 CONC etje Groenstad, Lina Groenstad
+2 EVEN Record
+3 ROLE 40000:20624594:
+1 SOUR @S500197@
+2 PAGE https://www.myheritage.com/profile-OYYV7PJF3CW6GAHMOV4QX6VCZDY34VY-1500075/marie-philip-behr-geboren-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500075
+1 RIN MH:I500104
+1 _UID 646CAA31A411D890EBC68E37CA0A7D69
+
+0 @I500776@ INDI
+1 _UPD 6 MAR 2025 07:46:53 GMT -0500 
+1 NAME Clara Hartog /Mozes/
+2 GIVN Clara Hartog
+2 NICK Clara
+2 SURN Mozes
+2 _MARNM Behr
+1 SEX F
+1 BIRT
+2 DATE 30 DEC 1818
+2 PLAC Oude Pekela, Groningen, Nederland
+1 DEAT Y
+2 DATE 1 DEC 1860
+2 PLAC Assen, Dr, Nederland
+1 BURI
+2 PLAC Assen, Drenthe, Nederland
+1 EVEN Spouse: Izak Israel Benjamin Behr
+2 TYPE MARR
+2 DATE 29 OCT 1841
+2 PLAC Hoogezand, Groningen, Netherlands
+1 FAMS @F500286@
+1 FAMS @F500290@
+1 FAMC @F500289@
+1 SOUR @S500061@
+2 PAGE Klaartje Hartog "Clara" Mozes
+2 QUAY 3
+2 DATA
+3 DATE 31 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500205@
+2 QUAY 4
+2 DATA
+3 TEXT Clara Hartog Mozes&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;גיל: 29&amp;lt;br&amp;gt;מקצוע: Koopman&amp;lt;br&amp;gt;הערות: Overledene_relatie - Echtgenote&amp;lt;br&amp;gt;מקו
+4 CONC ר: &lt;br&gt;מוסד: Drents Archief&lt;br&gt;ארכיון: 0167.015&lt;br&gt;# רישום: 1838&lt;br&gt;מספר מסמך: 44&lt;br&gt;מקום המקור: Meppel, Drenthe, Netherlands&lt;br&gt;ת
+4 CONC אריך מקור: 1838-05-02&lt;br&gt;תאריך הכרך: 1838-01-31&lt;br&gt;הערות: AkteSoort: Overlijden&lt;br&gt;מקור: &lt;a&gt;לצפייה ברשומה המלאה ב-alledrenten.nl&lt;
+4 CONC /a&gt;&lt;br&gt;תמונות: &lt;a&gt;Source image&lt;/a&gt;
+2 EVEN Record
+3 ROLE 10563:2691808-S:
+1 RIN MH:I500776
+1 _UID 6659CB979FBE9FE507E9282D95A15162
+
+0 @I501821@ INDI
+1 _UPD 4 MAR 2025 09:46:46 GMT -0500 
+1 NAME Hester-Henrietta Isaac Abraham Isaac /Behr/
+2 GIVN Hester-Henrietta Isaac Abraham Isaac
+2 SURN Behr
+1 SEX F
+1 BIRT
+2 DATE 16 OCT 1932
+2 PLAC Assen, Drenthe, Netherlands
+1 DEAT Y
+2 DATE 2 SEP 1943
+2 PLAC Auschwitz,Malopolskie, Poland
+1 FAMC @F500667@
+1 SOUR @S500153@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NWP3V7GRSSCW2QC2BQWXYEZ4ZY-5205979/hester-henrietta-isaac-abraham-isaac-behr
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 5205979
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Hester Henriette Behr&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Birth: Oct 16 1932 - Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;Death: Sep 2 1943 - Auschwitz, Malopolskie, Poland&amp;lt;br&am
+4 CONC p;gt;Father: &lt;a&gt;Izak Behr&lt;/a&gt;&amp;lt;br&amp;gt;Mother: &lt;a&gt;Debora Behr-de Lange (born de Lange)&lt;/a&gt;&amp;lt;br&amp;gt;Sibling: &lt;a&gt;Abraham Izak Behr&lt;/a&gt;
+2 EVEN Record
+3 ROLE 40000:20623756:
+1 RIN MH:I501821
+1 _UID 67ADDD4FA318AB38E7ABF83AA8B4587D
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTc3YjRhOTBlMDQ1ZTQ0MTdmZTc0MGIzYmQ4ZmRlN2U5YTlmYjRlYjA4MWQ0MjVmN2E1MjEwZDQ0NjA1MDAzZDgmZT0xNzUzNjEwNDAw/158/944/6912/500997_178265t1q716604c6x7i2a_A.jpg
+2 _FILESIZE 115008
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500996
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500997
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTg4N2Y3MmZiNGNkMzcyNWIxMDMxZTM2YWE3OTQyMTU1MDRkMTNiYWU3NmFlM2IzZmMzMDViOTAyMjU3Y2E5ZTMmZT0xNzUzNjEwNDAw/158/944/6912/500996_1012480b43c96i7621761o_A.jpg
+2 _FILESIZE 115038
+2 TITL hester_henriette_1932-_large
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500996
+
+0 @I504999@ INDI
+1 _UPD 1 MAY 2025 00:11:26 GMT -0500 
+1 NAME stillborn son /Behr/
+2 GIVN stillborn son
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 2 FEB 1855
+2 PLAC Assen
+1 DEAT Y
+2 DATE 2 FEB 1855
+2 PLAC Assen
+2 AGE 0
+1 FAMC @F500286@
+1 SOUR @S500353@
+2 PAGE stillborn son Behr
+2 QUAY 3
+2 DATA
+3 DATE 1 MAY 2025
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I504999
+1 _UID 681302597653ACA69445437D16C5C4A1
+
+0 @I505554@ INDI
+1 _UPD 7 MAY 2025 12:33:55 GMT -0500 
+1 NAME Abram /Behr/
+2 GIVN Abram
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 21 AUG 1831
+2 PLAC Hoogezand, GR, NL
+1 DEAT Y
+2 DATE 5 MAY 1832
+2 PLAC Hoogezand, GR, NL
+1 FAMC @F500285@
+1 SOUR @S500411@
+2 PAGE https://www.myheritage.co.il/profile-OYYV77ZDTXEVMWSDJTEOKK2ONBSQ24A-1500266/abram-behr
+2 QUAY 3
+2 DATA
+3 TEXT Schaper Web Site, מנוהל ע"י Carol Schaper
+2 EVEN Smart Matching
+3 ROLE 1500266
+1 RIN MH:I505554
+1 _UID 681B99807B718F75403AC36BD334173F
+
+0 @I501796@ INDI
+1 _UPD 30 APR 2025 04:36:50 GMT -0500 
+1 NAME Irit /Behr/
+2 GIVN Irit
+2 SURN Behr
+1 SEX F
+1 BIRT
+2 DATE 8 JAN 1955
+1 FAMS @F500661@
+1 FAMC @F500659@
+1 RIN MH:I501796
+1 _UID 67ACDBFEF0882C3475A4F3424FC1619C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWFhZjYzYmJmOTMwOGU5OTY1YTBmZDY4ODNmNjVmZTA2ZWJlNWFlYzc0MTJlZTU3MDNiYmQ5NWM0MmE4YTUwYTQmZT0xNzUzNjEwNDAw/158/944/6912/502161_36926718152jc7y3e461cf_A.jpg
+2 _FILESIZE 25094
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502160
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502161
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWMxMDMxNTc4ZGYwNzUyYjM3MDg1NGE1MjMwMTFhZTdmOGI1YWYwZDg4NjI5YTQ5YjMzMTcxOTNlZTZmNWUwYjQmZT0xNzUzNjEwNDAw/158/944/6912/502160_55808511hl7fef1e5r6238_A.jpg
+2 _FILESIZE 19989
+2 TITL behr_irit_19550801__sfi_org_
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 100 0 500 400
+2 _PHOTO_RIN MH:P502160
+
+0 @I501803@ INDI
+1 _UPD 30 APR 2025 07:58:42 GMT -0500 
+1 NAME Elly /Behr/
+2 GIVN Elly
+2 SURN Behr
+1 SEX F
+1 DEAT Y
+2 DATE 27 AUG 2023
+1 BIRT
+2 DATE 20 APR 1931
+2 PLAC Groningen Holland
+1 FAMS @F500662@
+1 FAMC @F500658@
+1 RIN MH:I501803
+1 _UID 67AD7A5313521C3D6811005A80794C63
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWY5OGNmNzVkZDRmNDcxNzYyYTY1Yjg0N2UxOTIwYjc2NTlhYzMwY2VjYzg3ZTczYWFjZGMwMWQxMTc4ZWQ2OGImZT0xNzUzNjEwNDAw/158/944/6912/502179_685954b18bp21ei16n862f_A.jpg
+2 _FILESIZE 32131
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502178
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502179
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWEzMDU2YjdhMzFjYWI1N2NlOWU5NGNiOGU2MmMzMzVhYzA2MDRkMWJhMWZmMGVhYzQwNDc3MDEzMmI4YzdmNDkmZT0xNzUzNjEwNDAw/158/944/6912/502178_75383011m618k0e6i8f1x2_A.jpg
+2 _FILESIZE 41841
+2 TITL behr_elly_19310420___fb_-_simon_jacobus_
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 1 23 342 364
+2 _PHOTO_RIN MH:P502178
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTczMzIwZmU3MDFhMjM1YjVkOTMxNzgzZDUzNWU5Yzc0YmNhZmJiYzUzNmU0YzMyZTFlMDcxODFjMjE3MWU4ZWYmZT0xNzUzNjEwNDAw/158/944/6912/502180_8247906a5612md8158e219_A.jpg
+2 _FILESIZE 88175
+2 TITL behr_elly_19310420__facebook_-_dorine_jacobus_
+2 _PHOTO_RIN MH:P502180
+
+0 @I501804@ INDI
+1 _UPD 22 APR 2025 13:28:02 GMT -0500 
+1 NAME Mauritz /Jacobus/
+2 GIVN Mauritz
+2 SURN Jacobus
+1 SEX M
+1 BIRT
+2 DATE 29 DEC 1917
+1 DEAT Y
+2 DATE 5 MAR 1982
+1 FAMS @F500662@
+1 SOUR @S500298@
+2 QUAY 3
+2 DATA
+3 DATE 11 APR 2025
+3 TEXT תמונה אישית של Morris Albert JACOBS נוספה באמצעות Photo Discovery™
+2 EVEN Discovery
+1 RIN MH:I501804
+1 _UID 67AD7AEE06B286A2F663D199D69AE34B
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTRlNWFhNGI0ZmMzNWMzNTFjYzYzYWU2ODMwMGM3Mjc1ZmIyNTJkNDM3MmY3M2I5NDFhZjUyYTE4ZjcyMTRjZTkmZT0xNzUzNjEwNDAw/158/944/6912/501892_811602w9fbc822017b61ve_A.jpg
+2 _FILESIZE 189979
+2 TITL Morris Jacobs (1918-1982)
+2 _DATE 1918
+2 _PHOTO_RIN MH:P501892
+
+0 @I502338@ INDI
+1 _UPD 27 FEB 2025 06:17:41 GMT -0500 
+1 NAME Saartje de /Behr/
+2 GIVN Saartje de
+2 SURN Behr
+1 SEX F
+1 BIRT
+2 DATE 18 JUL 1873
+2 PLAC Groningen
+1 DEAT Y
+2 DATE 20 MAR 1876
+2 PLAC Groningen
+1 FAMC @F500814@
+1 SOUR @S500178@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6O3XFHWIX3QYCM277BU2DZRFYAA-2590304/saartje-de-behr
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 2590304
+1 RIN MH:I502338
+1 _UID 67C057E103C1AC52875A3A022DDF21F5
+
+0 @I505435@ INDI
+1 _UPD 7 MAY 2025 11:53:58 GMT -0500 
+1 NAME Albartus /Behr/
+2 GIVN Albartus
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 18 OCT 1925
+2 PLAC Assen, Nederland
+1 DEAT Y
+2 DATE 23 DEC 1996
+2 PLAC Emmen
+2 AGE 71
+2 CAUS Kanker
+1 BURI
+2 PLAC Gecremeerd
+1 FAMC @F501679@
+1 SOUR @S500401@
+2 PAGE Albartus Behr
+2 QUAY 3
+2 DATA
+3 DATE 7 MAY 2025
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I505435
+1 _UID 681B8F7C0E18AC73CDECD28BEDE804D2
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWIzMzI5ZmE2NjYwOTU0N2QwZTVlZWRjYWMyNGZmNmQxMGNiY2E1YjI4NWRhZmNiODg1MmM0NjJhN2VjYWRlZjcmZT0xNzUzNjEwNDAw/158/944/6912/502407_4664908q096xe641gi2b4b_A.jpg
+2 _FILESIZE 151972
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502403
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502407
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWY1YTNiMjc4ZGU5OWZjODgwMmY2NDg1OGYyZGI1NDBmOTUyYzBkYTY2YTI5ZmU3M2E5NjkxNGQ3NTYyNWM5MjgmZT0xNzUzNjEwNDAw/158/944/6912/502403_81583449zu015oj62b8ep4_A.jpg
+2 _FILESIZE 173822
+2 TITL Albartus Behr
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P502403
+
+0 @I501814@ INDI
+1 _UPD 9 MAR 2025 12:13:56 GMT -0500 
+1 NAME Jetteke /Behr/
+2 GIVN Jetteke
+2 SURN Behr
+1 SEX F
+1 BIRT
+2 DATE 28 AUG 1937
+2 PLAC Groningen, Netherlands
+1 FAMS @F500665@
+1 FAMC @F500658@
+1 RIN MH:I501814
+1 _UID 67ADDBBE4AD3A4D6C6442F5F114AFF4C
+
+0 @I501815@ INDI
+1 _UPD 30 APR 2025 04:38:41 GMT -0500 
+1 NAME Leo /de Galan/
+2 GIVN Leo
+2 SURN de Galan
+1 SEX M
+1 BIRT
+2 DATE 10 OCT 1937
+1 DEAT Y
+2 DATE 19 NOV 2014
+1 FAMS @F500665@
+1 RIN MH:I501815
+1 _UID 67ADDC32A1253C451A481F274252EB00
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQxZWU1MTFlYmIxNjdiYjIzZjg1YmI2ZGMxNjdiNTFhYWExMDBmOTJmYzUwOTk1ZDRiNGFhNjkwY2E4NTI2NDAmZT0xNzUzNjEwNDAw/158/944/6912/502165_728891e1crf6aiv8p1116j_A.jpg
+2 _FILESIZE 28330
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502164
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502165
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTM5OTlmOWFmN2YwNGE3ODc0NTY0ODJjYWM2YWY2OWU1MDlhYWRjMThjOTk4YTEyMTRiMDVkMjIxZTE1NWI0NzAmZT0xNzUzNjEwNDAw/158/944/6912/502164_791089aep1s168ts6fk11u_A.jpg
+2 _FILESIZE 35776
+2 TITL galan_leo_19371010__olofspoort__1
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 18 387 405
+2 _PHOTO_RIN MH:P502164
+
+0 @I500701@ INDI
+1 _UPD 21 MAY 2024 09:22:57 GMT -0500 
+1 NAME Esther /Behr/
+2 GIVN Esther
+2 SURN Behr
+1 SEX F
+1 BIRT
+2 DATE 15 NOV 1850
+2 PLAC Assen, Drenthe, Nederland
+1 DEAT Y
+2 DATE 5 MAY 1853
+2 PLAC Assen, Drenthe, Nederland
+1 FAMC @F500039@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Esther Behr&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 15 בנוב’ 1850 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;פטירה: 5 במאי 1853 - Assen, Drenthe, Nederland&amp;lt
+4 CONC ;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: Klaartje Mozes&amp;lt;br&amp;gt;הערות: Deel/Akte: 161Inventarisnr.: 1850Akteplaats: Assen,DR,NLDArchiefnaam: Drents ArchiefDatum:
+4 CONC  November 16, 1850Inventarisnr.: 1853Akteplaats: Assen,DR,NLDArchiefnaam: Drents ArchiefDeel/Akte: 42Datum: May  6, 1853&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&lt;/a&gt; on &lt;a
+4 CONC &gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the original record will not wor
+4 CONC k.
+2 EVEN Record
+3 ROLE 10838:9276324:
+1 RIN MH:I500701
+1 _UID 664CAE3ABEC01E7050CA808DB376FFD9
+
+0 @I500704@ INDI
+1 _UPD 27 FEB 2025 06:31:37 GMT -0500 
+1 NAME Kind /Behr/
+2 GIVN Kind
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 2 FEB 1855
+2 PLAC Assen, Drenthe, Nederland
+1 DEAT Y
+2 DATE 2 FEB 1855
+2 PLAC Assen, Drenthe, Nederland
+1 FAMC @F500039@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Kind Behr&amp;lt;br&amp;gt;מין: לא ידוע&amp;lt;br&amp;gt;לידה: 22 בספט’ 1855 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: Klaa
+4 CONC rtje Mozes&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ag
+4 CONC o and have later been removed. In such cases, the link to the original record will not work.
+2 EVEN Record
+3 ROLE 10838:9276318:
+1 SOUR @S500181@
+2 PAGE https://www.myheritage.co.il/profile-OYYV74VTDB7BUSZNMXFWTYK26XRSJSA-1500372/%D7%9C%D7%90-%D7%99%D7%93%D7%95%D7%A2-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500372
+1 RIN MH:I500704
+1 _UID 664CAE3B52BBEE7350CA808DB376FFD9
+
+0 @I500700@ INDI
+1 _UPD 24 MAY 2024 08:13:40 GMT -0500 
+1 NAME Kind /Behr/
+2 GIVN Kind
+2 SURN Behr
+1 SEX U
+1 BIRT
+2 DATE 10 DEC 1849
+2 PLAC Assen, Drenthe, Nederland
+1 DEAT Y
+1 FAMC @F500039@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Kind Behr&amp;lt;br&amp;gt;מין: לא ידוע&amp;lt;br&amp;gt;לידה: 10 בדצמ’ 1849 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: Klaa
+4 CONC rtje Mozes&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ag
+4 CONC o and have later been removed. In such cases, the link to the original record will not work.
+2 EVEN Record
+3 ROLE 10838:9276336:
+1 RIN MH:I500700
+1 _UID 664CAE3A914CCE6F50CA808DB376FFD9
+
+0 @I500706@ INDI
+1 _UPD 27 FEB 2025 06:00:50 GMT -0500 
+1 NAME Salina /Behr/
+2 GIVN Salina
+2 SURN Behr
+2 _MARNM Ensel
+1 SEX F
+1 BIRT
+2 DATE 22 APR 1862
+2 PLAC Assen, Drenthe, Netherlands
+1 OCCU dienstbode
+1 DEAT Y
+2 DATE 10 MAR 1932
+2 PLAC Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands
+1 EVEN Spouse: Raphael Ensel
+2 TYPE MARR
+2 DATE 19 MAR 1884
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 FAMS @F500347@
+1 FAMC @F500039@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Salina Behr&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 22 באפר’ 1862 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;נישואין: Raphael Ensel1884-03-19Amsterdam, Noord-Hollan
+4 CONC d, Nederland&amp;lt;br&amp;gt;מקצוע: dienstbode&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: Maria Philip Groenstad&amp;lt;br&amp;gt;ילדים: Rachel EnselSalomon Ens
+4 CONC elMaria EnselIsaac EnselAndries EnselKaatje EnselHanna EnselSara EnselDavid EnselPhilip EnselAlida EnselAbraham EnselBetje Ensel&amp;lt;br&amp;gt;הערות: Akteplaats: Amsterdam,NH,NLDArchiefnaam: N
+4 CONC oord-Hollands ArchiefDeel/Akte: reg.5D;fol.18Datum: June 20, 1923Akteplaats: Amsterdam,NH,NLDDeel/Akte: reg.3I;fol.9Archiefnaam: Noord-Hollands ArchiefDatum: October 30, 1913Deel/Akte: reg.6E;fol.26vA
+4 CONC rchiefnaam: Noord-Hollands ArchiefAkteplaats: Amsterdam,NH,NLDDatum: July  4, 1917Deel/Akte: reg.2;fol.48Akteplaats: Amsterdam,NH,NLDArchiefnaam: Noord-Hollands ArchiefDatum: February  9, 1916Inventar
+4 CONC isnr.: 1862Archiefnaam: Drents Archie...&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some fam
+4 CONC ily trees were posted years ago and have later been removed. In such cases, the link to the original record will not work.
+2 EVEN Record
+3 ROLE 10838:9276378:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Salina Behr&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;כינוי: Salma&amp;lt;br&amp;gt;לידה: 22 באפר’ 1862 - Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;נישואין: בן/בת
+4 CONC  זוג: Raphael Ensel - 19 במרץ 1884 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;פטירה: 10 במרץ 1932 - Amsterdam, Government of Amsterdam, Noord
+4 CONC -Holland, The Netherlands&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: Marie Philip Behr (לבית Groenstad)&amp;lt;br&amp;gt;בעל: Raphael Ensel&amp;lt;br&amp;gt;ילד
+4 CONC ם: Salomon Ensel, Maria Ensel, Abraham Ensel, איזאק רפאל אנסל (לבית Ensel), Andries Ensel, Kaatje Ensel, Betje Raphael Meijers (לבית Ensel), Hanna Ensel, Sara Ensel, David Ensel
+4 CONC , Philip Ensel, Alida Ensel&amp;lt;br&amp;gt;אחים ואחיות: Hinderina Behr, Philippus Behr, Abraham Izak Behr, Saartje Behr, Samuel Behr (לבית BEHR), Kaatje aCathan (לבית Behr), Betje 
+4 CONC Behr
+2 EVEN Record
+3 ROLE 40000:20624595:
+1 SOUR @S500174@
+2 PAGE https://www.myheritage.com/profile-OYYV7NIJOIQKPNRZ6QYTZKI3SMEA6DY-1500011/salina-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500011
+1 SOUR @S500197@
+2 PAGE https://www.myheritage.com/profile-OYYV7PJF3CW6GAHMOV4QX6VCZDY34VY-1500086/salina-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500086
+1 RIN MH:I500706
+1 _UID 664CAE3BAE8CBE7550CA808DB376FFD9
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTIyODg1NzY5OTgwYWU3OTJkNzM2YWNmNGVmZGVjNTBiYTE1N2RhNzcxODYzNTE2NDU4ODNhMjFhYTc5NjJhMzEmZT0xNzUzNjEwNDAw/158/944/6912/500784_387985cfgm3m62507861me_A.jpg
+2 _FILESIZE 28592
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500783
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500784
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTEwMThhYzQ3ZWU2N2M1NmU0YzAwOTU4NDAzMzhkNzQzYjA4NTEwODY1OWQzYWMxYWQ3OGFjYWI4NTc2YjE4MTImZT0xNzUzNjEwNDAw/158/944/6912/500783_027809x2s83c16507fpgnv_A.jpg
+2 _FILESIZE 28592
+2 TITL 500059_8176081k5pb9j517ji68bb_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500783
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWI2OWVkYWRjZDNhMDJkMWRhZGY5ZTExNDQ2ZWM2YmFmMzhhNjdlYjg4N2NjMjEyYjQzZmRjZTU3Nzc3YzMwZGYmZT0xNzUzNjEwNDAw/158/944/6912/500298_090734p86857662v80s1z1_A.jpg
+2 _FILESIZE 29416
+2 TITL mmda03_000113922_mpeg21_p004_image_large
+2 _PHOTO_RIN MH:P500298
+
+0 @I500927@ INDI
+1 _UPD 27 FEB 2025 06:00:47 GMT -0500 
+1 NAME Raphael /Ensel/
+2 GIVN Raphael
+2 SURN Ensel
+1 SEX M
+1 BIRT
+2 DATE 20 JAN 1862
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 DEAT Y
+2 DATE 23 APR 1943
+2 PLAC Sobibór, Włodawa County, Lublin Voivodeship, Poland
+1 EVEN Spouse: Salina Behr
+2 TYPE MARR
+2 DATE 19 MAR 1884
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 BURI
+2 PLAC Sobibor
+1 FAMS @F500347@
+1 FAMS @F500805@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Raphael Ensel&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 20 בינו’ 1862 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;נישואין: בן/
+4 CONC בת זוג: Salina Behr - 19 במרץ 1884 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;פטירה: 23 באפר’ 1943 - Sobibór, Włodawa County, Lublin Vo
+4 CONC ivodeship, Poland&amp;lt;br&amp;gt;אב: Sally Andries Ensel&amp;lt;br&amp;gt;אם: Rachel Pimentel&amp;lt;br&amp;gt;נשים: Klaartje Worms, Salina Behr&amp;lt;br&amp;gt;ילדים: Rachel Ensel, Ph
+4 CONC ilip Ensel, Salomon Ensel, Maria Ensel, Abraham Ensel, איזאק רפאל אנסל (לבית Ensel), Andries Ensel, Kaatje Ensel, Betje Raphael Meijers (לבית Ensel), Hanna Ensel, Sara Ensel, Davi
+4 CONC d Ensel, Philip Ensel, Alida Ensel&amp;lt;br&amp;gt;אחים ואחיות: David Ensel, Gracia Ensel, Joseph Ensel, Meijer Ensel, Andries Ensel
+2 EVEN Record
+3 ROLE 40000:196135408:
+1 SOUR @S500174@
+2 PAGE https://www.myheritage.com/profile-OYYV7NIJOIQKPNRZ6QYTZKI3SMEA6DY-1500010/raphael-ensel
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500010
+1 RIN MH:I500927
+1 _UID 667860126171EC98BD95A809D9F62C9A
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWRhYzVmZWI0NjQzNDNmMzNkZGJiMDdkZTg3NDlhNDhmZjk3Njk4YTg3Y2U3YTk0ODhmZDA3MmQ3MjQwMzZlYjcmZT0xNzUzNjEwNDAw/158/944/6912/500782_1466591nc6f0eb5x3578wa_A.jpg
+2 _FILESIZE 17714
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500781
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500782
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQ4NGY1MGViODlhNDk5NDBlYmE0MWQzOTdiZmJhOTNlOWNhMWE4NmZjOGIzNGU2ZTczZWU5MzkyYzhjYmRiODUmZT0xNzUzNjEwNDAw/158/944/6912/500781_7146368156e7kjeca3i0l9_A.jpg
+2 _FILESIZE 17703
+2 TITL 500057_233615q5n63t5156bb755r_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500781
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWEwNDM1YTEyYjQ4YTY3MDViZmMyNTU0Yjk2OTE3ZmJhMjIwYjNjMGI3NDg2YmZhN2I5NTU2MTQ1YTliOTU5MmUmZT0xNzUzNjEwNDAw/158/944/6912/500300_3554371276w7j481766c0j_A.jpg
+2 _FILESIZE 3386
+2 TITL tah54gim_medium
+2 _PHOTO_RIN MH:P500300
+
+0 @I502371@ INDI
+1 _UPD 27 FEB 2025 06:34:25 GMT -0500 
+1 NAME Bertha Henriette /Behr/
+2 GIVN Bertha Henriette
+2 SURN Behr
+1 SEX F
+1 BIRT
+2 DATE 12 JAN 1901
+2 PLAC Paramaribo
+1 DEAT Y
+2 DATE 6 JUL 1965
+2 PLAC Paramaribo, Suriname
+1 BURI
+2 PLAC Paramaribo, Suriname
+1 FAMC @F500823@
+1 SOUR @S500182@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7CROBQHNIVI2O3NLEQCEBHO2F3Y-1500015/bertha-henriette-behr
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500015
+1 SOUR @S500198@
+2 PAGE https://www.myheritage.com/profile-OYYV7YYNVQTPEPANV656NVYNQKXFCII-1500020/bertha-henriette-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500020
+1 RIN MH:I502371
+1 _UID 67C05BCAC3EBB19D123457B38AE45095
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWU3ZmM5ZTczMjE4MjRmZmEzYjNhMjFiMTQyOTYzMzg1OTJlYmQ3NjYxNmFjMzJhODIwZDBiMzgwNTNmZGJkZWEmZT0xNzUzNjEwNDAw/158/944/6912/500879_137601t57hbu0dn119fc06_A.jpg
+2 _FILESIZE 76104
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500878
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500879
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTFlNGViZWQxYzZhNGMzYWVjNDUxZmVkYTRiOWFjYTRmY2ZlMTAwZmQ1ZDgwYjgzZTBiYTgzNWIwZmQ2NTI5OTcmZT0xNzUzNjEwNDAw/158/944/6912/500878_3118077c9dkd17f6db5b00_A.jpg
+2 _FILESIZE 76098
+2 TITL 500013_447920qe56e1o5e2m2113d_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500878
+
+0 @I502376@ INDI
+1 _UPD 27 FEB 2025 06:34:36 GMT -0500 
+1 NAME Abraham /Behr/
+2 GIVN Abraham
+2 SURN Behr
+1 SEX M
+1 DEAT Y
+2 DATE 16 MAR 1952
+2 PLAC Paramaribo
+1 BURI
+2 PLAC Paramaribo, Suriname
+1 BIRT
+2 DATE 7 JUL 1884
+2 PLAC Paramaribo, Suriname
+1 FAMC @F500287@
+1 SOUR @S500182@
+2 PAGE Abraham Behr
+2 QUAY 3
+2 DATA
+3 DATE 27 FEB 2025
+3 TEXT התווסף באמצעות Smart Match
+2 EVEN Discovery
+1 RIN MH:I502376
+1 _UID 67C05BDBE508AE5E528AD9FF607F6E61
+
+0 @I502377@ INDI
+1 _UPD 8 APR 2025 23:46:50 GMT -0500 
+1 NAME Jacob /Behr/
+2 GIVN Jacob
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 16 JAN 1887
+2 PLAC Paramaribo
+1 DEAT Y
+2 DATE 8 MAR 1887
+2 PLAC Paramaribo
+1 FAMC @F500287@
+1 SOUR @S500182@
+2 PAGE Jacob Behr
+2 QUAY 3
+2 DATA
+3 DATE 27 בפבר’ 2025
+3 TEXT התווסף באמצעות Smart Match
+2 EVEN Discovery
+1 SOUR @S500283@
+2 QUAY 3
+2 DATA
+3 DATE 8 APR 2025
+3 TEXT תמונה אישית של Jacob Behr נוספה באמצעות Photo Discovery™
+2 EVEN Discovery
+1 RIN MH:I502377
+1 _UID 67C05BDC2324AE63528AD9FF607F6E61
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTAyYjE4MmFmZWZlMzhjNjg3OTI1ZTcxNzNjM2YyNjViYzFlMTEzMjVlMWFhZTBkNzlhOGIxODMwYWVkYzNkY2UmZT0xNzUzNjEwNDAw/158/944/6912/501779_814739t45f5r6gatfqb1b7_A.jpg
+2 _FILESIZE 36724
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501763
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501779
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQ1MWE5ODkxODgyMTZjZDZjMTU3YjQzOGM0M2E5ZTI5M2ExZGQ1NjY2NjM0ZTRjYTlkZTY2Y2QxMDM5OGE3ZTcmZT0xNzUzNjEwNDAw/158/944/6912/501763_578906f7abf9n1k7t65j4b_A.jpg
+2 _FILESIZE 36617
+2 TITL 500256_6664243i0e10wa33wy5664
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501763
+
+0 @I501800@ INDI
+1 _UPD 12 FEB 2025 23:05:12 GMT -0500 
+1 NAME Ori /Behr/
+2 GIVN Ori
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 20 APR 1986
+1 FAMC @F500660@
+1 SOUR @S500019@
+2 QUAY 4
+2 DATA
+3 TEXT Ori Behr&amp;lt;br&amp;gt;לידה: 20 באפר’ 1986&amp;lt;br&amp;gt;&nbsp;&nbsp;קרובים אפשריים: שםלידהElud E Behr1959Vered V Behr20 בינו’ 1961
+2 EVEN Record
+3 ROLE 10220:678666841:
+1 SOUR @S500019@
+2 QUAY 4
+2 DATA
+3 TEXT Ori Behr&amp;lt;br&amp;gt;לידה: 20 באפר’ 1986
+2 EVEN Record
+3 ROLE 10220:750898257:
+1 RIN MH:I501800
+1 _UID 67AD79959A3107318C470421C915FE30
+
+0 @I501802@ INDI
+1 _UPD 13 FEB 2025 05:51:27 GMT -0500 
+1 NAME nn /Behr/
+2 GIVN nn
+2 SURN Behr
+1 SEX U
+1 BIRT
+2 DATE 1999
+1 FAMC @F500661@
+1 RIN MH:I501802
+1 _UID 67AD7A0338D4CC022721FCB3E1B33BB9
+
+0 @I502370@ INDI
+1 _UPD 27 FEB 2025 06:34:24 GMT -0500 
+1 NAME Maurits Jacques /Behr/
+2 GIVN Maurits Jacques
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 21 AUG 1898
+2 PLAC Paramaribo
+1 DEAT Y
+2 DATE 12 JAN 1902
+2 PLAC Paramaribo
+1 BURI
+2 PLAC Beth Haim, Kwattaweg, Paramaribo, Suriname
+1 FAMC @F500823@
+1 SOUR @S500182@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7CROBQHNIVI2O3NLEQCEBHO2F3Y-1500014/maurits-jacques-behr
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500014
+1 SOUR @S500198@
+2 PAGE https://www.myheritage.com/profile-OYYV7YYNVQTPEPANV656NVYNQKXFCII-1500019/maurits-jacques-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500019
+1 RIN MH:I502370
+1 _UID 67C05BCA84C5119C123457B38AE45095
+
+0 @I501820@ INDI
+1 _UPD 4 MAR 2025 09:46:45 GMT -0500 
+1 NAME Abraham Isaac Abraham Isaac /Behr/
+2 GIVN Abraham Isaac Abraham Isaac
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 26 MAY 1930
+2 PLAC Assen, Drenthe, Netherlands
+1 DEAT Y
+2 DATE 2 SEP 1943
+2 PLAC Auschwitz,Malopolskie, Poland
+1 FAMC @F500667@
+1 SOUR @S500153@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NWP3V7GRSSCW2QC2BQWXYEZ4ZY-5205978/abraham-isaac-abraham-isaac-behr
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 5205978
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Abraham Izak Behr&amp;lt;br&amp;gt;Gender: Male&amp;lt;br&amp;gt;Birth: May 26 1930 - Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;Death: Sep 2 1943 - Auschwitz, Malopolskie, Poland&amp;lt;br&amp;gt;F
+4 CONC ather: &lt;a&gt;Izak Behr&lt;/a&gt;&amp;lt;br&amp;gt;Mother: &lt;a&gt;Debora Behr-de Lange (born de Lange)&lt;/a&gt;&amp;lt;br&amp;gt;Sibling: &lt;a&gt;Hester Henriette Behr&lt;/a&gt;
+2 EVEN Record
+3 ROLE 40000:20623755:
+1 RIN MH:I501820
+1 _UID 67ADDD4F68A78B37E7ABF83AA8B4587D
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTkxZjNkZDA3OGRkNzkxOTI5MDMzNjM0YWI4MmIwYmE3YjUyMDAzMGNkYjE3YmRlYzFlNTIzOWY2NDU4Y2Q2MTEmZT0xNzUzNjEwNDAw/158/944/6912/500995_859323b5l1647crzg27560_A.jpg
+2 _FILESIZE 107036
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500994
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500995
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTBiNDU1NjI4NmY1YTFlNWEwZDFhMmQ0ZmFiMmQ3Yjc4ZGYwMjlkODc4ZjVlZDI4ZjM2MzkxOGU2ZTQ0MTQ1MzMmZT0xNzUzNjEwNDAw/158/944/6912/500994_372553a777265c65sx0144_A.jpg
+2 _FILESIZE 107031
+2 TITL abraham_izak_1930-_large
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500994
+
+0 @I505612@ INDI
+1 _UPD 7 MAY 2025 23:08:04 GMT -0500 
+1 NAME Simon Israëls /Behr/
+2 GIVN Simon Israëls
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 6 JAN 1830
+2 PLAC Hoogezand, GR, NL
+1 DEAT Y
+2 DATE 13 MAR 1899
+2 PLAC Hoogezand, GR, NL
+1 EVEN
+2 TYPE Record Change
+2 DATE 26 JAN 2002
+1 BURI
+2 PLAC Hoogezand 68, GR, NL
+1 FAMC @F501721@
+1 SOUR @S500411@
+2 PAGE https://www.myheritage.com/profile-OYYV77ZDTXEVMWSDJTEOKK2ONBSQ24A-1500269/simon-israels-behr
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500269
+1 RIN MH:I505612
+1 _UID 681C2E1CF22EEDF29C65958BCF0FC31D
+
+0 @I500097@ INDI
+1 _UPD 23 JUN 2024 12:49:13 GMT -0500 
+1 NAME Betje /Behr/
+2 GIVN Betje
+2 SURN Behr
+2 _MARNM de Vries
+1 SEX F
+1 BIRT
+2 DATE 12 NOV 1864
+2 PLAC Assen, Drenthe, Netherlands
+1 DEAT Y
+2 DATE 19 FEB 1899
+2 PLAC Harlingen, Friesland, Netherlands
+2 CAUS מחלה
+1 EVEN Spouse: Benjamin de Vries
+2 TYPE MARR
+2 DATE 7 AUG 1887
+2 PLAC Assen, Drenthe, Netherlands
+1 FAMS @F500035@
+1 FAMC @F500039@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Betje Behr&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 12 בנוב’ 1864 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;נישואין: Benjamin de Vries1887-08-07Assen, Drenthe, Nede
+4 CONC rland&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: Maria Philip Groenstad&amp;lt;br&amp;gt;הערות: Archiefnaam: Drents ArchiefAkteplaats: Assen,DR,NLDInventarisnr.: 1887
+4 CONC Deel/Akte: 44Datum: August  7, 1887Inventarisnr.: 1864Deel/Akte: 180Akteplaats: Assen,DR,NLDArchiefnaam: Drents ArchiefDatum: November 12, 1864&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original re
+4 CONC cord&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the origi
+4 CONC nal record will not work.
+2 EVEN Record
+3 ROLE 10838:9276325:
+1 SOUR @S500060@
+2 QUAY 4
+2 DATA
+3 TEXT Betje BEHR&amp;lt;br&amp;gt;לידה: 12 בנוב’ 1864
+	
+	 Assen, Drenthe, Netherlands
+
+
+
+
+
+	
+	
+	
+		
+	
+
+
+&amp;lt;br&amp;gt;נישואין: נישואין ל: Benjamin DE VRIES7 באוג’ 
+4 CONC 1887
+	
+	 Assen, Drenthe, Netherlands
+
+&amp;lt;br&amp;gt;פטירה: 19 בפבר’ 1899
+	
+	 Harlingen, Friesland, Netherlands
+
+&amp;lt;br&amp;gt;בעל: Benjamin DE VRIES&amp;lt;br&amp;gt;י
+4 CONC לדים: Aaron DE VRIES, Jacob DE VRIES, Maria DE VRIES, Heiman Izaäc DE VRIES
+2 EVEN Record
+3 ROLE 14100:1607163091:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Betje Behr&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 12 בנוב’ 1864 - Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Benjamin de Vries - 7 בא
+4 CONC ג’ 1887 - Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;פטירה: 19 בפבר’ 1899 - Harlingen, Friesland, Netherlands&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: M
+4 CONC arie Philip Behr (לבית Groenstad)&amp;lt;br&amp;gt;בעל: Benjamin de Vries&amp;lt;br&amp;gt;ילדים: Klaartje de Vries, Heiman Izaäc de Vries, Jacob de Vries, Maria de Vries, Aäron de Vries
+4 CONC &amp;lt;br&amp;gt;אחים ואחיות: Salina Behr, Hinderina Behr, Philippus Behr, Abraham Izak Behr, Saartje Behr, Samuel Behr (לבית BEHR), Kaatje aCathan (לבית Behr)
+2 EVEN Record
+3 ROLE 40000:20624597:
+1 SOUR @S500181@
+2 PAGE https://www.myheritage.co.il/profile-OYYV74VTDB7BUSZNMXFWTYK26XRSJSA-1500365/betje-vries-geboren-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500365
+1 SOUR @S500183@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6YQUCYFSYMMGUI2BVDFAEEULVYY-4504250/betje-de-vries-born-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 4504250
+1 SOUR @S500184@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7DNGPGE6CTCIVU5BG47YLZGPQBA-1004491/betje-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1004491
+1 SOUR @S500197@
+2 PAGE https://www.myheritage.com/profile-OYYV7PJF3CW6GAHMOV4QX6VCZDY34VY-1500087/betje-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500087
+1 RIN MH:I500097
+1 _UID 646C9EB8CC8EB37D093E4E4C32828A1A
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTc1NzliMmFhMTFlMWViZTVkYTg1N2JjYzRhYWU5ZGM2MTc5YjgxMTNmNmU5MGNhNDQ0OGQ0ZjhlZjhkMDUzNjYmZT0xNzUzNjEwNDAw/158/944/6912/500091_5348695u13mcz68f18m46z_A.jpg
+2 _FILESIZE 26931
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500090
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500091
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTY4YmY1YWU3YTE2NGUxZTc2M2VlODQ0ZjA2ZmNiZjQ0ODU3NTAyNjFlOWVhMGU1ZTY4ZDY0NWI3ZDEzMzZlZTAmZT0xNzUzNjEwNDAw/158/944/6912/500090_7744818f6456e21w4c8n10_A.jpg
+2 _FILESIZE 31688
+2 TITL בתיה בער
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 10 380 390
+2 _PHOTO_RIN MH:P500090
+
+0 @I500098@ INDI
+1 _UPD 29 NOV 2024 06:36:51 GMT -0500 
+1 NAME Benjamin /de Vries/
+2 GIVN Benjamin
+2 SURN de Vries
+1 SEX M
+1 BIRT
+2 DATE 1 OCT 1858
+2 PLAC Harlingen, Frise, Pays-Bas
+1 DEAT Y
+2 DATE 27 AUG 1906
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+1 EVEN Spouse: Roosje (Rozet) Kijzer
+2 TYPE MARR
+2 DATE 17 DEC 1902
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 FAMS @F500035@
+1 FAMC @F500038@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Benjamin de Vries&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 1 באוק’ 1858 - Harlingen, Frise, Pays-Bas&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Roosje Kijzer - 17 בד
+4 CONC מ’ 1902 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;פטירה: 27 באוג’ 1906 - Harlingen, Harlingen, Friesland, The Netherlands&amp;lt;br&amp;gt;א
+4 CONC ב: Izaak de Vries&amp;lt;br&amp;gt;אם: Klara de Vries (לבית Speijer)&amp;lt;br&amp;gt;נשים: Betje Behr, Roosje Kijzer&amp;lt;br&amp;gt;ילדים: Klaartje de Vries, Heiman Izaäc de Vries,
+4 CONC  Jacob de Vries, Maria de Vries, Aäron de Vries&amp;lt;br&amp;gt;אחים ואחיות: Eliazar de Vries, Aron de Vries, Jantje de Vries, Mietje de Vries, Pietje Polak (לבית de Vries), Kaatje de 
+4 CONC Vries, Mozes Eleazar de Vries, Saartje de Vries, Jacob de Vries
+2 EVEN Record
+3 ROLE 40000:125962542:
+1 SOUR @S500060@
+2 QUAY 4
+2 DATA
+3 TEXT Benjamin DE VRIES&amp;lt;br&amp;gt;לידה: 1 באוק’ 1858&amp;lt;br&amp;gt;נישואין: נישואין ל: Betje BEHR7 באוג’ 1887
+	
+	 Assen, Drenthe, Netherlands
+
+
+
+
+
+	
+	
+	
+		
+	
+4 CONC 
+
+
+&amp;lt;br&amp;gt;נישואין: נישואין ל: Roosje KIJZER17 בדצמ’ 1902&amp;lt;br&amp;gt;פטירה: 27 באוג’ 1906&amp;lt;br&amp;gt;אב: Izaak DE VRIES&amp;lt;br&amp;gt;אם: K
+4 CONC lara SPEIJER&amp;lt;br&amp;gt;בני זוג: Roosje KIJZER, Betje BEHR&amp;lt;br&amp;gt;ילדים: Maria DE VRIES, Aaron DE VRIES, Heiman Izaäc DE VRIES, Jacob DE VRIES&amp;lt;br&amp;gt;אחים ו
+4 CONC חיות: Aron DE VRIES, Jantje DE VRIES, Mietje DE VRIES, Pietje DE VRIES, Kaatje DE VRIES, Saartje DE VRIES, Eliazar DE VRIES, Jacob DE VRIES, Mozes Eleazar DE VRIES
+2 EVEN Record
+3 ROLE 14100:1607161892:
+1 SOUR @S500183@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6YQUCYFSYMMGUI2BVDFAEEULVYY-4504249/benjamin-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 4504249
+1 SOUR @S500184@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7DNGPGE6CTCIVU5BG47YLZGPQBA-1004490/benjamin-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1004490
+1 RIN MH:I500098
+1 _UID 646C9EE150DA61033FE8783606332823
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTRmM2U5NWNmNzM4YzYzZjIwMTllMTFmM2I4MGMxZDU1MjMxN2ViOGEzNTUwMzBjYjY4YjgwZGQ2NjQyYjY0ODkmZT0xNzUzNjEwNDAw/158/944/6912/500089_2701384fcd666dn16y519j_A.jpg
+2 _FILESIZE 30729
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500088
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500089
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWNkYWVlZTJkZTMyYjA4ZThiNjVjYzgyNTc3YWQyMDY3ZTdkMTc1OTU0OTBmYTYwNmRkMTk1MGNlNGNhYTFiNGYmZT0xNzUzNjEwNDAw/158/944/6912/500088_541068ec4686f1k6c2918g_A.jpg
+2 _FILESIZE 32588
+2 TITL בנימין דה פריס
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 28 0 434 406
+2 _PHOTO_RIN MH:P500088
+
+0 @I500728@ INDI
+1 _UPD 12 MAY 2025 23:24:12 GMT -0500 
+1 NAME Maria Mina /Behr/
+2 GIVN Maria Mina
+2 SURN Behr
+2 _MARNM Pinto
+1 SEX F
+1 BIRT
+2 DATE 1 APR 1903
+2 PLAC Assen, Drenthe, Netherlands
+1 DEAT Y
+2 DATE 12 DEC 1964
+2 PLAC Amsterdam, North Holland, Netherlands
+2 AGE 61
+1 EVEN Echtgeno(o)t(e): Jacob Schaap
+2 TYPE MARR
+2 DATE 15 AUG 1927
+2 PLAC Assen, Drenthe, Netherlands
+1 BURI
+2 PLAC Muiderberg, North Holland, Netherlands
+1 FAMS @F500666@
+1 FAMS @F500670@
+1 FAMC @F500265@
+1 SOUR @S500054@
+2 PAGE Maria Mina Behr
+2 QUAY 3
+2 DATA
+3 DATE 23 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500151@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6HHPLDXITVCOYCVECS23MHKWOKY-1500112/maria-mina-pinto-born-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500112
+1 SOUR @S500152@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7IGQF6CH42GIRYG24FIWZTYVV3Q-1500015/maria-mina-pinto-geboren-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500015
+1 SOUR @S500154@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6AFGYECOWDZUBAB62ZA34HESLFI-1501246/maria-mina-behr-pinto
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1501246
+1 SOUR @S500235@
+2 PAGE https://www.myheritage.com/profile-OYYV66CDPL66JYHPEFIP4HXJXZZCE7Q-1500147/maria-mina-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500147
+1 SOUR @S500423@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7CROQ4ZFXTAEQ5WZ3NTPSEBMUAI-1500008/maria-pinto-geboren-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500008
+1 RIN MH:I500728
+1 _UID 664F2625DB5449AFC18D5B820E509E1B
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTNhODg1MGM1ZjE4NDJmOTc5MmI4ZWViNjA4Y2RkMDU0ZjM0NzI5MGVmM2Q3YjU1MjQ4YTExMjBiZjAyMmI4ZjUmZT0xNzUzNjEwNDAw/158/944/6912/502519_98865721z82x335ic66bz9_A.jpg
+2 _FILESIZE 6688
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502518
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502519
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTA1OWZhMjE3ZGY5YTY4MjUzZjNkMmM4M2IwYzRhOTY5Y2IwYTg5MmE3MmMzMzhiNWM1MjY0YWU3MGQ0MjRmYTgmZT0xNzUzNjEwNDAw/158/944/6912/502518_712974189frb226m63tc94_A.jpg
+2 _FILESIZE 6691
+2 TITL 500056_932532f25kf064a84je3au_D
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P502518
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTBkZTE4Y2M0NWY3ZDcwNTY3NjY5Y2QzMjY2MDk4YmViNWVmNmE2MDA2NjI3OTI5MzlkZWU2ODhlNWFmNWJlYjcmZT0xNzUzNjEwNDAw/158/944/6912/500249_131486f2674p6j9162638b_A.jpg
+2 _FILESIZE 70989
+2 TITL IMG 0005
+2 _PHOTO_RIN MH:P500249
+
+0 @I501818@ INDI
+1 _UPD 30 MAR 2025 06:50:02 GMT -0500 
+1 NAME Eliazar /Pinto/
+2 GIVN Eliazar
+2 SURN Pinto
+1 SEX M
+1 BIRT
+2 DATE 7 MAR 1896
+2 PLAC Winschoten, GR, The Netherlands
+1 EVEN Spouse: Maria Mina Behr
+2 TYPE MARR
+2 DATE 15 AUG 1927
+1 DEAT Y
+2 DATE MAR 1944
+2 PLAC Birkenau Extermination Camp
+1 RESI
+2 ADDR
+3 ADR1 Winschoten
+1 OCCU Cattle-dealer
+1 BURI
+2 PLAC Birkenau Concentration Camp Brzezinka, Powiat oświęcimski, Małopolskie, Poland
+1 FAMS @F500666@
+1 FAMC @F501112@
+1 SOUR @S500152@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7IGQF6CH42GIRYG24FIWZTYVV3Q-1500032/eliazar-pinto
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500032
+1 SOUR @S500235@
+2 PAGE https://www.myheritage.com/profile-OYYV66CDPL66JYHPEFIP4HXJXZZCE7Q-1500041/eliazer-pinto
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500041
+1 SOUR @S500423@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7CROQ4ZFXTAEQ5WZ3NTPSEBMUAI-1500007/eliazar-pinto
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500007
+1 RIN MH:I501818
+1 _UID 67ADDD1EB6E3D455F4ABF230370D304B
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTIyNGMyODliZmIzNGVlMjNjY2YwMzhkMTIzOTFmNTJiMjY0ODBmNzIwZWQxZTQ5MjFlZDE1YTg5MDQ5Y2Q3MjEmZT0xNzUzNjEwNDAw/158/944/6912/500654_70199074r1af2ijdd6hz1d_A.jpg
+2 _FILESIZE 6472
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500653
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500654
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTViYmI4OWY5MWE5OGJkODQ5ZjIwM2NkY2JhMjA2MzUxNzU1YTkxYTY5ZjFkYjU0ZWFmMDliNzQ2ODhlMWI0OWImZT0xNzUzNjEwNDAw/158/944/6912/500653_4022696dpa1da61fdw2y67_A.jpg
+2 _FILESIZE 6473
+2 TITL 500008_0778908j4697o22f65556i_W
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500653
+
+0 @I501826@ INDI
+1 _UPD 12 MAY 2025 23:24:13 GMT -0500 
+1 NAME Jacob /Schaap/
+2 GIVN Jacob
+2 SURN Schaap
+1 SEX M
+1 BIRT
+2 DATE 23 OCT 1903
+2 PLAC Almelo, Overijssel, Netherlands
+1 DEAT Y
+2 DATE 1988
+2 PLAC Amsterdam
+1 FAMS @F500670@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Jacob Schaap&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 23 באוק’ 1905 - Almelo, Overijssel, Netherlands&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Maria Behr - 30 באו
+4 CONC ’ 1953&amp;lt;br&amp;gt;אב: Koopman Jacob Schaap&amp;lt;br&amp;gt;אם: Aaltje de Vries&amp;lt;br&amp;gt;אשה: Maria Behr&amp;lt;br&amp;gt;אחים ואחיות: Herman Schaap, Heiman Schaap, H
+4 CONC erman Simon Schaap
+2 EVEN Record
+3 ROLE 40000:20623764:
+1 SOUR @S500423@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7CROQ4ZFXTAEQ5WZ3NTPSEBMUAI-1500016/jacob-schaap
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500016
+1 RIN MH:I501826
+1 _UID 67ADE42DDEFAA516563808950F9F7B52
+
+0 @I500707@ INDI
+1 _UPD 4 MAR 2025 22:47:30 GMT -0500 
+1 NAME Hinderina /Behr/
+2 GIVN Hinderina
+2 SURN Behr
+2 _MARNM Speijer
+1 SEX F
+1 BIRT
+2 DATE 27 JUL 1862
+2 PLAC Assen, Assen, Drenthe, The Netherlands
+1 DEAT Y
+2 DATE 12 NOV 1939
+2 PLAC Groningen, Netherlands
+1 EVEN Spouse: Elkan Speyer
+2 TYPE MARR
+2 DATE 10 JUN 1886
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+1 FAMS @F501148@
+1 FAMC @F500039@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Hinderina Behr&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 27 ביולי 1863 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;נישואין: Elkan Speijer1886-06-10Harlingen, Friesland,
+4 CONC  Nederland&amp;lt;br&amp;gt;פטירה: 12 בנוב’ 1939 - Groningen, Groningen, Nederland&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: Maria Philip Groenstad&amp;lt;br&a
+4 CONC mp;gt;הערות: Archiefnaam: Tresoar, Frysk Histoarysk en LetterkundichAkteplaats: Harlingen,FR,NLDInventarisnr.: 2033Deel/Akte: 34Datum: June 10, 1886Akteplaats: Assen,DR,NLDInventarisnr.: 1863Deel
+4 CONC /Akte: 138Archiefnaam: Drents ArchiefDatum: July 27, 1863Archiefnaam: Groninger ArchievenAkteplaats: Groningen,GR,NLDDeel/Akte: 1501Datum: November 14, 1939&amp;lt;br&amp;gt;מקור: &lt;a&gt;View th
+4 CONC e original record&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link
+4 CONC  to the original record will not work.
+2 EVEN Record
+3 ROLE 10838:9276351:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Hinderina Behr&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 27 ביולי 1863 - Assen, Assen, Drenthe, The Netherlands&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Elkan Speijer
+4 CONC  - 10 ביוני 1886 - Harlingen, Harlingen, Friesland, The Netherlands&amp;lt;br&amp;gt;פטירה: 12 בנוב’ 1939 - Groningen, Netherlands&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;
+4 CONC lt;br&amp;gt;אם: Marie Philip Behr (לבית Groenstad)&amp;lt;br&amp;gt;בעל: Elkan Speijer&amp;lt;br&amp;gt;אחים ואחיות: Salina Behr, Philippus Behr, Abraham Izak Behr, Saartje Behr, S
+4 CONC amuel Behr (לבית BEHR), Kaatje aCathan (לבית Behr), Betje Behr
+2 EVEN Record
+3 ROLE 40000:133842741:
+1 SOUR @S500181@
+2 PAGE https://www.myheritage.co.il/profile-OYYV74VTDB7BUSZNMXFWTYK26XRSJSA-1500366/henderina-speijer-geboren-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500366
+1 SOUR @S500197@
+2 PAGE https://www.myheritage.com/profile-OYYV7PJF3CW6GAHMOV4QX6VCZDY34VY-1500091/hinderina-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500091
+1 SOUR @S500056@
+2 PAGE https://www.myheritage.co.il/research/collection-10562/netherlands-civil-marriages-1811-1940?itemId=386424&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Elkan Speyer
+קשר משפחתי: חתן
+לידה: Harlingen, Friesland, Netherlands
+נישואין: 10 ביוני 1886 - Harlingen, Friesland, Netherlands
+כלה: Hinderina Behr (Speyer)
+הורי ה
+4 CONC תן: Joseph Speyer, Johanna Feitsma
+2 EVEN Record
+3 ROLE 10562:386424:
+1 RIN MH:I500707
+1 _UID 664CAE3BDD384E7650CA808DB376FFD9
+
+0 @I503482@ INDI
+1 _UPD 2 APR 2025 06:38:27 GMT -0500 
+1 NAME Elkan /Speyer/
+2 GIVN Elkan
+2 SURN Speyer
+1 SEX M
+1 BIRT
+2 PLAC Harlingen, Friesland, Netherlands
+1 DEAT Y
+1 FAMS @F501148@
+1 SOUR @S500056@
+2 PAGE https://www.myheritage.co.il/research/collection-10562/netherlands-civil-marriages-1811-1940?itemId=386424&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Elkan Speyer
+קשר משפחתי: חתן
+לידה: Harlingen, Friesland, Netherlands
+נישואין: 10 ביוני 1886 - Harlingen, Friesland, Netherlands
+כלה: Hinderina Behr (Speyer)
+הורי ה
+4 CONC תן: Joseph Speyer, Johanna Feitsma
+2 EVEN Record
+3 ROLE 10562:386424:
+1 RIN MH:I503482
+1 _UID 67ED21B1B206FEE2683A7F3461D1CFBA
+
+0 @I501794@ INDI
+1 _UPD 13 MAR 2025 11:38:54 GMT -0500 
+1 NAME Abraham Edward /Behr/
+2 GIVN Abraham Edward
+2 SURN Behr
+1 SEX M
+1 DEAT Y
+2 DATE 1 JAN 2005
+2 PLAC Tel Aviv, Israel
+1 BIRT
+2 DATE 16 FEB 1933
+2 PLAC Groningen Holland
+1 FAMS @F500659@
+1 FAMC @F500658@
+1 SOUR @S500151@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6HHPLDXITVCOYCVECS23MHKWOKY-1500027/abraham-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500027
+1 SOUR @S500151@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6HHPLDXITVCOYCVECS23MHKWOKY-1000021/abraham-edward-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000021
+1 RIN MH:I501794
+1 _UID 67ACD34FE1D2FB99EF357A8A86AA2AB7
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWJiNTY0NGY0ZTliZDRlNmNkYWNmM2Y0NjY1ZTc5OWQ3YjE2MWZlOWQyZDkyZjcwYzdmMWM0MGFlYzNkYzFmNTgmZT0xNzUzNjEwNDAw/158/944/6912/500652_054898afzwb16b770adgfc_A.jpg
+2 _FILESIZE 2589
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500651
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500652
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTc4NTNjOWUwYmMzYjdiMDc0YjgwNDVmYjEyNGJiMWIyYTU3M2E3MTI4OGM4Y2QyM2Y3MzVmODc3ZDQ3NmVmMGQmZT0xNzUzNjEwNDAw/158/944/6912/500651_219077adnnbss6cm1q7b7a_A.jpg
+2 _FILESIZE 2587
+2 TITL jpg
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 0 72 72
+2 _PHOTO_RIN MH:P500651
+
+0 @I501797@ INDI
+1 _UPD 12 FEB 2025 22:44:32 GMT -0500 
+1 NAME Sheila /Stockland/
+2 GIVN Sheila
+2 SURN Stockland
+1 SEX F
+1 BIRT
+2 DATE 31 MAR 1930
+1 FAMS @F500659@
+1 RIN MH:I501797
+1 _UID 67ACDBFF05FC9C3575A4F3424FC1619C
+
+0 @I505555@ INDI
+1 _UPD 7 MAY 2025 12:33:55 GMT -0500 
+1 NAME Ester /Behr/
+2 GIVN Ester
+2 SURN Behr
+1 SEX F
+1 BIRT
+2 DATE 10 JUL 1826
+2 PLAC Hoogezand, GR, NL
+1 DEAT Y
+2 DATE 7 OCT 1826
+1 FAMC @F500285@
+1 SOUR @S500411@
+2 PAGE https://www.myheritage.co.il/profile-OYYV77ZDTXEVMWSDJTEOKK2ONBSQ24A-1500267/ester-behr
+2 QUAY 3
+2 DATA
+3 TEXT Schaper Web Site, מנוהל ע"י Carol Schaper
+2 EVEN Smart Matching
+3 ROLE 1500267
+1 RIN MH:I505555
+1 _UID 681B9980CEA1EF76403AC36BD334173F
+
+0 @I502379@ INDI
+1 _UPD 4 MAR 2025 22:48:59 GMT -0500 
+1 NAME Annie Jacqueline /Behr/
+2 GIVN Annie Jacqueline
+2 SURN Behr
+2 _MARNM van Leesten
+1 SEX F
+1 DEAT Y
+2 DATE 24 JUN 1985
+2 PLAC Paramaribo, Suriname
+1 BIRT
+2 DATE 5 FEB 1903
+2 PLAC Paramaribo, Suriname
+1 BURI
+2 PLAC Paramaribo, Suriname
+1 FAMS @F500885@
+1 FAMC @F500823@
+1 SOUR @S500182@
+2 PAGE Anne Behr
+2 QUAY 3
+2 DATA
+3 DATE 27 FEB 2025
+3 TEXT התווסף באמצעות Smart Match
+2 EVEN Discovery
+1 SOUR @S500198@
+2 PAGE https://www.myheritage.com/profile-OYYV7YYNVQTPEPANV656NVYNQKXFCII-1500021/annie-jacqueline-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500021
+1 RIN MH:I502379
+1 _UID 67C05BDC7D4C2E6B528AD9FF607F6E61
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWEzYzBlZDBkMjMzNzJjYzViZGU2YWM1YzIxMGUxOTdkMzNkZDUwNGRlYzIxNzM0MzJiM2U3MmQxMGM0M2ZkNjgmZT0xNzUzNjEwNDAw/158/944/6912/501007_522575babdcd7w67rc1736_A.jpg
+2 _FILESIZE 60896
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501006
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501007
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTNkZDI1ODY4YTAwOWE2NjE4MjliY2E4ODUzNjhkZTk4ODFmNzI1ZWNhNmFhM2Y2MjViOGJhN2JlZjZmZmEyNWYmZT0xNzUzNjEwNDAw/158/944/6912/501006_5368375eic7bd076a7u1d3_A.jpg
+2 _FILESIZE 60887
+2 TITL 500016_350648b9le630fab6afleb_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501006
+
+0 @I502616@ INDI
+1 _UPD 13 MAR 2025 11:39:28 GMT -0500 
+1 NAME Hendrik Marius /van Leesten/
+2 GIVN Hendrik Marius
+2 SURN van Leesten
+1 SEX M
+1 BIRT
+2 DATE 16 OCT 1889
+2 PLAC Paramaribo, Suriname
+1 DEAT Y
+2 DATE 25 OCT 1987
+2 PLAC Paramaribo, Suriname
+1 BURI
+2 PLAC Suriname
+1 FAMS @F500885@
+1 SOUR @S500198@
+2 PAGE https://www.myheritage.com/profile-OYYV7YYNVQTPEPANV656NVYNQKXFCII-1500044/hendrik-marius-van-leesten
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500044
+1 RIN MH:I502616
+1 _UID 67C7D7B93C4BA9D3AF9446F2C86A0A7D
+
+0 @I504997@ INDI
+1 _UPD 1 MAY 2025 00:11:25 GMT -0500 
+1 NAME Hartog /Behr/
+2 GIVN Hartog
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 21 MAR 1842
+2 PLAC Assen
+1 DEAT Y
+2 DATE 13 AUG 1895
+2 PLAC Winschoten
+1 OCCU koopman
+1 FAMS @F501675@
+1 FAMC @F500286@
+1 SOUR @S500353@
+2 PAGE Hartog Behr
+2 QUAY 3
+2 DATA
+3 DATE 1 MAY 2025
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 NOTE <p>&nbsp;</p><p>left Assen for Amsterdam on 04-06-1864</p>
+1 RIN MH:I504997
+1 _UID 6813025943C2CCA19445437D16C5C4A1
+
+0 @I505424@ INDI
+1 _UPD 7 MAY 2025 11:53:04 GMT -0500 
+1 NAME Rachel /v Gelderen/
+2 GIVN Rachel
+2 SURN v Gelderen
+2 _MARNM Behr
+1 SEX F
+1 BIRT
+2 DATE 1845
+2 PLAC Winschoten
+1 DEAT Y
+1 FAMS @F501675@
+1 FAMS @F501676@
+1 SOUR @S500401@
+2 PAGE Rachel Behr
+2 QUAY 3
+2 DATA
+3 DATE 7 MAY 2025
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 NOTE Wettiging van 2 kinderen bij huwlijk met Hartog Behr
+1 RIN MH:I505424
+1 _UID 681B8F7A520BEC4ECDECD28BEDE804D2
+
+0 @I502375@ INDI
+1 _UPD 27 FEB 2025 06:34:35 GMT -0500 
+1 NAME Benjamin /Behr/
+2 GIVN Benjamin
+2 SURN Behr
+1 SEX M
+1 DEAT Y
+2 DATE 2 MAR 1884
+2 PLAC Paramaribo
+1 BIRT
+2 DATE 17 OCT 1882
+2 PLAC Paramaribo
+1 FAMC @F500287@
+1 SOUR @S500182@
+2 PAGE Benjamin Behr
+2 QUAY 3
+2 DATA
+3 DATE 27 FEB 2025
+3 TEXT התווסף באמצעות Smart Match
+2 EVEN Discovery
+1 RIN MH:I502375
+1 _UID 67C05BDBB9CDBE5A528AD9FF607F6E61
+
+0 @I505609@ INDI
+1 _UPD 7 MAY 2025 23:08:02 GMT -0500 
+1 NAME Benjamin /Behr/
+2 GIVN Benjamin
+2 SURN Behr
+2 _MARNM Levie
+1 SEX F
+1 BIRT
+2 DATE 11 SEP 1824
+2 PLAC Hoogezand
+1 DEAT Y
+2 DATE 16 JAN 1903
+2 PLAC Sappemeer
+1 FAMC @F501721@
+1 SOUR @S500411@
+2 PAGE https://www.myheritage.com/profile-OYYV77ZDTXEVMWSDJTEOKK2ONBSQ24A-1502423/benjamin-levie-born-behr
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502423
+1 RIN MH:I505609
+1 _UID 681C2E1C58BEBDEF9C65958BCF0FC31D
+
+0 @I500710@ INDI
+1 _UPD 27 FEB 2025 06:31:30 GMT -0500 
+1 NAME Saartje /Behr/
+2 GIVN Saartje
+2 SURN Behr
+2 _MARNM Roco
+1 SEX F
+1 BIRT
+2 DATE 10 NOV 1872
+2 PLAC Assen, Drenthe, Netherlands
+1 DEAT Y
+2 DATE 14 MAY 1943
+2 PLAC Sobibór, Lubelskie, Poland
+1 FAMS @F500822@
+1 FAMC @F500039@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Saartje Behr&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 10 בנוב’ 1872 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;נישואין: Jechiël Roco1899-06-21Amsterdam, Noord-Holla
+4 CONC nd, Nederland&amp;lt;br&amp;gt;פטירה: 14 במאי 1943 - Sobibor, Biala Podlaska, Poland&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: Maria Philip Groenstad&amp;lt;br&a
+4 CONC mp;gt;ילדים: Sara RocoDavid Roco&amp;lt;br&amp;gt;הערות: Bron type: BS HuwelijkDeel/Akte: Reg.2G fol. 22Akteplaats: Amsterdam,NH,NLDArchiefnaam: Noord-Hollands ArchiefURL: https://www.wiewas
+4 CONC wie.nl/nl/detail/31168663Datum: October 29, 1924Akteplaats: Assen,DR,NLDArchiefnaam: Drents ArchiefDeel/Akte: 196Inventarisnr.: 1872Datum: November 11, 1872Archiefnaam: Noord-Hollands ArchiefAkteplaat
+4 CONC s: Amsterdam,NH,NLDDeel/Akte: reg.19;fol.33Datum: June 21, 1899&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;S
+4 CONC ource Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the original record will not work.
+2 EVEN Record
+3 ROLE 10838:9276340:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Saartje Behr&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 10 בנוב’ 1872 - Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;פטירה: 14 במאי 1943 - Sobibór, Lubelskie, Poland&
+4 CONC amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: Marie Philip Behr (לבית Groenstad)&amp;lt;br&amp;gt;בעל: Jechiël Roco&amp;lt;br&amp;gt;ילדים: Sara Roco, David Roco
+4 CONC  (לבית ROCO), Isaac Roco (לבית ROCO), Joseph Roco, Marie van Cleef (לבית Roco)&amp;lt;br&amp;gt;אחים ואחיות: Salina Behr, Hinderina Behr, Philippus Behr, Abraham Izak Behr, Samue
+4 CONC l Behr (לבית BEHR), Kaatje aCathan (לבית Behr), Betje Behr
+2 EVEN Record
+3 ROLE 40000:20624600:
+1 SOUR @S500108@
+2 QUAY 3
+2 DATA
+3 DATE 20 NOV 2024
+3 TEXT תמונה אישית של Saartje N. (born Behr) נוספה באמצעות Photo Discovery™
+2 EVEN Discovery
+1 SOUR @S500181@
+2 PAGE https://www.myheritage.co.il/profile-OYYV74VTDB7BUSZNMXFWTYK26XRSJSA-1500369/saartje-roco-geboren-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500369
+1 SOUR @S500197@
+2 PAGE https://www.myheritage.com/profile-OYYV7PJF3CW6GAHMOV4QX6VCZDY34VY-1500090/saartje-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500090
+1 RIN MH:I500710
+1 _UID 664CAE3C78C25E7950CA808DB376FFD9
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTRhNjY2NTdmZmE0YjQ5M2YzZTRjY2IxNGFiNTdkZTQ3ZWRjYzYzNjU0MTBkMjc4MmM2ODRkOWRlN2QwNWY4NTgmZT0xNzUzNjEwNDAw/158/944/6912/500857_6971227h06452c21b98co7_A.jpg
+2 _FILESIZE 40834
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500856
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500857
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWY2Nzc4MmM2MjY1ZjU4ODM5ZTg5NzI3YmFkZjRkMzAzMmJkNzNhY2VhMWQ4MDcyNTdmNjU1YTIyOGYyZGJjOTUmZT0xNzUzNjEwNDAw/158/944/6912/500856_1409370ct91c1277ub36t5_A.jpg
+2 _FILESIZE 40808
+2 TITL 501165_539601du05c77lne5ef50a_R
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500856
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTEzM2Q3OGIzZGY0ZDdlYzU0ZjIxNmZiZmFkNzE0YjViNTBiMjk1MmFkMTY5ZGMwMzM4NWE4NTEwMzYxNTRkYzMmZT0xNzUzNjEwNDAw/158/944/6912/500483_9640173s6d6d10u8795fu1_A.jpg
+2 _FILESIZE 32618
+2 TITL 000064_56255527qh2ced2d47l22e
+2 _PHOTO_RIN MH:P500483
+
+0 @I502360@ INDI
+1 _UPD 27 FEB 2025 06:32:07 GMT -0500 
+1 NAME Jechiël /Roco/
+2 GIVN Jechiël
+2 SURN Roco
+1 SEX M
+1 BIRT
+2 DATE 24 DEC 1868
+2 PLAC Amsterdam, N-H. Netherlands
+1 OCCU Worker
+1 RESI
+2 ADDR
+3 ADR1 Amsterdam, Noordholland, The Netherlands
+1 OCCU Slachter
+1 DEAT Y
+2 DATE 6 MAR 1944
+2 PLAC Oswiecim, Oświęcim County, Malopolskie, Poland
+1 FAMS @F500822@
+1 SOUR @S500181@
+2 PAGE https://www.myheritage.co.il/profile-OYYV74VTDB7BUSZNMXFWTYK26XRSJSA-1501261/jechiel-roco
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1501261
+1 SOUR @S500179@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7X3A7W6KC27H6IGOOXPMCGZPQIQ-7031997/jechiel-roco
+2 QUAY 3
+2 DATA
+3 TEXT Genealogia Silvia Carolina Gruenebaum, מנוהל ע"י Silvia Gruenebaum
+2 EVEN Smart Matching
+3 ROLE 7031997
+1 RIN MH:I502360
+1 _UID 67C05B1F2AE4352CFD18BE3EAD06AC95
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTMzM2Y3ZjkwNzc5OTg0NjRjZTUzYjZjNmVmNWQxZmJlOTA5NTA2MjdlN2ZlOWIzZjU4YTUwM2E4ODNlMjM1MmYmZT0xNzUzNjEwNDAw/158/944/6912/500861_197494u6c54b112nt70w7r_A.jpg
+2 _FILESIZE 2223
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500860
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500861
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTgxYzJkMGIwZDk5YWQyNzA3NDVhM2UwZGVhYzYwZDMxOGNiZjNlZTJhMWQ3NTUzMGYzYzc0ZTFkNGQwMWRiMzkmZT0xNzUzNjEwNDAw/158/944/6912/500860_12514476kfbc741c06ww51_A.jpg
+2 _FILESIZE 2223
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500860
+
+0 @I505425@ INDI
+1 _UPD 7 MAY 2025 11:53:58 GMT -0500 
+1 NAME Izak /Behr/
+2 GIVN Izak
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 25 DEC 1869
+2 PLAC Winschoten
+1 DEAT Y
+2 DATE 26 APR 1936
+2 PLAC Winschoten
+2 AGE 66
+1 BURI
+2 PLAC Winschoten
+1 OCCU Koopman
+1 RELI joods
+1 FAMS @F501677@
+1 FAMC @F501675@
+1 SOUR @S500401@
+2 PAGE Izak Behr
+2 QUAY 3
+2 DATA
+3 DATE 7 MAY 2025
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 NOTE Izak is in 1893 gedetacheerd als militair in Indonesie in 1875 trouwen zijn ouders en dan pas (na 6 jaar) wordt hij als wettig kind erkend uit Izak en Wilhelmina komt een kind voort
+1 RIN MH:I505425
+1 _UID 681B8F7AB5264C55CDECD28BEDE804D2
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTQ5MmJkOWJjMzYxNmZiZjBkM2MwYjUzMzE4NTRmNWJlYzZhOWZhYTU2ZjRlZjBmNzA0NjA2NmVmNzMyOTg5YmUmZT0xNzUzNjEwNDAw/158/944/6912/502405_749288nm986a11266hb6v0_A.jpg
+2 _FILESIZE 227120
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502402
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502405
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTlkYmIzMTIzZTY5NGVlOTk1MjVlN2RmNDc1YmM0MzZiODg3NTY4YjZjMWFlNGRlYzc5NzNkNmU0MGNlZTY5OWEmZT0xNzUzNjEwNDAw/158/944/6912/502402_1898850d3rb6v8529ep1b5_A.jpg
+2 _FILESIZE 258361
+2 TITL Izak Behr en Willemina Frenkel
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P502402
+
+0 @I505427@ INDI
+1 _UPD 7 MAY 2025 11:53:04 GMT -0500 
+1 NAME Wilhelmina /Frenkel/
+2 GIVN Wilhelmina
+2 SURN Frenkel
+2 _MARNM Behr
+1 SEX F
+1 BIRT
+1 DEAT Y
+1 FAMS @F501677@
+1 FAMC @F501678@
+1 SOUR @S500401@
+2 PAGE Wilhelmina Behr
+2 QUAY 3
+2 DATA
+3 DATE 7 MAY 2025
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I505427
+1 _UID 681B8F7B0AAB2C5CCDECD28BEDE804D2
+
+0 @I502372@ INDI
+1 _UPD 27 FEB 2025 06:34:27 GMT -0500 
+1 NAME Irene Clara /Behr/
+2 GIVN Irene Clara
+2 SURN Behr
+2 _MARNM Molenberg
+1 SEX F
+1 BIRT
+2 DATE 4 JAN 1905
+2 PLAC Paramaribo, Paramaribo District, Suriname
+1 OCCU Teacher
+1 DEAT Y
+2 DATE 27 JAN 1982
+2 PLAC Bussum, Nederland
+1 BURI
+2 DATE 1 FEB 1982
+1 FAMC @F500823@
+1 SOUR @S500182@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7CROBQHNIVI2O3NLEQCEBHO2F3Y-1500016/irene-clara-behr
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500016
+1 SOUR @S500198@
+2 PAGE https://www.myheritage.com/profile-OYYV7YYNVQTPEPANV656NVYNQKXFCII-1500022/irene-clara-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500022
+1 RIN MH:I502372
+1 _UID 67C05BCB0F50119E123457B38AE45095
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTBmMWU3OTQ3YWIxMjNiNjFlYTRiZTE5YTRkMTZiZjdiN2VhNGI5NDcwMjdlZDU3YzlkYzkzNzU3ZWI4OTYyNDImZT0xNzUzNjEwNDAw/158/944/6912/500881_1554826dvcb795229601bz_A.jpg
+2 _FILESIZE 34496
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500880
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500881
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTQzZmM5YWFiYmI3ZmM2ZTgyY2Q2ZjgzNGZjZWFiNzU3YTdmNzM3ZjIwMGMwZmFjZDUyNmRkYjkwM2Q3MTMzOTAmZT0xNzUzNjEwNDAw/158/944/6912/500880_528305c6sd20b6510d99a7_A.jpg
+2 _FILESIZE 34477
+2 TITL 500014_970717292ee2m1e26y3x55_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500880
+
+0 @I505428@ INDI
+1 _UPD 7 MAY 2025 11:53:58 GMT -0500 
+1 NAME Hartog /Behr/
+2 GIVN Hartog
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 24 FEB 1897
+2 PLAC Winschoten
+1 DEAT Y
+2 DATE 10 SEP 1960
+2 PLAC Amsterdam
+2 AGE 63
+1 FAMS @F501679@
+1 FAMC @F501677@
+1 SOUR @S500401@
+2 PAGE Hartog Behr
+2 QUAY 3
+2 DATA
+3 DATE 7 MAY 2025
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I505428
+1 _UID 681B8F7B34E3CC60CDECD28BEDE804D2
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTVhZGQ0YzA0YWNmZWQ5MjdiOTZmNjlmNmNjMjVkNjgzOGM3YjlhZDEyNjdjNmRjNDY5MjVhNTk5NGQxNGY4MGEmZT0xNzUzNjEwNDAw/158/944/6912/502404_16300128y03bey8910h766_A.jpg
+2 _FILESIZE 34467
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502400
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502404
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTBjZmRlZTY4YjM4MDAyYjdmNzQ5NjIxODE3OTNkMjZkYWQyOTQyYmE2MzdlZTdlZTZjOTEwMWVkNjhmZmI0YTYmZT0xNzUzNjEwNDAw/158/944/6912/502400_743985bb9517f463028k78_A.jpg
+2 _FILESIZE 38573
+2 TITL Hartog Behr pasfoto
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P502400
+
+0 @I505434@ INDI
+1 _UPD 7 MAY 2025 11:53:59 GMT -0500 
+1 NAME Arendina Henderika /Blomsma/
+2 GIVN Arendina Henderika
+2 SURN Blomsma
+2 _MARNM Behr
+1 SEX F
+1 BIRT
+2 DATE 8 DEC 1893
+2 PLAC Assen, Nederland
+1 DEAT Y
+2 DATE 18 APR 1979
+2 PLAC Assen, Nederland
+2 AGE 85
+1 BURI
+2 PLAC Assen, Nederland
+1 FAMS @F501679@
+1 SOUR @S500401@
+2 PAGE Arendina Henderika Behr
+2 QUAY 3
+2 DATA
+3 DATE 7 MAY 2025
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 NOTE Gescheiden 28-12-1948 te Assen
+1 RIN MH:I505434
+1 _UID 681B8F7BDE090C6ECDECD28BEDE804D2
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTI5YTY3OWVkOGI4MGZiMTEyNmU2ZTgyZjQ0YzM2MjRjODhjN2U3ZmE5NTViMmEwYWQwYjJkMGMyZTdmZGIyMTAmZT0xNzUzNjEwNDAw/158/944/6912/502409_51317906190d128b67fo6r_A.jpg
+2 _FILESIZE 4584
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502401
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502409
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTdiM2M3Y2JiNmQ3MjIxY2M5ODBhYmViOTRiOThjM2YwZTM0YzQ2NThlYjVlYWEzNzk2YjIyMTEwOWYyMjcxZWMmZT0xNzUzNjEwNDAw/158/944/6912/502401_243961qum8ta25199bfk06_A.jpg
+2 _FILESIZE 116705
+2 TITL Achter Saar,Bertus,Hartog,Jaap
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P502401
+
+0 @I500730@ INDI
+1 _UPD 13 FEB 2025 05:55:32 GMT -0500 
+1 NAME Ephraim /Behr/
+2 GIVN Ephraim
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 5 MAR 1905
+2 PLAC Assen, Drenthe, Netherlands
+1 DEAT Y
+2 DATE 14 MAY 1940
+2 PLAC Grebbeberg, Rhenen, Utrecht, Nederland
+2 AGE 35
+1 RELI Jewish
+1 OCCU Arts
+1 BURI
+2 DATE 30 MAY 1940
+2 PLAC Ned. Israelische Begraafplaats, Groningen, NLD
+1 EVEN Echtgeno(o)t(e): Bertha Aleida JACOBS (geboren Jacobs)
+2 TYPE MARR
+2 DATE 29 OCT 1929
+2 PLAC Groningen, Groningen, Netherlands
+1 FAMS @F500658@
+1 FAMC @F500265@
+1 SOUR @S500054@
+2 PAGE Ephraim Behr
+2 QUAY 3
+2 DATA
+3 DATE 23 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500151@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6HHPLDXITVCOYCVECS23MHKWOKY-1500106/ephraim-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500106
+1 SOUR @S500151@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6HHPLDXITVCOYCVECS23MHKWOKY-1000046/edward-eddi-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000046
+1 SOUR @S500152@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7IGQF6CH42GIRYG24FIWZTYVV3Q-1500005/ephraim-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500005
+1 SOUR @S500154@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6AFGYECOWDZUBAB62ZA34HESLFI-1501247/%D7%9C%D7%90-%D7%99%D7%93%D7%95%D7%A2-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1501247
+1 SOUR @S500423@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7CROQ4ZFXTAEQ5WZ3NTPSEBMUAI-1500030/ephraim-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500030
+1 RIN MH:I500730
+1 _UID 664F26261353C9B3C18D5B820E509E1B
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWFjODZhMWE0MmE4ZjRkODM0ZDJiMWNlMzY4NDhmOTFhYmEwYjRjOTlkMjc5NTFlOTY4ODY4MzZjMGY4MmNkNjMmZT0xNzUzNjEwNDAw/158/944/6912/500666_412803d6da463sd38sba71_A.jpg
+2 _FILESIZE 86466
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500665
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500666
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTBmNzMyYzQzMmM4NzI1NWFhODJmMmE4MmM2OTVlZGM4MmIxNWFkNmMxMGMzNTU0ZGU5ZTI0NzE3NDU2MjU1NjAmZT0xNzUzNjEwNDAw/158/944/6912/500665_9663291b2da3c68dty6d70_A.jpg
+2 _FILESIZE 86397
+2 TITL 500184_891105d96m88kq501o1425_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500665
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTQ2NzIyZmFkOWNiODMwNTc0MjgzMGMzZDU1YmMzNzJkNDU0YzkxNTQxNGIzZGRhMjA1OWVlNzgzZjdlN2Y1NTAmZT0xNzUzNjEwNDAw/158/944/6912/500250_088753f462b0r619m6b3eb_A.jpg
+2 _FILESIZE 86511
+2 TITL 293683-350-462_large
+2 _PHOTO_RIN MH:P500250
+
+0 @I501795@ INDI
+1 _UPD 12 FEB 2025 11:31:37 GMT -0500 
+1 NAME Bertha Aleida /Jacobs/
+2 GIVN Bertha Aleida
+2 SURN Jacobs
+1 SEX F
+1 BIRT
+2 DATE 19 APR 1907
+2 PLAC Groningen
+1 RELI Jewish
+1 DEAT Y
+2 DATE 30 SEP 1972
+2 PLAC Amsterdam
+1 FAMS @F500658@
+1 SOUR @S500151@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6HHPLDXITVCOYCVECS23MHKWOKY-1500107/bertha-aleida-behr-born-jacobs
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500107
+1 RIN MH:I501795
+1 _UID 67ACD34FEBF10B9AEF357A8A86AA2AB7
+
+0 @I500731@ INDI
+1 _UPD 4 MAR 2025 09:46:43 GMT -0500 
+1 NAME Isaac Abraham Isaac /Behr/
+2 GIVN Isaac Abraham Isaac
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 4 OCT 1900
+2 PLAC Assen, Drenthe, Netherlands
+1 DEAT Y
+2 DATE 26 DEC 1943
+2 PLAC Warsaw Ghetto, Poland
+1 BURI
+2 PLAC Diversen, Netherlands
+1 OCCU Koopman
+1 EVEN Spouse: Debora Behr-de Lange (born de Lange)
+2 TYPE MARR
+2 DATE 25 MAY 1929
+2 PLAC Assen, Drenthe, Netherlands
+1 FAMS @F500667@
+1 FAMC @F500265@
+1 SOUR @S500054@
+2 PAGE Izak Behr
+2 QUAY 3
+2 DATA
+3 DATE 23 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500152@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7IGQF6CH42GIRYG24FIWZTYVV3Q-1500016/izak-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500016
+1 SOUR @S500153@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NWP3V7GRSSCW2QC2BQWXYEZ4ZY-5205977/isaac-abraham-isaac-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 5205977
+1 SOUR @S500154@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6AFGYECOWDZUBAB62ZA34HESLFI-1501245/izak-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1501245
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Izak Behr&amp;lt;br&amp;gt;Gender: Male&amp;lt;br&amp;gt;Birth: Oct 4 1900 - Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;Marriage: Spouse: Debora Behr-de Lange (born de Lange) - May 25 1929 - Assen, 
+4 CONC Drenthe, Netherlands&amp;lt;br&amp;gt;Death: Dec 26 1943 - Warsaw Ghetto, Poland&amp;lt;br&amp;gt;Father: &lt;a&gt;Abraham Izak Behr&lt;/a&gt;&amp;lt;br&amp;gt;Mother: &lt;a&gt;Jette Bernard&lt;/a&gt;
+4 CONC &amp;lt;br&amp;gt;Wife: &lt;a&gt;Debora Behr-de Lange (born de Lange)&lt;/a&gt;&amp;lt;br&amp;gt;Children: &lt;a&gt;Abraham Izak Behr&lt;/a&gt;, &lt;a&gt;Hester Henriette Behr&lt;/a&gt;&amp;lt;br&amp;
+4 CONC gt;Siblings: &lt;a&gt;Froukje Behr&lt;/a&gt;, &lt;a&gt;Maria Behr&lt;/a&gt;, &lt;a&gt;Ephraim Behr&lt;/a&gt;
+2 EVEN Record
+3 ROLE 40000:20623753:
+1 SOUR @S500423@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7CROQ4ZFXTAEQ5WZ3NTPSEBMUAI-1500031/izak-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500031
+1 RIN MH:I500731
+1 _UID 664F2626291DD9B5C18D5B820E509E1B
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWVmZWNkMzAyODMzNmExNzkwNTg5MjcyMDNlMTdkZjE4NzU3MWQzOWI4MWE3YmM4NzE5NmUzMzViZDExMDI2ZjUmZT0xNzUzNjEwNDAw/158/944/6912/500255_6718359bm46owf4266cf31_A.jpg
+2 _FILESIZE 69308
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500253
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500255
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTc1MjU2MWU2ZGQzZmJkNjFhNDEwZTBmOWNhNTE4ZWFiNzQ2Njc1MTYzNzhjNTRlMGE1NTVlYjNjZWQ2NDY3NDMmZT0xNzUzNjEwNDAw/158/944/6912/500253_9783706b61g4z9832zk36f_A.jpg
+2 _FILESIZE 69288
+2 TITL izak_1900-_large
+2 _DATE 1900
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500253
+
+0 @I501819@ INDI
+1 _UPD 4 MAR 2025 09:46:41 GMT -0500 
+1 NAME Deborah Berend Abraham Berend Samuel Gompel Gombrecht /De Lange/
+2 GIVN Deborah Berend Abraham Berend Samuel Gompel Gombrecht
+2 SURN De Lange
+2 _MARNM Behr-de Lange
+1 SEX F
+1 BIRT
+2 DATE 29 AUG 1903
+2 PLAC Hoogeveen, Drenthe, Netherlands
+1 DEAT Y
+2 DATE 2 SEP 1943
+2 PLAC KZ Auschwitz, Poland
+1 FAMS @F500667@
+1 FAMC @F500884@
+1 SOUR @S500153@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NWP3V7GRSSCW2QC2BQWXYEZ4ZY-5205976/deborah-berend-abraham-berend-samuel-gompel-gombrecht-behr-born-de
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 5205976
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Debora Behr-de Lange (born de Lange)&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Birth: Aug 29 1903 - Hoogeveen, Drenthe, Netherlands&amp;lt;br&amp;gt;Marriage: Spouse: Izak Behr - May 25 1929 - 
+4 CONC Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;Death: Sep 2 1943 - KZ Auschwitz, Poland&amp;lt;br&amp;gt;Father: &amp;lt;a&amp;gt;Berend de Lange&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Mother: &amp;lt;a&amp
+4 CONC ;gt;Hester Kan&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Husband: &amp;lt;a&amp;gt;Izak Behr&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Children: &amp;lt;a&amp;gt;Abraham Izak Behr&amp;lt;/a&amp;gt;, &amp;lt;a&amp;g
+4 CONC t;Hester Henriette Behr&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Siblings: &amp;lt;a&amp;gt;Abraham de Lange&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Karel de Lange&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Henriëtta
+4 CONC  de Lange&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Annetta de Lange&amp;lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 40000:20623754:
+1 RIN MH:I501819
+1 _UID 67ADDD4F0EB06B34E7ABF83AA8B4587D
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTc4M2YwNDU4MGU1MzVhZTQ2NzE2NjE0MjQ2MzgxODQ4ZjNjOTZlYTdjZGVhNWU5YjA1YWVmM2MyN2M0YTYzZDgmZT0xNzUzNjEwNDAw/158/944/6912/500993_027119yc21k19l66380477_A.jpg
+2 _FILESIZE 127521
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500992
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500993
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTRhNmJlZTkzYWI0YTE0NTE3MmM3ZGQxMjUzY2RiNGU1NjA2ZDg3MDNmZTAyNjFjNjE5MDFmYWE0NGU2N2Q3NmEmZT0xNzUzNjEwNDAw/158/944/6912/500992_739864f686480jf71c20b7_A.jpg
+2 _FILESIZE 127540
+2 TITL debora_1903-_large
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500992
+
+0 @I502378@ INDI
+1 _UPD 27 FEB 2025 06:34:36 GMT -0500 
+1 NAME Clara /Behr/
+2 GIVN Clara
+2 SURN Behr
+1 SEX F
+1 DEAT Y
+2 DATE 12 FEB 1889
+2 PLAC Paramaribo
+1 BIRT
+2 DATE 25 DEC 1888
+2 PLAC Paramaribo
+1 FAMC @F500287@
+1 SOUR @S500182@
+2 PAGE Clara Behr
+2 QUAY 3
+2 DATA
+3 DATE 27 FEB 2025
+3 TEXT התווסף באמצעות Smart Match
+2 EVEN Discovery
+1 RIN MH:I502378
+1 _UID 67C05BDC4ED66E67528AD9FF607F6E61
+
+0 @I502341@ INDI
+1 _UPD 27 FEB 2025 06:17:42 GMT -0500 
+1 NAME Frouke de /Behr/
+2 GIVN Frouke de
+2 SURN Behr
+2 _MARNM Leeuwen
+1 SEX F
+1 BIRT
+2 DATE 17 FEB 1879
+2 PLAC Groningen
+1 DEAT Y
+2 DATE 4 JUL 1941
+2 PLAC Groningen
+1 FAMS @F500818@
+1 FAMC @F500814@
+1 SOUR @S500178@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6O3XFHWIX3QYCM277BU2DZRFYAA-2590306/frouke-de-behr-leeuwen
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 2590306
+1 SOUR @S500179@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7X3A7W6KC27H6IGOOXPMCGZPQIQ-7038133/frouke-de-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 7038133
+1 RIN MH:I502341
+1 _UID 67C057E1B3416C55875A3A022DDF21F5
+
+0 @I502349@ INDI
+1 _UPD 27 FEB 2025 06:24:07 GMT -0500 
+1 NAME Abraham (Mozes) van /Leeuwen/
+2 GIVN Abraham (Mozes) van
+2 SURN Leeuwen
+1 SEX M
+1 BIRT
+2 DATE 2 JAN 1878
+2 PLAC Monster
+1 DEAT Y
+2 DATE 30 APR 1943
+2 PLAC Sobibor
+1 FAMS @F500818@
+1 SOUR @S500179@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7X3A7W6KC27H6IGOOXPMCGZPQIQ-7038134/abraham-mozes-van-leeuwen
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 7038134
+1 RIN MH:I502349
+1 _UID 67C05966314BADD7A88EAEE222FD5A12
+
+0 @I505613@ INDI
+1 _UPD 7 MAY 2025 23:08:04 GMT -0500 
+1 NAME Abram /Behr/
+2 GIVN Abram
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 21 AUG 1831
+2 PLAC Hoogezand, GR, NL
+1 DEAT Y
+2 DATE 5 MAY 1832
+2 PLAC Hoogezand, GR, NL
+1 EVEN
+2 TYPE Record Change
+2 DATE 21 JAN 2002
+1 FAMC @F501721@
+1 SOUR @S500411@
+2 PAGE https://www.myheritage.com/profile-OYYV77ZDTXEVMWSDJTEOKK2ONBSQ24A-1500266/abram-behr
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500266
+1 RIN MH:I505613
+1 _UID 681C2E1D32BC1DF39C65958BCF0FC31D
+
+0 @I505560@ INDI
+1 _UPD 7 MAY 2025 12:33:59 GMT -0500 
+1 NAME Benjamin /Behr/
+2 GIVN Benjamin
+2 SURN Behr
+2 _MARNM Levie
+1 SEX F
+1 BIRT
+2 DATE 11 SEP 1824
+2 PLAC Hoogezand
+1 DEAT Y
+2 DATE 16 JAN 1903
+2 PLAC Sappemeer
+1 FAMC @F500285@
+1 SOUR @S500411@
+2 PAGE https://www.myheritage.co.il/profile-OYYV77ZDTXEVMWSDJTEOKK2ONBSQ24A-1502423/benjamin-levie-born-behr
+2 QUAY 3
+2 DATA
+3 TEXT Schaper Web Site, מנוהל ע"י Carol Schaper
+2 EVEN Smart Matching
+3 ROLE 1502423
+1 RIN MH:I505560
+1 _UID 681B99823416EF7B403AC36BD334173F
+
+0 @I500355@ INDI
+1 _UPD 13 MAR 2025 11:38:25 GMT -0500 
+1 NAME Philippus /Behr/
+2 GIVN Philippus
+2 SURN Behr
+1 SEX M
+1 DEAT Y
+2 DATE 19 FEB 1942
+2 PLAC Auschwitz,Malopolskie, Poland
+1 BIRT
+2 DATE 25 JUL 1866
+2 PLAC Assen, Drenthe, Netherlands
+1 OCCU koopman
+1 OCCU Schoenwinkelier
+1 OCCU koopman, schoenhandelaar
+1 RESI
+2 DATE BET 1890 AND 1900
+2 ADDR
+3 ADR1 Assen, Drenthe, Netherlands
+1 BURI
+2 DATE 1943
+2 PLAC Oswiecim, , Malopolskie, Poland
+1 EVEN Spouse: Betje van Dam
+2 TYPE MARR
+2 DATE 3 MAR 1895
+2 PLAC Groningen, Netherlands
+1 FAMS @F500259@
+1 FAMS @F500260@
+1 FAMC @F500039@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Philippus Behr&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 25 ביולי 1866 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;נישואין 1: Betje van Dam3 במרץ 1895
+	
+	 Groninge
+4 CONC n, Groningen, Nederland
+
+
+
+
+
+	
+	
+	
+		
+	
+
+
+&amp;lt;br&amp;gt;נישואין 2: Frieda Mindus1937
+	
+	 Groningen, Groningen, Nederland
+
+&amp;lt;br&amp;gt;פטירה: 19 בפבר’ 1943 - Ausch
+4 CONC witz (Oswiecim) E&amp;lt;br&amp;gt;מקצוע: koopman&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: Maria Philip Groenstad&amp;lt;br&amp;gt;בן/בת from marriage 2: Kind B
+4 CONC ehr&amp;lt;br&amp;gt;הערות: Akteplaats: Groningen,GR,NLDArchiefnaam: Groninger ArchievenDeel/Akte: 1141Datum: August 30, 1938Akteplaats: Assen,DR,NLDArchiefnaam: Drents ArchiefDeel/Akte: 131Inven
+4 CONC tarisnr.: 1866Datum: July 26, 1866Archiefnaam: Groninger ArchievenAkteplaats: Groningen,GR,NLDDeel/Akte: 50Datum: March  3, 1895&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&lt;/a&gt; 
+4 CONC on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the original record will
+4 CONC  not work.
+2 EVEN Record
+3 ROLE 10838:9276320:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Philippus Behr&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 25 ביולי 1866 - Assen, DR, NLD&amp;lt;br&amp;gt;מקצוע: Schoenwinkelier&amp;lt;br&amp;gt;נישואין: בן/בת ז
+4 CONC וג: Betje van Dam - 3 במרץ 1895 - Groningen, Netherlands&amp;lt;br&amp;gt;פטירה: 19 בפבר’ 1943 - Auschwitz, Malopolskie, Poland&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt
+4 CONC ;br&amp;gt;אם: Marie Philip Behr (לבית Groenstad)&amp;lt;br&amp;gt;נשים: Betje van Dam, Frieda Behr (לבית Mindus)&amp;lt;br&amp;gt;ילדים: Izak Behr, Henderina Behr, Marie Behr&amp;l
+4 CONC t;br&amp;gt;אחים ואחיות: Salina Behr, Hinderina Behr, Abraham Izak Behr, Saartje Behr, Samuel Behr (לבית BEHR), Kaatje aCathan (לבית Behr), Betje Behr
+2 EVEN Record
+3 ROLE 40000:20623741:
+1 SOUR @S500181@
+2 PAGE https://www.myheritage.co.il/profile-OYYV74VTDB7BUSZNMXFWTYK26XRSJSA-1500364/philippus-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500364
+1 SOUR @S500197@
+2 PAGE https://www.myheritage.com/profile-OYYV7PJF3CW6GAHMOV4QX6VCZDY34VY-1500085/philippus-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500085
+1 RIN MH:I500355
+1 _UID 64F5C1D575AAC01053DE6DC43DD43C91
+
+0 @I500712@ INDI
+1 _UPD 6 MAR 2025 07:47:50 GMT -0500 
+1 NAME Betje /van Dam/
+2 GIVN Betje
+2 SURN van Dam
+1 SEX F
+1 BIRT
+2 DATE 14 APR 1865
+2 PLAC Groningen, Netherlands
+1 DEAT Y
+2 DATE 4 NOV 1933
+2 PLAC Groningen, Netherlands
+1 FAMS @F500259@
+1 FAMC @F500911@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Betje van Dam&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 14 באפר’ 1865 - Groningen, Groningen, Nederland&amp;lt;br&amp;gt;נישואין: Philippus Behr1895-03-03Groningen, Gro
+4 CONC ningen, Nederland&amp;lt;br&amp;gt;פטירה: 4 בנוב’ 1933 - Groningen, Groningen, Nederland&amp;lt;br&amp;gt;אב: Simon van Dam&amp;lt;br&amp;gt;אם: Henderina Mulder&amp;lt;br&amp;gt;הער
+4 CONC ות: Archiefnaam: Groninger ArchievenAkteplaats: Groningen,GR,NLDDeel/Akte: 50Datum: March  3, 1895&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&lt;/a&gt; on &lt;a&gt;GenealogieOnline
+4 CONC  website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the original record will not work.
+2 EVEN Record
+3 ROLE 10838:9295789:
+1 SOUR @S500205@
+2 QUAY 4
+2 DATA
+3 TEXT Betje van Dam&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: Groningen, Netherlands&amp;lt;br&amp;gt;פטירה: 4 בנוב’ 1933 - Groningen, Netherlands&amp;lt;br&amp;gt;גיל: 68&a
+4 CONC mp;lt;br&amp;gt;אב: Simon van Dam&amp;lt;br&amp;gt;אם: Henderina Mulder&amp;lt;br&amp;gt;&nbsp;&nbsp;עדים או קרובי משפחה: &amp;lt;br&amp;gt;קשר משפחתי שם&amp;lt;br&amp;g
+4 CONC t;Relative Philippus Behr&amp;lt;br&amp;gt;מקור: &amp;lt;br&amp;gt;ספר: Overlijdensregister 1933&amp;lt;br&amp;gt;מוסד: AlleGroningers&amp;lt;br&amp;gt;מספר מסמך: 1339&amp;lt;br&amp
+4 CONC ;gt;מקום המקור: Groningen, Netherlands&amp;lt;br&amp;gt;תאריך מקור: 4 בנוב’ 1933&amp;lt;br&amp;gt;תאריך הכרך: 4 בנוב’ 1933&amp;lt;br&amp;gt;מקור: &amp;lt;a&a
+4 CONC mp;gt;לצפייה ברשומה המלאה ב-allegroningers.nl&amp;lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 10563:4834921-:
+1 RIN MH:I500712
+1 _UID 664CAE3CDDD53E7B50CA808DB376FFD9
+
+0 @I500713@ INDI
+1 _UPD 27 APR 2025 06:21:47 GMT -0500 
+1 NAME Frieda /Mindus/
+2 GIVN Frieda
+2 SURN Mindus
+1 SEX F
+1 BIRT
+2 DATE 1 JUL 1909
+2 PLAC Papenburg, Lower Saxony, Germany
+1 DEAT Y
+2 DATE 2 MAR 1943
+2 PLAC Auschwitz, Malopolskie, Poland
+1 FAMS @F500260@
+1 FAMC @F500914@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Frieda Mindus&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 1 ביולי 1909 - Papenburg, Niedersachsen, Duitsland&amp;lt;br&amp;gt;נישואין: Philippus Behr1937-00-00Groningen, G
+4 CONC roningen, Nederland&amp;lt;br&amp;gt;פטירה: 19 בפבר’ 1943 - Auschwitz (Oswiecim) E&amp;lt;br&amp;gt;אב: Ruben Mindus&amp;lt;br&amp;gt;אם: Röschen Wolf&amp;lt;br&amp;gt;בן/בת: Kind 
+4 CONC Behr&amp;lt;br&amp;gt;הערות: Akteplaats: Groningen,GR,NLDArchiefnaam: Groninger ArchievenDeel/Akte: 1141Datum: August 30, 1938&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&lt;/a&g
+4 CONC t; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the original record w
+4 CONC ill not work.
+2 EVEN Record
+3 ROLE 10838:9357168:
+1 SOUR @S500205@
+2 QUAY 4
+2 DATA
+3 TEXT Frieda Mindus&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 1 ביולי 1909 - Papenburg, Duitsland&amp;lt;br&amp;gt;פטירה: 19 בפבר’ 1943 - Auschwitz, Duitsland&amp;lt;br&am
+4 CONC p;gt;גיל: 33&amp;lt;br&amp;gt;אב: Ruben Mindus&amp;lt;br&amp;gt;אם: Röschen Wolf&amp;lt;br&amp;gt;&nbsp;&nbsp;עדים או קרובי משפחה: &amp;lt;br&amp;gt;קשר משפחתי שם&am
+4 CONC p;lt;br&amp;gt;Relative Philippus Behr&amp;lt;br&amp;gt;מקור: ספר:Overlijdensregister 1948מוסד:AlleGroningersארכיון:2109מספר מסמך:1942מקום המקור:Groningen, Netherland
+4 CONC sתאריך מקור:19 בפבר’ 1943תאריך הכרך:19 בפבר’ 1943הערות:Opmerking: beschikking Gerechtshof Leeuwarden d.d. 01-12-1948AkteSoort: artikelמקור:לצפייה ברשו
+4 CONC ה המלאה ב-allegroningers.nl
+2 EVEN Record
+3 ROLE 10563:5212630-:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Frieda Behr (לבית Mindus)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 1 ביולי 1909 - Papenburg, Lower Saxony, Germany&amp;lt;br&amp;gt;פטירה: 2 במרץ 1943 - Auschwitz
+4 CONC , Malopolskie, Poland&amp;lt;br&amp;gt;אב: Ruben Mindus&amp;lt;br&amp;gt;אם: Röschen Mindus (לבית Wolffs)&amp;lt;br&amp;gt;בעל: Philippus Behr&amp;lt;br&amp;gt;אחים ואחיות: Iwan 
+4 CONC Mindus, Hanna (Minna) Mindus, Henriette Mindus, Adolf Mindus, Siegmund (Teddy) Mindus
+2 EVEN Record
+3 ROLE 40000:20623742:
+1 RIN MH:I500713
+1 _UID 664CAE3D2F20CE7E50CA808DB376FFD9
+
+0 @I505000@ INDI
+1 _UPD 1 MAY 2025 00:11:26 GMT -0500 
+1 NAME stillborn son /Behr/
+2 GIVN stillborn son
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 22 SEP 1855
+2 PLAC Assen
+1 DEAT Y
+2 DATE 22 SEP 1855
+2 PLAC Assen
+2 AGE 0
+1 FAMC @F500286@
+1 SOUR @S500353@
+2 PAGE stillborn son Behr
+2 QUAY 3
+2 DATA
+3 DATE 1 MAY 2025
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I505000
+1 _UID 681302598E3A9CA89445437D16C5C4A1
+
+0 @I502369@ INDI
+1 _UPD 27 FEB 2025 06:34:23 GMT -0500 
+1 NAME Céline Marie /Behr/
+2 GIVN Céline Marie
+2 SURN Behr
+2 _MARNM Labadie
+1 SEX F
+1 BIRT
+2 DATE 25 MAR 1897
+2 PLAC Paramaribo, Suriname
+1 OCCU nurse
+1 DEAT Y
+2 DATE 28 MAY 1971
+2 PLAC Amsterdam, Nederland
+1 FAMC @F500823@
+1 SOUR @S500182@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7CROBQHNIVI2O3NLEQCEBHO2F3Y-1500013/celine-marie-behr
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500013
+1 SOUR @S500198@
+2 PAGE https://www.myheritage.com/profile-OYYV7YYNVQTPEPANV656NVYNQKXFCII-1500010/celine-marie-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500010
+1 RIN MH:I502369
+1 _UID 67C05BCA45EFA19B123457B38AE45095
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTc0NDgyZDNkZjA2NmE5NjE0NjhjZjdmY2MwNGE2NzY3MmZlN2NmYzU0NmY0N2I0MTY3YjZlZDdlNWJiZjAwZjUmZT0xNzUzNjEwNDAw/158/944/6912/500877_6711300517hlaoy69bcbec_A.jpg
+2 _FILESIZE 59367
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500876
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500877
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWMxZjkwM2RkZDcwOTRjYTU2ZjhmZjE5MmM5MzJjYjdjMzIxMzI4YzYzMGJjOTNlODcyNzgwMTRiOWU2MTQxZjAmZT0xNzUzNjEwNDAw/158/944/6912/500876_375053kc16h2em0c9n17b5_A.jpg
+2 _FILESIZE 59393
+2 TITL 500012_548043he325e21gege2653_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500876
+
+0 @I505569@ INDI
+1 _UPD 7 MAY 2025 23:10:13 GMT -0500 
+1 NAME Israel Benjamins /Behr/
+2 GIVN Israel Benjamins
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 14 FEB 1799
+2 PLAC Kalkwijk, Hoogezand, Groningen, Netherlands
+1 DEAT Y
+2 DATE 6 JAN 1873
+2 PLAC Hoogezand, Groningen, Netherlands
+1 OCCU voddenkoopman, inlands kramer
+1 FAMS @F501721@
+1 FAMC @F500288@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19510186/israel-benjamins-de-beer-ne-behr
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19510186
+1 SOUR @S500411@
+2 PAGE https://www.myheritage.com/profile-OYYV77ZDTXEVMWSDJTEOKK2ONBSQ24A-1500245/israel-benjamins-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500245
+1 SOUR @S500411@
+2 PAGE https://www.myheritage.co.il/profile-OYYV77ZDTXEVMWSDJTEOKK2ONBSQ24A-1500245/israel-benjamins-behr
+2 QUAY 3
+2 DATA
+3 TEXT Schaper Web Site, מנוהל ע"י Carol Schaper
+2 EVEN Smart Matching
+3 ROLE 1500245
+1 RIN MH:I505569
+1 _UID 681C250D030F40D2B8BB4CEFACDF9264
+
+0 @I505607@ INDI
+1 _UPD 7 MAY 2025 23:07:59 GMT -0500 
+1 NAME Sara Simons /Bollegraaf/
+2 GIVN Sara Simons
+2 SURN Bollegraaf
+2 _MARNM Behr
+1 SEX F
+1 BIRT
+2 DATE OCT 1796
+2 PLAC Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 5 JUL 1875
+2 PLAC Kalkwijk, gem. Hoogezand, Nederland
+1 FAMS @F501721@
+1 SOUR @S500411@
+2 PAGE https://www.myheritage.com/profile-OYYV77ZDTXEVMWSDJTEOKK2ONBSQ24A-1500246/sara-simons-behr-born-bollegraaf
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500246
+1 RIN MH:I505607
+1 _UID 681C2E1BC8488DEB9C65958BCF0FC31D
+
+0 @I500714@ INDI
+1 _UPD 21 MAY 2024 09:23:05 GMT -0500 
+1 NAME Kind /Behr/
+2 GIVN Kind
+2 SURN Behr
+1 SEX U
+1 BIRT
+2 DATE 30 AUG 1938
+2 PLAC Groningen, Groningen, Nederland
+1 FAMC @F500260@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Kind Behr&amp;lt;br&amp;gt;מין: לא ידוע&amp;lt;br&amp;gt;לידה: 30 באוג’ 1938 - Groningen, Groningen, Nederland&amp;lt;br&amp;gt;אב: Philippus Behr&amp;lt;br&amp;gt;אם: Frieda Mi
+4 CONC ndus&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and 
+4 CONC have later been removed. In such cases, the link to the original record will not work.
+2 EVEN Record
+3 ROLE 10838:9276352:
+1 RIN MH:I500714
+1 _UID 664CAE3D79D73E8150CA808DB376FFD9
+
+0 @I505557@ INDI
+1 _UPD 7 MAY 2025 12:33:57 GMT -0500 
+1 NAME Simon Israëls /Behr/
+2 GIVN Simon Israëls
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 6 JAN 1830
+2 PLAC Hoogezand, GR, NL
+1 DEAT Y
+2 DATE 13 MAR 1899
+2 PLAC Hoogezand, GR, NL
+1 BURI
+2 PLAC Hoogezand 68, GR, NL
+1 FAMC @F500285@
+1 SOUR @S500411@
+2 PAGE https://www.myheritage.co.il/profile-OYYV77ZDTXEVMWSDJTEOKK2ONBSQ24A-1500269/simon-israels-behr
+2 QUAY 3
+2 DATA
+3 TEXT Schaper Web Site, מנוהל ע"י Carol Schaper
+2 EVEN Smart Matching
+3 ROLE 1500269
+1 RIN MH:I505557
+1 _UID 681B99815F7E4F78403AC36BD334173F
+
+0 @I502373@ INDI
+1 _UPD 4 MAR 2025 22:49:03 GMT -0500 
+1 NAME Lilly Corrie /Behr/
+2 GIVN Lilly Corrie
+2 SURN Behr
+2 _MARNM Hering
+1 SEX F
+1 BIRT
+2 DATE 24 MAY 1907
+2 PLAC Paramaribo, Suriname
+1 DEAT Y
+2 DATE 19 AUG 1994
+2 PLAC Laren, NH, The Netherlands
+1 BURI
+2 DATE 22 AUG 1994
+2 PLAC Isr. Begraafplaats, Naarden, Nederland
+1 FAMC @F500823@
+1 SOUR @S500182@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7CROBQHNIVI2O3NLEQCEBHO2F3Y-1500012/lilly-behr
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500012
+1 SOUR @S500198@
+2 PAGE https://www.myheritage.com/profile-OYYV7YYNVQTPEPANV656NVYNQKXFCII-1500018/lilly-corrie-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500018
+1 RIN MH:I502373
+1 _UID 67C05BCB6412919F123457B38AE45095
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTdmYmU5ZDE0M2Y5YjA1ZDk1NjgwYTIwZGYzZjQ2ZjU4YTVhYTlhNGRlNTZiOTY3YjM1ZWM5NjQ4YmUzMGYwMzMmZT0xNzUzNjEwNDAw/158/944/6912/500883_057967c4mg170b5a96dae7_A.jpg
+2 _FILESIZE 54641
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500882
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500883
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPThhYTExYzdmMjdiZmRjNWIzMjJjY2Y5MWY0ZGNhMmNhY2NhYmI0NDMxYTBjOWIxY2I0YjUwYjVmN2E5YTJlNzAmZT0xNzUzNjEwNDAw/158/944/6912/500882_397011pwf19cb057dv360y_A.jpg
+2 _FILESIZE 54649
+2 TITL 500008_664857e32o462xeemz2t15_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500882
+
+0 @I501798@ INDI
+1 _UPD 30 APR 2025 04:37:02 GMT -0500 
+1 NAME Ehud /Behr/
+2 GIVN Ehud
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 19 JUN 1960
+2 PLAC Tel Aviv, Israel
+1 FAMS @F500660@
+1 FAMC @F500659@
+1 RIN MH:I501798
+1 _UID 67ACDC0B93B5D81A3C5322A632B5AFB7
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWMyNjc4MzE4NmEzYTU4ZGIxMjU1OTliMjEwNmNjYWRlZWE2NzkzMWY0ZWFlYjE5Njk3YmJiZGNjOWQ1ZGZhMDImZT0xNzUzNjEwNDAw/158/944/6912/502163_6080353e17as13cbe6fj18_A.jpg
+2 _FILESIZE 75396
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502162
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502163
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTJiNDlhNzg2MTIzNWIxODg0N2EzMzQ4YjM0MjdkNjdjYTdhM2NmZDIzYzM2MWIyZTllNjdhMDczOGQ0ZDIzMTcmZT0xNzUzNjEwNDAw/158/944/6912/502162_123823ui3fmdw6e13a18c1_A.jpg
+2 _FILESIZE 75431
+2 TITL behr_ehud__fb-udi_behr
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 0 600 600
+2 _PHOTO_RIN MH:P502162
+
+0 @I501799@ INDI
+1 _UPD 12 MAY 2025 23:21:43 GMT -0500 
+1 NAME Vered V /Zukeman/
+2 GIVN Vered V
+2 SURN Zukeman
+1 SEX F
+1 BIRT
+2 DATE 20 JAN 1961
+1 FAMS @F500660@
+1 SOUR @S500019@
+2 QUAY 4
+2 DATA
+3 TEXT Vered V Behr&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 20 בינו’ 1961&amp;lt;br&amp;gt;&nbsp;&nbsp;קרובים אפשריים: שםלידהElud E Behr1959Ori Behr20 באפר
+4 CONC  1986Barry Dds Behrens25 בדצמ’ 1942
+2 EVEN Record
+3 ROLE 10220:65385150:
+1 RIN MH:I501799
+1 _UID 67AD793227539268280785FBAABB9D71
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWYzNDU2YjA5YTdlMTE1YTdhOWQwMjczYzEzMTAzZjEzOTYyNDViY2Y4NTg1NjZlY2VhYzM5NTBkZDk1MmI1YzAmZT0xNzUzNjEwNDAw/158/944/6912/502517_007878f218cz78226do8rv_A.jpg
+2 _FILESIZE 87108
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502516
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502517
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTAxNDVjYzQ4MTVhOGJlNzYxMGU3NWY4MWZmMjY3ZTRmNTNmZWNiYWZjOWZkODQ3ZDQ4ZTRiYTQ2YTEyYTYwYTkmZT0xNzUzNjEwNDAw/158/944/6912/502516_6016232c2x61u8o16dv2v8_A.jpg
+2 _FILESIZE 696575
+2 TITL 491449792_18504195019002721_7260935001786905661_n
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 842 432 1351 941
+2 _PHOTO_RIN MH:P502516
+
+0 @I500698@ INDI
+1 _UPD 21 MAY 2024 09:22:56 GMT -0500 
+1 NAME Israël /Behr/
+2 GIVN Israël
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 12 NOV 1845
+2 PLAC Assen, Drenthe, Nederland
+1 DEAT Y
+2 DATE 21 FEB 1929
+2 PLAC Groningen, Groningen, Nederland
+1 OCCU koopman
+1 FAMC @F500039@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Israël Behr&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 12 בנוב’ 1845 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;נישואין: Annegina van der Zijl1872-05-01Assen, Drenthe, 
+4 CONC Nederland&amp;lt;br&amp;gt;פטירה: 21 בפבר’ 1929 - Groningen, Groningen, Nederland&amp;lt;br&amp;gt;מקצוע: koopman&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם
+4 CONC : Klaartje Mozes&amp;lt;br&amp;gt;בן/בת: Sander Behr&amp;lt;br&amp;gt;הערות: Nadere informatie  bruidegom: 26 jaar.; bruid: 26 jaar.Akteplaats: Groningen,GR,NLDArchiefnaam: Groninger Archieve
+4 CONC nDeel/Akte: 41Datum: February 12, 1899Archiefnaam: Drents ArchiefDeel/Akte: 125Akteplaats: Assen,DR,NLDInventarisnr.: 1845Datum: November 13, 1845Inventarisnr.: 1872Archiefnaam: Drents ArchiefAkteplaa
+4 CONC ts: Assen,DR,NLDDeel/Akte: 16Datum: May  1, 1872Deel/Akte: 285Akteplaats: Groningen,GR,NLDArchiefnaam: Groninger ArchievenDatum: February 22, 1929&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original
+4 CONC  record&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the or
+4 CONC iginal record will not work.
+2 EVEN Record
+3 ROLE 10838:9276361:
+1 RIN MH:I500698
+1 _UID 664CAE3A39C8AE6D50CA808DB376FFD9
+
+0 @I500778@ INDI
+1 _UPD 31 MAY 2024 08:08:39 GMT -0500 
+1 NAME Isak (Jacques) /Behr/
+2 GIVN Isak (Jacques)
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 22 SEP 1878
+2 PLAC Paramaribo, Suriname
+1 DEAT Y
+2 DATE 17 MAR 1955
+2 PLAC Paramaribo
+2 AGE 76
+1 BURI
+2 DATE 18 MAR 1955
+2 PLAC Beth Chaim, Paramaribo
+1 EVEN Echtgeno(o)t(e): Anna Pieternella Vas
+2 TYPE Marriage
+2 DATE 21 DEC 1898
+2 PLAC Paramaribo, Suriname
+2 AGE 20
+1 OCCU
+2 PLAC Koopman
+1 EVEN Echtgeno(o)t(e): Anna Pieternella Vas
+2 TYPE MARR
+2 DATE 21 DEC 1898
+2 PLAC Paramaribo, Suriname
+1 FAMS @F500823@
+1 FAMC @F500287@
+1 SOUR @S500061@
+2 PAGE Isak (Jacques) Behr
+2 QUAY 3
+2 DATA
+3 DATE 31 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500182@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7CROBQHNIVI2O3NLEQCEBHO2F3Y-1500008/isak-jacques-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500008
+1 SOUR @S500198@
+2 PAGE https://www.myheritage.com/profile-OYYV7YYNVQTPEPANV656NVYNQKXFCII-1500013/isak-jacques-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500013
+1 RIN MH:I500778
+1 _UID 6659CB97E1928FED07E9282D95A15162
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTkyYWEzY2FhOTZmNjdhZmFhYjEwMjJlZWM5NjdjY2U2MzA1OTY5ODc0NjcxOTQ0NDM2MWFmYTFkMjc4Mjc0NjgmZT0xNzUzNjEwNDAw/158/944/6912/500265_306106st76d1i6r5e53c9b_A.jpg
+2 _FILESIZE 54589
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500262
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500265
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWRkMjliZThkODg2ZDU2M2Y3YzYyMjEwY2EwMjk0YWFjNWZhZWE4NDliNDA1YzJmYTBlOTMyYWIzYzRmMWRkM2EmZT0xNzUzNjEwNDAw/158/944/6912/500262_349416cwbu6693g56dnmj1_A.jpg
+2 _FILESIZE 54396
+2 TITL kih43hub_large
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500262
+
+0 @I502368@ INDI
+1 _UPD 27 FEB 2025 06:34:21 GMT -0500 
+1 NAME Anna Pieternella /Vas/
+2 GIVN Anna Pieternella
+2 SURN Vas
+2 _MARNM Behr
+1 SEX F
+1 BIRT
+2 DATE 14 MAR 1872
+2 PLAC Paramaribo, Suriname
+1 EVEN Echtgeno(o)t(e): Isac (Jacques) Behr
+2 TYPE MARR
+2 DATE 21 DEC 1898
+2 PLAC Paramaribo, Suriname
+1 DEAT Y
+2 DATE 12 APR 1966
+2 PLAC Paramaribo, Suriname
+1 BURI
+2 DATE 13 APR 1966
+2 PLAC Paramaribo, Suriname
+1 EVEN Echtgeno(o)t(e): Isac (Jacques) Behr
+2 TYPE Marriage
+2 DATE 21 DEC 1898
+2 PLAC Paramaribo, Suriname
+1 FAMS @F500823@
+1 SOUR @S500182@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7CROBQHNIVI2O3NLEQCEBHO2F3Y-1500009/anna-pieternella-vas
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500009
+1 SOUR @S500198@
+2 PAGE https://www.myheritage.com/profile-OYYV7YYNVQTPEPANV656NVYNQKXFCII-1500014/anna-pieternella-vas
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500014
+1 RIN MH:I502368
+1 _UID 67C05BC9DDBFF198123457B38AE45095
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWY3ZmZkMGQ4ZjdlOTlmZjhlZjQ4NjFkZGM4YWQ4Nzg5ZjQ5ZGU2OGViMTExYTJlMzEzNjA4YzljMWI5YzJkNzkmZT0xNzUzNjEwNDAw/158/944/6912/500875_3371811tbm75cd6s0m979c_A.jpg
+2 _FILESIZE 66597
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500874
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500875
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTA0MzJhYWIxZWRjNjEwODA1NzAyYjE2YjRkZWMyYzc2OWE3OTQ5MTk4ZmFmMzRhNWNjM2Q2ODcyODVhM2YyMzgmZT0xNzUzNjEwNDAw/158/944/6912/500874_14343815o9clc9b1j0567c_A.jpg
+2 _FILESIZE 66562
+2 TITL 500006_2927212v6jd52hv3e3eqe1_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500874
+
+0 @I500774@ INDI
+1 _UPD 7 MAY 2025 22:28:38 GMT -0500 
+1 NAME Israël Benjamin /Behr/
+2 GIVN Israël Benjamin
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 14 FEB 1799
+2 PLAC Kalkwijk Gem. Hoogezand
+1 DEAT Y
+2 DATE 6 JAN 1873
+2 PLAC Hoogezand, Groningen, Netherlands
+2 AGE 73
+1 OCCU voddenkoopman, inlands kramer
+1 OCCU Handelsman
+1 FAMS @F500285@
+1 FAMC @F500288@
+1 SOUR @S500061@
+2 PAGE Israel Benjamins Behr
+2 QUAY 3
+2 DATA
+3 DATE 31 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500176@
+2 PAGE https://www.myheritage.co.il/profile-OYYV637G2A4M7VYLOW3DS3TIF3UK4HY-1000052/israel-benjamins-de-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000052
+1 SOUR @S500411@
+2 PAGE https://www.myheritage.co.il/profile-OYYV77ZDTXEVMWSDJTEOKK2ONBSQ24A-1500245/israel-benjamins-behr
+2 QUAY 3
+2 DATA
+3 TEXT Schaper Web Site, מנוהל ע"י Carol Schaper
+2 EVEN Smart Matching
+3 ROLE 1500245
+1 SOUR @S500205@
+2 PAGE https://www.myheritage.co.il/research/collection-10563/netherlands-civil-deaths-1811-1965?itemId=4745432&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Israël Benjamin Behr
+לידה: Kalkwijk Gem. Hoogezand
+פטירה: 6 בינו’ 1873 - Martenshoek Gem. Hoogezand
+הורים: Benjamin Behr, Hindel Lasarus
+עדים או קרובי משפחה: Sara 
+4 CONC Simons Bollegraaf
+2 EVEN Record
+3 ROLE 10563:4745432:
+1 RIN MH:I500774
+1 _UID 6659CB9766E28FDE07E9282D95A15162
+
+0 @I500775@ INDI
+1 _UPD 6 MAR 2025 07:50:40 GMT -0500 
+1 NAME Sara Simons /Bollegraaf/
+2 GIVN Sara Simons
+2 SURN Bollegraaf
+2 _MARNM Behr
+1 SEX F
+1 BIRT
+2 DATE OCT 1796
+2 PLAC Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 5 JUL 1875
+2 PLAC Martenshoek Gem. Hoogezand
+2 AGE 78
+1 FAMS @F500285@
+1 FAMC @F500917@
+1 SOUR @S500061@
+2 PAGE Sara Simons Bollegraaf
+2 QUAY 3
+2 DATA
+3 DATE 31 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500176@
+2 PAGE https://www.myheritage.co.il/profile-OYYV637G2A4M7VYLOW3DS3TIF3UK4HY-1000015/sara-simons-bollegraaf
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000015
+1 SOUR @S500205@
+2 QUAY 4
+2 DATA
+3 TEXT Sara Bollegraaf&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;פטירה: 5 ביולי 1875 - Martenshoek Gem. Hoogezand&amp;lt;br
+4 CONC &amp;gt;גיל: 77&amp;lt;br&amp;gt;אב: Simon Bollegraaf&amp;lt;br&amp;gt;אם: Ester Cohen&amp;lt;br&amp;gt;&nbsp;&nbsp;עדים או קרובי משפחה: &amp;lt;br&amp;gt;קשר משפחתי ש
+4 CONC ם&amp;lt;br&amp;gt;Relative Israel de Beer&amp;lt;br&amp;gt;מקור: &amp;lt;br&amp;gt;ספר: Overlijdensregister 1875&amp;lt;br&amp;gt;מוסד: AlleGroningers&amp;lt;br&amp;gt;מספר מסמך: 
+4 CONC 112&amp;lt;br&amp;gt;מקום המקור: Hoogezand, Groningen, Netherlands&amp;lt;br&amp;gt;תאריך מקור: 5 ביולי 1875&amp;lt;br&amp;gt;תאריך הכרך: 5 ביולי 1875&amp;lt;br&am
+4 CONC p;gt;מקור: &amp;lt;a&amp;gt;לצפייה ברשומה המלאה ב-allegroningers.nl&amp;lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 10563:4879607-:
+1 RIN MH:I500775
+1 _UID 6659CB9782964FE207E9282D95A15162
+
+0 @I500708@ INDI
+1 _UPD 27 FEB 2025 06:31:39 GMT -0500 
+1 NAME Kaatje /Behr/
+2 GIVN Kaatje
+2 SURN Behr
+2 _MARNM acathan
+1 SEX F
+1 BIRT
+2 DATE 30 SEP 1868
+2 PLAC Assen, Drenthe, Netherlands
+1 DEAT Y
+2 DATE 18 JUN 1941
+2 PLAC Amsterdam
+1 FAMC @F500039@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Kaatje Behr&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 30 בספט’ 1868 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;נישואין: David Acathan1894-04-04Amsterdam, Noord-Hollan
+4 CONC d, Nederland&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם: Maria Philip Groenstad&amp;lt;br&amp;gt;הערות: Voogd van de bruidegom Jozeph Barend Blik; toeziend voogd van d
+4 CONC e bruidegom Mozes AcathanDeel/Akte: 161Archiefnaam: Drents ArchiefAkteplaats: Assen,DR,NLDInventarisnr.: 1868Datum: September 30, 1868Akteplaats: Amsterdam,NH,NLDArchiefnaam: Noord-Hollands ArchiefDee
+4 CONC l/Akte: reg.7;fol.17vDatum: April  4, 1894&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some f
+4 CONC amily trees were posted years ago and have later been removed. In such cases, the link to the original record will not work.
+2 EVEN Record
+3 ROLE 10838:9276322:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Kaatje aCathan (לבית Behr)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 30 בספט’ 1868 - Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br
+4 CONC &amp;gt;אם: Marie Philip Behr (לבית Groenstad)&amp;lt;br&amp;gt;בעל: David Acathan&amp;lt;br&amp;gt;אחים ואחיות: Salina Behr, Hinderina Behr, Philippus Behr, Abraham Izak Behr, Saar
+4 CONC tje Behr, Samuel Behr (לבית BEHR), Betje Behr
+2 EVEN Record
+3 ROLE 40000:20624598:
+1 SOUR @S500181@
+2 PAGE https://www.myheritage.co.il/profile-OYYV74VTDB7BUSZNMXFWTYK26XRSJSA-1500368/kaatje-acathan-geboren-behr
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500368
+1 SOUR @S500197@
+2 PAGE https://www.myheritage.com/profile-OYYV7PJF3CW6GAHMOV4QX6VCZDY34VY-1500088/kaatje-acathan
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500088
+1 RIN MH:I500708
+1 _UID 664CAE3C1871BE7750CA808DB376FFD9
+
+0 @I504998@ INDI
+1 _UPD 1 MAY 2025 00:11:26 GMT -0500 
+1 NAME stillborn son /Behr/
+2 GIVN stillborn son
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 10 DEC 1849
+2 PLAC Assen
+1 DEAT Y
+2 DATE 10 DEC 1849
+2 PLAC Assen
+2 AGE 0
+1 FAMC @F500286@
+1 SOUR @S500353@
+2 PAGE stillborn son Behr
+2 QUAY 3
+2 DATA
+3 DATE 1 MAY 2025
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I504998
+1 _UID 681302595EB53CA49445437D16C5C4A1
+
+0 @I502380@ INDI
+1 _UPD 13 MAR 2025 11:39:16 GMT -0500 
+1 NAME Florie Sophie /Behr/
+2 GIVN Florie Sophie
+2 SURN Behr
+2 _MARNM van Rietschoten
+1 SEX F
+1 BIRT
+2 DATE 8 APR 1909
+2 PLAC Paramaribo, Suriname
+1 DEAT Y
+2 DATE 11 FEB 1975
+2 PLAC Amsterdam, NL
+1 BURI
+2 PLAC Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands
+1 FAMC @F500823@
+1 SOUR @S500182@
+2 PAGE Florie Sophie Behr
+2 QUAY 3
+2 DATA
+3 DATE 27 FEB 2025
+3 TEXT התווסף באמצעות Smart Match
+2 EVEN Discovery
+1 SOUR @S500198@
+2 PAGE https://www.myheritage.com/profile-OYYV7YYNVQTPEPANV656NVYNQKXFCII-1500023/florie-sophie-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500023
+1 RIN MH:I502380
+1 _UID 67C05BDCA3EEBE6E528AD9FF607F6E61
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTQ4MTcwZTg3YmRlNTkwNTY3N2RmZTAzNjE5NzY4YmNiNTM0ZmQyNjU1ZmM4ZWRiOTk5ZWVhNjhlYjg2ZmYzMmUmZT0xNzUzNjEwNDAw/158/944/6912/500886_133032dx5csd310j7qd65b_A.jpg
+2 _FILESIZE 32013
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500884
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500886
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWU1ZjI1YWExZTc1ZDc3YmRkMDU3MWE3MDJjY2UyODZkY2EyMzQ0YTZkMTVhMDhmMThkNDlhMjFlNzI3NzQ2ZDAmZT0xNzUzNjEwNDAw/158/944/6912/500884_02749951p15dd06b337llc_A.jpg
+2 _FILESIZE 31980
+2 TITL rud99jum_large
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500884
+
+0 @I500702@ INDI
+1 _UPD 21 MAY 2024 09:22:58 GMT -0500 
+1 NAME Benjamin /Behr/
+2 GIVN Benjamin
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 20 FEB 1853
+2 PLAC Assen, Drenthe, Nederland
+1 DEAT Y
+2 DATE 27 OCT 1908
+2 PLAC Groningen, Groningen, Nederland
+1 OCCU koopman
+1 FAMC @F500039@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Benjamin Behr&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 20 בפבר’ 1853 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;נישואין: Betje Wijnberg1881-02-27Groningen, Groningen, 
+4 CONC Nederland&amp;lt;br&amp;gt;פטירה: 27 באוק’ 1908 - Groningen, Groningen, Nederland&amp;lt;br&amp;gt;מקצוע: koopman&amp;lt;br&amp;gt;אב: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;אם
+4 CONC : Klaartje Mozes&amp;lt;br&amp;gt;הערות: Deel/Akte: 27Akteplaats: Groningen,GR,NLDArchiefnaam: Groninger ArchievenDatum: February 27, 1881Deel/Akte: 35Archiefnaam: Drents ArchiefInventarisnr.: 18
+4 CONC 53Akteplaats: Assen,DR,NLDDatum: February 21, 1853Akteplaats: Groningen,GR,NLDDeel/Akte: 1050Archiefnaam: Groninger ArchievenDatum: October 28, 1908&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the origin
+4 CONC al record&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the 
+4 CONC original record will not work.
+2 EVEN Record
+3 ROLE 10838:9276315:
+1 RIN MH:I500702
+1 _UID 664CAE3AEBE27E7150CA808DB376FFD9
+
+0 @F500287@ FAM
+1 _UPD 31 MAY 2024 08:07:35 GMT -0500
+1 HUSB @I500699@
+1 WIFE @I500777@
+1 CHIL @I500778@
+1 CHIL @I502374@
+1 CHIL @I502375@
+1 CHIL @I502376@
+1 CHIL @I502377@
+1 CHIL @I502378@
+1 RIN MH:F500287
+1 _UID 6659CB97C1683FEA07E9282D95A15162
+1 MARR
+2 DATE 13 SEP 1876
+2 PLAC Paramaribo, Suriname
+2 NOTE Echtgeno(o)t(e): Selly Bueno de Mesquita (geboren Bueno de Mesquita)
+
+0 @F500265@ FAM
+1 _UPD 23 MAY 2024 06:19:01 GMT -0500
+1 HUSB @I500709@
+1 WIFE @I500727@
+1 CHIL @I500729@
+1 CHIL @I500731@
+1 CHIL @I500728@
+1 CHIL @I500730@
+1 RIN MH:F500265
+1 _UID 664F2625B7CAF9ACC18D5B820E509E1B
+1 MARR
+2 DATE 11 JUL 1897
+2 PLAC Assen, Drenthe, Netherlands
+2 NOTE Echtgeno(o)t(e): Jette Bernard
+
+0 @F500039@ FAM
+1 _UPD 21 MAY 2024 09:22:49 GMT -0500
+1 HUSB @I500696@
+1 WIFE @I500104@
+1 CHIL @I500697@
+1 CHIL @I500698@
+1 CHIL @I500699@
+1 CHIL @I500700@
+1 CHIL @I500701@
+1 CHIL @I500702@
+1 CHIL @I500704@
+1 CHIL @I500705@
+1 CHIL @I500706@
+1 CHIL @I500707@
+1 CHIL @I500097@
+1 CHIL @I500355@
+1 CHIL @I500708@
+1 CHIL @I500709@
+1 CHIL @I500710@
+1 CHIL @I500711@
+1 RIN MH:F500039
+1 _UID 646CAA31B028C891EBC68E37CA0A7D69
+1 MARR
+2 DATE 27 MAR 1861
+2 PLAC Assen, Drenthe, Netherlands
+2 NOTE בן/בת זוג: Izak Israel Benjamin Behr
+
+0 @F500286@ FAM
+1 _UPD 31 MAY 2024 08:07:35 GMT -0500
+1 HUSB @I500696@
+1 WIFE @I500776@
+1 CHIL @I504997@
+1 CHIL @I504998@
+1 CHIL @I504999@
+1 CHIL @I505000@
+1 RIN MH:F500286
+1 _UID 6659CB97A059AFE607E9282D95A15162
+1 MARR
+2 DATE 27 MAR 1861
+2 PLAC Assen, Drenthe, Netherlands
+2 NOTE בן/בת זוג: Marie Philip Behr (לבית Groenstad)
+
+0 @F500661@ FAM
+1 _UPD 12 FEB 2025 22:50:11 GMT -0500
+1 WIFE @I501796@
+1 CHIL @I501802@
+1 RIN MH:F500661
+1 _UID 67AD7A03450BFC032721FCB3E1B33BB9
+
+0 @F500662@ FAM
+1 _UPD 30 APR 2025 06:03:28 GMT -0500
+1 HUSB @I501804@
+1 WIFE @I501803@
+1 CHIL @I501805@
+1 CHIL @I501806@
+1 CHIL @I501807@
+1 RIN MH:F500662
+1 _UID 67AD7AEE134B76A3F663D199D69AE34B
+1 MARR
+2 DATE 9 MAR 1956
+1 DIV Y
+2 DATE 1969
+
+0 @F500665@ FAM
+1 _UPD 13 FEB 2025 05:49:06 GMT -0500
+1 HUSB @I501815@
+1 WIFE @I501814@
+1 CHIL @I501816@
+1 CHIL @I501817@
+1 RIN MH:F500665
+1 _UID 67ADDC32AE1E5C461A481F274252EB00
+1 MARR
+2 DATE 27 OCT 1960
+1 DIV Y
+2 DATE 1978
+
+0 @F500347@ FAM
+1 _UPD 23 JUN 2024 12:49:06 GMT -0500
+1 HUSB @I500927@
+1 WIFE @I500706@
+1 CHIL @I500928@
+1 CHIL @I500929@
+1 CHIL @I500930@
+1 CHIL @I500931@
+1 CHIL @I500932@
+1 CHIL @I500933@
+1 CHIL @I500934@
+1 CHIL @I500935@
+1 CHIL @I500936@
+1 CHIL @I500937@
+1 CHIL @I500938@
+1 CHIL @I500939@
+1 CHIL @I502299@
+1 RIN MH:F500347
+1 _UID 667860126D9D9C99BD95A809D9F62C9A
+1 MARR
+2 DATE 19 MAR 1884
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+2 NOTE בן/בת זוג: Raphael Ensel
+
+0 @F500035@ FAM
+1 _UPD 23 MAY 2023 06:09:21 GMT -0500
+1 HUSB @I500098@
+1 WIFE @I500097@
+1 CHIL @I500771@
+1 CHIL @I500772@
+1 CHIL @I500089@
+1 CHIL @I500773@
+1 RIN MH:F500035
+1 _UID 646C9EB8D88BB37E093E4E4C32828A1A
+1 MARR
+2 DATE 7 AUG 1887
+2 PLAC Assen, Drenthe, Netherlands
+2 NOTE נישואין ל: Benjamin DE VRIES
+
+0 @F500666@ FAM
+1 _UPD 13 FEB 2025 05:53:02 GMT -0500
+1 HUSB @I501818@
+1 WIFE @I500728@
+1 CHIL @I505728@
+1 CHIL @I505730@
+1 RIN MH:F500666
+1 _UID 67ADDD1ECAC44456F4ABF230370D304B
+1 MARR
+2 DATE 15 AUG 1927
+2 PLAC Assen, Drenthe, Netherlands
+
+0 @F500670@ FAM
+1 _UPD 13 FEB 2025 06:23:09 GMT -0500
+1 HUSB @I501826@
+1 WIFE @I500728@
+1 RIN MH:F500670
+1 _UID 67ADE42DED20E517563808950F9F7B52
+1 MARR
+2 DATE 30 OCT 1953
+2 PLAC Amsterdam
+2 NOTE בן/בת זוג: Maria Behr
+
+0 @F501148@ FAM
+1 _UPD 2 APR 2025 06:38:25 GMT -0500
+1 HUSB @I503482@
+1 WIFE @I500707@
+1 RIN MH:F501148
+1 _UID 67ED21B1C2564EE3683A7F3461D1CFBA
+1 MARR
+2 DATE 10 JUN 1886
+2 PLAC Harlingen, Friesland, Netherlands
+
+0 @F500659@ FAM
+1 _UPD 12 FEB 2025 11:35:59 GMT -0500
+1 HUSB @I501794@
+1 WIFE @I501797@
+1 CHIL @I501796@
+1 CHIL @I501798@
+1 RIN MH:F500659
+1 _UID 67ACDBFF0C75EC3675A4F3424FC1619C
+
+0 @F500885@ FAM
+1 _UPD 4 MAR 2025 22:48:57 GMT -0500
+1 HUSB @I502616@
+1 WIFE @I502379@
+1 CHIL @I503268@
+1 CHIL @I502617@
+1 RIN MH:F500885
+1 _UID 67C7D7B946E1C9D4AF9446F2C86A0A7D
+1 MARR
+
+0 @F501675@ FAM
+1 _UPD 7 MAY 2025 11:51:06 GMT -0500
+1 HUSB @I504997@
+1 WIFE @I505424@
+1 CHIL @I505425@
+1 RIN MH:F501675
+1 _UID 681B8F7A53A46C4FCDECD28BEDE804D2
+1 EVEN
+2 TYPE Death of Spouse
+1 MARR
+
+0 @F500822@ FAM
+1 _UPD 27 FEB 2025 06:31:27 GMT -0500
+1 HUSB @I502360@
+1 WIFE @I500710@
+1 CHIL @I502361@
+1 CHIL @I502362@
+1 CHIL @I502363@
+1 CHIL @I502364@
+1 CHIL @I502365@
+1 CHIL @I502366@
+1 CHIL @I502367@
+1 RIN MH:F500822
+1 _UID 67C05B1F37E6A52DFD18BE3EAD06AC95
+1 MARR
+2 DATE 21 JUN 1899
+2 PLAC Amsterdam, North Holland, Netherlands
+
+0 @F501677@ FAM
+1 _UPD 7 MAY 2025 11:51:07 GMT -0500
+1 HUSB @I505425@
+1 WIFE @I505427@
+1 CHIL @I505428@
+1 CHIL @I505429@
+1 CHIL @I505430@
+1 CHIL @I505431@
+1 RIN MH:F501677
+1 _UID 681B8F7B0B61DC5DCDECD28BEDE804D2
+1 MARR
+2 DATE 7 OCT 1897
+2 PLAC Winschoten
+
+0 @F501679@ FAM
+1 _UPD 7 MAY 2025 11:51:07 GMT -0500
+1 HUSB @I505428@
+1 WIFE @I505434@
+1 CHIL @I505435@
+1 RIN MH:F501679
+1 _UID 681B8F7BDF6E7C6FCDECD28BEDE804D2
+1 MARR
+
+0 @F500658@ FAM
+1 _UPD 12 FEB 2025 10:58:55 GMT -0500
+1 HUSB @I500730@
+1 WIFE @I501795@
+1 CHIL @I501803@
+1 CHIL @I501794@
+1 CHIL @I501814@
+1 RIN MH:F500658
+1 _UID 67ACD34FF15C9B9BEF357A8A86AA2AB7
+
+0 @F500667@ FAM
+1 _UPD 13 FEB 2025 05:53:51 GMT -0500
+1 HUSB @I500731@
+1 WIFE @I501819@
+1 CHIL @I501820@
+1 CHIL @I501821@
+1 RIN MH:F500667
+1 _UID 67ADDD4F1D275B35E7ABF83AA8B4587D
+1 MARR
+2 DATE 25 MAY 1929
+2 PLAC Assen, Drenthe, Netherlands
+2 NOTE Spouse: Izak Behr
+
+0 @F500818@ FAM
+1 _UPD 27 FEB 2025 06:24:06 GMT -0500
+1 HUSB @I502349@
+1 WIFE @I502341@
+1 CHIL @I502350@
+1 RIN MH:F500818
+1 _UID 67C059663E6C7DD8A88EAEE222FD5A12
+1 MARR
+2 DATE 22 NOV 1908
+2 PLAC Groningen
+
+0 @F500259@ FAM
+1 _UPD 21 MAY 2024 09:22:52 GMT -0500
+1 HUSB @I500355@
+1 WIFE @I500712@
+1 CHIL @I505007@
+1 RIN MH:F500259
+1 _UID 664CAE3CE3C8EE7C50CA808DB376FFD9
+1 MARR
+
+0 @F500260@ FAM
+1 _UPD 21 MAY 2024 09:22:53 GMT -0500
+1 HUSB @I500355@
+1 WIFE @I500713@
+1 CHIL @I500714@
+1 RIN MH:F500260
+1 _UID 664CAE3D34F64E7F50CA808DB376FFD9
+1 MARR
+
+0 @F501721@ FAM
+1 _UPD 7 MAY 2025 23:07:55 GMT -0500
+1 HUSB @I505569@
+1 WIFE @I505607@
+1 CHIL @I505608@
+1 CHIL @I505609@
+1 CHIL @I505610@
+1 CHIL @I505611@
+1 CHIL @I505612@
+1 CHIL @I505613@
+1 CHIL @I505614@
+1 CHIL @I505615@
+1 CHIL @I505616@
+1 CHIL @I505617@
+1 CHIL @I505618@
+1 RIN MH:F501721
+1 _UID 681C2E1BD4F66DEC9C65958BCF0FC31D
+1 MARR
+2 DATE 23 JUL 1818
+2 PLAC Hoogezand, Groningen, Netherlands
+
+0 @F500660@ FAM
+1 _UPD 12 FEB 2025 22:46:42 GMT -0500
+1 HUSB @I501798@
+1 WIFE @I501799@
+1 CHIL @I501800@
+1 CHIL @I501801@
+1 RIN MH:F500660
+1 _UID 67AD7932347DE269280785FBAABB9D71
+1 MARR
+
+0 @F500823@ FAM
+1 _UPD 27 FEB 2025 06:34:17 GMT -0500
+1 HUSB @I500778@
+1 WIFE @I502368@
+1 CHIL @I502369@
+1 CHIL @I502370@
+1 CHIL @I502371@
+1 CHIL @I502379@
+1 CHIL @I502372@
+1 CHIL @I502373@
+1 CHIL @I502380@
+1 RIN MH:F500823
+1 _UID 67C05BC9EAFB3199123457B38AE45095
+1 MARR
+2 DATE 21 DEC 1898
+2 PLAC Paramaribo, Suriname
+
+0 @F500285@ FAM
+1 _UPD 31 MAY 2024 08:07:35 GMT -0500
+1 HUSB @I500774@
+1 WIFE @I500775@
+1 CHIL @I500696@
+1 CHIL @I505560@
+1 CHIL @I505555@
+1 CHIL @I505565@
+1 CHIL @I505557@
+1 CHIL @I505554@
+1 CHIL @I505556@
+1 CHIL @I505558@
+1 CHIL @I505566@
+1 CHIL @I500781@
+1 CHIL @I505559@
+1 RIN MH:F500285
+1 _UID 6659CB9768035FDF07E9282D95A15162
+1 MARR
+2 DATE 23 JUL 1818
+2 PLAC Hoogezand, Groningen, Netherlands
+2 NOTE http://allegroningers.nl/index2.php?task=bladeren&id=831776&entiteit=akte&option=com_genealogie&Itemid=54
+0 TRLR
