@@ -1,43 +1,44 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>פורום משפחתי</title>
-  <link rel="stylesheet" href="/style.css">
+  <meta charset="UTF-8" />
+  <title>💬 פורום משפחתי</title>
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <header>
-    <h1>💬 פורום המשפחה</h1>
-    <p>כאן תוכלו לכתוב, לשתף זכרונות, להציע מפגשים ועוד.</p>
+    <h1>💬 פורום משפחתי</h1>
   </header>
 
   <main>
-    <section id="forum-posts">
-      <!-- כאן יוצגו ההודעות -->
+    <section id="post-form">
+      <h2>📢 פתח דיון חדש</h2>
+      <form id="new-post">
+        <input type="text" placeholder="כותרת ההודעה" required />
+        <textarea placeholder="תוכן ההודעה..." required></textarea>
+        <button type="submit">פרסם</button>
+      </form>
     </section>
 
-    <section id="new-post">
-      <h2>📢 פוסט חדש</h2>
-      <form id="post-form">
-        <input type="text" id="name" placeholder="שמך" required><br>
-        <textarea id="content" placeholder="הודעה" required></textarea><br>
-        <button type="submit">📨 פרסם</button>
-      </form>
+    <section id="forum-threads">
+      <h2>📚 נושאים אחרונים</h2>
+      <ul id="threads">
+        <!-- כאן יופיעו הודעות -->
+      </ul>
     </section>
   </main>
 
   <script>
-    const form = document.getElementById('post-form');
-    const posts = document.getElementById('forum-posts');
+    const form = document.querySelector('#new-post');
+    const threads = document.querySelector('#threads');
 
     form.addEventListener('submit', e => {
       e.preventDefault();
-      const name = document.getElementById('name').value;
-      const content = document.getElementById('content').value;
-      const div = document.createElement('div');
-      div.className = 'post';
-      div.innerHTML = `<strong>${name}</strong><p>${content}</p><hr>`;
-      posts.prepend(div);
+      const title = form.querySelector('input').value;
+      const content = form.querySelector('textarea').value;
+      const li = document.createElement('li');
+      li.innerHTML = `<strong>${title}</strong><p>${content}</p>`;
+      threads.prepend(li);
       form.reset();
     });
   </script>
