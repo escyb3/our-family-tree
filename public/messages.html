@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>תיבת הודעות</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>הודעות</h1>
+  <form id="messageForm">
+    <input type="text" placeholder="הכנס נושא" id="subject" required>
+    <textarea placeholder="כתוב הודעה..." id="message" required></textarea>
+    <button type="submit">שלח</button>
+  </form>
+  <ul id="messageList"></ul>
+
+  <script>
+    fetch("/api/messages")
+      .then(res => res.json())
+      .then(messages => {
+        const list = document.getElementById("messageList");
+        messages.forEach(m => {
+          const li = document.createElement("li");
+          li.textContent = m.subject + ": " + m.message;
+          list.appendChild(li);
+        });
+      });
+
+    document.getElementById("messageForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      await fetch("/api/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          subject: document.getElementById("subject").value,
+          message: document.getElementById("message").value
+        })
+      });
+      location.reload();
+    });
+  </script>
+</body>
+</html>
