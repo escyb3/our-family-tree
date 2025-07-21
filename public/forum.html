@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>פורום משפחתי</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <h1>💬 פורום המשפחה</h1>
+    <p>כאן תוכלו לכתוב, לשתף זכרונות, להציע מפגשים ועוד.</p>
+  </header>
+
+  <main>
+    <section id="forum-posts">
+      <!-- כאן יוצגו ההודעות -->
+    </section>
+
+    <section id="new-post">
+      <h2>📢 פוסט חדש</h2>
+      <form id="post-form">
+        <input type="text" id="name" placeholder="שמך" required><br>
+        <textarea id="content" placeholder="הודעה" required></textarea><br>
+        <button type="submit">📨 פרסם</button>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('post-form');
+    const posts = document.getElementById('forum-posts');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const content = document.getElementById('content').value;
+      const div = document.createElement('div');
+      div.className = 'post';
+      div.innerHTML = `<strong>${name}</strong><p>${content}</p><hr>`;
+      posts.prepend(div);
+      form.reset();
+    });
+  </script>
+</body>
+</html>
