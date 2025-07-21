@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>קיר זיכרון</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>קיר זיכרון</h1>
+  <form id="memorialForm">
+    <input type="text" placeholder="שם הנפטר" id="name" required>
+    <textarea placeholder="הקדשה..." id="dedication" required></textarea>
+    <button type="submit">פרסם</button>
+  </form>
+  <div id="memorials"></div>
+
+  <script>
+    fetch("/api/memorials")
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("memorials");
+        data.forEach(entry => {
+          const div = document.createElement("div");
+          div.innerHTML = `<strong>${entry.name}</strong><p>${entry.dedication}</p><hr>`;
+          container.appendChild(div);
+        });
+      });
+
+    document.getElementById("memorialForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      await fetch("/api/memorials", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: document.getElementById("name").value,
+          dedication: document.getElementById("dedication").value
+        })
+      });
+      location.reload();
+    });
+  </script>
+</body>
+</html>
