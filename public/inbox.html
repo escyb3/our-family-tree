@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>📨 תיבת הודעות</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>📨 ההודעות שלי</h1>
+  </header>
+
+  <main>
+    <section id="inbox">
+      <ul id="messagesList">
+        <!-- הודעות יוזנו כאן -->
+      </ul>
+    </section>
+
+    <form id="messageForm">
+      <input type="text" id="recipient" placeholder="למי לשלוח?" required>
+      <textarea id="messageText" placeholder="כתוב הודעה..." required></textarea>
+      <button type="submit">שלח הודעה</button>
+    </form>
+  </main>
+
+  <script>
+    const messages = JSON.parse(localStorage.getItem("messages") || "[]");
+    const messagesList = document.getElementById("messagesList");
+    const form = document.getElementById("messageForm");
+
+    function renderMessages() {
+      messagesList.innerHTML = "";
+      messages.forEach(msg => {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>אל ${msg.to}</strong>: ${msg.text}`;
+        messagesList.appendChild(li);
+      });
+    }
+
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const to = document.getElementById("recipient").value;
+      const text = document.getElementById("messageText").value;
+      messages.push({ to, text });
+      localStorage.setItem("messages", JSON.stringify(messages));
+      renderMessages();
+      form.reset();
+    };
+
+    renderMessages();
+  </script>
+</body>
+</html>
