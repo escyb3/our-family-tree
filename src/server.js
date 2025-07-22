@@ -1,9 +1,9 @@
+const nodemailer = require('nodemailer');
 const express = require("express");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
 const fs = require("fs");
 const path = require("path");
-const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
 
 const app = express();
