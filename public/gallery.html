@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>גלריית תמונות</title>
-  <link rel="stylesheet" href="/style.css" />
+  <meta charset="UTF-8">
+  <title>גלריית תמונות משפחתית</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; padding: 20px; }
+    .gallery img { width: 100%; border-radius: 10px; }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>📁 גלריית תמונות משפחתית</h1>
-  </header>
-  <main>
-    <div class="gallery">
-      <img src="/assets/family1.jpg" alt="תמונה משפחתית 1">
-      <img src="/assets/family2.jpg" alt="תמונה משפחתית 2">
-    </div>
-  </main>
+  <h1>📸 גלריית תמונות</h1>
+  <div class="gallery">
+    <img src="momorials/frank.jpg" alt="Frank van der Velde (1943-2025)">
+    <img src="images/family1.jpg" alt="משפחה">
+    <img src="images/family2.jpg" alt="אירוע">
+  </div>
+  <p><a href="index.html">חזרה לעמוד הבית</a></p>
 </body>
 </html>
