@@ -13,6 +13,50 @@
     <button type="submit">פרסם</button>
   </form>
   <div id="memorials"></div>
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>🕯️ עמוד הנצחה - פרנק ון דר ולדה</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .memorial-container {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .memorial-photo {
+      border-radius: 10px;
+      max-width: 100%;
+      height: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .candle {
+      font-size: 48px;
+      animation: flicker 1.5s infinite alternate;
+    }
+    @keyframes flicker {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0.5; transform: scale(1.02); }
+    }
+  </style>
+</head>
+<body>
+  <main class="memorial-container">
+    <h1>🕯️ לזכרו של פרנק ון דר ולדה</h1>
+    <img class="memorial-photo" src="/images/frank.jpg" alt="פרנק ון דר ולדה">
+    <p><strong>שנות חיים:</strong> 1943 - 6 ביולי 2025</p>
+    <p><strong>מקום פטירה:</strong> קייפ טאון, דרום אפריקה</p>
+    <p><strong>פרנק היה אדם אהוב, אבא, סבא, חבר, ונשמה חמה וטובה.</strong></p>
+
+    <div class="candle" title="נר נשמה">🕯️</div>
+    <p>הדלק נר לזכרו בליבך ❤️</p>
+
+    <hr>
+    <p><a href="/">חזרה לעמוד הראשי</a></p>
+  </main>
+</body>
+</html>
 
   <script>
     fetch("/api/memorials")
@@ -38,17 +82,6 @@
       });
       location.reload();
    
-  <main>
-    <section class="memorial-entry">
-      <img src="/assets/frank.jpg" alt="פרנק ון דר ולדה" />
-      <h2>פרנק ון דר ולדה</h2>
-      <p>נולד: 1943</p>
-      <p>נפטר: 6 ביולי 2025, קייפטאון, דרום אפריקה</p>
-      <div class="candle"></div>
-    </section>
-  </main>
-</body>
-</html>
     });
   </script>
 </body>
