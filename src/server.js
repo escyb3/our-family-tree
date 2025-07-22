@@ -1,94 +1,58 @@
+const express = require('express');
+const bcrypt = require('bcrypt');
+const session = require('express-session');
 const nodemailer = require('nodemailer');
-const express = require("express");
-const session = require("express-session");
-const bcrypt = require("bcrypt");
-const fs = require("fs");
-const path = require("path");
-const bodyParser = require("body-parser");
+const multer = require('multer');
+const cookieParser = require('cookie-parser');
+const path = require('path');
 
 const app = express();
-const PORT = 3000;
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
+app.use(session({ secret: 'secret-key', resave: false, saveUninitialized: true }));
+app.use(express.static('public'));
 
-app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// תצורת מייל
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'yairmbenabou@gmail.com',
+    pass: 'wcbh ewrf khty vcxy'
+  }
+});
 
-app.use(session({
-  secret: "secret-escoob-key",
-  resave: false,
-  saveUninitialized: false
-}));
+// טפסים
+app.post('/send-email', async (req, res) => {
+  const { name, email, message } = req.body;
+  await transporter.sendMail({
+    from: 'yairmbenabou@gmail.com',
+    to: ['escoob30@gmail.com', 'help-center@gmx.com'],
+    subject: 'פנייה חדשה מאתר עץ משפחה',
+    text: `שם: ${name}\nאימייל: ${email}\nהודעה: ${message}`
+  });
+  res.send('הודעה נשלחה!');
+});
 
-// טעינת משתמשים
-const users = JSON.parse(fs.readFileSync("users.json", "utf-8"));
+// התחברות והרשמה
+const users = [];
 
-// התחברות
-app.post("/login", async (req, res) => {
+app.post('/signup', async (req, res) => {
+  const { username, password, familySide } = req.body;
+  const hashed = await bcrypt.hash(password, 10);
+  users.push({ username, password: hashed, familySide });
+  res.redirect('/login.html');
+});
+
+app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   const user = users.find(u => u.username === username);
-
   if (user && await bcrypt.compare(password, user.password)) {
     req.session.user = user;
-    res.redirect("/tree.html");
+    res.redirect('/family-tree.html');
   } else {
-    res.send("שגיאה: שם משתמש או סיסמה שגויים");
+    res.send('שגיאה בהתחברות');
   }
 });
 
-// התנתקות
-app.get("/logout", (req, res) => {
-  req.session.destroy(() => {
-    res.redirect("/login.html");
-  });
-});
-
-// שליפת קובץ GEDCOM לפי צד משפחתי
-app.get("/gedcom", (req, res) => {
-  if (!req.session.user) return res.status(403).send("אין גישה");
-
-  const fileName = `${req.session.user.family}.ged`;
-  const filePath = path.join(__dirname, "gedcom", fileName);
-
-  if (fs.existsSync(filePath)) {
-    res.sendFile(filePath);
-  } else {
-    res.status(404).send("קובץ עץ משפחתי לא נמצא");
-  }
-});
-
-// שליחת סיכום שיחה / טופס במייל
-app.post("/send-summary", async (req, res) => {
-  const { to, subject, content } = req.body;
-
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER || "yairmbenabou@gmail.com",
-      pass: process.env.EMAIL_PASS || "סיסמת-אפליקציה-כאן"
-    }
-  });
-
-  const mailOptions = {
-    from: '"Our Family Tree" <yairmbenabou@gmail.com>',
-    to: [to, "escoob30@gmail.com", "help-center@gmx.com"],
-    subject,
-    text: content
-  };
-
-  try {
-    await transporter.sendMail(mailOptions);
-    res.send("נשלח בהצלחה");
-  } catch (err) {
-    console.error("שגיאה בשליחה:", err);
-    res.status(500).send("שגיאה בשליחת מייל");
-  }
-});
-
-// דף ברירת מחדל
-app.get("/", (req, res) => {
-  res.redirect("/login.html");
-});
-
-app.listen(PORT, () => {
-  console.log(`💡 השרת פועל בכתובת http://localhost:${PORT}`);
-});
+app.listen(3000, () => console.log('השרת פועל ב־http://localhost:3000'));
