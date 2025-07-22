@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>ביוגרפיות משפחתיות</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>📖 ביוגרפיות</h1>
+  <article>
+    <h2>פרנק ון דר ולדה</h2>
+    <p>.</p>
+  </article>
+  <p><a href="index.html">חזרה לעמוד הבית</a></p>
+</body>
+</html>
