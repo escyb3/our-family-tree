@@ -1,85 +1,94 @@
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const bcrypt = require('bcrypt');
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const cors = require('cors');
+const express = require("express");
+const session = require("express-session");
+const bcrypt = require("bcrypt");
+const fs = require("fs");
+const path = require("path");
+const nodemailer = require("nodemailer");
+const bodyParser = require("body-parser");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
-const USERS_FILE = path.join(__dirname, 'data', 'users.json');
-
-app.use(cors());
-app.use(express.static('public'));
-app.use(bodyParser.json());
+app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use(session({
-  secret: 'my-secret-key',
+  secret: "secret-escoob-key",
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: false
 }));
 
-// טעינת משתמשים מהקובץ
-function loadUsers() {
-  return JSON.parse(fs.readFileSync(USERS_FILE, 'utf8'));
-}
+// טעינת משתמשים
+const users = JSON.parse(fs.readFileSync("users.json", "utf-8"));
 
-// אימות משתמש
-app.post('/api/login', async (req, res) => {
+// התחברות
+app.post("/login", async (req, res) => {
   const { username, password } = req.body;
-  const users = loadUsers();
   const user = users.find(u => u.username === username);
 
-  if (!user) return res.status(401).json({ message: 'משתמש לא קיים' });
-
-  const match = await bcrypt.compare(password, user.password);
-  if (!match) return res.status(401).json({ message: 'סיסמה שגויה' });
-
-  req.session.user = {
-    username: user.username,
-    role: user.role,
-    familySide: user.familySide
-  };
-
-  res.json({ message: 'התחברת בהצלחה', user: req.session.user });
+  if (user && await bcrypt.compare(password, user.password)) {
+    req.session.user = user;
+    res.redirect("/tree.html");
+  } else {
+    res.send("שגיאה: שם משתמש או סיסמה שגויים");
+  }
 });
 
-// יציאה
-app.post('/api/logout', (req, res) => {
-  req.session.destroy();
-  res.json({ message: 'התנתקת' });
-});
-
-// בדיקת התחברות
-app.get('/api/me', (req, res) => {
-  if (!req.session.user) return res.status(401).json({ message: 'לא מחובר' });
-  res.json(req.session.user);
+// התנתקות
+app.get("/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.redirect("/login.html");
+  });
 });
 
 // שליפת קובץ GEDCOM לפי צד משפחתי
-app.get('/api/gedcom', (req, res) => {
-  if (!req.session.user) return res.status(401).json({ message: 'לא מחובר' });
+app.get("/gedcom", (req, res) => {
+  if (!req.session.user) return res.status(403).send("אין גישה");
 
-  const familySide = req.session.user.familySide;
-  let filename;
+  const fileName = `${req.session.user.family}.ged`;
+  const filePath = path.join(__dirname, "gedcom", fileName);
 
-  if (req.session.user.role === 'admin') {
-    filename = 'all_families.ged';
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
   } else {
-    filename = `${familySide.toLowerCase().replace(/\s/g, '_')}.ged`;
+    res.status(404).send("קובץ עץ משפחתי לא נמצא");
   }
+});
 
-  const filepath = path.join(__dirname, 'gedcoms', filename);
-  if (!fs.existsSync(filepath)) {
-    return res.status(404).json({ message: 'קובץ לא נמצא' });
+// שליחת סיכום שיחה / טופס במייל
+app.post("/send-summary", async (req, res) => {
+  const { to, subject, content } = req.body;
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER || "yairmbenabou@gmail.com",
+      pass: process.env.EMAIL_PASS || "סיסמת-אפליקציה-כאן"
+    }
+  });
+
+  const mailOptions = {
+    from: '"Our Family Tree" <yairmbenabou@gmail.com>',
+    to: [to, "escoob30@gmail.com", "help-center@gmx.com"],
+    subject,
+    text: content
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    res.send("נשלח בהצלחה");
+  } catch (err) {
+    console.error("שגיאה בשליחה:", err);
+    res.status(500).send("שגיאה בשליחת מייל");
   }
+});
 
-  res.sendFile(filepath);
+// דף ברירת מחדל
+app.get("/", (req, res) => {
+  res.redirect("/login.html");
 });
 
 app.listen(PORT, () => {
-  console.log(`השרת פועל על http://localhost:${PORT}`);
+  console.log(`💡 השרת פועל בכתובת http://localhost:${PORT}`);
 });
