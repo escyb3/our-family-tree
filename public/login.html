@@ -1,22 +1,16 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>התחברות לאתר המשפחה</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="login-container">
-    <h1>התחברות</h1>
-    <form method="POST" action="/login">
-      <label>שם משתמש:</label>
-      <input type="text" name="username" required />
-      <label>סיסמה:</label>
-      <input type="password" name="password" required />
-      <button type="submit">התחבר</button>
-    </form>
-    <p>אין לך חשבון? <a href="register.html">הרשם</a></p>
-  </main>
+  <h1>התחברות</h1>
+  <form action="/login" method="POST">
+    <input name="username" required placeholder="שם משתמש">
+    <input name="password" type="password" required placeholder="סיסמה">
+    <button type="submit">התחבר</button>
+  </form>
 </body>
 </html>
-
