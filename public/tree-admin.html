@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>ניהול עץ המשפחה</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet" />
+  <style>
+    #familyTreeEditor { width: 100%; height: 600px; border: 1px solid #ccc; margin-top: 1rem; }
+    .controls { display: flex; flex-direction: column; gap: 1rem; }
+    input, button { padding: 8px; font-size: 1rem; }
+  </style>
+</head>
+<body>
+  <header><h1>🛠️ ממשק ניהול גרפי לעץ המשפחה</h1></header>
+  <main>
+    <div class="controls">
+      <input id="nameInput" placeholder="שם מלא">
+      <input id="relationInput" placeholder="קשר (אב/אם/בת וכו')">
+      <button onclick="addMember()">➕ הוסף בן משפחה</button>
+    </div>
+    <div id="familyTreeEditor"></div>
+  </main>
+
+  <script>
+    const nodes = new vis.DataSet([
+      { id: 1, label: "שורש העץ", group: "root" }
+    ]);
+    const edges = new vis.DataSet([]);
+    const container = document.getElementById('familyTreeEditor');
+    const data = { nodes, edges };
+    const options = { layout: { hierarchical: { direction: "UD" } }, groups: { root: { color: '#ffcc00' } } };
+    const network = new vis.Network(container, data, options);
+
+    let currentId = 2;
+    function addMember() {
+      const name = document.getElementById('nameInput').value;
+      const relation = document.getElementById('relationInput').value;
+      if (name) {
+        nodes.add({ id: currentId, label: name });
+        edges.add({ from: 1, to: currentId, label: relation });
+        currentId++;
+      }
+    }
+  </script>
+</body>
+</html>
