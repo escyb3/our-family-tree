@@ -1,15 +1,26 @@
+<!-- admin.html -->
 <!DOCTYPE html>
-<html lang="he">
-<head><meta charset="UTF-8"><title>ממשק ניהול</title></head>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>ניהול משתמשים</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
-<h1>ממשק ניהול האתר</h1>
-<ul>
-  <li><a href="/tree.html">עץ משפחתי</a></li>
-  <li><a href="/memorial.html">עמוד הנצחה</a></li>
-  <li><a href="/forum.html">פורום</a></li>
-  <li><a href="/calendar.html">לוח שנה משפחתי</a></li>
-  <li><a href="/book.html">ספר משפחתי</a></li>
-</ul>
-<a href="/logout">התנתקות</a>
+  <h2>ניהול משתמשים</h2>
+  <ul id="user-list"></ul>
+
+  <script>
+    fetch('/api/users')
+      .then(res => res.json())
+      .then(users => {
+        const list = document.getElementById('user-list');
+        users.forEach(user => {
+          const li = document.createElement('li');
+          li.innerText = `${user.username} - ${user.family}`;
+          list.appendChild(li);
+        });
+      });
+  </script>
 </body>
 </html>
