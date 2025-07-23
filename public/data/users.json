@@ -1,16 +1,1 @@
-{
-  "users": [
-    {
-      "username": "yair.benabou",
-      "password": "$2b$10$dXJ/0T7IfXk8kZa5xbtZ5u2j2kpZboV43Tdbm1a5ufTfLRwYnhq1e", // "your_password" bcrypt
-      "role": "admin",
-      "familyAccess": "all"
-    }
-    { 
-    "username: "gmcbjfh",
-      "password": "testuser89"
-      "role": "user",
-      "familyAccess": "van der Velde"
-    }
-  ]
-}
+
