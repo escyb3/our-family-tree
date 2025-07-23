@@ -69,6 +69,22 @@ app.post("/login", (req, res) => {
     } else {
       res.status(401).send("שגיאה בסיסמה.");
     }
+    app.get("/create-user.html", (req, res) => {
+  if (!isAuthenticatedAdmin(req)) {
+    return res.status(403).send("⛔ אין לך הרשאה לצפות בדף זה.");
+  }
+  res.sendFile(path.join(__dirname, "create-user.html"));
+});
+function isAuthenticatedAdmin(req) {
+  return req.cookies && req.cookies.username && req.cookies.role === "admin";
+}
+app.get("/admin-dashboard.html", (req, res) => {
+  if (!isAuthenticatedAdmin(req)) {
+    return res.status(403).send("⛔ אין לך הרשאה לצפות בדף זה.");
+  }
+  res.sendFile(path.join(__dirname, "admin-dashboard.html"));
+});
+
   });
 });
 app.post("/create-user", (req, res) => {
