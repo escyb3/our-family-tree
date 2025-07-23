@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>יצירת משתמש חדש</title>
+  <style>
+    body { font-family: sans-serif; max-width: 500px; margin: 40px auto; direction: rtl; }
+    input, select, button { display: block; margin: 10px 0; width: 100%; padding: 8px; }
+  </style>
+</head>
+<body>
+  <h1>יצירת משתמש חדש (למנהלים בלבד)</h1>
+  <form id="userForm">
+    <label>שם משתמש:</label>
+    <input type="text" name="username" required>
+
+    <label>סיסמה:</label>
+    <input type="password" name="password" required>
+
+    <label>תפקיד:</label>
+    <select name="role">
+      <option value="user">משתמש</option>
+      <option value="admin">מנהל</option>
+    </select>
+
+    <label>צד משפחתי:</label>
+    <input type="text" name="side" required placeholder="למשל: Ben Abou">
+
+    <button type="submit">צור משתמש</button>
+  </form>
+
+  <
