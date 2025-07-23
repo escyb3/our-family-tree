@@ -1,15 +1,22 @@
-// tree.js
-// עץ משפחה גרפי אינטראקטיבי (מציג עץ ממשפחת המשתמש)
-fetch('/gedcom/' + new URLSearchParams(window.location.search).get('family'))
-  .then(res => res.text())
-  .then(data => {
-    const lines = data.split('\n');
-    const names = lines.filter(l => l.includes('NAME')).map(l => l.split('NAME ')[1]);
-    const container = document.getElementById('tree-container');
-    names.forEach(name => {
-      const el = document.createElement('div');
-      el.className = 'person-box';
-      el.innerText = name;
-      container.appendChild(el);
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("/api/family-tree")
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("tree-container");
+      container.innerHTML = renderTree(data);
     });
-  });
+
+  function renderTree(data) {
+    if (!data || !data.name) return '';
+    let html = `<ul><li>${data.name}`;
+    if (data.children && data.children.length > 0) {
+      html += '<ul>';
+      data.children.forEach(child => {
+        html += `<li>${renderTree(child)}</li>`;
+      });
+      html += '</ul>';
+    }
+    html += '</li></ul>';
+    return html;
+  }
+});
