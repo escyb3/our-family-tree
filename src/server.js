@@ -84,6 +84,33 @@ app.get("/admin-dashboard.html", (req, res) => {
   }
   res.sendFile(path.join(__dirname, "admin-dashboard.html"));
 });
+    app.get("/manage-users", requireAdmin, (req, res) => {
+  res.sendFile(path.join(__dirname, "manage-users.html"));
+});
+
+app.get("/admin/users", requireAdmin, (req, res) => {
+  const users = JSON.parse(fs.readFileSync("users.json", "utf8"));
+  const sanitized = users.map(u => ({
+    username: u.username,
+    role: u.role,
+    side: u.side
+  }));
+  res.json(sanitized);
+});
+
+app.post("/admin/delete-user", requireAdmin, (req, res) => {
+  const { username } = req.body;
+  let users = JSON.parse(fs.readFileSync("users.json", "utf8"));
+
+  if (users.find(u => u.username === username && u.role === "admin")) {
+    return res.status(403).send("⛔ לא ניתן למחוק משתמש מסוג admin");
+  }
+
+  users = users.filter(u => u.username !== username);
+  fs.writeFileSync("users.json", JSON.stringify(users, null, 2));
+  res.send("🗑️ המשתמש נמחק בהצלחה.");
+});
+
 
   });
 });
