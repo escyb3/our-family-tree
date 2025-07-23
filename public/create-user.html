@@ -2,31 +2,43 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>יצירת משתמש חדש</title>
-  <style>
-    body { font-family: sans-serif; max-width: 500px; margin: 40px auto; direction: rtl; }
-    input, select, button { display: block; margin: 10px 0; width: 100%; padding: 8px; }
-  </style>
+  <title>הוספת משתמש חדש</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>יצירת משתמש חדש (למנהלים בלבד)</h1>
-  <form id="userForm">
-    <label>שם משתמש:</label>
-    <input type="text" name="username" required>
+  <main>
+    <h1>📋 יצירת משתמש חדש</h1>
+    <form action="/create-user" method="post">
+      <label>שם משתמש: <input type="text" name="username" required></label><br>
+      <label>סיסמה: <input type="password" name="password" required></label><br>
+      <label>תפקיד:
+        <select name="role" required>
+          <option value="user">משתמש רגיל</option>
+          <option value="admin">מנהל</option>
+        </select>
+      </label><br>
+      <label>צד משפחתי:
+        <select name="side" required>
+          <option value="Ben Abou">Ben Abou</option>
+          <option value="Elharrar">Elharrar</option>
+          <option value="Malca">Malca</option>
+          <option value="Ben David">Ben David</option>
+          <option value="Bromberg">Bromberg</option>
+          <option value="Barenbaum">Barenbaum</option>
+          <option value="Fass-Schneck">Fass-Schneck</option>
+          <option value="Weinberger">Weinberger</option>
+          <option value="Leibner">Leibner</option>
+          <option value="van der Velde">van der Velde</option>
+          <option value="Behr">Behr</option>
+          <option value="de Vries">de Vries</option>
+          <option value="Italiaander">Italiaander</option>
+          <option value="Izaks">Izaks</option>
+          <option value="Chapon">Chapon</option>
+        </select>
+      </label><br>
+      <button type="submit">➕ צור משתמש</button>
+    </form>
+  </main>
+</body>
+</html>
 
-    <label>סיסמה:</label>
-    <input type="password" name="password" required>
-
-    <label>תפקיד:</label>
-    <select name="role">
-      <option value="user">משתמש</option>
-      <option value="admin">מנהל</option>
-    </select>
-
-    <label>צד משפחתי:</label>
-    <input type="text" name="side" required placeholder="למשל: Ben Abou">
-
-    <button type="submit">צור משתמש</button>
-  </form>
-
-  <
