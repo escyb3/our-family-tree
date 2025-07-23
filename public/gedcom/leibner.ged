@@ -1,0 +1,5404 @@
+0 HEAD
+1 SOUR ChatGPT-GEDCOM
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+1 LANG Hebrew
+0 @I501052@ INDI
+1 _UPD 30 MAR 2025 06:29:54 GMT -0500 
+1 NAME Moses Jozef (Joseph) /Leibner/
+2 GIVN Moses Jozef (Joseph)
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 12 FEB 1883
+2 PLAC Nowy Zmigrod, Poland (Austria)
+1 DEAT Y
+2 DATE 30 DEC 1956
+2 PLAC Brooklyn, New York, Kings County, New York, United States
+1 RESI
+2 DATE 1935
+2 ADDR
+3 ADR1 Age: 26; Age: 26; Marital Status: Married; Relation to Head of House: Head, Manhattan Ward 12, New York, New York, USA
+3 ADR2 Same House - 5104 14th Ave, Brooklyn, A D 16, Kings, New York, USA
+1 BURI
+2 PLAC Mt Carmel Cemetery, Queens, NY  2-6-3-71-3 Temple Emanuel Boro Park section
+1 EVEN
+2 TYPE Arrival
+2 DATE 1881
+1 EVEN BD 10 Oct 1953
+2 TYPE Arrival
+2 DATE 1887
+1 EVEN BD = 20 Jun 1996
+2 TYPE Arrival
+2 DATE 1888
+1 EVEN
+2 TYPE Departure
+2 DATE 24 JUL 1888
+2 PLAC Hamburg
+1 EVEN
+2 TYPE Misc
+2 DATE 8 AUG 1888
+2 PLAC Arrived in NY on the Wyoming.
+1 IMMI
+2 DATE 8 AUG 1888
+2 PLAC New York, USA
+1 OCCU Wholesale fish
+2 PLAC New York
+1 OCCU Fish
+1 OCCU Fish
+1 OCCU Fish
+1 OCCU Fish
+1 OCCU Fish
+1 RESI
+2 ADDR
+3 ADR1 Manhattan, New York, New York
+1 RESI
+2 ADDR
+3 ADR1 Manhattan, New York, New York
+1 EVEN
+2 TYPE Departure
+2 PLAC Havana, Cuba
+1 RESI
+2 ADDR
+3 ADR1 Brooklyn, NY
+1 EVEN
+2 TYPE Departure
+2 PLAC Liverpool, England and Queenstown, Ireland
+1 EVEN No children.
+2 TYPE Race
+1 EVEN
+2 TYPE Other-Begin
+2 PLAC Manhattan City
+1 OCCU wholesale fish
+1 EVEN
+2 TYPE Arrival
+2 PLAC Grimsby (Nordamerika via Liveerpool)
+1 RESI
+2 ADDR
+3 ADR1 Korczyna, Galizien
+1 RESI
+2 DATE 1892
+2 ADDR
+3 ADR1 Rockland, New York
+1 RESI
+2 DATE 1892
+2 ADDR
+3 ADR1 Age: 9, Orangetown, Rockland, New York
+1 RESI
+2 DATE 1892
+2 ADDR
+3 ADR1 Age: 9, Orangetown, Rockland, New York
+1 RESI
+2 DATE 1910
+2 ADDR
+3 ADR1 Age: 26; Age: 26; Marital Status: Married; Relation to Head of House: Head, Manhattan Ward 12, New York, New York, USA
+1 RESI
+2 DATE 1911
+2 ADDR
+3 ADR1 New York, New York, USA
+1 RESI
+2 DATE 1912
+2 ADDR
+3 ADR1 New York, New York, USA
+1 RESI
+2 DATE 1912
+2 ADDR
+3 ADR1 New York, New York, USA
+1 RESI
+2 DATE 1915
+2 ADDR
+3 ADR1 New York, New York, USA
+1 RESI
+2 DATE 1 JUN 1915
+2 ADDR
+3 ADR1 Age: 32; Relation to Head of House: Head, New York, New York, New York, United States
+1 RESI
+2 DATE 1916
+2 ADDR
+3 ADR1 New York, New York, USA
+1 RESI
+2 DATE 1916
+2 ADDR
+3 ADR1 New York, New York, USA
+1 RESI
+2 DATE 1916
+2 ADDR
+3 ADR1 New York, New York, USA
+1 RESI
+2 DATE 1920
+2 ADDR
+3 ADR1 Brooklyn Assembly District 16, Kings, New York
+1 RESI
+2 DATE 1920
+2 ADDR
+3 ADR1 Age: 36; Marital Status: Married; Relation to Head of House: Head, Brooklyn Assembly District 16, Kings, New York, USA
+1 RESI
+2 DATE 1 JUN 1925
+2 ADDR
+3 ADR1 Age: 42; Relation to Head of House: Head, Brooklyn, Kings, New York, United States
+1 RESI
+2 DATE 1930
+2 ADDR
+3 ADR1 Age: 47; Marital Status: Married; Relation to Head of House: Head, Brooklyn, Kings, New York
+1 EVEN BD = 05 Jan 1949
+2 TYPE Arrival
+2 DATE 7 FEB 1933
+2 PLAC New York, New York
+1 CENS
+2 DATE 1940
+2 PLAC 5104 14th Ave, Brooklyn, A D 16, Kings, New York, USA
+1 RESI
+2 DATE 1 APR 1940
+2 ADDR
+3 ADR1 Age: 57; Marital Status: Married; Relation to Head of House: Head, New York, Kings, New York, United States
+1 RESI
+2 DATE 1 APR 1940
+2 ADDR
+3 ADR1 Age: 57; Marital Status: Married; Relation to Head of House: Head, New York, Kings, New York, United States
+1 RESI
+2 DATE 1942
+2 ADDR
+3 ADR1 Age: 59, Brooklyn, New York
+1 RESI
+2 DATE 1943
+2 ADDR
+3 ADR1 Manhattan, New York, USA
+1 RESI
+2 ADDR
+3 ADR1 Brooklyn, New York
+1 RESI
+2 DATE 1930
+2 ADDR
+3 ADR1 Brooklyn, Kings, New York
+1 RESI
+2 DATE 1935
+2 ADDR
+3 ADR1 New York, Kings, New York
+3 ADR2 Same House - 5104 14th Ave, Brooklyn, A D 16, Kings, New York, USA
+1 RESI
+2 DATE 1935
+2 ADDR
+3 ADR1 New York, Kings, New York
+1 RESI
+2 DATE 1910
+2 ADDR
+3 ADR1 Manhattan Ward 12, New York, New York
+1 FAMS @F500391@
+1 FAMC @F500390@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=344765286&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Joseph M Leibner
+לידה: 1883 - Nowy Żmigród, Jasło County, Podkarpackie Voivodeship, Poland
+פטירה: 1956 - Brooklyn, New York, Kings County, New York, United States
+אב: Nathan Leibner
+אם
+4 CONC : Rose Leibner (לבית Achtsam)
+אשה: Lillian Leibner (לבית Greher)
+ילדים: Rose Nobel (לבית Leibner), Mildred Jaffe (לבית Leibner), Taube Fagin (לבית Leibner), Ira Wallace Lei
+4 CONC bner
+אחים ואחיות: Menachem Shaul Leibner, Rachel Witte Teller (לבית Leibner), Baruch Leibner, Emma Goodwin (לבית Leibner), Etta Lang (לבית Leibner)
+2 EVEN Record
+3 ROLE 40000:344765286:
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500028/moses-jozef-joseph-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500028
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.com/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500028/moses-jozef-joseph-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500028
+1 SOUR @S500097@
+2 PAGE https://www.myheritage.com/profile-OYYV74WETS3KMMVP6RW2NBVT5UAABFI-1502608/joseph-morris-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502608
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500197/moses-jozef-joseph-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500197
+1 RIN MH:I501052
+1 _UID 66973FC06C3A62551D0261D9642F972B
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTM2YWI3YjMzYjZiMjZiYTVjYzRiMWIwZjcxZWZkYmQzMzNlZWFlMmM5ZjZiNGExYjc0ZjQ0NGU0NjFmYTcxMjImZT0xNzUzNjEwNDAw/158/944/6912/501332_3274131j1k6be969332i71_A.jpg
+2 _FILESIZE 73166
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500416
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501332
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWJmYTk4YjExZGZkYzUyYWM2NTY3ZGY0NjY4NTk4YThmY2MxZTIwNDg2NTkxN2FlNDIxZDFlYzE3MjBkMDRjNmImZT0xNzUzNjEwNDAw/158/944/6912/500416_4140271g06clr16c78651d_A.jpg
+2 _FILESIZE 2073638
+2 TITL 20240820_141546
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 886 1257 1049 1455
+2 _PHOTO_RIN MH:P500416
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQ3ZTY5ZjcyNGQ4Nzg2ZmNlYTAxZWZkYTc3MzYxZDE5MmM3NGY4ZDcxNTdiNDIyOGY1Yjc5NTdmYmIzZDVlYjYmZT0xNzUzNjEwNDAw/158/944/6912/500418_7464652a0656r10xco266b_A.jpg
+2 _FILESIZE 2073638
+2 TITL 20240820_141546
+2 _POSITION 886 1257 1049 1455
+2 _PHOTO_RIN MH:P500418
+
+0 @I501055@ INDI
+1 _UPD 30 MAR 2025 06:41:09 GMT -0500 
+1 NAME Lillian /Greher/
+2 GIVN Lillian
+2 SURN Greher
+1 SEX F
+1 DEAT Y
+2 DATE 25 JUN 1974
+2 PLAC Brooklyn, New York, Kings County, New York, United States
+1 BIRT
+2 DATE 23 JUL 1883
+2 PLAC Siedliska, Poland (Austria)
+1 RESI
+2 ADDR
+3 ADR1 Brooklyn, New York, Kings County, New York, United States
+1 IMMI
+2 DATE 1892
+1 OCCU Clerk
+1 OCCU retail fish
+1 CENS
+2 DATE 1930
+2 PLAC Brooklyn (Districts 1251-1500), Kings, New York, USA
+1 RESI
+2 DATE 1935
+2 ADDR
+3 ADR1 Brooklyn, New York 11226, USA
+1 CENS
+2 DATE 1940
+2 PLAC 5104 14th Ave, Brooklyn, A D 16, Kings, New York, USA
+1 BURI
+2 PLAC Mt. Carmel Cemetery, Queens, NY 2-6-3-71-4
+1 FAMS @F500391@
+1 FAMC @F501103@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Lillian Leibner (לבית Greher)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;מגורים: Brooklyn, New York, Kings County, New York, United States&amp;lt;br&amp;gt;לידה: 1882 - Poland&am
+4 CONC p;lt;br&amp;gt;פטירה: 1974 - Brooklyn, New York, Kings County, New York, United States&amp;lt;br&amp;gt;אב: Isaac Wolf Greher&amp;lt;br&amp;gt;אם: Frymet Greher (לבית Feld)&amp;lt;br&amp;
+4 CONC gt;בעל: Joseph M Leibner&amp;lt;br&amp;gt;ילדים: Rose Nobel (לבית Leibner), Mildred Jaffe (לבית Leibner), Taube Fagin (לבית Leibner), Ira Wallace Leibner&amp;lt;br&amp;gt;אחים 
+4 CONC ואחיות: Esther Fuss (לבית Greher), Pauline Kiselik (לבית Greher), Anna Tishler (לבית Greher), Sam Gray (לבית Greher), Aaron Greher, Jo'zef Greher, Juda Greher
+2 EVEN Record
+3 ROLE 40000:344765405:
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=746832165&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Lilian Leia Leibner (לבית Greher)
+לידה: 1882
+פטירה: 1974 - Brooklyn, New York, Kings County, New York, United States
+אב: Isaak Wolf Greher
+אם: Frumet Greher (לבית Feld)
+בעל: Jo
+4 CONC sef Moritz Leibner
+בן/בת: Taube Fagin (לבית Leibner)
+אחים ואחיות: Esther Chaja Fuss (לבית Greher), Paulina Perl Kiselik (לבית Greher), Anna Tischler (לבית Greher), Samuel
+4 CONC  Gray-Greher, Josef Greher, Ahron Greher, Juda Greher
+2 EVEN Record
+3 ROLE 40000:746832165:
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500040/lillian-leibner-born-greyer
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500040
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.com/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500040/lillian-leibner-born-greyer
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500040
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500212/lillian-leibner-%D7%9C%D7%91%D7%99%D7%AA-greyer
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500212
+1 RIN MH:I501055
+1 _UID 6697403627D0B2E1012F5EF0FA5D8D78
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTU4NzZlNjM4Y2IxYTE5ODBiNDZjYTMxY2RiMTUxYzE4OWIxYmM0YWFmMzkwMDZiMzAxNWEyNzYwZDY2ZDY5OWEmZT0xNzUzNjEwNDAw/158/944/6912/501333_568389e8y6i8xbd917t720_A.jpg
+2 _FILESIZE 26565
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500418
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501333
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQ3ZTY5ZjcyNGQ4Nzg2ZmNlYTAxZWZkYTc3MzYxZDE5MmM3NGY4ZDcxNTdiNDIyOGY1Yjc5NTdmYmIzZDVlYjYmZT0xNzUzNjEwNDAw/158/944/6912/500418_7464652a0656r10xco266b_A.jpg
+2 _FILESIZE 2073638
+2 TITL 20240820_141546
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 1948 1220 2326 1598
+2 _PHOTO_RIN MH:P500418
+
+0 @I501059@ INDI
+1 _UPD 5 MAR 2025 10:02:36 GMT -0500 
+1 NAME Ira Wallace /Leibner/
+2 GIVN Ira Wallace
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 23 AUG 1918
+2 PLAC New York, USA
+1 DEAT Y
+2 DATE 11 APR 1988
+2 PLAC Brooklyn, Kings, New York, USA
+1 OCCU pediatrician
+1 RESI
+2 DATE 1935
+2 ADDR
+3 ADR2 Same House - 5104 14th Ave, Brooklyn, A D 16, Kings, New York, USA
+1 CENS
+2 DATE 1940
+2 PLAC 5104 14th Ave, Brooklyn, A D 16, Kings, New York, USA
+1 FAMS @F500640@
+1 FAMC @F500391@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Ira Wallace Leibner&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 1918&amp;lt;br&amp;gt;פטירה: 1988&amp;lt;br&amp;gt;אב: Joseph M Leibner&amp;lt;br&amp;gt;אם: Lillian Leibner (ל
+4 CONC בית Greher)&amp;lt;br&amp;gt;אחים ואחיות: Rose Nobel (לבית Leibner), Mildred Jaffe (לבית Leibner), Taube Fagin (לבית Leibner)
+2 EVEN Record
+3 ROLE 40000:411191432:
+1 SOUR @S500096@
+2 PAGE https://www.myheritage.com/profile-OYYV77JD3VCPAGIQWGKPWH464A7OP2I-1500028/ira-wallace-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500028
+1 SOUR @S500096@
+2 PAGE https://www.myheritage.com/profile-OYYV77JD3VCPAGIQWGKPWH464A7OP2I-1500028/ira-wallace-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500028
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500215/ira-wallace-i-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500215
+1 RIN MH:I501059
+1 _UID 669740B698558AF4A0C1227A6269A3A4
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTIyZTRmMjE3ZDZmMWI1NWJhOGI2NDQ2Y2YzMjI1ZTE2NzQwMzM4NDM5NzU4OWZiOWQ0NGNkNmI4MDRiMDgxZDUmZT0xNzUzNjEwNDAw/158/944/6912/501003_3135525l862z71d3ec7114_A.jpg
+2 _FILESIZE 44577
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501002
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501003
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTlkNTk2MWZmODYzZjJlMTZkY2MxYTFjNTI5MGRlZjIyMjkyMTdhZjA1Yzc2OWQ2Y2I1ZmU3OGQyNWY0MDgzMzImZT0xNzUzNjEwNDAw/158/944/6912/501002_729114q7258c2dr7kf916a_A.jpg
+2 _FILESIZE 30713
+2 TITL Wally Leibner 2-85 sharp (sm)
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 5 380 385
+2 _PHOTO_RIN MH:P501002
+
+0 @I501745@ INDI
+1 _UPD 30 MAR 2025 06:43:35 GMT -0500 
+1 NAME Dorothy Jane /Goldberg/
+2 GIVN Dorothy Jane
+2 SURN Goldberg
+1 SEX F
+1 BIRT
+2 DATE 17 NOV 1923
+1 DEAT Y
+2 DATE 11 NOV 2019
+1 FAMS @F500640@
+1 RIN MH:I501745
+1 _UID 67A99FA98B680A9957B648260FACB314
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTI0MjhiMDZlN2I1NDBkMmMwNzljNTA0ZDlmNzQxMDU3NWFhZTNmMzNjZmI5OWZiMDVlZTU3YmZjN2JmYWVjMjUmZT0xNzUzNjEwNDAw/158/944/6912/501335_76079661ein177e1169ee2_A.jpg
+2 _FILESIZE 7021
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501334
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501335
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTJmMmIzYWRjMDZmNDQ1ZWE3ODdhYjMwYTk5Zjc4OTlmZTIwYzI4ZDcwMDVmMDY0YzUwMmNhODllOTU0OGZkZDEmZT0xNzUzNjEwNDAw/158/944/6912/501334_449835hea6j1ee1g646972_A.jpg
+2 _FILESIZE 7339
+2 TITL DOROTHY GOLDBERG LEIBNER
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 7 153 160
+2 _PHOTO_RIN MH:P501334
+
+0 @I500432@ INDI
+1 _UPD 21 AUG 2024 10:20:12 GMT -0500 
+1 NAME Ephraim Halevi /Leibner/
+2 GIVN Ephraim Halevi
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE NOV 1868
+2 PLAC Nowy Zmigrod, Austria, now Poland
+1 EVEN
+2 TYPE Arrival
+2 DATE 13 APR 1892
+2 PLAC New York, New York, USA
+2 AGE 23-24
+1 EVEN
+2 TYPE Departure
+2 PLAC Amsterdam, Netherlands
+1 DEAT Y
+2 DATE 7 JUL 1942
+2 PLAC the forest of Halbow near Zmigrod was shot with most of the Jewish community.  All of the Jews had been led to a meadow where the selection took place and  most or all were killed.
+2 AGE 73-74
+1 FAMS @F500393@
+1 FAMC @F500171@
+1 SOUR @S500006@
+2 PAGE Ephraim Halevi Leibner
+2 QUAY 3
+2 DATA
+3 DATE 14 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Ephraim Leibner&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 1868 - Nowy Żmigród, Jasło County, Podkarpackie Voivodeship, Poland&amp;lt;br&amp;gt;פטירה: 1942&amp;lt;br&amp;gt;א
+4 CONC : Nathan Leibner&amp;lt;br&amp;gt;אם: Pearl Leibner (לבית Tzimet)&amp;lt;br&amp;gt;אשה: Shprintze Leibner (לבית Findling)&amp;lt;br&amp;gt;אח/אחות: Jennie Krill (לבית Leibner)
+2 EVEN Record
+3 ROLE 40000:391842997:
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000626/efroim-ephraim-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000626
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.com/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500033/ephraim-halevi-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500033
+1 SOUR @S500018@
+2 QUAY 4
+2 DATA
+3 TEXT Pauline Leibner Klein&amp;lt;br&amp;gt;Alternate Name: Pepe Leibner&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Race: White&amp;lt;br&amp;gt;Record Type: Application&amp;lt;br&amp;gt;Submission d
+4 CONC ate: Dec 1961&amp;lt;br&amp;gt;Signed By: Client&#039;s signature&amp;lt;br&amp;gt;Reference Number: 65181529608&amp;lt;br&amp;gt;Description: Original SSN [social security number]
+2 EVEN Record
+3 ROLE 10863:33732787-F:
+1 RIN MH:I500432
+1 _UID 66443BAA6F6DE604C487AF0D5A03E904
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWVhMmQyZDM0YTQ5OWQ3ZmEzNzczZjMwNTU1Y2IyODg5NzVkM2VhNTBiODEzNjljMDQ2ZmU5NmFkNzk1ZmQ2NDUmZT0xNzUzNjEwNDAw/158/944/6912/500340_9690301sal6a7669u92982_A.jpg
+2 _FILESIZE 10958
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500339
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500340
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTU4OTkxNDA2YTA5YTJlNzgyY2ZiZGI0NTk0NmRjMTM5Yzg2MjkyNGRmNzE5ZmEyNTVlZjU2YTExNmRjMjY5NWImZT0xNzUzNjEwNDAw/158/944/6912/500339_10924396z61a6gp976c9y9_A.jpg
+2 _FILESIZE 23638
+2 TITL Ephraim Leibner
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 0 200 200
+2 _PHOTO_RIN MH:P500339
+
+0 @I501069@ INDI
+1 _UPD 18 JUL 2024 10:12:19 GMT -0500 
+1 NAME Shprince Ruchel /Findling/
+2 GIVN Shprince Ruchel
+2 SURN Findling
+2 _MARNM Leibner
+1 SEX F
+1 BIRT
+2 DATE 1879
+2 PLAC Nowy Zmigrod, Poland
+1 DEAT Y
+2 DATE 1942
+2 PLAC Poland
+1 FAMS @F500393@
+1 FAMS @F501598@
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000636/shprince-ruchel-leibner-born-findling
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000636
+1 SOUR @S500008@
+2 QUAY 4
+2 DATA
+3 TEXT Gerina Leibner (born Fiedberg)&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Husband: &amp;lt;a&amp;gt;Ephraim Leibner&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Daughter: &amp;lt;a&amp;gt;Pearl Pauline Kl
+4 CONC ein (born Leibner)&amp;lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 40001:1795242295:
+1 SOUR @S500018@
+2 QUAY 4
+2 DATA
+3 TEXT Pauline Leibner Klein&amp;lt;br&amp;gt;Alternate Name: Pepe Leibner&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Race: White&amp;lt;br&amp;gt;Record Type: Application&amp;lt;br&amp;gt;Birth: May 2
+4 CONC 2 1903 - Poland&amp;lt;br&amp;gt;Submission date: Dec 1961&amp;lt;br&amp;gt;Signed By: Client's signature&amp;lt;br&amp;gt;Reference Number: 65181529608&amp;lt;br&amp;gt;Description: Original SSN [soc
+4 CONC ial security number]
+2 EVEN Record
+3 ROLE 10863:33732787-M:
+1 RIN MH:I501069
+1 _UID 6697424A4869553E11D09B80A68FDC15
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTVjN2UyNjJjZjIxOTFlZTBhNTA4YTcyOGYxMjg5OTRlYTA4ZTczMzQ2ZDE3MmExZDE4MjBhNzlmMzY0ZWY3NDAmZT0xNzUzNjEwNDAw/158/944/6912/500347_5802696lp99d7k7f116303_A.jpg
+2 _FILESIZE 7296
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500346
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500347
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTliMGFhMTQ1NTMwM2MwZGNjMzUxMmI5MGVlZWJhNjUwMjJmZWQ4NDFkZWJjMThhMGIxZjgzNDdhNjgzMzU2NjQmZT0xNzUzNjEwNDAw/158/944/6912/500346_5440916tg79yd79r305162_A.jpg
+2 _FILESIZE 14135
+2 TITL now026b
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 0 200 200
+2 _PHOTO_RIN MH:P500346
+
+0 @I500431@ INDI
+1 _UPD 21 AUG 2024 10:20:01 GMT -0500 
+1 NAME Sheindel Jennie /Leibner/
+2 GIVN Sheindel Jennie
+2 SURN Leibner
+2 _MARNM Krill
+1 SEX F
+1 BIRT
+2 DATE 30 APR 1873
+2 PLAC Nowy Zmigrod, Austria, now Poland
+1 EVEN
+2 TYPE Arrival
+2 DATE AUG 1889
+2 PLAC Grimsby (Nordamerika via Liveerpool)
+2 AGE 16
+1 EVEN
+2 TYPE Departure
+2 DATE 2 SEP 1897
+2 PLAC Hamburg, Deutschland
+2 AGE 24
+1 EVEN
+2 TYPE Arrival
+2 DATE 11 SEP 1897
+2 PLAC New York, New York, USA
+2 AGE 24
+1 EVEN
+2 TYPE Arrival
+2 DATE 17 DEC 1937
+2 PLAC Miami, Florida, USA
+2 AGE 64
+1 EVEN
+2 TYPE NaturalizationPetition
+2 DATE 28 JUL 1943
+2 PLAC Newark, Essex, New Jersey, USA
+2 AGE 70
+1 RESI
+2 DATE BET 1963 AND 1964
+2 ADDR
+3 ADR1 New Jersey
+1 EVEN
+2 TYPE Arrival
+2 DATE 1888
+2 PLAC New York
+1 EVEN
+2 TYPE Departure
+2 DATE 24 JUL 1888
+2 PLAC Hamburg
+1 RESI
+2 DATE 1900
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Wife, Manhattan, New York, New York, USA
+1 RESI
+2 ADDR
+3 ADR1 Relation to Head: Frau, Korczina, Österreich
+1 DEAT Y
+2 DATE 14 JUN 1971
+2 PLAC Caldwell, Essex County, New Jersey, United States
+2 AGE 98
+1 IMMI
+2 DATE 8 AUG 1888
+2 PLAC Arrived in NY on the Wyoming from Liverpool  having begun her voyage on the Warrington from Hamburg to Grimsby, England on July 24.
+1 RESI
+2 ADDR
+3 ADR1 Newark and then Caldwell, NJ
+1 BURI
+2 PLAC Beth Israel Cemetery, Woodridge, NJ
+1 RESI
+2 ADDR
+3 ADR1 Korczyna, Galizien
+1 RESI
+2 ADDR
+3 ADR1 Relation to Head of House: Frau, Korczina, Österreich
+1 RESI
+2 DATE 1910
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Wife, Newark Ward 3, Essex, New Jersey, USA
+1 RESI
+2 DATE 1920
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Wife, Newark Ward 9, Essex, New Jersey, USA
+1 RESI
+2 DATE 1930
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Wife, Caldwell, Essex, New Jersey, USA
+1 EVEN
+2 TYPE Travel
+2 PLAC Jennie and Pauline return to NY sailing from Hamburg on the Furst Bismarck.
+1 FAMS @F500451@
+1 FAMC @F500171@
+1 SOUR @S500006@
+2 PAGE Scheindel Leibner
+2 QUAY 3
+2 DATA
+3 DATE 14 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Jennie Krill (לבית Leibner)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 1873 - Nowy Żmigród, Jasło County, Podkarpackie Voivodeship, Poland&amp;lt;br&amp;gt;פטירה: 1971 - 
+4 CONC Caldwell, Essex County, New Jersey, United States&amp;lt;br&amp;gt;אב: Nathan Leibner&amp;lt;br&amp;gt;אם: Pearl Leibner (לבית Tzimet)&amp;lt;br&amp;gt;בעל: Harry Krill&amp;lt;br&amp;gt;א
+4 CONC /אחות: Ephraim Leibner
+2 EVEN Record
+3 ROLE 40000:391842995:
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000627/jennie-sheindel-krill-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000627
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1500039/sheindel-jennie-krill-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500039
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.com/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500034/jennie-sheindel-krill-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500034
+1 RIN MH:I500431
+1 _UID 66443BAA58DFC602C487AF0D5A03E904
+
+0 @I501226@ INDI
+1 _UPD 21 AUG 2024 10:20:03 GMT -0500 
+1 NAME Harry (Tzvi) /Krill/
+2 GIVN Harry (Tzvi)
+2 SURN Krill
+1 SEX M
+1 BIRT
+2 DATE 1870
+1 DEAT Y
+2 DATE 18 MAY 1935
+1 FAMS @F500451@
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.com/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500045/harry-tzvi-krill
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500045
+1 RIN MH:I501226
+1 _UID 66C6059D75C3BF11C67E05C572CAE34C
+
+0 @I500485@ INDI
+1 _UPD 15 MAY 2024 12:19:41 GMT -0500 
+1 NAME Chaim /Leibner/
+2 GIVN Chaim
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE ABT 1883
+2 PLAC Korczyna
+1 DEAT Y
+2 DATE 1883
+2 NOTE Tree from Bill Leibner    Dob, Dod and cemetery are from Maureen Teller
+1 FAMC @F500010@
+1 SOUR @S500025@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7XJQYA7D2HPTQQMC66N77EPNURA-1500038/chaim-leibner
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500038
+1 SOUR @S500025@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7XJQYA7D2HPTQQMC66N77EPNURA-1500038/chaim-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500038
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500149/chaim-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500149
+1 RIN MH:I500485
+1 _UID 6644EEA8DA5030E44FBD2D8FC3E85B2F
+
+0 @I501057@ INDI
+1 _UPD 30 MAR 2025 06:26:45 GMT -0500 
+1 NAME Mildred C /Leibner/
+2 GIVN Mildred C
+2 SURN Leibner
+2 _MARNM Jaffe
+1 SEX F
+1 BIRT
+2 DATE 12 OCT 1911
+2 PLAC New York, USA
+1 DEAT Y
+2 DATE 26 JAN 1993
+2 PLAC Far Rockaway, Queens, New York, USA
+1 BURI
+2 PLAC Mt. Carmel Cemetery, Queens, NY
+1 RESI
+2 DATE 1935
+2 ADDR
+3 ADR2 Same House - 5104 14th Ave, Brooklyn, A D 16, Kings, New York, USA
+1 CENS
+2 DATE 1940
+2 PLAC 5104 14th Ave, Brooklyn, A D 16, Kings, New York, USA
+1 FAMS @F500547@
+1 FAMC @F500391@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Mildred Jaffe (לבית Leibner)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 1911&amp;lt;br&amp;gt;פטירה: 1993&amp;lt;br&amp;gt;אב: Joseph M Leibner&amp;lt;br&amp;gt;אם: Lill
+4 CONC ian Leibner (לבית Greher)&amp;lt;br&amp;gt;בעל: David Jaffe&amp;lt;br&amp;gt;אחים ואחיות: Rose Nobel (לבית Leibner), Taube Fagin (לבית Leibner), Ira Wallace Leibner
+2 EVEN Record
+3 ROLE 40000:411191375:
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500042/mildred-c-jaffe-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500042
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500042/mildred-c-jaffe-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500042
+1 SOUR @S500096@
+2 PAGE https://www.myheritage.com/profile-OYYV77JD3VCPAGIQWGKPWH464A7OP2I-1500027/mildred-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500027
+1 SOUR @S500096@
+2 PAGE https://www.myheritage.co.il/profile-OYYV77JD3VCPAGIQWGKPWH464A7OP2I-1500027/mildred-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500027
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500214/mildred-c-jaffe-%D7%9C%D7%91%D7%99%D7%AA-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500214
+1 SOUR @S500033@
+2 QUAY 4
+2 DATA
+3 TEXT David A. Jaffe וMildred C. Leibner&amp;lt;br&amp;gt;חתן: שם:David A. Jaffeלידה:12 בפבר’ 1911
+	
+	 New York, United States
+
+גיל:29אב:Benjamin Jaffeeאם:Fanny Silverstein&amp;l
+4 CONC t;br&amp;gt;כלה: שם:Mildred C. Leibnerלידה:12 באוק’ 1911
+	
+	 Manhattan, New York, United States
+
+גיל:28אב:Joseph M. Leibnerאם:Lillian Greyer&amp;lt;br&amp;gt;# תעודה: 1
+4 CONC 9201
+2 EVEN Record
+3 ROLE 20807:662715-S:
+1 RIN MH:I501057
+1 _UID 669740B63F39AAF2A0C1227A6269A3A4
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTlhYmUxN2JkMmY3OGFjZGM1OTc4ZjZjZjMxMGY4OTBhZTdmODdjMDM3ZGUzMWY4MDIxNmFlZGNhYWM3MTQyY2UmZT0xNzUzNjEwNDAw/158/944/6912/501331_3558727a31a753292ev6m1_A.jpg
+2 _FILESIZE 9446
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501330
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501331
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTY4NTU1NGMzNzlhYTdhOGMzYzY2MTRkOTE1YjdhOWFlODUxNTllYzM0NTQ0Zjk1YWZhNGQ1MjMxYjUwNTA3ZjAmZT0xNzUzNjEwNDAw/158/944/6912/501330_3408112p6t03170e5a8972_A.jpg
+2 _FILESIZE 10492
+2 TITL MILDRED LEIBNER JAFFE
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 14 0 197 183
+2 _PHOTO_RIN MH:P501330
+
+0 @I501474@ INDI
+1 _UPD 30 MAR 2025 06:32:40 GMT -0500 
+1 NAME David Aron /Jaffe/
+2 GIVN David Aron
+2 SURN Jaffe
+1 SEX M
+1 BIRT
+2 DATE 12 FEB 1911
+2 PLAC New York, United States
+1 BIRT
+2 DATE ABT 1911
+2 PLAC USA
+1 BIRT
+2 DATE 12 OCT 1911
+2 PLAC New York
+1 RESI
+2 DATE 1 JUN 1925
+2 ADDR
+3 ADR1 Age: 14; Relation to Head of House: Son, Brooklyn, Kings, New York, United States
+1 RESI
+2 DATE 1930
+2 ADDR
+3 ADR1 Marital Status: Single; Relation to Head of House: Son, Brooklyn, Kings, New York, USA
+1 DEAT Y
+2 DATE 30 APR 1953
+2 PLAC New York City, New York, United States
+1 BURI
+2 PLAC Mt. Carmel Cemetery
+1 FAMS @F500547@
+1 FAMC @F501105@
+1 SOUR @S500096@
+2 PAGE https://www.myheritage.com/profile-OYYV77JD3VCPAGIQWGKPWH464A7OP2I-1500064/david-aron-jaffe
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500064
+1 SOUR @S500096@
+2 PAGE https://www.myheritage.co.il/profile-OYYV77JD3VCPAGIQWGKPWH464A7OP2I-1500064/david-aron-jaffe
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500064
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500267/david-aron-jaffe
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500267
+1 SOUR @S500033@
+2 QUAY 4
+2 DATA
+3 TEXT David A. Jaffe וMildred C. Leibner&amp;lt;br&amp;gt;נישואין: 1940 - Brooklyn, Kings, New York, United States&amp;lt;br&amp;gt;חתן: שם:David A. Jaffeלידה:12 בפבר’ 1911
+	
+	 New
+4 CONC  York, United States
+
+
+
+
+
+	
+	
+	
+		
+	
+
+
+גיל:29אב:Benjamin Jaffeeאם:Fanny Silverstein&amp;lt;br&amp;gt;כלה: שם:Mildred C. Leibnerלידה:12 באוק’ 1911
+	
+	 Manhattan, New York,
+4 CONC  United States
+
+גיל:28אב:Joseph M. Leibnerאם:Lillian Greyer&amp;lt;br&amp;gt;# תעודה: 19201
+2 EVEN Record
+3 ROLE 20807:662715-:
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=192710465&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT David Jaffe
+לידה: 1911 - Brooklyn, Kings, New York, United States
+פטירה: אפר’ 1953 - New York City, New York, United States
+הורים: Sam Jaffe, Rebecca Jaffe (לבית Seides)
+אשה:
+4 CONC  Mildred C. Jaffe (לבית Leibner)
+אחים ואחיות: Solomon Jaffe, Moe Jaffe, Esther Jaffe, Annie Jaffe, Louis Jaffe, Martin Jaffee
+2 EVEN Record
+3 ROLE 40001:192710465:
+1 RIN MH:I501474
+1 _UID 677CAFB1973B0A1DBEB56C69C7F01C21
+
+0 @I501206@ INDI
+1 _UPD 22 FEB 2025 23:47:09 GMT -0500 
+1 NAME Feiga /Leibner/
+2 GIVN Feiga
+2 SURN Leibner
+1 SEX F
+1 BIRT
+2 DATE 3 SEP 1938
+2 PLAC Berlin, Berlin, Germany
+1 DEAT Y
+2 DATE 30 NOV 1941
+2 PLAC Riga-Rumbula
+2 NOTE <p>Cherlyl has 2 spouses.  I have had trouble removing the third which was entered in error as unknown.  She has had 2 spouses</p><p></p>
+1 RESI
+2 ADDR
+3 ADR1 Berlin Mitte, Berlin, Germany
+1 FAMC @F500445@
+1 SOUR @S500085@
+2 PAGE Feiga Leibner
+2 QUAY 3
+2 DATA
+3 DATE 16 AUG 2024
+3 TEXT התווסף באמצעות Smart Match
+2 EVEN Discovery
+1 SOUR @S500094@
+2 QUAY 4
+2 DATA
+3 TEXT Feige Feiga Leibner&amp;lt;br&amp;gt;לידה: 3 בספט’ 1938 - Berlin, Berlin, Germany&amp;lt;br&amp;gt;מגורים: Berlin Mitte, Berlin, Germany&amp;lt;br&amp;gt;פטירה: 30 בנוב’ 194
+4 CONC 1 - Riga-Rumbula&amp;lt;br&amp;gt;הַגלָיָה: from Berlin  27th November 1941, Riga
+2 EVEN Record
+3 ROLE 10921:157584:
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500089/feiga-leibner
+2 QUAY 3
+2 DATA
+3 TEXT בן אבו Web Site, מנוהל ע"י יאיר בן אבו
+2 EVEN Smart Matching
+3 ROLE 1500089
+1 RIN MH:I501206
+1 _UID 66BEE219A04E4357C53A20C113736439
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTM3ZTIzZmViMzRmZThkOTM3MTg3YjA3NTc1NTdlOTcyMDRjZjlmZTZkMWRkMzNhZDE1ZTY2MjI2ZTM5ZDk0NzkmZT0xNzUzNjEwNDAw/158/944/6912/500731_0655016b7811bacla5vj6l_A.jpg
+2 _FILESIZE 5132
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500730
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500731
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTg1NGRkZGRhM2VhOTRkOWVmYWFlZjRjZDliNzEzYTJlNzRkZGIxMDg5MDc5ZmY4NDQ0NDkwMGVjMzViYWMzOTEmZT0xNzUzNjEwNDAw/158/944/6912/500730_6172210cbsb569a7c41z16_A.jpg
+2 _FILESIZE 5125
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500730
+
+0 @I505137@ INDI
+1 _UPD 2 MAY 2025 05:11:43 GMT -0500 
+1 NAME Manny /Leibner/
+2 GIVN Manny
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 1921
+2 PLAC Nowy Zmigrod, Austria, now Poland
+1 OCCU Worked in store.
+1 DEAT Y
+2 DATE 1942
+2 PLAC the forest of Halbow.
+1 FAMC @F500393@
+1 SOUR @S500369@
+2 PAGE Manny Leibner
+2 QUAY 3
+2 DATA
+3 DATE 2 MAY 2025
+3 TEXT Added via a Smart Match
+2 EVEN Discovery
+1 RIN MH:I505137
+1 _UID 68149A5F3956A8646C7BA1AB116F1817
+
+0 @I501202@ INDI
+1 _UPD 22 FEB 2025 23:46:00 GMT -0500 
+1 NAME Tzvi (Hersh) /Leibner/
+2 GIVN Tzvi (Hersh)
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 27 JUN 1912
+2 PLAC Korczyna
+1 DEAT Y
+2 DATE 16 JAN 1998
+2 PLAC Givat Brenner, Israel
+1 IMMI From Berlin to Givat Brenner
+2 DATE 1933
+1 FAMC @F500443@
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500173/tzvi-hersh-leibner
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500173
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500173/tzvi-hersh-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500173
+1 RIN MH:I501202
+1 _UID 66BEE0820A9D36CABA6330456FABBDD3
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTE0Y2UyOTc3MWM5NGNhMmZmMzRkYzdjYmZiNTBjYWU4NTE2ZmExMzY3YzY1YzUwNDFkYmFiY2JkMWQxNmM2NWMmZT0xNzUzNjEwNDAw/158/944/6912/500380_3355641e745l313jq6b6ez_A.jpg
+2 _FILESIZE 202456
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500379
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500380
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWI3NDViYjRiYWViMjUzNDBmMGVlNjczOGIyOGRiYmY2ZWEyYmFlODZkZTgxZTZjZDRiZWEzMjk3MjE2MDNjZGQmZT0xNzUzNjEwNDAw/158/944/6912/500379_30855163614eezh9bdz735_A.jpg
+2 _FILESIZE 215853
+2 TITL צבי לביא קבר
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 596 0 1323 727
+2 _PHOTO_RIN MH:P500379
+
+0 @I501072@ INDI
+1 _UPD 10 FEB 2025 10:07:48 GMT -0500 
+1 NAME Jacob Yaakov /Leibner/
+2 GIVN Jacob Yaakov
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 5 AUG 1905
+2 PLAC Nowy Zmigrod, Poland
+1 DEAT Y
+2 DATE 10 OCT 1975
+2 PLAC Jerusalem, Israel
+1 BURI
+2 PLAC Har Hazeitim cemetery
+1 FAMS @F500396@
+1 FAMC @F500393@
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000646/jacob-yaakov-leibner
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000646
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000646/jacob-yaakov-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000646
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500233/jacob-yaakov-leibner
+2 QUAY 3
+2 DATA
+3 TEXT בן אבו Web Site, מנוהל ע"י יאיר בן אבו
+2 EVEN Smart Matching
+3 ROLE 1500233
+1 RIN MH:I501072
+1 _UID 6697424AEF09154311D09B80A68FDC15
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWY3N2RlMDFiMzEyYmFiZThiODVhN2E4ZjlmNTJjYzM0NDRkNjA3MTA1NjM3M2Y5YWY0NGI2NWMxYzU1ZmM4NzUmZT0xNzUzNjEwNDAw/158/944/6912/500644_13165364aj52z641a773i2_A.jpg
+2 _FILESIZE 3975
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500643
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500644
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTc3OWI4YTU3NThkYWFhODU1ZjQ2YjJlYTFjYTQyY2EzZjFkOTRmMDZmNjE3YTQwYmJlMGJhY2MwYzRjMTBhMTkmZT0xNzUzNjEwNDAw/158/944/6912/500643_387903ay28431j5b7653aa_A.jpg
+2 _FILESIZE 3974
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500643
+
+0 @I501080@ INDI
+1 _UPD 8 MAR 2025 11:50:01 GMT -0500 
+1 NAME Seril /Lang/
+2 GIVN Seril
+2 SURN Lang
+1 SEX F
+1 DEAT Y
+2 DATE 26 JUN 1985
+2 PLAC Jerusalem, Israel
+1 BIRT
+2 DATE 25 JUL 1906
+2 PLAC Nowy Zmigrod, Poland
+1 BURI
+2 PLAC Har Hazeitim
+1 FAMS @F500396@
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000647/seril-leibner-born-lang
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000647
+1 RIN MH:I501080
+1 _UID 6697D3D39E05015077E687B55C3FAC1B
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTQyNGU2NzEzNzVmY2IzYzgxN2M3ZDllZWRiZDFjMzg0YTg0ODUzOTg5YWY4ZTJmZTc5ZjM3OTM3NTMwMGU3NmQmZT0xNzUzNjEwNDAw/158/944/6912/501023_130397fb3l44c6k877m1c9_A.jpg
+2 _FILESIZE 8530
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500343
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501023
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTg2MDdlNGQ1NWQ4MzEwMmY2NGM1NGVhN2QzZjVjYjczYmRmMDI1N2UzYjVjNjdlYjgzOTQwNDk4YzRjNGExMDMmZT0xNzUzNjEwNDAw/158/944/6912/500343_7669169e10td636o9e7u91_A.jpg
+2 _FILESIZE 7160
+2 TITL bri341
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 25 200 225
+2 _PHOTO_RIN MH:P500343
+
+0 @I501076@ INDI
+1 _UPD 26 MAR 2025 09:18:54 GMT -0500 
+1 NAME Moshe /Leibner/
+2 GIVN Moshe
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 1908
+2 PLAC Nowy Zmigrod, Austria, now Poland
+1 DEAT Y
+2 DATE 1942
+2 PLAC Zmigrod was killed with brother Shimon while in hiding. Both sent to death camp, bribed guards to return to Zmigrod.  Farmer agreed to hide them in exchange for goods.  Farmer gathered goods, killed brothers, and was shot by Gestapo in forest for this.
+2 CAUS שואה
+1 OCCU Salesperson.
+1 FAMC @F500393@
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000652/moshe-leibner
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000652
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500106/moshe-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Miller Web Site, מנוהל ע"י Michael Miller
+2 EVEN Smart Matching
+3 ROLE 1500106
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500231/moshe-leibner
+2 QUAY 3
+2 DATA
+3 TEXT בן אבו Web Site, מנוהל ע"י יאיר בן אבו
+2 EVEN Smart Matching
+3 ROLE 1500231
+1 RIN MH:I501076
+1 _UID 6697424BB824F54711D09B80A68FDC15
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWEzYTQ0ZmRmMmFhOWY4MmM4NjI4YTg2ZDZjYWIzYjQ4OWFiNGUwZGUxYThhM2IwNjRhNzVhMWJlOGU4YTNjMGQmZT0xNzUzNjEwNDAw/158/944/6912/501270_956101gc0ea6634w74ce71_A.jpg
+2 _FILESIZE 5308
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501269
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501270
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTczYzhiMzU4NWM3MjQ4ZWRkNGIyZDRiOWNlZWJhMWIwNGJjN2IyYThlMGU5YjgwODYzOWUyNGE4NmEyYTZkNzImZT0xNzUzNjEwNDAw/158/944/6912/501269_7794596ew8c3s4uce710yr_A.jpg
+2 _FILESIZE 5311
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501269
+
+0 @I501049@ INDI
+1 _UPD 21 AUG 2024 10:18:26 GMT -0500 
+1 NAME Saul Mendel (Menachem) /Leibner/
+2 GIVN Saul Mendel (Menachem)
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 16 FEB 1876
+2 PLAC Nowy Zmigrod, Austria, now Poland
+1 DEAT Y
+2 DATE 30 JAN 1926
+2 PLAC New York, NY, USA
+1 BURI
+2 PLAC Washington cemetery, Brooklyn
+1 EVEN
+2 TYPE Departure
+2 DATE 5 SEP 1889
+2 PLAC Hamburg
+1 IMMI
+2 DATE 14 SEP 1889
+2 PLAC Arrived in NY on the Augusta Victoria having sailed from Hamburg.
+1 RESI
+2 ADDR
+3 ADR1 Relation to Head of House: Kind, Korezyn, Österreich
+1 RESI
+2 ADDR
+3 ADR1 Marital Status: ledig, New York
+1 EVEN
+2 TYPE Arrival
+2 PLAC Southampton; Cherbourg; New York
+1 RESI
+2 ADDR
+3 ADR1 New York City, New York
+1 EVEN BD = 10 Nov 2007
+2 TYPE Race
+1 EVEN
+2 TYPE Departure
+2 PLAC Hamburg, Germany and Southampton, England
+1 EVEN
+2 TYPE Arrival
+2 DATE 14 SEP 1889
+2 PLAC New York, New York
+1 RESI
+2 DATE 1900
+2 ADDR
+3 ADR1 Marital Status: Single; Relation to Head of House: Son, Manhattan, New York, New York, USA
+1 EVEN
+2 TYPE Departure
+2 DATE 1 OCT 1903
+2 PLAC Hamburg
+1 EVEN
+2 TYPE Travel
+2 DATE 11 OCT 1903
+2 PLAC Returned to US as a citizen having been to Berlin and traveled to US from Hamburg on the Blucher.
+1 RESI
+2 DATE BET 1917 AND 1918
+2 ADDR
+3 ADR1 Manhattan, New York, New York
+1 RESI
+2 DATE 1920
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Patient, Manhattan Assembly District 18, New York, New York, USA
+1 FAMC @F500390@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=391850837&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Menachem Shaul Leibner
+לידה: 1876 - Nowy Żmigród, Jasło County, Podkarpackie Voivodeship, Poland
+פטירה: 1926 - New York, New York, United States
+אב: Nathan Leibner
+אם: Rose Leibner (ל
+4 CONC בית Achtsam)
+אחים ואחיות: Rachel Witte Teller (לבית Leibner), Baruch Leibner, Joseph M Leibner, Emma Goodwin (לבית Leibner), Etta Lang (לבית Leibner)
+2 EVEN Record
+3 ROLE 40000:391850837:
+1 SOUR @S500027@
+2 QUAY 4
+2 DATA
+3 TEXT Mendel S Leibner&amp;lt;br&amp;gt;לידה: 23 בינו’ 1885 - Aus&amp;lt;br&amp;gt;פטירה: 30 בינו’ 1926&amp;lt;br&amp;gt;גיל פטירה: 47&amp;lt;br&amp;gt;קבורה: Washington Ce
+4 CONC metery, Brooklyn, United States&amp;lt;br&amp;gt;אב: Nusan Net Leibner&amp;lt;br&amp;gt;אם: Anna&amp;lt;br&amp;gt;הערות: On Tombstone: Son, Brother.  M3107:Single, Salesman, Parents: Nathan &
+4 CONC  Rea Feiner, 36 Years Us&amp;lt;br&amp;gt;בית עלמין: &amp;lt;a&amp;gt;צפו במידע על בית הקברות באתר של JewishGen&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Source website: &amp
+4 CONC ;lt;a&amp;gt;JewishGen&amp;lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 11019:3828764-:
+1 SOUR @S500097@
+2 PAGE https://www.myheritage.com/profile-OYYV74WETS3KMMVP6RW2NBVT5UAABFI-1502611/menachem-mendel-shaul-saulmanny-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502611
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.com/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500031/saul-mendel-menachem-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500031
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500200/saul-mendel-menachem-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500200
+1 RIN MH:I501049
+1 _UID 66973FBFBE7D22521D0261D9642F972B
+
+0 @I501071@ INDI
+1 _UPD 10 FEB 2025 10:07:28 GMT -0500 
+1 NAME Pearl Pauline /Leibner/
+2 GIVN Pearl Pauline
+2 SURN Leibner
+2 _MARNM Klein
+1 SEX F
+1 BIRT
+2 DATE 22 MAY 1903
+2 PLAC Nowy Zmigrod, Poland
+1 RELI Jewish
+1 DSCR <DSCR><HAIR>Brown</HAIR><EYES>Brown</EYES><WEIGHT>135</WEIGHT><HEIGHT>5' 3"</HEIGHT></DSCR>
+1 NATU Lived at 1630 E. 172 St, Bronx NY, USA
+2 DATE 4 DEC 1942
+2 PLAC New York, NY, USA
+1 DEAT Y
+2 DATE 10 AUG 2000
+2 PLAC New York, USA
+1 BURI
+2 PLAC Beth David Cemetry
+1 OCCU Saleslady
+1 RESI
+2 DATE 1935
+2 ADDR
+3 ADR2 Same Place - 204 East 165th Street, A D 2, Bronx, New York, USA
+1 RESI
+2 DATE 1940
+2 ADDR
+3 ADR2 Assembly District 2, Bronx, New York City, Bronx, New York, United States
+1 RESI
+2 DATE 1 APR 1950
+2 ADDR
+3 ADR2 The Bronx, New York City, New York County, New York, United States
+1 CENS
+2 DATE 1940
+2 PLAC 204 East 165th Street, A D 2, Bronx, New York, USA
+1 FAMS @F500544@
+1 FAMC @F500393@
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000641/pearl-pauline-klein-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000641
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000641/pearl-pauline-klein-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000641
+1 SOUR @S500008@
+2 QUAY 4
+2 DATA
+3 TEXT Pearl Pauline Klein (born Leibner)&amp;lt;br&amp;gt;Married name: Pauline Klein&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Birth: 1904 - Austria&amp;lt;br&amp;gt;Marriage: May 22 1926 - Manhatta
+4 CONC n, New York, New York, United States&amp;lt;br&amp;gt;Residence: 1935 - Same Place&amp;lt;br&amp;gt;Residence: 1940 - Assembly District 2, Bronx, New York City, Bronx, New York, United States&amp;lt;b
+4 CONC r&amp;gt;Residence: Apr 1 1950 - The Bronx, New York City, New York County, New York, United States&amp;lt;br&amp;gt;Death: 2000&amp;lt;br&amp;gt;Occupation: Saleslady&amp;lt;br&amp;gt;Parents: &amp;l
+4 CONC t;a&amp;gt;Ephraim Leibner&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Gerina Leibner (born Fiedberg)&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Husband: &amp;lt;a&amp;gt;Philip Pesach Klein&amp;lt;/a&amp;gt;&amp;lt;
+4 CONC br&amp;gt;Daughter: &amp;lt;a&amp;gt;Estelle Yoss (born Klein)&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;&nbsp;&nbsp;Additional information: &amp;lt;br&amp;gt; &amp;lt;br&amp;gt;Marital status: Married
+2 EVEN Record
+3 ROLE 40001:9652390:
+1 SOUR @S500142@
+2 QUAY 4
+2 DATA
+3 TEXT Philip Klein &amp; Pauline Lerbner&amp;lt;br&amp;gt;חתן: Philip Klein&amp;lt;br&amp;gt;כלה: Pauline Lerbner&amp;lt;br&amp;gt;# תעודה: 15330
+2 EVEN Record
+3 ROLE 10876:2033916-S:
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-1631669092-1500232/pearl-pauline-klein-לבית-leibner
+2 QUAY 3
+2 DATA
+3 TEXT בן אבו Web Site, מנוהל ע"י יאיר בן אבו
+2 EVEN Smart Matching
+3 ROLE 1500232
+1 SOUR @S500144@
+2 QUAY 4
+2 DATA
+3 TEXT Pauline Klein&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: סביבות 1904 - Austria&amp;lt;br&amp;gt;מגורים: 1940 - 204 East 165th Street, A D 2, Bronx, New York, USA&amp;lt;b
+4 CONC r&amp;gt;גיל: 36&amp;lt;br&amp;gt;מגורים ב-1935: Same Place - 204 East 165th Street, A D 2, Bronx, New York, USA&amp;lt;br&amp;gt;גזע: לבן&amp;lt;br&amp;gt;משיב: X&amp;lt;br&amp;gt
+4 CONC ;סטטוס אזרחות: AL&amp;lt;br&amp;gt;מצב משפחתי: נשוי&amp;lt;br&amp;gt;בעל: Philip Klein&amp;lt;br&amp;gt;ילדים: Estelle Klein, Doris Klein, Harold Klein&amp;lt;br&amp;gt
+4 CONC ;מפקד אוכלוסין: 
+	עיירהA D 2מחוז רישום3-291משפחה436
+	מחוזBronxסלילm-t0627-02468שורה33
+	מדינהNew Yorkמסגרת00354
+	תאריך1940-00-00עמוד18A
+ר
+4 CONC ו חברי משק הבית&amp;lt;br&amp;gt;&amp;lt;a id='household'&amp;gt;&amp;lt;/a&amp;gt;בית אב&amp;lt;br&amp;gt;יחס לראש המשפחה; שם; גיל; חלופות שהוצעו&amp;l
+4 CONC t;br&amp;gt;ראש המשפחה; &amp;lt;a href="https://www.myheritage.co.il/research/collection-10053/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7
+4 CONC %A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D7%99%D7%AA-1940?s=1589446912&itemId=13412834-&groupId=f40ca4ca09d27820ef5fe3bc5cfd6298&action=showRecord&recordTitle=Philip+Klein"&amp;gt;Philip Klein&amp;lt;/a&amp
+4 CONC ;gt;; 37; &amp;lt;br&amp;gt;אשה; &amp;lt;a href="https://www.myheritage.co.il/research/collection-10053/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8
+4 CONC %D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D7%99%D7%AA-1940?s=1589446912&itemId=13412835-&groupId=f40ca4ca09d27820ef5fe3bc5cfd6298&action=showRecord&recordTitle=Pauline+Klein"&amp;gt;Pauline Klein&amp;lt;/
+4 CONC a&amp;gt;; 36; &amp;lt;br&amp;gt;בת; &amp;lt;a href="https://www.myheritage.co.il/research/collection-10053/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7
+4 CONC %A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D7%99%D7%AA-1940?s=1589446912&itemId=13412836-&groupId=f40ca4ca09d27820ef5fe3bc5cfd6298&action=showRecord&recordTitle=Estelle+Klein"&amp;gt;Estelle Klein&amp;l
+4 CONC t;/a&amp;gt;; 13; &amp;lt;br&amp;gt;בת; &amp;lt;a href="https://www.myheritage.co.il/research/collection-10053/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90
+4 CONC %D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D7%99%D7%AA-1940?s=1589446912&itemId=13412837-&groupId=f40ca4ca09d27820ef5fe3bc5cfd6298&action=showRecord&recordTitle=Doris+Klein"&amp;gt;Doris Klein&amp;lt
+4 CONC ;/a&amp;gt;; 7; &amp;lt;br&amp;gt;בן; &amp;lt;a href="https://www.myheritage.co.il/research/collection-10053/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D
+4 CONC 7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D7%99%D7%AA-1940?s=1589446912&itemId=13412838-&groupId=f40ca4ca09d27820ef5fe3bc5cfd6298&action=showRecord&recordTitle=Harold+Klein"&amp;gt;Harold Klein&amp;lt
+4 CONC ;/a&amp;gt;; 4;
+2 EVEN Record
+3 ROLE 10053:13412835-:f40ca4ca09d27820ef5fe3bc5cfd6298
+1 SOUR @S500159@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7AH2GUFUYKC5D2WZ35DNTJ2TZTA-1000019/pauline-klein-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000019
+1 SOUR @S500018@
+2 QUAY 4
+2 DATA
+3 TEXT Pauline Leibner Klein&amp;lt;br&amp;gt;Alternate Name: Pepe Leibner&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Race: White&amp;lt;br&amp;gt;Record Type: Application&amp;lt;br&amp;gt;Birth: May 2
+4 CONC 2 1903 - Poland&amp;lt;br&amp;gt;Submission date: Dec 1961&amp;lt;br&amp;gt;Father: Efraim Leibner&amp;lt;br&amp;gt;Mother: Sprincer&amp;lt;br&amp;gt;Signed By: Client's signature&amp;lt;br&amp;gt;Ref
+4 CONC erence Number: 65181529608&amp;lt;br&amp;gt;Description: Original SSN [social security number]
+2 EVEN Record
+3 ROLE 10863:33732787-:
+1 RIN MH:I501071
+1 _UID 6697424AC2F2F54211D09B80A68FDC15
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTQxNWU0MWU3MjM2ODdjOGI0NTEyNmNiODY5OWVmMmJlMjE4YjdhYjIwZGUzMDY3MjkzYmU4YWFjMThkNTE0ZGImZT0xNzUzNjEwNDAw/158/944/6912/500642_8516934adb26a427gh1l01_A.jpg
+2 _FILESIZE 2545
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500641
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500642
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWJiYzEzMWMzYzFhNGE1YjAwNDMwN2IwMGVhZmQ1YjZiNDA3ODEyZDUwN2E5NWVlNmUwNjhhZTQ4YTcxYmYzZTAmZT0xNzUzNjEwNDAw/158/944/6912/500641_843385foe324a1xb27ag76_A.jpg
+2 _FILESIZE 2546
+2 TITL 500046_598842x276d1p555513xh4_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500641
+
+0 @I501469@ INDI
+1 _UPD 16 FEB 2025 05:40:04 GMT -0500 
+1 NAME Philip Pesach /Klein/
+2 GIVN Philip Pesach
+2 SURN Klein
+1 SEX M
+1 BIRT
+2 DATE 1 JUN 1902
+2 PLAC Boyarka, Ukraine
+1 RESI
+2 DATE 1935
+2 ADDR
+3 ADR2 Same Place - 204 East 165th Street, A D 2, Bronx, New York, USA
+1 RESI
+2 DATE 1940
+2 ADDR
+3 ADR2 Assembly District 2, Bronx, New York City, Bronx, New York, United States
+1 RESI
+2 DATE 1 APR 1950
+2 ADDR
+3 ADR2 The Bronx, New York City, New York County, New York, United States
+1 OCCU Proprietor
+1 DEAT Y
+2 DATE OCT 1986
+2 PLAC New York, NY, USA
+1 CENS
+2 DATE 1940
+2 PLAC 204 East 165th Street, A D 2, Bronx, New York, USA
+1 RELI Jewish
+1 DSCR <DSCR><HAIR>Brown</HAIR><EYES>Gray</EYES><WEIGHT>160</WEIGHT><HEIGHT>5' 6"</HEIGHT></DSCR>
+1 NATU Lived at 1532 Seabury Pl, Bronx, NY USA
+2 DATE 27 JUN 1930
+2 PLAC Bronx, NY USA
+1 FAMS @F500544@
+1 SOUR @S500008@
+2 QUAY 4
+2 DATA
+3 TEXT Philip Pesach Klein&amp;lt;br&amp;gt;Also known as: Pesach KlotzmanPhilip Klein&amp;lt;br&amp;gt;Gender: Male&amp;lt;br&amp;gt;Birth: 1903 - Boyarka, Zvenyhorodka Uyezd, Kiev, Russian Empire&amp;lt;br
+4 CONC &amp;gt;Marriage: Spouse: Pearl Pauline Leibner - May 22 1926 - Manhattan, New York, New York, United States&amp;lt;br&amp;gt;Residence: 1935 - Same Place&amp;lt;br&amp;gt;Residence: 1940 - Assembly D
+4 CONC istrict 2, Bronx, New York City, Bronx, New York, United States&amp;lt;br&amp;gt;Residence: Apr 1 1950 - The Bronx, New York City, New York County, New York, United States&amp;lt;br&amp;gt;Occupation:
+4 CONC  Proprietor&amp;lt;br&amp;gt;Parents: &amp;lt;a&amp;gt;Berel Klotzman&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Haia Sarah Klotzman (born Slobiuk)&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Wife: &amp;lt;a&amp;gt;P
+4 CONC earl Pauline Klein (born Leibner)&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Daughter: &amp;lt;a&amp;gt;Estelle Yoss (born Klein)&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Siblings: &amp;lt;a&amp;gt;Rose Lashinsky (
+4 CONC born Klotzman)&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Ita Klotzman&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Joseph Klein&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Bashe Sklar (born Klotzman)&amp;lt;/a&amp;gt;, &amp
+4 CONC ;lt;a&amp;gt;Sylvia Stauber (born Klotzman)&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Avrum Klotzman&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;&nbsp;&nbsp;Additional information: &amp;lt;br&amp;gt; &amp;lt;br&amp;
+4 CONC gt;Marital status: Married
+2 EVEN Record
+3 ROLE 40001:970688:
+1 SOUR @S500142@
+2 QUAY 4
+2 DATA
+3 TEXT Philip Klein & Pauline Lerbner&amp;lt;br&amp;gt;חתן: Philip Klein&amp;lt;br&amp;gt;כלה: Pauline Lerbner&amp;lt;br&amp;gt;נישואין: 22 במאי 1926 - Manhattan, New York, United States&amp
+4 CONC ;lt;br&amp;gt;# תעודה: 15330
+2 EVEN Record
+3 ROLE 10876:2033916-:
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1500006/philip-pesach-klein
+2 QUAY 3
+2 DATA
+3 TEXT Our Family and Heritage, מנוהל ע"י Reuven Shefer
+2 EVEN Smart Matching
+3 ROLE 1500006
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1500006/philip-pesach-klein
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500006
+1 SOUR @S500144@
+2 QUAY 4
+2 DATA
+3 TEXT Philip Klein&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: סביבות 1903 - Russia&amp;lt;br&amp;gt;מגורים: 1940 - 204 East 165th Street, A D 2, Bronx, New York, USA&amp;lt;br&am
+4 CONC p;gt;גיל: 37&amp;lt;br&amp;gt;מגורים ב-1935: Same Place - 204 East 165th Street, A D 2, Bronx, New York, USA&amp;lt;br&amp;gt;גזע: לבן&amp;lt;br&amp;gt;סטטוס אזרחות: NA&amp;
+4 CONC lt;br&amp;gt;מצב משפחתי: נשוי&amp;lt;br&amp;gt;אשה: Pauline Klein&amp;lt;br&amp;gt;ילדים: Estelle Klein, Doris Klein, Harold Klein&amp;lt;br&amp;gt;מפקד אוכלוסין: 
+	ע
+4 CONC יירהA D 2מחוז רישום3-291משפחה436
+	מחוזBronxסלילm-t0627-02468שורה32
+	מדינהNew Yorkמסגרת00354
+	תאריך1940עמוד18A
+ראו חברי משק הבית&amp;lt;br
+4 CONC &amp;gt;&amp;lt;a id='household'&amp;gt;&amp;lt;/a&amp;gt;בית אב&amp;lt;br&amp;gt;יחס לראש המשפחה; שם; גיל; חלופות שהוצעו&amp;lt;br&amp;gt;ראש המשפחה; &amp;
+4 CONC lt;a href="https://www.myheritage.co.il/research/collection-10053/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D7%
+4 CONC 99%D7%AA-1940?s=1589446912&itemId=13412834-&groupId=f40ca4ca09d27820ef5fe3bc5cfd6298&action=showRecord&recordTitle=Philip+Klein"&amp;gt;Philip Klein&amp;lt;/a&amp;gt;; 37; &amp;lt;br&amp;gt;אשה; &a
+4 CONC mp;lt;a href="https://www.myheritage.co.il/research/collection-10053/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%
+4 CONC D7%99%D7%AA-1940?s=1589446912&itemId=13412835-&groupId=f40ca4ca09d27820ef5fe3bc5cfd6298&action=showRecord&recordTitle=Pauline+Klein"&amp;gt;Pauline Klein&amp;lt;/a&amp;gt;; 36; &amp;lt;br&amp;gt;בת;
+4 CONC  &amp;lt;a href="https://www.myheritage.co.il/research/collection-10053/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%
+4 CONC A8%D7%99%D7%AA-1940?s=1589446912&itemId=13412836-&groupId=f40ca4ca09d27820ef5fe3bc5cfd6298&action=showRecord&recordTitle=Estelle+Klein"&amp;gt;Estelle Klein&amp;lt;/a&amp;gt;; 13; &amp;lt;br&amp;gt;ב
+4 CONC ת; &amp;lt;a href="https://www.myheritage.co.il/research/collection-10053/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%
+4 CONC D7%A8%D7%99%D7%AA-1940?s=1589446912&itemId=13412837-&groupId=f40ca4ca09d27820ef5fe3bc5cfd6298&action=showRecord&recordTitle=Doris+Klein"&amp;gt;Doris Klein&amp;lt;/a&amp;gt;; 7; &amp;lt;br&amp;gt;בן
+4 CONC ; &amp;lt;a href="https://www.myheritage.co.il/research/collection-10053/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7
+4 CONC %A8%D7%99%D7%AA-1940?s=1589446912&itemId=13412838-&groupId=f40ca4ca09d27820ef5fe3bc5cfd6298&action=showRecord&recordTitle=Harold+Klein"&amp;gt;Harold Klein&amp;lt;/a&amp;gt;; 4;
+2 EVEN Record
+3 ROLE 10053:13412834-:f40ca4ca09d27820ef5fe3bc5cfd6298
+1 SOUR @S500159@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7AH2GUFUYKC5D2WZ35DNTJ2TZTA-1000018/philip-klein
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000018
+1 RIN MH:I501469
+1 _UID 677C18123CF39FFBE25055AC46082621
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTNhZTJmOGY5ZTg1Y2RmODczMmFkODZkZjQxMGMwMTBmZjQ0ZWRjZWExZDk5MzMwNjgyNWU1NDU2ZmM2MmMzODQmZT0xNzUzNjEwNDAw/158/944/6912/500640_194304ac6oyay74c310q28_A.jpg
+2 _FILESIZE 2163
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500639
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500640
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTBlNTY1ZWUyYjMwYzA5NGUxNmMwNGY3ZDIyOTNjYTJhMTFmMGE3NTc5NzczMWEyODg3ZjVlNGE1MmZhNDRkOWYmZT0xNzUzNjEwNDAw/158/944/6912/500639_29548628admj0n63ta147p_A.jpg
+2 _FILESIZE 2166
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500639
+
+0 @I501074@ INDI
+1 _UPD 16 JUL 2024 23:02:24 GMT -0500 
+1 NAME Mania /Leibner/
+2 GIVN Mania
+2 SURN Leibner
+1 SEX F
+1 BIRT
+2 DATE 1919
+2 PLAC Nowy Zmigrod, Poland
+1 DEAT Y
+2 DATE 1924
+2 PLAC Nowy Zmigrod, Poland
+1 FAMC @F500393@
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000654/mania-leibner
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000654
+1 RIN MH:I501074
+1 _UID 6697424B56B0054511D09B80A68FDC15
+
+0 @I501746@ INDI
+1 _UPD 10 FEB 2025 00:42:05 GMT -0500 
+1 NAME Helen Ann /Leibner/
+2 GIVN Helen Ann
+2 SURN Leibner
+1 SEX F
+1 BIRT
+2 DATE DEC 1948
+1 FAMC @F500640@
+1 RIN MH:I501746
+1 _UID 67A99FBD98DC080FF8E668EC2B6EDFC7
+
+0 @I500363@ INDI
+1 _UPD 21 JUL 2024 03:05:17 GMT -0500 
+1 NAME Ephraim /Leibner/
+2 GIVN Ephraim
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 26 FEB 1882
+2 PLAC Korczyn(Korczyna), Austria
+1 DEAT Y
+2 DATE 30 JUN 1966
+2 PLAC Israel
+2 NOTE BD 02 Oct 1956
+1 OCCU Tailor.
+1 RESI
+2 ADDR
+3 ADR1 Following WWI settled in Berlin.  Set up tailor shop. Later moved to Israel.
+1 EVEN BD 28 Feb 1987
+2 TYPE Military Service
+1 FAMS @F500443@
+1 FAMC @F500010@
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500144/ephraim-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500144
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500144/ephraim-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500144
+1 SOUR @S500148@
+2 QUAY 4
+2 DATA
+3 TEXT אהרן לובנר ולידיה (לבית רות)&amp;lt;br&amp;gt;תאריך נישואין עברי: י״ח באייר תש״ח&amp;lt;br&amp;gt;חתן: שם:אהרן לובנרלידה:סביבו
+4 CONC  1921גיל:27קהילה אתנית/דתית:עבריתמגורים:
+	
+	 חיפה
+
+
+
+
+
+	
+	
+	
+		
+	
+
+
+מקצוע:חרט&amp;lt;br&amp;gt;כלה: שם:לידיהלידה:סביבות 1925גיל:
+4 CONC 23קהילה אתנית/דתית:עבריתמגורים:
+	
+	 חיפה
+
+מקצוע:אורגת&amp;lt;br&amp;gt;אב החתן: אפרים&amp;lt;br&amp;gt;אם החתן: מרים&amp;lt;br&amp;gt;
+4 CONC ב הכלה: נחום נורברט&amp;lt;br&amp;gt;אם הכלה: רינה&amp;lt;br&amp;gt;עד: הרב יהושע קניאל&amp;lt;br&amp;gt;קובץ מספר: 00071706-81-f2-14-bc&amp;lt;br&amp;
+4 CONC gt;עמוד מספר: 241&amp;lt;br&amp;gt;# תעודה: 94728&amp;lt;br&amp;gt;מקום התעודה: חיפה
+2 EVEN Record
+3 ROLE 20868:17177-F:
+1 RIN MH:I500363
+1 _UID 651BB22CCC60F9F25E4837462C0CB435
+
+0 @I501200@ INDI
+1 _UPD 22 FEB 2025 23:47:39 GMT -0500 
+1 NAME Miriam /Listgarten/
+2 GIVN Miriam
+2 SURN Listgarten
+2 _MARNM Leibner
+1 SEX F
+1 BIRT
+2 DATE 16 OCT 1886
+2 PLAC Korczyna
+1 DEAT Y
+2 DATE 1 MAY 1955
+2 PLAC Israel
+1 FAMS @F500443@
+1 FAMC @F500744@
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500172/miriam-leibner-born-listgarten
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500172
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500172/miriam-leibner-born-listgarten
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500172
+1 SOUR @S500148@
+2 QUAY 4
+2 DATA
+3 TEXT אהרן לובנר ולידיה (לבית רות)&amp;lt;br&amp;gt;תאריך נישואין עברי: י״ח באייר תש״ח&amp;lt;br&amp;gt;חתן: שם:אהרן לובנרלידה:סביבו
+4 CONC  1921גיל:27קהילה אתנית/דתית:עבריתמגורים:
+	
+	 חיפה
+
+מקצוע:חרט&amp;lt;br&amp;gt;כלה: שם:לידיהלידה:סביבות 1925גיל:23קהילה אתנ
+4 CONC ת/דתית:עבריתמגורים:
+	
+	 חיפה
+
+מקצוע:אורגת&amp;lt;br&amp;gt;אב החתן: אפרים&amp;lt;br&amp;gt;אם החתן: מרים&amp;lt;br&amp;gt;אב הכלה: נחו
+4 CONC ם נורברט&amp;lt;br&amp;gt;אם הכלה: רינה&amp;lt;br&amp;gt;עד: הרב יהושע קניאל&amp;lt;br&amp;gt;קובץ מספר: 00071706-81-f2-14-bc&amp;lt;br&amp;gt;עמוד מספר
+4 CONC : 241&amp;lt;br&amp;gt;# תעודה: 94728&amp;lt;br&amp;gt;מקום התעודה: חיפה
+2 EVEN Record
+3 ROLE 20868:17177-M:
+1 RIN MH:I501200
+1 _UID 66BEE081732096C6BA6330456FABBDD3
+
+0 @I501747@ INDI
+1 _UPD 10 FEB 2025 00:42:21 GMT -0500 
+1 NAME Donald Neil /Leibner/
+2 GIVN Donald Neil
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 19 FEB 1955
+1 FAMS @F500749@
+1 FAMC @F500640@
+1 SOUR @S500019@
+2 QUAY 4
+2 DATA
+3 TEXT Donald N MD Liebner&amp;lt;br&amp;gt;Gender: Male&amp;lt;br&amp;gt;Birth: Feb 19 1955&amp;lt;br&amp;gt;Also known as: Leibner N Donald, Liebner N Donald&amp;lt;br&amp;gt;&nbsp;&nbsp;Possible relatives
+4 CONC : &amp;lt;br&amp;gt;Name Birth&amp;lt;br&amp;gt;&amp;lt;a&amp;gt;Fran I Leibner&amp;lt;/a&amp;gt; May 23 1954&amp;lt;br&amp;gt;&amp;lt;a&amp;gt;Joshua G Leibner&amp;lt;/a&amp;gt; Mar 14 1987&amp;lt;br
+4 CONC &amp;gt;&amp;lt;a&amp;gt;Matthew S Leibner&amp;lt;/a&amp;gt; Mar 14 1987
+2 EVEN Record
+3 ROLE 10220:48346024:
+1 RIN MH:I501747
+1 _UID 67A99FCD5751106203BF4B9F8E8571C3
+
+0 @I502100@ INDI
+1 _UPD 23 FEB 2025 10:47:23 GMT -0500 
+1 NAME Fran //
+2 GIVN Fran
+1 SEX F
+1 BIRT
+2 DATE MAY 1954
+1 FAMS @F500749@
+1 RIN MH:I502100
+1 _UID 67BB511B8A3C7E88F85768CDA14B98D7
+
+0 @I501717@ INDI
+1 _UPD 6 MAR 2025 22:56:46 GMT -0500 
+1 NAME Efraim David /Leibner/
+2 GIVN Efraim David
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 9 NOV 1962
+2 PLAC United States
+1 DEAT Y
+2 DATE 31 JUL 2017
+1 FAMS @F500629@
+1 FAMC @F500628@
+1 SOUR @S500140@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6QBNIOSPOQLH2LI3W4FPXSBGLTY-1500297/ephriam-david-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500297
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=120219062&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT <פרטי> לייבנר
+אשה: מזל חדידה
+ילדים: <פרטי> לייבנר, <פרטי> לייבנר, <פרטי> לייבנר
+2 EVEN Record
+3 ROLE 40000:120219062:
+1 RIN MH:I501717
+1 _UID 67A994A33B00E90ADE978795EFA483CB
+
+0 @I501719@ INDI
+1 _UPD 6 MAR 2025 06:50:39 GMT -0500 
+1 NAME Mazal /Hadida/
+2 GIVN Mazal
+2 SURN Hadida
+2 _MARNM Leibner
+1 SEX F
+1 DEAT Y
+1 DEAT Y
+2 DATE 28 JUN 2017
+2 PLAC Israel
+1 FAMS @F500629@
+1 SOUR @S500140@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6QBNIOSPOQLH2LI3W4FPXSBGLTY-1500299/mazal-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500299
+1 SOUR @S500141@
+2 QUAY 4
+2 DATA
+3 TEXT מזל ליבנר&amp;lt;br&amp;gt;הודעה: מזל ליבנר ז"ל&amp;lt;br&amp;gt;תאריך ההודעה: 28 ביוני 2017&amp;lt;br&amp;gt;תאריך עברי: ד׳ בתמוז תשע״ז&amp
+4 CONC ;lt;br&amp;gt;מקום: 
+	
+	 Israel
+
+
+
+
+
+	
+	
+	
+		
+	
+
+
+&amp;lt;br&amp;gt;הודעה: החברים במערך האורתופדי של בית החולים הדסה מנחמים את ד״ר אפי
+4 CONC  ליבנר על מות רעייתו.
+2 EVEN Record
+3 ROLE 10118:294834-:ec7af3634c75f9e5227d266d823e5ea7
+1 RIN MH:I501719
+1 _UID 67A994F84F5CA7ED4F3AB9084DB1DD61
+
+0 @I500484@ INDI
+1 _UPD 16 AUG 2024 00:15:50 GMT -0500 
+1 NAME Nathan /Leibner/
+2 GIVN Nathan
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE ABT 1885
+2 PLAC Korczyna,poland
+1 DEAT Y
+2 DATE 1885
+1 FAMC @F500010@
+1 SOUR @S500025@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7XJQYA7D2HPTQQMC66N77EPNURA-1500034/nathan-weinberger
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500034
+1 SOUR @S500025@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7XJQYA7D2HPTQQMC66N77EPNURA-1500034/nathan-weinberger
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500034
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500145/nathan-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500145
+1 RIN MH:I500484
+1 _UID 6644EEA8A70F60E34FBD2D8FC3E85B2F
+
+0 @I501050@ INDI
+1 _UPD 21 AUG 2024 10:16:10 GMT -0500 
+1 NAME Rachel Witte /Leibner/
+2 GIVN Rachel Witte
+2 SURN Leibner
+2 _MARNM Teller
+1 SEX F
+1 BIRT
+2 DATE 11 FEB 1879
+2 PLAC Nowy Zmigrod, Austria, now Poland
+1 DEAT Y
+2 DATE 10 JUL 1957
+2 PLAC Brooklyn, Kings County, New York, United States
+1 EVEN
+2 TYPE Departure
+2 DATE 24 JUL 1888
+2 PLAC Hamburg
+1 IMMI
+2 DATE 8 AUG 1888
+2 PLAC New York, USA
+1 RESI
+2 ADDR
+3 ADR1 Korczyna, Galizien
+1 EVEN
+2 TYPE Arrival
+2 PLAC Grimsby (Nordamerika via Liveerpool)
+1 RESI
+2 DATE 1892
+2 ADDR
+3 ADR1 Orangetown, Rockland, New York
+1 RESI
+2 DATE 1910
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Wife, Brooklyn Ward 30, Kings, New York, USA
+1 RESI
+2 DATE 1 JUN 1915
+2 ADDR
+3 ADR1 Relation to Head of House: Wife, New York, Kings, New York, United States
+1 RESI
+2 DATE 1930
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Wife, Brooklyn, Kings, New York, USA
+1 BURI
+2 PLAC Mt. Carmel Cemetery
+1 FAMS @F500450@
+1 FAMC @F500390@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=391854232&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Rachel Witte Teller (לבית Leibner)
+לידה: 1879 - Nowy Żmigród, Jasło County, Podkarpackie Voivodeship, Poland
+פטירה: 1957 - Brooklyn, Kings County, New York, United States
+אב: Nathan 
+4 CONC Leibner
+אם: Rose Leibner (לבית Achtsam)
+בעל: Benjamin Teller
+אחים ואחיות: Menachem Shaul Leibner, Baruch Leibner, Joseph M Leibner, Emma Goodwin (לבית Leibner), Etta Lang (לב
+4 CONC ת Leibner)
+2 EVEN Record
+3 ROLE 40000:391854232:
+1 SOUR @S500097@
+2 PAGE https://www.myheritage.com/profile-OYYV74WETS3KMMVP6RW2NBVT5UAABFI-1502609/rachel-witte-teller-%D7%9C%D7%91%D7%99%D7%AA-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502609
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.com/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500029/rachel-witte-teller-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500029
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500029/rachel-witte-teller-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500029
+1 SOUR @S500033@
+2 QUAY 4
+2 DATA
+3 TEXT Jerome Arthur Teller וShirley Fishkin&amp;lt;br&amp;gt;חתן: שם:Jerome Arthur Tellerלידה:12 בנוב’ 1908
+	
+	 New York City, New York, United States
+
+גיל:34אב:Benjamin Tellerאם
+4 CONC :Rachel Leibner&amp;lt;br&amp;gt;כלה: שם:Shirley Fishkinלידה:15 באוק’ 1917
+	
+	 New York City, New York, United States
+
+גיל:25אב:Samuel Fishkinאם:Clara Goldstein&amp;lt;br&am
+4 CONC p;gt;# תעודה: 17476
+2 EVEN Record
+3 ROLE 20807:1744332-M:
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500198/rachel-witte-teller-%D7%9C%D7%91%D7%99%D7%AA-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500198
+1 RIN MH:I501050
+1 _UID 66973FC005C732531D0261D9642F972B
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWYwODJkYmJmZjM4OTI2ZTk0YTk0OTM5YWNiNGMyNjcyZTNjZmM4MjViYWM1OTg4YWI1MGU5MzAwM2ZmZWI2NTYmZT0xNzUzNjEwNDAw/158/944/6912/500415_538310k86086mdb76c113j_A.jpg
+2 _FILESIZE 231654
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500413
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500415
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWRjZDM2NDc5YjBmNmUzM2ZjNzI4ZTY4NmRlMzZlZTI2ZDQyYjgxMDZhMTYyMjExYmQ4YzlkNzU4NjA1NGE1ZDkmZT0xNzUzNjEwNDAw/158/944/6912/500413_579841v76310i61n1zl6qc_A.jpg
+2 _FILESIZE 1929236
+2 TITL 20240820_141617
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 1251 878 2320 1947
+2 _PHOTO_RIN MH:P500413
+
+0 @I501221@ INDI
+1 _UPD 13 MAR 2025 11:38:41 GMT -0500 
+1 NAME Benjamin /Teller/
+2 GIVN Benjamin
+2 SURN Teller
+1 SEX M
+1 BIRT
+2 DATE ABT 1874
+2 PLAC Sokal, Austria, now Ukraine
+1 OCCU Designer and manufacturer of men's golf and sport wear.
+1 RESI
+2 DATE 1900
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Head, Manhattan, New York, New York, USA
+1 RESI
+2 DATE 1910
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Head, Brooklyn Ward 30, Kings, New York, USA
+1 RESI
+2 DATE 1 JUN 1915
+2 ADDR
+3 ADR1 Relation to Head of House: Head, New York, Kings, New York, United States
+1 RESI
+2 DATE 1930
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Head, Brooklyn, Kings, New York, USA
+1 DEAT Y
+2 DATE 21 JAN 1934
+2 PLAC Florida
+1 BURI
+2 PLAC Mt. Carmel Cemetery
+1 FAMS @F500450@
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.com/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500085/benjamin-teller
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500085
+1 SOUR @S500033@
+2 QUAY 4
+2 DATA
+3 TEXT Jerome Arthur Teller וShirley Fishkin&amp;lt;br&amp;gt;חתן: שם:Jerome Arthur Tellerלידה:12 בנוב’ 1908
+	
+	 New York City, New York, United States
+
+
+
+
+
+	
+	
+	
+		
+	
+
+
+גיל:34אב
+4 CONC :Benjamin Tellerאם:Rachel Leibner&amp;lt;br&amp;gt;כלה: שם:Shirley Fishkinלידה:15 באוק’ 1917
+	
+	 New York City, New York, United States
+
+גיל:25אב:Samuel Fishkinאם:Clara Go
+4 CONC ldstein&amp;lt;br&amp;gt;# תעודה: 17476
+2 EVEN Record
+3 ROLE 20807:1744332-F:
+1 RIN MH:I501221
+1 _UID 66C6053895ADD15262C00F7FB68E726C
+
+0 @I502725@ INDI
+1 _UPD 26 MAR 2025 09:08:40 GMT -0500 
+1 NAME Bruce /Leibner/
+2 GIVN Bruce
+2 SURN Leibner
+1 SEX M
+1 FAMC @F500627@
+1 RIN MH:I502725
+1 _UID 67CA7BD52A540A730160F6A43A96714C
+
+0 @I501081@ INDI
+1 _UPD 17 JUL 2024 09:24:54 GMT -0500 
+1 NAME Yehuda /Leibner/
+2 GIVN Yehuda
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 1 FEB 1938
+2 PLAC Nowy Zmigrod, Poland
+1 DEAT Y
+2 DATE 8 JAN 1997
+2 PLAC Jerusalem, Israel
+1 FAMS @F500628@
+1 FAMC @F500396@
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000656/yehuda-leibner
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000656
+1 SOUR @S500140@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6QBNIOSPOQLH2LI3W4FPXSBGLTY-1500296/yehuda-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500296
+1 RIN MH:I501081
+1 _UID 6697D434D45741C04BAFD1AB81B54C89
+
+0 @I501716@ INDI
+1 _UPD 9 FEB 2025 23:58:59 GMT -0500 
+1 NAME Gladys Gittel /Schwartz/
+2 GIVN Gladys Gittel
+2 SURN Schwartz
+1 SEX F
+1 BIRT
+2 DATE 23 JAN 1940
+2 PLAC Bronx, Bronx, New York, USA
+1 DEAT Y
+2 DATE 22 DEC 2016
+2 PLAC Jerusalem, Israel
+1 BURI
+2 PLAC Har Menuchot Cemetery  Givat Shaul, Jerusalem, Israel
+1 FAMS @F500628@
+1 SOUR @S500140@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6QBNIOSPOQLH2LI3W4FPXSBGLTY-1500276/gladys-leibner-born-schwartz
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500276
+1 RIN MH:I501716
+1 _UID 67A994362852ACC0A05AB10AED91F65D
+
+0 @I500490@ INDI
+1 _UPD 16 AUG 2024 00:15:51 GMT -0500 
+1 NAME Pearl /Leibner/
+2 GIVN Pearl
+2 SURN Leibner
+1 SEX F
+1 BIRT
+2 DATE 1897
+2 PLAC Korczyna
+1 DEAT Y
+2 DATE 1898
+2 PLAC Korczyna
+1 FAMC @F500010@
+1 SOUR @S500025@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7XJQYA7D2HPTQQMC66N77EPNURA-1500035/pearl-leibner
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500035
+1 SOUR @S500025@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7XJQYA7D2HPTQQMC66N77EPNURA-1500035/pearl-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500035
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500152/pearl-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500152
+1 RIN MH:I500490
+1 _UID 6644EEAA02D080E94FBD2D8FC3E85B2F
+
+0 @I502726@ INDI
+1 _UPD 6 MAR 2025 22:55:01 GMT -0500 
+1 NAME Gidon /Leibner/
+2 GIVN Gidon
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 9 JUN 1994
+1 FAMC @F500629@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=120219197&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT <פרטי> לייבנר
+אם: מזל חדידה
+הורה: <פרטי> לייבנר
+אחים ואחיות: <פרטי> לייבנר, <פרטי> לייבנר
+2 EVEN Record
+3 ROLE 40000:120219197:
+1 RIN MH:I502726
+1 _UID 67CA7C07852145D87B12148F69807C78
+
+0 @I501053@ INDI
+1 _UPD 21 AUG 2024 10:15:53 GMT -0500 
+1 NAME Emma (Chaie Anna)) /Leibner/
+2 GIVN Emma (Chaie Anna))
+2 SURN Leibner
+2 _MARNM Goodwin
+1 SEX F
+1 BIRT
+2 DATE 1 MAY 1887
+2 PLAC Austria, now Poland
+1 DEAT Y
+2 DATE 26 OCT 1965
+2 PLAC New Jersey, United States
+1 EVEN Spouse: Rachel Lea HIRSCHLER (לבית ROSENBAUM)
+2 TYPE Arrival
+2 DATE 1888
+2 PLAC Grimsby (Nordamerika via Liveerpool)
+1 EVEN
+2 TYPE Departure
+2 DATE 24 JUL 1888
+2 PLAC Hamburg
+1 IMMI
+2 DATE 8 AUG 1888
+2 PLAC Arrived in NY on the Wyoming from Liverpool  having begin on the Warrington from Hamburg to Grimsby, England on July 24.
+1 RESI
+2 ADDR
+3 ADR1 Korczyna, Galizien
+1 RESI
+2 DATE 1900
+2 ADDR
+3 ADR1 Relation to Head of House: Daughter, Manhattan, New York, New York, USA
+1 RESI
+2 DATE 1910
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Wife, Brooklyn Ward 28, Kings, New York, USA
+1 RESI
+2 DATE 1 JUN 1915
+2 ADDR
+3 ADR1 New York, New York, New York, United States
+1 RESI
+2 DATE 1 JUN 1915
+2 ADDR
+3 ADR1 Relation to Head of House: Wife, New York, New York, New York, United States
+1 CENS
+2 DATE 1920
+2 PLAC Essex, New Jersey, USA
+1 RESI
+2 DATE 1920
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Wife, Caldwell, Essex, New Jersey, USA
+1 CENS
+2 DATE 1930
+2 PLAC Caldwell, Essex, New Jersey, USA
+1 RESI
+2 DATE 1930
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Wife, Caldwell, Essex, New Jersey, USA
+1 RESI
+2 DATE 1935
+2 ADDR
+3 ADR1 Caldwell, Essex, New Jersey
+1 RESI
+2 DATE 1 APR 1940
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Wife, Caldwell, Essex, New Jersey, USA
+1 FAMS @F500449@
+1 FAMC @F500390@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=391854710&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Emma Goodwin (לבית Leibner)
+לידה: 1887 - Poland
+פטירה: 1965 - New Jersey, United States
+אב: Nathan Leibner
+אם: Rose Leibner (לבית Achtsam)
+בעל: Harry Goodwin
+אחים ואחי
+4 CONC ת: Menachem Shaul Leibner, Rachel Witte Teller (לבית Leibner), Baruch Leibner, Joseph M Leibner, Etta Lang (לבית Leibner)
+2 EVEN Record
+3 ROLE 40000:391854710:
+1 SOUR @S500097@
+2 PAGE https://www.myheritage.com/profile-OYYV74WETS3KMMVP6RW2NBVT5UAABFI-1501515/emma-chaie-anna-goodwin-%D7%9C%D7%91%D7%99%D7%AA-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1501515
+1 SOUR @S500097@
+2 PAGE https://www.myheritage.co.il/profile-OYYV74WETS3KMMVP6RW2NBVT5UAABFI-1501515/emma-chaie-anna-goodwin-%D7%9C%D7%91%D7%99%D7%AA-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1501515
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.com/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500004/emma-goodwin-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500004
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500199/emma-goodwin-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500199
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500196/emma-goodwin-%D7%9C%D7%91%D7%99%D7%AA-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500196
+1 RIN MH:I501053
+1 _UID 66973FC0A23822561D0261D9642F972B
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTg4OTUzNjBkYTQyNjEwYjdmODEyMTVlZTE4MGNmNDU1NjYxOTI1ZjVmNGI4ZjNlNTAzZmRkYjllNjY3YWQ0ZGMmZT0xNzUzNjEwNDAw/158/944/6912/500423_479948o6460bc0n13y8d66_A.jpg
+2 _FILESIZE 212869
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500422
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500423
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWE4N2Q0NWQwMGY5ZDAxMmJjZWFkY2VjY2UxMmE5MGUyZGRlN2Y2MzFjMTBjNTRiMzRiMGRmMjE5NjkyNTBlYjUmZT0xNzUzNjEwNDAw/158/944/6912/500422_13143061c55b656ec4b034_A.jpg
+2 _FILESIZE 1769804
+2 TITL 20240820_141330
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 1060 632 2129 1701
+2 _PHOTO_RIN MH:P500422
+
+0 @I501216@ INDI
+1 _UPD 30 MAR 2025 06:35:25 GMT -0500 
+1 NAME Harry (Hersch) /Goodwin/
+2 GIVN Harry (Hersch)
+2 SURN Goodwin
+1 SEX M
+1 BIRT
+2 DATE 15 JUL 1877
+2 PLAC Austria
+1 IMMI
+2 DATE 1884
+2 PLAC Arrived in Baltimore on the Main from Bremen with mother, Esther, and sibs.
+1 EVEN
+2 TYPE Arrival
+2 DATE 1884
+1 EVEN
+2 TYPE Arrival
+2 DATE 1896
+1 CENS
+2 DATE 1900
+2 PLAC New York City, New York, New York, USA
+1 RESI
+2 DATE 1900
+2 ADDR
+3 ADR1 Marital Status: Single; Relation to Head of House: Son, Manhattan, New York, New York, USA
+1 NATU
+2 DATE 1901
+1 OCCU Fish business.
+1 RESI
+2 DATE 1910
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Head, Brooklyn Ward 28, Kings, New York, USA
+1 RESI
+2 DATE 1 JUN 1915
+2 ADDR
+3 ADR1 New York, New York, New York, United States
+1 RESI
+2 DATE 1 JUN 1915
+2 ADDR
+3 ADR1 Relation to Head of House: Head, New York, New York, New York, United States
+1 CENS
+2 DATE 1920
+2 PLAC Essex, New Jersey, USA
+1 RESI
+2 DATE 1920
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Head, Caldwell, Essex, New Jersey, USA
+1 RESI
+2 DATE 1920
+2 ADDR
+3 ADR1 Caldwell, NJ
+1 CENS
+2 DATE 1930
+2 PLAC Caldwell, Essex, New Jersey, USA
+1 RESI
+2 DATE 1930
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Head, Caldwell, Essex, New Jersey, USA
+1 RESI
+2 DATE 1930
+2 ADDR
+3 ADR1 Caldwell, NJ
+1 RESI
+2 DATE 1935
+2 ADDR
+3 ADR1 Caldwell, Essex, New Jersey
+1 RESI
+2 DATE 1 APR 1940
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Head, Caldwell, Essex, New Jersey, USA
+1 RESI
+2 DATE 1 APR 1940
+2 ADDR
+3 ADR1 Caldwell, NJ
+1 DEAT Y
+2 DATE 14 JUN 1961
+2 PLAC Caldwell, NJ
+1 FAMS @F500449@
+1 FAMC @F501109@
+1 SOUR @S500097@
+2 PAGE https://www.myheritage.com/profile-OYYV74WETS3KMMVP6RW2NBVT5UAABFI-1501514/harry-hersch-goodwin
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1501514
+1 SOUR @S500097@
+2 PAGE https://www.myheritage.co.il/profile-OYYV74WETS3KMMVP6RW2NBVT5UAABFI-1501514/harry-hersch-goodwin
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1501514
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500198/harry-goodwin
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500198
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500194/harry-goodwin
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500194
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=882052860&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Harry Gudwin "Goodwin"
+לידה: Austria
+הורים: Morris, Esler (לבית Reiner)
+אשה: Emma Gudwin "Goodwin" (לבית Liebner)
+ילדים: Rose Goodwin, Charlotte Goodwin, Olive Estelle Goodwin
+2 EVEN Record
+3 ROLE 40001:882052860:
+1 RIN MH:I501216
+1 _UID 66C604A831AD9B290B64D720BCE908B1
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQ1ZWI4N2MxZmJkNjY1YjRlYzRlNWNjNDgwODYwZjA4NmQ5NmI0OGFiN2RlNDQzZjdmYWE5YzAxZDBiY2I2OWImZT0xNzUzNjEwNDAw/158/944/6912/500733_289413bar6t1375a43nab7_A.jpg
+2 _FILESIZE 13082
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500732
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500733
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTQxZmNkOWQ1M2ZkYjM2ODQxNTY2ZjMwZGU3ZjZjNDExMTg4NGRjZjI2MTI2ZTJmMjk5NjkxZTM3NmY1ZjkxY2MmZT0xNzUzNjEwNDAw/158/944/6912/500732_117753w7n3b361ba7a1e1w_A.jpg
+2 _FILESIZE 13770
+2 TITL 221425335_193b79de-a533-49af-bc75-c7acf5cd55d9
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 22 214 236
+2 _PHOTO_RIN MH:P500732
+
+0 @I502727@ INDI
+1 _UPD 6 MAR 2025 22:55:15 GMT -0500 
+1 NAME Yehuda /Leibner/
+2 GIVN Yehuda
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 9 JUN 1997
+1 FAMC @F500629@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=223283128&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT <פרטי> לייבנר
+אם: מזל חדידה
+הורה: <פרטי> לייבנר
+אחים ואחיות: <פרטי> לייבנר, <פרטי> לייבנר
+2 EVEN Record
+3 ROLE 40000:223283128:
+1 RIN MH:I502727
+1 _UID 67CA7C07BBBDA5D97B12148F69807C78
+
+0 @I501070@ INDI
+1 _UPD 26 MAR 2025 09:20:09 GMT -0500 
+1 NAME Seril Sarah /Leibner/
+2 GIVN Seril Sarah
+2 SURN Leibner
+2 _MARNM Gross
+1 SEX F
+1 BIRT
+2 DATE 1903
+2 PLAC Nowy Zmigrod, Austria, now Poland
+1 DEAT Y
+2 DATE 7 JUL 1942
+2 PLAC also in the forest of Halbow near Zmigrod with most of the Jewish community.
+2 CAUS שואה
+1 FAMS @F500902@
+1 FAMC @F500393@
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000642/seril-sarah-gross-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000642
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-1631669092-1500226/seril-serl-sarah-gross-לבית-leibner
+2 QUAY 3
+2 DATA
+3 TEXT בן אבו Web Site, מנוהל ע"י יאיר בן אבו
+2 EVEN Smart Matching
+3 ROLE 1500226
+1 RIN MH:I501070
+1 _UID 6697424A94AA654111D09B80A68FDC15
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTMyZjNhMmFkMjgxNTBjZGE2MjAxYzY5ZTIyNzFiYTllNmI5MWE0ZDQ2OGEyZDFlOGNjOWIyYjA4MGI4OWMyNTkmZT0xNzUzNjEwNDAw/158/944/6912/500412_9820667a00e662g61qc4c0_A.jpg
+2 _FILESIZE 89831
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500411
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500412
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTc1MjZkZmRiMWYyNWRjOTMxZWU2YzU2OGRjMjMzMzQ5MzU0NzE3NDBkNTBhZjQwN2QxMDk2NzZjZTJhNDIzZjgmZT0xNzUzNjEwNDAw/158/944/6912/500411_537944cg0f09j6sc19r766_A.jpg
+2 _FILESIZE 1904918
+2 TITL 20240820_141834
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 1204 840 1839 1475
+2 _PHOTO_RIN MH:P500411
+
+0 @I502675@ INDI
+1 _UPD 6 MAR 2025 06:52:09 GMT -0500 
+1 NAME Shlomo /Gross/
+2 GIVN Shlomo
+2 SURN Gross
+1 SEX M
+1 DEAT Y
+2 DATE 1942
+2 CAUS שואה
+1 FAMS @F500902@
+1 RIN MH:I502675
+1 _UID 67C99A791A44461E962AA8DC012546EF
+
+0 @I501201@ INDI
+1 _UPD 13 MAR 2025 11:38:39 GMT -0500 
+1 NAME Avraham Meir /Leibner/
+2 GIVN Avraham Meir
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 1908
+2 PLAC Korczyna 'poland
+1 DEAT Y
+2 DATE ABT 1942
+2 PLAC Poland
+1 RESI
+2 ADDR
+3 ADR1 MITTE - LINIENSTR. 64
+3 CITY Berlin
+3 CTRY גרמניה
+1 FAMS @F500445@
+1 FAMC @F500443@
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500174/avraham-meir-leibner
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500174
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500174/avraham-meir-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500174
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500087/abram-meir-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500087
+1 RIN MH:I501201
+1 _UID 66BEE081CB8A06C9BA6330456FABBDD3
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWY0YWU2NDkyOWMyYWI0YjRkMzdhYjA0NTU1NDI5MDY0NzFiNTA2MWVhOTE2MGU2ZTJjZGFkZDE0MGJhNmI2MjImZT0xNzUzNjEwNDAw/158/944/6912/500386_229174q41166b3iefi0cae_A.jpg
+2 _FILESIZE 230373
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500385
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500386
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWZlMDU0M2NlMmUwM2RiOTc5YjE5ZTA2NWYyNWM2MmM4Y2IyNzkzNDRjZjI3Nzk1ZGVjNTNiMGI3NDc2MjQ2YmQmZT0xNzUzNjEwNDAw/158/944/6912/500385_596352b66uzejq71b41ee3_A.jpg
+2 _FILESIZE 242780
+2 TITL image (1)
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 95 808 903
+2 _PHOTO_RIN MH:P500385
+
+0 @I501205@ INDI
+1 _UPD 22 FEB 2025 23:46:51 GMT -0500 
+1 NAME Szeindel /Flaumenhaft/
+2 GIVN Szeindel
+2 SURN Flaumenhaft
+2 _MARNM Leibner
+1 SEX F
+1 BIRT
+2 DATE 22 JUL 1911
+2 PLAC tarnow, Galicia
+1 DEAT Y
+2 DATE 30 NOV 1941
+2 PLAC Riga-Rumbula
+1 CENS
+2 DATE MAY 1939
+2 PLAC Berlin, Mitte, Germany
+1 RESI
+2 DATE TO 1939
+2 ADDR
+3 ADR1 Linien 64
+3 CITY Berlin
+3 CTRY גרמניה
+1 FAMS @F500445@
+1 SOUR @S500085@
+2 PAGE Sheindel Leibner (born Flaumenhaft)
+2 QUAY 3
+2 DATA
+3 DATE 16 AUG 2024
+3 TEXT התווסף באמצעות Smart Match
+2 EVEN Discovery
+1 SOUR @S500095@
+2 QUAY 4
+2 DATA
+3 TEXT Szeindel Leibner (לבית Flaumenhaft)&amp;lt;br&amp;gt;לידה: 22 ביולי 1911 - Tarnów, Poland&amp;lt;br&amp;gt;מגורים: מאי 1939 - Berlin, Mitte, Germany&amp;lt;br&amp;gt;מקום ה
+4 CONC גירוש: Riga&amp;lt;br&amp;gt;פטירה: 30 בנוב’ 1941&amp;lt;br&amp;gt;Holocaust Victim: Yes&amp;lt;br&amp;gt;בית אב&amp;lt;br&amp;gt;שם; גיל; חלופות שהוצעו&amp;lt;br
+4 CONC &amp;gt;&amp;lt;a href="https://www.myheritage.co.il/research/collection-10901/%D7%9E%D7%A4%D7%A7%D7%93-%D7%90%D7%95%D7%9B%D7%9C%D7%95%D7%A1%D7%99%D7%9F-%D7%9C%D7%9E%D7%99%D7%A2%D7%95%D7%98%D7%99%D7%9
+4 CONC D-%D7%91%D7%92%D7%A8%D7%9E%D7%A0%D7%99%D7%94-1939?s=1589446912&itemId=213903-&groupId=bb77717d83e816122c4e36450d553610&action=showRecord&recordTitle=Szeindel+Leibner+%28%D7%9C%D7%91%D7%99%D7%AA+Flaume
+4 CONC nhaft%29"&amp;gt;Szeindel Leibner&amp;lt;/a&amp;gt;; 27; &amp;lt;br&amp;gt;&amp;lt;a href="https://www.myheritage.co.il/research/collection-10901/%D7%9E%D7%A4%D7%A7%D7%93-%D7%90%D7%95%D7%9B%D7%9C%D7%9
+4 CONC 5%D7%A1%D7%99%D7%9F-%D7%9C%D7%9E%D7%99%D7%A2%D7%95%D7%98%D7%99%D7%9D-%D7%91%D7%92%D7%A8%D7%9E%D7%A0%D7%99%D7%94-1939?s=1589446912&itemId=213809-&groupId=bb77717d83e816122c4e36450d553610&action=showRec
+4 CONC ord&recordTitle="&amp;gt;Feige Leibner&amp;lt;/a&amp;gt;; &amp;lt; 1;
+2 EVEN Record
+3 ROLE 10901:213903-:bb77717d83e816122c4e36450d553610
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-1631669092-1500088/szeindel-leibner-לבית-flaumenhaft
+2 QUAY 3
+2 DATA
+3 TEXT בן אבו Web Site, מנוהל ע"י יאיר בן אבו
+2 EVEN Smart Matching
+3 ROLE 1500088
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500088/szeindel-leibner-%D7%9C%D7%91%D7%99%D7%AA-flaumenhaft
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500088
+1 RIN MH:I501205
+1 _UID 66BEE2196F4EE351C53A20C113736439
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWJhZDY3YWQzNGY3Y2E2ZTM2YjE5MzEzNzEwYjQwOGJjMzg2NGE2ODgyYjc5NDRhZTQ4NDFiODkzMjcwNDdjZDEmZT0xNzUzNjEwNDAw/158/944/6912/500729_759409a75bu3o6b86g52a1_A.jpg
+2 _FILESIZE 4014
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500728
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500729
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTA4MGQzZDkzNGM2M2NhMGU3M2YzMzQzZTNkZDk1ODliNTMwNjEwMWQ0OTlhMTIyOTNiMDgzYWM2YWI0NGE5OTkmZT0xNzUzNjEwNDAw/158/944/6912/500728_342151ia7hb5g2687b861w_A.jpg
+2 _FILESIZE 4012
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500728
+
+0 @I500027@ INDI
+1 _UPD 20 APR 2025 06:57:58 GMT -0500 
+1 NAME Rachel Yetta /Leibner/
+2 GIVN Rachel Yetta
+2 SURN Leibner
+1 SEX F
+1 DEAT Y
+2 DATE BEF DEC 1923
+2 PLAC Korczyn, kielecki, świętokrzyskie, Poland
+1 BIRT
+2 DATE 1853
+2 PLAC Korczyn(Korczyna), Austria, now Poland
+1 FAMS @F500010@
+1 FAMC @F500169@
+1 SOUR @S500025@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7XJQYA7D2HPTQQMC66N77EPNURA-1500021/rachel-yetta-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500021
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500038/rachel-yetta-weinberger-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500038
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=761458587&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT רחל וינברגר (לבית Leibner)
+לידה: 1853 - Korczyna, gorlicki, małopolskie, Poland
+פטירה: לפני דצמ’ 1923 - Korczyn, kielecki, świętokrzyskie, Poland
+אב: Phillip Feiwe
+4 CONC l Leibner
+אם: Jennie Leibner (לבית Gross)
+בעל: Yechiel Aharon Weinberger
+ילדים: Ephraim Leibner (לבית Weinberger), Nisan Mordechai Elimelech Weinberger, Malka Gutwein (לבית Weinb
+4 CONC erger), Leah Wilner (לבית Weinberger)
+אחים ואחיות: Nuthan Nuta Leibner, Esther Beer (לבית Leibner)
+2 EVEN Record
+3 ROLE 40000:761458587:
+1 RIN MH:I500027
+1 _UID 645A69CC60FC11A27AD941E2CFBF5533
+
+0 @I500026@ INDI
+1 _UPD 25 FEB 2025 13:25:12 GMT -0500 
+1 NAME Yehiel Aharon /Weinberger/
+2 GIVN Yehiel Aharon
+2 SURN Weinberger
+1 SEX M
+1 DEAT Y
+2 DATE 24 APR 1931
+2 PLAC Korczyna,poland
+1 BIRT
+2 DATE 1853
+2 PLAC Korczyn(Korczyna), Austria
+1 FAMS @F500010@
+1 FAMC @F500159@
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500143/yehiel-aron-weinberger
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500143
+1 RIN MH:I500026
+1 _UID 645A699BC89E9BAFDEE9CF94C19625E6
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTJkNTJlNThhMmU4OWU3YzExNjhjOWI1MzVjMDNjZWU0Y2ZhN2E0ZjkzZTFkNWRjMmUxYjZkMzkwOGRjZjQ1N2MmZT0xNzUzNjEwNDAw/158/944/6912/500150_9083818959sel61582ie9u_A.jpg
+2 _FILESIZE 1426410
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500149
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500150
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTRlMDI5N2RkNzIyOWMwMzRjMDFiYWE1ODczZGYyNzRiYTEzZTU3OWQxYWYxYmYwODExOWVhNGViZWRhOGNmYzQmZT0xNzUzNjEwNDAw/158/944/6912/500149_9134350qfed9k6e989q512_A.jpg
+2 _FILESIZE 1426400
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500149
+
+0 @I501720@ INDI
+1 _UPD 10 FEB 2025 00:01:31 GMT -0500 
+1 NAME Meir /Leibner/
+2 GIVN Meir
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 1965
+1 FAMC @F500628@
+1 RIN MH:I501720
+1 _UID 67A9963B2877C3530C6938E474CF5418
+
+0 @I501718@ INDI
+1 _UPD 9 FEB 2025 23:54:58 GMT -0500 
+1 NAME Emile /Leibner/
+2 GIVN Emile
+2 SURN Leibner
+1 SEX M
+1 FAMC @F500627@
+1 RIN MH:I501718
+1 _UID 67A994B2991A66DE13B88CAAEE34E64C
+
+0 @I502102@ INDI
+1 _UPD 23 FEB 2025 10:48:36 GMT -0500 
+1 NAME Matthew S /Leibner/
+2 GIVN Matthew S
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 14 MAR 1987
+1 FAMS @F500750@
+1 FAMC @F500749@
+1 SOUR @S500019@
+2 QUAY 4
+2 DATA
+3 TEXT Matthew S Leibner&amp;lt;br&amp;gt;Gender: Male&amp;lt;br&amp;gt;Birth: Mar 14 1987&amp;lt;br&amp;gt;&nbsp;&nbsp;Possible relatives: &amp;lt;br&amp;gt;Name Birth&amp;lt;br&amp;gt;&amp;lt;a&amp;gt;Fran
+4 CONC  I Leibner&amp;lt;/a&amp;gt; May 23 1954&amp;lt;br&amp;gt;&amp;lt;a&amp;gt;Joshua G Leibner&amp;lt;/a&amp;gt; Mar 14 1987&amp;lt;br&amp;gt;&amp;lt;a&amp;gt;Donald N MD Liebner&amp;lt;/a&amp;gt; Feb 19
+4 CONC  1955
+2 EVEN Record
+3 ROLE 10220:754258096:
+1 RIN MH:I502102
+1 _UID 67BB514DD3B94FF947FE8304011AF51B
+
+0 @I502103@ INDI
+1 _UPD 23 FEB 2025 10:58:07 GMT -0500 
+1 NAME Abbey //
+2 GIVN Abbey
+1 SEX F
+1 FAMS @F500750@
+1 RIN MH:I502103
+1 _UID 67BB539EB8D931AE2FC83B62FF7E9539
+
+0 @I501722@ INDI
+1 _UPD 10 FEB 2025 00:02:18 GMT -0500 
+1 NAME Chud /Leibner/
+2 GIVN Chud
+2 SURN Leibner
+1 SEX M
+1 FAMC @F500627@
+1 RIN MH:I501722
+1 _UID 67A9966A68AAF7623D737B2D65A9896F
+
+0 @I500489@ INDI
+1 _UPD 15 MAY 2024 12:19:44 GMT -0500 
+1 NAME Sara /Leibner/
+2 GIVN Sara
+2 SURN Leibner
+1 SEX F
+1 BIRT
+2 DATE 1888
+2 PLAC Korczyna
+1 DEAT Y
+2 DATE 1891
+2 NOTE Lives with Bonnie Katz, Ph.D. and her children Ben, Ariel, and  Maya Sinvany and dog, Jackson Tishler
+1 FAMC @F500010@
+1 SOUR @S500025@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7XJQYA7D2HPTQQMC66N77EPNURA-1500037/sara-leibner
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500037
+1 SOUR @S500025@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7XJQYA7D2HPTQQMC66N77EPNURA-1500037/sara-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500037
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500148/sara-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500148
+1 RIN MH:I500489
+1 _UID 6644EEA9C19B30E84FBD2D8FC3E85B2F
+
+0 @I501051@ INDI
+1 _UPD 21 AUG 2024 10:18:26 GMT -0500 
+1 NAME Burech Leib /Leibner/
+2 GIVN Burech Leib
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 18 OCT 1881
+2 PLAC Nowy Zmigrod, Austria, now Poland
+1 DEAT Y
+2 DATE 1881
+2 PLAC Nowy Zmigrod, Austria, now Poland
+1 FAMC @F500390@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=391855144&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Baruch Leibner
+לידה: 1881 - Nowy Żmigród, Jasło County, Podkarpackie Voivodeship, Poland
+פטירה: 1881 - Nowy Żmigród, Jasło County, Podkarpackie Voivodeship, Poland
+אב: Nathan Leibner
+
+4 CONC אם: Rose Leibner (לבית Achtsam)
+אחים ואחיות: Menachem Shaul Leibner, Rachel Witte Teller (לבית Leibner), Joseph M Leibner, Emma Goodwin (לבית Leibner), Etta Lang (לבית Leib
+4 CONC ner)
+2 EVEN Record
+3 ROLE 40000:391855144:
+1 SOUR @S500097@
+2 PAGE https://www.myheritage.com/profile-OYYV74WETS3KMMVP6RW2NBVT5UAABFI-1502610/baruch-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502610
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.com/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500030/burech-leib-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500030
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500199/burech-leib-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500199
+1 RIN MH:I501051
+1 _UID 66973FC038F882541D0261D9642F972B
+
+0 @I501093@ INDI
+1 _UPD 30 MAR 2025 10:09:50 GMT -0500 
+1 NAME Ephraim /Leibner/
+2 GIVN Ephraim
+2 SURN Leibner
+1 SEX M
+1 DEAT Y
+1 BIRT
+2 DATE ABT 1800
+1 FAMS @F500399@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=344768443&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Froim Leibner
+אשה: Rachela Leibner
+בן/בת: Phillip Leibner
+2 EVEN Record
+3 ROLE 40000:344768443:
+1 RIN MH:I501093
+1 _UID 66993540E31CFAA4274C5AC4764BBB75
+
+0 @I501094@ INDI
+1 _UPD 18 JUL 2024 10:31:49 GMT -0500 
+1 NAME Rachela //
+2 GIVN Rachela
+2 _MARNM Leibner
+1 SEX F
+1 DEAT Y
+1 FAMS @F500399@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=344768464&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Rachela Leibner
+בעל: Froim Leibner
+בן/בת: Phillip Leibner
+2 EVEN Record
+3 ROLE 40000:344768464:
+1 RIN MH:I501094
+1 _UID 66993541305D8AA6274C5AC4764BBB75
+
+0 @I500427@ INDI
+1 _UPD 14 MAY 2024 23:37:51 GMT -0500 
+1 NAME Ester /Leibner/
+2 GIVN Ester
+2 SURN Leibner
+2 _MARNM Beer
+1 SEX F
+1 BIRT
+2 PLAC Austria, now Poland
+1 DEAT Y
+2 DATE ABT 1922
+2 PLAC Nowy Zmigrod, Poland
+1 FAMS @F500400@
+1 FAMC @F500169@
+1 SOUR @S500006@
+2 PAGE Ester Leibner
+2 QUAY 3
+2 DATA
+3 DATE 14 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000624/esther-beer-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Our Family and Heritage, מנוהל ע"י Reuven Shefer
+2 EVEN Smart Matching
+3 ROLE 1000624
+1 RIN MH:I500427
+1 _UID 66443BA9DCBC75F6C487AF0D5A03E904
+
+0 @I501095@ INDI
+1 _UPD 18 JUL 2024 10:32:32 GMT -0500 
+1 NAME Wolf /Beer/
+2 GIVN Wolf
+2 SURN Beer
+1 SEX M
+1 DEAT Y
+1 FAMS @F500400@
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000635/wolf-beer
+2 QUAY 3
+2 DATA
+3 TEXT Our Family and Heritage, מנוהל ע"י Reuven Shefer
+2 EVEN Smart Matching
+3 ROLE 1000635
+1 RIN MH:I501095
+1 _UID 6699358FC1CAD85C85ACFFD6A41BE1D6
+
+0 @I501054@ INDI
+1 _UPD 21 AUG 2024 10:18:30 GMT -0500 
+1 NAME Sara Etta /Leibner/
+2 GIVN Sara Etta
+2 SURN Leibner
+2 _MARNM Lang
+1 SEX F
+1 BIRT
+2 DATE 12 NOV 1891
+2 PLAC Nyack or possibly Newburgh or Tarrytown, NY
+1 DEAT Y
+2 DATE 13 MAY 1962
+2 PLAC New York, United States
+1 RESI
+2 DATE 1900
+2 ADDR
+3 ADR1 Relation to Head of House: Daughter, Manhattan, New York, New York, USA
+1 RESI
+2 DATE 1905
+2 ADDR
+3 ADR1 Relationship to Head: Daughter, Manhattan, New York, New York, USA
+1 RESI
+2 DATE 1910
+2 ADDR
+3 ADR1 Marital Status: Single; Relation to Head of House: Daughter, Manhattan Ward 11, New York, New York, USA
+1 RESI
+2 DATE 1920
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Wife, Manhattan Assembly District 18, New York, New York, USA
+1 RESI
+2 DATE 1 JUN 1925
+2 ADDR
+3 ADR1 Relation to Head of House: Wife, New York, Bronx, New York, United States
+1 RESI
+2 DATE 1930
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Wife, Bronx, Bronx, New York, USA
+1 BURI
+2 PLAC Mt. Carmel with John and now Rose, Leon and Murry
+1 RESI
+2 ADDR
+3 ADR1 NY, FL
+1 FAMS @F500448@
+1 FAMC @F500390@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=391855143&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Etta Lang (לבית Leibner)
+לידה: 1891 - New York, United States
+פטירה: 1962 - New York, United States
+אב: Nathan Leibner
+אם: Rose Leibner (לבית Achtsam)
+בעל: John Lang
+אחים 
+4 CONC אחיות: Menachem Shaul Leibner, Rachel Witte Teller (לבית Leibner), Baruch Leibner, Joseph M Leibner, Emma Goodwin (לבית Leibner)
+2 EVEN Record
+3 ROLE 40000:391855143:
+1 SOUR @S500096@
+2 PAGE https://www.myheritage.com/profile-OYYV77JD3VCPAGIQWGKPWH464A7OP2I-1500050/etta-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500050
+1 SOUR @S500097@
+2 PAGE https://www.myheritage.com/profile-OYYV74WETS3KMMVP6RW2NBVT5UAABFI-1502612/sara-etta-lang-%D7%9C%D7%91%D7%99%D7%AA-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502612
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.com/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500032/sara-etta-lang-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500032
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500032/sara-etta-lang-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500032
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500201/sara-etta-lang-%D7%9C%D7%91%D7%99%D7%AA-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500201
+1 RIN MH:I501054
+1 _UID 66973FC0D9BAA2571D0261D9642F972B
+
+0 @I501212@ INDI
+1 _UPD 30 MAR 2025 06:34:56 GMT -0500 
+1 NAME John H. /Lang/
+2 GIVN John H.
+2 SURN Lang
+1 SEX M
+1 DEAT Y
+2 DATE 17 APR 1945
+2 PLAC Miami Beach, FL
+1 BIRT
+2 DATE 21 AUG 1887
+2 PLAC Kassau, Hungary (now Kosice, Slovakia)
+1 BIRT
+2 DATE 21 AUG 1887
+1 RESI
+2 ADDR
+3 ADR1 In 1900 lived with GPs in NY.
+1 RESI
+2 DATE 1920
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Head, Manhattan Assembly District 18, New York, New York, USA
+1 RESI
+2 DATE 1 JUN 1925
+2 ADDR
+3 ADR1 Relation to Head of House: Head, New York, Bronx, New York, United States
+1 RESI
+2 DATE 1930
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Head, Bronx, Bronx, New York, USA
+1 RESI
+2 DATE 1942
+2 ADDR
+3 ADR1 Forest Hills, New York, USA
+1 FAMS @F500448@
+1 FAMC @F501108@
+1 SOUR @S500096@
+2 PAGE https://www.myheritage.com/profile-OYYV77JD3VCPAGIQWGKPWH464A7OP2I-1500077/john-h-lang
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500077
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500090/john-h-lang
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500090
+1 SOUR @S500033@
+2 PAGE https://www.myheritage.co.il/research/collection-20807/new-york-city-marriages-1866-1949?itemId=1813591&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT John Lang
+לידה: סביבות 1887 - Dorna Hungaria
+נישואין: 21 באוג’ 1910 - Manhattan, New York, United States
+כלה: Etta Leibner (Lang)
+אב: Emanuel Lang
+אם: Meri Berger
+2 EVEN Record
+3 ROLE 20807:1813591:
+1 RIN MH:I501212
+1 _UID 66C603F3963FC34599E865537D7E4A3E
+
+0 @I501077@ INDI
+1 _UPD 2 MAY 2025 05:11:43 GMT -0500 
+1 NAME Reisel /Leibner/
+2 GIVN Reisel
+2 SURN Leibner
+1 SEX F
+1 BIRT
+2 DATE 1917
+2 PLAC Nowy Zmigrod, Austria, now Poland
+1 DEAT Y
+2 DATE 1942
+2 PLAC Poland
+2 CAUS שואה
+1 FAMC @F500393@
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000653/reisel-leibner
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000653
+1 SOUR @S500369@
+2 PAGE Reisel Leibner
+2 QUAY 3
+2 DATA
+3 DATE 2 MAY 2025
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1501075
+1 RIN MH:I501077
+1 _UID 6697424BE90E454811D09B80A68FDC15
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTViODVmNDFhNDhjNGY4YmNjZGViNGI5MTVkZjM2YTlkNDY5MWJiMDcyZDg4ZDBjMWIxMzRkODVhYjc5NzRkNWImZT0xNzUzNjEwNDAw/158/944/6912/500342_722878e86f7d19mij6h6v2_A.jpg
+2 _FILESIZE 7316
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500341
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500342
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQ4YmY0Y2ViZmM2YWQ3NzFjMTNmMWU3MDk0YzhjNWQ0YTc0Y2VhNThjM2Q2MzkyYmU1YWI2OTI4ZmMzNTZjMDUmZT0xNzUzNjEwNDAw/158/944/6912/500341_0519766n6w9b1e26f79afd_A.jpg
+2 _FILESIZE 8843
+2 TITL now061
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 14 158 172
+2 _PHOTO_RIN MH:P500341
+
+0 @I501056@ INDI
+1 _UPD 30 MAR 2025 06:47:33 GMT -0500 
+1 NAME Rose /Leibner/
+2 GIVN Rose
+2 SURN Leibner
+2 _MARNM Nobel
+1 SEX F
+1 BIRT
+2 DATE 26 SEP 1907
+2 PLAC New York, United States
+1 DEAT Y
+2 DATE 28 APR 1994
+2 PLAC Mamaroneck, NY
+1 RESI
+2 DATE 1930
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Wife, Brooklyn, Kings, New York, USA
+1 OCCU rehabilitation counselor, artist
+1 RESI
+2 DATE 1910
+2 ADDR
+3 ADR1 Marital Status: Single; Relation to Head of House: Daughter, Manhattan Ward 12, New York, New York, USA
+1 RESI
+2 ADDR
+3 ADR1 47 St.
+1 CENS
+2 DATE 1 APR 1950
+2 PLAC 3e 47 St., Queens, Queens, New York, United States
+1 FAMS @F500545@
+1 FAMS @F500546@
+1 FAMC @F500391@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Rose Nobel (לבית Leibner)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 1907&amp;lt;br&amp;gt;פטירה: 1994&amp;lt;br&amp;gt;אב: Joseph M Leibner&amp;lt;br&amp;gt;אם: Lillian
+4 CONC  Leibner (לבית Greher)&amp;lt;br&amp;gt;בעלים: Reuben Schechter, Harry Nobel&amp;lt;br&amp;gt;אחים ואחיות: Mildred Jaffe (לבית Leibner), Taube Fagin (לבית Leibner), Ira Wall
+4 CONC ace Leibner
+2 EVEN Record
+3 ROLE 40000:411191346:
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500044/rose-nobel-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500044
+1 SOUR @S500096@
+2 PAGE https://www.myheritage.com/profile-OYYV77JD3VCPAGIQWGKPWH464A7OP2I-1500026/rose-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500026
+1 SOUR @S500071@
+2 QUAY 4
+2 DATA
+3 TEXT Rose Nobel&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: סביבות 1908 - New York, United States&amp;lt;br&amp;gt;מגורים: 1 באפר’ 1950 - 3e 47 St., Queens, Queens, New Y
+4 CONC ork, United States&amp;lt;br&amp;gt;גיל: 42&amp;lt;br&amp;gt;גזע: White&amp;lt;br&amp;gt;מצב משפחתי: נשוי&amp;lt;br&amp;gt;בעל: Harry Nobel&amp;lt;br&amp;gt;ילדים: Toby Nobe
+4 CONC l, Ruth Nobel&amp;lt;br&amp;gt;מפקד אוכלוסין: 
+	עירQueensסדרהT628
+	מחוזQueensDwelling #65
+	מדינהNew Yorkשורה23
+	תאריך1 באפר’ 1950
+	מחוז רישום41-178
+
+4 CONC ראו חברי משק הבית&amp;lt;br&amp;gt;&amp;lt;a id='household'&amp;gt;&amp;lt;/a&amp;gt;בית אב&amp;lt;br&amp;gt;יחס לראש המשפחה; שם; גיל&amp;lt;br&amp;gt;Head; &amp;l
+4 CONC t;a href="https://www.myheritage.co.il/research/collection-11006/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D7%9
+4 CONC 9%D7%AA-1950?s=1589446912&itemId=108135771-&groupId=377dda29e3396108694c920285e82f86&action=showRecord&recordTitle=Harry+Nobel"&amp;gt;Harry Nobel&amp;lt;/a&amp;gt;; 48&amp;lt;br&amp;gt;Wife; &amp;lt;
+4 CONC a href="https://www.myheritage.co.il/research/collection-11006/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D7%99%
+4 CONC D7%AA-1950?s=1589446912&itemId=108135847-&groupId=377dda29e3396108694c920285e82f86&action=showRecord&recordTitle=Rose+Nobel"&amp;gt;Rose Nobel&amp;lt;/a&amp;gt;; 42&amp;lt;br&amp;gt;Daughter; &amp;lt;
+4 CONC a href="https://www.myheritage.co.il/research/collection-11006/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D7%99%
+4 CONC D7%AA-1950?s=1589446912&itemId=108135848-&groupId=377dda29e3396108694c920285e82f86&action=showRecord&recordTitle=Toby+Nobel"&amp;gt;Toby Nobel&amp;lt;/a&amp;gt;; 18&amp;lt;br&amp;gt;Daughter; &amp;lt;
+4 CONC a href="https://www.myheritage.co.il/research/collection-11006/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D7%99%
+4 CONC D7%AA-1950?s=1589446912&itemId=108135849-&groupId=377dda29e3396108694c920285e82f86&action=showRecord&recordTitle=Ruth+Nobel"&amp;gt;Ruth Nobel&amp;lt;/a&amp;gt;; 4
+2 EVEN Record
+3 ROLE 11006:108135847-:377dda29e3396108694c920285e82f86
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500216/rose-nobel-%D7%9C%D7%91%D7%99%D7%AA-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500216
+1 SOUR @S500142@
+2 PAGE https://www.myheritage.co.il/research/collection-10876/new-york-city-marriage-index-1866-1937?itemId=2128467&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Rubin Schechter וRose Leibner
+חתן: Rubin Schechter
+כלה: Rose Leibner (Schechter)
+נישואין: 11 בספט’ 1927 - Manhattan, New York, United States
+2 EVEN Record
+3 ROLE 10876:2128467:
+1 RIN MH:I501056
+1 _UID 669740B608AD6AF1A0C1227A6269A3A4
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWE5MGIzOGEwNzFlZWQ5Yzk3NzliMjRmNjg4NzNiMzQzOTJlNzE5Yjc0MTkzYTVkY2E4ZThhNWI3ZGRhZDNjYzkmZT0xNzUzNjEwNDAw/158/944/6912/501342_573628eit31e5ffa129675_A.jpg
+2 _FILESIZE 9690
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501341
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501342
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWZlOTFhYzQ5MjRlMGNhZTg1MWQzYThkNTEyNDRlYzEzYzYyY2RjOTljMmE1OTFlYWQyMjE4OGMwMGU4ZmRjMjQmZT0xNzUzNjEwNDAw/158/944/6912/501341_935806k2s15yw963z37ef4_A.jpg
+2 _FILESIZE 10180
+2 TITL רוז נובל
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 12 0 200 188
+2 _PHOTO_RIN MH:P501341
+
+0 @I501471@ INDI
+1 _UPD 9 MAY 2025 05:10:16 GMT -0500 
+1 NAME Reuben /Schechter/
+2 GIVN Reuben
+2 SURN Schechter
+1 SEX M
+1 BIRT
+2 DATE 5 JUL 1905
+2 PLAC Lipkin, Bessarabia
+1 RESI
+2 DATE 1910
+2 ADDR
+3 ADR1 Marital Status: Single; Relation to Head of House: Son, Manhattan Ward 17, New York, New York, USA
+1 RESI
+2 DATE 1920
+2 ADDR
+3 ADR1 Marital Status: Single; Relation to Head of House: Son, Brooklyn Assembly District 22, Kings, New York, USA
+1 DEAT Y
+2 DATE 28 AUG 1937
+2 PLAC Spain
+2 NOTE Served with the XV Brigade, Washington BN, Estado Mayor, Clerk and BN Party Secretary; WIA Brunete July 24, 1937 while bringing ammunition up to the front lines; d. August 24 (28, 30), 1937 in a hospi
+3 CONC tal in Murcia from wounds and was buried in Murcia.
+2 CAUS At War
+1 BURI
+2 PLAC Murcia
+1 FAMS @F500545@
+1 FAMC @F501106@
+1 SOUR @S500096@
+2 PAGE https://www.myheritage.com/profile-OYYV77JD3VCPAGIQWGKPWH464A7OP2I-1500062/reuben-schechter
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500062
+1 SOUR @S500096@
+2 PAGE https://www.myheritage.co.il/profile-OYYV77JD3VCPAGIQWGKPWH464A7OP2I-1500062/reuben-schechter
+2 QUAY 3
+2 DATA
+3 TEXT Sommer Family Site, מנוהל ע"י Beth Sommer
+2 EVEN Smart Matching
+3 ROLE 1500062
+1 SOUR @S500142@
+2 PAGE https://www.myheritage.co.il/research/collection-10876/new-york-city-marriage-index-1866-1937?itemId=2128467&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Rubin Schechter וRose Leibner
+חתן: Rubin Schechter
+כלה: Rose Leibner (Schechter)
+נישואין: 11 בספט’ 1927 - Manhattan, New York, United States
+2 EVEN Record
+3 ROLE 10876:2128467:
+1 RIN MH:I501471
+1 _UID 677CAF782B3219486313C62478170C17
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWVmYTYxNTIyZmZjNDkyNWI3OGMyODYwZDQxN2YyMmFkOWMwMjU1YjIwNmI4NWM0NWJkODZjZjdiYmIxNTFlOWMmZT0xNzUzNjEwNDAw/158/944/6912/502267_840399n91483berw1lfb86_A.jpg
+2 _FILESIZE 8874
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502266
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502267
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTI2MGRlMjQ0YjRmNjg2ZjE4MzFkOGE0MjMyODY2MjlhZWVhMzQ4MGUwYTY4YTAyNmIzY2VkYTNjNmI5YTk0ZjgmZT0xNzUzNjEwNDAw/158/944/6912/502266_1603303b6ce981y7b8hd14_A.jpg
+2 _FILESIZE 26013
+2 TITL Schecter-Rubin-with-daughter
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 49 133 182
+2 _PHOTO_RIN MH:P502266
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWU4OWY3ODFiMDNlNjQzZGJiMmI4NGQxZDVmMjM0ZTRhMDJlNDA0MmI3NzY5N2YyMjc0ZTQ3ZDUxODFmOGM1NzkmZT0xNzUzNjEwNDAw/158/944/6912/502483_33661064dd3r8qf2im0q11_A.jpg
+2 _FILESIZE 9196
+2 TITL Schechter-Rubin-in-Spain
+2 _PHOTO_RIN MH:P502483
+
+0 @I501472@ INDI
+1 _UPD 9 MAY 2025 05:13:29 GMT -0500 
+1 NAME Harry /Nobel/
+2 GIVN Harry
+2 SURN Nobel
+1 SEX M
+1 BIRT
+2 DATE 28 AUG 1900
+2 PLAC Mielec, Galicia, now Poland
+1 EVEN
+2 TYPE Arrival
+2 DATE 1921
+1 IMMI
+2 DATE JUL 1921
+2 PLAC According to Petition for Naturalization immigrated on Roussilon from Havre, France  11 Jul 1921, but I haven't found him on manifest.
+1 RESI
+2 ADDR
+3 ADR1 New York
+1 EVEN
+2 TYPE Departure
+2 PLAC Le Havre, France
+1 RESI
+2 ADDR
+3 ADR1 United States
+1 EDUC Was ABD in philology at NYU.
+1 EVEN
+2 TYPE Departure
+2 PLAC Cherbourg, France
+1 EVEN
+2 TYPE Arrival
+2 DATE 4 JAN 1928
+2 PLAC New York, New York
+1 RESI
+2 DATE 1930
+2 ADDR
+3 ADR1 Marital Status: Single; Relation to Head of House: Son, Manhattan, New York, New York, USA
+1 RESI
+2 DATE 1935
+2 ADDR
+3 ADR1 New York, Kings, New York
+1 EVEN
+2 TYPE Arrival
+2 DATE 14 APR 1938
+2 PLAC New York, New York
+1 RESI
+2 DATE 1 APR 1940
+2 ADDR
+3 ADR1 Marital Status: Single; Relation to Head of House: Head, New York, Kings, New York, USA
+1 EVEN
+2 TYPE Military Service
+2 DATE 13 NOV 1942
+1 DEAT Y
+2 DATE 23 FEB 1991
+2 PLAC New York
+1 RESI
+2 ADDR
+3 ADR1 47 St.
+1 CENS
+2 DATE 1 APR 1950
+2 PLAC 3e 47 St., Queens, Queens, New York, United States
+1 RESI
+2 ADDR
+3 ADR1 Manhattan, New York City, New York, United States
+1 FAMS @F500546@
+1 FAMC @F501107@
+1 SOUR @S500096@
+2 PAGE https://www.myheritage.com/profile-OYYV77JD3VCPAGIQWGKPWH464A7OP2I-1500061/harry-nobel
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500061
+1 SOUR @S500071@
+2 QUAY 4
+2 DATA
+3 TEXT Harry Nobel&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: סביבות 1902 - Poland&amp;lt;br&amp;gt;מגורים: 1 באפר’ 1950 - 3e 47 St., Queens, Queens, New York, United States
+4 CONC &amp;lt;br&amp;gt;גיל: 48&amp;lt;br&amp;gt;גזע: White&amp;lt;br&amp;gt;מצב משפחתי: נשוי&amp;lt;br&amp;gt;אשה: Rose Nobel&amp;lt;br&amp;gt;ילדים: Toby Nobel, Ruth Nobel&amp;l
+4 CONC t;br&amp;gt;מפקד אוכלוסין: 
+	עירQueensסדרהT628
+	מחוזQueensDwelling #65
+	מדינהNew Yorkשורה22
+	תאריך1950-04-01מספר בית3e
+	מחוז רישום41-178
+ראו ח
+4 CONC רי משק הבית&amp;lt;br&amp;gt;&amp;lt;a id='household'&amp;gt;&amp;lt;/a&amp;gt;בית אב&amp;lt;br&amp;gt;יחס לראש המשפחה; שם; גיל&amp;lt;br&amp;gt;Head; &amp;lt;a href="
+4 CONC https://www.myheritage.co.il/research/collection-11006/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D7%99%D7%AA-19
+4 CONC 50?s=1589446912&itemId=108135771-&groupId=377dda29e3396108694c920285e82f86&action=showRecord&recordTitle=Harry+Nobel"&amp;gt;Harry Nobel&amp;lt;/a&amp;gt;; 48&amp;lt;br&amp;gt;Wife; &amp;lt;a href="ht
+4 CONC tps://www.myheritage.co.il/research/collection-11006/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D7%99%D7%AA-1950
+4 CONC ?s=1589446912&itemId=108135847-&groupId=377dda29e3396108694c920285e82f86&action=showRecord&recordTitle=Rose+Nobel"&amp;gt;Rose Nobel&amp;lt;/a&amp;gt;; 42&amp;lt;br&amp;gt;Daughter; &amp;lt;a href="ht
+4 CONC tps://www.myheritage.co.il/research/collection-11006/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D7%99%D7%AA-1950
+4 CONC ?s=1589446912&itemId=108135848-&groupId=377dda29e3396108694c920285e82f86&action=showRecord&recordTitle=Toby+Nobel"&amp;gt;Toby Nobel&amp;lt;/a&amp;gt;; 18&amp;lt;br&amp;gt;Daughter; &amp;lt;a href="ht
+4 CONC tps://www.myheritage.co.il/research/collection-11006/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D7%99%D7%AA-1950
+4 CONC ?s=1589446912&itemId=108135849-&groupId=377dda29e3396108694c920285e82f86&action=showRecord&recordTitle=Ruth+Nobel"&amp;gt;Ruth Nobel&amp;lt;/a&amp;gt;; 4
+2 EVEN Record
+3 ROLE 11006:108135771-:377dda29e3396108694c920285e82f86
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=2471105418&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Harry Nobel
+לידה: 28 באוג’ 1900 - Miele, Poland
+פטירה: 23 בפבר’ 1991
+הורים: Moses D Nobel, Jenny Nobel (לבית Keller)
+2 EVEN Record
+3 ROLE 40001:2471105418:
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500314/harry-nobel
+2 QUAY 3
+2 DATA
+3 TEXT Miller Web Site, מנוהל ע"י Michael Miller
+2 EVEN Smart Matching
+3 ROLE 1500314
+1 RIN MH:I501472
+1 _UID 677CAF787D3BD94B6313C62478170C17
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTE1MTg1NDNmMjBjZmQ0Yjk5NGY3NThiMmI4NDRlNTlkYWZhODQ3N2RmYmQwNDNiNDA4MTMwOTM2YjBjOTFhMTImZT0xNzUzNjEwNDAw/158/944/6912/501344_15950126e6v851f729v1b5_A.jpg
+2 _FILESIZE 9089
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501343
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501344
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTE4MzBkODU4OGRhNjg5OTFlZjAzOWZlYjI2OWZhY2RlMGQ3NjhiMDZmMDY1Y2RhNWMyNTU3OWY2MmVjOGQzYzgmZT0xNzUzNjEwNDAw/158/944/6912/501343_3200206f22551q7b8e2l9k_A.jpg
+2 _FILESIZE 10208
+2 TITL הארי נובל
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 14 0 196 182
+2 _PHOTO_RIN MH:P501343
+
+0 @I502101@ INDI
+1 _UPD 23 FEB 2025 10:49:05 GMT -0500 
+1 NAME Joshua G /Leibner/
+2 GIVN Joshua G
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 14 MAR 1987
+1 FAMS @F500751@
+1 FAMC @F500749@
+1 SOUR @S500019@
+2 QUAY 4
+2 DATA
+3 TEXT Joshua G Leibner&amp;lt;br&amp;gt;Gender: Male&amp;lt;br&amp;gt;Birth: Mar 14 1987&amp;lt;br&amp;gt;&nbsp;&nbsp;Possible relatives: &amp;lt;br&amp;gt;Name Birth&amp;lt;br&amp;gt;&amp;lt;a&amp;gt;Fran 
+4 CONC I Leibner&amp;lt;/a&amp;gt; May 23 1954&amp;lt;br&amp;gt;&amp;lt;a&amp;gt;Matthew S Leibner&amp;lt;/a&amp;gt; Mar 14 1987&amp;lt;br&amp;gt;&amp;lt;a&amp;gt;Donald N MD Liebner&amp;lt;/a&amp;gt; Feb 19
+4 CONC  1955
+2 EVEN Record
+3 ROLE 10220:754258077:
+1 RIN MH:I502101
+1 _UID 67BB513C764369CE262667DE47FFD761
+
+0 @I502104@ INDI
+1 _UPD 23 FEB 2025 10:58:22 GMT -0500 
+1 NAME Danielle //
+2 GIVN Danielle
+1 SEX F
+1 FAMS @F500751@
+1 RIN MH:I502104
+1 _UID 67BB53AE019CCD3FBC9C6DB55F855CE4
+
+0 @I501075@ INDI
+1 _UPD 26 MAR 2025 09:19:37 GMT -0500 
+1 NAME Sima /Leibner/
+2 GIVN Sima
+2 SURN Leibner
+2 _MARNM Posterung
+1 SEX F
+1 BIRT
+2 DATE 1899
+2 PLAC Nowy Zmigrod, Austria, now Poland
+1 DEAT Y
+2 DATE 7 JUL 1942
+2 PLAC Poland
+2 CAUS שואה
+1 FAMS @F500452@
+1 FAMC @F500393@
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000650/sima-posterung-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000650
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-1631669092-1500227/sima-postrung-לבית-leibner
+2 QUAY 3
+2 DATA
+3 TEXT בן אבו Web Site, מנוהל ע"י יאיר בן אבו
+2 EVEN Smart Matching
+3 ROLE 1500227
+1 SOUR @S500370@
+2 PAGE https://www.myheritage.co.il/profile-OYYV732D4CGONPDJ42PEUYV2BY3MFCA-1501070/sima-postrung-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Bunn Web Site, מנוהל ע"י Rachael Bunn
+2 EVEN Smart Matching
+3 ROLE 1501070
+1 RIN MH:I501075
+1 _UID 6697424B8758154611D09B80A68FDC15
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTMwNzZhZjBkZDcyYWY5YTcxMWYwOWQwODMxMmY1ZWVlZTUyMTNjMGRhYjI4MjQ1NjczMDc4YmM3YzhhYzBkOTImZT0xNzUzNjEwNDAw/158/944/6912/501272_912561ii1476c1f904a05e_A.jpg
+2 _FILESIZE 5666
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501271
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501272
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWRiMDhiNzcxODk2YTEwNjBkMWZlYWI1NzYzYzA3ZDFjOGVlNjk4YjU1NDNkMTRkMmQ0ODk1NGEzNDYzZTE0MmImZT0xNzUzNjEwNDAw/158/944/6912/501271_3300260ec5zo6a68efv471_A.jpg
+2 _FILESIZE 5664
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501271
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTY1YzE2NTkxMGJlYzkxZWRkNWU1NTZjZGY5ZTQ0ZWYyNGJjZTFkYjY3ZWIzYjA0MmEwNzgwODk1Nzg3MDM1YjkmZT0xNzUzNjEwNDAw/158/944/6912/500645_32787337j71aah2384zyb6_A.jpg
+2 _FILESIZE 5664
+2 _PHOTO_RIN MH:P500645
+
+0 @I501234@ INDI
+1 _UPD 26 MAR 2025 09:19:11 GMT -0500 
+1 NAME Mordechai /Posterung/
+2 GIVN Mordechai
+2 SURN Posterung
+1 SEX M
+1 DEAT Y
+2 DATE 1942
+2 CAUS שואה
+1 BIRT
+2 PLAC Dukla, Poland
+1 FAMS @F500452@
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000657/mordecai-posterung
+2 QUAY 3
+2 DATA
+3 TEXT Our Family and Heritage, מנוהל ע"י Reuven Shefer
+2 EVEN Smart Matching
+3 ROLE 1000657
+1 RIN MH:I501234
+1 _UID 66C608761E6E9BF51B976B8D5CBC287D
+
+0 @I501721@ INDI
+1 _UPD 10 FEB 2025 00:01:53 GMT -0500 
+1 NAME Uzi /Leibner/
+2 GIVN Uzi
+2 SURN Leibner
+1 SEX M
+1 FAMC @F500628@
+1 RIN MH:I501721
+1 _UID 67A99651870CA8E20221E88CB2139E39
+
+0 @I500488@ INDI
+1 _UPD 15 MAY 2024 12:19:43 GMT -0500 
+1 NAME Reisel /Leibner/
+2 GIVN Reisel
+2 SURN Leibner
+1 SEX F
+1 BIRT
+2 DATE 1887
+2 PLAC Korczyn(Korczyna), Austria
+1 DEAT Y
+2 DATE 1892
+2 PLAC Korczyna
+1 FAMC @F500010@
+1 SOUR @S500025@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7XJQYA7D2HPTQQMC66N77EPNURA-1500036/reisel-leibner
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500036
+1 SOUR @S500025@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7XJQYA7D2HPTQQMC66N77EPNURA-1500036/reisel-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500036
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500147/reisel-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500147
+1 RIN MH:I500488
+1 _UID 6644EEA989E380E74FBD2D8FC3E85B2F
+
+0 @I501058@ INDI
+1 _UPD 23 FEB 2025 09:42:53 GMT -0500 
+1 NAME Taube /Leibner/
+2 GIVN Taube
+2 SURN Leibner
+2 _MARNM Fagin
+1 SEX F
+1 BIRT
+2 DATE 29 SEP 1913
+2 PLAC New York, New York, United States
+1 DEAT Y
+2 DATE 5 JAN 1994
+2 PLAC Palm Beach, Florida, United States
+2 NOTE BD = 09 Nov 1991
+1 EVEN
+2 TYPE Departure
+2 PLAC New York, New York
+1 EVEN
+2 TYPE Departure
+2 PLAC Hamilton, Bermuda
+1 RESI
+2 DATE 1 JUN 1915
+2 ADDR
+3 ADR1 Age: 1; Relation to Head of House: Daughter, New York, New York, New York, United States
+1 CENS
+2 DATE 1930
+2 PLAC Brooklyn (Districts 1251-1500), Kings, New York, USA
+1 RESI
+2 DATE 1920
+2 ADDR
+3 ADR1 Age: 6; Marital Status: Single; Relation to Head of House: Daughter, Brooklyn Assembly District 16, Kings, New York, USA
+1 RESI
+2 DATE 1 JUN 1925
+2 ADDR
+3 ADR1 Age: 11; Relation to Head of House: Daughter, Brooklyn, Kings, New York, United States
+1 RESI
+2 DATE 1930
+2 ADDR
+3 ADR1 Age: 16; Marital Status: Single; Relation to Head of House: Daughter, Brooklyn, Kings, New York
+1 EVEN BD 02 Nov 1980    Setting on house in Minnetonka on 4/15/09.
+2 TYPE Arrival
+2 DATE 7 SEP 1931
+2 PLAC New York, New York
+1 EVEN Abrahm Lincoln Brigade website:  "Units served with   XV BDE, Washington BN later Lincoln-Washington BN. Served at Brunete, Aragon. Rank Sgt."  "USSDA notes Noble as having returned on April 8, 1938 aboard Ile de France. "
+2 TYPE Arrival
+2 DATE 2 SEP 1932
+2 PLAC New York, New York
+1 RESI
+2 DATE 1935
+2 ADDR
+3 ADR1 New York, Kings, New York
+3 ADR2 Same House - 5104 14th Ave, Brooklyn, A D 16, Kings, New York, USA
+1 RESI
+2 DATE 1935
+2 ADDR
+3 ADR1 New York, Kings, New York
+1 RESI
+2 DATE 1935
+2 ADDR
+3 ADR1 New York, Kings, New York
+1 EVEN DOB taken from 1900 census.
+2 TYPE Arrival
+2 DATE 27 NOV 1936
+2 PLAC New York, New York
+1 CENS
+2 DATE 1940
+2 PLAC 5104 14th Ave, Brooklyn, A D 16, Kings, New York, USA
+1 RESI
+2 DATE 1 APR 1940
+2 ADDR
+3 ADR1 Age: 26; Marital Status: Single; Relation to Head of House: Daughter, New York, Kings, New York, United States
+1 RESI
+2 DATE 1 APR 1940
+2 ADDR
+3 ADR1 Age: 32; Marital Status: Widowed; Relation to Head of House: Daughter, New York, Kings, New York, United States
+1 RESI
+2 DATE 1 APR 1940
+2 ADDR
+3 ADR1 Age: 26; Marital Status: Single; Relation to Head of House: Daughter, New York, Kings, New York, United States
+1 FAMS @F500446@
+1 FAMC @F500391@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Taube Fagin (לבית Leibner)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 1913 - New York, New York, United States&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Theodore Fagin -
+4 CONC  29 ביוני 1941&amp;lt;br&amp;gt;פטירה: 1994 - Florida, United States&amp;lt;br&amp;gt;אב: Joseph M Leibner&amp;lt;br&amp;gt;אם: Lillian Leibner (לבית Greher)&amp;lt;br&amp;gt;בעל:
+4 CONC  Theodore Fagin&amp;lt;br&amp;gt;בן/בת: Beth Sommer (לבית Fagin)&amp;lt;br&amp;gt;אחים ואחיות: Rose Nobel (לבית Leibner), Mildred Jaffe (לבית Leibner), Ira Wallace Leibner
+2 EVEN Record
+3 ROLE 40000:344765264:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Taube Fagin (לבית Leibner)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;בעל: Theodore Fagin&amp;lt;br&amp;gt;בן/בת: &lt;פרטי&gt; Sommer (לבית Fagin)
+2 EVEN Record
+3 ROLE 40000:549768148:
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500041/taube-fagin-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500041
+1 SOUR @S500096@
+2 PAGE https://www.myheritage.co.il/site-family-tree-OYYV77JD3VCPAGIQWGKPWH464A7OP2I/sommer-family-site?indID=1500002
+2 QUAY 3
+2 DATA
+3 TEXT Sommer Family Site, מנוהל ע"י Beth Sommer
+2 EVEN Smart Matching
+3 ROLE 1500002
+1 SOUR @S500033@
+2 QUAY 4
+2 DATA
+3 TEXT Theodore Fagin וTaube Leibner&amp;lt;br&amp;gt;חתן: שם:Theodore Faginלידה:26 באוג’ 1912
+	
+	 New York City, New York, United States
+
+גיל:28אב:Hyman Faginאם:Bella Staraselsky
+4 CONC &amp;lt;br&amp;gt;כלה: שם:Taube Leibnerלידה:29 בספט’ 1913
+	
+	 New York City, New York, United States
+
+גיל:27אב:Joseph M. Leibnerאם:Lillian Greyer&amp;lt;br&amp;gt;# תעוד
+4 CONC ה: 14123
+2 EVEN Record
+3 ROLE 20807:3143953-S:
+1 SOUR @S500167@
+2 PAGE https://www.myheritage.com/profile-OYYV6D2M5VUAMVAX4KHSGWFWVO6KL2Q-1500044/taube-fagin-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500044
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500213/taube-fagin-%D7%9C%D7%91%D7%99%D7%AA-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500213
+1 RIN MH:I501058
+1 _UID 669740B66B5D4AF3A0C1227A6269A3A4
+
+0 @I501208@ INDI
+1 _UPD 10 FEB 2025 00:22:09 GMT -0500 
+1 NAME Theodore /Fagin/
+2 GIVN Theodore
+2 SURN Fagin
+1 SEX M
+1 BIRT
+2 DATE 26 AUG 1912
+2 PLAC New York City, New York, United States
+1 DEAT Y
+2 DATE 23 DEC 2011
+2 PLAC CT
+1 FAMS @F500446@
+1 FAMS @F500904@
+1 SOUR @S500096@
+2 PAGE https://www.myheritage.co.il/site-family-tree-OYYV77JD3VCPAGIQWGKPWH464A7OP2I/sommer-family-site?indID=1500003
+2 QUAY 3
+2 DATA
+3 TEXT Sommer Family Site, מנוהל ע"י Beth Sommer
+2 EVEN Smart Matching
+3 ROLE 1500003
+1 SOUR @S500033@
+2 QUAY 4
+2 DATA
+3 TEXT Theodore Fagin וTaube Leibner&amp;lt;br&amp;gt;נישואין: 29 ביוני 1941 - Brooklyn, Kings, New York, United States&amp;lt;br&amp;gt;חתן: שם:Theodore Faginלידה:26 באוג’ 1912
+
+4 CONC 	
+	 New York City, New York, United States
+
+
+
+
+
+	
+	
+	
+		
+	
+
+
+גיל:28אב:Hyman Faginאם:Bella Staraselsky&amp;lt;br&amp;gt;כלה: שם:Taube Leibnerלידה:29 בספט’ 1913
+	
+	 New Y
+4 CONC ork City, New York, United States
+
+גיל:27אב:Joseph M. Leibnerאם:Lillian Greyer&amp;lt;br&amp;gt;# תעודה: 14123
+2 EVEN Record
+3 ROLE 20807:3143953-:
+1 SOUR @S500204@
+2 QUAY 4
+2 DATA
+3 TEXT Theodore Fagin וRetta S Landowne&amp;lt;br&amp;gt;נישואין: 30 בספט’ 1996 - New Haven, Connecticut, USA&amp;lt;br&amp;gt;תעודה: 14793&amp;lt;br&amp;gt;בעל: Theodore Fagin&amp;lt;b
+4 CONC r&amp;gt;&nbsp;&nbsp;לידה: סביבות 1912&amp;lt;br&amp;gt;&nbsp;&nbsp;גיל: 84&amp;lt;br&amp;gt;אשה: Retta S Landowne (Fagin)&amp;lt;br&amp;gt;&nbsp;&nbsp;לידה: סביבות 1918&amp;
+4 CONC lt;br&amp;gt;&nbsp;&nbsp;גיל: 78
+2 EVEN Record
+3 ROLE 10204:252889-:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Theodore Fagin&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;אשה: Taube Fagin (לבית Leibner)&amp;lt;br&amp;gt;בן/בת: &lt;פרטי&gt; Sommer (לבית Fagin)
+2 EVEN Record
+3 ROLE 40000:391605192:
+1 RIN MH:I501208
+1 _UID 66C206F7313174AD6D116226DD6207C4
+
+0 @I501203@ INDI
+1 _UPD 16 AUG 2024 00:31:08 GMT -0500 
+1 NAME Rosa Reisel /Leibner/
+2 GIVN Rosa Reisel
+2 SURN Leibner
+2 _MARNM Friedmann
+1 SEX F
+1 BIRT
+2 DATE 29 DEC 1915
+2 PLAC Korczyna, Galizien
+1 DEAT Y
+2 DATE 13 MAY 1942
+2 PLAC Kulmhof (Chelmno), extermination camp
+1 RESI
+2 ADDR
+3 ADR1 Prenzlauer Berg, Berlin, Germany
+1 CENS
+2 DATE MAY 1939
+2 PLAC Berlin, Prenzlauer Berg, Germany
+1 FAMS @F500444@
+1 FAMC @F500443@
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500175/reisel-friedmann-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500175
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500175/reisel-friedmann-born-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500175
+1 SOUR @S500094@
+2 QUAY 4
+2 DATA
+3 TEXT Rosa Reisel Friedemann (לבית Leibner)&amp;lt;br&amp;gt;לידה: 29 בדצמ’ 1915 - Korczyna, Galizien&amp;lt;br&amp;gt;מגורים: Prenzlauer Berg, Berlin, Germany&amp;lt;br&amp;gt;פטיר
+4 CONC : 13 במאי 1942 - Kulmhof (Chelmno), extermination camp&amp;lt;br&amp;gt;הַגלָיָה: from Berlin  01st November 1941, Litzmannstadt (Lodz), ghetto  13th May 1942, Kulmhof (Chelmno), extermin
+4 CONC ation camp
+2 EVEN Record
+3 ROLE 10921:123055:
+1 SOUR @S500095@
+2 QUAY 4
+2 DATA
+3 TEXT Reisel (Rosa) Friedemann (לבית Leibner)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 29 בדצמ’ 1915 - Korczyna, Krosno, Poland&amp;lt;br&amp;gt;מגורים: מאי 1939 - Ber
+4 CONC lin, Prenzlauer Berg, Germany&amp;lt;br&amp;gt;מקום הגירוש: Litzmannstadt&amp;lt;br&amp;gt;פטירה: לפני 8 במאי 1945&amp;lt;br&amp;gt;Holocaust Victim: Yes&amp;lt;br&amp;gt;בית
+4 CONC  אב&amp;lt;br&amp;gt;שם; גיל; חלופות שהוצעו&amp;lt;br&amp;gt;&amp;lt;a href="https://www.myheritage.co.il/research/collection-10901/%D7%9E%D7%A4%D7%A7%D7%93-%D7%90%D7%95%D7%9B%D7%9C
+4 CONC %D7%95%D7%A1%D7%99%D7%9F-%D7%9C%D7%9E%D7%99%D7%A2%D7%95%D7%98%D7%99%D7%9D-%D7%91%D7%92%D7%A8%D7%9E%D7%A0%D7%99%D7%94-1939?s=1589446912&itemId=88025-&groupId=e9c50a4d85f4496f5c4bda61756bcdb6&action=sho
+4 CONC wRecord&recordTitle="&amp;gt;Gerhard Friedemann&amp;lt;/a&amp;gt;; 24; &amp;lt;br&amp;gt;&amp;lt;a href="https://www.myheritage.co.il/research/collection-10901/%D7%9E%D7%A4%D7%A7%D7%93-%D7%90%D7%95%D7
+4 CONC %9B%D7%9C%D7%95%D7%A1%D7%99%D7%9F-%D7%9C%D7%9E%D7%99%D7%A2%D7%95%D7%98%D7%99%D7%9D-%D7%91%D7%92%D7%A8%D7%9E%D7%A0%D7%99%D7%94-1939?s=1589446912&itemId=90453-&groupId=e9c50a4d85f4496f5c4bda61756bcdb6&a
+4 CONC ction=showRecord&recordTitle=Reisel+%28Rosa%29+Friedemann+%28%D7%9C%D7%91%D7%99%D7%AA+Leibner%29"&amp;gt;Reisel Friedemann&amp;lt;/a&amp;gt;; 23;
+2 EVEN Record
+3 ROLE 10901:90453-:e9c50a4d85f4496f5c4bda61756bcdb6
+1 RIN MH:I501203
+1 _UID 66BEE08240A436CBBA6330456FABBDD3
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWM1NzdjMjJkYmQxYzUyMDQxZDhkZjI4NmE4ZTcxZjIzMTk5ZDliNjIyNzU2OTRhYTdhNzFjZWZhMjczNmEzYTYmZT0xNzUzNjEwNDAw/158/944/6912/500384_48415610b6e6ec317bb54a_A.jpg
+2 _FILESIZE 238735
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500383
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500384
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTJlODU4MGY2Yzc2NzUwOGMzYTkyZWI3YTEwMjQ3NzgzOTlhMjZmNWNhY2RiNzMwZTBlM2MzMzFkNjIzNDIyODgmZT0xNzUzNjEwNDAw/158/944/6912/500383_1182726vf6t51s1bbeq64e_A.jpg
+2 _FILESIZE 260544
+2 TITL image
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 1 11 782 792
+2 _PHOTO_RIN MH:P500383
+
+0 @I501204@ INDI
+1 _UPD 16 AUG 2024 00:30:09 GMT -0500 
+1 NAME Gerhard /Friedmann/
+2 GIVN Gerhard
+2 SURN Friedmann
+1 SEX M
+1 DEAT Y
+2 DATE 13 MAY 1942
+2 PLAC Death camp.  Had been sent first to the Lodz getto.
+1 BIRT
+2 DATE 6 JUL 1914
+2 PLAC Berlin, Germany
+1 CENS
+2 DATE MAY 1939
+2 PLAC Berlin, Prenzlauer Berg, Germany
+1 FAMS @F500444@
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500180/gerhard-friedmann
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500180
+1 SOUR @S500095@
+2 QUAY 4
+2 DATA
+3 TEXT Gerhard Friedemann&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 6 ביולי 1914 - Berlin, Germany&amp;lt;br&amp;gt;מגורים: מאי 1939 - Berlin, Prenzlauer Berg, Germany&amp;lt;b
+4 CONC r&amp;gt;מקום הגירוש: Litzmannstadt&amp;lt;br&amp;gt;פטירה: 13 במאי 1942&amp;lt;br&amp;gt;Holocaust Victim: Yes&amp;lt;br&amp;gt;בית אב&amp;lt;br&amp;gt;שם; גיל; חלופ
+4 CONC ת שהוצעו&amp;lt;br&amp;gt;&amp;lt;a href="https://www.myheritage.co.il/research/collection-10901/%D7%9E%D7%A4%D7%A7%D7%93-%D7%90%D7%95%D7%9B%D7%9C%D7%95%D7%A1%D7%99%D7%9F-%D7%9C%D7%9E%D7%99%D7
+4 CONC %A2%D7%95%D7%98%D7%99%D7%9D-%D7%91%D7%92%D7%A8%D7%9E%D7%A0%D7%99%D7%94-1939?s=1589446912&itemId=88025-&groupId=e9c50a4d85f4496f5c4bda61756bcdb6&action=showRecord&recordTitle=Gerhard+Friedemann"&amp;gt
+4 CONC ;Gerhard Friedemann&amp;lt;/a&amp;gt;; 24; &amp;lt;br&amp;gt;&amp;lt;a href="https://www.myheritage.co.il/research/collection-10901/%D7%9E%D7%A4%D7%A7%D7%93-%D7%90%D7%95%D7%9B%D7%9C%D7%95%D7%A1%D7%99%
+4 CONC D7%9F-%D7%9C%D7%9E%D7%99%D7%A2%D7%95%D7%98%D7%99%D7%9D-%D7%91%D7%92%D7%A8%D7%9E%D7%A0%D7%99%D7%94-1939?s=1589446912&itemId=90453-&groupId=e9c50a4d85f4496f5c4bda61756bcdb6&action=showRecord&recordTitle
+4 CONC ="&amp;gt;Reisel Friedemann&amp;lt;/a&amp;gt;; 23;
+2 EVEN Record
+3 ROLE 10901:88025-:e9c50a4d85f4496f5c4bda61756bcdb6
+1 RIN MH:I501204
+1 _UID 66BEE0C8053319CBE6C2EFDA3394DECE
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTU2ZjI0ZDIzNGVjMzhjNDI0ODU0MGU3NTA2M2MzMTg5MGI5MDljNTA2OTk1Yjc1MTcwZTBlYmU1NmQ0OTM5NWImZT0xNzUzNjEwNDAw/158/944/6912/500382_7983903aet6lb8e6ez1k15_A.jpg
+2 _FILESIZE 198718
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500381
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500382
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWVjNjI3YzFhMjljZDUzYTlkOGM0ZWI0NDFiYTAwMTBlMTE2NTcxZjI0NGJhOGVmMjNhMzdmOGRlZDE0MDAzZWEmZT0xNzUzNjEwNDAw/158/944/6912/500381_481625te1vz6556ehe03bl_A.jpg
+2 _FILESIZE 209651
+2 TITL unnamed
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 1 94 808 901
+2 _PHOTO_RIN MH:P500381
+
+0 @I500426@ INDI
+1 _UPD 5 MAR 2025 09:54:15 GMT -0500 
+1 NAME Nathan Nute Halevi /Leibner/
+2 GIVN Nathan Nute Halevi
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 18 APR 1843
+2 PLAC Korczyna
+1 BIRT
+2 DATE 18 APR 1843
+2 PLAC possbily Korczyn(Korczyna), Austria, now Poland
+1 BIRT
+2 DATE 6 MAR 1855
+2 PLAC Zmigrod, Galicia, Austria
+1 BIRT
+2 DATE 1843
+2 PLAC Korczyna, Poland
+1 EVEN
+2 TYPE Arrival
+2 DATE 25 JUN 1888
+2 PLAC New York, New York
+2 AGE 27-28
+1 EVEN
+2 TYPE Arrival
+2 DATE 1885
+2 AGE 29-30
+1 RESI
+2 DATE 1910
+2 AGE 54-55
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Head, Manhattan Ward 11, New York, New York, USA
+1 RESI
+2 DATE 1925
+2 AGE 69-70
+2 ADDR
+3 ADR1 Relation to Head: Head, New York, New York
+1 RESI
+2 DATE 1900
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Head, Manhattan, New York, New York, USA
+1 DEAT Y
+2 DATE 15 DEC 1929
+2 PLAC Manhattan, New York, USA
+2 NOTE Went to Vassar.  Worked for Faith Popcorn and now for a think tank that looks at issues that affect businesses/sort of marketing.    BD=26 Jul 1982
+2 AGE 74
+1 BURI
+2 PLAC Brooklyn, New York, United States
+1 IMMI
+2 DATE 25 JUN 1888
+2 PLAC New York, USA
+1 RESI
+2 DATE 1892
+2 ADDR
+3 ADR1 Age: 46, Orangetown, Rockland, New York
+1 NATU
+2 DATE 4 AUG 1900
+2 PLAC U.S. District Court, NY
+1 EVEN
+2 TYPE Departure
+2 PLAC Hamburg, Germany and Le Havre, France
+1 OCCU Fish
+1 OCCU In Europe, had clothing stand in markets in Krosno and Zmigrod.  In US, was in fish business.
+1 OCCU Fish
+1 OCCU Fish
+1 EVEN
+2 TYPE Civil
+2 DATE 1900
+1 RESI
+2 ADDR
+3 ADR1 1892:Nyack, 1910: Rivington St. Last residence probably Cannon Street, NY
+1 RESI
+2 DATE 1903
+2 ADDR
+3 ADR1 New York, New York, USA
+1 RESI
+2 DATE 1910
+2 ADDR
+3 ADR1 Manhattan Ward 11, New York, New York
+1 RESI
+2 DATE 1911
+2 ADDR
+3 ADR1 New York, New York, USA
+1 RESI
+2 DATE 1912
+2 ADDR
+3 ADR1 New York, New York, USA
+1 RESI
+2 DATE 1915
+2 ADDR
+3 ADR1 Relation to Head of House: Head, New York, New York, USA
+1 RESI
+2 DATE 1916
+2 ADDR
+3 ADR1 New York, New York, USA
+1 RESI
+2 DATE 1920
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Head, Manhattan Assembly District 4, New York, New York
+1 RESI
+2 DATE 1 JUN 1925
+2 ADDR
+3 ADR1 Relation to Head of House: Head, New York, New York, New York, United States
+1 FAMS @F500171@
+1 FAMS @F500172@
+1 FAMS @F500390@
+1 FAMC @F500169@
+1 SOUR @S500006@
+2 PAGE Nathan Nute Halevi Leibner
+2 QUAY 3
+2 DATA
+3 DATE 14 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Nathan Leibner&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 1843 - Poland&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Rose Leibner (לבית Achtsam) - בין 1873 ו-1875 - Polan
+4 CONC d&amp;lt;br&amp;gt;פטירה: 1929 - New York, New York, United States&amp;lt;br&amp;gt;אב: Phillip Leibner&amp;lt;br&amp;gt;אם: Jennie Leibner (לבית Gross)&amp;lt;br&amp;gt;נשים: Rose Le
+4 CONC ibner (לבית Achtsam), Anna Leibner (לבית Cohen), Pearl Leibner (לבית Tzimet)&amp;lt;br&amp;gt;ילדים: Sydney Leibner, Ephraim Leibner, Jennie Krill (לבית Leibner), Menachem Shaul L
+4 CONC eibner, Rachel Witte Teller (לבית Leibner), Baruch Leibner, Joseph M Leibner, Emma Goodwin (לבית Leibner), Etta Lang (לבית Leibner)
+2 EVEN Record
+3 ROLE 40000:344765766:
+1 SOUR @S500027@
+2 QUAY 4
+2 DATA
+3 TEXT Nusan Net Leibner&amp;lt;br&amp;gt;לידה: 23 בינו’ 1885 - Aus&amp;lt;br&amp;gt;פטירה: 30 בינו’ 1926&amp;lt;br&amp;gt;גיל פטירה: 47&amp;lt;br&amp;gt;קבורה: Washington C
+4 CONC emetery, Brooklyn, United States&amp;lt;br&amp;gt;אב: Nusan Net Leibner&amp;lt;br&amp;gt;הערות: On Tombstone: Son, Brother.  M3107:Single, Salesman, Parents: Nathan & Rea Feiner, 36 Years Us&am
+4 CONC p;lt;br&amp;gt;בית עלמין: &amp;lt;a&amp;gt;צפו במידע על בית הקברות באתר של JewishGen&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Source website: &amp;lt;a&amp;gt;JewishGen&amp;
+4 CONC lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 11019:3828764-F:
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/research/collection-1/אילנות-יוחסין-ב-myheritage?itemId=407521371-1-500271&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Nathan Nute Halevi Leibner
+לידה: 18 באפר’ 1843 - possbily Korczyn(Korczyna), Austria, now Poland
+פטירה: 15 בדצמ’ 1929 - New York
+הורים: Phillip (Shragai Feibish Halevi) Leibn
+4 CONC er, Jennie (Sheindel) Leibner (born Gross)
+אחים ואחיות: Rachel Yetta Leibner, Esther Leibner
+אישה: Rose (Reizel) Leibner (born Achtsam)
+אישה: Pearl Feige Leibner (born Tzimet)
+איש
+4 CONC ה: Anna (Annie) (Chaya) Leibner (born Cohen)
+ילדים: Ephraim Halevi Leibner, Jennie (Sheindel) Krill (born Leibner), Menachem (Mendel)-shaul (Saul)(Manny) Leibner, Rachel Witte Leibner, Burech (B
+4 CONC oruch) Leibner, Joseph Morris Leibner, Emma Goodwin (born Leibner), Etta (Sarah Sadie) Leibner, Sydney Leibner
+2 EVEN Smart Matching
+3 ROLE 1500271
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.com/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500013/nathan-nute-halevi-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500013
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.com/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500013/nathan-nute-halevi-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500013
+1 SOUR @S500097@
+2 PAGE https://www.myheritage.com/profile-OYYV74WETS3KMMVP6RW2NBVT5UAABFI-1502606/nathan-nute-halevi-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502606
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500191/nathan-nute-halevi-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500191
+1 RIN MH:I500426
+1 _UID 66443BA9C71CD5F4C487AF0D5A03E904
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTU1YWFlOTlhNTJjMjViMWIzMGJhNmQzNWIyNDIxNjI0ZjQ3MTZiMjAyYWZhZTRhZWFhYzI2ZmY3MDQwM2FlYWUmZT0xNzUzNjEwNDAw/158/944/6912/500338_311311p9170r65998o6ay9_A.jpg
+2 _FILESIZE 18961
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500337
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500338
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTE1YThkMDYzMThkNGM4NWJjZDViNmExY2VjNGI5NzhkNzc1ZmE2MjA2MjIwNTdhMjczZDBhY2FiMWJhOWE1NGEmZT0xNzUzNjEwNDAw/158/944/6912/500337_082158a69794z8on966139_A.jpg
+2 _FILESIZE 25341
+2 TITL Nathan Nute Leibner  ,1910
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 56 250 306
+2 _PHOTO_RIN MH:P500337
+1 OBJE
+2 FORM pdf
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWM0ZjUyNTc2NjBkNjFhNTRhYjU4YWQ4MWFkZGM2ZDk4N2ZhY2VmNjExNzAyY2Y3MmM3NGM2ODFmNjhhNGFkZGImZT0xNzUzNjEwNDAw/158/944/6912/500345_08541001wfqd65k791w676_A.pdf
+2 _FILESIZE 582680
+2 TITL AI Biography™ - Nathan Nute Halevi Leibner
+2 _ALBUM @A999988@
+2 _PHOTO_RIN MH:P500345
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPThlZGUwZjVjZmQ3NTk3MDc0YmM3Nzg0MmI4MjdmMWZlYjRmMjU1NmEwM2EyOWFlN2ExNWJlMTM2OTYzMWNhNzImZT0xNzUzNjEwNDAw/158/944/6912/500348_2660611w16c9kh4a63p18c_A.jpg
+2 _FILESIZE 11978
+2 TITL ZmiNLeibner
+2 _PHOTO_RIN MH:P500348
+
+0 @I500429@ INDI
+1 _UPD 16 JUL 2024 23:02:26 GMT -0500 
+1 NAME Pearl Feige /Tzimet/
+2 GIVN Pearl Feige
+2 SURN Tzimet
+2 _MARNM Leibner
+1 SEX F
+1 BIRT
+2 DATE 16 APR 1846
+2 PLAC Nowy Zmigrod, Austria, now Poland
+1 BIRT
+2 DATE ABT 1851
+2 PLAC Nowy Zmigrod, Poland
+1 DEAT Y
+2 DATE 1874
+2 PLAC Nowy Zmigrod, Poland
+2 AGE About 26-27
+1 DEAT Y
+2 DATE ABT 1878
+2 PLAC Zmigrod, Austria
+2 AGE About 26-27
+1 FAMS @F500171@
+1 SOUR @S500006@
+2 PAGE Pearl Feige Tzimet
+2 QUAY 3
+2 DATA
+3 DATE 14 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000625/pearl-leibner-born-tzimet
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000625
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.com/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500026/pearl-feige-leibner-born-tzimet
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500026
+1 RIN MH:I500429
+1 _UID 66443BAA122855FAC487AF0D5A03E904
+
+0 @I500430@ INDI
+1 _UPD 16 JUL 2024 22:50:22 GMT -0500 
+1 NAME Anna /Cohen/
+2 GIVN Anna
+2 SURN Cohen
+2 _MARNM Leibner
+1 SEX F
+1 BIRT
+2 DATE 1873
+2 PLAC Poland
+1 BIRT
+2 DATE ABT 1870
+2 PLAC Sompolno, koniński, Greater Poland Voivodeship, Poland
+1 BIRT
+2 DATE 1873
+2 PLAC Russia
+1 EVEN
+2 TYPE Arrival
+2 DATE 1882
+2 AGE 8-9
+1 EVEN
+2 TYPE Arrival
+2 DATE 1892
+2 AGE 18-19
+1 RESI
+2 DATE 1910
+2 AGE 36-37
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Wife, Manhattan Ward 11, New York, New York, USA
+1 RESI
+2 DATE 1920
+2 AGE 46-47
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head: Wife, Manhattan Assembly District 4, New York, New York, USA
+1 RESI
+2 DATE 1925
+2 AGE 51-52
+2 ADDR
+3 ADR1 Relation to Head: Wife, New York, New York
+1 DEAT Y
+2 DATE 18 FEB 1944
+2 PLAC NY, NY
+2 AGE 70-71
+1 BURI
+2 PLAC Brooklyn, Kings County (Brooklyn), New York, United States of America
+1 FAMS @F500172@
+1 SOUR @S500006@
+2 PAGE Anna Cohen
+2 QUAY 3
+2 DATA
+3 DATE 14 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Anna Leibner (לבית Cohen)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: סביבות 1872 - Sompolno, koniński, Greater Poland Voivodeship, Poland&amp;lt;br&amp;gt;פטירה: 1944
+4 CONC &amp;lt;br&amp;gt;קבורה: Brooklyn, Kings County, New York, United States&amp;lt;br&amp;gt;בעל: Nathan Leibner&amp;lt;br&amp;gt;בן/בת: Sydney Leibner
+2 EVEN Record
+3 ROLE 40000:391855871:
+1 RIN MH:I500430
+1 _UID 66443BAA3444F5FEC487AF0D5A03E904
+
+0 @I501042@ INDI
+1 _UPD 30 MAR 2025 10:09:18 GMT -0500 
+1 NAME Rose (Reizel) /Achtsam/
+2 GIVN Rose (Reizel)
+2 SURN Achtsam
+2 _MARNM Leibner
+1 SEX F
+1 BIRT
+2 DATE 1853
+2 PLAC Poland
+1 DEAT Y
+2 DATE 14 JAN 1905
+2 PLAC New York, New York, United States
+1 EVEN
+2 TYPE Departure
+2 DATE 24 JUL 1888
+2 PLAC Hamburg
+1 IMMI
+2 DATE 8 AUG 1888
+2 PLAC Arrived in NY with Jenny, Rachel, Joe & Emma from Liverpool on the Wyoming having begin on the Warrington from Hamburg to Grimsby, England on July 24.
+1 EVEN
+2 TYPE Arrival
+2 PLAC Grimsby (Nordamerika via Liveerpool)
+1 RESI
+2 ADDR
+3 ADR1 Korczyna, Galizien
+1 RESI
+2 DATE 1900
+2 ADDR
+3 ADR1 Marital Status: Married; Relation to Head of House: Wife, Manhattan, New York, New York, USA
+1 BURI
+2 PLAC Washington Cemetery, Brooklyn, NY
+1 FAMS @F500390@
+1 FAMC @F501125@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Rose Leibner (לבית Achtsam)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 1853 - Poland&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Nathan Leibner - בין 1873 ו-1875 - Pol
+4 CONC and&amp;lt;br&amp;gt;פטירה: 1905 - New York, New York, United States&amp;lt;br&amp;gt;אב: Moses Achtsam&amp;lt;br&amp;gt;אם: Taube Achtsam&amp;lt;br&amp;gt;בעל: Nathan Leibner&amp;lt;br&am
+4 CONC p;gt;ילדים: Menachem Shaul Leibner, Rachel Witte Teller (לבית Leibner), Baruch Leibner, Joseph M Leibner, Emma Goodwin (לבית Leibner), Etta Lang (לבית Leibner)
+2 EVEN Record
+3 ROLE 40000:344765785:
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=344765785&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Rose Leibner (לבית Achtsam)
+לידה: 1853 - Poland
+פטירה: 1905 - New York, New York, United States
+אב: Moses Achtsam
+אם: Taube Achtsam
+בעל: Nathan Leibner
+ילדים: Menachem Shaul L
+4 CONC eibner, Rachel Witte Teller (לבית Leibner), Baruch Leibner, Joseph M Leibner, Emma Goodwin (לבית Leibner), Etta Lang (לבית Leibner)
+2 EVEN Record
+3 ROLE 40000:344765785:
+1 SOUR @S500097@
+2 PAGE https://www.myheritage.com/profile-OYYV74WETS3KMMVP6RW2NBVT5UAABFI-1502607/ratzel-leibner-%D7%9C%D7%91%D7%99%D7%AA-achtsam
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502607
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.com/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500014/rose-reizel-leibner-born-achtsam
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500014
+1 SOUR @S500010@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MWVXCUAJCSXJHAD5MXNGKL2FZI-1500193/rose-reizel-leibner-%D7%9C%D7%91%D7%99%D7%AA-achtsam
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500193
+1 RIN MH:I501042
+1 _UID 66973F7B9718BDE3A12065DC4264905A
+
+0 @I500433@ INDI
+1 _UPD 21 AUG 2024 10:10:31 GMT -0500 
+1 NAME Sydney /Leibner/
+2 GIVN Sydney
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 27 NOV 1910
+2 PLAC New York, United States
+1 BIRT
+2 DATE 27 NOV 1911
+2 PLAC New York, United States
+1 BIRT
+2 DATE 27 NOV 1906
+2 PLAC NY, NY
+1 RESI
+2 DATE 1920
+2 AGE 9-10
+2 ADDR
+3 ADR1 Marital Status: Single; Relation to Head: Son, Manhattan Assembly District 4, New York, New York, USA
+1 RESI
+2 DATE 1925
+2 AGE 14-15
+2 ADDR
+3 ADR1 Relation to Head: Son, New York, New York
+1 EVEN
+2 TYPE Arrival
+2 DATE 20 NOV 1936
+2 PLAC New York, New York
+2 AGE 25
+1 EVEN
+2 TYPE Departure
+2 PLAC Hamilton, Bermuda
+1 RESI
+2 DATE 1930
+2 ADDR
+3 ADR1 Marital Status: Single; Relation to Head of House: Brother-In-Law; Relation to Head of House: Brother, West New York, Hudson, New Jersey, USA
+1 DEAT Y
+2 DATE 28 NOV 1996
+2 PLAC Deerfield Beach, Broward, Florida, United States of America
+2 AGE 86
+1 BURI
+2 PLAC Boca Raton, Palm Beach County, Florida, United States of America
+1 RESI
+2 DATE 1935
+2 ADDR
+3 ADR1 New York, Bronx, New York
+1 EVEN
+2 TYPE Military Service
+2 DATE 8 MAY 1942
+2 PLAC Fort Jay Governors Island, New York
+1 RESI
+2 DATE 1 JUN 1915
+2 ADDR
+3 ADR1 Relation to Head of House: Son, New York, New York, New York, United States
+1 RESI
+2 DATE 1 APR 1940
+2 ADDR
+3 ADR1 Marital Status: Single; Relation to Head of House: Son, New York, Bronx, New York, USA
+1 CENS
+2 DATE 1 APR 1950
+2 PLAC 1385 Miller Drive., Los Angeles, Los Angeles, California, United States
+1 RESI
+2 ADDR
+3 ADR1 New York
+1 RESI
+2 DATE 1 JUN 1925
+2 ADDR
+3 ADR1 Relation to Head of House: Son, New York, New York, New York, United States
+1 FAMS @F500394@
+1 FAMS @F500395@
+1 FAMC @F500172@
+1 SOUR @S500006@
+2 PAGE Sydney Leibner
+2 QUAY 3
+2 DATA
+3 DATE 14 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Sydney Leibner&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 1910 - New York, United States&amp;lt;br&amp;gt;פטירה: 1996 - Florida, United States&amp;lt;br&amp;gt;אב: Nathan Leibne
+4 CONC r&amp;lt;br&amp;gt;אם: Anna Leibner (לבית Cohen)&amp;lt;br&amp;gt;נשים: Paula Leibner (לבית Bove), Myrtle Leibner (לבית Specter)
+2 EVEN Record
+3 ROLE 40000:391856371:
+1 SOUR @S500023@
+2 QUAY 4
+2 DATA
+3 TEXT Sydney Leibner וMyrtle A Specter&amp;lt;br&amp;gt;נישואין: 1942 - Manhattan, New York City, New York, United States&amp;lt;br&amp;gt;תעודת נישואין: 27 בינו’ 1942&amp;lt;br&am
+4 CONC p;gt;חתן: Sydney Leibner&amp;lt;br&amp;gt;כלה: Myrtle A Specter&amp;lt;br&amp;gt;רישיון מספר: 2160&amp;lt;br&amp;gt;Groom volume: 1&amp;lt;br&amp;gt;Bride volume: 1
+2 EVEN Record
+3 ROLE 10459:3880823-S:
+1 SOUR @S500071@
+2 QUAY 4
+2 DATA
+3 TEXT Sydney Leibner&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: סביבות 1911 - New York, United States&amp;lt;br&amp;gt;מגורים: 1 באפר’ 1950 - 1385 Miller Drive., Los Angele
+4 CONC s, Los Angeles, California, United States&amp;lt;br&amp;gt;גיל: 39&amp;lt;br&amp;gt;גזע: White&amp;lt;br&amp;gt;מצב משפחתי: נשוי&amp;lt;br&amp;gt;אשה: Myrtle A Leibner&amp;lt;br&
+4 CONC amp;gt;מפקד אוכלוסין: 
+	עירLos AngelesסדרהT628
+	מחוזLos AngelesDwelling #42
+	מדינהCaliforniaשורה6
+	תאריך1950-04-01מספר בית1385
+	מחוז רישום66-675A
+
+4 CONC או חברי משק הבית&amp;lt;br&amp;gt;&amp;lt;a id='household'&amp;gt;&amp;lt;/a&amp;gt;בית אב&amp;lt;br&amp;gt;יחס לראש המשפחה; שם; גיל&amp;lt;br&amp;gt;Head; &amp;lt
+4 CONC ;a href="https://www.myheritage.co.il/research/collection-11006/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D7%99
+4 CONC %D7%AA-1950?s=1589446912&itemId=139578186-&groupId=26d1acaf2330df2e295a33f34bccdf39&action=showRecord&recordTitle=Sydney+Leibner"&amp;gt;Sydney Leibner&amp;lt;/a&amp;gt;; 39&amp;lt;br&amp;gt;Wife; &am
+4 CONC p;lt;a href="https://www.myheritage.co.il/research/collection-11006/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D
+4 CONC 7%99%D7%AA-1950?s=1589446912&itemId=139578187-&groupId=26d1acaf2330df2e295a33f34bccdf39&action=showRecord&recordTitle=Myrtle+A+Leibner"&amp;gt;Myrtle A Leibner&amp;lt;/a&amp;gt;; 36
+2 EVEN Record
+3 ROLE 11006:139578186-:26d1acaf2330df2e295a33f34bccdf39
+1 SOUR @S500065@
+2 QUAY 4
+2 DATA
+3 TEXT Sydney Leibner וPaula Nita Bovee/Ginsburg&amp;lt;br&amp;gt;נישואין: 2 באוג’ 1978 - Palm Beach, Florida, USA&amp;lt;br&amp;gt;תעודה: 059233&amp;lt;br&amp;gt;קובץ: 4319&amp;lt;br&
+4 CONC amp;gt;בעל: Sydney Leibner&amp;lt;br&amp;gt;אשה: Paula Nita Bovee/Ginsburg (Leibner)
+2 EVEN Record
+3 ROLE 10205:1836154-:
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.com/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500035/sydney-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500035
+1 RIN MH:I500433
+1 _UID 66443BAA8659C606C487AF0D5A03E904
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTg4N2EwYTllNDIzMzdhNjI4YWQzOGFmNmYxMDk3NjBmYWJlMTA1ZGMxMzRlOTliZmQ2MGEyZWE4MGRiMDEzN2QmZT0xNzUzNjEwNDAw/158/944/6912/500421_364359t66767ofc36p9102_A.jpg
+2 _FILESIZE 177726
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500420
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500421
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTFiNjdkYjA4MzA5MjM1NzE1MjBiYTY3OWZjMmViNzBlNzk1ZjExMGNkNzBkZDg2MWU4ZTFiMGExMTYyNmM2MmUmZT0xNzUzNjEwNDAw/158/944/6912/500420_56962601k564x76646cfb3_A.jpg
+2 _FILESIZE 1876336
+2 TITL 20240820_141207
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 891 143 1854 1106
+2 _PHOTO_RIN MH:P500420
+
+0 @I501078@ INDI
+1 _UPD 18 JUL 2024 10:27:32 GMT -0500 
+1 NAME Paula Nita /Bovee/Ginsburg/
+2 GIVN Paula Nita
+2 SURN Bovee/Ginsburg
+2 _MARNM Leibner
+1 SEX F
+1 BIRT
+2 DATE 11 AUG 1928
+1 DEAT Y
+2 DATE 30 SEP 1993
+1 FAMS @F500394@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Paula Leibner (לבית Bove)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;בעל: Sydney Leibner
+2 EVEN Record
+3 ROLE 40000:413216915:
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500112/paula-leibner-born-bove
+2 QUAY 3
+2 DATA
+3 TEXT Miller Web Site, מנוהל ע"י Michael Miller
+2 EVEN Smart Matching
+3 ROLE 1500112
+1 SOUR @S500065@
+2 QUAY 4
+2 DATA
+3 TEXT Sydney Leibner וPaula Nita Bovee/Ginsburg&amp;lt;br&amp;gt;תעודה: 059233&amp;lt;br&amp;gt;קובץ: 4319&amp;lt;br&amp;gt;בעל: Paula Nita Bovee/Ginsburg (Leibner)
+2 EVEN Record
+3 ROLE 10205:1836154-S:
+1 RIN MH:I501078
+1 _UID 66979BE94A51178686BC5B853B239860
+
+0 @I501079@ INDI
+1 _UPD 18 JUL 2024 10:25:03 GMT -0500 
+1 NAME Margot /Messing/
+2 GIVN Margot
+2 SURN Messing
+2 _MARNM Leibner
+1 SEX F
+1 BIRT
+2 DATE 25 NOV 1902
+2 PLAC Austria
+1 RESI
+2 ADDR
+3 ADR1 Miller Drive.
+1 CENS
+2 DATE 1 APR 1950
+2 PLAC 1385 Miller Drive., Los Angeles, Los Angeles, California, United States
+1 DEAT Y
+2 DATE NOV 1975
+2 PLAC Broward, Florida, United States
+1 FAMS @F500395@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Myrtle Leibner (לבית Specter)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;בעל: Sydney Leibner
+2 EVEN Record
+3 ROLE 40000:413216893:
+1 SOUR @S500071@
+2 QUAY 4
+2 DATA
+3 TEXT Myrtle A Leibner&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: סביבות 1914 - Austria&amp;lt;br&amp;gt;מגורים: 1 באפר’ 1950 - 1385 Miller Drive., Los Angeles, Los Angel
+4 CONC es, California, United States&amp;lt;br&amp;gt;גיל: 36&amp;lt;br&amp;gt;גזע: White&amp;lt;br&amp;gt;מצב משפחתי: נשוי&amp;lt;br&amp;gt;בעל: Sydney Leibner&amp;lt;br&amp;gt;מפק
+4 CONC  אוכלוסין: 
+	עירLos AngelesסדרהT628
+	מחוזLos AngelesDwelling #42
+	מדינהCaliforniaשורה7
+	תאריך1 באפר’ 1950מספר בית1385
+	מחוז רישום66-675A
+ראו 
+4 CONC חברי משק הבית&amp;lt;br&amp;gt;&amp;lt;a id='household'&amp;gt;&amp;lt;/a&amp;gt;בית אב&amp;lt;br&amp;gt;יחס לראש המשפחה; שם; גיל&amp;lt;br&amp;gt;Head; &amp;lt;a hre
+4 CONC f="https://www.myheritage.co.il/research/collection-11006/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D7%99%D7%AA
+4 CONC -1950?s=1589446912&itemId=139578186-&groupId=26d1acaf2330df2e295a33f34bccdf39&action=showRecord&recordTitle=Sydney+Leibner"&amp;gt;Sydney Leibner&amp;lt;/a&amp;gt;; 39&amp;lt;br&amp;gt;Wife; &amp;lt;a
+4 CONC  href="https://www.myheritage.co.il/research/collection-11006/%D7%94%D7%9E%D7%A4%D7%A7%D7%93-%D7%94%D7%A4%D7%93%D7%A8%D7%9C%D7%99-%D7%A9%D7%9C-%D7%90%D7%A8%D7%A6%D7%95%D7%AA-%D7%94%D7%91%D7%A8%D7%99%D
+4 CONC 7%AA-1950?s=1589446912&itemId=139578187-&groupId=26d1acaf2330df2e295a33f34bccdf39&action=showRecord&recordTitle=Myrtle+A+Leibner"&amp;gt;Myrtle A Leibner&amp;lt;/a&amp;gt;; 36
+2 EVEN Record
+3 ROLE 11006:139578187-:26d1acaf2330df2e295a33f34bccdf39
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/research/collection-1/אילנות-יוחסין-ב-myheritage?itemId=407521371-1-500111&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Margot Leibner (לבית Messing)
+לידה: 25 בנוב’ 1902
+פטירה: נוב’ 1975 - Broward, Florida, United States
+בעל: Sydney Leibner
+2 EVEN Smart Matching
+3 ROLE 1500111
+1 RIN MH:I501079
+1 _UID 66979BE9997D078986BC5B853B239860
+
+0 @I500434@ INDI
+1 _UPD 14 MAY 2024 23:37:52 GMT -0500 
+1 NAME Ida /Leibner/
+2 GIVN Ida
+2 SURN Leibner
+1 SEX F
+1 BIRT
+2 DATE ABT 1893
+2 PLAC New York
+1 RESI
+2 DATE 1910
+2 AGE About 16-17
+2 ADDR
+3 ADR1 Marital Status: Single; Relation to Head of House: Daughter, Manhattan Ward 11, New York, New York, USA
+1 FAMC @F500172@
+1 SOUR @S500006@
+2 PAGE Ida Leibner
+2 QUAY 3
+2 DATA
+3 DATE 14 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I500434
+1 _UID 66443BAA9F832608C487AF0D5A03E904
+
+0 @I500423@ INDI
+1 _UPD 16 APR 2025 10:26:32 GMT -0500 
+1 NAME Shraga Feiwel /Leibner/
+2 GIVN Shraga Feiwel
+2 SURN Leibner
+1 SEX M
+1 DEAT Y
+1 BIRT
+2 DATE 1821
+2 PLAC Korczyna
+1 DEAT Y
+2 DATE 1913
+2 PLAC Korczyna, Austria
+2 AGE About 92-93
+1 RESI
+2 ADDR
+3 ADR1 Continued living with daughter, Rachel Yetta Leibner-Weinberger following the death of his second wife.
+1 OCCU Had a clothing stand at the local market.
+1 FAMS @F500169@
+1 FAMS @F500170@
+1 FAMC @F500399@
+1 SOUR @S500006@
+2 PAGE Shragai Feibish Leibner
+2 QUAY 3
+2 DATA
+3 DATE 14 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Phillip Leibner&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: סביבות 1821 - Poland&amp;lt;br&amp;gt;פטירה: 1913&amp;lt;br&amp;gt;אב: Froim Leibner&amp;lt;br&amp;gt;אם: Rach
+4 CONC ela Leibner&amp;lt;br&amp;gt;אשה: Jennie Leibner (לבית Gross)&amp;lt;br&amp;gt;בן/בת: Nathan Leibner
+2 EVEN Record
+3 ROLE 40000:344768442:
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=344768442&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Phillip Leibner
+לידה: סביבות 1821 - Poland
+פטירה: 1913
+אב: Froim Leibner
+אם: Rachela Leibner
+אשה: Jennie Leibner (לבית Gross)
+בן/בת: Nathan Leibner
+2 EVEN Record
+3 ROLE 40000:344768442:
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500024/phillip-shragai-feibish-halevi-leibner
+2 QUAY 3
+2 DATA
+3 TEXT Miller Web Site, מנוהל ע"י Michael Miller
+2 EVEN Smart Matching
+3 ROLE 1500024
+1 RIN MH:I500423
+1 _UID 66443BA964A5D5E8C487AF0D5A03E904
+
+0 @I500424@ INDI
+1 _UPD 29 JUL 2024 04:11:57 GMT -0500 
+1 NAME Sheindel /Gross/
+2 GIVN Sheindel
+2 SURN Gross
+2 _MARNM Leibner
+1 SEX F
+1 DEAT Y
+1 BIRT
+2 PLAC Prob Korczyna
+1 DEAT Y
+2 DATE 1853
+1 FAMS @F500169@
+1 SOUR @S500006@
+2 PAGE Jennie (Sheindel) Gross
+2 QUAY 3
+2 DATA
+3 DATE 14 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I500424
+1 _UID 66443BA988E575ECC487AF0D5A03E904
+
+0 @I500425@ INDI
+1 _UPD 14 MAY 2024 23:37:51 GMT -0500 
+1 NAME Hannah Gittel /Grau/
+2 GIVN Hannah Gittel
+2 SURN Grau
+2 _MARNM Leibner
+1 SEX F
+1 DEAT Y
+2 DATE 1891
+2 PLAC Korczyna
+1 BIRT
+2 DATE 1833
+2 PLAC Korczyna
+1 DEAT Y
+2 DATE 1891
+2 PLAC Korczyna
+2 AGE 57-58
+1 FAMS @F500170@
+1 SOUR @S500006@
+2 PAGE Hannah Gittel Grau
+2 QUAY 3
+2 DATA
+3 DATE 14 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 NOTE <p>Facts from Bill Leibner</p><p></p>
+1 RIN MH:I500425
+1 _UID 66443BA9A82645EFC487AF0D5A03E904
+
+0 @I501073@ INDI
+1 _UPD 16 JUL 2024 23:02:23 GMT -0500 
+1 NAME Shimshon Shimon /Leibner/
+2 GIVN Shimshon Shimon
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 1 MAY 1914
+2 PLAC Nowy Zmigrod, Poland
+1 DEAT Y
+2 DATE 1942
+2 PLAC Poland
+2 CAUS שואה
+1 FAMC @F500393@
+1 SOUR @S500084@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NLMSI42Y3DPH2M7JE6XLXYG76Q-1000651/shimshon-shimon-leibner
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1000651
+1 RIN MH:I501073
+1 _UID 6697424B2952A54411D09B80A68FDC15
+
+0 @I500486@ INDI
+1 _UPD 15 MAY 2024 12:19:42 GMT -0500 
+1 NAME Gitel /Leibner/
+2 GIVN Gitel
+2 SURN Leibner
+1 SEX F
+1 BIRT
+2 DATE ABT 1889
+2 PLAC Korczyn(Korczyna), Austria
+1 DEAT Y
+2 DATE 1889
+1 FAMC @F500010@
+1 SOUR @S500025@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7XJQYA7D2HPTQQMC66N77EPNURA-1500039/gitel-leibner
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500039
+1 SOUR @S500025@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7XJQYA7D2HPTQQMC66N77EPNURA-1500039/gitel-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500039
+1 SOUR @S500085@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OEU6P455JNYST5GRJN5C6ZXHEQ-1500151/gitel-leibner
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500151
+1 RIN MH:I500486
+1 _UID 6644EEA91E4EB0E54FBD2D8FC3E85B2F
+
+0 @I501714@ INDI
+1 _UPD 9 FEB 2025 23:04:50 GMT -0500 
+1 NAME William /Leibner/
+2 GIVN William
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 15 JAN 1936
+2 PLAC Krosno, Poland
+1 FAMS @F500627@
+1 FAMC @F500396@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT William Leibner&amp;lt;br&amp;gt;לידה: 1936 - Krosno, Galicia, Polen&amp;lt;br&amp;gt;אב: Jacob Leibner&amp;lt;br&amp;gt;אם: Seril Leibner (לבית Lang)&amp;lt;br&amp;gt;בן/בת זוג: &a
+4 CONC mp;lt;פרטי&amp;gt; Leibner (לבית Tritt)
+2 EVEN Record
+3 ROLE 40000:90893653-GM:
+1 SOUR @S500019@
+2 QUAY 4
+2 DATA
+3 TEXT William Leibner&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 15 בינו’ 1936&amp;lt;br&amp;gt;&nbsp;&nbsp;קרובים אפשריים: שםלידהClaudette E Leibner18 בינו’ 1
+4 CONC 942
+2 EVEN Record
+3 ROLE 10220:278102851:
+1 RIN MH:I501714
+1 _UID 67A988F21A87EC5BF412031D5E9FA1B5
+
+0 @I501715@ INDI
+1 _UPD 10 FEB 2025 00:03:12 GMT -0500 
+1 NAME Claudette E /Tritt/
+2 GIVN Claudette E
+2 SURN Tritt
+1 SEX F
+1 BIRT
+2 DATE 18 JAN 1942
+1 FAMS @F500627@
+1 SOUR @S500019@
+2 QUAY 4
+2 DATA
+3 TEXT Claudette E Leibner&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 18 בינו’ 1942&amp;lt;br&amp;gt;&nbsp;&nbsp;קרובים אפשריים: שםלידהWilliam Leibner15 בינו’
+4 CONC  1936
+2 EVEN Record
+3 ROLE 10220:278102852:
+1 RIN MH:I501715
+1 _UID 67A9892339B4CCFFCC9EEED0E68B6F48
+
+0 @I502728@ INDI
+1 _UPD 6 MAR 2025 22:54:48 GMT -0500 
+1 NAME Jacob /Leibner/
+2 GIVN Jacob
+2 SURN Leibner
+1 SEX M
+1 BIRT
+2 DATE 28 MAR 1993
+1 FAMC @F500629@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=120219185&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT <פרטי> לייבנר
+אם: מזל חדידה
+הורה: <פרטי> לייבנר
+אחים ואחיות: <פרטי> לייבנר, <פרטי> לייבנר
+2 EVEN Record
+3 ROLE 40000:120219185:
+1 RIN MH:I502728
+1 _UID 67CA7C07E96E05DA7B12148F69807C78
+
+0 @F500391@ FAM
+1 _UPD 16 JUL 2024 22:53:26 GMT -0500
+1 HUSB @I501052@
+1 WIFE @I501055@
+1 CHIL @I501056@
+1 CHIL @I501057@
+1 CHIL @I501058@
+1 CHIL @I501059@
+1 RIN MH:F500391
+1 _UID 6697403631AC82E2012F5EF0FA5D8D78
+1 MARR
+2 DATE 2 DEC 1906
+2 PLAC Newark, NJ
+
+0 @F500640@ FAM
+1 _UPD 10 FEB 2025 00:41:45 GMT -0500
+1 HUSB @I501059@
+1 WIFE @I501745@
+1 CHIL @I501746@
+1 CHIL @I501747@
+1 RIN MH:F500640
+1 _UID 67A99FA9949B9A9A57B648260FACB314
+1 MARR
+2 DATE 22 OCT 1950
+
+0 @F500393@ FAM
+1 _UPD 16 JUL 2024 23:02:18 GMT -0500
+1 HUSB @I500432@
+1 WIFE @I501069@
+1 CHIL @I505144@
+1 CHIL @I501075@
+1 CHIL @I501070@
+1 CHIL @I501071@
+1 CHIL @I501072@
+1 CHIL @I501076@
+1 CHIL @I501073@
+1 CHIL @I501077@
+1 CHIL @I501074@
+1 CHIL @I505137@
+1 RIN MH:F500393
+1 _UID 6697424A525D053F11D09B80A68FDC15
+1 MARR
+2 DATE 1895
+
+0 @F500451@ FAM
+1 _UPD 21 AUG 2024 10:19:57 GMT -0500
+1 HUSB @I501226@
+1 WIFE @I500431@
+1 CHIL @I501227@
+1 CHIL @I501228@
+1 CHIL @I501229@
+1 CHIL @I501230@
+1 CHIL @I501231@
+1 CHIL @I501232@
+1 CHIL @I501233@
+1 RIN MH:F500451
+1 _UID 66C6059D7F622F12C67E05C572CAE34C
+1 MARR
+2 DATE 1893
+
+0 @F500547@ FAM
+1 _UPD 6 JAN 2025 22:38:09 GMT -0500
+1 HUSB @I501474@
+1 WIFE @I501057@
+1 CHIL @I501475@
+1 RIN MH:F500547
+1 _UID 677CAFB19FBB3A1EBEB56C69C7F01C21
+1 MARR
+2 DATE 22 SEP 1940
+2 PLAC Brooklyn, Kings, New York, United States
+
+0 @F500396@ FAM
+1 _UPD 17 JUL 2024 09:23:15 GMT -0500
+1 HUSB @I501072@
+1 WIFE @I501080@
+1 CHIL @I501714@
+1 CHIL @I501081@
+1 RIN MH:F500396
+1 _UID 6697D3D3A806515177E687B55C3FAC1B
+1 MARR
+
+0 @F500544@ FAM
+1 _UPD 6 JAN 2025 11:51:14 GMT -0500
+1 HUSB @I501469@
+1 WIFE @I501071@
+1 CHIL @I501470@
+1 CHIL @I501723@
+1 CHIL @I501724@
+1 RIN MH:F500544
+1 _UID 677C181248C33FFCE25055AC46082621
+1 MARR
+2 DATE 22 MAY 1926
+2 PLAC Manhattan, New York, New York, United States
+
+0 @F500443@ FAM
+1 _UPD 16 AUG 2024 00:15:45 GMT -0500
+1 HUSB @I500363@
+1 WIFE @I501200@
+1 CHIL @I501201@
+1 CHIL @I501202@
+1 CHIL @I501203@
+1 CHIL @I501207@
+1 RIN MH:F500443
+1 _UID 66BEE0817D9976C7BA6330456FABBDD3
+1 MARR
+2 DATE 17 JUN 1908
+2 PLAC Korczyna
+
+0 @F500749@ FAM
+1 _UPD 23 FEB 2025 10:47:23 GMT -0500
+1 HUSB @I501747@
+1 WIFE @I502100@
+1 CHIL @I502101@
+1 CHIL @I502102@
+1 RIN MH:F500749
+1 _UID 67BB511B93834E89F85768CDA14B98D7
+1 MARR
+
+0 @F500629@ FAM
+1 _UPD 9 FEB 2025 23:56:08 GMT -0500
+1 HUSB @I501717@
+1 WIFE @I501719@
+1 CHIL @I502728@
+1 CHIL @I502726@
+1 CHIL @I502727@
+1 RIN MH:F500629
+1 _UID 67A994F857C0D7EE4F3AB9084DB1DD61
+1 MARR
+
+0 @F500450@ FAM
+1 _UPD 21 AUG 2024 10:18:16 GMT -0500
+1 HUSB @I501221@
+1 WIFE @I501050@
+1 CHIL @I501222@
+1 CHIL @I501223@
+1 CHIL @I501224@
+1 CHIL @I501225@
+1 RIN MH:F500450
+1 _UID 66C605389F4E915362C00F7FB68E726C
+1 MARR
+
+0 @F500628@ FAM
+1 _UPD 9 FEB 2025 23:52:54 GMT -0500
+1 HUSB @I501081@
+1 WIFE @I501716@
+1 CHIL @I501717@
+1 CHIL @I501720@
+1 CHIL @I501721@
+1 RIN MH:F500628
+1 _UID 67A9943632DB5CC1A05AB10AED91F65D
+1 MARR
+2 DATE 1959
+
+0 @F500449@ FAM
+1 _UPD 21 AUG 2024 10:15:52 GMT -0500
+1 HUSB @I501216@
+1 WIFE @I501053@
+1 CHIL @I501217@
+1 CHIL @I501218@
+1 CHIL @I501220@
+1 CHIL @I501727@
+1 CHIL @I501219@
+1 RIN MH:F500449
+1 _UID 66C604A83B3C6B2A0B64D720BCE908B1
+1 MARR
+2 DATE 13 MAY 1906
+2 PLAC Congregation Agudath Achim MeKrakow at 54-56 Pitt Street, NY
+
+0 @F500902@ FAM
+1 _UPD 6 MAR 2025 06:52:09 GMT -0500
+1 HUSB @I502675@
+1 WIFE @I501070@
+1 RIN MH:F500902
+1 _UID 67C99A7926AFA61F962AA8DC012546EF
+1 MARR
+
+0 @F500445@ FAM
+1 _UPD 16 AUG 2024 00:22:33 GMT -0500
+1 HUSB @I501201@
+1 WIFE @I501205@
+1 CHIL @I501206@
+1 RIN MH:F500445
+1 _UID 66BEE219706A5352C53A20C113736439
+1 MARR
+
+0 @F500010@ FAM
+1 _UPD 9 MAY 2023 10:42:04 GMT -0500
+1 HUSB @I500026@
+1 WIFE @I500027@
+1 CHIL @I500479@
+1 CHIL @I500193@
+1 CHIL @I500363@
+1 CHIL @I500485@
+1 CHIL @I500484@
+1 CHIL @I500487@
+1 CHIL @I500194@
+1 CHIL @I500488@
+1 CHIL @I500489@
+1 CHIL @I500486@
+1 CHIL @I500024@
+1 CHIL @I500490@
+1 CHIL @I500396@
+1 RIN MH:F500010
+1 _UID 645A699BD6E16BB0DEE9CF94C19625E6
+1 MARR
+2 DATE 1874
+2 PLAC Korczyn(Korczyna), Austria
+
+0 @F500750@ FAM
+1 _UPD 23 FEB 2025 10:58:06 GMT -0500
+1 HUSB @I502102@
+1 WIFE @I502103@
+1 RIN MH:F500750
+1 _UID 67BB539EC743F1AF2FC83B62FF7E9539
+1 MARR
+
+0 @F500399@ FAM
+1 _UPD 18 JUL 2024 10:31:13 GMT -0500
+1 HUSB @I501093@
+1 WIFE @I501094@
+1 CHIL @I500423@
+1 RIN MH:F500399
+1 _UID 66993540F3C09AA5274C5AC4764BBB75
+
+0 @F500400@ FAM
+1 _UPD 18 JUL 2024 10:32:31 GMT -0500
+1 HUSB @I501095@
+1 WIFE @I500427@
+1 RIN MH:F500400
+1 _UID 6699358FD254985D85ACFFD6A41BE1D6
+1 MARR
+
+0 @F500448@ FAM
+1 _UPD 21 AUG 2024 10:12:51 GMT -0500
+1 HUSB @I501212@
+1 WIFE @I501054@
+1 CHIL @I501214@
+1 CHIL @I501215@
+1 RIN MH:F500448
+1 _UID 66C603F3A09F834699E865537D7E4A3E
+1 MARR
+2 DATE 13 AUG 1910
+2 PLAC Manhattan, New York City, New York, United States
+
+0 @F500545@ FAM
+1 _UPD 6 JAN 2025 22:37:12 GMT -0500
+1 HUSB @I501471@
+1 WIFE @I501056@
+1 CHIL @I503322@
+1 RIN MH:F500545
+1 _UID 677CAF783473B9496313C62478170C17
+1 MARR
+2 DATE 12 SEP 1927
+2 PLAC The Astor, New York, NY
+
+0 @F500546@ FAM
+1 _UPD 6 JAN 2025 22:37:12 GMT -0500
+1 HUSB @I501472@
+1 WIFE @I501056@
+1 CHIL @I501473@
+1 RIN MH:F500546
+1 _UID 677CAF788265694C6313C62478170C17
+1 MARR
+
+0 @F500751@ FAM
+1 _UPD 23 FEB 2025 10:58:22 GMT -0500
+1 HUSB @I502101@
+1 WIFE @I502104@
+1 RIN MH:F500751
+1 _UID 67BB53AE0BE08D40BC9C6DB55F855CE4
+1 MARR
+
+0 @F500452@ FAM
+1 _UPD 21 AUG 2024 10:32:06 GMT -0500
+1 HUSB @I501234@
+1 WIFE @I501075@
+1 CHIL @I505145@
+1 CHIL @I505146@
+1 RIN MH:F500452
+1 _UID 66C60876281E0BF61B976B8D5CBC287D
+1 MARR
+
+0 @F500446@ FAM
+1 _UPD 18 AUG 2024 09:36:39 GMT -0500
+1 HUSB @I501208@
+1 WIFE @I501058@
+1 CHIL @I501243@
+1 RIN MH:F500446
+1 _UID 66C206F73D0444AE6D116226DD6207C4
+1 MARR
+2 DATE 29 JUN 1941
+2 PLAC Brooklyn, Kings, New York, United States
+
+0 @F500444@ FAM
+1 _UPD 16 AUG 2024 00:16:56 GMT -0500
+1 HUSB @I501204@
+1 WIFE @I501203@
+1 RIN MH:F500444
+1 _UID 66BEE0C80E1D39CCE6C2EFDA3394DECE
+1 MARR
+
+0 @F500171@ FAM
+1 _UPD 14 MAY 2024 23:35:54 GMT -0500
+1 HUSB @I500426@
+1 WIFE @I500429@
+1 CHIL @I500432@
+1 CHIL @I500431@
+1 RIN MH:F500171
+1 _UID 66443BAA12D575FBC487AF0D5A03E904
+1 MARR
+2 DATE ABT 1863
+2 PLAC Nowy Zmigrod, Poland (then Austria)
+
+0 @F500172@ FAM
+1 _UPD 14 MAY 2024 23:35:54 GMT -0500
+1 HUSB @I500426@
+1 WIFE @I500430@
+1 CHIL @I500434@
+1 CHIL @I500433@
+1 RIN MH:F500172
+1 _UID 66443BAA3510E5FFC487AF0D5A03E904
+1 MARR
+2 DATE 6 JAN 1906
+2 PLAC Manhattan, New York, USA
+
+0 @F500390@ FAM
+1 _UPD 16 JUL 2024 22:50:19 GMT -0500
+1 HUSB @I500426@
+1 WIFE @I501042@
+1 CHIL @I501049@
+1 CHIL @I501050@
+1 CHIL @I501051@
+1 CHIL @I501052@
+1 CHIL @I501053@
+1 CHIL @I501054@
+1 RIN MH:F500390
+1 _UID 66973F7BA2BDDDE4A12065DC4264905A
+1 MARR
+2 DATE 1875
+2 NOTE בן/בת זוג: Rose Leibner (לבית Achtsam)
+
+0 @F500394@ FAM
+1 _UPD 17 JUL 2024 05:24:41 GMT -0500
+1 HUSB @I500433@
+1 WIFE @I501078@
+1 RIN MH:F500394
+1 _UID 66979BE9537D478786BC5B853B239860
+1 MARR
+2 DATE 2 AUG 1978
+2 PLAC Palm Beach, Florida, USA
+
+0 @F500395@ FAM
+1 _UPD 17 JUL 2024 05:24:41 GMT -0500
+1 HUSB @I500433@
+1 WIFE @I501079@
+1 RIN MH:F500395
+1 _UID 66979BE99F37278A86BC5B853B239860
+1 MARR
+
+0 @F500169@ FAM
+1 _UPD 14 MAY 2024 23:35:53 GMT -0500
+1 HUSB @I500423@
+1 WIFE @I500424@
+1 CHIL @I500426@
+1 CHIL @I500027@
+1 CHIL @I500427@
+1 RIN MH:F500169
+1 _UID 66443BA966BC05E9C487AF0D5A03E904
+1 MARR
+
+0 @F500170@ FAM
+1 _UPD 14 MAY 2024 23:35:53 GMT -0500
+1 HUSB @I500423@
+1 WIFE @I500425@
+1 RIN MH:F500170
+1 _UID 66443BA9A8EDE5F0C487AF0D5A03E904
+1 MARR
+2 DATE 1875
+
+0 @F500627@ FAM
+1 _UPD 9 FEB 2025 23:05:39 GMT -0500
+1 HUSB @I501714@
+1 WIFE @I501715@
+1 CHIL @I501718@
+1 CHIL @I501722@
+1 CHIL @I502725@
+1 RIN MH:F500627
+1 _UID 67A9892343029D00CC9EEED0E68B6F48
+1 MARR
+0 TRLR

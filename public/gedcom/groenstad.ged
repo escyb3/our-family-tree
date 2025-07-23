@@ -1,0 +1,2418 @@
+0 HEAD
+1 SOUR ChatGPT-GEDCOM
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+1 LANG Hebrew
+0 @I500725@ INDI
+1 _UPD 29 NOV 2024 06:37:35 GMT -0500 
+1 NAME Philip Samuel /Groenstad/
+2 GIVN Philip Samuel
+2 SURN Groenstad
+1 SEX M
+1 BIRT
+2 DATE 3 SEP 1789
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 DEAT Y
+2 DATE 2 JUL 1852
+2 PLAC Hoogezand, Groningen, Nederland
+1 RESI
+2 DATE 1832
+2 ADDR
+3 ADR1 Assen, Drenthe, Netherlands
+1 OCCU Koopman
+1 EVEN
+2 TYPE MARR
+2 DATE 21 FEB 1828
+2 PLAC Hoogezand, Groningen, Nederland
+1 FAMS @F500264@
+1 FAMC @F500499@
+1 SOUR @S500054@
+2 PAGE Philip Samuel Groenstad
+2 QUAY 3
+2 DATA
+3 DATE 23 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1502154/philip-samuel-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502154
+1 RIN MH:I500725
+1 _UID 664F262574F529A4C18D5B820E509E1B
+
+0 @I500726@ INDI
+1 _UPD 8 MAR 2025 23:06:08 GMT -0500 
+1 NAME Saartje /Salomons/
+2 GIVN Saartje
+2 SURN Salomons
+2 _MARNM Groenstad
+1 SEX F
+1 BIRT
+2 DATE 1800
+2 PLAC Zuthpen
+1 DEAT Y
+2 DATE 24 SEP 1844
+2 PLAC Martenshoek Gem. Hoogezand
+1 OCCU Kramersche
+1 FAMS @F500264@
+1 FAMC @F500912@
+1 SOUR @S500054@
+2 PAGE Saartje Salomons
+2 QUAY 3
+2 DATA
+3 DATE 23 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500205@
+2 QUAY 4
+2 DATA
+3 TEXT Saartje Salomons&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: Zuthpen&amp;lt;br&amp;gt;פטירה: 24 בספט’ 1844 - Martenshoek Gem. Hoogezand&amp;lt;br&amp;gt;גיל: 32&amp;lt;b
+4 CONC r&amp;gt;מקצוע: Kramersche&amp;lt;br&amp;gt;אב: Salomon Izaks&amp;lt;br&amp;gt;אם: Mariana Benediktus&amp;lt;br&amp;gt;&nbsp;&nbsp;עדים או קרובי משפחה: &amp;lt;br&amp;gt;קש
+4 CONC  משפחתי שם&amp;lt;br&amp;gt;Relative Philip Samuël Groenstad&amp;lt;br&amp;gt;מקור: &amp;lt;br&amp;gt;ספר: Overlijdensregister 1844&amp;lt;br&amp;gt;מוסד: AlleGroningers&amp;lt;br
+4 CONC &amp;gt;מספר מסמך: 87&amp;lt;br&amp;gt;מקום המקור: Hoogezand, Groningen, Netherlands&amp;lt;br&amp;gt;תאריך מקור: 24 בספט’ 1844&amp;lt;br&amp;gt;תאריך הכרך: 24
+4 CONC  בספט’ 1844&amp;lt;br&amp;gt;מקור: &amp;lt;a&amp;gt;לצפייה ברשומה המלאה ב-allegroningers.nl&amp;lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 10563:4479960-:
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19549092/saartje-salomons-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 19549092
+1 SOUR @S500208@
+2 PAGE https://www.myheritage.co.il/profile-OYYV76HBPO6RJRN34ZUR5WCHTYISVII-1500981/saartje-salomons-groenstad-geboren-salomons
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500981
+1 RIN MH:I500726
+1 _UID 664F262592DAF9A8C18D5B820E509E1B
+
+0 @I502537@ INDI
+1 _UPD 13 MAR 2025 11:34:53 GMT -0500 
+1 NAME Henriette /Groenstad/
+2 GIVN Henriette
+2 SURN Groenstad
+1 SEX F
+1 BIRT
+2 DATE 18 JAN 1833
+2 PLAC Amsterdam, Amsterdam, NH, Netherlands
+1 DEAT Y
+1 FAMC @F500501@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Henriette Groenstad&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Birth: Jan 18 1833 - Amsterdam, Amsterdam, NH, Netherlands&amp;lt;br&amp;gt;Father: &amp;lt;a&amp;gt;Hermanus Emanuel / Mendele Sam
+4 CONC uel / Zanwil Groenstad&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Mother: &amp;lt;a&amp;gt;Sara Ephraim Amelander&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Siblings: &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp
+4 CONC ;gt;, &amp;lt;a&amp;gt;Samuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Samuel Emanuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Ephraim 
+4 CONC Emanuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Grietje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Fijtje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;, &amp
+4 CONC ;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Eva Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Gesina Groenstad&amp;lt;/a&amp
+4 CONC ;gt;
+2 EVEN Record
+3 ROLE 40000:504342786:
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1504792/henriette-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1504792
+1 RIN MH:I502537
+1 _UID 67C71DF485AC83D677713616347B436A
+
+0 @I503483@ INDI
+1 _UPD 2 APR 2025 06:43:50 GMT -0500 
+1 NAME Ephraim Emanuel /Groenstad/
+2 GIVN Ephraim Emanuel
+2 SURN Groenstad
+1 SEX M
+1 BIRT
+2 DATE 9 JUL 1824
+2 PLAC Amsterdam, North Holland, Netherlands
+1 EVEN Echtgeno(o)t(e): Saartje Kool
+2 TYPE MARR
+2 DATE 1 MAY 1850
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 3 DEC 1866
+2 PLAC Amsterdam, North Holland, Netherlands
+1 FAMS @F501149@
+1 FAMC @F500501@
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1504787/ephraim-emanuel-efraim-groenstadt-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1504787
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=375099569&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Ephraim Emanuel Groenstad
+לידה: 9 ביולי 1824 - Amsterdam, North Holland, Netherlands
+פטירה: 3 בדצמ’ 1866 - Amsterdam, North Holland, Netherlands
+פטירה: 3 בדצמ’ 1866 - Am
+4 CONC sterdam, Noord-Holland, Nederland
+הורים: Hermanus Samuel Groenstad, Sara Ephraim Groenstad (לבית Amelander)
+אשה: Saartje Groenstad (לבית Kool)
+ילדים: Lion Groenstad, Jacob Groenst
+4 CONC ad, Flora Groenstad
+אחים ואחיות: Marianne Groenstad, Fijtje Post (לבית Groenstad), Henriette Groenstad, Eva Groenstad, Gesina Aa (לבית Groenstad)
+2 EVEN Record
+3 ROLE 40001:375099569:
+1 RIN MH:I503483
+1 _UID 67ED22D091C37B1CB4EDE24E3B02F0F5
+
+0 @I503487@ INDI
+1 _UPD 2 APR 2025 06:43:51 GMT -0500 
+1 NAME Saartje /Kool/
+2 GIVN Saartje
+2 SURN Kool
+1 SEX F
+1 BIRT
+2 DATE 1828
+2 PLAC Amsterdam, North Holland, Netherlands
+1 DEAT Y
+1 FAMS @F501149@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=672736341&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Saartje Groenstad (לבית Kool)
+לידה: 1828 - Amsterdam, North Holland, Netherlands
+לידה: 19 בפבר’ 1828 - Amsterdam, Noord-Holland, Nederland
+פטירה: 8 במאי 1908 - Amsterdam, No
+4 CONC ord-Holland, Nederland
+הורים: Salomon Levie Kool-Cohen, Naatje Jacob Kool-Cohen (לבית Bonnetenmaker)
+בעל: Ephraim Emanuel Groenstad
+ילדים: Lion Groenstad, Jacob Groenstad, Flora Groen
+4 CONC stad
+אחים ואחיות: Joseph Salomon Kool, Sara Salomonsdr Grewel (לבית Kool), Levie Salomon Kool, Mozes Salomon Kool, Aaltje Salomon Isaac Snoek (לבית Kool), Joseph Salomonsz Kool, Rebe
+4 CONC kka Kool, Rebekka Kool
+2 EVEN Record
+3 ROLE 40001:672736341:
+1 RIN MH:I503487
+1 _UID 67ED22F5A117BA122C83272B6F7AC308
+
+0 @I503484@ INDI
+1 _UPD 3 APR 2025 12:45:15 GMT -0500 
+1 NAME Fijtje /Groenstad/
+2 GIVN Fijtje
+2 SURN Groenstad
+1 SEX F
+1 BIRT
+2 DATE 12 FEB 1826
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 EVEN Echtgeno(o)t(e): Benjamin Abraham Post
+2 TYPE MARR
+2 DATE 1 AUG 1855
+2 PLAC Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands
+1 DEAT Y
+1 FAMC @F500501@
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1504789/fijtje-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1504789
+1 RIN MH:I503484
+1 _UID 67ED22D0D78E4B1DB4EDE24E3B02F0F5
+
+0 @I503911@ INDI
+1 _UPD 7 APR 2025 01:01:48 GMT -0500 
+1 NAME Betje /Groenstad/
+2 GIVN Betje
+2 SURN Groenstad
+2 _MARNM van Praag
+1 SEX F
+1 BIRT
+2 DATE 12 JUN 1861
+2 PLAC Amsterdam, North Holland, The Netherlands
+2 NOTE "In Memoriam" noemt 12-06-1861.
+1 RESI
+2 ADDR
+3 ADR1 Plantage Muidergracht 17
+3 CITY Amsterdam
+1 EVEN 68P
+2 TYPE Reference Number
+1 DEAT Y
+2 DATE 28 SEP 1942
+2 PLAC Gmina Oświęcim, Lesser Poland Voivodeship, Poland
+1 FAMS @F501274@
+1 SOUR @S500269@
+2 PAGE https://www.myheritage.com/profile-OYYV7E2NX3ND57DL7OICYZSX5O7WTLI-1504246/betje-van-praag-geboren-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1504246
+1 RIN MH:I503911
+1 _UID 67F36A45D6CDF82684EB2DE5ECE98A19
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTdlMTNiOGFiMjI1MjgyZDM2NWY4ZjBjMDlhOGJjNDJkZGIxZjEyMWJhYjhmOTkxN2Q2MTM1M2E2OWViN2UxYTImZT0xNzUzNjEwNDAw/158/944/6912/501611_136998674pd36bifq11baz_A.jpg
+2 _FILESIZE 28474
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501610
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501611
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTUyYTZlN2RmY2IxYTg3YjJiZmFmODNhNjZlNDc3M2U3NTkxZDliMjdjMjgwMWM2NmQzYmVkNWMxOGVjOWRiZTAmZT0xNzUzNjEwNDAw/158/944/6912/501610_807964f6181f67b0wzp34a_A.jpg
+2 _FILESIZE 28476
+2 TITL 501415_179509x51pld2n635a61ad_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501610
+
+0 @I503910@ INDI
+1 _UPD 7 APR 2025 01:01:47 GMT -0500 
+1 NAME Jochem Joachim Emanuel /van Praag/
+2 GIVN Jochem Joachim Emanuel
+2 SURN van Praag
+1 SEX M
+1 BIRT
+2 DATE 5 MAY 1861
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 OCCU Diamantversteller
+1 OCCU diamantversteller
+1 RESI
+2 ADDR
+3 ADR1 Leuvenstraat 413
+3 CITY Amsterdam
+1 EVEN 68P van 61P
+2 TYPE Reference Number
+1 OCCU diamantbewerker
+1 EVEN Spouse: Betje Groenstad
+2 TYPE MARR
+2 DATE 15 APR 1885
+2 PLAC Amsterdam, Noord-Holland, Netherlands
+1 DEAT Y
+2 DATE 31 JAN 1924
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 BURI
+2 DATE 3 FEB 1924
+2 PLAC Muiderberg (NH)
+1 FAMS @F501274@
+1 SOUR @S500269@
+2 PAGE https://www.myheritage.com/profile-OYYV7E2NX3ND57DL7OICYZSX5O7WTLI-1504001/jochem-joachim-emanuel-van-praag
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1504001
+1 RIN MH:I503910
+1 _UID 67F36A4594B8282484EB2DE5ECE98A19
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWEyODk5NGIxYzE1MGIzMWIwY2FhM2RlZjI5MzliZDBlZWMyYTZhNmI5Y2EwYjdmNzY0OWI0YzRjMzkyMWNiY2QmZT0xNzUzNjEwNDAw/158/944/6912/501609_253806ae364f713p061vu9_A.jpg
+2 _FILESIZE 1877
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501608
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501609
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTE4Nzg4NzQxMDBmMDgwZWRjODUyN2Y0YjllZTZmNTU1NTFjNzhhNDFiNThjMjY3ZTdiZjJhOWY2NWQxNDc3MzMmZT0xNzUzNjEwNDAw/158/944/6912/501608_0077981va4186fg9f36d97_A.jpg
+2 _FILESIZE 1881
+2 TITL 501417_94064457s1a0t3nd5wd661_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501608
+
+0 @I500734@ INDI
+1 _UPD 23 MAY 2024 06:19:40 GMT -0500 
+1 NAME Martha /Groenstad/
+2 GIVN Martha
+2 SURN Groenstad
+1 SEX F
+1 RESI
+2 DATE 1833
+2 ADDR
+3 ADR2 Groningen, Groningen, Netherlands
+1 BIRT
+2 DATE 27 SEP 1833
+2 PLAC Groningen, Groningen, Netherlands
+1 DEAT Y
+2 DATE 6 APR 1904
+2 PLAC Hoogezand, Groningen, Nederland
+1 CHR
+2 PLAC Groningen, Groningen, Netherlands
+1 FAMC @F500264@
+1 SOUR @S500054@
+2 PAGE Martha Groenstad
+2 QUAY 3
+2 DATA
+3 DATE 23 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I500734
+1 _UID 664F26266A6279BBC18D5B820E509E1B
+
+0 @I503485@ INDI
+1 _UPD 20 APR 2025 11:06:04 GMT -0500 
+1 NAME Eliaser Salomon /Groenstad/
+2 GIVN Eliaser Salomon
+2 SURN Groenstad
+1 SEX M
+1 BIRT
+2 DATE 1791
+2 PLAC Amsterdam, North Holland, Netherlands
+1 DEAT Y
+1 FAMC @F500499@
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1500641/eliaser-salomon-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500641
+1 RIN MH:I503485
+1 _UID 67ED22D120098B1EB4EDE24E3B02F0F5
+
+0 @I504974@ INDI
+1 _UPD 30 APR 2025 04:26:49 GMT -0500 
+1 NAME Hanna /Groenstad/
+2 GIVN Hanna
+2 SURN Groenstad
+1 SEX F
+1 BIRT
+2 DATE 28 AUG 1923
+2 PLAC Apeldoorn, Gelderland, Netherlands
+1 DEAT Y
+2 DATE 4 JUN 1943
+2 PLAC Sobibor Extermination Camp, Sobibór, Włodawa County, Lublin, Poland
+1 FAMS @F501559@
+1 FAMC @F501555@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1904257998&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Hanna Speijer (לבית Groenstad)
+לידה: 28 באוג’ 1923 - Apeldoorn, Gelderland, Netherlands
+פטירה: 4 ביוני 1943 - Sobibor Extermination Camp, Sobibór, Włodawa County, Lublin, Pol
+4 CONC and
+הורים: Ephraim Groenstad, Sara Judith Groenstad (לבית van Kollem)
+בעל: Herman Speijer
+אחים ואחיות: Mimi Poot (לבית Groenstad), Nana Groenstad, Eleazer Groenstad
+2 EVEN Record
+3 ROLE 40001:1904257998:
+1 RIN MH:I504974
+1 _UID 6811ECD62AB28EE90BE60B762F4C16BC
+
+0 @I504978@ INDI
+1 _UPD 30 APR 2025 04:30:47 GMT -0500 
+1 NAME Herman /Speijer/
+2 GIVN Herman
+2 SURN Speijer
+1 SEX M
+1 BIRT
+2 DATE 1 SEP 1918
+2 PLAC Lemmer
+1 DEAT Y
+2 DATE 4 JUN 1943
+2 PLAC Sobibór Vernietigingskamp, Sobibór, Powiat włodawski, lubelskie, Polen
+1 FAMS @F501559@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1807189752&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Herman Speijer
+לידה: 1 בספט’ 1918 - Lemmer
+פטירה: Amsterdam, Noord-Holland, Nederland
+פטירה: 4 ביוני 1943 - Sobibór Vernietigingskamp, Sobibór, Powiat włodawski, lubelskie,
+4 CONC  Polen
+הורים: Izaak Speijer, Bertha Speijer (לבית Frankenhuis)
+אשה: Hanna Speijer (לבית Groenstad)
+אחים ואחיות: Rebecca Speijer, Elkan Speijer
+2 EVEN Record
+3 ROLE 40001:1807189752:
+1 RIN MH:I504978
+1 _UID 6811EDC688F76B3EC6015B2B5C0A62DB
+
+0 @I502542@ INDI
+1 _UPD 4 MAR 2025 09:36:29 GMT -0500 
+1 NAME Gesina /Groenstad/
+2 GIVN Gesina
+2 SURN Groenstad
+1 SEX F
+1 BIRT
+2 DATE 24 AUG 1841
+2 PLAC Amsterdam, Noord-Holland, The Netherlands
+1 DEAT Y
+2 DATE JAN 1926
+2 PLAC Amsterdam, Noord-Holland, The Netherlands
+1 BURI
+2 DATE 17 JAN 1926
+2 PLAC Joodse Begraafplaats, Muiderberg, Noord-Holland, The Netherlands
+1 EVEN Echtgeno(o)t(e): Benjamin Aa
+2 TYPE MARR
+2 DATE 26 AUG 1868
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 FAMC @F500501@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Gesina Groenstad&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Birth: Aug 24 1841 - Amsterdam, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;Marriage: Spouse: Benjamin Aa - Aug 26 1868 - Amsterda
+4 CONC m, Government of Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;Death: Jan 1926 - Amsterdam, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;Burial: Jan 17 1926 - Joodse Begraafplaats, Mui
+4 CONC derberg, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;Father: &amp;lt;a&amp;gt;Hermanus Emanuel / Mendele Samuel / Zanwil Groenstad&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Mother: &amp;lt;a&amp;gt;Sara 
+4 CONC Ephraim Amelander&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Husband: &amp;lt;a&amp;gt;Benjamin Aa&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Children: &amp;lt;a&amp;gt;Catharina Aa&amp;lt;/a&amp;gt;, &amp;lt;a&amp;g
+4 CONC t;Hermanus Aa&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Jacob Aa&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Juda Aa&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Ephraim Aa&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Elisabeth Aa&a
+4 CONC mp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Siblings: &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Samuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&am
+4 CONC p;gt;, &amp;lt;a&amp;gt;Samuel Emanuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Ephraim Emanuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Grietje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt
+4 CONC ;Fijtje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Henriette Groenstad&amp;lt;/a&amp;gt;, 
+4 CONC &amp;lt;a&amp;gt;Eva Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 40000:202759985:
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1504795/gesina-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1504795
+1 RIN MH:I502542
+1 _UID 67C71DF5AAD183DB77713616347B436A
+
+0 @I502539@ INDI
+1 _UPD 4 MAR 2025 09:36:27 GMT -0500 
+1 NAME Eva /Groenstad/
+2 GIVN Eva
+2 SURN Groenstad
+2 _MARNM Wind
+1 SEX F
+1 BIRT
+2 DATE 9 APR 1835
+2 PLAC Amsterdam, Amsterdam, NH, Netherlands
+1 DEAT Y
+2 DATE 12 JUN 1916
+2 PLAC Manhattan
+1 EVEN Echtgeno(o)t(e): Abraham Wind
+2 TYPE MARR
+2 DATE 12 DEC 1866
+2 PLAC Manhattan, New York City, New York County, New York, United States
+1 FAMC @F500501@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Eva Groenstad&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Birth: Apr 9 1835 - Amsterdam, Amsterdam, NH, Netherlands&amp;lt;br&amp;gt;Marriage: Spouse: Abraham Wind - Dec 12 1866 - Manhattan, New 
+4 CONC York City, New York County, New York, United States&amp;lt;br&amp;gt;Death: June 12 1916 - Manhattan&amp;lt;br&amp;gt;Father: &amp;lt;a&amp;gt;Hermanus Emanuel / Mendele Samuel / Zanwil Groenstad&amp;
+4 CONC lt;/a&amp;gt;&amp;lt;br&amp;gt;Mother: &amp;lt;a&amp;gt;Sara Ephraim Amelander&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Husband: &amp;lt;a&amp;gt;Abraham Wind&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Child: &amp;
+4 CONC lt;a&amp;gt;Solomon Wind&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Siblings: &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Samuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Maria
+4 CONC nne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Samuel Emanuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Ephraim Emanuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Grietje Groenstad&amp;lt;/a
+4 CONC &amp;gt;, &amp;lt;a&amp;gt;Fijtje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Henriette Gro
+4 CONC enstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Gesina Groenstad&amp;lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 40000:504342129:
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1504793/eva-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1504793
+1 RIN MH:I502539
+1 _UID 67C71DF4F16543D877713616347B436A
+
+0 @I502535@ INDI
+1 _UPD 13 MAR 2025 11:34:49 GMT -0500 
+1 NAME Marianne /Groenstad/
+2 GIVN Marianne
+2 SURN Groenstad
+1 SEX F
+1 BIRT
+2 DATE 4 APR 1823
+2 PLAC Amsterdam, Amsterdam, NH, Netherlands
+1 DEAT Y
+1 FAMC @F500501@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Marianne Groenstad&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Birth: Apr 4 1823 - Amsterdam, Amsterdam, NH, Netherlands&amp;lt;br&amp;gt;Father: &amp;lt;a&amp;gt;Hermanus Emanuel / Mendele Samue
+4 CONC l / Zanwil Groenstad&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Mother: &amp;lt;a&amp;gt;Sara Ephraim Amelander&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Siblings: &amp;lt;a&amp;gt;Samuel Emanuel Groenstad&amp;lt;/a
+4 CONC &amp;gt;, &amp;lt;a&amp;gt;Ephraim Emanuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Grietje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Fijtje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betj
+4 CONC e Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Henriette Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Eva Groenstad&amp;lt;/a&amp;gt;, &amp;lt;
+4 CONC a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Samuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Gesina Groenstad&amp;lt;/a&amp;
+4 CONC gt;
+2 EVEN Record
+3 ROLE 40000:504343771:
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1504785/marianne-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1504785
+1 RIN MH:I502535
+1 _UID 67C71DF41EF363D477713616347B436A
+
+0 @I503489@ INDI
+1 _UPD 2 APR 2025 06:43:52 GMT -0500 
+1 NAME Jacob /Groenstad/
+2 GIVN Jacob
+2 SURN Groenstad
+1 SEX M
+1 BIRT
+2 DATE 28 JUL 1863
+2 PLAC Amsterdam, Noord-Holland, Netherlands
+1 DEAT Y
+1 FAMC @F501149@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=389809541&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Jacob Groenstad
+לידה: 28 ביולי 1863 - Amsterdam, Noord-Holland, Netherlands
+הורים: Ephraim Emanuel Groenstad, Saartje Groenstad (לבית Kool)
+אחים ואחיות: Lion Groenstad, Flo
+4 CONC ra Groenstad
+2 EVEN Record
+3 ROLE 40001:389809541:
+1 RIN MH:I503489
+1 _UID 67ED22F62822BA162C83272B6F7AC308
+
+0 @I502538@ INDI
+1 _UPD 4 MAR 2025 09:36:27 GMT -0500 
+1 NAME Marianne /Groenstad/
+2 GIVN Marianne
+2 SURN Groenstad
+1 SEX F
+1 BIRT
+2 DATE ABT 8 MAR 1834
+1 DEAT Y
+2 DATE ABT 19 MAR 1834
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 FAMC @F500501@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Marianne Groenstad&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Birth: Circa Mar 8 1834&amp;lt;br&amp;gt;Death: Circa Mar 19 1834 - Amsterdam, Government of Amsterdam, North Holland, The Netherlan
+4 CONC ds&amp;lt;br&amp;gt;Father: &amp;lt;a&amp;gt;Hermanus Emanuel / Mendele Samuel / Zanwil Groenstad&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Mother: &amp;lt;a&amp;gt;Sara Ephraim Amelander&amp;lt;/a&amp;gt;&a
+4 CONC mp;lt;br&amp;gt;Siblings: &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Samuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&a
+4 CONC mp;gt;Samuel Emanuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Ephraim Emanuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Grietje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Fijtje Groenstad&
+4 CONC amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Henriette Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Eva Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betje 
+4 CONC Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Gesina Groenstad&amp;lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 40000:204440010:
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1504791/marianne-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1504791
+1 RIN MH:I502538
+1 _UID 67C71DF4B845F3D777713616347B436A
+
+0 @I503496@ INDI
+1 _UPD 7 APR 2025 00:52:34 GMT -0500 
+1 NAME Jacob Raphael /Groenstad/
+2 GIVN Jacob Raphael
+2 SURN Groenstad
+1 SEX M
+1 BIRT
+2 DATE 23 OCT 1897
+2 PLAC Amsterdam, Noord-Holland, Nederland
+1 DEAT Y
+2 DATE 31 MAR 1944
+2 PLAC Polska
+1 OCCU warehouse clerk in 1924
+1 FAMS @F501560@
+1 FAMC @F501150@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1904061227&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Jacob Raphael Groenstad
+לידה: 23 באוק’ 1897 - Amsterdam,Noord Holland,Netherlands
+פטירה: 31 במרץ 1944 - Polen (Holocaust)
+הורים: Lion Groenstad, Mietje Groenstad (לבית Swar
+4 CONC t)
+אשה: Carolina Sophia Groenstad (לבית Davids)
+אחים ואחיות: Hanna Sajet (לבית Groenstad), Sellij Duim (לבית Groenstad), Marianne Flora van Praag (לבית Groenstad), Ephraim
+4 CONC  Groenstad
+2 EVEN Record
+3 ROLE 40001:1904061227:
+1 SOUR @S500225@
+2 PAGE https://www.myheritage.com/profile-OYYV6IBMXOL2JUVTEVIOWVGGFKXTM3Y-1502692/jacob-raphael-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502692
+1 RIN MH:I503496
+1 _UID 67ED2325D468E99489095A63B4CB3A01
+
+0 @I504979@ INDI
+1 _UPD 30 APR 2025 04:31:16 GMT -0500 
+1 NAME Carolina Sophia /Davids/
+2 GIVN Carolina Sophia
+2 SURN Davids
+1 SEX F
+1 BIRT
+2 DATE 14 OCT 1903
+2 PLAC Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 22 OCT 1943
+2 PLAC Auschwitz Concentration Camp, Oświęcim, Biała, Kraków, Poland
+1 FAMS @F501560@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=2527359617&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Carolina Sophia Groenstad (לבית Davids)
+לידה: 14 באוק’ 1903 - Amsterdam, North Holland, Netherlands
+פטירה: 22 באוק’ 1943 - Auschwitz Concentration Camp, Oświęcim, Biała, Kr
+4 CONC aków, Poland
+הורים: Eliazar Davids, Jeannette Davids (לבית Wiener)
+בעל: Jacob Raphael Groenstad
+אחות: Sophia Carolina Davids
+2 EVEN Record
+3 ROLE 40001:2527359617:
+1 RIN MH:I504979
+1 _UID 6811EDE3A8247B03C0D391FD71F5E135
+
+0 @I504975@ INDI
+1 _UPD 30 APR 2025 04:26:49 GMT -0500 
+1 NAME Eleazer /Groenstad/
+2 GIVN Eleazer
+2 SURN Groenstad
+1 SEX M
+1 BIRT
+2 DATE 19 FEB 1925
+2 PLAC Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 4 JUN 1943
+2 PLAC Sobibor Extermination Camp, Sobibór, Włodawa County, Lublin, Poland
+1 FAMC @F501555@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1903983265&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Eleazer Groenstad
+לידה: 19 בפבר’ 1925 - Amsterdam, North Holland, Netherlands
+פטירה: 4 ביוני 1943 - Sobibor Extermination Camp, Sobibór, Włodawa County, Lublin, Poland
+הורים
+4 CONC : Ephraim Groenstad, Sara Judith Groenstad (לבית van Kollem)
+אחים ואחיות: Mimi Poot (לבית Groenstad), Nana Groenstad, Hanna Speijer (לבית Groenstad)
+2 EVEN Record
+3 ROLE 40001:1903983265:
+1 RIN MH:I504975
+1 _UID 6811ECD660705EEA0BE60B762F4C16BC
+
+0 @I503486@ INDI
+1 _UPD 2 APR 2025 06:43:51 GMT -0500 
+1 NAME Marianne /Groenstad/
+2 GIVN Marianne
+2 SURN Groenstad
+1 SEX F
+1 BIRT
+2 DATE 4 APR 1823
+2 PLAC Amsterdam, Noord-Holland, Netherlands
+1 DEAT Y
+1 FAMC @F500501@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=726937066&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Marianne Groenstad
+לידה: 4 באפר’ 1823 - Amsterdam, Noord-Holland, Netherlands
+הורים: Hermanus Samuel Groenstad, Sara Ephraim Groenstad (לבית Amelander)
+אחים ואחיות: Ephrai
+4 CONC m Emanuel Groenstad, Fijtje Post (לבית Groenstad), Henriette Groenstad, Eva Groenstad, Gesina Aa (לבית Groenstad)
+2 EVEN Record
+3 ROLE 40001:726937066:
+1 RIN MH:I503486
+1 _UID 67ED22F5644BCA112C83272B6F7AC308
+
+0 @I500732@ INDI
+1 _UPD 4 MAR 2025 09:38:32 GMT -0500 
+1 NAME Betje /Groenstad/
+2 GIVN Betje
+2 SURN Groenstad
+2 _MARNM Coster
+1 SEX F
+1 BIRT
+2 DATE 24 OCT 1831
+2 PLAC Sappemeer, Hoogezand, Hoogezand-Sappemeer, Groningen, The Netherlands
+1 DEAT Y
+2 DATE AFT 1888
+2 PLAC Amsterdam
+1 DEAT Y
+2 DATE 15 DEC 1895
+2 PLAC Amsterdam, Noord-Holland, Nederland
+1 FAMS @F500266@
+1 FAMC @F500264@
+1 SOUR @S500054@
+2 PAGE Betje Groenstad
+2 QUAY 3
+2 DATA
+3 DATE 23 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Betje Groenstad&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Birth: Oct 24 1831 - Sappemeer, Hoogezand, Hoogezand-Sappemeer, Groningen, The Netherlands&amp;lt;br&amp;gt;Marriage: Spouse: Salomon C
+4 CONC oster - Apr 27 1859 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;Death: After 1888&amp;lt;br&amp;gt;Father: &lt;a&gt;Philip Samuel Groenstad&lt;/a&gt;&amp;lt;b
+4 CONC r&amp;gt;Mother: &lt;a&gt;Saartje Groenstad (born Salomons)&lt;/a&gt;&amp;lt;br&amp;gt;Husband: &lt;a&gt;Salomon Coster&lt;/a&gt;&amp;lt;br&amp;gt;Children: &lt;a&gt;David Coster&lt;/a&gt;, &lt;a&gt;P
+4 CONC hilip Coster&lt;/a&gt;, &lt;a&gt;Mozes Coster&lt;/a&gt;, &lt;a&gt;Samuel Coster&lt;/a&gt;, &lt;a&gt;Aaltje Coster&lt;/a&gt;&amp;lt;br&amp;gt;Siblings: &lt;a&gt;Marie Philip Behr (born Groenstad)&lt;/a
+4 CONC &gt;, &lt;a&gt;Lina Groenstad&lt;/a&gt;, &lt;a&gt;Eva Hinderina Groenstad&lt;/a&gt;
+2 EVEN Record
+3 ROLE 40000:24678383:
+1 RIN MH:I500732
+1 _UID 664F26264000A9B7C18D5B820E509E1B
+
+0 @I500736@ INDI
+1 _UPD 4 MAR 2025 09:38:31 GMT -0500 
+1 NAME Salomon /Coster/
+2 GIVN Salomon
+2 SURN Coster
+1 SEX M
+1 RESI
+2 DATE 1823
+2 ADDR
+3 ADR2 Amsterdam, Noord-Holland, Netherlands
+1 BIRT
+2 DATE 13 OCT 1823
+2 PLAC or 9/28/1824, Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 BIRT
+2 DATE 15 OCT 1823
+2 PLAC Amsterdam, Noord-Holland, Nederland
+1 DEAT Y
+2 DATE 11 JUN 1890
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 OCCU vischhandelaar
+1 FAMS @F500266@
+1 FAMS @F500869@
+1 FAMS @F500870@
+1 FAMS @F500871@
+1 FAMS @F500872@
+1 FAMC @F500868@
+1 SOUR @S500054@
+2 PAGE Salomon Coster
+2 QUAY 3
+2 DATA
+3 DATE 23 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Salomon Coster&amp;lt;br&amp;gt;Gender: Male&amp;lt;br&amp;gt;Birth: Oct 13 1823 - or 9/28/1824, Amsterdam, Government of Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;Occupation: vischha
+4 CONC ndelaar&amp;lt;br&amp;gt;Marriage: Spouse: Betje Groenstad - Apr 27 1859 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;Divorce: Spouse: Saartje Philip de Hond -
+4 CONC  Dec 13 1852 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;Death: June 11 1890 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;Father: &amp;lt;a&amp;gt
+4 CONC ;N N&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Mother: &amp;lt;a&amp;gt;Eleonora / Elsje Moses Coster&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Wives: &amp;lt;a&amp;gt;Vogeltje Marcus Spitz&amp;lt;/a&amp;gt;, &amp;
+4 CONC lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Ex-wife: &amp;lt;a&amp;gt;Saartje Philip de Hond&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Children: &amp;lt;a&amp;gt;Hijman de Hond (born Coste
+4 CONC r)&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;David Coster&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Philip Coster&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Mozes Coster&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Samuel Coster
+4 CONC &amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Aaltje Coster&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Siblings: &amp;lt;a&amp;gt;Samson Coster&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Sipora Koster&amp;lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 40000:192727293:
+1 RIN MH:I500736
+1 _UID 664F262695CF89BFC18D5B820E509E1B
+
+0 @I501364@ INDI
+1 _UPD 4 APR 2025 02:53:14 GMT -0500 
+1 NAME Eva Heva Leendert Leizergroenstadt /Groenstad/
+2 GIVN Eva Heva Leendert Leizergroenstadt
+2 SURN Groenstad
+2 _MARNM Slier-Levie
+1 SEX F
+1 BIRT
+2 DATE 6 FEB 1822
+2 PLAC Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 18 DEC 1892
+2 PLAC Amsterdam, Noord-Holland, Nederland
+1 FAMS @F501197@
+1 FAMC @F500500@
+1 SOUR @S500112@
+2 PAGE Eva Heva Leendert LeizerGroenstadt Slier-Levie
+2 QUAY 3
+2 DATA
+3 DATE 29 בנוב’ 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500008@
+2 QUAY 4
+2 DATA
+3 TEXT Eva Leendert Slier (לבית Groenstad)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 6 בפבר’ 1822 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;נישואין: 13 בי
+4 CONC נו’ 1847 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;פטירה: 18 בדצמ’ 1892 - Amsterdam, Noord-Holland, Nederland&amp;lt;br&amp;gt;הורים: Leendert Samuel Groenstad, Bran
+4 CONC ka Hartog Groenstad (לבית Kazer)&amp;lt;br&amp;gt;בעל: Jesaïas Andries Slier&amp;lt;br&amp;gt;ילדים: Andries Jesaïas Slier, Betje Jesaïas Slier, Naatje Jesaïas Waterman (לבית Slier
+4 CONC ), Elisabeth Jesaia Slier, Judith Jesaïas Slier&amp;lt;br&amp;gt;אחים ואחיות: Hartog Leendert Groenstat, Eva Leendert Groenstad&amp;lt;br&amp;gt;נראה כי לאדם זה קרובי מש
+4 CONC חה משוכפלים. היכנסו ל-FamilySearch לקבלת מידע נוסף.
+2 EVEN Record
+3 ROLE 40001:1715119127:
+1 RIN MH:I501364
+1 _UID 6749B58FD5A6E62B9958A13FFB063C35
+
+0 @I503653@ INDI
+1 _UPD 4 APR 2025 02:53:17 GMT -0500 
+1 NAME Jesaïas Andries /Slier/
+2 GIVN Jesaïas Andries
+2 SURN Slier
+1 SEX M
+1 BIRT
+2 DATE 7 FEB 1822
+2 PLAC Amsterdam, Holland, Nederland
+1 BIRT
+2 DATE 8 FEB 1822
+2 PLAC Amsterdam, Noord-Holland, Nederland
+1 DEAT Y
+2 DATE 7 SEP 1891
+2 PLAC Amsterdam, Noord-Holland, Nederland
+1 CHR
+2 PLAC Amsterdam, Noord-Holland, Netherlands
+1 FAMS @F501197@
+1 SOUR @S500008@
+2 QUAY 4
+2 DATA
+3 TEXT Jesaïas Andries Slier&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 7 בפבר’ 1822 - Amsterdam, Holland, Nederland&amp;lt;br&amp;gt;לידה: 8 בפבר’ 1822 - Amsterdam, Noord-Ho
+4 CONC lland, Nederland&amp;lt;br&amp;gt;הטבלה לנצרות: Amsterdam, Noord-Holland, Netherlands&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Eva Leendert Groenstad - 13 בינו’ 1847 - Amste
+4 CONC rdam, North Holland, Netherlands&amp;lt;br&amp;gt;פטירה: 7 בספט’ 1891 - Amsterdam, Noord-Holland, Nederland&amp;lt;br&amp;gt;הורים: Andries Jesaïas Joseph Slier, Elisabeth Meijer Slie
+4 CONC r (לבית van Kleeff)&amp;lt;br&amp;gt;אשה: Eva Leendert Slier (לבית Groenstad)&amp;lt;br&amp;gt;ילדים: Andries Jesaïas Slier, Betje Jesaïas Slier, Naatje Jesaïas Waterman (לבית S
+4 CONC lier), Elisabeth Jesaia Slier, Judith Jesaïas Slier&amp;lt;br&amp;gt;אחים ואחיות: Abraham Andries Slier, Jozeph Andries Slier, Naatje Andries Mof (לבית Slier), Daniël Andries Slier, Me
+4 CONC ijer Andries Slier, Sipora Andries Slier, Levie Slier, Judic Metz (לבית Slier), Isaäk Slier
+2 EVEN Record
+3 ROLE 40001:792560336:
+1 RIN MH:I503653
+1 _UID 67EF8FE916E0D8AD8C95D29C87BB7729
+
+0 @I502543@ INDI
+1 _UPD 2 APR 2025 06:43:16 GMT -0500 
+1 NAME Samuel Emanuel /Groenstad/
+2 GIVN Samuel Emanuel
+2 SURN Groenstad
+1 SEX M
+1 BIRT
+2 DATE 9 DEC 1828
+2 PLAC Amsterdam, Amsterdam, NH, Netherlands
+1 DEAT Y
+2 DATE 16 JAN 1829
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 EVEN Echtgeno(o)t(e): Adelaide / Alida Wind
+2 TYPE MARR
+2 DATE 15 DEC 1872
+2 PLAC Manhattan
+1 FAMC @F500501@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Samuel Groenstad&amp;lt;br&amp;gt;Gender: Male&amp;lt;br&amp;gt;Alias name: Groenstadt Greenstedt Greenstadt&amp;lt;br&amp;gt;Birth: Oct 4 1843 - Amsterdam, Amsterdam, NH, Netherlands&amp;lt;br&amp;gt
+4 CONC ;Marriage: Spouse: Adelaide / Alida Wind - Dec 15 1872 - Manhattan&amp;lt;br&amp;gt;Death: Mar 31 1932 - Bronx&amp;lt;br&amp;gt;Father: &amp;lt;a&amp;gt;Hermanus Emanuel / Mendele Samuel / Zanwil Groe
+4 CONC nstad&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Mother: &amp;lt;a&amp;gt;Sara Ephraim Amelander&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Wife: &amp;lt;a&amp;gt;Adelaide / Alida Wind&amp;lt;/a&amp;gt;&amp;lt;br&amp
+4 CONC ;gt;Children: &amp;lt;a&amp;gt;Sarah Greenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Rebecca Greenstad&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Siblings: &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;,
+4 CONC  &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Samuel Emanuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Ephraim Emanuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Grie
+4 CONC tje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Fijtje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt
+4 CONC ;a&amp;gt;Henriette Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Eva Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Gesina Groenstad&amp;lt;/a&amp;g
+4 CONC t;
+2 EVEN Record
+3 ROLE 40000:504342907:
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1504786/samuel-emanuel-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1504786
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1504784/samuel-groenstadt-greenstedt-greenstadt-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1504784
+1 RIN MH:I502543
+1 _UID 67C71DF5DF9023DC77713616347B436A
+
+0 @I503492@ INDI
+1 _UPD 7 APR 2025 00:52:33 GMT -0500 
+1 NAME Hanna /Groenstad/
+2 GIVN Hanna
+2 SURN Groenstad
+2 _MARNM Sajet
+1 SEX F
+1 BIRT
+2 DATE 17 OCT 1883
+2 PLAC Amsterdam, Noord-Holland, Nederland
+1 DEAT Y
+2 DATE 1 JUN 1943
+2 PLAC Sobibór, Włodawa County, Lublin Voivodeship, Poland
+1 FAMC @F501150@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1712931612&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Hanna Sajet (לבית Groenstad)
+לידה: 1883 - Amsterdam
+הורים: Lion Groenstad, Mietje Groenstad (לבית Swart)
+בעל: Abraham Sajet
+אחים ואחיות: Sellij Duim (לבית Groenstad),
+4 CONC  Marianne Flora van Praag (לבית Groenstad), Ephraim Groenstad, Jacob Raphael Groenstad
+2 EVEN Record
+3 ROLE 40001:1712931612:
+1 SOUR @S500225@
+2 PAGE https://www.myheritage.com/profile-OYYV6IBMXOL2JUVTEVIOWVGGFKXTM3Y-1502689/hanna-sajet-geboren-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502689
+1 RIN MH:I503492
+1 _UID 67ED23250DFEF99089095A63B4CB3A01
+
+0 @I503493@ INDI
+1 _UPD 7 APR 2025 00:52:33 GMT -0500 
+1 NAME Selly /Groenstad/
+2 GIVN Selly
+2 SURN Groenstad
+1 SEX F
+1 BIRT
+2 DATE 24 AUG 1885
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 26 JAN 1942
+2 PLAC אושוויץ
+1 FAMS @F501151@
+1 FAMC @F501150@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1373049123&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Sellij Duim (לבית Groenstad)
+לידה: 24 באוג’ 1885 - Amsterdam, Noord-Holland, Nederland
+לידה: 25 באוג’ 1885 - Amsterdam, Noord-Holland, Nederland
+פטירה: 26 בינו’ 1942
+4 CONC  - Oswiecim, Oświęcim County, Lesser Poland Voivodeship, Poland (Polen)
+הורים: Lion Groenstad, Mietje Groenstad (לבית Swart)
+בעל: Joseph Duim
+ילדים: Cato Poot (לבית Duim), Mary 
+4 CONC Kopuit (לבית Duim), Willem Duim
+אחים ואחיות: Hanna Sajet (לבית Groenstad), Marianne Flora van Praag (לבית Groenstad), Ephraim Groenstad, Jacob Raphael Groenstad
+2 EVEN Record
+3 ROLE 40001:1373049123:
+1 SOUR @S500225@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6IBMXOL2JUVTEVIOWVGGFKXTM3Y-1502693/selly-duim-geboren-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT Marly Web Site, מנוהל ע"י Maria Paulina Cornelia Johanna Petronella de Rond Marly
+2 EVEN Smart Matching
+3 ROLE 1502693
+1 SOUR @S500225@
+2 PAGE https://www.myheritage.com/profile-OYYV6IBMXOL2JUVTEVIOWVGGFKXTM3Y-1502693/selly-duim-geboren-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502693
+1 RIN MH:I503493
+1 _UID 67ED23253FC5399189095A63B4CB3A01
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWY5ZDUyZDM0ZDc2NTg5NTU1MWJkYzcxYTVmMTdkOTE5OWJkZTAzNTg1NDBlMTQ4M2YwODU0YTQzMzAyYmNhNmImZT0xNzUzNjEwNDAw/158/944/6912/501422_303301v8r2rd03716e0oi7_A.jpg
+2 _FILESIZE 3979
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501421
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501422
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTU2YjA4ZTZkMjkwZDM3YjQ3NTdiOWY5NWU4OGY1Y2Q1OWNkYjYyZmYzNjAzNjNkMTgzYTYzNzQ4YjgxZjZhNWQmZT0xNzUzNjEwNDAw/158/944/6912/501421_60477232e7816d6q10qd47_A.jpg
+2 _FILESIZE 3981
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501421
+
+0 @I503497@ INDI
+1 _UPD 2 APR 2025 06:58:57 GMT -0500 
+1 NAME Joseph /Duim/
+2 GIVN Joseph
+2 SURN Duim
+1 SEX M
+1 BIRT
+2 DATE 4 DEC 1890
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 18 JUN 1934
+2 PLAC Amsterdam
+1 FAMS @F501151@
+1 SOUR @S500225@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6IBMXOL2JUVTEVIOWVGGFKXTM3Y-1502703/joseph-duim
+2 QUAY 3
+2 DATA
+3 TEXT Marly Web Site, מנוהל ע"י Maria Paulina Cornelia Johanna Petronella de Rond Marly
+2 EVEN Smart Matching
+3 ROLE 1502703
+1 RIN MH:I503497
+1 _UID 67ED2386168220A13E0EAE8A15553D2A
+
+0 @I501361@ INDI
+1 _UPD 4 MAR 2025 09:36:25 GMT -0500 
+1 NAME Hermanus Emanuel / Mendele Samuel / Zanwil /Groenstad/
+2 GIVN Hermanus Emanuel / Mendele Samuel / Zanwil
+2 SURN Groenstad
+1 SEX M
+1 BIRT
+2 DATE ABT 1792
+2 PLAC Amsterdam, Noord-Holland, The Netherlands
+1 DEAT Y
+2 DATE 7 FEB 1855
+2 PLAC Amsterdam, Noord-Holland, The Netherlands
+2 AGE About 62-63
+1 BURI
+2 DATE 9 FEB 1855
+2 PLAC Joodse Begraafplaats, Muiderberg, Noord-Holland, The Netherlands
+1 EVEN
+2 TYPE MARR
+2 DATE 22 AUG 1821
+2 PLAC Amsterdam, Noord-Holland, Netherlands
+1 FAMS @F500501@
+1 FAMC @F500499@
+1 SOUR @S500112@
+2 PAGE Hermanus Emanuel Mendele Samuel Zanwil Groenstad
+2 QUAY 3
+2 DATA
+3 DATE 29 בנוב’ 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Hermanus Emanuel / Mendele Samuel / Zanwil Groenstad&amp;lt;br&amp;gt;Gender: Male&amp;lt;br&amp;gt;Birth: Feb 17 1792 - Amsterdam, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;Marriage: Spouse: Sa
+4 CONC ra Ephraim Amelander - Aug 22 1821 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;Death: Feb 7 1855 - Amsterdam, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;
+4 CONC Burial: Feb 9 1855 - Joodse Begraafplaats, Muiderberg, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;Father: &lt;a&gt;Samuel / Zanwil Eliazer / Leizer Groenstad&lt;/a&gt;&amp;lt;br&amp;gt;Mother: &l
+4 CONC t;a&gt;Marianne / Betje Philip de Vries&lt;/a&gt;&amp;lt;br&amp;gt;Wife: &lt;a&gt;Sara Ephraim Amelander&lt;/a&gt;&amp;lt;br&amp;gt;Children: &lt;a&gt;Marianne Groenstad&lt;/a&gt;, &lt;a&gt;Ephraim Em
+4 CONC anuel Groenstad&lt;/a&gt;, &lt;a&gt;Fijtje Groenstad&lt;/a&gt;, &lt;a&gt;Betje Groenstad&lt;/a&gt;, &lt;a&gt;Samuel Emanuel Groenstad&lt;/a&gt;, &lt;a&gt;Grietje Groenstad&lt;/a&gt;, &lt;a&gt;Henriett
+4 CONC e Groenstad&lt;/a&gt;, &lt;a&gt;Marianne Groenstad&lt;/a&gt;, &lt;a&gt;Eva Groenstad&lt;/a&gt;, &lt;a&gt;Marianne Groenstad&lt;/a&gt;, &lt;a&gt;Betje Groenstad&lt;/a&gt;, &lt;a&gt;Gesina Groenstad&lt;
+4 CONC /a&gt;, &lt;a&gt;Samuel Groenstad&lt;/a&gt;&amp;lt;br&amp;gt;Siblings: &lt;a&gt;Philip Samuel Groenstad&lt;/a&gt;, &lt;a&gt;Eliazer / Leizer Salomon Groenstad&lt;/a&gt;
+2 EVEN Record
+3 ROLE 40000:191892935:
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1502155/hermanus-samuel-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502155
+1 RIN MH:I501361
+1 _UID 6749B58F805436239958A13FFB063C35
+
+0 @I501366@ INDI
+1 _UPD 4 MAR 2025 09:36:22 GMT -0500 
+1 NAME Sara Ephraim /Amelander Levie Amelander/
+2 GIVN Sara Ephraim
+2 SURN Amelander Levie Amelander
+2 _MARNM Groenstad
+1 SEX F
+1 BIRT
+2 DATE ABT 1803
+2 PLAC Amsterdam, Noord-Holland, The Netherlands
+1 DEAT Y
+2 DATE 27 DEC 1879
+2 PLAC Amsterdam, Noord-Holland, The Netherlands
+1 BURI
+2 DATE 29 DEC 1879
+2 PLAC Joodse Begraafplaats, Muiderberg, Noord-Holland, The Netherlands
+1 EVEN Echtgeno(o)t(e): Hermanus Emanuel / Mendele Samuel / Zanwil Groenstad
+2 TYPE MARR
+2 DATE 22 AUG 1821
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 FAMS @F500501@
+1 FAMC @F500865@
+1 SOUR @S500112@
+2 PAGE Sara Ephraim Groenstad (geboren Amelander)
+2 QUAY 3
+2 DATA
+3 DATE 29 בנוב’ 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Sara Ephraim Amelander&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Birth: Jan 13 1803 - Amsterdam, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;Marriage: Spouse: Hermanus Emanuel / Mendele Sam
+4 CONC uel / Zanwil Groenstad - Aug 22 1821 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;Death: Dec 27 1879 - Amsterdam, Noord-Holland, The Netherlands&amp;lt;br&amp;
+4 CONC gt;Burial: Dec 29 1879 - Joodse Begraafplaats, Muiderberg, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;Father: &amp;lt;a&amp;gt;Ephraim Michiel / Yechiel Levie Amelander&amp;lt;/a&amp;gt;&amp;lt;b
+4 CONC r&amp;gt;Mother: &amp;lt;a&amp;gt;Abigael / Fegle Levie&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Husband: &amp;lt;a&amp;gt;Hermanus Emanuel / Mendele Samuel / Zanwil Groenstad&amp;lt;/a&amp;gt;&amp;lt;br&am
+4 CONC p;gt;Children: &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Samuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Samue
+4 CONC l Emanuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Ephraim Emanuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Grietje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Fijtje Groenstad&amp;lt;/a&a
+4 CONC mp;gt;, &amp;lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Henriette Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Eva Groensta
+4 CONC d&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Gesina Groenstad&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Siblings: &amp;lt;a&amp;gt;Michiel Yechiel Ephraim Levie A
+4 CONC melander&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Grietje Ephraim Content (born Amelander)&amp;lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 40000:191892942:
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1504782/sara-ephraim-groenstad-geboren-amelander
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1504782
+1 RIN MH:I501366
+1 _UID 6749B59011DA862F9958A13FFB063C35
+
+0 @I503490@ INDI
+1 _UPD 2 APR 2025 06:43:52 GMT -0500 
+1 NAME Flora /Groenstad/
+2 GIVN Flora
+2 SURN Groenstad
+1 SEX F
+1 BIRT
+2 DATE 14 MAY 1867
+2 PLAC Amsterdam, Noord-Holland, Netherlands
+1 DEAT Y
+1 FAMC @F501149@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=674027434&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Flora Groenstad
+לידה: 14 במאי 1867 - Amsterdam, Noord-Holland, Netherlands
+הורים: Ephraim Emanuel Groenstad, Saartje Groenstad (לבית Kool)
+אחים ואחיות: Lion Groenstad, Jacob
+4 CONC  Groenstad
+2 EVEN Record
+3 ROLE 40001:674027434:
+1 RIN MH:I503490
+1 _UID 67ED22F65958AA172C83272B6F7AC308
+
+0 @I500104@ INDI
+1 _UPD 23 JUN 2024 12:49:11 GMT -0500 
+1 NAME Marie Philip /Groenstad/
+2 GIVN Marie Philip
+2 SURN Groenstad
+2 _MARNM Behr
+1 SEX F
+1 BIRT
+2 DATE 24 OCT 1828
+2 PLAC Hoogezand, Groningen, Netherlands
+1 DEAT Y
+2 DATE 22 DEC 1887
+2 PLAC Assen, Drenthe, Netherlands
+1 EVEN Spouse: Izak Israel Benjamin Behr
+2 TYPE MARR
+2 DATE 27 MAR 1861
+2 PLAC Assen, Drenthe, Netherlands
+1 FAMS @F500039@
+1 FAMC @F500264@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Marie Philip Behr (לבית Groenstad)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;כינוי: Maria&amp;lt;br&amp;gt;לידה: 24 באוק’ 1828 - Hoogezand, Groningen, Netherlands&amp;lt;br
+4 CONC &amp;gt;נישואין: בן/בת זוג: Izak Israel Benjamin Behr - 27 במרץ 1861 - Assen, Drenthe, Netherlands&amp;lt;br&amp;gt;פטירה: 22 בדצמ’ 1887 - Assen, Drenthe, Netherlands&amp;
+4 CONC lt;br&amp;gt;אב: Philip Samuel Groenstad&amp;lt;br&amp;gt;אם: Saartje Groenstad (לבית Salomons)&amp;lt;br&amp;gt;בעל: Izak Israel Benjamin Behr&amp;lt;br&amp;gt;ילדים: Salina Behr, Hin
+4 CONC derina Behr, Philippus Behr, Abraham Izak Behr, Saartje Behr, Samuel Behr (לבית BEHR), Kaatje aCathan (לבית Behr), Betje Behr&amp;lt;br&amp;gt;אחים ואחיות: Eva Hinderina Groenstad, B
+4 CONC etje Groenstad, Lina Groenstad
+2 EVEN Record
+3 ROLE 40000:20624594:
+1 SOUR @S500197@
+2 PAGE https://www.myheritage.com/profile-OYYV7PJF3CW6GAHMOV4QX6VCZDY34VY-1500075/marie-philip-behr-geboren-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500075
+1 RIN MH:I500104
+1 _UID 646CAA31A411D890EBC68E37CA0A7D69
+
+0 @I500696@ INDI
+1 _UPD 20 NOV 2024 08:26:38 GMT -0500 
+1 NAME Izak Israel Benjamin /Behr/
+2 GIVN Izak Israel Benjamin
+2 SURN Behr
+1 SEX M
+1 BIRT
+2 DATE 15 NOV 1818
+2 PLAC Hoogeveen, Drenthe, Nederland
+1 DEAT Y
+2 DATE 4 JUN 1888
+2 PLAC Assen, Drenthe, Nederland
+1 OCCU inlands kramer, koopman
+1 RESI
+2 ADDR
+3 ADR1 Tieneweg, Assen, DR (NL)
+1 OCCU Merchant
+1 EVEN Spouse: Marie Philip Groenstad
+2 TYPE MARR
+2 DATE 27 MAR 1861
+2 PLAC Assen, Drenthe, Netherlands
+1 FAMS @F500039@
+1 FAMS @F500286@
+1 FAMC @F500285@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Izak Israel Benjamin Behr&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 16 בנוב’ 1818 - Hoogezand, Groningen, Nederland&amp;lt;br&amp;gt;נישואין 1: Klaartje Mozes1841-10-29Ho
+4 CONC ogezand, Groningen, Nederland&amp;lt;br&amp;gt;נישואין 2: Maria Philip Groenstad1861-03-27Assen, Drenthe, Nederland&amp;lt;br&amp;gt;פטירה: 4 ביוני 1888 - Assen, Drenthe, Nederland&am
+4 CONC p;lt;br&amp;gt;מקצוע: inlands kramer, koopman&amp;lt;br&amp;gt;אב: Israël Benjamins Behr&amp;lt;br&amp;gt;אם: Sara Simons Simons Bollegraaf&amp;lt;br&amp;gt;ילדים from marriage 1: Harto
+4 CONC g BehrSara BehrIsraël BehrMozes BehrKind BehrEsther BehrBenjamin BehrKind BehrKind BehrSimon Behr&amp;lt;br&amp;gt;ילדים from marriage 2: Salina BehrHinderina BehrBetje BehrPhilippus BehrKaatje 
+4 CONC BehrAbraham Izak BehrSaartje BehrSamuel Behr&amp;lt;br&amp;gt;הערות: Inventarisnr.: 1857Deel/Akte: 90Akteplaats: Assen,DR,NLDArchiefnaam: Drents ArchiefDatum: December 14, 1857Inventarisnr.: 1864
+4 CONC Deel/Akte: 180Akteplaats: Assen,DR,NLDArchiefnaam: Drents ArchiefDatum: November 12, 1864Archiefnaam: Drents ArchiefInventarisnr.: 1857Deel/Akte: 178Akteplaats: Assen,DR,NLDDatum: November 30, 1857Arc
+4 CONC hiefnaam: Drents ArchiefAkteplaats: Assen,DR,NLDDeel/Akte: 158Inventarisnr.: 1887Datum: December 23, 1887Archiefnaam: Drents ArchiefDeel/Akte: 10Akt...&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the ori
+4 CONC ginal record&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to t
+4 CONC he original record will not work.
+2 EVEN Record
+3 ROLE 10838:9276355:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Izak Israel Benjamin Behr&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;כינוי: Isak&amp;lt;br&amp;gt;מגורים: Tieneweg, Assen, DR (NL)&amp;lt;br&amp;gt;לידה: 15 בנוב’ 1818 - Hoo
+4 CONC geveen, Drenthe, Nederland&amp;lt;br&amp;gt;מקצוע: Merchant&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Marie Philip Behr (לבית Groenstad) - 27 במרץ 1861 - Assen, Drenthe, Netherla
+4 CONC nds&amp;lt;br&amp;gt;פטירה: 4 ביוני 1888 - Assen, Drenthe, Nederland&amp;lt;br&amp;gt;אב: Israël Benjamins de Beer (לבית Behr)&amp;lt;br&amp;gt;אם: Sara Simons Bollegraaf&amp;lt;br&
+4 CONC amp;gt;נשים: Klaartje Hartog van Praag - Behr (לבית Mozes), Marie Philip Behr (לבית Groenstad)&amp;lt;br&amp;gt;ילדים: Salina Behr, Hinderina Behr, Philippus Behr, Abraham Izak Behr, 
+4 CONC Saartje Behr, Samuel Behr (לבית BEHR), Kaatje aCathan (לבית Behr), Betje Behr, Hartog Behr, Sara Behr, Israel Behr, Mozes Behr, (Stillborn) Behr, Esther Behr, Benjamin Behr, Stillborn Behr, (S
+4 CONC tillborn) Behr, Simon Behr&amp;lt;br&amp;gt;אחים ואחיות: Benjamin de Behr, Esther Behr, Hendel Mozes (לבית de Behr), Frouwke Schaap (לבית Behr), Simon de Beer (לבית Behr), Abram 
+4 CONC Behr, Esther/Hester de Beer, Kaatje de Beer, Salomon de Behr, Abraham de Beer
+2 EVEN Record
+3 ROLE 40000:20623785:
+1 SOUR @S500104@
+2 QUAY 3
+2 DATA
+3 DATE 20 NOV 2024
+3 TEXT תמונה אישית של Izak Israel Benjamin "Isak" Behr נוספה באמצעות Photo Discovery™
+2 EVEN Discovery
+1 SOUR @S500197@
+2 PAGE https://www.myheritage.com/profile-OYYV7PJF3CW6GAHMOV4QX6VCZDY34VY-1500065/izak-israel-benjamin-behr
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500065
+1 RIN MH:I500696
+1 _UID 664CAE39CCA82E6B50CA808DB376FFD9
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWJmYWJjMjk4OGQ0ZjdmYTBhMTIwZGM3MDNjOWYxYWQ1MmNjN2Q2MmM0MDBkZWE1ZmZmYjNlNGI3NDljOWIzMDgmZT0xNzUzNjEwNDAw/158/944/6912/500505_193128063ec719e1afq5ud_A.jpg
+2 _FILESIZE 43964
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500489
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500505
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQ5NDBjY2Y2ZmIyNGY1NjMyZTU3MjQ3MTVlZDlkM2ZiNGVmZmUwMmU5MTY5ZmYwNzZjNzYxYzU3MmEyMGZlMTkmZT0xNzUzNjEwNDAw/158/944/6912/500489_435973p1cqd6xlf7d1935z_A.jpg
+2 _FILESIZE 44007
+2 TITL 502341_82288358987544ftkw3978
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500489
+
+0 @I504972@ INDI
+1 _UPD 30 APR 2025 04:26:47 GMT -0500 
+1 NAME Mimi /Groenstad/
+2 GIVN Mimi
+2 SURN Groenstad
+1 SEX F
+1 BIRT
+2 DATE 20 APR 1917
+2 PLAC Amsterdam, Noord-Holland, Nederland
+1 DEAT Y
+2 DATE 23 AUG 2010
+2 PLAC Amsterdam, Noord-Holland, Nederland
+1 FAMS @F501556@
+1 FAMC @F501555@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=2315801274&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Mimi Poot (לבית Groenstad)
+לידה: 20 באפר’ 1917 - Amsterdam, Noord-Holland, Nederland
+פטירה: 23 באוג’ 2010 - Amsterdam, Noord-Holland, Nederland
+הורים: Ephraim Groenstad, 
+4 CONC Sara Judith Groenstad (לבית van Kollem)
+בעל: Maarten Poot
+אחים ואחיות: Nana Groenstad, Hanna Speijer (לבית Groenstad), Eleazer Groenstad
+2 EVEN Record
+3 ROLE 40001:2315801274:
+1 RIN MH:I504972
+1 _UID 6811ECD5B355DEE70BE60B762F4C16BC
+
+0 @I503504@ INDI
+1 _UPD 30 APR 2025 04:17:10 GMT -0500 
+1 NAME Maarten /Poot/
+2 GIVN Maarten
+2 SURN Poot
+1 SEX M
+1 BIRT
+2 DATE 14 NOV 1913
+2 PLAC Rotterdam, South Holland, Netherlands
+1 DEAT Y
+2 DATE 13 MAR 2010
+2 PLAC Amsterdam, Noord-Holland, Nederland
+1 FAMS @F501154@
+1 FAMS @F501556@
+1 SOUR @S500244@
+2 PAGE https://www.myheritage.co.il/profile-35882201-2000005/מרטין-פוט
+2 QUAY 3
+2 DATA
+3 TEXT Burstein Web Site, מנוהל ע"י Oren Burstein
+2 EVEN Smart Matching
+3 ROLE 2000005
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1965372657&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Maarten Poot
+לידה: 14 בנוב’ 1913 - Rotterdam, South Holland, Netherlands
+פטירה: 13 במרץ 2010 - Amsterdam, Noord-Holland, Nederland
+הורים: Arie Poot, Maria Helena Poot (לבית
+4 CONC  De Jong)
+בני זוג: Cato Poot (לבית Duim), Mimi Poot (לבית Groenstad)
+אחים ואחיות: Heiltje Bakker (לבית Poot), Pieter Poot, Hendrik Poot, Arie Poot, Ewout Poot
+2 EVEN Record
+3 ROLE 40001:1965372657:
+1 RIN MH:I503504
+1 _UID 67ED23D353561E11AFA24B4951F6815B
+
+0 @I502536@ INDI
+1 _UPD 13 MAR 2025 11:34:51 GMT -0500 
+1 NAME Grietje /Groenstad/
+2 GIVN Grietje
+2 SURN Groenstad
+1 SEX F
+1 BIRT
+2 DATE 11 AUG 1830
+2 PLAC Amsterdam, Amsterdam, NH, Netherlands
+1 DEAT Y
+1 FAMC @F500501@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Grietje Groenstad&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Birth: Aug 11 1830 - Amsterdam, Amsterdam, NH, Netherlands&amp;lt;br&amp;gt;Father: &amp;lt;a&amp;gt;Hermanus Emanuel / Mendele Samue
+4 CONC l / Zanwil Groenstad&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Mother: &amp;lt;a&amp;gt;Sara Ephraim Amelander&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Siblings: &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;g
+4 CONC t;, &amp;lt;a&amp;gt;Samuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Samuel Emanuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Ephraim Em
+4 CONC anuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Fijtje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;
+4 CONC lt;a&amp;gt;Henriette Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Eva Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Gesina Groenstad&amp;lt;/a&amp
+4 CONC ;gt;
+2 EVEN Record
+3 ROLE 40000:504341133:
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1504788/grietje-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1504788
+1 RIN MH:I502536
+1 _UID 67C71DF451A903D577713616347B436A
+
+0 @I503494@ INDI
+1 _UPD 30 APR 2025 04:32:04 GMT -0500 
+1 NAME Marianne Flora /Groenstad/
+2 GIVN Marianne Flora
+2 SURN Groenstad
+2 _MARNM van Praag
+1 SEX F
+1 BIRT
+2 DATE 15 FEB 1888
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 DEAT Y
+2 DATE 12 OCT 1942
+2 PLAC Gmina Oświęcim, Oświęcim County, Lesser Poland Voivodeship, Poland (Polen) (Holocaust)
+1 OCCU Onderwijzeres
+1 FAMS @F501271@
+1 FAMC @F501150@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1509471985&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Marianne Flora van Praag (לבית Groenstad)
+לידה: 15 בפבר’ 1888 - Amsterdam, Noord-Holland, Nederland
+פטירה: 12 באוק’ 1942 - Gmina Oświęcim, Oświęcim County, Lesser Poland V
+4 CONC oivodeship, Poland (Polen) (Holocaust)
+הורים: Lion Groenstad, Mietje Groenstad (לבית Swart)
+בעל: Philip van Praag
+ילדים: Philip van Praag, Bert Van Praag, Marian Elisabeth Van Praag
+
+4 CONC חים ואחיות: Hanna Sajet (לבית Groenstad), Sellij Duim (לבית Groenstad), Ephraim Groenstad, Jacob Raphael Groenstad
+2 EVEN Record
+3 ROLE 40001:1509471985:
+1 SOUR @S500225@
+2 PAGE https://www.myheritage.com/profile-OYYV6IBMXOL2JUVTEVIOWVGGFKXTM3Y-1502690/marianna-flora-van-praag-geboren-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502690
+1 SOUR @S500269@
+2 PAGE https://www.myheritage.com/profile-OYYV7E2NX3ND57DL7OICYZSX5O7WTLI-1505501/marianna-flora-van-praag-geboren-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1505501
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=134651885&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Marianna Flora Groenstad
+לידה: 15 בפבר’ 1888 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+פטירה: 12 באוק’ 1942 - Gmina Oświęcim, Oświęcim County, Lesse
+4 CONC r Poland Voivodeship, Poland
+אב: Lion Groenstad
+אם: Mietje Swart, (2)
+בעל: Philip van Praag
+ילדים: Marian Elisabeth van Praag, Philip van Praag, Bert van Praag
+אחים ואחיות: Hanna
+4 CONC  Groenstad, Selly Groenstad, Jacob Raphael Groenstad, Ephraïm Groenstad
+2 EVEN Record
+3 ROLE 40000:134651885:
+1 RIN MH:I503494
+1 _UID 67ED2325717FD99289095A63B4CB3A01
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWNkNDI5NDdjOGY4YzRlZDdjZWRjOGRjMzhjNDk5MWFjNjg4MjE0YTI1NmZhNTI2NWRjYjYzN2EyNjljZTQwZGUmZT0xNzUzNjEwNDAw/158/944/6912/502151_787363f18718614e11eeak_A.jpg
+2 _FILESIZE 18794
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502150
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502151
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTFmNzE2NjFhODg1NGE4ZTFiODQ0NWRmZDJiNzkyNWQzOTI1M2M0YTEyNTFiYzQxODA2Y2YyZTgwZmQzODc2N2MmZT0xNzUzNjEwNDAw/158/944/6912/502150_8286027111w31ebf8wxet6_A.jpg
+2 _FILESIZE 18796
+2 TITL marianne_flora_groenstad_large
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P502150
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWJkMzU1NTVkNDdlZTJiZGFkNjk3MTZmNDg4NDc1NmI5NjU4MzZlMDljODM1YzdlZDI4YjQ2YWMzOTNhM2I2YjUmZT0xNzUzNjEwNDAw/158/944/6912/501593_49644381f3i146719w786i_A.jpg
+2 _FILESIZE 18780
+2 TITL 500596_2911284z11fp1568f1dupg_A
+2 _PHOTO_RIN MH:P501593
+
+0 @I503903@ INDI
+1 _UPD 30 APR 2025 04:32:05 GMT -0500 
+1 NAME Philip Van /van Praag/
+2 GIVN Philip Van
+2 SURN van Praag
+1 SEX M
+1 BIRT
+2 DATE 31 MAY 1887
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 OCCU siertekenaar
+1 OCCU plateelschilder, reclametekenaar
+1 RESI
+2 DATE BEF 1940
+2 ADDR
+3 ADR1 Deventer, Overijssel, Netherlands
+3 CITY Deventer
+1 DEAT Y
+2 DATE 12 OCT 1942
+2 PLAC Gmina Oświęcim, Oświęcim County, Lesser Poland Voivodeship, Poland
+1 EVEN 69P van 68P
+2 TYPE Reference Number
+1 EVEN Echtgeno(o)t(e): Marianna Flora Groenstad
+2 TYPE MARR
+2 DATE 12 NOV 1913
+2 PLAC Arnhem, Arnhem, Gelderland, The Netherlands
+1 BURI
+2 PLAC Diversen, Netherlands
+1 FAMS @F501271@
+1 FAMC @F501274@
+1 SOUR @S500225@
+2 PAGE https://www.myheritage.com/profile-OYYV6IBMXOL2JUVTEVIOWVGGFKXTM3Y-1502712/philip-van-praag
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502712
+1 SOUR @S500269@
+2 PAGE https://www.myheritage.com/profile-OYYV7E2NX3ND57DL7OICYZSX5O7WTLI-1504247/philip-van-van-praag
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1504247
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=134651865&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Philip van Praag
+לידה: 31 במאי 1887 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+פטירה: 12 באוק’ 1942 - Gmina Oświęcim, Oświęcim County, Lesser Poland Vo
+4 CONC ivodeship, Poland
+אב: Jochem van Praag
+אם: Betje Groenstad
+אשה: Marianna Flora Groenstad
+ילדים: Marian Elisabeth van Praag, Philip van Praag, Bert van Praag
+אחים ואחיות: Henriett
+4 CONC e van Praag, Emanuel van Praag, Lea van Praag, Klara van Praag, Eliazer van Praag, Elisabeth van Praag, Bernard van Praag
+2 EVEN Record
+3 ROLE 40000:134651865:
+1 RIN MH:I503903
+1 _UID 67F3681862D9A5371E975845CA364B48
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWZlMTc3MzM2MjI4YjE2NmViMTc5Yjc4YmM2ZmNiN2FkZmNiYmMwNTA0ZWI5ZWJhZDI3ZGNmNGRiODMyMGM3NDkmZT0xNzUzNjEwNDAw/158/944/6912/502153_4587355168msx117e6hce1_A.jpg
+2 _FILESIZE 26435
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502152
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502153
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTdjMGUyODgwMjM4NDM2MzlhNTA0NGQ4NDlkNTAxZTFkNmRhNmNiYTA5NDBjMTU5MjA2ZmFlZTMyZWViZTZkMzMmZT0xNzUzNjEwNDAw/158/944/6912/502152_6449717fe5118h63ml19e1_A.jpg
+2 _FILESIZE 26420
+2 TITL qaz99rib_large
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P502152
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTc3NjIzMGNmYzlmMWZmNDY0NjYzMDFhN2FkMTYyMWIxNDdmYjYzN2RlMGVmOTE0NDZiMjUxNDM0ZGRjMDRkYjgmZT0xNzUzNjEwNDAw/158/944/6912/501595_392235afd59163361a778q_A.jpg
+2 _FILESIZE 26414
+2 TITL 500610_47251416cn1yf3a109f116_A
+2 _PHOTO_RIN MH:P501595
+
+0 @I502540@ INDI
+1 _UPD 13 MAR 2025 11:34:56 GMT -0500 
+1 NAME Marianne /Groenstad/
+2 GIVN Marianne
+2 SURN Groenstad
+1 SEX F
+1 BIRT
+2 DATE 5 JUN 1837
+2 PLAC Amsterdam, Amsterdam, NH, Netherlands
+1 DEAT Y
+1 FAMC @F500501@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Marianne Groenstad&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Birth: June 5 1837 - Amsterdam, Amsterdam, NH, Netherlands&amp;lt;br&amp;gt;Father: &amp;lt;a&amp;gt;Hermanus Emanuel / Mendele Samu
+4 CONC el / Zanwil Groenstad&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Mother: &amp;lt;a&amp;gt;Sara Ephraim Amelander&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Siblings: &amp;lt;a&amp;gt;Samuel Groenstad&amp;lt;/a&amp;gt
+4 CONC ;, &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Samuel Emanuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Ephraim Emanuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Gr
+4 CONC ietje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Fijtje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;
+4 CONC lt;a&amp;gt;Henriette Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Eva Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Gesina Groenstad&amp;lt;/a&amp
+4 CONC ;gt;
+2 EVEN Record
+3 ROLE 40000:504341131:
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1504783/marianne-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1504783
+1 RIN MH:I502540
+1 _UID 67C71DF53A4E03D977713616347B436A
+
+0 @I504973@ INDI
+1 _UPD 30 APR 2025 04:29:53 GMT -0500 
+1 NAME Nana /Groenstad/
+2 GIVN Nana
+2 SURN Groenstad
+1 SEX F
+1 BIRT
+2 DATE 6 APR 1919
+2 PLAC Apeldoorn, Apeldoorn, Gelderland, Netherlands
+1 DEAT Y
+2 DATE 7 FEB 1992
+2 PLAC Amstelveen, Amstelveen, North Holland, Netherlands
+1 BURI
+2 PLAC Joodse Begraafplaats, Muiderberg, Noord-Holland, Nederland
+1 FAMS @F501557@
+1 FAMS @F501558@
+1 FAMC @F501555@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=2315797892&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Nana Groenstad
+לידה: 6 באפר’ 1919 - Apeldoorn, Gelderland, Nederland
+פטירה: 7 בפבר’ 1992 - Amstelveen, Noord-Holland, Nederland
+הורים: Ephraim Groenstad, Sara Judith Groensta
+4 CONC d (לבית van Kollem)
+בני זוג: Bernard Sanders, Jacob Bonettemaker
+אחים ואחיות: Mimi Poot (לבית Groenstad), Hanna Speijer (לבית Groenstad), Eleazer Groenstad
+2 EVEN Record
+3 ROLE 40001:2315797892:
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=249021292&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Nana Groenstad
+לידה: 6 באפר’ 1919 - Apeldoorn, Apeldoorn, Gelderland, Netherlands
+פטירה: 7 בפבר’ 1992 - Amstelveen, Amstelveen, North Holland, Netherlands
+אב: Ephraïm Groenstad
+4 CONC 
+אם: Sara Judith van Kollem
+בעלים: Bernard Sanders, Jacob Bonettemaker
+אחים ואחיות: Mimi Groenstad, Hanna Groenstad, Eleazer Groenstad
+2 EVEN Record
+3 ROLE 40000:249021292:
+1 RIN MH:I504973
+1 _UID 6811ECD5E899CEE80BE60B762F4C16BC
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTdiODc0YjIzNTk1MzU1NjQwZGI3MWI2OGVjNjRlZjAzZjk5MWYzYmRlMjYyNmNjOWRmOTc1N2Q3MTdlMjE3MDcmZT0xNzUzNjEwNDAw/158/944/6912/502147_496294ue8dnq109160115e_A.jpg
+2 _FILESIZE 66229
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502146
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502147
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTE5MGExZjI3MzNiMTQxYWFiYTI5ZmM3NjU4NWUyNTEyZWNhZTYxZWY3YmQ3NGY1Yzk3ZGIwOWIxMGU0YmVlNzEmZT0xNzUzNjEwNDAw/158/944/6912/502146_613935de956811f14kc171_A.jpg
+2 _FILESIZE 66229
+2 TITL screen_shot_2017-04-12_at_14_large
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P502146
+
+0 @I504976@ INDI
+1 _UPD 30 APR 2025 04:29:54 GMT -0500 
+1 NAME Bernard /Sanders/
+2 GIVN Bernard
+2 SURN Sanders
+1 SEX M
+1 BIRT
+2 DATE 1 FEB 1918
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 DEAT Y
+2 DATE 24 JAN 1944
+2 PLAC Oswiecim, Oświęcim County, Lesser Poland Voivodeship, Poland
+1 FAMS @F501557@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=248733877&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Bernard Sanders
+לידה: 1 בפבר’ 1918 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+פטירה: 24 בינו’ 1944 - Oswiecim, Oświęcim County, Lesser Poland Voivodesh
+4 CONC ip, Poland
+אב: Mozes Sanders
+אם: Marianne Sanders (לבית Pijnappel‏‎)
+אשה: Nana Groenstad
+אח/אחות: Esther Sanders
+2 EVEN Record
+3 ROLE 40000:248733877:
+1 RIN MH:I504976
+1 _UID 6811ED9069F63252BA9D864895FD9490
+
+0 @I504977@ INDI
+1 _UPD 30 APR 2025 04:29:55 GMT -0500 
+1 NAME Jacob /Bonettemaker/
+2 GIVN Jacob
+2 SURN Bonettemaker
+1 SEX M
+1 BIRT
+2 DATE 30 MAR 1900
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 1 JUN 2004
+2 PLAC Amsterdam, Amsterdam, Noord-Holland, Nederland
+1 FAMS @F501558@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=280278326&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Jacob Bonettemaker
+לידה: 30 במרץ 1900 - Amsterdam, Government of Amsterdam, North Holland, Netherlands
+פטירה: 1 ביוני 2004 - Amsterdam, Amsterdam, Noord-Holland, Nederland
+אב: Asse
+4 CONC r Bonettemaker
+אם: Heintje Reens
+אשה: Nana Groenstad
+אחים ואחיות: Vrouwkje Bonettemaker, Marianne Bonettemaker
+2 EVEN Record
+3 ROLE 40000:280278326:
+1 RIN MH:I504977
+1 _UID 6811ED90B8307255BA9D864895FD9490
+
+0 @I502541@ INDI
+1 _UPD 13 MAR 2025 11:34:59 GMT -0500 
+1 NAME Betje /Groenstad/
+2 GIVN Betje
+2 SURN Groenstad
+1 SEX F
+1 BIRT
+2 DATE 13 JUN 1839
+2 PLAC Amsterdam, Amsterdam, NH, Netherlands
+1 DEAT Y
+1 FAMC @F500501@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Betje Groenstad&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Birth: June 13 1839 - Amsterdam, Amsterdam, NH, Netherlands&amp;lt;br&amp;gt;Father: &amp;lt;a&amp;gt;Hermanus Emanuel / Mendele Samuel
+4 CONC  / Zanwil Groenstad&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Mother: &amp;lt;a&amp;gt;Sara Ephraim Amelander&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Siblings: &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt
+4 CONC ;, &amp;lt;a&amp;gt;Samuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Samuel Emanuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Ephraim Ema
+4 CONC nuel Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Grietje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Fijtje Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Betje Groenstad&amp;lt;/a&amp;gt;, &amp;lt
+4 CONC ;a&amp;gt;Marianne Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Henriette Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Eva Groenstad&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Gesina Groenstad&amp;lt;/a&am
+4 CONC p;gt;
+2 EVEN Record
+3 ROLE 40000:504343772:
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1504794/betje-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1504794
+1 RIN MH:I502541
+1 _UID 67C71DF5770A93DA77713616347B436A
+
+0 @I500733@ INDI
+1 _UPD 23 MAY 2024 06:19:40 GMT -0500 
+1 NAME Lina /Groenstad/
+2 GIVN Lina
+2 SURN Groenstad
+2 _MARNM Muller
+1 SEX F
+1 BIRT
+2 DATE 26 JAN 1836
+2 PLAC Martenshoek, Hoogezand-Sappemeer, Groningen, The Netherlands
+1 DEAT Y
+2 DATE 2 DEC 1870
+2 PLAC Groningen, Groningen, Groningen, The Netherlands
+1 FAMS @F500916@
+1 FAMC @F500264@
+1 SOUR @S500054@
+2 PAGE Lina Groenstad
+2 QUAY 3
+2 DATA
+3 DATE 23 MAY 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500205@
+2 QUAY 4
+2 DATA
+3 TEXT Lina Groenstad&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: Groningen, Netherlands&amp;lt;br&amp;gt;פטירה: 18 בינו’ 1914 - Groningen, Netherlands&amp;lt;br&amp;gt;גיל: 46
+4 CONC &amp;lt;br&amp;gt;בת: Maria Muller&amp;lt;br&amp;gt;&nbsp;&nbsp;עדים או קרובי משפחה: &amp;lt;br&amp;gt;קשר משפחתי שם&amp;lt;br&amp;gt;Relative Eduard Kisch&amp;lt;br&amp;g
+4 CONC t;מקור: &amp;lt;br&amp;gt;ספר: Overlijdensregister 1914&amp;lt;br&amp;gt;מוסד: AlleGroningers&amp;lt;br&amp;gt;מספר מסמך: 78&amp;lt;br&amp;gt;מקום המקור: Groningen, Netherl
+4 CONC ands&amp;lt;br&amp;gt;תאריך מקור: 18 בינו’ 1914&amp;lt;br&amp;gt;תאריך הכרך: 18 בינו’ 1914&amp;lt;br&amp;gt;מקור: &amp;lt;a&amp;gt;לצפייה ברשומה המלא
+4 CONC  ב-allegroningers.nl&amp;lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 10563:4143423-M:
+1 RIN MH:I500733
+1 _UID 664F2626558C39B9C18D5B820E509E1B
+
+0 @I502699@ INDI
+1 _UPD 8 MAR 2025 23:01:02 GMT -0500 
+1 NAME Levi Joseph /Muller/
+2 GIVN Levi Joseph
+2 SURN Muller
+1 SEX M
+1 DEAT Y
+1 FAMS @F500916@
+1 SOUR @S500205@
+2 QUAY 4
+2 DATA
+3 TEXT Levi Joseph Muller&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: Groningen, Netherlands&amp;lt;br&amp;gt;פטירה: 18 בינו’ 1914 - Groningen, Netherlands&amp;lt;br&amp;gt;גיל
+4 CONC : 46&amp;lt;br&amp;gt;בת: Maria Muller&amp;lt;br&amp;gt;&nbsp;&nbsp;עדים או קרובי משפחה: &amp;lt;br&amp;gt;קשר משפחתי שם&amp;lt;br&amp;gt;Relative Eduard Kisch&amp;lt;br&a
+4 CONC mp;gt;מקור: &amp;lt;br&amp;gt;ספר: Overlijdensregister 1914&amp;lt;br&amp;gt;מוסד: AlleGroningers&amp;lt;br&amp;gt;מספר מסמך: 78&amp;lt;br&amp;gt;מקום המקור: Groningen, Net
+4 CONC herlands&amp;lt;br&amp;gt;תאריך מקור: 1914-01-18&amp;lt;br&amp;gt;תאריך הכרך: 1914-01-18&amp;lt;br&amp;gt;מקור: &amp;lt;a&amp;gt;לצפייה ברשומה המלאה ב-allegroni
+4 CONC ngers.nl&amp;lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 10563:4143423-F:
+1 RIN MH:I502699
+1 _UID 67C9A8164516CA3348C80E5325B36C5C
+
+0 @I501365@ INDI
+1 _UPD 4 APR 2025 02:53:16 GMT -0500 
+1 NAME Eva Heva Leendert Leizer /Groenstad/
+2 GIVN Eva Heva Leendert Leizer
+2 SURN Groenstad
+2 _MARNM Slier-Levie
+1 SEX F
+1 BIRT
+2 DATE 4 AUG 1821
+2 PLAC Amsterdam, North Holland, Netherlands
+1 DEAT Y
+1 BIRT
+2 DATE 6 AUG 1821
+2 PLAC Amsterdam, Holland, Nederland
+1 FAMC @F500500@
+1 SOUR @S500112@
+2 PAGE Eva Heva Leendert Leizer Slier-Levie (geboren Groenstad)
+2 QUAY 3
+2 DATA
+3 DATE 29 בנוב’ 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500008@
+2 QUAY 4
+2 DATA
+3 TEXT Eva Leendert Groenstad&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 4 באוג’ 1821 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;לידה: 6 באוג’ 1821 - Amsterdam
+4 CONC , Holland, Nederland&amp;lt;br&amp;gt;הורים: Leendert Samuel Groenstad, Branka Hartog Groenstad (לבית Kazer)&amp;lt;br&amp;gt;אחים ואחיות: Hartog Leendert Groenstat, Eva Leendert Sl
+4 CONC ier (לבית Groenstad)&amp;lt;br&amp;gt;נראה כי לאדם זה קרובי משפחה משוכפלים. היכנסו ל-FamilySearch לקבלת מידע נוסף.
+2 EVEN Record
+3 ROLE 40001:752248916:
+1 RIN MH:I501365
+1 _UID 6749B58FEE9FB62D9958A13FFB063C35
+
+0 @I501358@ INDI
+1 _UPD 8 MAR 2025 22:44:27 GMT -0500 
+1 NAME Samuel Zanwil Eliaser Leizer /Groenstad/
+2 GIVN Samuel Zanwil Eliaser Leizer
+2 SURN Groenstad
+1 SEX M
+1 BIRT
+2 DATE 1762
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 DEAT Y
+2 DATE 1 JAN 1799
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+2 AGE 36-37
+1 FAMS @F500499@
+1 FAMC @F500939@
+1 SOUR @S500112@
+2 PAGE Samuel Zanwil Eliaser Leizer Groenstad
+2 QUAY 3
+2 DATA
+3 DATE 29 בנוב’ 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=204443169&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Samuel / Zanwil Eliazer / Leizer Groenstad
+לידה: 1762 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+פטירה: 1 בינו’ 1799 - Amsterdam, Government of Amsterdam, Nort
+4 CONC h Holland, The Netherlands
+אב: Eliazer Samuel
+אשה: Marianne / Betje Philip de Vries
+ילדים: Philip Samuel Groenstad, Eliazer / Leizer Salomon Groenstad, Hermanus Emanuel / Mendele Samuel / Za
+4 CONC nwil Groenstad
+2 EVEN Record
+3 ROLE 40000:204443169:
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1502152/samuel-leendert-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502152
+1 RIN MH:I501358
+1 _UID 6749B58F2B3ED61A9958A13FFB063C35
+
+0 @I501359@ INDI
+1 _UPD 2 APR 2025 06:43:18 GMT -0500 
+1 NAME Marianne Philip /de Vries/
+2 GIVN Marianne Philip
+2 SURN de Vries
+2 _MARNM Groenstad
+1 SEX F
+1 BIRT
+2 DATE 1763
+2 PLAC Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 8 FEB 1814
+2 PLAC Amsterdam, Noord-Holland, Netherlands
+2 AGE 50-51
+1 FAMS @F500499@
+1 FAMC @F500940@
+1 SOUR @S500112@
+2 PAGE Marianne Philip Groenstad (geboren de Vries)
+2 QUAY 3
+2 DATA
+3 DATE 29 בנוב’ 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19550007/marianne-betje-philip-xx-de-vries-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19550007
+1 SOUR @S500243@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6WFRTI5BFCRWNQK5OCUNDTLY6LY-1502153/marjanne-philip-groenstad-geboren-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502153
+1 RIN MH:I501359
+1 _UID 6749B58F4BC2C61E9958A13FFB063C35
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTliNDZjODVjNjc2OTBlYTU1MDA4MTAwNzIyMjIxMmE0Yzg4ZDc1NDhmZDk3MjNlZjE2MjVjYzgxOTI1MTNiMDUmZT0xNzUzNjEwNDAw/158/944/6912/501025_3414421ydc7sh1i2dhc065_A.jpg
+2 _FILESIZE 3486
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501024
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501025
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPThhNzZjMzljNWZiZWJjYzQyYjc0YWQxN2QzYjQ4NDY0MzM5YzQ3MjE2YTA2MjgwODU1MTUyYTA4ZjNjYWU0YWYmZT0xNzUzNjEwNDAw/158/944/6912/501024_694417cnd1dg72j11c5061_A.jpg
+2 _FILESIZE 3488
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501024
+
+0 @I501363@ INDI
+1 _UPD 29 NOV 2024 06:38:02 GMT -0500 
+1 NAME Philip Eliazer /Groenstad/
+2 GIVN Philip Eliazer
+2 SURN Groenstad
+1 SEX M
+1 BIRT
+2 DATE ABT 1831
+1 EVEN Spouse: Leentje Barend Groenteman
+2 TYPE MARR
+2 DATE 11 JUL 1860
+1 FAMS @F500503@
+1 FAMC @F500500@
+1 SOUR @S500112@
+2 PAGE Philip Eliazer Groenstad
+2 QUAY 3
+2 DATA
+3 DATE 29 NOV 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I501363
+1 _UID 6749B58FBF7056299958A13FFB063C35
+
+0 @I501369@ INDI
+1 _UPD 29 NOV 2024 06:38:03 GMT -0500 
+1 NAME Leentje Barend /Groenteman/
+2 GIVN Leentje Barend
+2 SURN Groenteman
+2 _MARNM Groenstad
+1 SEX F
+1 BIRT
+2 DATE ABT 1835
+1 EVEN Spouse: Philip Eliazer Groenstad
+2 TYPE MARR
+2 DATE 11 JUL 1860
+1 FAMS @F500503@
+1 SOUR @S500112@
+2 PAGE Leentje Barend Groenstad (geboren Groenteman)
+2 QUAY 3
+2 DATA
+3 DATE 29 NOV 2024
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I501369
+1 _UID 6749B5906A2C36399958A13FFB063C35
+
+0 @I503488@ INDI
+1 _UPD 7 APR 2025 00:52:32 GMT -0500 
+1 NAME Lion Ephraim /Groenstad/
+2 GIVN Lion Ephraim
+2 SURN Groenstad
+1 SEX M
+1 BIRT
+2 DATE 5 NOV 1853
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 6 JAN 1940
+2 PLAC Amsterdam, Noord-Holland, Nederland
+1 RESI
+2 DATE BET 5 NOV 1853 AND 1863
+2 ADDR
+3 ADR1 Joden Breestraat 266 Street
+1 FAMS @F501150@
+1 FAMC @F501149@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1373049122&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Lion Groenstad
+לידה: 5 בנוב’ 1853 - Amsterdam, Noord-Holland, Netherlands
+לידה: 7 בנוב’ 1853 - Amsterdam, Noord-Holland, Nederland
+פטירה: 6 בינו’ 1940 - Amsterdam, Noord
+4 CONC -Holland, Nederland
+הורים: Ephraim Emanuel Groenstad, Saartje Groenstad (לבית Kool)
+אשה: Mietje Groenstad (לבית Swart)
+ילדים: Hanna Sajet (לבית Groenstad), Sellij Duim (לבי
+4 CONC ת Groenstad), Marianne Flora van Praag (לבית Groenstad), Ephraim Groenstad, Jacob Raphael Groenstad
+אחים ואחיות: Jacob Groenstad, Flora Groenstad
+2 EVEN Record
+3 ROLE 40001:1373049122:
+1 SOUR @S500225@
+2 PAGE https://www.myheritage.com/profile-OYYV6IBMXOL2JUVTEVIOWVGGFKXTM3Y-1502688/lion-ephraim-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502688
+1 RIN MH:I503488
+1 _UID 67ED22F5E9047A152C83272B6F7AC308
+
+0 @I503491@ INDI
+1 _UPD 7 APR 2025 00:52:32 GMT -0500 
+1 NAME MIETJE (MIRJAM) /Swart/
+2 GIVN MIETJE (MIRJAM)
+2 SURN Swart
+1 SEX F
+1 BIRT
+2 DATE 26 AUG 1857
+2 PLAC Leeuwarden, Friesland, Netherlands
+1 DEAT Y
+2 DATE 18 OCT 1939
+2 PLAC Amsterdam, Noord-Holland, Nederland
+1 FAMS @F501150@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1373049750&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Mietje Groenstad (לבית Swart)
+לידה: 26 באוג’ 1857 - Leeuwarden, Friesland, Nederland
+פטירה: 18 באוק’ 1939 - Amsterdam, Noord-Holland, Nederland
+בעל: Lion Groenstad
+ילדי
+4 CONC ם: Hanna Sajet (לבית Groenstad), Sellij Duim (לבית Groenstad), Marianne Flora van Praag (לבית Groenstad), Ephraim Groenstad, Jacob Raphael Groenstad
+2 EVEN Record
+3 ROLE 40001:1373049750:
+1 SOUR @S500225@
+2 PAGE https://www.myheritage.com/profile-OYYV6IBMXOL2JUVTEVIOWVGGFKXTM3Y-1501804/mietje-mirjam-groenstad-geboren-swart
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1501804
+1 RIN MH:I503491
+1 _UID 67ED2324B31D798D89095A63B4CB3A01
+
+0 @I503495@ INDI
+1 _UPD 7 APR 2025 00:52:34 GMT -0500 
+1 NAME Ephraim /Groenstad/
+2 GIVN Ephraim
+2 SURN Groenstad
+1 SEX M
+1 BIRT
+2 DATE 8 JUN 1890
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 4 JUN 1943
+2 PLAC Sobibór, Włodawa County, Lublin Voivodeship, Poland
+1 FAMS @F501555@
+1 FAMC @F501150@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1904053614&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Ephraim Groenstad
+לידה: 8 ביוני 1890 - Amsterdam, North Holland, Netherlands
+פטירה: 4 ביוני 1943 - Sobibor Extermination Camp, Sobibór, Włodawa County, Lublin, Poland
+הורים: 
+4 CONC Lion Groenstad, Mietje Groenstad (לבית Swart)
+אשה: Sara Judith Groenstad (לבית van Kollem)
+ילדים: Mimi Poot (לבית Groenstad), Nana Groenstad, Hanna Speijer (לבית Groenstad), El
+4 CONC eazer Groenstad
+אחים ואחיות: Hanna Sajet (לבית Groenstad), Sellij Duim (לבית Groenstad), Marianne Flora van Praag (לבית Groenstad), Jacob Raphael Groenstad
+2 EVEN Record
+3 ROLE 40001:1904053614:
+1 SOUR @S500225@
+2 PAGE https://www.myheritage.com/profile-OYYV6IBMXOL2JUVTEVIOWVGGFKXTM3Y-1502691/ephraim-groenstad
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502691
+1 RIN MH:I503495
+1 _UID 67ED2325A4A2099389095A63B4CB3A01
+
+0 @I504971@ INDI
+1 _UPD 30 APR 2025 04:26:47 GMT -0500 
+1 NAME Sara Judith /van Kollem/
+2 GIVN Sara Judith
+2 SURN van Kollem
+1 SEX F
+1 BIRT
+2 DATE 21 FEB 1888
+2 PLAC Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 4 JUN 1943
+2 PLAC Sobibor Extermination Camp, Sobibór, Włodawa County, Lublin, Poland
+1 FAMS @F501555@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1903996057&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Sara Judith Groenstad (לבית van Kollem)
+לידה: 21 בפבר’ 1888 - Amsterdam, North Holland, Netherlands
+פטירה: 4 ביוני 1943 - Sobibor Extermination Camp, Sobibór, Włodawa County,
+4 CONC  Lublin, Poland
+הורים: Eleazar van Kollem, Naatje Philip van Kollem (לבית Kater)
+בעל: Ephraim Groenstad
+ילדים: Mimi Poot (לבית Groenstad), Nana Groenstad, Hanna Speijer (לבית 
+4 CONC Groenstad), Eleazer Groenstad
+אחים ואחיות: Levie van Kollem, Hanna van Kollem, Jacob van Kollem, Betje Salomons (לבית van Kollem), Alida van Kollem, Isaac van Kollem, Sellien van Kollem
+2 EVEN Record
+3 ROLE 40001:1903996057:
+1 RIN MH:I504971
+1 _UID 6811ECD55C99DEE40BE60B762F4C16BC
+
+0 @F500264@ FAM
+1 _UPD 23 MAY 2024 06:19:01 GMT -0500
+1 HUSB @I500725@
+1 WIFE @I500726@
+1 CHIL @I500104@
+1 CHIL @I500732@
+1 CHIL @I500734@
+1 CHIL @I500733@
+1 CHIL @I500735@
+1 RIN MH:F500264
+1 _UID 664F2625762BE9A5C18D5B820E509E1B
+1 MARR
+2 DATE 21 FEB 1828
+2 PLAC Hoogezand, Groningen, Nederland
+2 NOTE Esposa: Saartje Groenstad (nacida Salomons)
+
+0 @F501149@ FAM
+1 _UPD 2 APR 2025 06:43:49 GMT -0500
+1 HUSB @I503483@
+1 WIFE @I503487@
+1 CHIL @I503488@
+1 CHIL @I503489@
+1 CHIL @I503490@
+1 RIN MH:F501149
+1 _UID 67ED22F5A6DEEA132C83272B6F7AC308
+1 MARR
+2 DATE 1 MAY 1850
+2 PLAC Amsterdam, Noord-Holland, Netherlands
+
+0 @F501274@ FAM
+1 _UPD 7 APR 2025 01:01:41 GMT -0500
+1 HUSB @I503910@
+1 WIFE @I503911@
+1 CHIL @I503912@
+1 CHIL @I503903@
+1 CHIL @I503913@
+1 CHIL @I503914@
+1 CHIL @I503915@
+1 CHIL @I503916@
+1 CHIL @I503917@
+1 CHIL @I503918@
+1 CHIL @I503919@
+1 CHIL @I503920@
+1 RIN MH:F501274
+1 _UID 67F36A45A181682584EB2DE5ECE98A19
+1 MARR
+2 DATE 15 APR 1885
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands, Amsterdam, North Holland, The Netherlands
+2 NOTE Echtgeno(o)t(e): Jochem van Praag
+
+0 @F501559@ FAM
+1 _UPD 30 APR 2025 04:30:46 GMT -0500
+1 HUSB @I504978@
+1 WIFE @I504974@
+1 RIN MH:F501559
+1 _UID 6811EDC6933CEB3FC6015B2B5C0A62DB
+1 MARR
+
+0 @F501560@ FAM
+1 _UPD 30 APR 2025 04:31:15 GMT -0500
+1 HUSB @I503496@
+1 WIFE @I504979@
+1 RIN MH:F501560
+1 _UID 6811EDE3B1A30B04C0D391FD71F5E135
+1 MARR
+2 DATE 9 JUL 1924
+2 PLAC Amsterdam, Noord-Holland, Nederland
+
+0 @F500266@ FAM
+1 _UPD 23 MAY 2024 06:19:02 GMT -0500
+1 HUSB @I500736@
+1 WIFE @I500732@
+1 CHIL @I502551@
+1 CHIL @I502552@
+1 RIN MH:F500266
+1 _UID 664F2626968569C0C18D5B820E509E1B
+1 MARR
+2 DATE 27 APR 1859
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+2 NOTE Spouse: Salomon Coster
+
+0 @F501197@ FAM
+1 _UPD 4 APR 2025 02:53:13 GMT -0500
+1 HUSB @I503653@
+1 WIFE @I501364@
+1 CHIL @I503654@
+1 CHIL @I503655@
+1 CHIL @I503656@
+1 CHIL @I503657@
+1 CHIL @I503658@
+1 RIN MH:F501197
+1 _UID 67EF8FE91CE988AE8C95D29C87BB7729
+1 MARR
+2 DATE 13 JAN 1847
+2 PLAC Amsterdam, North Holland, Netherlands
+
+0 @F501151@ FAM
+1 _UPD 2 APR 2025 06:46:14 GMT -0500
+1 HUSB @I503497@
+1 WIFE @I503493@
+1 CHIL @I503500@
+1 CHIL @I503498@
+1 CHIL @I503499@
+1 RIN MH:F501151
+1 _UID 67ED2386200250A23E0EAE8A15553D2A
+1 MARR
+
+0 @F500501@ FAM
+1 _UPD 29 NOV 2024 06:37:36 GMT -0500
+1 HUSB @I501361@
+1 WIFE @I501366@
+1 CHIL @I502535@
+1 CHIL @I503486@
+1 CHIL @I503483@
+1 CHIL @I503484@
+1 CHIL @I502543@
+1 CHIL @I502536@
+1 CHIL @I502537@
+1 CHIL @I502538@
+1 CHIL @I502539@
+1 CHIL @I502540@
+1 CHIL @I502541@
+1 CHIL @I502542@
+1 RIN MH:F500501
+1 _UID 6749B590126BC6309958A13FFB063C35
+1 MARR
+2 DATE 22 AUG 1821
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+2 NOTE Echtgeno(o)t(e): Sara Ephraim Amelander
+
+0 @F500039@ FAM
+1 _UPD 21 MAY 2024 09:22:49 GMT -0500
+1 HUSB @I500696@
+1 WIFE @I500104@
+1 CHIL @I500697@
+1 CHIL @I500698@
+1 CHIL @I500699@
+1 CHIL @I500700@
+1 CHIL @I500701@
+1 CHIL @I500702@
+1 CHIL @I500704@
+1 CHIL @I500705@
+1 CHIL @I500706@
+1 CHIL @I500707@
+1 CHIL @I500097@
+1 CHIL @I500355@
+1 CHIL @I500708@
+1 CHIL @I500709@
+1 CHIL @I500710@
+1 CHIL @I500711@
+1 RIN MH:F500039
+1 _UID 646CAA31B028C891EBC68E37CA0A7D69
+1 MARR
+2 DATE 27 MAR 1861
+2 PLAC Assen, Drenthe, Netherlands
+2 NOTE בן/בת זוג: Izak Israel Benjamin Behr
+
+0 @F501556@ FAM
+1 _UPD 30 APR 2025 04:28:12 GMT -0500
+1 HUSB @I503504@
+1 WIFE @I504972@
+1 RIN MH:F501556
+1 _UID 6811ED2C9C5C3D9A6CD47124FCD8C209
+1 MARR
+2 DATE 5 JUL 1950
+2 PLAC Amsterdam
+
+0 @F501271@ FAM
+1 _UPD 7 APR 2025 00:52:24 GMT -0500
+1 HUSB @I503903@
+1 WIFE @I503494@
+1 CHIL @I503904@
+1 CHIL @I503905@
+1 CHIL @I503906@
+1 RIN MH:F501271
+1 _UID 67F368186B95A5381E975845CA364B48
+1 MARR
+2 DATE 12 NOV 1913
+2 PLAC Arnhem, Arnhem, Gelderland, The Netherlands
+2 NOTE Echtgeno(o)t(e): Philip van Praag
+
+0 @F501557@ FAM
+1 _UPD 30 APR 2025 04:29:52 GMT -0500
+1 HUSB @I504976@
+1 WIFE @I504973@
+1 RIN MH:F501557
+1 _UID 6811ED9073438253BA9D864895FD9490
+1 MARR
+2 DATE 20 SEP 1943
+2 PLAC Westerbork, Midden-Drenthe, Drenthe, Netherlands
+
+0 @F501558@ FAM
+1 _UPD 30 APR 2025 04:29:52 GMT -0500
+1 HUSB @I504977@
+1 WIFE @I504973@
+1 RIN MH:F501558
+1 _UID 6811ED90BE070256BA9D864895FD9490
+1 MARR
+2 DATE 23 MAY 1946
+2 PLAC Amsterdam, North Holland, Netherlands
+
+0 @F500916@ FAM
+1 _UPD 6 MAR 2025 07:50:14 GMT -0500
+1 HUSB @I502699@
+1 WIFE @I500733@
+1 CHIL @I502700@
+1 RIN MH:F500916
+1 _UID 67C9A81652972A3448C80E5325B36C5C
+1 MARR
+
+0 @F500499@ FAM
+1 _UPD 29 NOV 2024 06:37:35 GMT -0500
+1 HUSB @I501358@
+1 WIFE @I501359@
+1 CHIL @I500725@
+1 CHIL @I501360@
+1 CHIL @I503485@
+1 CHIL @I501361@
+1 RIN MH:F500499
+1 _UID 6749B58F2CD6861B9958A13FFB063C35
+1 MARR
+2 DATE 1788
+2 PLAC Amsterdam
+
+0 @F500503@ FAM
+1 _UPD 29 NOV 2024 06:37:36 GMT -0500
+1 HUSB @I501363@
+1 WIFE @I501369@
+1 RIN MH:F500503
+1 _UID 6749B5906ACB663A9958A13FFB063C35
+1 MARR
+
+0 @F501150@ FAM
+1 _UPD 2 APR 2025 06:44:36 GMT -0500
+1 HUSB @I503488@
+1 WIFE @I503491@
+1 CHIL @I503492@
+1 CHIL @I503493@
+1 CHIL @I503494@
+1 CHIL @I503495@
+1 CHIL @I503496@
+1 RIN MH:F501150
+1 _UID 67ED2324BCDC398E89095A63B4CB3A01
+1 MARR
+2 DATE 8 JUN 1882
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+2 NOTE Echtgeno(o)t(e): Lion Groenstad
+
+0 @F501555@ FAM
+1 _UPD 30 APR 2025 04:26:45 GMT -0500
+1 HUSB @I503495@
+1 WIFE @I504971@
+1 CHIL @I504972@
+1 CHIL @I504973@
+1 CHIL @I504974@
+1 CHIL @I504975@
+1 RIN MH:F501555
+1 _UID 6811ECD5666EEEE50BE60B762F4C16BC
+1 MARR
+2 DATE 3 MAY 1916
+2 PLAC Amsterdam, North Holland, Netherlands
+0 TRLR

@@ -1,0 +1,4540 @@
+0 HEAD
+1 SOUR ChatGPT-GEDCOM
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+1 LANG Hebrew
+0 @I500107@ INDI
+1 _UPD 21 FEB 2025 08:19:05 GMT -0500 
+1 NAME Benjamin /van der Velde/
+2 GIVN Benjamin
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 21 SEP 1849
+2 PLAC Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands
+1 DEAT Y
+2 DATE 23 JAN 1924
+2 PLAC Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands
+1 EVEN Spouse: Flora van der Velde (born Italiaander)
+2 TYPE MARR
+2 DATE 6 APR 1886
+2 PLAC Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands
+1 FAMS @F500040@
+1 FAMC @F500123@
+1 SOUR @S500125@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6IWFCRWTZPFKTFPQVZMK6KWLIAI-1500124/benjamin-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500124
+1 SOUR @S500056@
+2 QUAY 4
+2 DATA
+3 TEXT Benjamin Rudelsheim וZippora Elisabeth van der Velde&amp;lt;br&amp;gt;חתן: Benjamin van der Velde&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;גיל: 24&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;מקצוע: M
+4 CONC agazijnbediende&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;גיל: 31&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;מקצוע: Zonder Beroep&amp;lt;br&amp;gt;מקור: אוסף:Burgerlijke Stand Huwelijken 1922מו
+4 CONC סד:Haags Gemeentearchiefמספר מסמך:844מקום המקור:&#039;s-Gravenhage, South Holland, Netherlandsתאריך הכרך:1500-01-01מקור:לצפייה ברשומה המלאה ב-denhaag.
+4 CONC digitalestamboom.nlתמונות:Source image
+2 EVEN Record
+3 ROLE 10562:8349971-SF:
+1 SOUR @S500056@
+2 QUAY 4
+2 DATA
+3 TEXT Andries Salomon van der Velde וElisabeth Sarfatij&amp;lt;br&amp;gt;חתן: Benjamin van der Velde&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;גיל: 28&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;מקצוע: Koop
+4 CONC man&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;גיל: 32&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;מקצוע: Kantoorbediende&amp;lt;br&amp;gt;מקור: &lt;br&gt;מוסד: Noord-Hollands Archief&lt;br&gt;מס
+4 CONC פר מסמך: Watergraafsmeer Reg.W2 fol. 40&lt;br&gt;מקום המקור: Amsterdam, North Holland, Netherlands&lt;br&gt;תאריך מקור: 1930-08-20&lt;br&gt;תאריך הכרך: 1930-01-31&lt;b
+4 CONC r&gt;הערות: Provenance: Datadump ExportBS Huwelijk_20180404_114831.csv van NHA, csv2a2a
+2 EVEN Record
+3 ROLE 10562:7956548-F:
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500024/benjamin-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500024
+1 NOTE <p><span style="border: 0px; margin: 0px; padding: 0px; font-size: 13px; box-sizing: border-box; color: #333333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #ffffff;
+2 CONC  vertical-align: inherit;"><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; vertical-align: inherit;">לאחר הכשרה בסמינר ההולנדי-ישראלי ולמד 
+2 CONC תיאולוגיה וספרות בליידן, חזר לסמינר ההולנדי-ישראלי ב-1876 כמורה לעברית.&nbsp;</span><span style="border: 0px; margin: 0px; padding: 0px; box-sizi
+2 CONC ng: border-box; vertical-align: inherit;">הוא ימשיך לעבוד כאן עד פרישתו ב-1922.</span></span></p>
+<p style="border: 0px; margin: 0px; padding: 0px; font-size: 13px; box-sizin
+2 CONC g: border-box; color: #333333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #ffffff;">&nbsp;</p>
+<p style="border: 0px; margin: 0px; padding: 0px; font-size: 13px; b
+2 CONC ox-sizing: border-box; color: #333333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #ffffff;"><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-
+2 CONC box; vertical-align: inherit;"><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; vertical-align: inherit;">לאחר השכלתו בסמינר ההולנדי-ישראלי, נ
+2 CONC רשם ב-1867 כסטודנט לספרות ב- Athenaeum Illustre באמסטרדם.&nbsp;</span><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; vertical-align: inherit;">
+2 CONC תחילת 1868 נרשם כסטודנט בליידן, שם למד תיאולוגיה וספרות.&nbsp;</span><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; vertical-al
+2 CONC ign: inherit;">באוגוסט 1869 השיג את ההסמכה שלו כמטיף ומורה דתי.</span></span></p>
+<p style="border: 0px; margin: 0px; padding: 0px; font-size: 13px; box-sizing: bor
+2 CONC der-box; color: #333333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #ffffff;">&nbsp;</p>
+<p style="border: 0px; margin: 0px; padding: 0px; font-size: 13px; box-siz
+2 CONC ing: border-box; color: #333333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #ffffff;"><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; v
+2 CONC ertical-align: inherit;"><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; vertical-align: inherit;">במחצית הראשונה של שנות ה-70 עבד ואן דר ול
+2 CONC ה, בין השאר, כמורה לעברית בבית הספר "תלמוד תורה פלאנטאז'".&nbsp;</span><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; vertical
+2 CONC -align: inherit;">בשנת 1872 היה מעורב בהקמת אגודה למורים דתיים.&nbsp;</span><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; vertical-align
+2 CONC : inherit;">בתקופה זו גם נשא באופן קבוע דרשות מדי פעם.&nbsp;</span><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; vertical-align: inherit
+2 CONC ;">ב-1874, למשל, הוא נשא נאום לרגל יום השנה ה-25 למלכותו של המלך וילם השלישי.&nbsp;</span><span style="border: 0px; margin: 0px; padding: 0px; box-siz
+2 CONC ing: border-box; vertical-align: inherit;">באותה שנה קיבל גם הזמנה לשאת דרשה לקהילה היהודית בארנהם.&nbsp;</span><span style="border: 0px; margin: 0px; pad
+2 CONC ding: 0px; box-sizing: border-box; vertical-align: inherit;">זה היה כנראה קשור לעובדה שאן דר ולדה שקל להגיש מועמדות לתפקיד כמורה דתי בארנ
+2 CONC ם בתקופה זו.&nbsp;</span><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; vertical-align: inherit;">הוא החליף כמה מכתבים בעניין זה עם 
+2 CONC בר מועצת הכנסייה של ארנהם, ליפמן פרינס.&nbsp;</span><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; vertical-align: inherit;">בסופו ש
+2 CONC ל דבר כל הנושא יצא לריק.</span></span></p>
+1 RIN MH:I500107
+1 _UID 646E1539B4E8800473D0C5CAA5DEBEDE
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWZmODI5MmRjZjM2YjQ1ODMxNGYxZmM4MGQ5ZDNkYjU5ZjE4ZGFmY2IwNDZiNTUxZTc3MTFjNGQ4MGUzM2U5MzkmZT0xNzUzNjEwNDAw/158/944/6912/500723_300947y571i88q47b8e86b_A.jpg
+2 _FILESIZE 21757
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500722
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500723
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWZjMWUxZmVjOGIxYzAwMmRmM2MxOWYxOTZmODljMzc4YzY0N2YyZjEyMDMwZWQ0YzA2YmJkNmJjOWIxOTdmOGYmZT0xNzUzNjEwNDAw/158/944/6912/500722_882176678u815l863pb7sb_A.jpg
+2 _FILESIZE 21752
+2 TITL 501218_2171363o71n6457fa2f4q0_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 255 53 372 207
+2 _PHOTO_RIN MH:P500722
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTVhYWQ5N2JjNTk1ZmYzMTk3M2I0MDI2NTE3NzlkYjQ3YjhlZDY0ZjgzYjVhZGZmNTM1MDA2N2I5OTFmNTNhNTcmZT0xNzUzNjEwNDAw/158/944/6912/500048_166470cb651gb4mbdb1228_A.jpg
+2 _FILESIZE 1299
+2 TITL בנימין ון דר ולדה (סבא סבתא יוליה)
+2 _POSITION 43 8 63 35
+2 _PHOTO_RIN MH:P500048
+
+0 @I500106@ INDI
+1 _UPD 21 FEB 2025 08:19:05 GMT -0500 
+1 NAME Flora /Italiaander/
+2 GIVN Flora
+2 SURN Italiaander
+2 _MARNM van der Velde
+1 SEX F
+1 BIRT
+2 DATE 28 JUL 1861
+2 PLAC Rotterdam, Rotterdam, Zuid-Holland, Nederland
+1 DEAT Y
+2 DATE 22 NOV 1940
+2 PLAC Amsterdam, Noord-Holland, The Netherlands
+2 CAUS בעיה בריאותית
+1 EVEN Spouse: Benjamin van der Velde
+2 TYPE MARR
+2 DATE 6 APR 1886
+2 PLAC Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands
+1 BURI
+2 PLAC Gooise Meren, North Holland, Netherlands
+1 FAMS @F500040@
+1 FAMC @F500227@
+1 SOUR @S500125@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6IWFCRWTZPFKTFPQVZMK6KWLIAI-1500125/flora-italiaander
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500125
+1 SOUR @S500056@
+2 QUAY 4
+2 DATA
+3 TEXT Benjamin Rudelsheim וZippora Elisabeth van der Velde&amp;lt;br&amp;gt;חתן: Flora Italiaander&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;גיל: 24&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;מקצוע: Magazi
+4 CONC jnbediende&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;גיל: 31&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;מקצוע: Zonder Beroep&amp;lt;br&amp;gt;מקור: אוסף:Burgerlijke Stand Huwelijken 1922מוסד:
+4 CONC Haags Gemeentearchiefמספר מסמך:844מקום המקור:&#039;s-Gravenhage, South Holland, Netherlandsתאריך הכרך:1500-01-01מקור:לצפייה ברשומה המלאה ב-denhaag.digit
+4 CONC alestamboom.nlתמונות:Source image
+2 EVEN Record
+3 ROLE 10562:8349971-SM:
+1 SOUR @S500056@
+2 QUAY 4
+2 DATA
+3 TEXT Andries Salomon van der Velde וElisabeth Sarfatij&amp;lt;br&amp;gt;חתן: Flora Italiaander&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;גיל: 28&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;מקצוע: Koopman&a
+4 CONC mp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;גיל: 32&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;מקצוע: Kantoorbediende&amp;lt;br&amp;gt;מקור: &lt;br&gt;מוסד: Noord-Hollands Archief&lt;br&gt;מספר 
+4 CONC מסמך: Watergraafsmeer Reg.W2 fol. 40&lt;br&gt;מקום המקור: Amsterdam, North Holland, Netherlands&lt;br&gt;תאריך מקור: 1930-08-20&lt;br&gt;תאריך הכרך: 1930-01-31&lt;br&gt;
+4 CONC הערות: Provenance: Datadump ExportBS Huwelijk_20180404_114831.csv van NHA, csv2a2a
+2 EVEN Record
+3 ROLE 10562:7956548-M:
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500025/flora
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500025
+1 NOTE <p><span style="border: 0px; margin: 0px; padding: 0px; font-size: 13px; box-sizing: border-box; color: #333333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #ffffff;
+2 CONC  vertical-align: inherit;"><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; vertical-align: inherit;">כילדה יתומה שרוצה להתחתן, פלורה איטליא
+2 CONC נדר ציינה ב-1885 שהיא רוצה להיות זכאית לתרומה מהמורשת המכונה דרזדן.&nbsp;</span><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: bord
+2 CONC er-box; vertical-align: inherit;">מורשת זו נבעה מעזבונו של יונאס אפרים דרזדן שמת ללא ילדים ב-24 ביוני 1806.&nbsp;</span><span style="border: 0px; ma
+2 CONC rgin: 0px; padding: 0px; box-sizing: border-box; vertical-align: inherit;">הוא השאיר מאחוזתו 200,000 גילדן לילדות יתומות בנות 18 עד 30 מ"הקהילה היהוד
+2 CONC ת הישנה של גרמניה הגבוהה", שציינו שהן רוצות להתחתן.&nbsp;</span><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; vertical-align: in
+2 CONC herit;">התנאי היה שעליהם לקרוא לבנם הבכור יונאס אפרים.&nbsp;</span><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; vertical-align: in
+2 CONC herit;">מדי שנה הוענק סכום כסף נכבד בקרב בנות יתומות בעניין.&nbsp;</span><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; vertical
+2 CONC -align: inherit;">בשנת 1885, פלורה איטליאנדר הייתה בר המזל וקיבלה סכום של 7,400 גילדן ממורשת זו.&nbsp;</span><span style="border: 0px; margin: 0px
+2 CONC ; padding: 0px; box-sizing: border-box; vertical-align: inherit;">הנישואים בין בנימין לפלורה התקיימו ב-6 באפריל 1886.</span></span></p>
+<p style="border: 0px; mar
+2 CONC gin: 0px; padding: 0px; font-size: 13px; box-sizing: border-box; color: #333333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #ffffff;"><span style="border: 0px; marg
+2 CONC in: 0px; padding: 0px; box-sizing: border-box; vertical-align: inherit;"><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; vertical-align: inherit;">הזוג הצעיר עב
+2 CONC ר לגור בבית ב-Plantage Muidergracht.&nbsp;</span><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; vertical-align: inherit;">לפחות שישה ילדים נול
+2 CONC ו מנישואים אלה בין 1887 ל-1902.&nbsp;</span><span style="border: 0px; margin: 0px; padding: 0px; box-sizing: border-box; vertical-align: inherit;">הבן הבכור יונאס אפר
+2 CONC ם נפטר בשנת 1892. שאר הילדים הגיעו לבגרות</span></span></p>
+1 RIN MH:I500106
+1 _UID 646E151A6880D083A6459E035E7AF83B
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWU4MzYzZTIwNDk0ZTJkOGMwZTE1NDdjNTYzZmQ0MTc5NjQ1YjYzYmUyY2VlMDM3ZjA2YzVmMGFkZjM5MTA5NDAmZT0xNzUzNjEwNDAw/158/944/6912/500087_3938321ec196bccb34e6fc_A.jpg
+2 _FILESIZE 67186
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500086
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500087
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWUyNmNmYjkxZWNhMzJiM2RiNTljZTQyMTQ2M2UzYTBkOTc1MWZhMTE2NDQ3OTk1NGU3YjNjMDBiZjQ0YTc5MzEmZT0xNzUzNjEwNDAw/158/944/6912/500086_7462359cjc66cxk177c143_A.jpg
+2 _FILESIZE 70475
+2 TITL אמא ישעיהו משה
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 26 581 607
+2 _PHOTO_RIN MH:P500086
+
+0 @I500668@ INDI
+1 _UPD 21 MAY 2024 09:16:50 GMT -0500 
+1 NAME Clara Eva /van der Velde/
+2 GIVN Clara Eva
+2 SURN van der Velde
+1 SEX F
+1 BIRT
+2 DATE 8 SEP 1889
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 27 NOV 1927
+2 PLAC Apeldoorn, Apeldoorn, Gelderland, Netherlands
+1 FAMC @F500040@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Clara Eva van der Velde&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 8 בספט’ 1889 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;פטירה: 27
+4 CONC  בנוב’ 1927 - Apeldoorn, Apeldoorn, Gelderland, Netherlands&amp;lt;br&amp;gt;אב: Benjamin van der Velde&amp;lt;br&amp;gt;אם: Flora Italiaander&amp;lt;br&amp;gt;אחים ואחיות: Jonas J
+4 CONC acob van der Velde, Zippora Elisabeth van der Velde, Max van der Bilt (לבית van der Velde), Mozes Jesaja van der Velde, NN van der Velde, Sara Jeannette Salomons (לבית van der Velde), Andries 
+4 CONC Salomon van der Velde, David Hartog van der Velde
+2 EVEN Record
+3 ROLE 40000:267250343:
+1 SOUR @S500125@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6IWFCRWTZPFKTFPQVZMK6KWLIAI-1500127/clara-eva-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500127
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500038/clara-eva-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500038
+1 RIN MH:I500668
+1 _UID 664CACCF5B1BC6F9309C51B5ED9AF1A9
+
+0 @I502173@ INDI
+1 _UPD 25 FEB 2025 22:49:14 GMT -0500 
+1 NAME Rebekka /van der Velde/
+2 GIVN Rebekka
+2 SURN van der Velde
+1 SEX F
+1 BIRT
+2 DATE 4 APR 1828
+2 PLAC Wijhe, Overijssel, Nederland
+1 DEAT Y
+2 DATE 16 NOV 1902
+2 PLAC Groningen, Groningen, Netherlands
+1 FAMC @F500766@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1199689215&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Rebekka Polak (לבית van der Velde)
+לידה: 4 באפר’ 1828 - Wijhe, Overijssel, Nederland
+פטירה: 16 בנוב’ 1902 - Groningen, Groningen, Netherlands
+הורים: Moses Meijer van de V
+4 CONC elde, Betje Emanuel van de Velde (לבית Blitz)
+בעל: Benjamin Levie Polak
+ילדים: Levi Polak, Annabet Polak, Saartje Polak, Anna Brest (לבית Polak), Mozes Polak, Mozes Polak
+אחים וא
+4 CONC חיות: Heijman Meijer van de Velde, Rebekka van de Velde, Isaac Moses van der Velde, Alexander van der Velde, Aaltje Mozes van der Mesritz (לבית Velde), Levie van der Velde, Eliazer Van Der Vel
+4 CONC de
+2 EVEN Record
+3 ROLE 40001:1199689215:
+1 RIN MH:I502173
+1 _UID 67BE9D46B574175AE7EC1E3EF1504890
+
+0 @I502049@ INDI
+1 _UPD 20 FEB 2025 06:40:44 GMT -0500 
+1 NAME Aaltje Mozes van der /van der Velde/
+2 GIVN Aaltje Mozes van der
+2 SURN van der Velde
+2 _MARNM Mesritz
+1 SEX F
+1 BIRT
+2 DATE 27 JAN 1820
+2 PLAC Meppel
+1 DEAT Y
+2 DATE 8 DEC 1901
+2 PLAC Schiedam
+1 FAMS @F500737@
+1 FAMC @F500735@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=296090280&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Aaltje Mozes van der Mesritz (לבית Velde)
+לידה: 1825 - Meppel, Drenthe, Nederland
+הורים: Moses Meijer van de Velde, Betje Emanuel van de Velde (לבית Blitz)
+בעל: Isaak Elias Mesritz
+4 CONC 
+ילדים: Elias Mesritz, Betje Mesritz, Rebecca Mesritz, Schoontje Groenewoudt (לבית Mesritz), Mozes Mesritz, Ester Denneboom (לבית Mesritz), Lezer Mesritz, Philip Mesritz, Benjamin Mesritz
+4 CONC 
+אחים ואחיות: Heijman Meijer van de Velde, Rebekka van de Velde, Isaac Moses van der Velde, Alexander van der Velde, Rebekka Polak (לבית van der Velde), Levie van der Velde, Eliazer Van 
+4 CONC Der Velde
+2 EVEN Record
+3 ROLE 40001:296090280:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Aaltje Mozes van der Velde&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;כינוי: de&amp;lt;br&amp;gt;לידה: סביבות 1820 - Wijhe, Olst-Wijhe, Overijssel, The Netherlands&amp;lt;br&amp
+4 CONC ;gt;נישואין: בן/בת זוג: Isaak Elias Mesritz - 19 ביוני 1846 - Wijhe, Olst-Wijhe, Overijssel, The Netherlands&amp;lt;br&amp;gt;אב: Mozes Meijer van der Velde&amp;lt;br&amp;gt;אם:
+4 CONC  Betje Emanuel Blitz&amp;lt;br&amp;gt;בעל: Isaak Elias Mesritz&amp;lt;br&amp;gt;ילדים: Elias Mesritz, Philip Mesritz, Betje Mesritz, Schoontje Mesritz, Rebecca Mesritz, Mozes Mesritz, Ester Me
+4 CONC sritz, Lezer Mesritz, Benjamin Mesritz&amp;lt;br&amp;gt;אחים ואחיות: Hijman Meijer van der Velde, Rebekka van de Velde, Isaac Mozes van der Velde, Emanuel Vandervelde (לבית van der Velde
+4 CONC ), Alexander van der Velde, Rebecka van der Velde, Eliazer van der Velde, Levie van der Velde
+2 EVEN Record
+3 ROLE 40000:130829865:
+1 SOUR @S500077@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6EKZSR5VGXFPXXN53ZTSPF6WXMY-13012693/aaltje-mozes-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 13012693
+1 RIN MH:I502049
+1 _UID 67B721F8AF1A6295F7F327A788267158
+
+0 @I502058@ INDI
+1 _UPD 20 FEB 2025 06:40:44 GMT -0500 
+1 NAME Izaak Elias /Mesritz/
+2 GIVN Izaak Elias
+2 SURN Mesritz
+1 SEX M
+1 BIRT
+2 DATE 19 JUN 1819
+2 PLAC Meppel
+1 DEAT Y
+2 DATE 24 APR 1899
+2 PLAC Meppel
+1 FAMS @F500737@
+1 SOUR @S500077@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6EKZSR5VGXFPXXN53ZTSPF6WXMY-13012694/izaak-elias-mesritz
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 13012694
+1 RIN MH:I502058
+1 _UID 67B722CB2A1785E349FF028EFC39C788
+
+0 @I500306@ INDI
+1 _UPD 19 JUL 2023 05:42:26 GMT -0500 
+1 NAME Saartje /van der Velde/
+2 GIVN Saartje
+2 SURN van der Velde
+1 SEX F
+1 BIRT
+2 DATE 1854
+2 PLAC Amsterdam, Noord-Holland, Netherlands
+1 DEAT Y
+2 DATE 1924
+2 PLAC Amsterdam, Noord-Holland, Netherlands
+1 FAMC @F500123@
+1 RIN MH:I500306
+1 _UID 64B7BCB99DB1A6953149636BDC1480F3
+
+0 @I501874@ INDI
+1 _UPD 17 FEB 2025 10:24:58 GMT -0500 
+1 NAME Elisheva /van der Velde/
+2 GIVN Elisheva
+2 SURN van der Velde
+2 _MARNM Abrahams
+1 SEX F
+1 BIRT
+2 DATE 23 MAR 1937
+2 PLAC Soerabaja
+1 FAMS @F500689@
+1 FAMC @F500688@
+1 SOUR @S500163@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7VQ2ATDMKHQUZR3MU5PPT6FA4UY-1658873/elisheva-abrahams-born-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1658873
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT מרת אלישבע אברהמס (לבית ון-דר-ולדה)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;כינוי: Elisheva&amp;lt;br&amp;gt;לידה: 23 במרץ 1937 - Soerabaja&amp;lt;br
+4 CONC &amp;gt;אב: David Hartog van der Velde&amp;lt;br&amp;gt;אם: Klaartje de Vries&amp;lt;br&amp;gt;בעל: שלמה הנרי אברהמס&amp;lt;br&amp;gt;ילדים: &lt;פרטי&gt; Abrahams, &lt;פ
+4 CONC רטי&gt; לוי (לבית אברהמס), &lt;פרטי&gt; Nussbaum (לבית Abrahams), &lt;פרטי&gt; Grangewood (לבית Abrahams), &lt;פרטי&gt; מילנר (לבית אברהמס)&amp;lt;br
+4 CONC &amp;gt;אח/אחות: &lt;פרטי&gt; van der Velde
+2 EVEN Record
+3 ROLE 40000:195242241:
+1 RIN MH:I501874
+1 _UID 67B3628D45378F87E863620692278238
+
+0 @I501875@ INDI
+1 _UPD 17 FEB 2025 10:54:28 GMT -0500 
+1 NAME Shlomo Henry /Abrahams/
+2 GIVN Shlomo Henry
+2 SURN Abrahams
+1 SEX M
+1 DEAT Y
+2 DATE 2018
+1 BIRT
+2 DATE 23 AUG 1930
+2 PLAC Frankfurt, Darmstadt, Hesse, Germany
+1 FAMS @F500689@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT שלמה הנרי אברהמס&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;כינוי: Shlomo&amp;lt;br&amp;gt;לידה: 23 באוג’ 1930 - Frankfurt, Darmstadt, Hesse, Germany&amp;lt;br&amp;g
+4 CONC t;פטירה: 2018&amp;lt;br&amp;gt;אב: יעקב נפתלי יעקב נפתלי אברהמס&amp;lt;br&amp;gt;אם: בתיה ביאטריס אברהמס (לבית גולדשמידט)&amp;lt;br&amp;g
+4 CONC t;אשה: מרת אלישבע אברהמס (לבית ון-דר-ולדה)&amp;lt;br&amp;gt;ילדים: &amp;lt;פרטי&amp;gt; Abrahams, &amp;lt;פרטי&amp;gt; לוי (לבית אברהמס), &amp;l
+4 CONC t;פרטי&amp;gt; Nussbaum (לבית Abrahams), &amp;lt;פרטי&amp;gt; Grangewood (לבית Abrahams), &amp;lt;פרטי&amp;gt; מילנר (לבית אברהמס)&amp;lt;br&amp;gt;אחים ואחי
+4 CONC ות: יחיאל הי"ד Abrahams (לבית אברהמס), מרת חנה הינדכא (Helena) Elzas (לבית אברהמס), Renee Zipora Masher (לבית אברהמס), &amp;lt;פרטי&amp;gt; טו
+4 CONC נק (לבית אברהמס), מרת רות Breuer (לבית אברהמס), &amp;lt;פרטי&amp;gt; שפיצר (לבית אברהמס)
+2 EVEN Record
+3 ROLE 40000:96097905-GM:
+1 RIN MH:I501875
+1 _UID 67B362C5AFF9FFADCD2E3AEE4EAADE33
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWRjZjU4NDA5NDdkNGY2NTFhYzJiNThhN2QyYjY1YmViYjVjNDY2NjcwYTAxMTJkNjNhZDA1ZGZhYTk1N2Y4NGEmZT0xNzUzNjEwNDAw/158/944/6912/500702_416936323zhbg7176627yb_A.jpg
+2 _FILESIZE 14451
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500701
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500702
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWVjMGMwOTFmYTFhNDVkZmYxYzA5NjE2OTRjYWRkODI4YzkwNmE3YWM4ODM3NzAwNzMwOTI2ODYyYTdiN2YzZTAmZT0xNzUzNjEwNDAw/158/944/6912/500701_516515167enp2b67j363y4_A.jpg
+2 _FILESIZE 14452
+2 TITL slmh_brhms_pnym_large
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500701
+
+0 @I502177@ INDI
+1 _UPD 25 FEB 2025 22:49:16 GMT -0500 
+1 NAME Emanuel /van der Velde/
+2 GIVN Emanuel
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 26 JAN 1866
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 DEAT Y
+2 DATE 2 JUL 1943
+2 PLAC Sobibor, Lublin, Poland
+1 FAMC @F500765@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1273616420&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Emanuel van der Velde
+לידה: 26 בינו’ 1866 -  Medemblik, Noord-Holland, Netherlands
+פטירה: 2 ביולי 1943 -  Sobibor, Lublin, Poland
+הורים: Isaac Moses van der Velde, Vrouwtje va
+4 CONC n der Velde (לבית van Essen)
+אשה: Betje van der Velde (לבית Akker)
+ילדים: Rosalien van der Velde, Isaac van der Velde, Rosalie Lea van der Velde, Heiman Maurits van der Velde
+אחים 
+4 CONC ואחיות: Mozes van der Velde, Esther van der Velde, Hester Cohen Kaz (לבית van der Velde), Elisabeth Blok (לבית van der Velde), Levenloos geboren kind van der Velde, Leentje Van der Frank
+4 CONC  (לבית Velde), Emanuel van der Velde, Nathan van der Velde
+2 EVEN Record
+3 ROLE 40001:1273616420:
+1 RIN MH:I502177
+1 _UID 67BE9D477AB3575EE7EC1E3EF1504890
+
+0 @I500291@ INDI
+1 _UPD 13 MAY 2025 08:49:09 GMT -0500 
+1 NAME Hans /van der Velde/
+2 GIVN Hans
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 17 FEB 1921
+2 PLAC Amsterdam, Noord-Holland, Nederland
+1 DEAT Y
+2 DATE 4 JUN 1943
+2 PLAC Sobibor
+2 CAUS שואה
+1 OCCU אופה
+2 DATE TO 1943
+2 PLAC הולנד
+1 FAMC @F500019@
+1 SOUR @S500155@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7IWHBHKQSXHVSFEMZDVDGV5AFXA-12501676/hans-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 12501676
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=2118867292&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Hans van der Velde
+לידה: 17 בפבר’ 1921 - Amsterdam, Noord-Holland, Nederland
+פטירה: 4 ביוני 1943 - Sobibór Vernietigingskamp, Sobibór, Powiat włodawski, Lubelskie, Polen
+הור
+4 CONC ם: Mozes Jesaja Van der Velde, Maria Van der Velde (לבית de Vries)
+אחות: Emile van der Velde
+2 EVEN Record
+3 ROLE 40001:2118867292:
+1 RIN MH:I500291
+1 _UID 64B1307DE35A3DB3A099180D5E15C0AB
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTQzMThjZTU0NGNmNjRjYWFjYWEzODljMDQwZGUwMjIyMTdjZGM1ZWQzZWNlMjI4MTI3ODYyMDU4NjFiNDY5MDMmZT0xNzUzNjEwNDAw/158/944/6912/502532_914570m81dd2r58h35f614_A.jpg
+2 _FILESIZE 5200
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500082
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502532
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTdmYjY0MjFkNWU1YjY5ZDg5MDUyNTU5ZjlhYzYzOWI3Y2IyM2JiNjViNjQxNmNkYzAzNjUxOTVmZWQzZDZiYjgmZT0xNzUzNjEwNDAw/158/944/6912/500082_803245410cu24ts161rab6_A.jpg
+2 _FILESIZE 101334
+2 TITL  Hans (Benjamin Zeev) van der Velde
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 257 59 413 211
+2 _PHOTO_RIN MH:P500082
+
+0 @I500669@ INDI
+1 _UPD 21 FEB 2025 08:19:07 GMT -0500 
+1 NAME Zippora Elisabeth /van der Velde/
+2 GIVN Zippora Elisabeth
+2 SURN van der Velde
+2 _MARNM Rudelsheim
+1 SEX F
+1 BIRT
+2 DATE 13 MAY 1891
+2 PLAC Amsterdam, Noord-Holland, Nederland
+1 DEAT Y
+2 DATE 1 FEB 1943
+2 PLAC Auschwitz (Oswiecim) E
+1 EVEN Spouse: Benjamin Rudelsheim
+2 TYPE MARR
+2 DATE 14 JUN 1922
+2 PLAC The Hague, The Hague, South Holland, The Netherlands
+1 OCCU Zonder Beroep
+1 BURI
+2 PLAC Auschwitz Death Camp, Oswiecim, Malopolskie, Poland
+1 FAMS @F500565@
+1 FAMC @F500040@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Zippora Elisabeth van der Velde&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 13 במאי 1891 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;ני
+4 CONC שואין: בן/בת זוג: Benjamin Rudelsheim - 14 ביוני 1922 - The Hague, The Hague, South Holland, The Netherlands&amp;lt;br&amp;gt;פטירה: 1 בפבר’ 1943 - Oswiecim, Oświęcim Cou
+4 CONC nty, Lesser Poland Voivodeship, Poland&amp;lt;br&amp;gt;אב: Benjamin van der Velde&amp;lt;br&amp;gt;אם: Flora Italiaander&amp;lt;br&amp;gt;בעל: Benjamin Rudelsheim&amp;lt;br&amp;gt;אחים ו
+4 CONC חיות: Jonas Jacob van der Velde, Clara Eva van der Velde, Max van der Bilt (לבית van der Velde), Mozes Jesaja van der Velde, NN van der Velde, Sara Jeannette Salomons (לבית van der Velde)
+4 CONC , Andries Salomon van der Velde, David Hartog van der Velde
+2 EVEN Record
+3 ROLE 40000:209750912:
+1 SOUR @S500125@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6IWFCRWTZPFKTFPQVZMK6KWLIAI-1500128/zippora-elisabeth-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500128
+1 SOUR @S500056@
+2 QUAY 4
+2 DATA
+3 TEXT Benjamin Rudelsheim וZippora Elisabeth van der Velde&amp;lt;br&amp;gt;נישואין: 14 ביוני 1922 - 's-Gravenhage, South Holland, Netherlands&amp;lt;br&amp;gt;חתן: Benjamin Rudelsheim&amp;l
+4 CONC t;br&amp;gt;&nbsp;&nbsp;לידה: סביבות 1898&amp;lt;br&amp;gt;&nbsp;&nbsp;גיל: 24&amp;lt;br&amp;gt;&nbsp;&nbsp;מקצוע: Magazijnbediende&amp;lt;br&amp;gt;&nbsp;&nbsp;אב: Zadok Rudelshei
+4 CONC m&amp;lt;br&amp;gt;&nbsp;&nbsp;אם: Hanna Voorzanger&amp;lt;br&amp;gt;כלה: Zippora Elisabeth van der Velde (Rudelsheim)&amp;lt;br&amp;gt;&nbsp;&nbsp;לידה: סביבות 1891&amp;lt;br&amp;gt;&n
+4 CONC bsp;&nbsp;גיל: 31&amp;lt;br&amp;gt;&nbsp;&nbsp;מקצוע: Zonder Beroep&amp;lt;br&amp;gt;אב: Benjamin van der Velde&amp;lt;br&amp;gt;אם: Flora Italiaander&amp;lt;br&amp;gt;מקור: אוסף:B
+4 CONC urgerlijke Stand Huwelijken 1922מוסד:Haags Gemeentearchiefמספר מסמך:844מקום המקור:'s-Gravenhage, South Holland, Netherlandsתאריך הכרך:בין 1 בינו’ 1500 ו-31 בד
+4 CONC צמ’ 2000מקור:לצפייה ברשומה המלאה ב-denhaag.digitalestamboom.nlתמונות:Source image
+2 EVEN Record
+3 ROLE 10562:8349971-S:
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Zippora Elisabeth van Der Velde&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 13 במאי 1891 - Amsterdam, Noord-Holland, Nederland&amp;lt;br&amp;gt;נישואין: Benjamin Rudelsheim
+4 CONC 1922-06-14&#039;s-Gravenhage, Zuid-Holland, Nederland&amp;lt;br&amp;gt;פטירה: 1 בפבר’ 1943 - Auschwitz (Oswiecim) E&amp;lt;br&amp;gt;אב: Benjamin van der Velde&amp;lt;br&amp;gt;אם: Flor
+4 CONC a Italiaander&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years
+4 CONC  ago and have later been removed. In such cases, the link to the original record will not work.
+2 EVEN Record
+3 ROLE 10838:9406460:
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500037/zippora-elisabeth-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500037
+1 RIN MH:I500669
+1 _UID 664CACCF8C5C96FA309C51B5ED9AF1A9
+
+0 @I501537@ INDI
+1 _UPD 11 JAN 2025 22:56:41 GMT -0500 
+1 NAME Benjamin /Rudelsheim/
+2 GIVN Benjamin
+2 SURN Rudelsheim
+1 SEX M
+1 BIRT
+2 DATE ABT 1898
+2 PLAC Amsterdam, Noord-Holland, Nederland
+1 OCCU Magazijnbediende
+1 DEAT Y
+2 DATE 1 FEB 1943
+2 PLAC Auschwitz (Oswiecim) E
+1 FAMS @F500565@
+1 FAMC @F500566@
+1 SOUR @S500056@
+2 QUAY 4
+2 DATA
+3 TEXT Benjamin Rudelsheim וZippora Elisabeth van der Velde&amp;lt;br&amp;gt;נישואין: 14 ביוני 1922 - 's-Gravenhage, South Holland, Netherlands&amp;lt;br&amp;gt;חתן: Benjamin Rudelsheim&amp;l
+4 CONC t;br&amp;gt;&nbsp;&nbsp;לידה: סביבות 1898&amp;lt;br&amp;gt;&nbsp;&nbsp;גיל: 24&amp;lt;br&amp;gt;&nbsp;&nbsp;מקצוע: Magazijnbediende&amp;lt;br&amp;gt;&nbsp;&nbsp;אב: Zadok Rudelshei
+4 CONC m&amp;lt;br&amp;gt;&nbsp;&nbsp;אם: Hanna Voorzanger&amp;lt;br&amp;gt;כלה: Zippora Elisabeth van der Velde (Rudelsheim)&amp;lt;br&amp;gt;&nbsp;&nbsp;לידה: סביבות 1891&amp;lt;br&amp;gt;&n
+4 CONC bsp;&nbsp;גיל: 31&amp;lt;br&amp;gt;&nbsp;&nbsp;מקצוע: Zonder Beroep&amp;lt;br&amp;gt;אב: Benjamin van der Velde&amp;lt;br&amp;gt;אם: Flora Italiaander&amp;lt;br&amp;gt;מקור: אוסף:B
+4 CONC urgerlijke Stand Huwelijken 1922מוסד:Haags Gemeentearchiefמספר מסמך:844מקום המקור:'s-Gravenhage, South Holland, Netherlandsתאריך הכרך:1500-01-01מקור:לצפייה בר
+4 CONC שומה המלאה ב-denhaag.digitalestamboom.nlתמונות:Source image
+2 EVEN Record
+3 ROLE 10562:8349971-:
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Benjamin Rudelsheim&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 2 בפבר’ 1898 - Amsterdam, Noord-Holland, Nederland&amp;lt;br&amp;gt;נישואין: Zippora Elisabeth van der Velde
+4 CONC 14 ביוני 1922
+	
+	 's-Gravenhage, Zuid-Holland, Nederland
+
+
+
+
+
+	
+	
+	
+		
+	
+
+
+&amp;lt;br&amp;gt;פטירה: 1 בפבר’ 1943 - Auschwitz (Oswiecim) E&amp;lt;br&amp;gt;מקצוע: magazijnb
+4 CONC ediende&amp;lt;br&amp;gt;אב: Zadok Rudelsheim&amp;lt;br&amp;gt;אם: Hanna Voorzanger&amp;lt;br&amp;gt;מקור: &amp;lt;a&amp;gt;View the original record&amp;lt;/a&amp;gt; on &amp;lt;a&amp;gt;Genea
+4 CONC logieOnline website&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the original record will not work
+4 CONC .
+2 EVEN Record
+3 ROLE 10838:9383740:
+1 RIN MH:I501537
+1 _UID 67834B458F520194BE73087B2FB7AB13
+
+0 @I502272@ INDI
+1 _UPD 27 FEB 2025 05:48:34 GMT -0500 
+1 NAME Alexander /van der Velde/
+2 GIVN Alexander
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE ABT 1711
+1 DEAT Y
+1 FAMS @F500798@
+1 FAMC @F500799@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19552479/alexander-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 19552479
+1 RIN MH:I502272
+1 _UID 67C0509E7E5EF118BFE6FF219A8E134B
+
+0 @I502273@ INDI
+1 _UPD 27 FEB 2025 05:47:07 GMT -0500 
+1 NAME  /Hengel/
+2 SURN Hengel
+2 _MARNM van der Velde
+1 SEX F
+1 BIRT
+2 DATE ABT 1717
+1 DEAT Y
+1 FAMS @F500798@
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19552480/%D7%9C%D7%90-%D7%99%D7%93%D7%95%D7%A2-hengel-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 19552480
+1 RIN MH:I502273
+1 _UID 67C0509EB719011ABFE6FF219A8E134B
+
+0 @I502157@ INDI
+1 _UPD 25 FEB 2025 22:49:09 GMT -0500 
+1 NAME Isaac Moses /van der Velde/
+2 GIVN Isaac Moses
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE ABT 1822
+2 PLAC Wijhe, Overijssel, Netherlands
+1 DEAT Y
+2 DATE 15 OCT 1866
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 BURI
+2 PLAC Medemblik, Medemblik Municipality, Noord-Holland, Netherlands
+1 FAMS @F500765@
+1 FAMC @F500766@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1199685501&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Isaac Moses van der Velde
+לידה: סביבות 1822 - Wijhe, Overijssel, Netherlands
+פטירה: 15 באוק’ 1866 - Medemblik, Noord-Holland, Netherlands
+הורים: Moses Meijer van de Velde, Be
+4 CONC tje Emanuel van de Velde (לבית Blitz)
+אשה: Vrouwtje van der Velde (לבית van Essen)
+ילדים: Mozes van der Velde, Esther van der Velde, Hester Cohen Kaz (לבית van der Velde), Elisabet
+4 CONC h Blok (לבית van der Velde), Levenloos geboren kind van der Velde, Leentje Van der Frank (לבית Velde), Emanuel van der Velde, Emanuel van der Velde, Nathan van der Velde
+אחים ואחיות:
+4 CONC  Heijman Meijer van de Velde, Rebekka van de Velde, Alexander van der Velde, Aaltje Mozes van der Mesritz (לבית Velde), Rebekka Polak (לבית van der Velde), Levie van der Velde, Eliazer Van Der
+4 CONC  Velde
+2 EVEN Record
+3 ROLE 40001:1199685501:
+1 RIN MH:I502157
+1 _UID 67BE9D13D28934F528C61FA532365037
+
+0 @I502158@ INDI
+1 _UPD 25 FEB 2025 22:51:30 GMT -0500 
+1 NAME Vrouwtje /van Essen/
+2 GIVN Vrouwtje
+2 SURN van Essen
+1 SEX F
+1 BIRT
+2 DATE 12 MAY 1827
+2 PLAC Medemblik, Holland, Nederland
+1 DEAT Y
+2 DATE 21 APR 1885
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 BURI
+2 PLAC Medemblik, Medemblik Municipality, Noord-Holland, Netherlands
+1 OCCU vleeshouwster
+1 FAMS @F500765@
+1 FAMC @F500769@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1132944180&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Vrouwtje van der Velde (לבית van Essen)
+לידה: 12 במאי 1827 - Medemblik, Holland, Nederland
+פטירה: 21 באפר’ 1885 - Medemblik, Noord-Holland, Netherlands
+הורים: Nathan Hartog
+4 CONC  van Essen, Hester Jacobs van Essen (לבית van Aalten)
+בעל: Isaac Moses van der Velde
+ילדים: Mozes van der Velde, Esther van der Velde, Hester Cohen Kaz (לבית van der Velde), Elisabeth 
+4 CONC Blok (לבית van der Velde), Levenloos geboren kind van der Velde, Leentje Van der Frank (לבית Velde), Emanuel van der Velde, Emanuel van der Velde, Nathan van der Velde
+אחים ואחיות: Z
+4 CONC ippora Nathan van Essen, Levij Nathan van Essen, Izak Nathan van Essen, Susanna Polak (לבית van Essen), Magdalena Blok (לבית van Essen), Hartog Nathan van Essen, Judith Nathan Kan (לבית va
+4 CONC n Essen), Saartje Nathan van Essen, Israël Nathan van Essen
+2 EVEN Record
+3 ROLE 40001:1132944180:
+1 RIN MH:I502158
+1 _UID 67BE9D14185D64F728C61FA532365037
+
+0 @I502258@ INDI
+1 _UPD 27 FEB 2025 05:46:18 GMT -0500 
+1 NAME Alexander /van der Velde/
+2 GIVN Alexander
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 1772
+2 PLAC Alkmaar
+1 DEAT Y
+2 DATE 26 APR 1856
+2 PLAC Amsterdam
+2 AGE 83-84
+1 FAMC @F500788@
+1 SOUR @S500171@
+2 PAGE Alexander van der Velde
+2 QUAY 3
+2 DATA
+3 DATE 27 FEB 2025
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I502258
+1 _UID 67C0503283B54BCC99F147A588AFFFC6
+
+0 @I502160@ INDI
+1 _UPD 25 FEB 2025 22:48:23 GMT -0500 
+1 NAME Esther /van der Velde/
+2 GIVN Esther
+2 SURN van der Velde
+1 SEX F
+1 BIRT
+2 DATE ABT 2 DEC 1853
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 DEAT Y
+2 DATE 27 DEC 1853
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 FAMC @F500765@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1199685224&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Esther van der Velde
+לידה: סביבות 2 בדצמ’ 1853 - Medemblik, Noord-Holland, Netherlands
+פטירה: 27 בדצמ’ 1853 - Medemblik, Noord-Holland, Netherlands
+הורים: Isaac Moses v
+4 CONC an der Velde, Vrouwtje van der Velde (לבית van Essen)
+אחים ואחיות: Mozes van der Velde, Hester Cohen Kaz (לבית van der Velde), Elisabeth Blok (לבית van der Velde), Levenloos gebo
+4 CONC ren kind van der Velde, Leentje Van der Frank (לבית Velde), Emanuel van der Velde, Emanuel van der Velde, Nathan van der Velde
+2 EVEN Record
+3 ROLE 40001:1199685224:
+1 RIN MH:I502160
+1 _UID 67BE9D14715C54F928C61FA532365037
+
+0 @I502203@ INDI
+1 _UPD 25 FEB 2025 22:51:39 GMT -0500 
+1 NAME Emanuel /van der Velde/
+2 GIVN Emanuel
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 26 JAN 1866
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 DEAT Y
+2 DATE 2 JUL 1943
+2 PLAC Sobibor, Lublin, Poland
+1 FAMC @F500765@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1273616420&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Emanuel van der Velde
+לידה: 26 בינו’ 1866 -  Medemblik, Noord-Holland, Netherlands
+פטירה: 2 ביולי 1943 -  Sobibor, Lublin, Poland
+הורים: Isaac Moses van der Velde, Vrouwtje va
+4 CONC n der Velde (לבית van Essen)
+אשה: Betje van der Velde (לבית Akker)
+ילדים: Rosalien van der Velde, Isaac van der Velde, Rosalie Lea van der Velde, Heiman Maurits van der Velde
+אחים 
+4 CONC ואחיות: Mozes van der Velde, Esther van der Velde, Hester Cohen Kaz (לבית van der Velde), Elisabeth Blok (לבית van der Velde), Levenloos geboren kind van der Velde, Leentje Van der Frank
+4 CONC  (לבית Velde), Emanuel van der Velde, Nathan van der Velde
+2 EVEN Record
+3 ROLE 40001:1273616420:
+1 RIN MH:I502203
+1 _UID 67BE9DD459E46ACA217C807EE2B59137
+
+0 @I502067@ INDI
+1 _UPD 9 APR 2025 03:06:02 GMT -0500 
+1 NAME Hella Esther /van der Velde/
+2 GIVN Hella Esther
+2 SURN van der Velde
+2 _MARNM Galpert
+1 SEX F
+1 BIRT
+2 DATE 27 MAY 1958
+2 PLAC Holland, Netherlands
+1 OCCU Teacher
+1 RESI
+2 ADDR
+3 ADR1 United Kingdom
+1 FAMS @F501344@
+1 FAMC @F500694@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=27152977&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Hella Esther Galpert (לבית v.d Velde)
+אב: Jacob (Jaques) Platvoet
+אם: צלה van der Velde (לבית Duis)
+הורה: <פרטי> van der Velde
+בן/בת זוג: <פרטי> Galpert
+ילדים: <
+4 CONC פרטי> Galpert, Shaya Galpert, <פרטי> Galpert, <פרטי> Galpert, <פרטי> Galpert
+אחים ואחיות: davied van der velde, <פרטי> Vandervelde (לבית van der Velde)
+2 EVEN Record
+3 ROLE 40000:27152977:
+1 RIN MH:I502067
+1 _UID 67B88333C6537E95864CC01894571F62
+
+0 @I504282@ INDI
+1 _UPD 9 APR 2025 03:06:03 GMT -0500 
+1 NAME Yonah B /Galpert/
+2 GIVN Yonah B
+2 SURN Galpert
+1 SEX M
+1 BIRT
+2 DATE SEP 1952
+2 PLAC London, Greater London, England, United Kingdom
+1 FAMS @F501344@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=27152971&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT <פרטי> Galpert
+אב: Harry, Zvi Hersh Galpert
+אם: Kate Galpert-Harris (לבית Harris)
+אשה: Hella Esther Galpert (לבית v.d Velde)
+ילדים: <פרטי> Galpert, Shaya Galpert, <פרטי
+4 CONC > Galpert, <פרטי> Galpert, <פרטי> Galpert
+אחים ואחיות: <פרטי> Galpert, <פרטי> Galpert
+2 EVEN Record
+3 ROLE 40000:27152971:
+1 RIN MH:I504282
+1 _UID 67F62A68C5B2ABDA4E90ED90D7BEDD74
+
+0 @I502159@ INDI
+1 _UPD 25 FEB 2025 22:48:23 GMT -0500 
+1 NAME Mozes /van der Velde/
+2 GIVN Mozes
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE ABT 1851
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 DEAT Y
+2 DATE 11 DEC 1931
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 BURI
+2 PLAC Medemblik, Medemblik Municipality, Noord-Holland, Netherlands
+1 FAMC @F500765@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1199685999&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Mozes van der Velde
+לידה: סביבות 1851 - Medemblik, Noord-Holland, Netherlands
+פטירה: 11 בדצמ’ 1931 - Medemblik, Noord-Holland, Netherlands
+הורים: Isaac Moses van der Velde, V
+4 CONC rouwtje van der Velde (לבית van Essen)
+אשה: Mattje van der Velde (לבית van Gelder)
+אחים ואחיות: Esther van der Velde, Hester Cohen Kaz (לבית van der Velde), Elisabeth Blok (ל
+4 CONC בית van der Velde), Levenloos geboren kind van der Velde, Leentje Van der Frank (לבית Velde), Emanuel van der Velde, Emanuel van der Velde, Nathan van der Velde
+2 EVEN Record
+3 ROLE 40001:1199685999:
+1 RIN MH:I502159
+1 _UID 67BE9D14468474F828C61FA532365037
+
+0 @I502166@ INDI
+1 _UPD 25 FEB 2025 22:48:26 GMT -0500 
+1 NAME Nathan /van der Velde/
+2 GIVN Nathan
+2 SURN van der Velde
+1 SEX M
+1 DEAT Y
+1 FAMC @F500765@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=2122873158&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Nathan van der Velde
+הורים: Isaac Moses van der Velde, Vrouwtje van der Velde (לבית van Essen)
+אשה: Elisabeth van der Velde (לבית van Stratum)
+אחים ואחיות: Mozes van der Veld
+4 CONC e, Esther van der Velde, Hester Cohen Kaz (לבית van der Velde), Elisabeth Blok (לבית van der Velde), Levenloos geboren kind van der Velde, Leentje Van der Frank (לבית Velde), Emanuel van d
+4 CONC er Velde, Emanuel van der Velde
+2 EVEN Record
+3 ROLE 40001:2122873158:
+1 RIN MH:I502166
+1 _UID 67BE9D1586FBD4FF28C61FA532365037
+
+0 @I505412@ INDI
+1 _UPD 7 MAY 2025 08:03:37 GMT -0500 
+1 NAME Alexander /van der Velde/
+2 GIVN Alexander
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 1772
+2 PLAC Alkmaar
+1 DEAT Y
+2 DATE 26 APR 1856
+2 PLAC Amsterdam
+1 FAMC @F501670@
+1 SOUR @S500077@
+2 PAGE https://www.myheritage.com/profile-OYYV6EKZSR5VGXFPXXN53ZTSPF6WXMY-13078401/alexander-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 13078401
+1 RIN MH:I505412
+1 _UID 681B5A24BC5AC0ECD06D35855112CB26
+
+0 @I502066@ INDI
+1 _UPD 21 FEB 2025 07:41:43 GMT -0500 
+1 NAME Gabriëlla Tsipora /van der Velde/
+2 GIVN Gabriëlla Tsipora
+2 SURN van der Velde
+2 _MARNM Schwartz
+1 SEX F
+1 BIRT
+2 DATE 28 APR 1991
+1 FAMS @F500739@
+1 FAMC @F500738@
+1 RIN MH:I502066
+1 _UID 67B8827B4E7180DACAE002028429A8D0
+
+0 @I502068@ INDI
+1 _UPD 21 FEB 2025 08:01:44 GMT -0500 
+1 NAME Tzvi Shlomo /Schwartz/
+2 GIVN Tzvi Shlomo
+2 SURN Schwartz
+1 SEX M
+1 FAMS @F500739@
+1 RIN MH:I502068
+1 _UID 67B88748A6C9C05A73164CCD892316A4
+
+0 @I502063@ INDI
+1 _UPD 21 FEB 2025 08:05:38 GMT -0500 
+1 NAME Esther Gelle /van der Velde/
+2 GIVN Esther Gelle
+2 SURN van der Velde
+2 _MARNM Shvili
+1 SEX F
+1 BIRT
+2 DATE 26 AUG 1988
+1 FAMS @F500741@
+1 FAMC @F500738@
+1 RIN MH:I502063
+1 _UID 67B8822777743387C43FE1FDEF1E6AB3
+
+0 @I502071@ INDI
+1 _UPD 21 FEB 2025 08:07:35 GMT -0500 
+1 NAME Tomer /Shvili/
+2 GIVN Tomer
+2 SURN Shvili
+1 SEX M
+1 FAMS @F500741@
+1 RIN MH:I502071
+1 _UID 67B888A78BFA15CDE9F546B974CED551
+
+0 @I505413@ INDI
+1 _UPD 7 MAY 2025 08:04:09 GMT -0500 
+1 NAME Mozes Meijer /van der Velde/
+2 GIVN Mozes Meijer
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE MAR 1785
+2 PLAC Alkmaar, Alkmaar, Noord-Holland, The Netherlands
+1 DEAT Y
+2 DATE 10 APR 1863
+2 PLAC Wijhe, Olst-Wijhe, Overijssel, The Netherlands
+1 FAMC @F501670@
+1 SOUR @S500077@
+2 PAGE https://www.myheritage.com/profile-OYYV6EKZSR5VGXFPXXN53ZTSPF6WXMY-13036913/mozes-meyer-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT Individual added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 13036913
+1 SOUR @S500400@
+2 PAGE https://www.myheritage.com/profile-OYYV7F6ZYNAGMLM5WQHSE5LZBEZCHLQ-1502773/mozes-meijer-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1502773
+1 RIN MH:I505413
+1 _UID 681B5A24E816E0EDD06D35855112CB26
+
+0 @I500376@ INDI
+1 _UPD 21 MAY 2024 09:16:56 GMT -0500 
+1 NAME Emmy /van der Velde/
+2 GIVN Emmy
+2 SURN van der Velde
+2 _MARNM Brouwer
+1 SEX F
+1 BIRT
+2 DATE 5 JUN 1924
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 1 OCT 1958
+2 PLAC Eindhoven, Eindhoven, North Brabant, Netherlands
+1 OCCU verpleegster; pedicure
+1 FAMS @F500153@
+1 FAMC @F500151@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Emmy van der Velde&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 5 ביוני 1924 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;מקצוע: verpleeg
+4 CONC ster; pedicure&amp;lt;br&amp;gt;פטירה: 1 באוק’ 1958 - Eindhoven, Eindhoven, North Brabant, Netherlands&amp;lt;br&amp;gt;אב: Jonas Jacob van der Velde&amp;lt;br&amp;gt;אם: Rosalie Lea va
+4 CONC n der Velde&amp;lt;br&amp;gt;בעל: Dirk Brouwer&amp;lt;br&amp;gt;אחים ואחיות: Betty van der Velde, Rita Flora van der Velde
+2 EVEN Record
+3 ROLE 40000:303550151:
+1 SOUR @S500137@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NS73R6TKEINKGLHB4RMLNK44DY-9022313/emmy-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 9022313
+1 RIN MH:I500376
+1 _UID 6538A5B5B2E276276A6A1E3E45E090F6
+
+0 @I500381@ INDI
+1 _UPD 1 MAR 2025 23:02:48 GMT -0500 
+1 NAME Dirk /Brouwer/
+2 GIVN Dirk
+2 SURN Brouwer
+1 SEX M
+1 BIRT
+2 DATE 23 AUG 1924
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 24 AUG 1953
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 FAMS @F500153@
+1 SOUR @S500137@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NS73R6TKEINKGLHB4RMLNK44DY-9022319/dirk-brouwer
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 9022319
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Dirk Brouwer&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 23 באוג’ 1924 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;פטירה: 24 באוג’
+4 CONC  1953 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;אשה: Emmy van der Velde
+2 EVEN Record
+3 ROLE 40000:303550237:
+1 RIN MH:I500381
+1 _UID 6538DB3470634C0F04F2DBB4E01EF0E1
+
+0 @I500667@ INDI
+1 _UPD 24 MAY 2024 08:13:27 GMT -0500 
+1 NAME NN /van der Velde/
+2 GIVN NN
+2 SURN van der Velde
+1 SEX U
+1 BIRT
+2 DATE 1 SEP 1897
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 DEAT Y
+1 FAMC @F500040@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT NN van der Velde&amp;lt;br&amp;gt;לידה: 1 בספט’ 1897 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;אב: Benjamin van der Velde&amp;lt;br&amp;gt;אם: Flo
+4 CONC ra Italiaander&amp;lt;br&amp;gt;אחים ואחיות: Jonas Jacob van der Velde, Clara Eva van der Velde, Zippora Elisabeth van der Velde, Max van der Bilt (לבית van der Velde), Mozes Jesaja van 
+4 CONC der Velde, Sara Jeannette Salomons (לבית van der Velde), Andries Salomon van der Velde, David Hartog van der Velde
+2 EVEN Record
+3 ROLE 40000:267297510:
+1 SOUR @S500125@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6IWFCRWTZPFKTFPQVZMK6KWLIAI-1500130/nn-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500130
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1501105/nn-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1501105
+1 RIN MH:I500667
+1 _UID 664CACCF20E1A6F8309C51B5ED9AF1A9
+
+0 @I502274@ INDI
+1 _UPD 27 FEB 2025 05:48:34 GMT -0500 
+1 NAME Yaacob /van der Velde/
+2 GIVN Yaacob
+2 SURN van der Velde
+1 SEX M
+1 DEAT Y
+1 BIRT
+2 DATE 1673
+1 FAMS @F500799@
+1 RIN MH:I502274
+1 _UID 67C05112125FF15A4C0B2A1FCDC31B3E
+
+0 @I504598@ INDI
+1 _UPD 22 APR 2025 23:24:35 GMT -0500 
+1 NAME Alexander /van der Velde/
+2 GIVN Alexander
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE ABT 1711
+1 FAMS @F501454@
+1 FAMC @F501457@
+1 SOUR @S500317@
+2 PAGE Alexander van der Velde
+2 QUAY 3
+2 DATA
+3 DATE 22 APR 2025
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I504598
+1 _UID 68086B34E4F769AB59E23AE5CC15DACB
+
+0 @I504599@ INDI
+1 _UPD 22 APR 2025 23:24:35 GMT -0500 
+1 NAME  /Hengel/
+2 SURN Hengel
+2 _MARNM van der Velde
+1 SEX F
+1 BIRT
+2 DATE ABT 1717
+1 FAMS @F501454@
+1 SOUR @S500317@
+2 PAGE לא ידוע Hengel
+2 QUAY 3
+2 DATA
+3 DATE 22 APR 2025
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 RIN MH:I504599
+1 _UID 68086B35419989AF59E23AE5CC15DACB
+
+0 @I502044@ INDI
+1 _UPD 6 MAR 2025 07:54:14 GMT -0500 
+1 NAME Moses Meijer /van der Velde/
+2 GIVN Moses Meijer
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE ABT 1785
+2 PLAC Alkmaar, Alkmaar, Noord-Holland, The Netherlands
+1 DEAT Y
+2 DATE 10 APR 1863
+2 PLAC Wijhe, Olst-Wijhe, Overijssel, The Netherlands
+1 FAMS @F500735@
+1 FAMC @F500736@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1230472816&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Moses Meijer van de Velde
+לידה: סביבות 1785 - Alkmaar, Noord-Holland, Netherlands
+פטירה: 10 באפר’ 1863 - Wijhe, Overijssel, Netherlands
+הורים: Marcus Alexander van der Velde 
+4 CONC Hengel, Rebekka Hartog van der Velde Hengel (לבית Italianer)
+אשה: Betje Emanuel van de Velde (לבית Blitz)
+ילדים: Heijman Meijer van de Velde, Rebekka van de Velde, Isaac Moses van der 
+4 CONC Velde, Alexander van der Velde, Aaltje Mozes van der Mesritz (לבית Velde), Rebekka Polak (לבית van der Velde), Levie van der Velde, Eliazer Van Der Velde
+אחות: Sara Meijer Frank (לבית 
+4 CONC Van der Velde)
+2 EVEN Record
+3 ROLE 40001:1230472816:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Mozes Meijer van der Velde&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;כינוי: Moses van de Velde&amp;lt;br&amp;gt;לידה: מרץ 1785 - Alkmaar, Alkmaar, Noord-Holland, The Netherlands&amp
+4 CONC ;lt;br&amp;gt;נישואין: בן/בת זוג: Betje Emanuel Blitz - 24 באפר’ 1816 - Wijhe, Olst-Wijhe, Overijssel, The Netherlands&amp;lt;br&amp;gt;פטירה: 10 באפר’ 1863 - Wijhe, Ols
+4 CONC t-Wijhe, Overijssel, The Netherlands&amp;lt;br&amp;gt;אב: Marcus / Meijer Alexander / Ziskind van der Velde Hengel&amp;lt;br&amp;gt;אם: Rebekka Hartog Italianer&amp;lt;br&amp;gt;אשה: Betje Eman
+4 CONC uel Blitz&amp;lt;br&amp;gt;ילדים: Hijman Meijer van der Velde, Rebekka van de Velde, Aaltje Mozes van der Velde, Isaac Mozes van der Velde, Emanuel Vandervelde (לבית van der Velde), Alexander
+4 CONC  van der Velde, Rebecka van der Velde, Eliazer van der Velde, Levie van der Velde&amp;lt;br&amp;gt;אח/אחות: Sara Meijer van der Velde
+2 EVEN Record
+3 ROLE 40000:131188792:
+1 SOUR @S500077@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6EKZSR5VGXFPXXN53ZTSPF6WXMY-13036913/mozes-meyer-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 13036913
+1 SOUR @S500205@
+2 QUAY 4
+2 DATA
+3 TEXT Moses Meijer van de Velde&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;גיל: 69&amp;lt;br&amp;gt;מקור: אוסף:Wijhe, registers van overlijdensמוסד:Historisch Centrum Overijsselארכ
+4 CONC יון:0123# רישום:13878מספר מסמך:27מקום המקור:Wijhe, Overijssel, Netherlandsתאריך מקור:1863-04-30תאריך הכרך:1859-01-01הערות:Provenance: 0123.13878_54_141_
+4 CONC MAISI_AKT.txt via HCO (txt2csv csv2a2a)תמונות:Source image
+2 EVEN Record
+3 ROLE 10563:32815907-S:
+1 RIN MH:I502044
+1 _UID 67B721F7A169828FF7F327A788267158
+
+0 @I502045@ INDI
+1 _UPD 6 MAR 2025 07:54:13 GMT -0500 
+1 NAME Betje Emanuel Aron /Blitz/
+2 GIVN Betje Emanuel Aron
+2 SURN Blitz
+1 SEX F
+1 BIRT
+2 DATE 1793
+2 PLAC Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 29 APR 1863
+2 PLAC Wijhe, Olst-Wijhe, Overijssel, The Netherlands
+1 FAMS @F500735@
+1 FAMC @F500927@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1230472766&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Betje Emanuel van de Velde (לבית Blitz)
+לידה: 1794 - Amsterdam, North Holland, Netherlands
+פטירה: 29 באפר’ 1863 - Wijhe, Overijssel, Netherlands
+הורים: Emanuel Aron Blitz, Aalt
+4 CONC je Isaac Blitz (לבית Hammelburg)
+בעל: Moses Meijer van de Velde
+ילדים: Heijman Meijer van de Velde, Rebekka van de Velde, Isaac Moses van der Velde, Alexander van der Velde, Aaltje Mozes v
+4 CONC an der Mesritz (לבית Velde), Rebekka Polak (לבית van der Velde), Levie van der Velde, Eliazer Van Der Velde
+אחים ואחיות: Leentje Emanuel Polak (לבית Blitz), Isaac Emanuel Blitz, 
+4 CONC Levie Emanuel Blitz
+2 EVEN Record
+3 ROLE 40001:1230472766:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Betje Emanuel Blitz&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;כינוי: van Blits&amp;lt;br&amp;gt;לידה: 1794 - Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands&amp;lt
+4 CONC ;br&amp;gt;נישואין: בן/בת זוג: Mozes Meijer van der Velde - 24 באפר’ 1816 - Wijhe, Olst-Wijhe, Overijssel, The Netherlands&amp;lt;br&amp;gt;פטירה: 29 באפר’ 1863 - Wijhe,
+4 CONC  Olst-Wijhe, Overijssel, The Netherlands&amp;lt;br&amp;gt;אב: Emanuel / Man Aron Blitz&amp;lt;br&amp;gt;אם: Aaltje Isaac Blitz (לבית Hammelburg)&amp;lt;br&amp;gt;בעל: Mozes Meijer van der V
+4 CONC elde&amp;lt;br&amp;gt;ילדים: Hijman Meijer van der Velde, Rebekka van de Velde, Aaltje Mozes van der Velde, Isaac Mozes van der Velde, Emanuel Vandervelde (לבית van der Velde), Alexander van 
+4 CONC der Velde, Rebecka van der Velde, Eliazer van der Velde, Levie van der Velde&amp;lt;br&amp;gt;אחים ואחיות: Godschalk / Getschlig Emanuel / Menachem-Man Blits, Mozes Emanuel Man Blits Huhnerk
+4 CONC aufer, Lea (Leentje) Emanuel Blitz, Isaac Emanuel Blitz, Levie Emanuel Blitz
+2 EVEN Record
+3 ROLE 40000:131188797:
+1 SOUR @S500077@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6EKZSR5VGXFPXXN53ZTSPF6WXMY-13036914/betje-emanuel-aron-blitz
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 13036914
+1 SOUR @S500205@
+2 QUAY 4
+2 DATA
+3 TEXT Betje Emanuel Aron Blitz&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: סביבות 1794 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;פטירה: 29 באפר’ 1863 - Wijhe
+4 CONC , Overijssel, Netherlands&amp;lt;br&amp;gt;גיל: 69&amp;lt;br&amp;gt;בעל: Moses Meijer van de Velde&amp;lt;br&amp;gt;אב: Emanuel Aron Blitz&amp;lt;br&amp;gt;אם: Aaltje Isac Hammelenburg&amp;l
+4 CONC t;br&amp;gt;מקור: אוסף:Wijhe, registers van overlijdensמוסד:Historisch Centrum Overijsselארכיון:0123# רישום:13878מספר מסמך:27מקום המקור:Wijhe, Overijssel, Nethe
+4 CONC rlandsתאריך מקור:30 באפר’ 1863תאריך הכרך:בין 1 בינו’ 1859 ו-31 בדצמ’ 1869הערות:Provenance: 0123.13878_54_141_MAISI_AKT.txt via HCO (txt2csv csv2a2a)תמו
+4 CONC ות:Source image
+2 EVEN Record
+3 ROLE 10563:32815907-:
+1 RIN MH:I502045
+1 _UID 67B721F7E2741291F7F327A788267158
+
+0 @I502171@ INDI
+1 _UPD 25 FEB 2025 22:49:13 GMT -0500 
+1 NAME Alexander /van der Velde/
+2 GIVN Alexander
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE ABT 1824
+2 PLAC Wijhe, Overijssel, Netherlands
+1 DEAT Y
+2 DATE 23 MAY 1898
+2 PLAC Deventer, Overijssel, Netherlands
+1 FAMC @F500766@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=2221880972&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Alexander van der Velde
+לידה: סביבות 1824 - Wijhe, Overijssel, Netherlands
+פטירה: 23 במאי 1898 - Deventer, Overijssel, Netherlands
+הורים: Moses Meijer van de Velde, Betje Emanu
+4 CONC el van de Velde (לבית Blitz)
+אשה: Johanna van der Velde (לבית Goudsmit)
+ילדים: Betje Engers (לבית van der Velde), Lion van der Velde
+אחים ואחיות: Heijman Meijer van de Ve
+4 CONC lde, Rebekka van de Velde, Isaac Moses van der Velde, Aaltje Mozes van der Mesritz (לבית Velde), Rebekka Polak (לבית van der Velde), Levie van der Velde, Eliazer Van Der Velde
+2 EVEN Record
+3 ROLE 40001:2221880972:
+1 RIN MH:I502171
+1 _UID 67BE9D466009A758E7EC1E3EF1504890
+
+0 @I504024@ INDI
+1 _UPD 8 APR 2025 04:53:45 GMT -0500 
+1 NAME Moshe /van der Velde/
+2 GIVN Moshe
+2 SURN van der Velde
+1 SEX M
+1 FAMC @F500738@
+1 RIN MH:I504024
+1 _UID 67F4F2298C494C2F1F4F37EF32C6027A
+
+0 @I504409@ INDI
+1 _UPD 12 JUN 2025 02:49:25 GMT -0500 
+1 NAME Georgette Henriette /van der Velde/
+2 GIVN Georgette Henriette
+2 SURN van der Velde
+2 _MARNM Kragt
+1 SEX F
+1 BIRT
+2 DATE 5 JUN 1932
+2 PLAC Den Haag
+1 FAMS @F501395@
+1 FAMC @F501393@
+1 RIN MH:I504409
+1 _UID 67FFED44DC25FF1D35E266E6C6567C61
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTA3NDM1NmNkYWJmMDc1NGYyMTA2NmFkZDM5M2Y0MmQ2MWE1YmY4OTAzMDljZDI0ZmEzODE1ZWU3NGI4N2M5NDImZT0xNzUzNjEwNDAw/158/944/6912/502567_691284jo8fb2b517476a78_A.jpg
+2 _FILESIZE 2199
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502566
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502567
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWVhZWY2MDBjNzJmMDM4MDI2MmQ2YjY1Y2E4MWJhZmMzZjNmYWU4ZWY0MWM2OGE1MDMxZDg2ZDZjMjA0ZjQyYzcmZT0xNzUzNjEwNDAw/158/944/6912/502566_955906228zbha17846zay5_A.jpg
+2 _FILESIZE 2199
+2 TITL jpg (3)
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 0 72 72
+2 _PHOTO_RIN MH:P502566
+
+0 @I504412@ INDI
+1 _UPD 17 JUN 2025 07:33:02 GMT -0500 
+1 NAME Klaas /Kragt/
+2 GIVN Klaas
+2 SURN Kragt
+1 SEX M
+1 DEAT Y
+2 DATE 20 OCT 2003
+2 PLAC Heemskerk
+1 BIRT
+2 DATE 4 NOV 1930
+2 PLAC Utrecht
+1 BURI
+2 PLAC Heemskerk Eikenhof, Heemskerk, Noord-Holland, Netherlands
+1 FAMS @F501395@
+1 SOUR @S500430@
+2 QUAY 4
+2 DATA
+3 TEXT Klaas Kragt&amp;lt;br&amp;gt;Birth: Nov 4 1930&amp;lt;br&amp;gt;Death: Oct 20 2003&amp;lt;br&amp;gt;Burial: Heemskerk Eikenhof, Heemskerk, Noord-Holland, Netherlands&amp;lt;br&amp;gt;Age: 72&amp;lt;br
+4 CONC &amp;gt;Cemetery: &amp;lt;br&amp;gt;Country: Netherlands&amp;lt;br&amp;gt;State: Noord-Holland&amp;lt;br&amp;gt;City: Heemskerk&amp;lt;br&amp;gt;Name: Heemskerk Eikenhof
+2 EVEN Record
+3 ROLE 10335:600892-:
+1 RIN MH:I504412
+1 _UID 67FFEEA59C910EEE0688D939E68BF124
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTZmMjA2NjQxNTZjNGQ0Y2ZjMGNlYWExZjVjZWMwZDRlMDkyZmRhNDAzOWViMWJiNTc2NWM1YjY2ZjhmYzBiOGUmZT0xNzUzNjEwNDAw/158/944/6912/502573_3474819l584y1815j76e06_A.jpg
+2 _FILESIZE 533576
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502572
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502573
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQ1MDA0ZjY1ZDBhMzgxOGU2YzA4ZjI1N2JkY2MwOGJlMmI3MDFjMzhjMTAyM2Q3NTU2NjIzYzZjZDYzMGU4ZTMmZT0xNzUzNjEwNDAw/158/944/6912/502572_910186v68e9q01b57w316d_A.jpg
+2 _FILESIZE 691049
+2 TITL showfoto
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 169 1024 1193
+2 _PHOTO_RIN MH:P502572
+
+0 @I500683@ INDI
+1 _UPD 4 MAR 2025 22:51:05 GMT -0500 
+1 NAME Sara Meijer /van der Velde/
+2 GIVN Sara Meijer
+2 SURN van der Velde
+1 SEX F
+1 BIRT
+2 DATE 3 DEC 1774
+2 PLAC Alkmaar, North Holland, The Netherlands
+1 DEAT Y
+2 DATE 25 JUN 1868
+2 PLAC Meppel, Meppel, Drenthe, The Netherlands
+1 EVEN
+2 TYPE Doop
+2 DATE DEC 1774
+2 PLAC Alkmaar, North Holland, The Netherlands
+1 FAMS @F500257@
+1 FAMC @F500788@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Sara Meijer van De Velde&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 3 בדצמ’ 1774 - Alkmaar, The Netherlands&amp;lt;br&amp;gt;נישואין: Samson Hartog Frank&amp;lt;br&amp;g
+4 CONC t;פטירה: 25 ביוני 1868 - Meppel, The Netherlands&amp;lt;br&amp;gt;אב: Meyer Marcus van de Velde&amp;lt;br&amp;gt;אם: Italianer Rebecca&amp;lt;br&amp;gt;ילדים: Rebecka Samson FrankBe
+4 CONC tje FrankHartog Samson FrankMeijer Samson FrankAnnigje FrankHijman Meijer FrankJacob Samson FrankMozes Samson Frank&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&lt;/a&gt; on &lt;a&gt;G
+4 CONC enealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the original record will not work.
+2 EVEN Record
+3 ROLE 10838:10381798:
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19550150/sara-meijer-van-der-velde-frank
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 19550150
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Sara Meijer van der Velde&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Birth: Dec 3 1774 - Alkmaar, Alkmaar, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;Death: June 25 1868 - Meppel, Meppel, D
+4 CONC renthe, The Netherlands&amp;lt;br&amp;gt;Father: &amp;lt;a&amp;gt;Marcus / Meijer Alexander / Ziskind van der Velde Hengel&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Mother: &amp;lt;a&amp;gt;Rebekka Hartog It
+4 CONC alianer&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Husband: &amp;lt;a&amp;gt;Samson Hartog Frank&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Children: &amp;lt;a&amp;gt;Rebekka Samson Frank&amp;lt;/a&amp;gt;, &amp;lt;a
+4 CONC &amp;gt;Betje Samson Frank&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Hartog Samson Frank&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Meijer Samson Frank&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Annigje Frank&amp;lt;/a&a
+4 CONC mp;gt;, &amp;lt;a&amp;gt;Hijman Meijer Frank&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Jacob Samson Frank&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Mozes Samson Frank&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Sibling: &
+4 CONC amp;lt;a&amp;gt;Mozes Meijer van der Velde&amp;lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 40000:77659103:
+1 SOUR @S500205@
+2 QUAY 4
+2 DATA
+3 TEXT Sara van de Velde&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;גיל: 41&amp;lt;br&amp;gt;מקצוע: Zonder Beroep&amp;lt;br&amp;gt;מקור: מוסד:Gelders Archiefארכיון:0207# ריש
+4 CONC ם:2392מספר מסמך:42מקום המקור:Winterswijk, Gelderland, Nederlandתאריך מקור:1856-03-29תאריך הכרך:1856-03-29תמונות:Source image
+2 EVEN Record
+3 ROLE 10563:3262171-M:
+1 RIN MH:I500683
+1 _UID 664CAD6BCAE1A4CF99D8232FF5CD8A12
+
+0 @I500682@ INDI
+1 _UPD 8 APR 2025 23:46:50 GMT -0500 
+1 NAME Samson Hartog /Frank/
+2 GIVN Samson Hartog
+2 SURN Frank
+1 SEX M
+1 BIRT
+2 DATE 1767
+2 PLAC Meppel, Meppel, Drenthe, The Netherlands
+1 DEAT Y
+2 DATE 22 MAY 1826
+2 PLAC Meppel, Meppel, Drenthe, The Netherlands
+1 FAMS @F500257@
+1 FAMC @F500789@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Samson Hartog Frank&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 1767 - Meppel, The Netherlands&amp;lt;br&amp;gt;נישואין: Sara Meijer van de Velde&amp;lt;br&amp;gt;פטירה: 22 
+4 CONC במאי 1826 - Meppel, The Netherlands&amp;lt;br&amp;gt;אב: Hartog Jacob Frank&amp;lt;br&amp;gt;אם: Sara Godfried Saartje Samson Gotvied&amp;lt;br&amp;gt;ילדים: Rebecka Samson FrankBetje Fra
+4 CONC nkHartog Samson FrankMeijer Samson FrankAnnigje FrankHijman Meijer FrankJacob Samson FrankMozes Samson Frank&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&lt;/a&gt; on &lt;a&gt;Genealog
+4 CONC ieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the original record will not work.
+2 EVEN Record
+3 ROLE 10838:10377203:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Samson Hartog Frank&amp;lt;br&amp;gt;Gender: Male&amp;lt;br&amp;gt;Birth: 1767 - Meppel, Meppel, Drenthe, The Netherlands&amp;lt;br&amp;gt;Death: May 22 1826 - Meppel, Meppel, Drenthe, The Netherlands
+4 CONC &amp;lt;br&amp;gt;Father: &lt;a&gt;Hartog Jacob Frank&lt;/a&gt;&amp;lt;br&amp;gt;Mother: &lt;a&gt;Sara Samson Godfried‏‎&lt;/a&gt;&amp;lt;br&amp;gt;Wife: &lt;a&gt;Sara Meijer van der Velde&lt;/a&g
+4 CONC t;&amp;lt;br&amp;gt;Children: &lt;a&gt;Rebekka Samson Frank&lt;/a&gt;, &lt;a&gt;Betje Samson Frank&lt;/a&gt;, &lt;a&gt;Hartog Samson Frank&lt;/a&gt;, &lt;a&gt;Meijer Samson Frank&lt;/a&gt;, &lt;a&gt;A
+4 CONC nnigje Frank&lt;/a&gt;, &lt;a&gt;Hijman Meijer Frank&lt;/a&gt;, &lt;a&gt;Jacob Samson Frank&lt;/a&gt;, &lt;a&gt;Mozes Samson Frank&lt;/a&gt;&amp;lt;br&amp;gt;Siblings: &lt;a&gt;Izak Hartog Frank&lt;/a
+4 CONC &gt;, &lt;a&gt;Mariana Hartog Frank&lt;/a&gt;, &lt;a&gt;Jacob Koppel Hartog Frank&lt;/a&gt;, &lt;a&gt;Bernardus Hartog Frank&lt;/a&gt;, &lt;a&gt;Abraham Hartog Frank&lt;/a&gt;, &lt;a&gt;Eva Hartog Fra
+4 CONC nk&lt;/a&gt;, &lt;a&gt;Prinsje Frank&lt;/a&gt;
+2 EVEN Record
+3 ROLE 40000:77658998:
+1 SOUR @S500205@
+2 QUAY 4
+2 DATA
+3 TEXT Samson Frank&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;גיל: 41&amp;lt;br&amp;gt;מקצוע: Zonder Beroep&amp;lt;br&amp;gt;מקור: מוסד:Gelders Archiefארכיון:0207# רישום:2
+4 CONC 392מספר מסמך:42מקום המקור:Winterswijk, Gelderland, Nederlandתאריך מקור:1856-03-29תאריך הכרך:1856-03-29תמונות:Source image
+2 EVEN Record
+3 ROLE 10563:3262171-F:
+1 SOUR @S500172@
+2 QUAY 3
+2 DATA
+3 DATE 8 APR 2025
+3 TEXT תמונה אישית של Samson Hartog Frank נוספה באמצעות Photo Discovery™
+2 EVEN Discovery
+1 RIN MH:I500682
+1 _UID 664CAD6AA05D14CD99D8232FF5CD8A12
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTgyN2I2NmYxYjNkNmYyYzk1ZDk5YmU3YjM2ZTE3OWNjMWE5MzA1ODdhMTFjYzM1NzFkNWRkMjQ3NDBjZDU1ZWEmZT0xNzUzNjEwNDAw/158/944/6912/501778_778031m1b4f67afp359ccb_A.jpg
+2 _FILESIZE 32617
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501761
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501778
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTY0NmRmNWQ3NzM3NDY1Mzk2YzAwYmE5MzgyNzg5Y2FiZmViNjA3MWMyZDlhYjhjMThhMjUyMGI0ZGM2MWJlZWUmZT0xNzUzNjEwNDAw/158/944/6912/501761_88463851u9ocwr4bboff67_A.jpg
+2 _FILESIZE 39102
+2 TITL drenth
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 37 0 319 376
+2 _PHOTO_RIN MH:P501761
+
+0 @I502126@ INDI
+1 _UPD 25 FEB 2025 22:48:19 GMT -0500 
+1 NAME Emanuel /van der Velde/
+2 GIVN Emanuel
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 26 JAN 1866
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 DEAT Y
+2 DATE 2 JUL 1943
+2 PLAC Sobibor, Lublin, Poland
+1 FAMS @F500760@
+1 FAMC @F500765@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1273616420&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Emanuel van der Velde
+לידה: 26 בינו’ 1866 -  Medemblik, Noord-Holland, Netherlands
+פטירה: 2 ביולי 1943 -  Sobibor, Lublin, Poland
+הורים: Isaac Moses van der Velde, Vrouwtje va
+4 CONC n der Velde (לבית van Essen)
+אשה: Betje van der Velde (לבית Akker)
+ילדים: Rosalien van der Velde, Isaac van der Velde, Rosalie Lea van der Velde, Heiman Maurits van der Velde
+אחים 
+4 CONC ואחיות: Mozes van der Velde, Esther van der Velde, Hester Cohen Kaz (לבית van der Velde), Elisabeth Blok (לבית van der Velde), Levenloos geboren kind van der Velde, Leentje Van der Frank
+4 CONC  (לבית Velde), Emanuel van der Velde, Nathan van der Velde
+2 EVEN Record
+3 ROLE 40001:1273616420:
+1 RIN MH:I502126
+1 _UID 67BE9C375E93E6EB25A40AFB021A6864
+
+0 @I502127@ INDI
+1 _UPD 25 FEB 2025 22:45:48 GMT -0500 
+1 NAME Betje Heijmans /Akker/
+2 GIVN Betje Heijmans
+2 SURN Akker
+1 SEX F
+1 BIRT
+2 DATE 11 JUL 1866
+2 PLAC Winsum, Groningen, Netherlands
+1 DEAT Y
+2 DATE 2 JUL 1943
+2 PLAC Sobibor, Lublin, Poland
+1 FAMS @F500760@
+1 FAMC @F500761@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1273616872&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Betje van der Velde (לבית Akker)
+לידה: 11 ביולי 1866 -  Winsum, Groningen, Netherlands
+פטירה: 2 ביולי 1943 -  Sobibor, Lublin, Poland
+הורים: Heiman Izaäk Akker, Roosjen Ja
+4 CONC cobs Akker (לבית Goldsmith)
+בעל: Emanuel van der Velde
+ילדים: Rosalie Lea van der Velde, Heiman Maurits van der Velde, Isaac van der Velde, Rosalien van der Velde
+אחים ואחיות: Je
+4 CONC tte Turksma (לבית Akker), Frouke Akker, Frederika Akker, Izaäk Akker, Jakob Filippus Akker, Mietje van Gelder (לבית Akker), Samuel Heiman Akker
+2 EVEN Record
+3 ROLE 40001:1273616872:
+1 RIN MH:I502127
+1 _UID 67BE9C37A6DA56ED25A40AFB021A6864
+
+0 @I500377@ INDI
+1 _UPD 21 MAY 2024 09:16:56 GMT -0500 
+1 NAME Rita Flora /van der Velde/
+2 GIVN Rita Flora
+2 SURN van der Velde
+2 _MARNM Tas
+1 SEX F
+1 DEAT Y
+2 DATE 23 OCT 1980
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 BIRT
+2 DATE 11 MAY 1920
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 RELI Jewish
+1 EVEN נישאה ל Louis Tas
+2 TYPE נישואים
+2 DATE 1947
+2 AGE 26
+1 FAMS @F500603@
+1 FAMC @F500151@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Rita Flora van der Velde&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 11 במאי 1920 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;נישואין:
+4 CONC  בן/בת זוג: Louis Tas - 11 בינו’ 1947 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;פטירה: 23 באוק’ 1980 - Amsterdam, Government of Amsterda
+4 CONC m, North Holland, Netherlands&amp;lt;br&amp;gt;אב: Jonas Jacob van der Velde&amp;lt;br&amp;gt;אם: Rosalie Lea van der Velde&amp;lt;br&amp;gt;בעל: Louis Tas&amp;lt;br&amp;gt;אחים ואחיו
+4 CONC : Betty van der Velde, Emmy van der Velde
+2 EVEN Record
+3 ROLE 40000:303550052:
+1 SOUR @S500137@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NS73R6TKEINKGLHB4RMLNK44DY-9022312/rita-flora-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 9022312
+1 RIN MH:I500377
+1 _UID 6538A6046683E12744C8F2755E8EF69A
+
+0 @I501640@ INDI
+1 _UPD 4 FEB 2025 07:16:50 GMT -0500 
+1 NAME Louis /Tas/
+2 GIVN Louis
+2 SURN Tas
+1 SEX M
+1 DEAT Y
+2 DATE 26 DEC 1974
+2 PLAC The Hague, The Hague, South Holland, Netherlands
+1 BIRT
+2 DATE 23 JUN 1921
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 FAMS @F500603@
+1 SOUR @S500137@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7NS73R6TKEINKGLHB4RMLNK44DY-9022314/louis-tas
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 9022314
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Louis Tas&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;כינוי: Lou&amp;lt;br&amp;gt;לידה: 23 ביוני 1921 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;
+4 CONC gt;נישואין: בן/בת זוג: Rita Flora van der Velde - 11 בינו’ 1947 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;פטירה: 26 בדצמ’ 1974 - 
+4 CONC The Hague, The Hague, South Holland, Netherlands&amp;lt;br&amp;gt;אשה: Rita Flora van der Velde
+2 EVEN Record
+3 ROLE 40000:303550227:
+1 RIN MH:I501640
+1 _UID 67A212B28B28BF532BBD7BEB1B620B1B
+
+0 @I504635@ INDI
+1 _UPD 23 APR 2025 01:36:33 GMT -0500 
+1 NAME Louis Alexander /van der Velde/
+2 GIVN Louis Alexander
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 8 FEB 1802
+2 PLAC Harlingen, Friesland, Nederland
+1 DEAT Y
+2 DATE 9 JUN 1847
+2 PLAC Zwolle, Overijssel, Netherlands
+1 OCCU steendrukker
+1 FAMC @F501467@
+1 SOUR @S500008@
+2 QUAY 4
+2 DATA
+3 TEXT Louis Alexander van der Velde&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 8 בפבר’ 1802 - Harlingen, Friesland, Nederland&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Maike J
+4 CONC acobs Elkan - 29 בספט’ 1827 - Veendam, Groningen, Netherlands&amp;lt;br&amp;gt;פטירה: 9 ביוני 1847 - Zwolle, Overijssel, Netherlands&amp;lt;br&amp;gt;מקצוע: steendrukker&amp;lt;br
+4 CONC &amp;gt;הורים: Alexander Marcus Meyer van der Velde, Fijtje Jacob Polak van der Velde (לבית Levie)&amp;lt;br&amp;gt;אשה: Maike Jacobs van der Velde (לבית Elkan)&amp;lt;br&amp;gt;ילד
+4 CONC ים: Alexander Louis Velde van der, Duifje de Jong (לבית Velde van der), Jacob van der Velde, Sientje Van Der Velde, Betje Velde van der, Jansje Van Der Velde, Mietje Van der Velde&amp;lt;br&amp;
+4 CONC gt;אחים ואחיות: Mietje Alexander Van der Woude (לבית van der Velde), Sara Alexanders Schönberg (לבית Van Der Velde)
+2 EVEN Record
+3 ROLE 40001:2053641428:
+1 RIN MH:I504635
+1 _UID 68088A6E7E899E5C29F3588146FD0B91
+
+0 @I500304@ INDI
+1 _UPD 13 MAR 2025 11:38:23 GMT -0500 
+1 NAME Hijman Meijer /van der Velde/
+2 GIVN Hijman Meijer
+2 SURN van der Velde
+1 SEX M
+1 DEAT Y
+2 DATE 4 SEP 1899
+2 PLAC Amsterdam, Noord-Holland, Netherlands
+1 BIRT
+2 DATE 25 JUN 1817
+2 PLAC Wijhe, Overijssel, Netherlands
+1 FAMS @F500123@
+1 FAMC @F500735@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Heijman Meijer van De Velde&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 25 ביוני 1817 - Wijhe, The Netherlands&amp;lt;br&amp;gt;נישואין: Betje Frank1846-07-01Amsterdam, The 
+4 CONC Netherlands&amp;lt;br&amp;gt;פטירה: 4 בספט’ 1899 - Amsterdam, The Netherlands&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;
+4 CONC /a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were posted years ago and have later been removed. In such cases, the link to the original record will not work.
+2 EVEN Record
+3 ROLE 10838:10381786:
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=532210430&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Heijman Meijer van de Velde
+לידה: 25 ביוני 1817 - Wijhe, Overijssel, Netherlands
+פטירה: 4 בספט’ 1899 - Amsterdam, Noord Holland, Netherlands
+הורים: Moses Meijer van de Velde, 
+4 CONC Betje Emanuel van de Velde (לבית Blitz)
+אשה: Betje Samson van de Velde (לבית Frank)
+ילדים: Mozes Van Der Velde, Benjamin van der Velde, Saartje Roeper (לבית van der Velde), Doodgeb
+4 CONC oren Kind Van Der Velde
+אחים ואחיות: Rebekka van de Velde, Isaac Moses van der Velde, Alexander van der Velde, Aaltje Mozes van der Mesritz (לבית Velde), Rebekka Polak (לבית van der 
+4 CONC Velde), Levie van der Velde, Eliazer Van Der Velde
+2 EVEN Record
+3 ROLE 40001:532210430:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Hijman Meijer van der Velde&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;כינוי: Herman de&amp;lt;br&amp;gt;לידה: 25 ביוני 1817 - Wijhe, Olst-Wijhe, Overijssel, The Netherlands&amp;lt
+4 CONC ;br&amp;gt;נישואין: בן/בת זוג: Betje Samson Frank - 1 ביולי 1846 - Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;פטירה: 4 בספט’ 1899
+4 CONC  - Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;אב: Mozes Meijer van der Velde&amp;lt;br&amp;gt;אם: Betje Emanuel Blitz&amp;lt;br&amp;gt;אשה: Betje Samson
+4 CONC  Frank&amp;lt;br&amp;gt;ילדים: Stillborn van der Velde, Saartje van der Velde, Mozes van de Velde, Benjamin van der Velde&amp;lt;br&amp;gt;אחים ואחיות: Rebekka van de Velde, Aaltje Moze
+4 CONC s van der Velde, Isaac Mozes van der Velde, Emanuel Vandervelde (לבית van der Velde), Alexander van der Velde, Rebecka van der Velde, Eliazer van der Velde, Levie van der Velde
+2 EVEN Record
+3 ROLE 40000:113291185:
+1 SOUR @S500077@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6EKZSR5VGXFPXXN53ZTSPF6WXMY-13036928/hijman-meijer-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 13036928
+1 RIN MH:I500304
+1 _UID 64B7BCB9840F96923149636BDC1480F3
+
+0 @I500305@ INDI
+1 _UPD 4 MAR 2025 22:50:56 GMT -0500 
+1 NAME Betje Samson /Frank/
+2 GIVN Betje Samson
+2 SURN Frank
+1 SEX F
+1 DEAT Y
+2 DATE 28 SEP 1892
+2 PLAC Amsterdam, Amsterdam, Noord-Holland, Netherlands
+1 BIRT
+2 DATE 13 JUN 1810
+2 PLAC or 22/6/1812, Meppel, Meppel, Drenthe, The Netherlands
+1 FAMS @F500123@
+1 FAMC @F500257@
+1 SOUR @S500045@
+2 QUAY 4
+2 DATA
+3 TEXT Betje Frank&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 13 ביוני 1810 - Meppel, The Netherlands&amp;lt;br&amp;gt;נישואין: Heijman Meijer van de Velde1 ביולי 1846
+	
+
+4 CONC 	 Amsterdam, The Netherlands
+
+
+
+
+
+	
+	
+	
+		
+	
+
+
+&amp;lt;br&amp;gt;פטירה: 28 בספט’ 1892 - Amsterdam, The Netherlands&amp;lt;br&amp;gt;אב: Samson Hartog Frank&amp;lt;br&amp;gt;אם: Sa
+4 CONC ra Meijer van de Velde&amp;lt;br&amp;gt;מקור: &lt;a&gt;View the original record&lt;/a&gt; on &lt;a&gt;GenealogieOnline website&lt;/a&gt;&amp;lt;br&amp;gt;Source Remarks: Some family trees were pos
+4 CONC ted years ago and have later been removed. In such cases, the link to the original record will not work.
+2 EVEN Record
+3 ROLE 10838:10377158:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Betje Samson Frank&amp;lt;br&amp;gt;Gender: Female&amp;lt;br&amp;gt;Alias name: Franck&amp;lt;br&amp;gt;Birth: June 13 1810 - or 22/6/1812, Meppel, Meppel, Drenthe, The Netherlands&amp;lt;br&amp;gt;Ma
+4 CONC rriage: Spouse: Hijman Meijer van der Velde - July 1 1846 - Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;Death: Sep 28 1892 - Amsterdam, Amsterdam, Noord-Holland
+4 CONC , Netherlands&amp;lt;br&amp;gt;Father: &lt;a&gt;Samson Hartog Frank&lt;/a&gt;&amp;lt;br&amp;gt;Mother: &lt;a&gt;Sara Meijer van der Velde&lt;/a&gt;&amp;lt;br&amp;gt;Husband: &lt;a&gt;Hijman Meijer van
+4 CONC  der Velde&lt;/a&gt;&amp;lt;br&amp;gt;Children: &lt;a&gt;Stillborn van der Velde&lt;/a&gt;, &lt;a&gt;Saartje van der Velde&lt;/a&gt;, &lt;a&gt;Mozes van de Velde&lt;/a&gt;, &lt;a&gt;Benjamin van der V
+4 CONC elde&lt;/a&gt;&amp;lt;br&amp;gt;Siblings: &lt;a&gt;Rebekka Samson Frank&lt;/a&gt;, &lt;a&gt;Hartog Samson Frank&lt;/a&gt;, &lt;a&gt;Meijer Samson Frank&lt;/a&gt;, &lt;a&gt;Annigje Frank&lt;/a&gt;, &lt
+4 CONC ;a&gt;Hijman Meijer Frank&lt;/a&gt;, &lt;a&gt;Jacob Samson Frank&lt;/a&gt;, &lt;a&gt;Mozes Samson Frank&lt;/a&gt;
+2 EVEN Record
+3 ROLE 40000:113291171:
+1 NOTE <div class="event_summary" style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; color: #6e6e6e; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f7f7f7;"><spa
+2 CONC n style="border: 0px; margin: 0px; padding: 0px; font-weight: bold;">לידה:</span>&nbsp;<span style="border: 0px; margin: 0px; padding: 0px;">13 ביוני 1810 - Meppel</span></div>
+<div class="e
+2 CONC vent_summary" style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; color: #6e6e6e; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f7f7f7;"><span style="bord
+2 CONC er: 0px; margin: 0px; padding: 0px; font-weight: bold;">פטירה:</span>&nbsp;<span style="border: 0px; margin: 0px; padding: 0px;">28 בספט&rsquo; 1892 - Amsterdam, Noord-Holland</span></div>
+<
+2 CONC div class="relative_summary" style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; color: #6e6e6e; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f7f7f7;"><s
+2 CONC pan style="border: 0px; margin: 0px; padding: 0px; font-weight: bold;">הורים:</span>&nbsp;<span style="border: 0px; margin: 0px; padding: 0px;">Samson Hartog Frank וSara Meijer Frank (born van d
+2 CONC e Velde)</span></div>
+<div class="relative_summary" style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; color: #6e6e6e; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; backgr
+2 CONC ound-color: #f7f7f7;"><span style="border: 0px; margin: 0px; padding: 0px; font-weight: bold;">אחים/ אחיות:</span>&nbsp;<span style="border: 0px; margin: 0px; padding: 0px;">Rebecka Samson, H
+2 CONC artog Samson, Meijer Samson, Annigje, Hijman Meijer, Jacob Samson וMozes Samson</span></div>
+<div class="relative_summary" style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; color: #6e6
+2 CONC e6e; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f7f7f7;"><span style="border: 0px; margin: 0px; padding: 0px; font-weight: bold;">בעל:</span>&nbsp;<span style="
+2 CONC border: 0px; margin: 0px; padding: 0px;">Hijman Meijer van der Velde</span></div>
+1 RIN MH:I500305
+1 _UID 64B7BCB98F4506933149636BDC1480F3
+
+0 @I500375@ INDI
+1 _UPD 4 FEB 2025 07:14:58 GMT -0500 
+1 NAME Betty /van der Velde/
+2 GIVN Betty
+2 SURN van der Velde
+2 _MARNM Sanders
+1 SEX F
+1 BIRT
+2 DATE 17 APR 1919
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 23 MAY 2011
+2 PLAC Knegsel, Eersel, North Brabant, Netherlands
+1 FAMS @F500152@
+1 FAMS @F500595@
+1 FAMC @F500151@
+1 RIN MH:I500375
+1 _UID 6538A49C109D4756603BE2CA359DC785
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTBlYzE4ZTVlN2M1ZjBkOTczZWUyZTZkN2UxZGNhMjUxY2I5NTVmNmUyM2FkZjQyZjM5OTQyMWM0MDM4MGRmY2ImZT0xNzUzNjEwNDAw/158/944/6912/500152_0417411s36f54eem6d875u_A.jpg
+2 _FILESIZE 17860
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500151
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500152
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTA3Nzk3NTI4ZDMwMDQyODM0ZWY0NGEyNzhjZWEwZGIyMThmMDBkMTU3OGZlMWVkOWU1MGY0YjE1ZmFiYTMwY2EmZT0xNzUzNjEwNDAw/158/944/6912/500151_005570d5c38pn5710e6ind_A.jpg
+2 _FILESIZE 17861
+2 TITL betty sanders
+2 _DATE 20 JAN 1997
+2 _PLACE Knegsel, Noord-Brabant, Netherlands
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500151
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTYwYzhmNDYyZGYxNzY4YWI2NWQ4MTQwZGFkYzhhMTU5OWFmZjFiMWFkNGFkMWFjMzcxOTNkNjlkY2U2MTRiMjkmZT0xNzUzNjEwNDAw/158/944/6912/500716_9046961l8qtb676f36756c_A.jpg
+2 _FILESIZE 234939
+2 TITL ‏‏‫תמונת מפת ‫סיביות ‫חדשה
+2 _POSITION 1009 377 1172 585
+2 _PHOTO_RIN MH:P500716
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWI4YTEyYTA2ODA1NDkzZGVkMTZiZjE4OTM3YTNiNjA1NTMxZDJkMTdmNGFjY2Y5MmM1N2YwYTg3MGE2NGYyOGQmZT0xNzUzNjEwNDAw/158/944/6912/501858_2937879nef01569a796f31_A.jpg
+2 _FILESIZE 709331
+2 TITL 466509479_10234732187394391_5347569500416359730_n
+2 _POSITION 385 477 577 741
+2 _PHOTO_RIN MH:P501858
+
+0 @I500380@ INDI
+1 _UPD 26 MAR 2025 09:32:17 GMT -0500 
+1 NAME Ferdinand Leonard /Sanders/
+2 GIVN Ferdinand Leonard
+2 SURN Sanders
+1 SEX M
+1 BIRT
+2 DATE 11 MAR 1914
+2 PLAC Coevorden, Coevorden, Drenthe, Netherlands
+1 DEAT Y
+2 DATE 23 OCT 1975
+2 PLAC Eindhoven, Eindhoven, North Brabant, Netherlands
+1 OCCU watchmaker
+1 FAMS @F500152@
+1 FAMC @F501072@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Ferdinand Leonard Sanders&amp;lt;br&amp;gt;Gender: Male&amp;lt;br&amp;gt;Birth: Mar 11 1914 - Coevorden, Coevorden, Drenthe, Netherlands&amp;lt;br&amp;gt;Occupation: watchmaker&amp;lt;br&amp;gt;Death:
+4 CONC  Oct 23 1975 - Eindhoven, Eindhoven, North Brabant, Netherlands&amp;lt;br&amp;gt;Father: &amp;lt;a&amp;gt;Comprecht Sanders&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Mothers: &amp;lt;a&amp;gt;Marie Luise Fra
+4 CONC nk&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Marianne Frank&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Wife: &amp;lt;a&amp;gt;Betty van der Velde&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Children: &amp;lt;a&amp;gt;Johan 
+4 CONC Sanders&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;johan sanders&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;&amp;lt;&amp;lt;Private&amp;gt;&amp;gt; Sanders&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Siblings: &amp;lt;a&amp
+4 CONC ;gt;Salomon Sanders&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;Samson Frederik Gustaaf (Guus) Sanders&amp;lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 40000:365614580:
+1 SOUR @S500226@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7F7CQQ3M4MONQE453L2JNYN7DTA-1500043/ferdinand-leonard-sanders
+2 QUAY 3
+2 DATA
+3 TEXT bor Web Site, מנוהל ע"י nechama bor
+2 EVEN Smart Matching
+3 ROLE 1500043
+1 RIN MH:I500380
+1 _UID 6538A7D9DAB6557E5BC3EF1E5E55BFD9
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTAxYjQ4ZmNjNDMyMmI3YWU3NjM2Y2FhZGZlMTVhZGUzZGJjMWVjZGYzZGIxYjZkNDNmNGM5Y2M1ZDQ5ZTQwNTQmZT0xNzUzNjEwNDAw/158/944/6912/500145_036102c56h8e138asap757_A.jpg
+2 _FILESIZE 2889
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500144
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500145
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWIwZTNiYzZjODllNzhmMGVjZTYxYTQ3ZDE0YTk3YTdhNGM2OTA2ZjZkNDk0ZGZlZTNhNTQ5ZTljZTdjY2IyNTImZT0xNzUzNjEwNDAw/158/944/6912/500144_0343617a561d7817a3u82e_A.jpg
+2 _FILESIZE 2862
+2 TITL jpg
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 13 84 97
+2 _PHOTO_RIN MH:P500144
+
+0 @I501620@ INDI
+1 _UPD 21 FEB 2025 05:10:47 GMT -0500 
+1 NAME Thijs /Soeting/
+2 GIVN Thijs
+2 SURN Soeting
+1 SEX M
+1 BIRT
+2 DATE 27 OCT 1915
+2 PLAC Amsterdam
+1 DEAT Y
+2 DATE 19 OCT 2017
+2 PLAC Eindhoven
+1 FAMS @F500595@
+1 RIN MH:I501620
+1 _UID 679BCCAD1ED66E17F29DC2E02E80ACFB
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTBiZDRiMjk2OGM4YTM4ZTg2YmI1ZDdiYWVmZWJjNzVjZmNkZGRjMzEzNDU3ZGMyMWVjOTg4ZGY3OGY1MGY2ZmUmZT0xNzUzNjEwNDAw/158/944/6912/500717_3191665b77i7qku21z38f6_A.jpg
+2 _FILESIZE 39235
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500716
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500717
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTYwYzhmNDYyZGYxNzY4YWI2NWQ4MTQwZGFkYzhhMTU5OWFmZjFiMWFkNGFkMWFjMzcxOTNkNjlkY2U2MTRiMjkmZT0xNzUzNjEwNDAw/158/944/6912/500716_9046961l8qtb676f36756c_A.jpg
+2 _FILESIZE 234939
+2 TITL ‏‏‫תמונת מפת ‫סיביות ‫חדשה
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 187 215 657 685
+2 _PHOTO_RIN MH:P500716
+
+0 @I502128@ INDI
+1 _UPD 25 FEB 2025 22:44:41 GMT -0500 
+1 NAME Rosalien /van der Velde/
+2 GIVN Rosalien
+2 SURN van der Velde
+1 SEX F
+1 BIRT
+2 DATE 1892
+2 PLAC Medemblik, North Holland, Netherlands
+1 DEAT Y
+2 DATE 22 AUG 1892
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 FAMC @F500760@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1380408880&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Rosalien van der Velde
+לידה: 1892 - Medemblik, North Holland, Netherlands
+פטירה: 22 באוג’ 1892 - Medemblik, Noord-Holland, Netherlands
+הורים: Emanuel van der Velde, Betje van der V
+4 CONC elde (לבית Akker)
+אחים ואחיות: Isaac van der Velde, Rosalie Lea van der Velde, Heiman Maurits van der Velde
+2 EVEN Record
+3 ROLE 40001:1380408880:
+1 RIN MH:I502128
+1 _UID 67BE9C37DAC1F6EE25A40AFB021A6864
+
+0 @I504407@ INDI
+1 _UPD 16 APR 2025 12:51:33 GMT -0500 
+1 NAME Arnold Barend /van der Velde/
+2 GIVN Arnold Barend
+2 SURN van der Velde
+1 SEX M
+1 DEAT Y
+2 DATE 1972
+1 BIRT
+2 DATE 1 SEP 1897
+2 PLAC Amsterdam
+1 OCCU Kassier
+1 FAMS @F501393@
+1 FAMC @F500040@
+1 SOUR @S500045@
+2 PAGE https://www.myheritage.co.il/research/collection-10838/genealogieonline-family-tree-index?itemId=28965409&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Arnold Barend van Der Velde
+לידה: 1 בספט’ 1897 - Amsterdam
+הורים: Benjamin van der Velde, Flora Italiaander
+אשה: Catharina Elizabeth Zaal
+בן/בת: Arthur Zaal
+2 EVEN Record
+3 ROLE 10838:28965409:
+1 SOUR @S500056@
+2 PAGE https://www.myheritage.co.il/research/collection-10562/netherlands-civil-marriages-1811-1940?itemId=8383057&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Arnold Barend van der Velde
+קשר משפחתי: חתן
+לידה: סביבות 1897
+נישואין: 9 בדצמ’ 1931 - 's-Gravenhage, South Holland, Netherlands
+כלה: Catharina Elizabeth Zaal (van
+4 CONC  der Velde)
+הורי החתן: Benjamin van der Velde, Flora Italiaander
+2 EVEN Record
+3 ROLE 10562:8383057:
+1 RIN MH:I504407
+1 _UID 67FFEC9E8C6D0C723F6F4F5091D9709F
+
+0 @I504408@ INDI
+1 _UPD 16 APR 2025 12:47:24 GMT -0500 
+1 NAME Catharina Elizabeth /Zaal/
+2 GIVN Catharina Elizabeth
+2 SURN Zaal
+1 SEX F
+1 BIRT
+2 DATE 21 MAR 1904
+2 PLAC Leeuwarden, Friesland, Netherlands
+1 DEAT Y
+1 RESI
+2 ADDR
+3 ADR1 Leeuwarden, Friesland, Netherlands
+1 FAMS @F501393@
+1 SOUR @S500305@
+2 PAGE https://www.myheritage.co.il/research/collection-10561/netherlands-civil-births-1811-1915?itemId=3341189&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Catharina Elizabeth Zaal
+לידה: 21 במרץ 1904 - Leeuwarden, Friesland, Netherlands
+הורים: Petrus Johannes Zaal, Jacoba Margaretha Hasz
+2 EVEN Record
+3 ROLE 10561:3341189:
+1 SOUR @S500056@
+2 PAGE https://www.myheritage.co.il/research/collection-10562/netherlands-civil-marriages-1811-1940?itemId=8383057&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Arnold Barend van der Velde
+קשר משפחתי: חתן
+לידה: סביבות 1897
+נישואין: 9 בדצמ’ 1931 - 's-Gravenhage, South Holland, Netherlands
+כלה: Catharina Elizabeth Zaal (van
+4 CONC  der Velde)
+הורי החתן: Benjamin van der Velde, Flora Italiaander
+2 EVEN Record
+3 ROLE 10562:8383057:
+1 RIN MH:I504408
+1 _UID 67FFECF3373F2018DF0E7ADC9B102FE7
+
+0 @I501334@ INDI
+1 _UPD 28 MAY 2025 02:58:34 GMT -0500 
+1 NAME Robert James /van der Velde/
+2 GIVN Robert James
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 17 JUL 1941
+2 PLAC South Africa
+1 FAMS @F500592@
+1 FAMS @F500613@
+1 FAMC @F500154@
+1 RIN MH:I501334
+1 _UID 672B69EC71CB447C865D6CDAC15D0F28
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQyNzlmZGIyNjZjNDE2YWQwMThiMmYzOWMwMmZmN2RiNjY2NjAzZjZmNjIzOTcxN2U5MTVjN2RmMGE4ZmE5ZTAmZT0xNzUzNjEwNDAw/158/944/6912/500622_565032db7phe3gm476981x_A.jpg
+2 _FILESIZE 2085
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500621
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500622
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTJlMTVjNjNmMzA4NWVhZmZlNTIyMjIzNTZhMDFjNzEzOTI0MzU3ZGFmNmM1OTA0ODBkNDMwZGY0Y2U5NjVhZWMmZT0xNzUzNjEwNDAw/158/944/6912/500621_40710923v4kjx9718b6e5d_A.jpg
+2 _FILESIZE 2086
+2 TITL fb_img_1710840875217_small
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500621
+
+0 @I501610@ INDI
+1 _UPD 30 JAN 2025 12:44:29 GMT -0500 
+1 NAME Margaret Kennedy /Crookshank/
+2 GIVN Margaret Kennedy
+2 SURN Crookshank
+1 SEX F
+1 BIRT
+2 DATE 5 MAR 1947
+1 FAMS @F500592@
+1 RIN MH:I501610
+1 _UID 679B8DBB243C23E2225548E9E22E5924
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTU1YmRhOWE2NmMyMjY3YjUwY2UzMTQ0M2VkMTNkNDBiOTEzYWVlMTI1Yzg0MWU0YTllNTBhZTU2ODVmODZjZWUmZT0xNzUzNjEwNDAw/158/944/6912/500624_5235589d27s8ec6ml184jb_A.jpg
+2 _FILESIZE 4615
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500623
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500624
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWUyMmQ1ZmEwMjNkMTk4YjVhY2RjYmNkOGQzZGRiYjY4ODU3NTQ4ODU4NDc5OTk4NTVmNGFjNzAyNWMzNDZiNzImZT0xNzUzNjEwNDAw/158/944/6912/500623_0665906d74bj51n8648c9b_A.jpg
+2 _FILESIZE 4625
+2 TITL 330d0f80-6c00-4021-be80-9937fca9bf10_small
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500623
+
+0 @I501662@ INDI
+1 _UPD 5 FEB 2025 07:23:02 GMT -0500 
+1 NAME Christine /Nielson/
+2 GIVN Christine
+2 SURN Nielson
+1 SEX F
+1 BIRT
+2 DATE 1951
+1 DEAT Y
+2 DATE 2010
+1 FAMS @F500613@
+1 RIN MH:I501662
+1 _UID 67A3660948433AB048E9482AB7A86DC7
+
+0 @I502047@ INDI
+1 _UPD 8 APR 2025 23:46:50 GMT -0500 
+1 NAME Alexander /van der Velde/
+2 GIVN Alexander
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 12 APR 1825
+2 PLAC Wijhe, Overijssel, The Netherlands
+1 DEAT Y
+2 DATE 23 MAY 1898
+2 PLAC Deventer, Gelderland, The Netherlands
+1 FAMC @F500735@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=2221880972&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Alexander van der Velde
+לידה: סביבות 1824 - Wijhe, Overijssel, Netherlands
+פטירה: 23 במאי 1898 - Deventer, Overijssel, Netherlands
+הורים: Moses Meijer van de Velde, Betje Emanu
+4 CONC el van de Velde (לבית Blitz)
+אשה: Johanna van der Velde (לבית Goudsmit)
+ילדים: Betje Engers (לבית van der Velde), Lion van der Velde
+אחים ואחיות: Heijman Meijer van de Ve
+4 CONC lde, Rebekka van de Velde, Isaac Moses van der Velde, Aaltje Mozes van der Mesritz (לבית Velde), Rebekka Polak (לבית van der Velde), Levie van der Velde, Eliazer Van Der Velde
+2 EVEN Record
+3 ROLE 40001:2221880972:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Alexander van der Velde&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 12 באפר’ 1825 - Wijhe, Overijssel, The Netherlands&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Johanna G
+4 CONC oudsmit - 30 באוק’ 1861 - Wijhe, Overijssel, The Netherlands&amp;lt;br&amp;gt;פטירה: 23 במאי 1898 - Deventer, Gelderland, The Netherlands&amp;lt;br&amp;gt;אב: Mozes Meijer van der Vel
+4 CONC de&amp;lt;br&amp;gt;אם: Betje Emanuel Blitz&amp;lt;br&amp;gt;אשה: Johanna Goudsmit&amp;lt;br&amp;gt;ילדים: Betje van der Velde, Henriette van der Velde, Samuel Vandervelde (לבית van der 
+4 CONC Velde), Margareth van der Velde, Mozes van der Velde, Lion (Yehudah) van der Velde&amp;lt;br&amp;gt;אחים ואחיות: Hijman Meijer van der Velde, Rebekka van de Velde, Aaltje Mozes van der Velde
+4 CONC , Isaac Mozes van der Velde, Emanuel Vandervelde (לבית van der Velde), Rebecka van der Velde, Eliazer van der Velde, Levie van der Velde
+2 EVEN Record
+3 ROLE 40000:131188769:
+1 SOUR @S500077@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6EKZSR5VGXFPXXN53ZTSPF6WXMY-13076457/alexander-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 13076457
+1 SOUR @S500282@
+2 QUAY 3
+2 DATA
+3 DATE 8 APR 2025
+3 TEXT תמונה אישית של Alexander Zieskind Van der welde נוספה באמצעות Photo Discovery™
+2 EVEN Discovery
+1 RIN MH:I502047
+1 _UID 67B721F851EAF293F7F327A788267158
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTM0YWRlYzkzMTZlMWE4ZDVlZThhYjc5ZTQ0YmZhY2I4ZTBjZDNkMTRlNmRmYTRiMjliNDY0N2JmMjhjMzE5NjQmZT0xNzUzNjEwNDAw/158/944/6912/501772_185584v4j75f6k15abnmfb_A.jpg
+2 _FILESIZE 56501
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501766
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501772
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTRhNzA1YTEyYTNmZTZiMmM1ZmE2Njg2MzdmYWJlZTNhNDU2MzRkZDYxNTEzNzA5N2NkZWFlNDJmNjM3ZjQ2ZmQmZT0xNzUzNjEwNDAw/158/944/6912/501766_04766047fb7f2xa6r91bn5_A.jpg
+2 _FILESIZE 57819
+2 TITL Alexander Van der Velde marriage 1
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501766
+
+0 @I504020@ INDI
+1 _UPD 8 APR 2025 04:50:20 GMT -0500 
+1 NAME Eliana Joy /van der Velde/
+2 GIVN Eliana Joy
+2 SURN van der Velde
+1 SEX F
+1 FAMC @F501300@
+1 RIN MH:I504020
+1 _UID 67F4F14E69DC78881CDCDF40971528F1
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQ2YmViOTcyNDRlYTFkZGU5MjRkMWY3ODUwYzI1Yjk1NTYxYzIyNTFmZTUxY2ZjNmJkMjU1MjMxODAyYmFiNjImZT0xNzUzNjEwNDAw/158/944/6912/501651_881767sfff3715b9t41a64_A.jpg
+2 _FILESIZE 8361
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501650
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501651
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWZiODIyZmYxNWMwNTI1ZmUyZGQ5OWEzNzQ1ODBlMWE1YjIxZTI4MjdkYzc3ZTJhZWE3NTg4ZDlkMzVkMTc4NDEmZT0xNzUzNjEwNDAw/158/944/6912/501650_92349631b4l1fjy7f658xb_A.jpg
+2 _FILESIZE 8747
+2 TITL img-20211025-wa0070_medium
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 19 112 131
+2 _PHOTO_RIN MH:P501650
+
+0 @I502161@ INDI
+1 _UPD 25 FEB 2025 22:48:24 GMT -0500 
+1 NAME Hester /van der Velde/
+2 GIVN Hester
+2 SURN van der Velde
+1 SEX F
+1 BIRT
+2 DATE 1855
+2 PLAC Medemblik, Noord-Holland, Nederland
+1 DEAT Y
+2 DATE 2 OCT 1937
+2 PLAC Amsterdam, Noord-Holland, Nederland
+1 FAMC @F500765@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=537480069&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Hester Cohen Kaz (לבית van der Velde)
+לידה: 1855 - Medemblik, Noord-Holland, Nederland
+פטירה: 2 באוק’ 1937 - Amsterdam, Noord-Holland, Nederland
+הורים: Isaac Moses van der Veld
+4 CONC e, Vrouwtje van der Velde (לבית van Essen)
+בעל: Andries Mathusslem Cohen Kaz
+אחים ואחיות: Mozes van der Velde, Esther van der Velde, Elisabeth Blok (לבית van der Velde), Levenloos
+4 CONC  geboren kind van der Velde, Leentje Van der Frank (לבית Velde), Emanuel van der Velde, Emanuel van der Velde, Nathan van der Velde
+2 EVEN Record
+3 ROLE 40001:537480069:
+1 RIN MH:I502161
+1 _UID 67BE9D149BD7F4FA28C61FA532365037
+
+0 @I502176@ INDI
+1 _UPD 25 FEB 2025 22:49:15 GMT -0500 
+1 NAME Emanuel /van der Velde/
+2 GIVN Emanuel
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 1 AUG 1864
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 DEAT Y
+2 DATE 4 AUG 1864
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 FAMC @F500765@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1230471741&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Emanuel van der Velde
+לידה: 1 באוג’ 1864 - Medemblik, Noord-Holland, Netherlands
+פטירה: 4 באוג’ 1864 - Medemblik, Noord-Holland, Netherlands
+הורים: Isaac Moses van der Velde,
+4 CONC  Vrouwtje van der Velde (לבית van Essen)
+אחים ואחיות: Mozes van der Velde, Esther van der Velde, Hester Cohen Kaz (לבית van der Velde), Elisabeth Blok (לבית van der Velde), Leven
+4 CONC loos geboren kind van der Velde, Leentje Van der Frank (לבית Velde), Emanuel van der Velde, Nathan van der Velde
+2 EVEN Record
+3 ROLE 40001:1230471741:
+1 RIN MH:I502176
+1 _UID 67BE9D4747C8175DE7EC1E3EF1504890
+
+0 @I501872@ INDI
+1 _UPD 21 FEB 2025 07:38:13 GMT -0500 
+1 NAME Benno /van der Velde/
+2 GIVN Benno
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 5 APR 1933
+2 PLAC Batavia
+1 FAMS @F500690@
+1 FAMC @F500688@
+1 RIN MH:I501872
+1 _UID 67B3621872D28F2EC8A622FD70CD0E40
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTY0NTA5ZGE1Y2I0OTI2MzExNWRjOThjYmY1ZmQxMWMyYjBjZjg0NTUxOGZjN2ZiOGJhNWI5OWM0NzAyNzFiOTgmZT0xNzUzNjEwNDAw/158/944/6912/500719_757794a1bx8157e76c83o1_A.jpg
+2 _FILESIZE 26393
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500718
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500719
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWM4M2FjNGQ0OTE2ZGQ5NjU0YTI4ZjMyYmYyMThkMzU1ZDE5MWQ3ZTIxMThiZmMyNjYxZjcxMzgxZGYzNTM2ZGImZT0xNzUzNjEwNDAw/158/944/6912/500718_768318b7xl187144168cjs_A.jpg
+2 _FILESIZE 30859
+2 TITL 723965
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 32 0 320 288
+2 _PHOTO_RIN MH:P500718
+
+0 @I501876@ INDI
+1 _UPD 21 FEB 2025 08:13:08 GMT -0500 
+1 NAME Sylvia Louisa /Duis/
+2 GIVN Sylvia Louisa
+2 SURN Duis
+2 _MARNM van der velde
+1 SEX F
+1 BIRT
+2 DATE 30 JUN 1932
+2 PLAC Amsterdam, Amsterdam, Noord-Holland, Nederland (Netherlands)
+1 DEAT Y
+2 DATE 20 AUG 2024
+2 PLAC Herzliya, Israel
+1 FAMS @F500690@
+1 FAMS @F500694@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT צלה van der Velde (לבית Duis)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 30 ביוני 1932 - Amsterdam, Amsterdam, Noord-Holland, Nederland&amp;lt;br&amp;gt;נישואין: 
+4 CONC ן/בת זוג: Jacob (Jaques) Platvoet - 9 ביולי 1957 - Amsterdam, Government of Amsterdam, NH, Netherlands&amp;lt;br&amp;gt;פטירה: אוג’ 2024 - Herzliya, Israel&amp;lt;br&amp;gt;אב:
+4 CONC  David Duis&amp;lt;br&amp;gt;אם: Louisa (Wiesje) Meiboom&amp;lt;br&amp;gt;בעל: Jacob (Jaques) Platvoet&amp;lt;br&amp;gt;בני זוג: &lt;פרטי&gt; van der Velde, &lt;פרטי&gt; van der vel
+4 CONC de&amp;lt;br&amp;gt;ילדים: &lt;פרטי&gt; Galpert (לבית Platvoet), Hella Esther Galpert (לבית v.d Velde), davied van der velde, &lt;פרטי&gt; Vandervelde (לבית van der Velde)
+2 EVEN Record
+3 ROLE 40000:29986879:
+1 RIN MH:I501876
+1 _UID 67B36399B2D9E2E01CED5B075609617C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTU1Njk4ODVhOWJkNGEzZTAwZWU1ZmIxNWE0NGY2YTdlNmIyM2FlZDJmMThjZDg5YjRiZTdiM2ViZDMwY2NiZDImZT0xNzUzNjEwNDAw/158/944/6912/500721_24216476zgbv819q4820jf_A.jpg
+2 _FILESIZE 30606
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500720
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500721
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWNhZjg1ZTNjZjU0ZGY2YjQzMjQ4NGUyN2MzMjA5Y2RhYmYzNTQyNGIyYTBhYjMwMTQxNTFlMmMzNzk2Y2Q2ODImZT0xNzUzNjEwNDAw/158/944/6912/500720_1984647x81694880b2wfzy_A.jpg
+2 _FILESIZE 35839
+2 TITL 726370
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 32 0 320 288
+2 _PHOTO_RIN MH:P500720
+
+0 @I502165@ INDI
+1 _UPD 25 FEB 2025 22:48:26 GMT -0500 
+1 NAME Emanuel /van der Velde/
+2 GIVN Emanuel
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 1 AUG 1864
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 DEAT Y
+2 DATE 4 AUG 1864
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 FAMC @F500765@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1230471741&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Emanuel van der Velde
+לידה: 1 באוג’ 1864 - Medemblik, Noord-Holland, Netherlands
+פטירה: 4 באוג’ 1864 - Medemblik, Noord-Holland, Netherlands
+הורים: Isaac Moses van der Velde,
+4 CONC  Vrouwtje van der Velde (לבית van Essen)
+אחים ואחיות: Mozes van der Velde, Esther van der Velde, Hester Cohen Kaz (לבית van der Velde), Elisabeth Blok (לבית van der Velde), Leven
+4 CONC loos geboren kind van der Velde, Leentje Van der Frank (לבית Velde), Emanuel van der Velde, Nathan van der Velde
+2 EVEN Record
+3 ROLE 40001:1230471741:
+1 RIN MH:I502165
+1 _UID 67BE9D15588BD4FE28C61FA532365037
+
+0 @I502257@ INDI
+1 _UPD 4 MAR 2025 22:50:56 GMT -0500 
+1 NAME Mozes Meyer Meijer /van der Velde/
+2 GIVN Mozes Meyer Meijer
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE MAR 1785
+2 PLAC Alkmaar, Alkmaar, Noord-Holland, The Netherlands
+1 DEAT Y
+2 DATE 10 APR 1863
+2 PLAC Wijhe, Olst-Wijhe, Overijssel, The Netherlands
+2 AGE 78
+1 BIRT
+2 DATE MAR 1785
+2 PLAC Alkmaar, North Holland, The Netherlands
+1 DEAT Y
+2 DATE 10 APR 1863
+2 PLAC Wijhe, Overijssel, Netherlands
+1 FAMC @F500788@
+1 SOUR @S500171@
+2 PAGE Mozes Meyer van der Velde
+2 QUAY 3
+2 DATA
+3 DATE 27 בפבר’ 2025
+3 TEXT נוסף באמצעות Person Discovery
+2 EVEN Discovery
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19552469/mozes-meyer-meijer-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 19552469
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Mozes Meijer van der Velde&amp;lt;br&amp;gt;Gender: Male&amp;lt;br&amp;gt;Alias name: Moses van de Velde&amp;lt;br&amp;gt;Birth: Mar 1785 - Alkmaar, Alkmaar, Noord-Holland, The Netherlands&amp;lt;br&a
+4 CONC mp;gt;Marriage: Spouse: Betje Emanuel Blitz - Apr 24 1816 - Wijhe, Olst-Wijhe, Overijssel, The Netherlands&amp;lt;br&amp;gt;Death: Apr 10 1863 - Wijhe, Olst-Wijhe, Overijssel, The Netherlands&amp;lt;b
+4 CONC r&amp;gt;Father: &lt;a&gt;Marcus / Meijer Alexander / Ziskind van der Velde Hengel&lt;/a&gt;&amp;lt;br&amp;gt;Mother: &lt;a&gt;Rebekka Hartog Italianer&lt;/a&gt;&amp;lt;br&amp;gt;Wife: &lt;a&gt;Betje 
+4 CONC Emanuel Blitz&lt;/a&gt;&amp;lt;br&amp;gt;Children: &lt;a&gt;Hijman Meijer van der Velde&lt;/a&gt;, &lt;a&gt;Rebekka van de Velde&lt;/a&gt;, &lt;a&gt;Aaltje Mozes van der Velde&lt;/a&gt;, &lt;a&gt;Isaa
+4 CONC c Mozes van der Velde&lt;/a&gt;, &lt;a&gt;Emanuel Vandervelde (born van der Velde)&lt;/a&gt;, &lt;a&gt;Alexander van der Velde&lt;/a&gt;, &lt;a&gt;Rebecka van der Velde&lt;/a&gt;, &lt;a&gt;Eliazer van
+4 CONC  der Velde&lt;/a&gt;, &lt;a&gt;Levie van der Velde&lt;/a&gt;&amp;lt;br&amp;gt;Sibling: &lt;a&gt;Sara Meijer van der Velde&lt;/a&gt;
+2 EVEN Record
+3 ROLE 40000:131188792:
+1 RIN MH:I502257
+1 _UID 67C050326CEE9BCA99F147A588AFFFC6
+
+0 @I501333@ INDI
+1 _UPD 7 JUL 2025 23:28:28 GMT -0500 
+1 NAME Frank /van der Velde/
+2 GIVN Frank
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 15 DEC 1943
+2 PLAC East London, Amatole, Eastern Cape, South Africa
+1 RESI
+2 ADDR
+3 ADR1 Cape Town, WC, South Africa
+1 OCCU Engineer
+1 RESI
+2 EMAIL frankvdv@@telkomsa.net
+1 DEAT Y
+2 DATE 6 JUL 2025
+2 PLAC Cape Town, South Africa
+1 FAMS @F500490@
+1 FAMS @F500567@
+1 FAMC @F500154@
+1 SOUR @S500127@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7EATNDCW3QAGIPI3CV6HDAEWR3A-1500011/frank-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500011
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Frank van der Velde&amp;lt;br&amp;gt;מגורים: Cape Town, WC, South Africa&amp;lt;br&amp;gt;לידה: 15 בדצמ’ 1943 - East London, Amatole, Eastern Cape, South Africa&amp;lt;br&amp;gt;מקצ
+4 CONC וע: Engineer&amp;lt;br&amp;gt;בן/בת זוג: &amp;lt;פרטי&amp;gt; van der Velde (לבית Azar)&amp;lt;br&amp;gt;בן/בת זוג לשעבר: &amp;lt;פרטי&amp;gt; van der Velde (לבית 
+4 CONC Webb)&amp;lt;br&amp;gt;ילדים: &amp;lt;פרטי&amp;gt; van der Velde, &amp;lt;פרטי&amp;gt; van der Velde, &amp;lt;פרטי&amp;gt; van der Velde
+2 EVEN Record
+3 ROLE 40000:192684359-GM:
+1 RIN MH:I501333
+1 _UID 672B69DB43212C85CB29A84C7C4BC5A0
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQ3YTM5MTA5ZjY5MzlhMDEyZTdkNzAzZjk4N2E1M2QzYzliMzE4ODUyZWYzNjU5ZDA2MmFiMzJhY2E3NDk0OTMmZT0xNzUzNjEwNDAw/158/944/6912/501857_7728070w6fjcc1178tpc61_A.jpg
+2 _FILESIZE 35655
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501856
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501857
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTQwOTk1NWMwMzY3MTI2NGY1MThhOGM3MmI0YzNiNjAxMDkyNzdkMDQ4YjA1MmI5MGU5NGIxMTYwODVlZDU5MGUmZT0xNzUzNjEwNDAw/158/944/6912/501856_312383mc01668x677dfc91_A.jpg
+2 _FILESIZE 478146
+2 TITL 278941742_10166163245605188_6435397700951599546_n
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 1309 320 1667 678
+2 _PHOTO_RIN MH:P501856
+
+0 @I501337@ INDI
+1 _UPD 6 JUL 2025 22:49:33 GMT -0500 
+1 NAME Nina E /Azar/
+2 GIVN Nina E
+2 SURN Azar
+2 _MARNM Van der Velde
+1 SEX F
+1 BIRT
+2 DATE 16 AUG 1955
+2 PLAC Marquard, South Africa
+1 RESI
+2 EMAIL nina@@starjobs.co.za
+1 FAMS @F500490@
+1 FAMS @F501298@
+1 FAMC @F501295@
+1 SOUR @S500103@
+2 PAGE https://www.myheritage.co.il/profile-263768141-1500017/פרטי-van-der-velde-born-azar
+2 QUAY 3
+2 DATA
+3 TEXT Van der Velde Web Site, מנוהל ע"י frank van der velde
+2 EVEN Smart Matching
+3 ROLE 1500017
+1 RIN MH:I501337
+1 _UID 672B6A2A5B2F7C0F08042F65795307C3
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTZjMDE3MjM1Y2E0ZDU3YTIzODYxOTU1OTMyYjRiNjE5N2Y3MjFjMDlmODRmMDNkZTJjYzk0MThhMzhjY2UyN2YmZT0xNzUzNjEwNDAw/158/944/6912/501849_056015w7b01pc69b6t1v4f_A.jpg
+2 _FILESIZE 1437
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501848
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501849
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWRmZDZjNjk1ZTU3NDJlNDdkMmRhZTM0NTExYzRkYmI3ZjkzMWE2ODFjYTM0MTVjMDUzY2MzYjBlZDY5MTU1MjcmZT0xNzUzNjEwNDAw/158/944/6912/501848_741796calb6601gfg7b1i4_A.jpg
+2 _FILESIZE 1440
+2 TITL unnamed
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501848
+
+0 @I501545@ INDI
+1 _UPD 9 APR 2025 02:02:57 GMT -0500 
+1 NAME Patricia Anne /Webb/
+2 GIVN Patricia Anne
+2 SURN Webb
+2 _MARNM Van der Velde
+1 SEX F
+1 BIRT
+2 DATE 27 DEC 1943
+2 PLAC Cardiff, Cardiff, Wales, United Kingdom
+1 OCCU Retired
+1 FAMS @F500567@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Patricia Anne van der Velde (born Webb)&amp;lt;br&amp;gt;Birth: Dec 27 1943 - Cardiff, Cardiff, Wales, United Kingdom&amp;lt;br&amp;gt;Occupation: Retired&amp;lt;br&amp;gt;Father: &amp;lt;a&amp;gt;Aus
+4 CONC ten Kenneth Rupert Webb&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Mother: &amp;lt;a&amp;gt;Lynda Marjorie Webb (born Trace)&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Ex-spouse: &amp;lt;a&amp;gt;&amp;lt;&amp;lt;Priv
+4 CONC ate&amp;gt;&amp;gt; van der Velde&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Children: &amp;lt;a&amp;gt;&amp;lt;&amp;lt;Private&amp;gt;&amp;gt; van der Velde&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;&amp;lt;&amp;l
+4 CONC t;Private&amp;gt;&amp;gt; van der Velde&amp;lt;/a&amp;gt;, &amp;lt;a&amp;gt;&amp;lt;&amp;lt;Private&amp;gt;&amp;gt; van der Velde&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;Sibling: &amp;lt;a&amp;gt;&amp;lt;&
+4 CONC amp;lt;Private&amp;gt;&amp;gt; Webb&amp;lt;/a&amp;gt;
+2 EVEN Record
+3 ROLE 40000:192684475:
+1 RIN MH:I501545
+1 _UID 67834D3F071F5D7417B8C125804B19DF
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTJjOTkzOTExZDFkYmU5YjM5OTQxYTIzNDk2MjdjZDNjMDhlYjdlNmZhOThjNjgxZmY4MTIzYmMwYzA5NTE0OGEmZT0xNzUzNjEwNDAw/158/944/6912/501851_5446466fy1b7a4c618lf16_A.jpg
+2 _FILESIZE 130794
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501850
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501851
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTE3YWFjY2M0Y2EyYWFkNmZjNDQ5ZGE0NmUyMjViMTNkZWM5YTY2YmM4MDQwZTk4MjZhN2RjODUyNzA5ZGRjZjQmZT0xNzUzNjEwNDAw/158/944/6912/501850_883960b6gt10d6aa6716fl_A.jpg
+2 _FILESIZE 309513
+2 TITL 464519150_8458414270903566_1952774275947621891_n
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 497 135 1280 918
+2 _PHOTO_RIN MH:P501850
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWMwNDA3YTk5MTI4ZjBjM2E3OTA0YWJlYjdlNjlhMWM4NGMzYzc5OTg0YjJjM2U3ZTI2ZTI5MjI2MDIwMWE4OWYmZT0xNzUzNjEwNDAw/158/944/6912/501852_956730bei71bafcj9617b6_A.jpg
+2 _FILESIZE 384176
+2 TITL 37595548_1731965933548467_774948538424492032_n
+2 _POSITION 1188 502 1497 879
+2 _PHOTO_RIN MH:P501852
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWI0OWRiMzU3NTJiOWUzMDBiZmVhYzkyYzRlNDQ1ZGJlNTJjMGJkNmU0MjExOTcxMmY4ZmI3M2EyMTRhMWQwMTkmZT0xNzUzNjEwNDAw/158/944/6912/501854_811933bp6ezuf1t97e6153_A.jpg
+2 _FILESIZE 384176
+2 TITL 37595548_1731965933548467_774948538424492032_n
+2 _POSITION 1188 502 1497 879
+2 _PHOTO_RIN MH:P501854
+
+0 @I502174@ INDI
+1 _UPD 25 FEB 2025 22:49:15 GMT -0500 
+1 NAME Levie /van der Velde/
+2 GIVN Levie
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 1834
+2 PLAC Wijhe
+1 DEAT Y
+2 DATE 18 MAY 1871
+2 PLAC Deventer, Overijssel, Nederland
+1 FAMC @F500766@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=2122879140&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Levie van der Velde
+לידה: 1834 - Wijhe
+פטירה: 18 במאי 1871 - Deventer, Overijssel, Nederland
+הורים: Moses Meijer van de Velde, Betje Emanuel van de Velde (לבית Blitz)
+אחים ו
+4 CONC אחיות: Heijman Meijer van de Velde, Rebekka van de Velde, Isaac Moses van der Velde, Alexander van der Velde, Aaltje Mozes van der Mesritz (לבית Velde), Rebekka Polak (לבית van der Velde)
+4 CONC , Eliazer Van Der Velde
+2 EVEN Record
+3 ROLE 40001:2122879140:
+1 RIN MH:I502174
+1 _UID 67BE9D46E12AD75BE7EC1E3EF1504890
+
+0 @I502069@ INDI
+1 _UPD 21 FEB 2025 08:06:10 GMT -0500 
+1 NAME Tamar /van der Velde/
+2 GIVN Tamar
+2 SURN van der Velde
+2 _MARNM Mozyrskiy
+1 SEX F
+1 FAMS @F500740@
+1 FAMC @F500738@
+1 RIN MH:I502069
+1 _UID 67B88851DEC1A42786A73D998E1A5337
+
+0 @I502070@ INDI
+1 _UPD 21 FEB 2025 08:06:38 GMT -0500 
+1 NAME Leib /Mozyrskiy/
+2 GIVN Leib
+2 SURN Mozyrskiy
+1 SEX M
+1 FAMS @F500740@
+1 RIN MH:I502070
+1 _UID 67B8886E938CC9F678F7CADBEF631CCC
+
+0 @I502129@ INDI
+1 _UPD 16 JUN 2025 08:40:39 GMT -0500 
+1 NAME Isaac /van der Velde/
+2 GIVN Isaac
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 28 JUL 1893
+2 PLAC Medemblik, Medemblik, North Holland, Netherlands
+1 DEAT Y
+2 DATE 5 JUN 1983
+2 PLAC Haaksbergen, Haaksbergen, Overijssel, Netherlands
+1 FAMC @F500760@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1380408228&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Isaac van der Velde
+לידה: 1893
+הורים: Emanuel van der Velde, Betje van der Velde (לבית Akker)
+אשה: Trijntje Saakje van der Velde (לבית van der Veen)
+אחים ואחיות: Rosalien
+4 CONC  van der Velde, Rosalie Lea van der Velde, Heiman Maurits van der Velde
+2 EVEN Record
+3 ROLE 40001:1380408228:
+1 RIN MH:I502129
+1 _UID 67BE9C381B97F6EF25A40AFB021A6864
+
+0 @I500292@ INDI
+1 _UPD 29 MAR 2025 13:18:59 GMT -0500 
+1 NAME Emile /van der Velde/
+2 GIVN Emile
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 20 FEB 1925
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 DEAT Y
+2 DATE 4 JUN 1943
+2 PLAC Sobibór, Włodawa County, Lublin Voivodeship, Poland
+2 AGE 18
+2 CAUS שואה
+1 FAMC @F500019@
+1 SOUR @S500155@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7IWHBHKQSXHVSFEMZDVDGV5AFXA-12501677/emile-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 12501677
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500279/emile-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT Family tree, מנוהל ע"י Shelly Galpert
+2 EVEN Smart Matching
+3 ROLE 1500279
+1 RIN MH:I500292
+1 _UID 64B130AFCE064E9B61A8DDFAFE2420A5
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTM1MzZlODcxMTVlNThlYjVjNjE3NWM2NDE2MmYwYTk1MzM1NzM4MjJmNGQ4ZTk0MzFiZjBmZTU4YjM3ZDA4M2QmZT0xNzUzNjEwNDAw/158/944/6912/500081_45920576ckb4fa1b6641xc_A.jpg
+2 _FILESIZE 68287
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500080
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500081
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQxZWJlNjEzZTFmMTlhODA4M2MwMzAxOWZkMDI5ZDU0YWEyYzhlYTU3YWZjMDRmMDc2OWNjNzYyYmU4ZjcyODEmZT0xNzUzNjEwNDAw/158/944/6912/500080_5121194czc61jp61soafj6_A.jpg
+2 _FILESIZE 87402
+2 TITL אמיל אח סבתא יוליה
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 130 657 787
+2 _PHOTO_RIN MH:P500080
+
+0 @I501603@ INDI
+1 _UPD 21 APR 2025 10:43:57 GMT -0500 
+1 NAME Jason James /van der Velde/
+2 GIVN Jason James
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 21 SEP 1976
+2 PLAC Cape Town, Cape Town, Western Cape, South Africa
+1 RESI
+2 ADDR
+3 ADR1 Clonakilty, Cork, Cork, Ireland
+1 OCCU Medical specialist
+1 FAMS @F500589@
+1 FAMC @F500567@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Jason James van der Velde&amp;lt;br&amp;gt;מגורים: Clonakilty, Cork, Cork, Ireland&amp;lt;br&amp;gt;לידה: 21 בספט’ 1976 - Cape Town, Cape Town, Western Cape, South Africa&amp;lt;br&amp
+4 CONC ;gt;מקצוע: Medical specialist&amp;lt;br&amp;gt;הורים: &amp;lt;פרטי&amp;gt; van der Velde, &amp;lt;פרטי&amp;gt; van der Velde (לבית Webb)&amp;lt;br&amp;gt;בן/בת זוג: &amp;l
+4 CONC t;פרטי&amp;gt; van der Velde (לבית Grierson)&amp;lt;br&amp;gt;אחים ואחיות: &amp;lt;פרטי&amp;gt; van der Velde, &amp;lt;פרטי&amp;gt; van der Velde
+2 EVEN Record
+3 ROLE 40000:184038469-GM:
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=184038469&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT <פרטי> van der Velde
+הורים: <פרטי> van der Velde, <פרטי> van der Velde (לבית Webb)
+בן/בת זוג: <פרטי> van der Velde (לבית Grierson)
+אחים ואחיות: <פרטי>
+4 CONC  van der Velde, <פרטי> van der Velde
+2 EVEN Record
+3 ROLE 40000:184038469:
+1 RIN MH:I501603
+1 _UID 679B710DB71EA8D20E20ACBE7DD404BE
+
+0 @I501604@ INDI
+1 _UPD 21 APR 2025 10:43:56 GMT -0500 
+1 NAME Kirsten Jane /Grierson/
+2 GIVN Kirsten Jane
+2 SURN Grierson
+2 _MARNM van der Velde
+1 SEX F
+1 BIRT
+2 DATE 9 FEB 1976
+2 PLAC Kirkcaldy, Fife, UK
+1 RESI
+2 ADDR
+3 ADR1 Clonakilty, Cork, Cork, Ireland
+1 FAMS @F500589@
+1 SOUR @S500005@
+2 PAGE https://www.myheritage.co.il/research/collection-40000/אילן-היוחסין-העולמי-של-geni?itemId=206181265&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT <פרטי> van der Velde (לבית Grierson)
+בן/בת זוג: <פרטי> van der Velde
+2 EVEN Record
+3 ROLE 40000:206181265:
+1 RIN MH:I501604
+1 _UID 679B71D9510D7D42BD60A90BE2C4A26F
+
+0 @I502202@ INDI
+1 _UPD 25 FEB 2025 22:51:39 GMT -0500 
+1 NAME Emanuel /van der Velde/
+2 GIVN Emanuel
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 1 AUG 1864
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 DEAT Y
+2 DATE 4 AUG 1864
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 FAMC @F500765@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1230471741&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Emanuel van der Velde
+לידה: 1 באוג’ 1864 - Medemblik, Noord-Holland, Netherlands
+פטירה: 4 באוג’ 1864 - Medemblik, Noord-Holland, Netherlands
+הורים: Isaac Moses van der Velde,
+4 CONC  Vrouwtje van der Velde (לבית van Essen)
+אחים ואחיות: Mozes van der Velde, Esther van der Velde, Hester Cohen Kaz (לבית van der Velde), Elisabeth Blok (לבית van der Velde), Leven
+4 CONC loos geboren kind van der Velde, Leentje Van der Frank (לבית Velde), Emanuel van der Velde, Nathan van der Velde
+2 EVEN Record
+3 ROLE 40001:1230471741:
+1 RIN MH:I502202
+1 _UID 67BE9DD422E8AAC9217C807EE2B59137
+
+0 @I500673@ INDI
+1 _UPD 21 FEB 2025 08:19:09 GMT -0500 
+1 NAME David Hartog /van der Velde/
+2 GIVN David Hartog
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 5 MAY 1904
+2 PLAC Amsterdam, NH, Netherlands
+1 DEAT Y
+2 DATE 18 SEP 1944
+2 PLAC a/b JUNYO MARU, Indische Oceaan nabij Benkoelen, Westkust Sumatra, Indonesia
+2 CAUS שואה
+1 OCCU Soldaat KNIL
+1 EVEN Spouse: Klaartje v.d.Velde-de Vries (born de Vries)
+2 TYPE MARR
+2 DATE 23 APR 1930
+2 PLAC Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands
+1 FAMS @F500688@
+1 FAMC @F500040@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT David Hartog van der Velde&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 5 במאי 1904 - Amsterdam, NH, Netherlands&amp;lt;br&amp;gt;מקצוע: Soldaat KNIL&amp;lt;br&amp;gt;נישוא
+4 CONC ין: בן/בת זוג: Klaartje de Vries - 23 באפר’ 1930 - Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;פטירה: 18 בספט’ 1944 - a/b JUNYO MARU, 
+4 CONC Indische Oceaan nabij Benkoelen, Westkust Sumatra, Indonesia&amp;lt;br&amp;gt;אב: Benjamin van der Velde&amp;lt;br&amp;gt;אם: Flora Italiaander&amp;lt;br&amp;gt;אשה: Klaartje de Vries&amp;lt;br
+4 CONC &amp;gt;ילדים: &lt;פרטי&gt; van der Velde, מרת אלישבע אברהמס (לבית ון-דר-ולדה)&amp;lt;br&amp;gt;אחים ואחיות: Jonas Jacob van der Velde, Clara Eva van der 
+4 CONC Velde, Zippora Elisabeth van der Velde, Max van der Bilt (לבית van der Velde), Mozes Jesaja van der Velde, NN van der Velde, Sara Jeannette Salomons (לבית van der Velde), Andries Salomon van d
+4 CONC er Velde
+2 EVEN Record
+3 ROLE 40000:108508875:
+1 SOUR @S500125@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6IWFCRWTZPFKTFPQVZMK6KWLIAI-1500133/david-hartog-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500133
+1 SOUR @S500163@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7VQ2ATDMKHQUZR3MU5PPT6FA4UY-1658872/david-hartog-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1658872
+1 SOUR @S500056@
+2 QUAY 4
+2 DATA
+3 TEXT David Hartog van der Velde וKlaartje de Vries&amp;lt;br&amp;gt;חתן: David Hartog van der Velde&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;גיל: 25&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;מקצוע: Boek
+4 CONC houder&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;גיל: 28&amp;lt;br&amp;gt;מקור: &lt;br&gt;מוסד: Noord-Hollands Archief&lt;br&gt;מספר מסמך: Reg.8B fol. 9v&lt;br&gt;מקום המקור: Am
+4 CONC sterdam, North Holland, Netherlands&lt;br&gt;תאריך מקור: 1930-04-23&lt;br&gt;תאריך הכרך: 1930-01-31&lt;br&gt;הערות: Provenance: Datadump ExportBS Huwelijk_20180404_114831.csv va
+4 CONC n NHA, csv2a2a
+2 EVEN Record
+3 ROLE 10562:7511007-:
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500020/david-hartog-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500020
+1 RIN MH:I500673
+1 _UID 664CACD064AA76FE309C51B5ED9AF1A9
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWU2MTE3ZjNhY2FjZGVkYTFlMmJlNDhlNzNiZTk2ZDRiMTk0ZmVhYmJkYzBiMmVhYTkwNTFkNzRlNWYzYTZmMzMmZT0xNzUzNjEwNDAw/158/944/6912/500727_185933yy85b16mkv7b8u7d_A.jpg
+2 _FILESIZE 10029
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500726
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500727
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWI1MjUwNDJhOTM2MTFkOTFiMmQ4OTA0ZWMxMDU5ODFkNmMyOGNiMDE2ODAwZGJjYmU5ZjA3NzNhMjJkZGUxZmMmZT0xNzUzNjEwNDAw/158/944/6912/500726_92241578iy1856827b0chb_A.jpg
+2 _FILESIZE 10028
+2 TITL 500117_8513571771gaay56849c44_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500726
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWRhMGZlZGUyNzU1MTAyNzE4NjFlMzQ1MjBjZDVlNDRlYWM1NjkyZTJmNGIzMzcyOThhZjYzMjFiZGVhNGNjNjcmZT0xNzUzNjEwNDAw/158/944/6912/500243_318668pipd4260a66ec1cc_A.jpg
+2 _FILESIZE 10021
+2 TITL junyo_maru_large
+2 _PHOTO_RIN MH:P500243
+
+0 @I501873@ INDI
+1 _UPD 13 MAR 2025 11:38:59 GMT -0500 
+1 NAME Klaartje /de Vries/
+2 GIVN Klaartje
+2 SURN de Vries
+1 SEX F
+1 BIRT
+2 DATE 22 NOV 1901
+2 PLAC Harlingen, Friesland, the Netherlands
+1 EVEN Spouse: David Hartog van der Velde
+2 TYPE MARR
+2 DATE 23 APR 1930
+2 PLAC Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands
+1 DEAT Y
+2 DATE 6 NOV 1979
+2 PLAC Amstelveen, Amstelveen, North Holland, Netherlands
+1 FAMS @F500688@
+1 FAMC @F500691@
+1 SOUR @S500163@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7VQ2ATDMKHQUZR3MU5PPT6FA4UY-1658874/klaartje-van-der-velde-born-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1658874
+1 SOUR @S500056@
+2 QUAY 4
+2 DATA
+3 TEXT David Hartog van der Velde וKlaartje de Vries&amp;lt;br&amp;gt;נישואין: 23 באפר’ 1930 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;חתן: David Hartog van der Velde&amp;lt;b
+4 CONC r&amp;gt;&nbsp;&nbsp;לידה: סביבות 1905 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;&nbsp;&nbsp;גיל: 25&amp;lt;br&amp;gt;&nbsp;&nbsp;מקצוע: Boekhouder&amp;lt;br&amp;gt;&n
+4 CONC bsp;&nbsp;אב: Benjamin van der Velde&amp;lt;br&amp;gt;&nbsp;&nbsp;אם: Flora Italiaander&amp;lt;br&amp;gt;כלה: Klaartje de Vries (van der Velde)&amp;lt;br&amp;gt;&nbsp;&nbsp;לידה: סביבו
+4 CONC ת 1902 - Harlingen, Friesland, Netherlands&amp;lt;br&amp;gt;&nbsp;&nbsp;גיל: 28&amp;lt;br&amp;gt;אב: Jacob de Vries&amp;lt;br&amp;gt;אם: Elize Odewald&amp;lt;br&amp;gt;מקור: &amp;lt;br&amp
+4 CONC ;gt;מוסד: Noord-Hollands Archief&amp;lt;br&amp;gt;מספר מסמך: Reg.8B fol. 9v&amp;lt;br&amp;gt;מקום המקור: Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;תאריך מקור
+4 CONC : 23 באפר’ 1930&amp;lt;br&amp;gt;תאריך הכרך: 31 בינו’ 1930&amp;lt;br&amp;gt;הערות: Provenance: Datadump ExportBS Huwelijk_20180404_114831.csv van NHA, csv2a2a
+2 EVEN Record
+3 ROLE 10562:7511007-S:
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500021/klaartje-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500021
+1 SOUR @S500170@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7MQSGFL7XPBJAXKZNEWB2QTQWOQ-8075862/klaartje-van-der-velde-%D7%9C%D7%91%D7%99%D7%AA-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 8075862
+1 RIN MH:I501873
+1 _UID 67B362187BF53F2FC8A622FD70CD0E40
+
+0 @I504021@ INDI
+1 _UPD 8 APR 2025 04:50:49 GMT -0500 
+1 NAME Isaac /van der Velde/
+2 GIVN Isaac
+2 SURN van der Velde
+1 SEX M
+1 FAMC @F501300@
+1 RIN MH:I504021
+1 _UID 67F4F16F797B97BD6CFBC3781E695F6D
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTMyZjhkYjg0ZWIwNTM4NDBjMTViNzAwNDEzZThkNmM5N2U1MDk5MjdiYTgxZDY4ODNhNTcxNWIxNmUwYWJlOWQmZT0xNzUzNjEwNDAw/158/944/6912/501653_1398005ffo3t747f61791z_A.jpg
+2 _FILESIZE 6841
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501652
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501653
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTJlZmI1MDVkNzE1MTMwZDU1ODc4NGFjNGU2N2Y3ZjVkZjY2Y2U5NDQzNDFiMjRjN2VmNzBkNGVhOTBjZWIxNWMmZT0xNzUzNjEwNDAw/158/944/6912/501652_83979378ke46f1f7k5f9f1_A.jpg
+2 _FILESIZE 6778
+2 TITL img-20220420-wa0004_medium
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 19 112 131
+2 _PHOTO_RIN MH:P501652
+
+0 @I504636@ INDI
+1 _UPD 23 APR 2025 01:36:33 GMT -0500 
+1 NAME Mietje Alexander /van der Velde/
+2 GIVN Mietje Alexander
+2 SURN van der Velde
+2 _MARNM Van der Woude
+1 SEX F
+1 BIRT
+2 DATE ABT 1805
+2 PLAC Harlingen, Friesland, Netherlands
+1 FAMC @F501467@
+1 SOUR @S500008@
+2 QUAY 4
+2 DATA
+3 TEXT Mietje Alexander Van der Woude (לבית van der Velde)&amp;lt;br&amp;gt;המוכר גם בשם: Wilhelmina Mietje Alexander van der Velde&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 
+4 CONC סביבות 1805 - Harlingen, Friesland, Netherlands&amp;lt;br&amp;gt;נישואין: 8 ביולי 1827 - Bolsward, Friesland, Niederlande&amp;lt;br&amp;gt;הורים: Alexander Marcus Meyer van der 
+4 CONC Velde, Fijtje Jacob Polak van der Velde (לבית Levie)&amp;lt;br&amp;gt;בעל: Jacob Benedictus Van der Woude&amp;lt;br&amp;gt;ילדים: Benjamin Van der Woude, Feikje van Gelder (לבית van de
+4 CONC r Woude), Alexander van der Woude, Sibilla Betje van den Berg (לבית Van der Woude), Levi Levie Louis van der Woude, Mozes Van der Woude&amp;lt;br&amp;gt;אחים ואחיות: Louis Alexander van 
+4 CONC der Velde, Sara Alexanders Schönberg (לבית Van Der Velde)
+2 EVEN Record
+3 ROLE 40001:429918839:
+1 RIN MH:I504636
+1 _UID 68088A6EB5BC9E5D29F3588146FD0B91
+
+0 @I500671@ INDI
+1 _UPD 21 FEB 2025 08:19:31 GMT -0500 
+1 NAME Sara Jeannette /van der Velde/
+2 GIVN Sara Jeannette
+2 SURN van der Velde
+2 _MARNM Salomons
+1 SEX F
+1 BIRT
+2 DATE 9 DEC 1899
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+1 DEAT Y
+2 DATE 16 JUL 1943
+2 PLAC Sobibór, Włodawa County, Lublin Voivodeship, Poland
+2 CAUS שואה
+1 EVEN Spouse: Simon Salomons
+2 TYPE MARR
+2 DATE 29 APR 1931
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 OCCU Directrice rusthuis
+1 BURI
+2 PLAC Sobibor Death Camp, Lublin, Poland
+1 FAMS @F500742@
+1 FAMC @F500040@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Sara Jeannette Salomons (לבית van der Velde)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 9 בדצמ’ 1899 - Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;נישוא
+4 CONC ין: בן/בת זוג: Simon Salomons - 29 באפר’ 1931 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;פטירה: 16 ביולי 1943 - Sobibór, Włodawa Count
+4 CONC y, Lublin Voivodeship, Poland&amp;lt;br&amp;gt;אב: Benjamin van der Velde&amp;lt;br&amp;gt;אם: Flora Italiaander&amp;lt;br&amp;gt;בעל: Simon Salomons&amp;lt;br&amp;gt;בן/בת: Benjamin Salomo
+4 CONC ns&amp;lt;br&amp;gt;אחים ואחיות: Jonas Jacob van der Velde, Clara Eva van der Velde, Zippora Elisabeth van der Velde, Max van der Bilt (לבית van der Velde), Mozes Jesaja van der Velde, N
+4 CONC N van der Velde, Andries Salomon van der Velde, David Hartog van der Velde
+2 EVEN Record
+3 ROLE 40000:195245109:
+1 SOUR @S500089@
+2 QUAY 3
+2 DATA
+3 DATE 4 AUG 2024
+3 TEXT תמונה אישית של Sara Jeannette van der Velde נוספה באמצעות Photo Discovery™
+2 EVEN Discovery
+1 SOUR @S500089@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500036/sara-jeannette-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500036
+1 SOUR @S500125@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6IWFCRWTZPFKTFPQVZMK6KWLIAI-1500131/sara-jeannette-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500131
+1 RIN MH:I500671
+1 _UID 664CACCFF27ED6FC309C51B5ED9AF1A9
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQ0YTgzZjlkMjk0MGI2M2M1ZTIwYTY5MjE2MjgxMDY0YzkyYzhkMWM0YjU2YmJhMzYwZDMzNTg3NzdjNmJhMTgmZT0xNzUzNjEwNDAw/158/944/6912/500361_278265f85686m09u617ah4_A.jpg
+2 _FILESIZE 83835
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500358
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500361
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTc5MTkzZjg5MmFiN2RiMjg1YTVmMDlmYmY1ODExOTEwN2I5YWY4ODllZmYyMTA5NmQ2ZDgzMjA5NDkyMGMwMDUmZT0xNzUzNjEwNDAw/158/944/6912/500358_876518t6f60j69yi734l1a_A.jpg
+2 _FILESIZE 83960
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500358
+
+0 @I502080@ INDI
+1 _UPD 21 FEB 2025 08:19:03 GMT -0500 
+1 NAME Simon /Salomons de Paauw/
+2 GIVN Simon
+2 SURN Salomons de Paauw
+1 SEX M
+1 BIRT
+2 DATE 17 APR 1892
+2 PLAC Amsterdam, NL
+1 OCCU Boekhouder
+1 DEAT Y
+2 DATE 16 JUL 1943
+2 PLAC KL Sobibor Poland
+2 CAUS שואה
+1 BURI
+2 PLAC Sobibor Death Camp, Lublin, Poland
+1 FAMS @F500742@
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500237/simon-salomons-de-paauw
+2 QUAY 3
+2 DATA
+3 TEXT אדם התווסף באמצעות אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500237
+1 RIN MH:I502080
+1 _UID 67B88B55B9A15B0B4BBF380D2EB83E7A
+
+0 @I500374@ INDI
+1 _UPD 28 MAY 2025 02:57:27 GMT -0500 
+1 NAME Bernard /van der Velde/
+2 GIVN Bernard
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 25 JAN 1911
+2 PLAC Utrecht, Utrecht, UT, Netherlands
+1 DEAT Y
+2 DATE 26 MAY 1997
+2 PLAC South Africa
+1 FAMS @F500154@
+1 FAMC @F501079@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Bernard van der Velde&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 25 בינו’ 1911 - Utrecht, Utrecht, UT, Netherlands&amp;lt;br&amp;gt;אב: Jonas Jacob van der Velde&amp;lt;br&amp;
+4 CONC gt;אם: Frouke Frank
+2 EVEN Record
+3 ROLE 40000:679592242:
+1 SOUR @S500127@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7EATNDCW3QAGIPI3CV6HDAEWR3A-1500093/bernard-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500093
+1 RIN MH:I500374
+1 _UID 6538A41532B71DC962E4E4AAE46689A9
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTE2NDYxODEzYmUwMWNiNjIyM2Y1YjhlNDNiNjMzYjgwNTE5ZmExYTQ3NmI4ZTkyZmNmOTBkNDdhMDQwOGZhN2UmZT0xNzUzNjEwNDAw/158/944/6912/501859_3917837713iw1f6171ae06_A.jpg
+2 _FILESIZE 74951
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501858
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501859
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWI4YTEyYTA2ODA1NDkzZGVkMTZiZjE4OTM3YTNiNjA1NTMxZDJkMTdmNGFjY2Y5MmM1N2YwYTg3MGE2NGYyOGQmZT0xNzUzNjEwNDAw/158/944/6912/501858_2937879nef01569a796f31_A.jpg
+2 _FILESIZE 709331
+2 TITL 466509479_10234732187394391_5347569500416359730_n
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 1201 519 1693 1011
+2 _PHOTO_RIN MH:P501858
+
+0 @I500382@ INDI
+1 _UPD 28 MAY 2025 02:56:21 GMT -0500 
+1 NAME Eleanor Alice /Waterston/
+2 GIVN Eleanor Alice
+2 SURN Waterston
+2 _MARNM van der Velde
+1 SEX F
+1 BIRT
+2 DATE 25 JUL 1912
+2 PLAC South Africa
+1 DEAT Y
+2 DATE 17 JUL 2001
+2 PLAC Johannesburg, Gauteng, South Africa
+1 FAMS @F500154@
+1 RIN MH:I500382
+1 _UID 653A11AC67C96512CCA0C952D776E88D
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTlkY2ExZTAxMmZjYThiYzBjZDFiOWM5ODJhNjY2Y2E3YmMyNTM1YWZiOTZlM2VhMjNmYjdhMDRmNjM0MjQ3NzkmZT0xNzUzNjEwNDAw/158/944/6912/502560_8349990z615d58uu31ac68_A.jpg
+2 _FILESIZE 78560
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501858
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502560
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWI4YTEyYTA2ODA1NDkzZGVkMTZiZjE4OTM3YTNiNjA1NTMxZDJkMTdmNGFjY2Y5MmM1N2YwYTg3MGE2NGYyOGQmZT0xNzUzNjEwNDAw/158/944/6912/501858_2937879nef01569a796f31_A.jpg
+2 _FILESIZE 709331
+2 TITL 466509479_10234732187394391_5347569500416359730_n
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 1 581 493 1073
+2 _PHOTO_RIN MH:P501858
+
+0 @I502065@ INDI
+1 _UPD 8 APR 2025 04:51:15 GMT -0500 
+1 NAME Sal Joseph /van der Velde/
+2 GIVN Sal Joseph
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 14 JUL 1993
+1 FAMS @F501300@
+1 FAMC @F500738@
+1 RIN MH:I502065
+1 _UID 67B882515C3E6E885431FFFEEB63F10A
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWQ3NmNkMzMwYzQ4ZmY0MjA0M2I1ODZlMGNhMTc4OGMzYjQ3ODI1MGM5NjI3MTQ5NDYzMzZkOGNkNjBjNTVkZjImZT0xNzUzNjEwNDAw/158/944/6912/501655_324263qy1o9fj4l375f116_A.jpg
+2 _FILESIZE 3110
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501654
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501655
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTNhNTgwOTM0OWQ3NDU0NjNiYzc1NWEyOGY5M2FiOTViYTE0NTAxNWVlNDhhMTVhZmFlNTI4MWRlMzQ4MzQ3ZDgmZT0xNzUzNjEwNDAw/158/944/6912/501654_604955196g14p12f7pv1xf_A.jpg
+2 _FILESIZE 3540
+2 TITL whatsapp_imag_2023-01-21_at_20_medium
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 32 85 117
+2 _PHOTO_RIN MH:P501654
+
+0 @I504019@ INDI
+1 _UPD 8 APR 2025 04:49:05 GMT -0500 
+1 NAME Molly Sarah /Mavorah/
+2 GIVN Molly Sarah
+2 SURN Mavorah
+1 SEX F
+1 BIRT
+2 DATE 11 OCT 1997
+1 FAMS @F501300@
+1 RIN MH:I504019
+1 _UID 67F4F106E2F0EF8270AB5DD52AE25E6F
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTNiZGRhZTYwNjUyOTNjNTdkMjYzNDQ4NGVkOWVkMTMwMjNhOGQ1ZmY2YzRkZDJhZjcwMzAzZGUxZDViOTc4MWYmZT0xNzUzNjEwNDAw/158/944/6912/501649_162092171fbz1fp5146rw7_A.jpg
+2 _FILESIZE 4609
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501648
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501649
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTcxMWYwZDQxYTFjN2ExMDcxNjlhOTIyZTI1YjllNjhiZjYxMWFmMTgzZjdhZmViMGNmZjIxYmYyM2RkZTVmNGMmZT0xNzUzNjEwNDAw/158/944/6912/501648_274268161f1xc3874117fi_A.jpg
+2 _FILESIZE 3814
+2 TITL whatsapp_image_2023-01-21_at_20_medium
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 0 30 88 118
+2 _PHOTO_RIN MH:P501648
+
+0 @I502048@ INDI
+1 _UPD 20 FEB 2025 06:39:32 GMT -0500 
+1 NAME Isaac Moses /van der Velde/
+2 GIVN Isaac Moses
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE ABT 1822
+2 PLAC Wijhe, Olst-Wijhe, Overijssel, The Netherlands
+1 DEAT Y
+2 DATE 15 OCT 1866
+2 PLAC Medemblik, Noord-Holland, The Netherlands
+1 BURI
+2 PLAC Joodse Begraafplaats Medemblik  , adres: Oude haven - Bangert, Noord-Holland, The Netherlands
+1 FAMC @F500735@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1199685501&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Isaac Moses van der Velde
+לידה: סביבות 1822 - Wijhe, Overijssel, Netherlands
+פטירה: 15 באוק’ 1866 - Medemblik, Noord-Holland, Netherlands
+הורים: Moses Meijer van de Velde, Be
+4 CONC tje Emanuel van de Velde (לבית Blitz)
+אשה: Vrouwtje van der Velde (לבית van Essen)
+ילדים: Mozes van der Velde, Esther van der Velde, Hester Cohen Kaz (לבית van der Velde), Elisabet
+4 CONC h Blok (לבית van der Velde), Levenloos geboren kind van der Velde, Leentje Van der Frank (לבית Velde), Emanuel van der Velde, Emanuel van der Velde, Nathan van der Velde
+אחים ואחיות:
+4 CONC  Heijman Meijer van de Velde, Rebekka van de Velde, Alexander van der Velde, Aaltje Mozes van der Mesritz (לבית Velde), Rebekka Polak (לבית van der Velde), Levie van der Velde, Eliazer Van Der
+4 CONC  Velde
+2 EVEN Record
+3 ROLE 40001:1199685501:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Isaac Mozes van der Velde&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;כינוי: Moses?&amp;lt;br&amp;gt;לידה: 1822 - Wijhe, Olst-Wijhe, Overijssel, The Netherlands&amp;lt;br&amp;gt;נישו
+4 CONC אין: בן/בת זוג: Vrouwtje van Essen - 11 במרץ 1849 - Medemblik, Medemblik, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;פטירה: 15 באוק’ 1866 - Medemblik, Noord-Holland, The 
+4 CONC Netherlands&amp;lt;br&amp;gt;קבורה: Joodse Begraafplaats Medemblik  , adres: Oude haven - Bangert, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;אב: Mozes Meijer van der Velde&amp;lt;br&amp;g
+4 CONC t;אם: Betje Emanuel Blitz&amp;lt;br&amp;gt;אשה: Vrouwtje van Essen&amp;lt;br&amp;gt;ילדים: Mozes van der Velde, Nathan van der Velde, Esther van der Velde, Stillborn van der Velde, Hester va
+4 CONC n der Velde, Elisabeth van der Velde, Leentje van der Velde, Emanuel van der Velde, Emanuel van der Velde&amp;lt;br&amp;gt;אחים ואחיות: Hijman Meijer van der Velde, Rebekka van de Velde, Aal
+4 CONC tje Mozes van der Velde, Emanuel Vandervelde (לבית van der Velde), Alexander van der Velde, Rebecka van der Velde, Eliazer van der Velde, Levie van der Velde
+2 EVEN Record
+3 ROLE 40000:194009203:
+1 RIN MH:I502048
+1 _UID 67B721F87F0AD294F7F327A788267158
+
+0 @I501878@ INDI
+1 _UPD 17 FEB 2025 10:29:54 GMT -0500 
+1 NAME Davied Zwi /van der Velde/
+2 GIVN Davied Zwi
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 20 MAY 1964
+1 FAMS @F500738@
+1 FAMC @F500690@
+1 RIN MH:I501878
+1 _UID 67B364023114091779B18B6A40A8E93C
+
+0 @I502064@ INDI
+1 _UPD 28 FEB 2025 05:53:49 GMT -0500 
+1 NAME Channi /Root/
+2 GIVN Channi
+2 SURN Root
+2 _MARNM Mizrahi
+1 SEX F
+1 FAMS @F500738@
+1 RIN MH:I502064
+1 _UID 67B882278199E388C43FE1FDEF1E6AB3
+
+0 @I502163@ INDI
+1 _UPD 25 FEB 2025 22:48:25 GMT -0500 
+1 NAME Levenloos geboren kind /van der Velde/
+2 GIVN Levenloos geboren kind
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 2 MAR 1861
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 DEAT Y
+2 DATE 2 MAR 1861
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 FAMC @F500765@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1273615343&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Levenloos geboren kind van der Velde
+לידה: 2 במרץ 1861 - Medemblik, Noord-Holland, Netherlands
+פטירה: 2 במרץ 1861 - Medemblik, Noord-Holland, Netherlands
+הורים: Isaac Moses van d
+4 CONC er Velde, Vrouwtje van der Velde (לבית van Essen)
+אחים ואחיות: Mozes van der Velde, Esther van der Velde, Hester Cohen Kaz (לבית van der Velde), Elisabeth Blok (לבית van der Veld
+4 CONC e), Leentje Van der Frank (לבית Velde), Emanuel van der Velde, Emanuel van der Velde, Nathan van der Velde
+2 EVEN Record
+3 ROLE 40001:1273615343:
+1 RIN MH:I502163
+1 _UID 67BE9D14F3EC24FC28C61FA532365037
+
+0 @I500045@ INDI
+1 _UPD 21 FEB 2025 08:19:08 GMT -0500 
+1 NAME Mozes Jesaja /van der Velde/
+2 GIVN Mozes Jesaja
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 30 MAR 1895
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+2 NOTE Spouse: Barend Meiboom
+1 DEAT Y
+2 DATE 17 JUL 1943
+2 PLAC Sobibór, Włodawa County, Lublin Voivodeship, Poland
+2 CAUS שואה
+1 EVEN Spouse: Maria de Vries
+2 TYPE MARR
+2 DATE 12 MAR 1919
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 BURI
+2 PLAC Sobibor Death Camp, Lublin, Poland
+1 OCCU boekhouder
+1 FAMS @F500019@
+1 FAMC @F500040@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Mozes Jesaja van der Velde&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 30 במרץ 1895 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;נישוא
+4 CONC ן: בן/בת זוג: Maria de Vries - 12 במרץ 1919 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;פטירה: 17 ביולי 1943 - Sobibór, Włodawa County, L
+4 CONC ublin Voivodeship, Poland&amp;lt;br&amp;gt;אב: Benjamin van der Velde&amp;lt;br&amp;gt;אם: Flora Italiaander&amp;lt;br&amp;gt;אשה: Maria de Vries&amp;lt;br&amp;gt;ילדים: Hans van der Velde
+4 CONC , &lt;פרטי&gt; van der Velde, Emile van der Velde&amp;lt;br&amp;gt;אחים ואחיות: Jonas Jacob van der Velde, Clara Eva van der Velde, Zippora Elisabeth van der Velde, Max van der Bilt (ל
+4 CONC ית van der Velde), NN van der Velde, Sara Jeannette Salomons (לבית van der Velde), Andries Salomon van der Velde, David Hartog van der Velde
+2 EVEN Record
+3 ROLE 40000:195244855:
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500034/mozes-jesaja-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500034
+1 RIN MH:I500045
+1 _UID 645E225FC300D497D21921288C7B221C
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTg0NTFmYjJlYzVjMWMzYThlMzMwMjYyODZiNjQ2ODQxYjIwZWU3MGE5Y2FhZmIxZGY1MWMwZjNhZThhZjg2YmQmZT0xNzUzNjEwNDAw/158/944/6912/500578_729631c42kg1630nl87z1g_A.jpg
+2 _FILESIZE 40753
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500577
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500578
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTlmZmI2NDlmMWNiNzBiMTY2ZWZhN2M2ZmMxY2M5MzIyMTExOWQ5ZDNlOThhNDk5ZTlmYzQ0NWRiZTYwNjBkNWImZT0xNzUzNjEwNDAw/158/944/6912/500577_8317252c43v6z10878w2c1_A.jpg
+2 _FILESIZE 68578
+2 TITL thumbnail_image
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 411 0 911 500
+2 _PHOTO_RIN MH:P500577
+
+0 @I500089@ INDI
+1 _UPD 27 FEB 2025 06:37:18 GMT -0500 
+1 NAME Maria /de Vries/
+2 GIVN Maria
+2 SURN de Vries
+2 _MARNM Van der velde
+1 SEX F
+1 BIRT
+2 DATE 7 AUG 1896
+2 PLAC Harlingen, Harlingen, Friesland, The Netherlands
+1 DEAT Y
+2 DATE 17 JUL 1943
+2 PLAC Sobibór, Włodawa County, Lublin Voivodeship, Poland
+2 CAUS שואה
+1 EVEN Spouse: Mozes Jesaja van der Velde
+2 TYPE MARR
+2 DATE 12 MAR 1919
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 FAMS @F500019@
+1 FAMC @F500035@
+1 SOUR @S500060@
+2 QUAY 4
+2 DATA
+3 TEXT Maria DE VRIES&amp;lt;br&amp;gt;לידה: 7 באוג’ 1896&amp;lt;br&amp;gt;פטירה: 17 ביולי 1943&amp;lt;br&amp;gt;אב: Benjamin DE VRIES&amp;lt;br&amp;gt;אם: Betje BEHR&amp;lt;br&amp;gt
+4 CONC ;אחים ואחיות: Heiman Izaäc DE VRIES, Aaron DE VRIES, Jacob DE VRIES
+2 EVEN Record
+3 ROLE 14100:1607160356:
+1 SOUR @S500183@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6YQUCYFSYMMGUI2BVDFAEEULVYY-4504251/maria-de-vries
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 4504251
+1 RIN MH:I500089
+1 _UID 64636FC0193A575231232496AE69C46F
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWU5YzNlY2YzNDg0YWM5ZmIwNzVjM2MxMjZmMTA2ZTQzMTI5MWFiODYxZGYwNjkwMDVmZTVlMmFhZjI4NjQyZGEmZT0xNzUzNjEwNDAw/158/944/6912/500085_381529cv6t61464qb15bcz_A.jpg
+2 _FILESIZE 79179
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500084
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500085
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWFmNzc0YTJkYTc5NTQ1Y2NlMDdlOGY3MjMyZWFkZTA3ODM1NTQwODRmZDAzOTViYzYzNzUwYzMxYTYzYmY4ZTgmZT0xNzUzNjEwNDAw/158/944/6912/500084_498149x5c6a64qn3bes116_A.jpg
+2 _FILESIZE 107479
+2 TITL תמונה1אמא סבתא יוליה
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _POSITION 1 147 644 790
+2 _PHOTO_RIN MH:P500084
+
+0 @I502162@ INDI
+1 _UPD 25 FEB 2025 22:48:24 GMT -0500 
+1 NAME Elisabeth /van der Velde/
+2 GIVN Elisabeth
+2 SURN van der Velde
+1 SEX F
+1 BIRT
+2 DATE 1858
+2 PLAC Medemblik, Noord-Holland, Nederland
+1 DEAT Y
+2 DATE 31 MAR 1940
+2 PLAC Gouda, Zuid-Holland, Nederland
+1 FAMC @F500765@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=2536101676&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Elisabeth Blok (לבית van der Velde)
+לידה: 1858 - Medemblik, Noord-Holland, Nederland
+פטירה: 31 במרץ 1940 - Gouda, Zuid-Holland, Nederland
+הורים: Isaac Moses van der Velde, Vrouwt
+4 CONC je van der Velde (לבית van Essen)
+בעל: Izaäk Blok
+ילדים: David Hartog Blok, Engelina Alida Witmond (לבית Blok), Vrouwtje Magdalena Blok
+אחים ואחיות: Mozes van der Velde, Est
+4 CONC her van der Velde, Hester Cohen Kaz (לבית van der Velde), Levenloos geboren kind van der Velde, Leentje Van der Frank (לבית Velde), Emanuel van der Velde, Emanuel van der Velde, Nathan van der
+4 CONC  Velde
+2 EVEN Record
+3 ROLE 40001:2536101676:
+1 RIN MH:I502162
+1 _UID 67BE9D14C6BCD4FB28C61FA532365037
+
+0 @I502182@ INDI
+1 _UPD 25 FEB 2025 22:49:52 GMT -0500 
+1 NAME Rebekka /van der Velde/
+2 GIVN Rebekka
+2 SURN van der Velde
+1 SEX F
+1 BIRT
+2 DATE 4 APR 1828
+2 PLAC Wijhe, Overijssel, Nederland
+1 DEAT Y
+2 DATE 16 NOV 1902
+2 PLAC Groningen, Groningen, Netherlands
+1 FAMC @F500766@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1199689215&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Rebekka Polak (לבית van der Velde)
+לידה: 4 באפר’ 1828 - Wijhe, Overijssel, Nederland
+פטירה: 16 בנוב’ 1902 - Groningen, Groningen, Netherlands
+הורים: Moses Meijer van de V
+4 CONC elde, Betje Emanuel van de Velde (לבית Blitz)
+בעל: Benjamin Levie Polak
+ילדים: Levi Polak, Annabet Polak, Saartje Polak, Anna Brest (לבית Polak), Mozes Polak, Mozes Polak
+אחים וא
+4 CONC חיות: Heijman Meijer van de Velde, Rebekka van de Velde, Isaac Moses van der Velde, Alexander van der Velde, Aaltje Mozes van der Mesritz (לבית Velde), Levie van der Velde, Eliazer Van Der Vel
+4 CONC de
+2 EVEN Record
+3 ROLE 40001:1199689215:
+1 RIN MH:I502182
+1 _UID 67BE9D6DABBF183B1722297ECEFFD4A7
+
+0 @I502130@ INDI
+1 _UPD 25 FEB 2025 22:44:42 GMT -0500 
+1 NAME Heiman Maurits /van der Velde/
+2 GIVN Heiman Maurits
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 14 MAR 1901
+2 PLAC Medemblik, Noord-Holland, Netherlands
+1 DEAT Y
+2 DATE 2 FEB 1949
+2 PLAC Apeldoorn, Gelderland, Nederland
+1 FAMC @F500760@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=763108503&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Heiman Maurits van der Velde
+לידה: 14 במרץ 1901 -  Medemblik, Noord-Holland, Netherlands
+פטירה: 2 בפבר’ 1949 - Apeldoorn, Gelderland, Nederland
+הורים: Emanuel van der Velde, Be
+4 CONC tje van der Velde (לבית Akker)
+אשה: Rebekka van der Velde (לבית van der Kaars)
+אחים ואחיות: Rosalien van der Velde, Isaac van der Velde, Rosalie Lea van der Velde
+2 EVEN Record
+3 ROLE 40001:763108503:
+1 RIN MH:I502130
+1 _UID 67BE9C384B3106F025A40AFB021A6864
+
+0 @I502054@ INDI
+1 _UPD 22 APR 2025 23:27:25 GMT -0500 
+1 NAME Marcus / Meijer Alexander / Ziskind /van der Velde/
+2 GIVN Marcus / Meijer Alexander / Ziskind
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 1736
+2 PLAC Engen, Freiburg, Baden-Württemberg, Germany
+1 DEAT Y
+2 DATE 4 NOV 1806
+2 PLAC Meppel, Meppel, Drenthe, The Netherlands
+1 BURI
+2 DATE 4 NOV 1806
+2 PLAC Meppel, Noord-Holland, Netherlands
+1 FAMS @F500736@
+1 FAMC @F501454@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Marcus / Meijer Alexander / Ziskind van der Velde Hengel&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: בין 1736 ו-1740 - Engen, Freiburg, Baden-Württemberg, Germany&amp;lt;br&amp;gt;
+4 CONC נישואין: בן/בת זוג: Rebekka Hartog Italianer - 1772 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;פטירה: 4 בנוב’ 1806 - Meppel, Meppel,
+4 CONC  Drenthe, The Netherlands&amp;lt;br&amp;gt;אב: Alexander Benedictus&amp;lt;br&amp;gt;נשים: Ester Marcus / Mordechai van Norden, Rebekka Hartog Italianer&amp;lt;br&amp;gt;ילדים: Alexander va
+4 CONC n der Velde, Sara Meijer van der Velde, Mozes Meijer van der Velde
+2 EVEN Record
+3 ROLE 40000:196201794:
+1 SOUR @S500172@
+2 QUAY 3
+2 DATA
+3 DATE 8 APR 2025
+3 TEXT תמונה אישית של Marcus Meijer Alexander Ziskind yy van der Velde נוספה באמצעות Photo Discovery™
+2 EVEN Discovery
+1 SOUR @S500172@
+2 PAGE https://www.myheritage.co.il/profile-OYYV734H6G5GHPFPVUZ5UDGF2S4UT4Y-19551575/marcus-meijer-alexander-ziskind-yy-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT Joelle Meyer Web Site, מנוהל ע"י Joelle Meyer
+2 EVEN Smart Matching
+3 ROLE 19551575
+1 SOUR @S500008@
+2 QUAY 4
+2 DATA
+3 TEXT Meijer van der Velde&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;אשה: Rebecca van der Velde (לבית Italiaander)&amp;lt;br&amp;gt;בן: Alexander Marcus Meyer van der Velde
+2 EVEN Record
+3 ROLE 40001:1977044824:
+1 RIN MH:I502054
+1 _UID 67B72280D1A09972AB950B1BD372503B
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWVhOTM5NTA0MTBkMTQzOWI5Yzk0NTk3MTVhMWJiN2M1YjkyNTdkYjY5ZmYwYTMxNjVjMTZhMTBiZTQ2YTdiZTAmZT0xNzUzNjEwNDAw/158/944/6912/502022_8094508c6h278670d1866y_A.jpg
+2 _FILESIZE 4458
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P502021
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P502022
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTI0YzVjZmRiOTgzNGNkMTk2NzQ0ODNmZTExNDE1ZTM4MzJjMTBhNmM5ZDc3MmM5NTQwMDZkZWM3MTg2MjQ3Y2UmZT0xNzUzNjEwNDAw/158/944/6912/502021_445833c2el6c8718ar860v_A.jpg
+2 _FILESIZE 4458
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P502021
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWY0NzU5ZjQxMTZhYmU0Y2JiNjEzNGE1YmNjYzRkMmRhNDdlYmRiNTM2ZjU0MWM2NWFjZDllNWFkNzkwYjNlNGYmZT0xNzUzNjEwNDAw/158/944/6912/501760_6638429bwf716hqf5i14bm_A.jpg
+2 _FILESIZE 18876
+2 TITL allemagne
+2 _PHOTO_RIN MH:P501760
+
+0 @I502055@ INDI
+1 _UPD 23 APR 2025 01:36:32 GMT -0500 
+1 NAME Rebekka Hartog /Italiaander/
+2 GIVN Rebekka Hartog
+2 SURN Italiaander
+2 _MARNM van der Velde
+1 SEX F
+1 BIRT
+2 DATE 1742
+2 PLAC Amsterdam, Noord-Holland, Netherlands
+1 DEAT Y
+2 DATE 19 DEC 1817
+2 PLAC Meppel, Drenthe, Netherlands
+1 OCCU in the year 1812 Wasvrouw
+1 FAMS @F500736@
+1 FAMC @F501455@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Rebekka Hartog Italianer&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;כינוי: Rebecca&amp;lt;br&amp;gt;לידה: 1742 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands&amp
+4 CONC ;lt;br&amp;gt;נישואין: בן/בת זוג: Marcus / Meijer Alexander / Ziskind van der Velde Hengel - 1772 - Amsterdam, Government of Amsterdam, North Holland, The Netherlands&amp;lt;br&amp;gt;פ
+4 CONC טירה: 19 בדצמ’ 1817 - Meppel, Meppel, Drenthe, The Netherlands&amp;lt;br&amp;gt;אב: Hartog / Hirsch Levie de Jong Italianer&amp;lt;br&amp;gt;אם: Anna Channa Annegien Leendert Leizer Koes
+4 CONC sier&amp;lt;br&amp;gt;בעל: Marcus / Meijer Alexander / Ziskind van der Velde Hengel&amp;lt;br&amp;gt;ילדים: Sara Meijer van der Velde, Mozes Meijer van der Velde&amp;lt;br&amp;gt;אחים וא
+4 CONC חיות: Levie Hartog / Zwi Hirsch Italianer, Gerrit / Getz Hartog / Hirsch Italianer, Nathan Hartog / Hirsch Italianer, Marcus Meijer Hartog / Hirsch Italiaander Italianer, Clara / Gelle Hartog / Zw
+4 CONC i Hirsch Italianer, Eliazer / Leizer Hartog / Hirsch Italianer
+2 EVEN Record
+3 ROLE 40000:196201755:
+1 SOUR @S500045@
+2 PAGE https://www.myheritage.co.il/research/collection-10838/genealogieonline-family-tree-index?itemId=17175598&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Rebekka Hartog Italianer
+לידה: 1742 - Amsterdam, Noord-Holland, Netherlands
+פטירה: 19 בדצמ’ 1817 - Meppel, Drenthe, Netherlands
+הורים: Hartog Hirsch Levie de Jong Italianer, Anna L
+4 CONC eendert Leizer
+אחים ואחיות: Gerrit Hartog Hirsch Italianer, Elias Leizer Hartog Italianer, Nathan Hartog Hirsch Italianer, Marcus Meyer Hartog Hirsch Italianer, Clara Gelle Hartog Zwi-Hirsch
+4 CONC  Italianer
+בעל: Marcus Meyer Alexander Ziskind van der Velde Hengel
+ילדים: Alexander Meijer van der Velde, Sara Meijer van der Velde, Mozes Meijer van der Velde
+2 EVEN Record
+3 ROLE 10838:17175598:
+1 SOUR @S500008@
+2 QUAY 4
+2 DATA
+3 TEXT Rebecca van der Velde (לבית Italiaander)&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;בעל: Meijer van der Velde&amp;lt;br&amp;gt;בן: Alexander Marcus Meyer van der Velde
+2 EVEN Record
+3 ROLE 40001:1977044843:
+1 RIN MH:I502055
+1 _UID 67B722811C1CC974AB950B1BD372503B
+
+0 @I500294@ INDI
+1 _UPD 21 FEB 2025 08:19:06 GMT -0500 
+1 NAME Jonas Jacob /van der Velde/
+2 GIVN Jonas Jacob
+2 SURN van der Velde
+1 SEX M
+1 DEAT Y
+2 DATE 26 APR 1980
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 BIRT
+2 DATE 27 DEC 1887
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 OCCU direkteur Cooperatie (1918) ; advocaat-procureur
+1 EVEN Spouse: Rosalie Lea van der Velde
+2 TYPE MARR
+2 DATE 19 JUN 1918
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 FAMS @F500151@
+1 FAMS @F501079@
+1 FAMC @F500040@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Jonas Jacob van der Velde&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 27 בדצמ’ 1887 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;מקצוע: d
+4 CONC irekteur Cooperatie (1918) ; advocaat-procureur&amp;lt;br&amp;gt;נישואין: בן/בת זוג: Rosalie Lea van der Velde - 19 ביוני 1918 - Amsterdam, Government of Amsterdam, North Holland, N
+4 CONC etherlands&amp;lt;br&amp;gt;פטירה: 26 באפר’ 1980 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;אב: Benjamin van der Velde&amp;lt;br&amp;gt;אם: Flora 
+4 CONC Italiaander&amp;lt;br&amp;gt;נשים: Frouke Frank, Rosalie Lea van der Velde&amp;lt;br&amp;gt;ילדים: Bernard van der Velde, Betty van der Velde, Rita Flora van der Velde, Emmy van der Velde&amp
+4 CONC ;lt;br&amp;gt;אחים ואחיות: Clara Eva van der Velde, Zippora Elisabeth van der Velde, Max van der Bilt (לבית van der Velde), Mozes Jesaja van der Velde, NN van der Velde, Sara Jeannette S
+4 CONC alomons (לבית van der Velde), Andries Salomon van der Velde, David Hartog van der Velde
+2 EVEN Record
+3 ROLE 40000:195244650:
+1 SOUR @S500125@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6IWFCRWTZPFKTFPQVZMK6KWLIAI-1500126/jonas-jacob-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500126
+1 SOUR @S500127@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7EATNDCW3QAGIPI3CV6HDAEWR3A-1500097/johannes-jacoba-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500097
+1 RIN MH:I500294
+1 _UID 64B3C6FFD7D3A8C966463FBFB486959E
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWViMmY3M2U3ZGI0Y2NkOTIyYzgzZDlkZjk3MDY0YTAzZTBhNzE1OTk4N2Y1MTVjMTAwOGM5NmFlNzllZDNjZDMmZT0xNzUzNjEwNDAw/158/944/6912/500725_042542x7414b5b85d67a8b_A.jpg
+2 _FILESIZE 15194
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P500724
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P500725
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWY3NGY1ODUyMzkxMWNlMzYxZmJlMTk4NjViYzgyYTUzNDM1MjEzNmMyYjMxNTg3ZWVjMGZmNjRlZjI4ZjJhZTkmZT0xNzUzNjEwNDAw/158/944/6912/500724_816230r0b5178ck7a6568b_A.jpg
+2 _FILESIZE 15197
+2 TITL 501111_0988678f66p5ozb1y72y85_A
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P500724
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTc2NDI1YjZiZjc5OTg0YTI1MTNlNjdkYjI3MTVhODhhZTk2YmUxZGM3ZWIxZGNiZDg0MmIxZTc4MzEwNzllYWEmZT0xNzUzNjEwNDAw/158/944/6912/500092_6893989354y6ff5l1p40pc_A.jpg
+2 _FILESIZE 1689
+2 TITL יעקב אח משה ון דר ולד ה
+2 _POSITION 0 19 67 86
+2 _PHOTO_RIN MH:P500092
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTg4YjMzMWY5YWMwMDg1NDc3MGY1ZjUzNTkyZjUwYzQwYjJkNDkwN2IwMzhlNzFhM2E1MGFmNmY5ZWVjYWE3OGImZT0xNzUzNjEwNDAw/158/944/6912/500146_9894831a61k1385ji32e59_A.jpg
+2 _FILESIZE 48621
+2 TITL Jonas_Jacob_van_der_Velde_(1949)
+2 _PHOTO_RIN MH:P500146
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTY0NjJjZTNhNTc0NGQ4YzAxNWZhZmIwZTEyYTZjMGUzODY5MGJiMjk0NzFmYzU3OGYzNjEyODFlYzg1YWJlODcmZT0xNzUzNjEwNDAw/158/944/6912/500241_897225ct4a0d6uc1q24a16_A.jpg
+2 _FILESIZE 15195
+2 TITL jonas_jacob_van_der_velde_large
+2 _PHOTO_RIN MH:P500241
+
+0 @I500373@ INDI
+1 _UPD 25 FEB 2025 22:44:39 GMT -0500 
+1 NAME Rosalie Lea /van der velde/
+2 GIVN Rosalie Lea
+2 SURN van der velde
+2 _MARNM van der velde
+1 SEX F
+1 BIRT
+2 DATE 20 SEP 1895
+2 PLAC Medemblik, Medemblik, Noord-Holland, The Netherlands
+1 DEAT Y
+2 DATE 7 APR 1969
+2 PLAC Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands
+1 FAMS @F500151@
+1 FAMC @F500760@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Rosalie Lea van der Velde&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;לידה: 20 בספט’ 1895 - Medemblik, Medemblik, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;נישואין: בן/
+4 CONC בת זוג: Jonas Jacob van der Velde - 19 ביוני 1918 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;פטירה: 7 באפר’ 1969 - Amsterdam, Government of 
+4 CONC Amsterdam, Noord-Holland, The Netherlands&amp;lt;br&amp;gt;אב: Emanuel van der Velde&amp;lt;br&amp;gt;אם: Betje Akker&amp;lt;br&amp;gt;בעל: Jonas Jacob van der Velde&amp;lt;br&amp;gt;ילדים
+4 CONC : Betty van der Velde, Rita Flora van der Velde, Emmy van der Velde&amp;lt;br&amp;gt;אחים ואחיות: Rosalien van der Velde, Isaac van der Velde, Heiman Maurits van der Velde‏‎
+2 EVEN Record
+3 ROLE 40000:195244734:
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1095961232&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Rosalie Lea Vander van der Velde (לבית Velde)
+לידה: 20 בספט’ 1895 - Medemblik, Noord-Holland, Netherlands
+פטירה: 7 באפר’ 1969 - Amsterdam, Noord-Holland, Netherlands
+הורי
+4 CONC : Emanuel van der Velde, Betje van der Velde (לבית Akker)
+בעל: Jonas Jacob van der Velde
+אחים ואחיות: Rosalien van der Velde, Isaac van der Velde, Rosalie Lea van der Velde, Heiman M
+4 CONC aurits van der Velde
+2 EVEN Record
+3 ROLE 40001:1095961232:
+1 RIN MH:I500373
+1 _UID 6538A3A8BF0E86333C51650CCA60B749
+
+0 @I503234@ INDI
+1 _UPD 26 MAR 2025 09:40:08 GMT -0500 
+1 NAME Frouke /Frank/
+2 GIVN Frouke
+2 SURN Frank
+2 _MARNM van der Velde
+1 SEX F
+1 BIRT
+2 DATE 5 MAR 1884
+2 PLAC Groningen, Groningen, Nederland
+1 DEAT Y
+2 DATE 25 JAN 1911
+2 PLAC Utrecht, Nederland
+1 FAMS @F501079@
+1 FAMC @F501075@
+1 SOUR @S500228@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7LX2QJHFPQSYK7I6YKP2COGGZPY-1501653/frouke-van-der-velde-jacob-born-frank
+2 QUAY 3
+2 DATA
+3 TEXT Schmidt Web Site, מנוהל ע"י Peter Schmidt
+2 EVEN Smart Matching
+3 ROLE 1501653
+1 SOUR @S500229@
+2 PAGE https://www.myheritage.com/profile-OYYV6JHU2QI3RTRMKQUEVAPG6LORGQI-1501816/frouke-frank
+2 QUAY 3
+2 DATA
+3 TEXT Added by confirming a Smart Match
+2 EVEN Smart Matching
+3 ROLE 1501816
+1 RIN MH:I503234
+1 _UID 67E410EF5ADC06DAC21FB8516B086979
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPWFkZWY0ZmMwODdhZTNiYzFkYmZmYzFlZTY4YzQ0OWI0MmNkMWYzN2EwM2EwNmU1OTg5ZTNmN2I2ZWEyMWU2NzQmZT0xNzUzNjEwNDAw/158/944/6912/501298_0965126m97ea0oylf71481_A.jpg
+2 _FILESIZE 2286
+2 _PRIM Y
+2 _CUTOUT Y
+2 _PARENTRIN MH:P501297
+2 _PERSONALPHOTO Y
+2 _PHOTO_RIN MH:P501298
+1 OBJE
+2 FORM jpg
+2 FILE https://sites-cf.mhcache.com/e/1/az1zaXRlc192MSZzPTYxYjdjMTYwZmJjZmZiYjUyMDhjNDg2NWUzMDdiYTM2NjEyOWQ5MzZlNzM1MjlmZDRmMThhNzg5MTU3MjMzOTgmZT0xNzUzNjEwNDAw/158/944/6912/501297_848888ne6m8fr774110z9v_A.jpg
+2 _FILESIZE 2284
+2 TITL 500320_55444117d1j0g0v9b60bbj_E
+2 _PRIM_CUTOUT Y
+2 _PARENTPHOTO Y
+2 _PHOTO_RIN MH:P501297
+
+0 @I500672@ INDI
+1 _UPD 21 FEB 2025 08:19:08 GMT -0500 
+1 NAME Andries Salomon /van der Velde/
+2 GIVN Andries Salomon
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 10 MAR 1902
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 DEAT Y
+2 DATE 28 JAN 1944
+2 PLAC Oswiecim, Oświęcim County, Lesser Poland Voivodeship, Poland
+2 CAUS שואה
+1 EVEN Spouse: Elisabeth van der Velde (born Sarfatij)
+2 TYPE MARR
+2 DATE 20 AUG 1930
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 BURI
+2 PLAC Auschwitz Death Camp, Oswiecim, Malopolskie, Poland
+1 OCCU Koopman
+1 FAMS @F500743@
+1 FAMC @F500040@
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Andries Salomon van der Velde&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: 10 במרץ 1902 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;נישואי
+4 CONC ן: בן/בת זוג: Elisabeth van der Velde (לבית Sarfatij) - 20 באוג’ 1930 - Amsterdam, Government of Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;פטירה: 28 בינו’ 194
+4 CONC 4 - Oswiecim, Oświęcim County, Lesser Poland Voivodeship, Poland&amp;lt;br&amp;gt;אב: Benjamin van der Velde&amp;lt;br&amp;gt;אם: Flora Italiaander&amp;lt;br&amp;gt;אשה: Elisabeth van der Vel
+4 CONC de (לבית Sarfatij)&amp;lt;br&amp;gt;אחים ואחיות: Jonas Jacob van der Velde, Clara Eva van der Velde, Zippora Elisabeth van der Velde, Max van der Bilt (לבית van der Velde), Mozes Jes
+4 CONC aja van der Velde, NN van der Velde, Sara Jeannette Salomons (לבית van der Velde), David Hartog van der Velde
+2 EVEN Record
+3 ROLE 40000:195244939:
+1 SOUR @S500125@
+2 PAGE https://www.myheritage.co.il/profile-OYYV6IWFCRWTZPFKTFPQVZMK6KWLIAI-1500132/andries-salomon-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500132
+1 SOUR @S500163@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7VQ2ATDMKHQUZR3MU5PPT6FA4UY-1658869/andries-salomon-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1658869
+1 SOUR @S500164@
+2 PAGE https://www.myheritage.co.il/profile-OYYV7OPDA3UQXFMMKLB76NXUZYMYV7A-1500035/andries-salomon-van-der-velde
+2 QUAY 3
+2 DATA
+3 TEXT התווסף על ידי אישור ™Smart Match
+2 EVEN Smart Matching
+3 ROLE 1500035
+1 SOUR @S500056@
+2 QUAY 4
+2 DATA
+3 TEXT Andries Salomon van der Velde וElisabeth Sarfatij&amp;lt;br&amp;gt;נישואין: 20 באוג’ 1930 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;חתן: Andries Salomon van der Velde&a
+4 CONC mp;lt;br&amp;gt;&nbsp;&nbsp;לידה: סביבות 1902 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;&nbsp;&nbsp;גיל: 28&amp;lt;br&amp;gt;&nbsp;&nbsp;מקצוע: Koopman&amp;lt;br&amp;g
+4 CONC t;&nbsp;&nbsp;אב: Benjamin van der Velde&amp;lt;br&amp;gt;&nbsp;&nbsp;אם: Flora Italiaander&amp;lt;br&amp;gt;כלה: Elisabeth Sarfatij (van der Velde)&amp;lt;br&amp;gt;&nbsp;&nbsp;לידה: סב
+4 CONC בות 1898 - Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;&nbsp;&nbsp;גיל: 32&amp;lt;br&amp;gt;&nbsp;&nbsp;מקצוע: Kantoorbediende&amp;lt;br&amp;gt;אב: Elias Sarfatij&amp;lt;br&am
+4 CONC p;gt;אם: Sientje Lelie&amp;lt;br&amp;gt;מקור: &amp;lt;br&amp;gt;מוסד: Noord-Hollands Archief&amp;lt;br&amp;gt;מספר מסמך: Watergraafsmeer Reg.W2 fol. 40&amp;lt;br&amp;gt;מקום המ
+4 CONC קור: Amsterdam, North Holland, Netherlands&amp;lt;br&amp;gt;תאריך מקור: 20 באוג’ 1930&amp;lt;br&amp;gt;תאריך הכרך: 31 בינו’ 1930&amp;lt;br&amp;gt;הערות: Provenanc
+4 CONC e: Datadump ExportBS Huwelijk_20180404_114831.csv van NHA, csv2a2a
+2 EVEN Record
+3 ROLE 10562:7956548-:
+1 RIN MH:I500672
+1 _UID 664CACD0318D56FD309C51B5ED9AF1A9
+
+0 @I502082@ INDI
+1 _UPD 21 FEB 2025 08:22:26 GMT -0500 
+1 NAME Elisabeth /Sarfatij/
+2 GIVN Elisabeth
+2 SURN Sarfatij
+1 SEX F
+1 DEAT Y
+2 DATE 28 JAN 1944
+2 PLAC Oswiecim, Oświęcim County, Lesser Poland Voivodeship, Poland
+2 CAUS שואה
+1 BIRT
+2 DATE 6 SEP 1897
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+1 FAMS @F500743@
+1 SOUR @S500056@
+2 QUAY 4
+2 DATA
+3 TEXT Andries Salomon van der Velde וElisabeth Sarfatij&amp;lt;br&amp;gt;חתן: Elisabeth Sarfatij (van der Velde)&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;גיל: 28&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;מק
+4 CONC צוע: Koopman&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;גיל: 32&amp;lt;br&amp;gt;&amp;nbsp;&amp;nbsp;מקצוע: Kantoorbediende&amp;lt;br&amp;gt;מקור: &lt;br&gt;מוסד: Noord-Hollands Archief&l
+4 CONC t;br&gt;מספר מסמך: Watergraafsmeer Reg.W2 fol. 40&lt;br&gt;מקום המקור: Amsterdam, North Holland, Netherlands&lt;br&gt;תאריך מקור: 1930-08-20&lt;br&gt;תאריך הכרך: 193
+4 CONC 0-01-31&lt;br&gt;הערות: Provenance: Datadump ExportBS Huwelijk_20180404_114831.csv van NHA, csv2a2a
+2 EVEN Record
+3 ROLE 10562:7956548-S:
+1 RIN MH:I502082
+1 _UID 67B88B75A55B93C636132CB9804B9DD5
+
+0 @I502051@ INDI
+1 _UPD 20 FEB 2025 06:39:34 GMT -0500 
+1 NAME Levie /van der Velde/
+2 GIVN Levie
+2 SURN van der Velde
+1 SEX M
+1 BIRT
+2 DATE 1834
+2 PLAC Wijhe, Olst-Wijhe, Overijssel, The Netherlands
+1 DEAT Y
+2 DATE 18 MAY 1871
+2 PLAC Deventer, Deventer, Overijssel, The Netherlands
+1 FAMC @F500735@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=2122879140&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Levie van der Velde
+לידה: 1834 - Wijhe
+פטירה: 18 במאי 1871 - Deventer, Overijssel, Nederland
+הורים: Moses Meijer van de Velde, Betje Emanuel van de Velde (לבית Blitz)
+אחים ו
+4 CONC אחיות: Heijman Meijer van de Velde, Rebekka van de Velde, Isaac Moses van der Velde, Alexander van der Velde, Aaltje Mozes van der Mesritz (לבית Velde), Rebekka Polak (לבית van der Velde)
+4 CONC , Eliazer Van Der Velde
+2 EVEN Record
+3 ROLE 40001:2122879140:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Levie van der Velde&amp;lt;br&amp;gt;מין: זכר&amp;lt;br&amp;gt;לידה: סביבות 1834 - Wijhe, Olst-Wijhe, Overijssel, The Netherlands&amp;lt;br&amp;gt;פטירה: 18 במאי 1871 - Devent
+4 CONC er, Deventer, Overijssel, The Netherlands&amp;lt;br&amp;gt;אב: Mozes Meijer van der Velde&amp;lt;br&amp;gt;אם: Betje Emanuel Blitz&amp;lt;br&amp;gt;אחים ואחיות: Hijman Meijer van der Vel
+4 CONC de, Rebekka van de Velde, Aaltje Mozes van der Velde, Isaac Mozes van der Velde, Emanuel Vandervelde (לבית van der Velde), Alexander van der Velde, Rebecka van der Velde, Eliazer van der Velde
+2 EVEN Record
+3 ROLE 40000:231828604:
+1 RIN MH:I502051
+1 _UID 67B721F91D9E1297F7F327A788267158
+
+0 @I502050@ INDI
+1 _UPD 20 FEB 2025 06:39:33 GMT -0500 
+1 NAME Rebekka /van der Velde/
+2 GIVN Rebekka
+2 SURN van der Velde
+2 _MARNM Polak
+1 SEX F
+1 BIRT
+2 DATE 16 JUN 1828
+2 PLAC Wijhe, Olst-Wijhe, Overijssel, The Netherlands
+1 DEAT Y
+2 DATE 16 NOV 1902
+2 PLAC Groningen, Groningen, Groningen, The Netherlands
+1 FAMC @F500735@
+1 SOUR @S500008@
+2 PAGE https://www.myheritage.co.il/research/collection-40001/אילן-יוחסין-של-familysearch?itemId=1199689215&action=showRecord
+2 QUAY 4
+2 DATA
+3 TEXT Rebekka Polak (לבית van der Velde)
+לידה: 4 באפר’ 1828 - Wijhe, Overijssel, Nederland
+פטירה: 16 בנוב’ 1902 - Groningen, Groningen, Netherlands
+הורים: Moses Meijer van de V
+4 CONC elde, Betje Emanuel van de Velde (לבית Blitz)
+בעל: Benjamin Levie Polak
+ילדים: Levi Polak, Annabet Polak, Saartje Polak, Anna Brest (לבית Polak), Mozes Polak, Mozes Polak
+אחים וא
+4 CONC חיות: Heijman Meijer van de Velde, Rebekka van de Velde, Isaac Moses van der Velde, Alexander van der Velde, Aaltje Mozes van der Mesritz (לבית Velde), Levie van der Velde, Eliazer Van Der Vel
+4 CONC de
+2 EVEN Record
+3 ROLE 40001:1199689215:
+1 SOUR @S500005@
+2 QUAY 4
+2 DATA
+3 TEXT Rebecka van der Velde&amp;lt;br&amp;gt;מין: נקבה&amp;lt;br&amp;gt;כינוי: Rebekka Rebecca&amp;lt;br&amp;gt;לידה: 16 ביוני 1828 - Wijhe, Olst-Wijhe, Overijssel, The Netherlands&amp;
+4 CONC lt;br&amp;gt;נישואין: בן/בת זוג: Benjamin Polak - 16 באפר’ 1857 - Wijhe, Olst-Wijhe, Overijssel, The Netherlands&amp;lt;br&amp;gt;פטירה: 16 בנוב’ 1902 - Groningen, Groni
+4 CONC ngen, Groningen, The Netherlands&amp;lt;br&amp;gt;אב: Mozes Meijer van der Velde&amp;lt;br&amp;gt;אם: Betje Emanuel Blitz&amp;lt;br&amp;gt;בעל: Benjamin Polak&amp;lt;br&amp;gt;ילדים: Anna 
+4 CONC Polak, Annabet Polak, Saartje Polak, Mozes Polak, Levie Polak&amp;lt;br&amp;gt;אחים ואחיות: Hijman Meijer van der Velde, Rebekka van de Velde, Aaltje Mozes van der Velde, Isaac Mozes van der
+4 CONC  Velde, Emanuel Vandervelde (לבית van der Velde), Alexander van der Velde, Eliazer van der Velde, Levie van der Velde
+2 EVEN Record
+3 ROLE 40000:196925450:
+1 RIN MH:I502050
+1 _UID 67B721F8E02A3296F7F327A788267158
+
+0 @F500040@ FAM
+1 _UPD 24 MAY 2023 08:46:33 GMT -0500
+1 HUSB @I500107@
+1 WIFE @I500106@
+1 CHIL @I500294@
+1 CHIL @I500668@
+1 CHIL @I500669@
+1 CHIL @I500670@
+1 CHIL @I500045@
+1 CHIL @I500667@
+1 CHIL @I504407@
+1 CHIL @I500671@
+1 CHIL @I500672@
+1 CHIL @I500673@
+1 RIN MH:F500040
+1 _UID 646E151A7719F084A6459E035E7AF83B
+
+0 @F500737@ FAM
+1 _UPD 20 FEB 2025 06:40:43 GMT -0500
+1 HUSB @I502058@
+1 WIFE @I502049@
+1 CHIL @I502059@
+1 CHIL @I502060@
+1 RIN MH:F500737
+1 _UID 67B722CB35E6C5E449FF028EFC39C788
+1 MARR
+2 DATE 19 JUN 1846
+2 PLAC Wijhe
+
+0 @F500689@ FAM
+1 _UPD 17 FEB 2025 10:24:37 GMT -0500
+1 HUSB @I501875@
+1 WIFE @I501874@
+1 CHIL @I501879@
+1 CHIL @I501880@
+1 CHIL @I501881@
+1 CHIL @I501882@
+1 CHIL @I501883@
+1 RIN MH:F500689
+1 _UID 67B362C5BCD15FAECD2E3AEE4EAADE33
+1 MARR
+
+0 @F500565@ FAM
+1 _UPD 11 JAN 2025 22:55:33 GMT -0500
+1 HUSB @I501537@
+1 WIFE @I500669@
+1 RIN MH:F500565
+1 _UID 67834B45978F3195BE73087B2FB7AB13
+1 MARR
+2 DATE 14 JUN 1922
+2 PLAC 's-Gravenhage, South Holland, Netherlands
+
+0 @F500798@ FAM
+1 _UPD 27 FEB 2025 05:46:38 GMT -0500
+1 HUSB @I502272@
+1 WIFE @I502273@
+1 CHIL @I502252@
+1 RIN MH:F500798
+1 _UID 67C0509E8A79B119BFE6FF219A8E134B
+
+0 @F500765@ FAM
+1 _UPD 25 FEB 2025 22:48:20 GMT -0500
+1 HUSB @I502157@
+1 WIFE @I502158@
+1 CHIL @I502159@
+1 CHIL @I502160@
+1 CHIL @I502161@
+1 CHIL @I502162@
+1 CHIL @I502163@
+1 CHIL @I502164@
+1 CHIL @I502165@
+1 CHIL @I502176@
+1 CHIL @I502202@
+1 CHIL @I502126@
+1 CHIL @I502177@
+1 CHIL @I502203@
+1 CHIL @I502166@
+1 RIN MH:F500765
+1 _UID 67BE9D13DC2294F628C61FA532365037
+
+0 @F501344@ FAM
+1 _UPD 9 APR 2025 03:06:00 GMT -0500
+1 HUSB @I504282@
+1 WIFE @I502067@
+1 CHIL @I504283@
+1 CHIL @I504284@
+1 CHIL @I504285@
+1 CHIL @I504286@
+1 CHIL @I504287@
+1 RIN MH:F501344
+1 _UID 67F62A68D01ABBDB4E90ED90D7BEDD74
+1 MARR
+2 DATE ABT 1977
+2 PLAC United Kingdom
+
+0 @F500739@ FAM
+1 _UPD 21 FEB 2025 08:01:44 GMT -0500
+1 HUSB @I502068@
+1 WIFE @I502066@
+1 CHIL @I502075@
+1 CHIL @I502076@
+1 CHIL @I502077@
+1 CHIL @I502078@
+1 CHIL @I502079@
+1 RIN MH:F500739
+1 _UID 67B88748AFBFF05B73164CCD892316A4
+1 MARR
+
+0 @F500741@ FAM
+1 _UPD 21 FEB 2025 08:07:35 GMT -0500
+1 HUSB @I502071@
+1 WIFE @I502063@
+1 CHIL @I502072@
+1 CHIL @I502073@
+1 CHIL @I502074@
+1 RIN MH:F500741
+1 _UID 67B888A796A0A5CEE9F546B974CED551
+1 MARR
+
+0 @F500153@ FAM
+1 _UPD 25 OCT 2023 04:09:08 GMT -0500
+1 HUSB @I500381@
+1 WIFE @I500376@
+1 CHIL @I501520@
+1 RIN MH:F500153
+1 _UID 6538DB3483E8CC1004F2DBB4E01EF0E1
+1 MARR
+
+0 @F500799@ FAM
+1 _UPD 27 FEB 2025 05:48:34 GMT -0500
+1 HUSB @I502274@
+1 CHIL @I502272@
+1 RIN MH:F500799
+1 _UID 67C051121F34915B4C0B2A1FCDC31B3E
+
+0 @F501454@ FAM
+1 _UPD 22 APR 2025 23:23:17 GMT -0500
+1 HUSB @I504598@
+1 WIFE @I504599@
+1 CHIL @I502054@
+1 RIN MH:F501454
+1 _UID 68086B34E69519AC59E23AE5CC15DACB
+
+0 @F500735@ FAM
+1 _UPD 20 FEB 2025 06:37:11 GMT -0500
+1 HUSB @I502044@
+1 WIFE @I502045@
+1 CHIL @I500304@
+1 CHIL @I502046@
+1 CHIL @I502049@
+1 CHIL @I502048@
+1 CHIL @I502057@
+1 CHIL @I502047@
+1 CHIL @I502050@
+1 CHIL @I502052@
+1 CHIL @I502051@
+1 RIN MH:F500735
+1 _UID 67B721F7B0051290F7F327A788267158
+1 MARR
+2 DATE 24 APR 1816
+2 PLAC Wijhe
+2 NOTE בן/בת זוג: Betje Emanuel Blitz
+
+0 @F501395@ FAM
+1 _UPD 16 APR 2025 12:53:41 GMT -0500
+1 HUSB @I504412@
+1 WIFE @I504409@
+1 RIN MH:F501395
+1 _UID 67FFEEA5A4FFCEEF0688D939E68BF124
+1 MARR
+
+0 @F500257@ FAM
+1 _UPD 21 MAY 2024 09:19:23 GMT -0500
+1 HUSB @I500682@
+1 WIFE @I500683@
+1 CHIL @I502254@
+1 CHIL @I500305@
+1 CHIL @I500684@
+1 CHIL @I500685@
+1 CHIL @I500686@
+1 CHIL @I500687@
+1 CHIL @I500688@
+1 CHIL @I500689@
+1 RIN MH:F500257
+1 _UID 664CAD6AAAEA84CE99D8232FF5CD8A12
+
+0 @F500760@ FAM
+1 _UPD 25 FEB 2025 22:44:39 GMT -0500
+1 HUSB @I502126@
+1 WIFE @I502127@
+1 CHIL @I502128@
+1 CHIL @I502129@
+1 CHIL @I500373@
+1 CHIL @I502130@
+1 RIN MH:F500760
+1 _UID 67BE9C3768FEE6EC25A40AFB021A6864
+
+0 @F500603@ FAM
+1 _UPD 4 FEB 2025 07:14:26 GMT -0500
+1 HUSB @I501640@
+1 WIFE @I500377@
+1 CHIL @I501642@
+1 CHIL @I501644@
+1 CHIL @I501641@
+1 CHIL @I501643@
+1 RIN MH:F500603
+1 _UID 67A212B29F881F542BBD7BEB1B620B1B
+1 MARR
+2 DATE 11 JAN 1947
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+2 NOTE בן/בת זוג: Rita Flora van der Velde
+
+0 @F500123@ FAM
+1 _UPD 19 JUL 2023 05:36:41 GMT -0500
+1 HUSB @I500304@
+1 WIFE @I500305@
+1 CHIL @I500107@
+1 CHIL @I500306@
+1 CHIL @I502053@
+1 RIN MH:F500123
+1 _UID 64B7BCB9962AD6943149636BDC1480F3
+
+0 @F500152@ FAM
+1 _UPD 25 OCT 2023 00:30:01 GMT -0500
+1 HUSB @I500380@
+1 WIFE @I500375@
+1 CHIL @I501619@
+1 CHIL @I501618@
+1 CHIL @I501621@
+1 RIN MH:F500152
+1 _UID 6538A6D858FC5753F76E211FAEA74CCE
+1 MARR
+
+0 @F500595@ FAM
+1 _UPD 30 JAN 2025 13:02:05 GMT -0500
+1 HUSB @I501620@
+1 WIFE @I500375@
+1 RIN MH:F500595
+1 _UID 679BCCAD29E4BE18F29DC2E02E80ACFB
+1 MARR
+2 DATE 1980
+
+0 @F501393@ FAM
+1 _UPD 16 APR 2025 12:46:27 GMT -0500
+1 HUSB @I504407@
+1 WIFE @I504408@
+1 CHIL @I504410@
+1 CHIL @I504409@
+1 RIN MH:F501393
+1 _UID 67FFECF343B38019DF0E7ADC9B102FE7
+1 MARR
+2 DATE 9 DEC 1931
+2 PLAC 's-Gravenhage, South Holland, Netherlands
+
+0 @F500592@ FAM
+1 _UPD 5 FEB 2025 07:16:56 GMT -0500
+1 HUSB @I501334@
+1 WIFE @I501610@
+1 CHIL @I501611@
+1 CHIL @I501613@
+1 CHIL @I501612@
+1 CHIL @I501614@
+1 RIN MH:F500592
+1 _UID 679B8DBB2CF243E3225548E9E22E5924
+1 MARR
+2 DATE 1967
+1 DIV Y
+2 DATE 1982
+
+0 @F500613@ FAM
+1 _UPD 6 APR 2025 05:11:07 GMT -0500
+1 HUSB @I501334@
+1 WIFE @I501662@
+1 RIN MH:F500613
+1 _UID 67A36609522FAAB148E9482AB7A86DC7
+1 MARR
+2 DATE 1989
+
+0 @F500690@ FAM
+1 _UPD 17 FEB 2025 10:28:09 GMT -0500
+1 HUSB @I501872@
+1 WIFE @I501876@
+1 CHIL @I501878@
+1 RIN MH:F500690
+1 _UID 67B36399BC3672E11CED5B075609617C
+1 MARR
+2 DATE 1960
+
+0 @F500490@ FAM
+1 _UPD 6 NOV 2024 07:07:54 GMT -0500
+1 HUSB @I501333@
+1 WIFE @I501337@
+1 RIN MH:F500490
+1 _UID 672B6A2A65434C1008042F65795307C3
+1 MARR
+2 DATE 1995
+2 PLAC South Africa
+
+0 @F500567@ FAM
+1 _UPD 11 JAN 2025 23:03:59 GMT -0500
+1 HUSB @I501333@
+1 WIFE @I501545@
+1 CHIL @I501602@
+1 CHIL @I501546@
+1 CHIL @I501603@
+1 RIN MH:F500567
+1 _UID 67834D3F0F1D3D7517B8C125804B19DF
+1 MARR
+2 DATE 16 DEC 1968
+2 PLAC Eshowe, (South) Uthungulu DC, KwaZulu-Natal, South Africa
+1 DIV Y
+2 DATE 1993
+
+0 @F500740@ FAM
+1 _UPD 21 FEB 2025 08:06:38 GMT -0500
+1 HUSB @I502070@
+1 WIFE @I502069@
+1 RIN MH:F500740
+1 _UID 67B8886E9D0FE9F778F7CADBEF631CCC
+1 MARR
+
+0 @F500589@ FAM
+1 _UPD 30 JAN 2025 06:34:33 GMT -0500
+1 HUSB @I501603@
+1 WIFE @I501604@
+1 CHIL @I501688@
+1 CHIL @I501689@
+1 CHIL @I501690@
+1 CHIL @I501691@
+1 CHIL @I501692@
+1 RIN MH:F500589
+1 _UID 679B71D95A1CAD43BD60A90BE2C4A26F
+1 MARR
+2 DATE 1999
+
+0 @F500688@ FAM
+1 _UPD 17 FEB 2025 10:21:44 GMT -0500
+1 HUSB @I500673@
+1 WIFE @I501873@
+1 CHIL @I501872@
+1 CHIL @I501874@
+1 RIN MH:F500688
+1 _UID 67B362188142BF30C8A622FD70CD0E40
+1 MARR
+2 DATE 23 APR 1930
+2 PLAC Amsterdam, Government of Amsterdam, Noord-Holland, The Netherlands
+
+0 @F500742@ FAM
+1 _UPD 21 FEB 2025 08:19:01 GMT -0500
+1 HUSB @I502080@
+1 WIFE @I500671@
+1 CHIL @I502081@
+1 RIN MH:F500742
+1 _UID 67B88B55C2E13B0C4BBF380D2EB83E7A
+1 MARR
+2 DATE 29 APR 1931
+2 PLAC Amsterdam, NL
+
+0 @F500154@ FAM
+1 _UPD 26 OCT 2023 02:13:48 GMT -0500
+1 HUSB @I500374@
+1 WIFE @I500382@
+1 CHIL @I501334@
+1 CHIL @I501333@
+1 CHIL @I501336@
+1 CHIL @I501335@
+1 RIN MH:F500154
+1 _UID 653A11AC735D3513CCA0C952D776E88D
+1 MARR
+2 DATE 6 JUL 1940
+
+0 @F501300@ FAM
+1 _UPD 8 APR 2025 04:48:54 GMT -0500
+1 HUSB @I502065@
+1 WIFE @I504019@
+1 CHIL @I504020@
+1 CHIL @I504021@
+1 RIN MH:F501300
+1 _UID 67F4F106EE589F8370AB5DD52AE25E6F
+1 MARR
+
+0 @F500738@ FAM
+1 _UPD 21 FEB 2025 08:01:59 GMT -0500
+1 HUSB @I501878@
+1 WIFE @I502064@
+1 CHIL @I502063@
+1 CHIL @I502066@
+1 CHIL @I502065@
+1 CHIL @I502069@
+1 CHIL @I504024@
+1 RIN MH:F500738
+1 _UID 67B8822787244389C43FE1FDEF1E6AB3
+1 MARR
+1 DIV Y
+
+0 @F500019@ FAM
+1 _UPD 16 MAY 2023 06:57:52 GMT -0500
+1 HUSB @I500045@
+1 WIFE @I500089@
+1 CHIL @I500291@
+1 CHIL @I500292@
+1 CHIL @I500041@
+1 RIN MH:F500019
+1 _UID 645E225FD0397498D21921288C7B221C
+1 MARR
+2 DATE 12 MAR 1919
+2 PLAC Amstelveen, Amstelveen, North Holland, Netherlands
+
+0 @F500736@ FAM
+1 _UPD 20 FEB 2025 06:39:29 GMT -0500
+1 HUSB @I502054@
+1 WIFE @I502055@
+1 CHIL @I504623@
+1 CHIL @I502056@
+1 CHIL @I502044@
+1 RIN MH:F500736
+1 _UID 67B72280E45FC973AB950B1BD372503B
+1 MARR
+2 DATE 1772
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, The Netherlands
+2 NOTE בן/בת זוג: Marcus / Meijer Alexander / Ziskind van der Velde Hengel
+
+0 @F500151@ FAM
+1 _UPD 25 OCT 2023 00:12:08 GMT -0500
+1 HUSB @I500294@
+1 WIFE @I500373@
+1 CHIL @I500375@
+1 CHIL @I500377@
+1 CHIL @I500376@
+1 RIN MH:F500151
+1 _UID 6538A3A8D02FF6343C51650CCA60B749
+1 MARR
+2 DATE 19 JUN 1918
+2 PLAC Amsterdam, Government of Amsterdam, North Holland, Netherlands
+2 NOTE בן/בת זוג: Jonas Jacob van der Velde
+
+0 @F501079@ FAM
+1 _UPD 26 MAR 2025 09:43:16 GMT -0500
+1 HUSB @I500294@
+1 WIFE @I503234@
+1 CHIL @I500374@
+1 RIN MH:F501079
+1 _UID 67E41284DC36C9326D93A661C942ED3F
+1 MARR
+2 DATE 24 FEB 1910
+2 PLAC Amsterdam, North Holland, Netherlands
+
+0 @F500743@ FAM
+1 _UPD 21 FEB 2025 08:19:33 GMT -0500
+1 HUSB @I500672@
+1 WIFE @I502082@
+1 RIN MH:F500743
+1 _UID 67B88B75ADE763C736132CB9804B9DD5
+1 MARR
+2 DATE 20 AUG 1930
+2 PLAC Amsterdam, North Holland, Netherlands
+0 TRLR
