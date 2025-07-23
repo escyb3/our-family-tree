@@ -40,6 +40,13 @@
     button:hover {
       background-color: #c82333;
     }
+    .edit-btn {
+      background-color: #ffc107;
+      margin-left: 5px;
+    }
+    .edit-btn:hover {
+      background-color: #e0a800;
+    }
   </style>
   <script>
     async function deleteUser(username) {
@@ -55,6 +62,23 @@
       }
     }
 
+    function openEditModal(user) {
+      const newRole = prompt("שנה תפקיד עבור " + user.username, user.role);
+      if (newRole) {
+        const newSide = prompt("שנה צד משפחתי עבור " + user.username, user.side);
+        fetch("/update-user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: user.username, role: newRole, side: newSide })
+        })
+        .then(res => res.text())
+        .then(msg => {
+          alert(msg);
+          location.reload();
+        });
+      }
+    }
+
     window.onload = () => {
       fetch("/admin-users")
         .then(res => res.json())
@@ -66,7 +90,10 @@
               <td>${u.username}</td>
               <td>${u.role}</td>
               <td>${u.side}</td>
-              <td><button onclick="deleteUser('${u.username}')">🗑️ מחק</button></td>
+              <td>
+                <button onclick="deleteUser('${u.username}')">🗑️ מחק</button>
+                <button class="edit-btn" onclick='openEditModal(${JSON.stringify(u)})'>✏️ ערוך</button>
+              </td>
             `;
             table.appendChild(tr);
           });
@@ -83,11 +110,11 @@
           <th>שם משתמש</th>
           <th>תפקיד</th>
           <th>צד משפחתי</th>
-          <th>🗑️ מחיקה</th>
+          <th>פעולות</th>
         </tr>
       </thead>
       <tbody id="userTable">
-        <!-- נטען מהשרת -->
+        <!-- ייטען מהשרת -->
       </tbody>
     </table>
   </main>
