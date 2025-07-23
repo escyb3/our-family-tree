@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>בקשת עדכון</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h2>בקשת עדכון פרטים באילן היוחסין</h2>
+    <form action="/update-request" method="POST">
+      <input type="text" name="name" placeholder="שם מלא" required>
+      <input type="text" name="relation" placeholder="קשר משפחתי">
+      <textarea name="message" placeholder="פרטים שברצונך לעדכן" rows="6"></textarea>
+      <button type="submit">שלח בקשה</button>
+    </form>
+  </main>
+</body>
+</html>
