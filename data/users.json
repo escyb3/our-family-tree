@@ -8,8 +8,9 @@
     }
     { 
     "username: "gmcbjfh",
-      "password": testuser89
+      "password": "testuser89"
       "role": "user",
-      "familyAccess":
+      "familyAccess": "van der Velde"
+    }
   ]
 }
