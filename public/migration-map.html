@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>מפת נדודי המשפחה</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/>
+  <style>
+    #map { height: 600px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h2>מפת נדודי המשפחה</h2>
+    <div id="map"></div>
+  </main>
+
+  <script>
+    const map = L.map('map').setView([31.7683, 35.2137], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // דוגמה לנקודות נדידה
+    const migrations = [
+      { from: "מרוקו", lat: 31.7917, lon: -7.0926 },
+      { to: "ישראל", lat: 31.7683, lon: 35.2137 }
+    ];
+
+    migrations.forEach((m, i) => {
+      L.marker([m.lat, m.lon]).addTo(map)
+        .bindPopup(m.from ? `מ־${m.from}` : `אל ${m.to}`);
+    });
+
+    if (migrations.length === 2) {
+      L.polyline([[migrations[0].lat, migrations[0].lon], [migrations[1].lat, migrations[1].lon]], {
+        color: 'blue'
+      }).addTo(map);
+    }
+  </script>
+</body>
+</html>
