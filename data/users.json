@@ -6,5 +6,10 @@
       "role": "admin",
       "familyAccess": "all"
     }
+    { 
+    "username: "gmcbjfh",
+      "password": testuser89
+      "role": "user",
+      "familyAccess":
   ]
 }
