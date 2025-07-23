@@ -1,45 +1,64 @@
-/* style.css */
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f2f2f2;
-  direction: rtl;
-  margin: 0;
-  padding: 20px;
-}
-h1, h2 {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
   color: #333;
+  margin: 0;
+  padding: 0;
+  direction: rtl;
 }
+
+header {
+  background-color: #004466;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0;
+}
+
+nav li {
+  margin: 0 15px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+main {
+  padding: 40px;
+  text-align: center;
+}
+
 form {
+  max-width: 500px;
+  margin: auto;
   background: white;
   padding: 20px;
-  border-radius: 10px;
-  max-width: 400px;
-  margin: auto;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-input, select, textarea, button {
-  display: block;
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 10px;
-}
-button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-button:hover {
-  background-color: #45a049;
-}
-#tree-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.person-box {
-  background: #fff;
-  border: 1px solid #ccc;
-  padding: 10px;
   border-radius: 8px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #004466;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
