@@ -71,7 +71,29 @@ app.post("/login", (req, res) => {
     }
   });
 });
+app.post("/create-user", (req, res) => {
+  const { username, password, role, side } = req.body;
 
+  const usersPath = path.join(__dirname, "users.json");
+  let users = [];
+
+  if (fs.existsSync(usersPath)) {
+    users = JSON.parse(fs.readFileSync(usersPath, "utf8"));
+    if (users.find(u => u.username === username)) {
+      return res.send("שם המשתמש כבר קיים.");
+    }
+  }
+
+  bcrypt.hash(password, 10, (err, hash) => {
+    if (err) return res.status(500).send("שגיאה בהצפנת הסיסמה.");
+
+    const newUser = { username, password: hash, role, side };
+    users.push(newUser);
+    fs.writeFileSync(usersPath, JSON.stringify(users, null, 2), "utf8");
+
+    res.send("✅ המשתמש נוסף בהצלחה!");
+  });
+});
 
 app.post("/upload-gedcom", upload.single("gedcom"), (req, res) => {
   res.send("GEDCOM הועלה בהצלחה");
