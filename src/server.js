@@ -50,17 +50,28 @@ app.get("/logout", (req, res) => {
   req.session.destroy(() => res.redirect("/login.html"));
 });
 
-app.post("/login", async (req, res) => {
+app.post("/login", (req, res) => {
   const { username, password } = req.body;
-  const user = users[username];
-  if (user && await bcrypt.compare(password, user.passwordHash)) {
-    req.session.username = username;
-    req.session.role = user.role;
-    res.redirect("/admin.html");
-  } else {
-    res.send("שגיאה בהתחברות");
-  }
+
+  const usersPath = path.join(__dirname, "users.json");
+  if (!fs.existsSync(usersPath)) return res.status(401).send("קובץ משתמשים לא קיים.");
+
+  const users = JSON.parse(fs.readFileSync(usersPath, "utf8"));
+
+  const user = users.find(u => u.username === username);
+  if (!user) return res.status(401).send("שם משתמש לא קיים.");
+
+  bcrypt.compare(password, user.password, (err, result) => {
+    if (result) {
+      // התחברות מוצלחת
+      res.cookie("user", JSON.stringify(user), { httpOnly: true });
+      res.redirect("/");
+    } else {
+      res.status(401).send("שגיאה בסיסמה.");
+    }
+  });
 });
+
 
 app.post("/upload-gedcom", upload.single("gedcom"), (req, res) => {
   res.send("GEDCOM הועלה בהצלחה");
