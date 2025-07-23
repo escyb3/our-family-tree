@@ -2,43 +2,52 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>הוספת משתמש חדש</title>
+  <title>יצירת משתמש חדש</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: Arial; background: #f0f0f0; padding: 20px; text-align: center; }
+    form { background: white; display: inline-block; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px #aaa; }
+    input, select {
+      display: block; margin: 10px auto; padding: 8px;
+      width: 80%; max-width: 300px;
+    }
+    button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+  </style>
 </head>
 <body>
-  <main>
-    <h1>📋 יצירת משתמש חדש</h1>
-    <form action="/create-user" method="post">
-      <label>שם משתמש: <input type="text" name="username" required></label><br>
-      <label>סיסמה: <input type="password" name="password" required></label><br>
-      <label>תפקיד:
-        <select name="role" required>
-          <option value="user">משתמש רגיל</option>
-          <option value="admin">מנהל</option>
-        </select>
-      </label><br>
-      <label>צד משפחתי:
-        <select name="side" required>
-          <option value="Ben Abou">Ben Abou</option>
-          <option value="Elharrar">Elharrar</option>
-          <option value="Malca">Malca</option>
-          <option value="Ben David">Ben David</option>
-          <option value="Bromberg">Bromberg</option>
-          <option value="Barenbaum">Barenbaum</option>
-          <option value="Fass-Schneck">Fass-Schneck</option>
-          <option value="Weinberger">Weinberger</option>
-          <option value="Leibner">Leibner</option>
-          <option value="van der Velde">van der Velde</option>
-          <option value="Behr">Behr</option>
-          <option value="de Vries">de Vries</option>
-          <option value="Italiaander">Italiaander</option>
-          <option value="Izaks">Izaks</option>
-          <option value="Chapon">Chapon</option>
-        </select>
-      </label><br>
-      <button type="submit">➕ צור משתמש</button>
-    </form>
-  </main>
+  <h2>יצירת משתמש חדש</h2>
+  <form action="/create-user" method="POST">
+    <input name="username" placeholder="שם משתמש" required>
+    <input name="password" type="password" placeholder="סיסמה" required>
+    <input name="email" type="email" placeholder="אימייל (לשחזור סיסמה)" required>
+    <select name="side" required>
+      <option value="">בחר צד משפחתי</option>
+      <option>Ben Abou</option>
+      <option>Elharrar</option>
+      <option>Malca</option>
+      <option>Ben David</option>
+      <option>Bromberg</option>
+      <option>Barenbaum</option>
+      <option>Fass-Schneck</option>
+      <option>Weinberger</option>
+      <option>Leibner</option>
+      <option>van der Velde</option>
+      <option>Behr</option>
+      <option>de Vries</option>
+      <option>Italiaander</option>
+      <option>Izaks</option>
+      <option>Chapon</option>
+    </select>
+    <select name="role" required>
+      <option value="user">משתמש רגיל</option>
+      <option value="editor">עורך</option>
+      <option value="admin">מנהל</option>
+      <option value="super">מנהל-על</option>
+    </select>
+    <button type="submit">✅ צור משתמש</button>
+  </form>
 </body>
 </html>
+
 
