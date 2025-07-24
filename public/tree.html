@@ -1,26 +1,17 @@
-<html> <lang="he" dir="rtl">
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>עץ המשפחה שלנו</title>
-  <link> <rel="stylesheet" href="style.css">
-  <script> src="https://unpkg.com/family-chart@2.5.0"></script>
+  <title>🧬 אילן משפחתי</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/familytreejs@latest/familytree.css">
+  <script src="https://cdn.jsdelivr.net/npm/familytreejs@latest/familytree.min.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; }
+    #tree { width: 100%; height: 100vh; direction: ltr; }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>עץ המשפחה</h1>
-    <h2>ברוכים הבאים לעץ המשפחתי של משפחתנו</h2>
-  </header>
-
-  <main>
-    <section>
-      <div id="tree-container" style="width: 100%; height: 800px;"></div>
-    </section>
-  </main>
-
-  <footer>
-    © כל הזכויות שמורות למשפחתנו
-  </footer>
-
-  <script src="tree.js"></script>
+  <div id="tree"></div>
+  <script src="tree-loader.js"></script>
 </body>
 </html>
