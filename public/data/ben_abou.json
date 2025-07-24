@@ -1,0 +1,65 @@
+{
+  "id": "I1010",
+  "name": "Anina-Anny Ben Abou",
+  "sex": "F",
+  "birth": "1927-11-13",
+  "death": "2013-04-02",
+  "birth_place": "Casablanca, Morocco",
+  "death_place": "B\u00e9ziers, France",
+  "father": "Isaac Ben Abou",
+  "mother": "Zohra Sebag",
+  "spouse": {
+    "id": "I1011",
+    "name": "Jacques Morand Baur",
+    "birth": "1900-10-02",
+    "death": "1997-09-28",
+    "birth_place": "Rupt-sur-Moselle, Vosges, France",
+    "death_place": "Carc\u00e8s, Var, France"
+  },
+  "media": [
+    {
+      "type": "image",
+      "url": "media/baur_death.jpg",
+      "title": "Death Certificate \u2013 Jacques Morand Baur"
+    },
+    {
+      "type": "image",
+      "url": "media/anina_death.jpg",
+      "title": "Death Certificate \u2013 Anina-Anny Ben Abou"
+    }
+  ],
+  "children": [
+    {
+      "id": "U1",
+      "note": "Child 1 \u2013 unknown"
+    },
+    {
+      "id": "U2",
+      "note": "Child 2 \u2013 unknown"
+    },
+    {
+      "id": "U3",
+      "note": "Child 3 \u2013 unknown"
+    },
+    {
+      "id": "U4",
+      "note": "Child 4 \u2013 unknown"
+    },
+    {
+      "id": "U5",
+      "note": "Child 5 \u2013 unknown"
+    },
+    {
+      "id": "U6",
+      "note": "Child 6 \u2013 unknown"
+    },
+    {
+      "id": "U7",
+      "note": "Child 7 \u2013 unknown"
+    },
+    {
+      "id": "U8",
+      "note": "Child 8 \u2013 unknown"
+    }
+  ]
+}
