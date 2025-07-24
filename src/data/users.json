@@ -1,0 +1,14 @@
+[
+  {
+    "username": "admin",
+    "password": "$2b$10$zTppzP4TrF0YoA5Z5QW9B.DMTknuDxbVGqthBRRx1WWDFsChWKUme",
+    "role": "admin",
+    "side": "Ben Abou"
+  },
+  {
+    "username": "yair",
+    "password": "$2b$10$zTppzP4TrF0YoA5Z5QW9B.DMTknuDxbVGqthBRRx1WWDFsChWKUme",
+    "role": "user",
+    "side": "Elharrar"
+  }
+]
