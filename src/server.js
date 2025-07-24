@@ -10,8 +10,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: "secret", resave: false, saveUninitialized: true }));
 
-let users = JSON.parse(fs.readFileSync("users.json"));
-let messages = JSON.parse(fs.readFileSync("messages.json", "utf-8"));
+const path = require('path');
+const users = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'users.json')));
 
 function saveUsers() {
   fs.writeFileSync("users.json", JSON.stringify(users, null, 2));
