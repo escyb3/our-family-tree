@@ -1,0 +1,44 @@
+{
+  "id": "I1",
+  "name": "Moshe Elharrar",
+  "gender": "M",
+  "birth": "15 Aug 1893",
+  "death": "27 Dec 1973",
+  "birth_place": "Casablanca, Morocco",
+  "death_place": "New York, USA",
+  "spouse": {
+    "id": "I2",
+    "name": "Hnina Levy",
+    "gender": "F",
+    "birth": "17 Mar 1896",
+    "death": "30 Jul 1972",
+    "birth_place": "Casablanca, Morocco",
+    "death_place": "New York, USA"
+  },
+  "children": [
+    {
+      "name": "Fabienne Elharrar",
+      "spouse": "André Marcelle Hirschler"
+    },
+    {
+      "name": "Sonia Elharrar",
+      "spouse": "Knorr"
+    },
+    {
+      "name": "Stella Elharrar",
+      "spouse": "Weingord"
+    },
+    {
+      "name": "Edward Elharrar"
+    },
+    {
+      "name": "Michel Elharrar"
+    },
+    {
+      "name": "Max Elharrar"
+    },
+    {
+      "name": "Charles Elharrar"
+    }
+  ]
+}
