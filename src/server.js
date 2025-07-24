@@ -71,7 +71,6 @@ app.post("/create-user", auth("admin"), (req, res) => {
   res.redirect("/admin-dashboard.html");
 });
 
-// מערכת הודעות
 app.get("/messages", (req, res) => {
   const inbox = messages.filter(m => m.to === req.session.user.username + "@family.local");
   res.json(inbox);
@@ -105,6 +104,11 @@ app.post("/reply-message", (req, res) => {
   } else {
     res.status(404).send("הודעה לא נמצאה");
   }
+});
+
+app.get("/api/user", (req, res) => {
+  if (!req.session.user) return res.status(401).json({ error: "לא מחובר" });
+  res.json(req.session.user);
 });
 
 app.listen(3000, () => console.log("השרת רץ על פורט 3000"));
