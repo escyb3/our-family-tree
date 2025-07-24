@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>📨 שיחה</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="message-thread" id="thread"></div>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const threadId = params.get("id");
+
+    fetch("/messages")
+      .then(res => res.json())
+      .then(messages => {
+        const msg = messages.find(m => m.threadId === threadId);
+        const container = document.getElementById("thread");
+
+        if (!msg) return container.innerHTML = "📭 ההודעה לא נמצאה.";
+
+        container.innerHTML = `
+          <h3>${msg.subject}</h3>
+          <p><strong>מאת:</strong> ${msg.from}</p>
+          <p>${msg.body}</p>
+          <small>${new Date(msg.timestamp).toLocaleString()}</small>
+          <hr>
+          ${(msg.replies || []).map(r => `<div class='reply'><strong>${r.from}</strong>: ${r.body}</div>`).join('')}
+          <form onsubmit="return replyTo('${msg.threadId}', this)">
+            <textarea name="body" placeholder="תגובה..." required></textarea>
+            <button type="submit">↩️ שלח תגובה</button>
+          </form>
+        `;
+      });
+
+    function replyTo(threadId, form) {
+      const body = form.body.value;
+      fetch("/reply-message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ threadId, body })
+      }).then(res => res.text()).then(alert);
+      form.body.value = "";
+      return false;
+    }
+  </script>
+</body>
+</html>
