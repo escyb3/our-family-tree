@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>✉️ שלח הודעה חדשה</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>✉️ שלח הודעה חדשה</h2>
+  <form action="/send-message" method="POST">
+    <input name="to" placeholder="לדוגמה: yael@family.local" required>
+    <input name="subject" placeholder="נושא ההודעה" required>
+    <textarea name="body" placeholder="כתוב את ההודעה כאן..." required></textarea>
+    <button type="submit">📤 שלח</button>
+  </form>
+</body>
+</html>
