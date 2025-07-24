@@ -1,0 +1,83 @@
+{
+  "family_name": "Weinberger",
+  "root_person": {
+    "id": "I1",
+    "name": "Yehiel Aharon Weinberger",
+    "birth": "1853",
+    "death": "24 Apr 1931",
+    "spouse": {
+      "name": "Rachel Yetta Weinberger (Leibner)",
+      "birth": "1853",
+      "death": "Before Dec 1923"
+    },
+    "children": [
+      {
+        "name": "Fraidel Endzweig (born Weinberger)"
+      },
+      {
+        "name": "Lea Wilner (born Weinberger)",
+        "birth": "1875",
+        "death": "1938"
+      },
+      {
+        "name": "Itzhak Weinberger",
+        "birth": "1879"
+      },
+      {
+        "name": "Ephraim Leibner",
+        "birth": "26 Feb 1882",
+        "spouse": "Miriam Listgarten"
+      },
+      {
+        "name": "Simcha Weinberger",
+        "birth": "2 Sep 1885",
+        "spouse": "Chaja Sara"
+      },
+      {
+        "name": "Etta Malka Gutwein (born Weinberger)",
+        "birth": "1887",
+        "death": "30 Sep 1938",
+        "spouse": "Yehuda Gutwein"
+      },
+      {
+        "name": "Reisel Leibner",
+        "birth": "1887",
+        "death": "1892"
+      },
+      {
+        "name": "Sara Leibner",
+        "birth": "1888",
+        "death": "1891"
+      },
+      {
+        "name": "Gitel Leibner",
+        "birth": "1889",
+        "death": "1889"
+      },
+      {
+        "name": "Nathan Leibner",
+        "birth": "1885",
+        "death": "1885"
+      },
+      {
+        "name": "Chaim Leibner",
+        "birth": "ca. 1883"
+      },
+      {
+        "name": "Nissan Mordechai Elimelech Weinberger",
+        "birth": "1894",
+        "spouse": "Genendel Fas"
+      },
+      {
+        "name": "Pearl Leibner",
+        "birth": "1897",
+        "death": "1898"
+      }
+    ]
+  },
+  "sources": [
+    "weinberger.ged",
+    "user-provided info",
+    "pdf document"
+  ]
+}
