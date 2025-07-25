@@ -105,6 +105,42 @@ app.post("/reply-message", (req, res) => {
     res.status(404).send("הודעה לא נמצאה");
   }
 });
+let pendingPeople = [];
+const pendingPath = path.join(__dirname, 'data', 'pending.json');
+
+if (fs.existsSync(pendingPath)) {
+  pendingPeople = JSON.parse(fs.readFileSync(pendingPath));
+}
+
+function savePending() {
+  fs.writeFileSync(pendingPath, JSON.stringify(pendingPeople, null, 2));
+}
+app.post("/add-person", (req, res) => {
+  const person = req.body;
+  person.id = "p" + Date.now();
+  person.submittedBy = req.session.user?.username || "unknown";
+  pendingPeople.push(person);
+  savePending();
+  res.send("התווסף בהצלחה ואישורך ממתין לאישור מנהל.");
+});
+app.get("/pending-people", auth("admin"), (req, res) => {
+  res.json(pendingPeople);
+});
+app.post("/approve-person", auth("admin"), (req, res) => {
+  const { id, side } = req.body;
+  const index = pendingPeople.findIndex(p => p.id === id);
+  if (index === -1) return res.status(404).send("לא נמצא");
+
+  const approved = pendingPeople.splice(index, 1)[0];
+  savePending();
+
+  const pathToSide = path.join(__dirname, 'data', `${side}.json`);
+  const sideData = JSON.parse(fs.readFileSync(pathToSide));
+  sideData.push(approved);
+  fs.writeFileSync(pathToSide, JSON.stringify(sideData, null, 2));
+
+  res.send("אושר ונשמר");
+});
 
 app.get("/api/user", (req, res) => {
   if (!req.session.user) return res.status(401).json({ error: "לא מחובר" });
