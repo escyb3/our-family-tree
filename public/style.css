@@ -121,5 +121,51 @@ h2 {
   }
   .language-toggle {
     margin-top: 10px;
+    /* תפריט צד מודרני */
+.sidebar {
+  background-color: #f9fafb;
+  border-right: 1px solid #ddd;
+  padding: 1rem;
+  width: 260px;
+  font-family: "Segoe UI", "Alef", sans-serif;
+  font-size: 1rem;
+}
+
+.sidebar h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #1e3a8a;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 10px 0;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.sidebar ul li a i {
+  margin-left: 10px;
+  font-size: 1.2rem;
+}
+
   }
 }
