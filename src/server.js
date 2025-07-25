@@ -206,6 +206,8 @@ app.post("/api/autofill", (req, res) => {
   };
   res.json(filled);
 });
+const aiRoutes = require("./routes/ai.js"); // או הנתיב הרלוונטי
+app.use(aiRoutes);
 
 
 app.listen(3000, () => console.log("השרת רץ על פורט 3000"));
