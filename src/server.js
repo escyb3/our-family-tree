@@ -3,6 +3,14 @@ const express = require("express");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
 const fs = require("fs");
+const path = require("path");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+const pdfParse = require("pdf-parse");
+const { v4: uuidv4 } = require("uuid");
+const { Translate } = require("@google-cloud/translate").v2;
+const translate = new Translate({ key: process.env.GOOGLE_API_KEY });
+
 const app = express();
 
 app.use(express.static("public"));
@@ -10,14 +18,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: "secret", resave: false, saveUninitialized: true }));
 
-const path = require('path');
-const users = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'users.json')));
-
+const usersPath = path.join(__dirname, 'data', 'users.json');
+let users = JSON.parse(fs.readFileSync(usersPath));
 function saveUsers() {
-  fs.writeFileSync("users.json", JSON.stringify(users, null, 2));
+  fs.writeFileSync(usersPath, JSON.stringify(users, null, 2));
 }
+
+const messagesPath = path.join(__dirname, 'data', 'messages.json');
+let messages = fs.existsSync(messagesPath) ? JSON.parse(fs.readFileSync(messagesPath)) : [];
 function saveMessages() {
-  fs.writeFileSync("messages.json", JSON.stringify(messages, null, 2));
+  fs.writeFileSync(messagesPath, JSON.stringify(messages, null, 2));
 }
 
 function auth(role) {
@@ -49,7 +59,6 @@ app.post("/delete-user", auth("admin"), (req, res) => {
   saveUsers();
   res.send("המשתמש נמחק");
 });
-
 
 app.post("/update-user", auth("admin"), (req, res) => {
   const { username, role, side } = req.body;
@@ -106,16 +115,16 @@ app.post("/reply-message", (req, res) => {
     res.status(404).send("הודעה לא נמצאה");
   }
 });
+
 let pendingPeople = [];
 const pendingPath = path.join(__dirname, 'data', 'pending.json');
-
 if (fs.existsSync(pendingPath)) {
   pendingPeople = JSON.parse(fs.readFileSync(pendingPath));
 }
-
 function savePending() {
   fs.writeFileSync(pendingPath, JSON.stringify(pendingPeople, null, 2));
 }
+
 app.post("/add-person", (req, res) => {
   const person = req.body;
   person.id = "p" + Date.now();
@@ -124,9 +133,11 @@ app.post("/add-person", (req, res) => {
   savePending();
   res.send("התווסף בהצלחה ואישורך ממתין לאישור מנהל.");
 });
+
 app.get("/pending-people", auth("admin"), (req, res) => {
   res.json(pendingPeople);
 });
+
 app.post("/approve-person", auth("admin"), (req, res) => {
   const { id, side } = req.body;
   const index = pendingPeople.findIndex(p => p.id === id);
@@ -147,43 +158,39 @@ app.get("/api/user", (req, res) => {
   if (!req.session.user) return res.status(401).json({ error: "לא מחובר" });
   res.json(req.session.user);
 });
+
 app.get("/events", (req, res) => {
   const events = JSON.parse(fs.readFileSync("data/events.json"));
   res.json(events);
 });
+
 app.post("/events", (req, res) => {
   const events = JSON.parse(fs.readFileSync("data/events.json"));
   events.push(req.body);
   fs.writeFileSync("data/events.json", JSON.stringify(events, null, 2));
   res.sendStatus(200);
 });
-// למעלה ב-importים:
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
-const pdfParse = require("pdf-parse");
-const { v4: uuidv4 } = require("uuid");
 
-// צ'אט רגיל - תשובה מבוססת שאלה כללית
 app.post("/api/ask", async (req, res) => {
-  const { question } = req.body;
-  // מענה פשוט לדוגמה. אפשר להרחיב עם AI אמיתי או מסד נתונים.
-  if (question.includes("מי אבא של")) {
-    return res.json({ answer: "לא מצאתי מידע על האבא, נסה לחפש לפי שם מלא." });
+  const { question, lang } = req.body;
+  const answer = `שאלת: "${question}" - אנו עדיין לומדים את השאלה הזאת.`;
+
+  if (lang === "en") {
+    const [translated] = await translate.translate(answer, "en");
+    return res.json({ answer: translated });
   }
-  res.json({ answer: `שאלת: "${question}" - אנו עדיין לומדים את השאלה הזאת.` });
+
+  res.json({ answer });
 });
 
-// בדיקת קשר משפחתי בין שני שמות
 app.post("/api/ask-relation", (req, res) => {
   const { name1, name2 } = req.body;
-  // דוגמה בלבד. בפועל יש לחפש בקובץ JSON של העץ.
   if (name1 === "שלמה בן אבו" && name2 === "סוזן אלחרר") {
     return res.json({ relation: "בני זוג" });
   }
   res.json({ relation: "הקשר לא נמצא" });
 });
 
-// ניתוח PDF עם אילן יוחסין
 app.post("/api/parse-pdf", upload.single("file"), async (req, res) => {
   try {
     const dataBuffer = fs.readFileSync(req.file.path);
@@ -194,10 +201,8 @@ app.post("/api/parse-pdf", upload.single("file"), async (req, res) => {
   }
 });
 
-// השלמה אוטומטית של נתונים חסרים
 app.post("/api/autofill", (req, res) => {
   const { partial } = req.body;
-  // ניתן לחבר ל-GPT או אלגוריתם ניתוח
   const filled = {
     ...partial,
     birthDate: partial.birthDate || "1900",
@@ -206,43 +211,13 @@ app.post("/api/autofill", (req, res) => {
   };
   res.json(filled);
 });
-// לוג בסיסי לפעילות
-const logStream = fs.createWriteStream(path.join(__dirname, "data", "activity.log"), { flags: 'a' });
 
+const logStream = fs.createWriteStream(path.join(__dirname, "data", "activity.log"), { flags: 'a' });
 app.use((req, res, next) => {
   const user = req.session.user ? req.session.user.username : "anonymous";
   const log = `[${new Date().toISOString()}] ${user} => ${req.method} ${req.url}\n`;
   logStream.write(log);
   next();
 });
-const { Translate } = require("@google-cloud/translate").v2;
-const translate = new Translate({ key: process.env.GOOGLE_API_KEY });
-
-app.post("/api/ask", async (req, res) => {
-  const { question, lang } = req.body;
-  const answer = await ai.getAnswer(question); // פונקציית הבינה שלך
-
-  if (lang === "en") {
-    const [translated] = await translate.translate(answer, "en");
-    return res.json({ answer: translated });
-  }
-
-  res.json({ answer });
-});
-body: JSON.stringify({ question, lang: "he" }) // או "en"
-let messages = [];
-const messagesPath = path.join(__dirname, 'data', 'messages.json');
-if (fs.existsSync(messagesPath)) {
-  messages = JSON.parse(fs.readFileSync(messagesPath));
-}
-function saveMessages() {
-  fs.writeFileSync(messagesPath, JSON.stringify(messages, null, 2));
-}
-const usersPath = path.join(__dirname, 'data', 'users.json');
-const users = JSON.parse(fs.readFileSync(usersPath));
-function saveUsers() {
-  fs.writeFileSync(usersPath, JSON.stringify(users, null, 2));
-}
-
 
 app.listen(3000, () => console.log("השרת רץ על פורט 3000"));
