@@ -49,55 +49,7 @@ app.post("/delete-user", auth("admin"), (req, res) => {
   saveUsers();
   res.send("המשתמש נמחק");
 });
-// למעלה ב-importים:
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
-const pdfParse = require("pdf-parse");
-const { v4: uuidv4 } = require("uuid");
 
-// צ'אט רגיל - תשובה מבוססת שאלה כללית
-app.post("/api/ask", async (req, res) => {
-  const { question } = req.body;
-  // מענה פשוט לדוגמה. אפשר להרחיב עם AI אמיתי או מסד נתונים.
-  if (question.includes("מי אבא של")) {
-    return res.json({ answer: "לא מצאתי מידע על האבא, נסה לחפש לפי שם מלא." });
-  }
-  res.json({ answer: `שאלת: "${question}" - אנו עדיין לומדים את השאלה הזאת.` });
-});
-
-// בדיקת קשר משפחתי בין שני שמות
-app.post("/api/ask-relation", (req, res) => {
-  const { name1, name2 } = req.body;
-  // דוגמה בלבד. בפועל יש לחפש בקובץ JSON של העץ.
-  if (name1 === "שלמה בן אבו" && name2 === "סוזן אלחרר") {
-    return res.json({ relation: "בני זוג" });
-  }
-  res.json({ relation: "הקשר לא נמצא" });
-});
-
-// ניתוח PDF עם אילן יוחסין
-app.post("/api/parse-pdf", upload.single("file"), async (req, res) => {
-  try {
-    const dataBuffer = fs.readFileSync(req.file.path);
-    const data = await pdfParse(dataBuffer);
-    res.json({ text: data.text });
-  } catch (err) {
-    res.status(500).json({ error: "שגיאה בניתוח הקובץ" });
-  }
-});
-
-// השלמה אוטומטית של נתונים חסרים
-app.post("/api/autofill", (req, res) => {
-  const { partial } = req.body;
-  // ניתן לחבר ל-GPT או אלגוריתם ניתוח
-  const filled = {
-    ...partial,
-    birthDate: partial.birthDate || "1900",
-    birthPlace: partial.birthPlace || "לא ידוע",
-    id: uuidv4()
-  };
-  res.json(filled);
-});
 
 app.post("/update-user", auth("admin"), (req, res) => {
   const { username, role, side } = req.body;
@@ -204,6 +156,55 @@ app.post("/events", (req, res) => {
   events.push(req.body);
   fs.writeFileSync("data/events.json", JSON.stringify(events, null, 2));
   res.sendStatus(200);
+});
+// למעלה ב-importים:
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+const pdfParse = require("pdf-parse");
+const { v4: uuidv4 } = require("uuid");
+
+// צ'אט רגיל - תשובה מבוססת שאלה כללית
+app.post("/api/ask", async (req, res) => {
+  const { question } = req.body;
+  // מענה פשוט לדוגמה. אפשר להרחיב עם AI אמיתי או מסד נתונים.
+  if (question.includes("מי אבא של")) {
+    return res.json({ answer: "לא מצאתי מידע על האבא, נסה לחפש לפי שם מלא." });
+  }
+  res.json({ answer: `שאלת: "${question}" - אנו עדיין לומדים את השאלה הזאת.` });
+});
+
+// בדיקת קשר משפחתי בין שני שמות
+app.post("/api/ask-relation", (req, res) => {
+  const { name1, name2 } = req.body;
+  // דוגמה בלבד. בפועל יש לחפש בקובץ JSON של העץ.
+  if (name1 === "שלמה בן אבו" && name2 === "סוזן אלחרר") {
+    return res.json({ relation: "בני זוג" });
+  }
+  res.json({ relation: "הקשר לא נמצא" });
+});
+
+// ניתוח PDF עם אילן יוחסין
+app.post("/api/parse-pdf", upload.single("file"), async (req, res) => {
+  try {
+    const dataBuffer = fs.readFileSync(req.file.path);
+    const data = await pdfParse(dataBuffer);
+    res.json({ text: data.text });
+  } catch (err) {
+    res.status(500).json({ error: "שגיאה בניתוח הקובץ" });
+  }
+});
+
+// השלמה אוטומטית של נתונים חסרים
+app.post("/api/autofill", (req, res) => {
+  const { partial } = req.body;
+  // ניתן לחבר ל-GPT או אלגוריתם ניתוח
+  const filled = {
+    ...partial,
+    birthDate: partial.birthDate || "1900",
+    birthPlace: partial.birthPlace || "לא ידוע",
+    id: uuidv4()
+  };
+  res.json(filled);
 });
 
 
