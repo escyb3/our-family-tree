@@ -1,49 +1,24 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he">
 <head>
   <meta charset="UTF-8">
-  <title>📬 תיבת הודעות</title>
-  <link rel="stylesheet" href="style.css">
+  <title>ההודעות שלי</title>
+  <script defer src="mailbox.js"></script>
+  <style>
+    body { direction: rtl; font-family: Arial, sans-serif; padding: 2rem; }
+    h1 { color: #333; }
+    .message { border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; }
+    .from { font-weight: bold; }
+    .subject { font-size: 1.2em; margin-bottom: 0.5rem; }
+    .timestamp { color: #777; font-size: 0.9em; }
+    .body { margin-top: 0.5rem; }
+    .reply-box { margin-top: 1rem; }
+    textarea { width: 100%; padding: 0.5rem; }
+    button { margin-top: 0.5rem; padding: 0.5rem 1rem; }
+  </style>
 </head>
 <body>
-  <h2>📬 ההודעות שלי</h2>
-  <div class="message-thread" id="inbox"></div>
-  <script>
-    fetch("/messages")
-      .then(res => res.json())
-      .then(messages => {
-        const inbox = document.getElementById("inbox");
-        messages.forEach(msg => {
-          const div = document.createElement("div");
-          div.className = "message";
-          div.innerHTML = `
-            <strong>מאת:</strong> ${msg.from}<br>
-            <strong>נושא:</strong> ${msg.subject}<br>
-            <p>${msg.body}</p>
-            <small>${new Date(msg.timestamp).toLocaleString()}</small>
-            <div class="replies">
-              ${(msg.replies || []).map(r => `<div class='reply'><strong>${r.from}:</strong> ${r.body}</div>`).join('')}
-            </div>
-            <form onsubmit="return replyTo('${msg.threadId}', this)">
-              <textarea name="body" placeholder="כתוב תגובה..." required></textarea>
-              <button type="submit">↩️ שלח תגובה</button>
-            </form>
-            <hr>
-          `;
-          inbox.appendChild(div);
-        });
-      });
-
-    function replyTo(threadId, form) {
-      const body = form.body.value;
-      fetch("/reply-message", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ threadId, body })
-      }).then(res => res.text()).then(alert);
-      form.body.value = "";
-      return false;
-    }
-  </script>
+  <h1>ההודעות שלי</h1>
+  <div id="inbox">טוען הודעות...</div>
 </body>
 </html>
