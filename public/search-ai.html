@@ -2,16 +2,133 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>חיפוש חכם לפי תיאור</title>
-  <link rel="stylesheet" href="style.css">
+  <title>צ'אט גנאולוגי חכם</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f4f8;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      background-color: #0057a3;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+    #chat-box {
+      flex: 1;
+      overflow-y: auto;
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
+    }
+    .msg {
+      margin: 0.5rem 0;
+    }
+    .msg.user {
+      text-align: right;
+      color: #0057a3;
+    }
+    .msg.ai {
+      text-align: left;
+      color: #333;
+    }
+    form {
+      display: flex;
+      gap: 0.5rem;
+    }
+    input[type="text"] {
+      flex: 1;
+      padding: 0.7rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      padding: 0.7rem 1rem;
+      background: #0057a3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .examples {
+      margin-top: 1rem;
+      background: #e8f0ff;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    .examples h3 {
+      margin: 0 0 0.5rem;
+    }
+    .examples ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .examples li {
+      margin-bottom: 0.3rem;
+    }
+  </style>
 </head>
 <body>
+  <header>🧠 צ'אט גנאולוגי</header>
   <main>
-    <h2>חיפוש חכם לפי תיאור של בן משפחה</h2>
-    <form action="/search-ai" method="POST">
-      <textarea name="description" rows="6" placeholder="לדוגמה: גבר בן 80 שנולד במרוקו, עלה לארץ בשנות ה־50 וגר בירושלים..."></textarea>
-      <button type="submit">חפש</button>
+    <div id="chat-box"></div>
+    <form id="chat-form">
+      <input type="text" id="user-input" placeholder="שאל שאלה על עץ המשפחה... למשל: 'מי הילדים של שלמה בן אבו? או 'הראה לי קרובים מהונגריה'" required />
+      <button type="submit">שלח</button>
     </form>
+    <div class="examples">
+      <h3>🧪 דוגמאות לחיפושים חכמים:</h3>
+      <ul>
+        <li>📍 איפה נולדה רחל לייבנר?</li>
+        <li>👨‍👩‍👧‍👦 מי הנכדים של אתא מלכה?</li>
+        <li>🕯️ מי נספה בשואה?</li>
+        <li>🎂 ימי הולדת בחודש יולי</li>
+        <li>🌍 קרובי משפחה בפולין</li>
+        <li>🧩 קשר משפחתי בין ראובן לאסתר</li>
+      </ul>
+    </div>
   </main>
+  <script>
+    const form = document.getElementById("chat-form");
+    const input = document.getElementById("user-input");
+    const chatBox = document.getElementById("chat-box");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const question = input.value.trim();
+      if (!question) return;
+
+      chatBox.innerHTML += `<div class="msg user">${question}</div>`;
+      input.value = "";
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      const res = await fetch("/api/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question })
+      });
+
+      const data = await res.json();
+      chatBox.innerHTML += `<div class="msg ai">${data.answer}</div>`;
+      chatBox.scrollTop = chatBox.scrollHeight;
+    });
+  </script>
 </body>
 </html>
