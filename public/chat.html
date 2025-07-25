@@ -1,34 +1,45 @@
+<!-- chat.html -->
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>צ'אט AI משפחתי</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>צ'אט גנאולוגי</title>
+  <style>
+    body { font-family: sans-serif; background: #f4f8fb; padding: 20px; }
+    #chatbox { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .message { margin: 10px 0; }
+    .user { text-align: right; color: blue; }
+    .bot { text-align: left; color: green; }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>🤖 צ'אט AI משפחתי</h1>
-    <nav>
-      <a href="index.html">בית</a>
-      <a href="messages.html">הודעות</a>
-      <a href="form.html">צור קשר</a>
-    </nav>
-  </header>
+  <div id="chatbox">
+    <h2>צ'אט גנאולוגי</h2>
+    <div id="messages"></div>
+    <form onsubmit="sendMessage(event)">
+      <input type="text" id="input" placeholder="שאל שאלה על המשפחה..." style="width:80%" required />
+      <button type="submit">שלח</button>
+    </form>
+  </div>
+  <script>
+    async function sendMessage(e) {
+      e.preventDefault();
+      const input = document.getElementById("input");
+      const msg = input.value;
+      input.value = "";
 
-  <main>
-    <div id="chat-container">
-      <div id="chat-log"></div>
-      <form id="chat-form">
-        <input type="text" id="user-input" placeholder="כתוב הודעה..." required />
-        <button type="submit">שלח</button>
-      </form>
-    </div>
-  </main>
+      const messagesDiv = document.getElementById("messages");
+      messagesDiv.innerHTML += `<div class="message user">${msg}</div>`;
 
-  <footer>
-    <p>&copy; 2025 האתר המשפחתי</p>
-  </footer>
+      const res = await fetch("/api/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: msg })
+      });
+      const data = await res.json();
 
-  <script src="ai.js"></script>
+      messagesDiv.innerHTML += `<div class="message bot">${data.answer}</div>`;
+    }
+  </script>
 </body>
 </html>
