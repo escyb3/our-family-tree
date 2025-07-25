@@ -146,5 +146,16 @@ app.get("/api/user", (req, res) => {
   if (!req.session.user) return res.status(401).json({ error: "לא מחובר" });
   res.json(req.session.user);
 });
+app.get("/events", (req, res) => {
+  const events = JSON.parse(fs.readFileSync("data/events.json"));
+  res.json(events);
+});
+app.post("/events", (req, res) => {
+  const events = JSON.parse(fs.readFileSync("data/events.json"));
+  events.push(req.body);
+  fs.writeFileSync("data/events.json", JSON.stringify(events, null, 2));
+  res.sendStatus(200);
+});
+
 
 app.listen(3000, () => console.log("השרת רץ על פורט 3000"));
