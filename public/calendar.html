@@ -1,61 +1,87 @@
 
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
-    <title>📅 לוח שנה משפחתי</title>
   <meta charset="UTF-8">
-  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css' rel='stylesheet' />
-  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+  <title> 📅 לוח שנה משפחתי</title>
+  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css' rel='stylesheet' />
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js'></script>
   <style>
-    body { font-family: sans-serif; direction: rtl; padding: 20px; background: #f8f9fa; }
-    #calendar { max-width: 900px; margin: 0 auto; background: white; border-radius: 8px; padding: 10px; }
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      direction: rtl;
+      background: #f2f6fc;
+    }
+    header {
+      background-color: #0057a3;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.5em;
+    }
+    #calendar {
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .add-event-form {
+      max-width: 700px;
+      margin: 20px auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .add-event-form input, .add-event-form button {
+      padding: 10px;
+      margin: 6px;
+    }
   </style>
 </head>
 <body>
-  <h1 style="text-align: center;">לוח שנה משפחתי</h1>
-  <div id='calendar'></div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', async function() {
-      const calendarEl = document.getElementById('calendar');
+<header>לוח שנה משפחתי</header>
 
-      const res = await fetch('/events');
-      const events = await res.json();
+<div class="add-event-form">
+  <h3>הוסף אירוע</h3>
+  <input type="text" id="title" placeholder="שם האירוע" required />
+  <input type="date" id="date" required />
+  <button onclick="addEvent()">הוסף</button>
+</div>
 
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'he',
-        selectable: true,
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay'
-        },
-        events,
-        select: function(info) {
-          const title = prompt("שם האירוע:");
-          if (!title) return;
-          const type = prompt("סוג האירוע: יום הולדת, אזכרה, נישואין...");
+<div id='calendar'></div>
 
-          const newEvent = {
-            title,
-            start: info.startStr,
-            end: info.endStr,
-            type
-          };
-
-          fetch('/events', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newEvent)
-          }).then(() => {
-            calendar.addEvent(newEvent);
-          });
-        }
-      });
-
-      calendar.render();
+<script>
+  let calendar;
+  document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar');
+    calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      locale: 'he',
+      events: JSON.parse(localStorage.getItem("familyEvents") || "[]")
     });
-  </script>
+    calendar.render();
+  });
+
+  function addEvent() {
+    const title = document.getElementById("title").value;
+    const date = document.getElementById("date").value;
+    if (title && date) {
+      const newEvent = { title, start: date };
+      calendar.addEvent(newEvent);
+      const existing = JSON.parse(localStorage.getItem("familyEvents") || "[]");
+      existing.push(newEvent);
+      localStorage.setItem("familyEvents", JSON.stringify(existing));
+      document.getElementById("title").value = "";
+      document.getElementById("date").value = "";
+    }
+  }
+</script>
+
 </body>
 </html>
