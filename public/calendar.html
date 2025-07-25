@@ -1,20 +1,61 @@
+
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he">
 <head>
-  <meta charset="UTF-8" />
-  <title>📅 לוח שנה משפחתי</title>
-  <link rel="stylesheet" href="/style.css" />
+    <title>📅 לוח שנה משפחתי</title>
+  <meta charset="UTF-8">
+  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css' rel='stylesheet' />
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+  <style>
+    body { font-family: sans-serif; direction: rtl; padding: 20px; background: #f8f9fa; }
+    #calendar { max-width: 900px; margin: 0 auto; background: white; border-radius: 8px; padding: 10px; }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>לוח שנה משפחתי</h1>
-    <p>ימי הולדת, אזכרות, ומפגשים קרובים</p>
-  </header>
-  <main>
-    <ul>
-      <li>🕯️ 6 ביולי – אזכרה לפרנק ון דר ולדה</l
-      <p><li>באוגוסט- יום הולדת לסבתא סוזן 🎂</li></p>
-    </ul>
-  </main>
+  <h1 style="text-align: center;">לוח שנה משפחתי</h1>
+  <div id='calendar'></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      const calendarEl = document.getElementById('calendar');
+
+      const res = await fetch('/events');
+      const events = await res.json();
+
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'he',
+        selectable: true,
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        events,
+        select: function(info) {
+          const title = prompt("שם האירוע:");
+          if (!title) return;
+          const type = prompt("סוג האירוע: יום הולדת, אזכרה, נישואין...");
+
+          const newEvent = {
+            title,
+            start: info.startStr,
+            end: info.endStr,
+            type
+          };
+
+          fetch('/events', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newEvent)
+          }).then(() => {
+            calendar.addEvent(newEvent);
+          });
+        }
+      });
+
+      calendar.render();
+    });
+  </script>
 </body>
 </html>
