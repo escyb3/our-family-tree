@@ -51,8 +51,9 @@
     form {
       display: flex;
       gap: 0.5rem;
+      flex-wrap: wrap;
     }
-    input[type="text"] {
+    input[type="text"], input[type="file"] {
       flex: 1;
       padding: 0.7rem;
       border: 1px solid #ccc;
@@ -66,39 +67,52 @@
       border-radius: 8px;
       cursor: pointer;
     }
+    .section-title {
+      font-weight: bold;
+      margin: 1rem 0 0.5rem;
+    }
   </style>
 </head>
 <body>
   <header>🧠 צ'אט גנאולוגי</header>
   <main>
+    <div class="section-title">שיחה חכמה</div>
     <div id="chat-box"></div>
     <form id="chat-form">
       <input type="text" id="user-input" placeholder="שאל שאלה על עץ המשפחה..." required />
       <button type="submit">שלח</button>
     </form>
-    <br />
+
+    <div class="section-title">🔗 בדיקת קשר משפחתי</div>
     <form id="relation-form">
       <input type="text" id="name1" placeholder="שם ראשון" required />
       <input type="text" id="name2" placeholder="שם שני" required />
-      <button type="submit">בדוק קשר משפחתי</button>
+      <button type="submit">בדוק קשר</button>
     </form>
-    <br />
-    <form id="pdf-form" enctype="multipart/form-data">
-      <input type="file" name="file" required />
-      <button type="submit">נתח קובץ אילן יוחסין</button>
+    <div id="relation-result"></div>
+
+    <div class="section-title">📄 ניתוח אילן מ־PDF</div>
+    <form id="pdf-form">
+      <input type="file" id="pdf-file" accept="application/pdf" required />
+      <button type="submit">נתח קובץ</button>
     </form>
-    <br />
+    <pre id="pdf-result"></pre>
+
+    <div class="section-title">⚙️ השלמה אוטומטית של פרטים</div>
     <form id="autofill-form">
-      <input type="text" id="auto-name" placeholder="שם חסר" required />
-      <button type="submit">השלם נתונים</button>
+      <input type="text" id="partial-name" placeholder="שם" />
+      <input type="text" id="partial-birthDate" placeholder="תאריך לידה (אופציונלי)" />
+      <button type="submit">השלם</button>
     </form>
+    <pre id="autofill-result"></pre>
   </main>
   <script>
+    const chatForm = document.getElementById("chat-form");
+    const input = document.getElementById("user-input");
     const chatBox = document.getElementById("chat-box");
 
-    document.getElementById("chat-form").addEventListener("submit", async (e) => {
+    chatForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const input = document.getElementById("user-input");
       const question = input.value.trim();
       if (!question) return;
 
@@ -111,6 +125,7 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question })
       });
+
       const data = await res.json();
       chatBox.innerHTML += `<div class="msg ai">${data.answer}</div>`;
       chatBox.scrollTop = chatBox.scrollHeight;
@@ -120,42 +135,36 @@
       e.preventDefault();
       const name1 = document.getElementById("name1").value.trim();
       const name2 = document.getElementById("name2").value.trim();
-      if (!name1 || !name2) return;
-
       const res = await fetch("/api/ask-relation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ person1: name1, person2: name2 })
+        body: JSON.stringify({ name1, name2 })
       });
       const data = await res.json();
-      chatBox.innerHTML += `<div class="msg ai">קשר בין ${name1} ל-${name2}: ${data.answer}</div>`;
+      document.getElementById("relation-result").innerText = `🔍 קשר: ${data.relation}`;
     });
 
     document.getElementById("pdf-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const form = e.target;
-      const formData = new FormData(form);
-
-      const res = await fetch("/api/parse-pdf", {
-        method: "POST",
-        body: formData
-      });
+      const file = document.getElementById("pdf-file").files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await fetch("/api/parse-pdf", { method: "POST", body: formData });
       const data = await res.json();
-      chatBox.innerHTML += `<div class="msg ai">נתונים שהופקו מהקובץ: <pre>${JSON.stringify(data, null, 2)}</pre></div>`;
+      document.getElementById("pdf-result").textContent = data.text || data.error;
     });
 
     document.getElementById("autofill-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const name = document.getElementById("auto-name").value.trim();
-      if (!name) return;
-
+      const name = document.getElementById("partial-name").value;
+      const birthDate = document.getElementById("partial-birthDate").value;
       const res = await fetch("/api/autofill", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name })
+        body: JSON.stringify({ partial: { name, birthDate } })
       });
       const data = await res.json();
-      chatBox.innerHTML += `<div class="msg ai">השלמות מוצעות: <pre>${JSON.stringify(data, null, 2)}</pre></div>`;
+      document.getElementById("autofill-result").textContent = JSON.stringify(data, null, 2);
     });
   </script>
 </body>
