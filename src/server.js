@@ -215,6 +215,20 @@ app.use((req, res, next) => {
   logStream.write(log);
   next();
 });
+const { Translate } = require("@google-cloud/translate").v2;
+const translate = new Translate({ key: process.env.GOOGLE_API_KEY });
 
+app.post("/api/ask", async (req, res) => {
+  const { question, lang } = req.body;
+  const answer = await ai.getAnswer(question); // פונקציית הבינה שלך
+
+  if (lang === "en") {
+    const [translated] = await translate.translate(answer, "en");
+    return res.json({ answer: translated });
+  }
+
+  res.json({ answer });
+});
+body: JSON.stringify({ question, lang: "he" }) // או "en"
 
 app.listen(3000, () => console.log("השרת רץ על פורט 3000"));
