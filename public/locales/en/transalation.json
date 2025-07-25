@@ -1,0 +1,16 @@
+{
+  "welcome": "Welcome",
+  "search": "Search",
+  "profile": "Profile",
+  "birth": "Born",
+  "death": "Died",
+  "place": "Place",
+  "spouse": "Spouse",
+  "children": "Children",
+  "parents": "Parents",
+  "siblings": "Siblings",
+  "notes": "Notes",
+  "send": "Send",
+  "reply": "Reply",
+  "inbox": "Inbox"
+}
