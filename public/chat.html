@@ -98,6 +98,21 @@
     </form>
     <pre id="pdf-result"></pre>
 
+    <div class="section-title">🖼️ ניתוח אילן מתמונה</div>
+    <form id="image-form">
+      <input type="file" id="image-file" accept="image/*" required />
+      <button type="submit">נתח תמונה</button>
+    </form>
+    <pre id="image-result"></pre>
+
+    <div class="section-title">🧬 קשר חכם (AI)</div>
+    <form id="relation-ai-form">
+      <input type="text" id="ai-name1" placeholder="שם ראשון" required />
+      <input type="text" id="ai-name2" placeholder="שם שני" required />
+      <button type="submit">בדוק קשר AI</button>
+    </form>
+    <div id="relation-ai-result"></div>
+
     <div class="section-title">⚙️ השלמה אוטומטית של פרטים</div>
     <form id="autofill-form">
       <input type="text" id="partial-name" placeholder="שם" />
@@ -144,6 +159,19 @@
       document.getElementById("relation-result").innerText = `🔍 קשר: ${data.relation}`;
     });
 
+    document.getElementById("relation-ai-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name1 = document.getElementById("ai-name1").value.trim();
+      const name2 = document.getElementById("ai-name2").value.trim();
+      const res = await fetch("/api/ask-relation-smart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name1, name2 })
+      });
+      const data = await res.json();
+      document.getElementById("relation-ai-result").innerText = `🤖 קשר AI: ${data.relation}`;
+    });
+
     document.getElementById("pdf-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const file = document.getElementById("pdf-file").files[0];
@@ -152,6 +180,16 @@
       const res = await fetch("/api/parse-pdf", { method: "POST", body: formData });
       const data = await res.json();
       document.getElementById("pdf-result").textContent = data.text || data.error;
+    });
+
+    document.getElementById("image-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const file = document.getElementById("image-file").files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await fetch("/api/analyze-tree-image", { method: "POST", body: formData });
+      const data = await res.json();
+      document.getElementById("image-result").textContent = data.text || data.error;
     });
 
     document.getElementById("autofill-form").addEventListener("submit", async (e) => {
@@ -169,4 +207,3 @@
   </script>
 </body>
 </html>
-
