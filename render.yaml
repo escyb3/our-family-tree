@@ -2,9 +2,6 @@ services:
   - type: web
     name: our-family-tree
     env: node
-    buildCommand: npm install
-    startCommand: npm start
-    buildFilter:
-      paths:
-        - package.json
-        - package-lock.json
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    plan: free
