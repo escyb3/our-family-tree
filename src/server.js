@@ -230,5 +230,19 @@ app.post("/api/ask", async (req, res) => {
   res.json({ answer });
 });
 body: JSON.stringify({ question, lang: "he" }) // או "en"
+let messages = [];
+const messagesPath = path.join(__dirname, 'data', 'messages.json');
+if (fs.existsSync(messagesPath)) {
+  messages = JSON.parse(fs.readFileSync(messagesPath));
+}
+function saveMessages() {
+  fs.writeFileSync(messagesPath, JSON.stringify(messages, null, 2));
+}
+const usersPath = path.join(__dirname, 'data', 'users.json');
+const users = JSON.parse(fs.readFileSync(usersPath));
+function saveUsers() {
+  fs.writeFileSync(usersPath, JSON.stringify(users, null, 2));
+}
+
 
 app.listen(3000, () => console.log("השרת רץ על פורט 3000"));
