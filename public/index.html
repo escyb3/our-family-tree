@@ -43,6 +43,27 @@
     </ul>
   </nav>
   </header>
+   <div style="position: fixed; top: 1rem; left: 1rem; z-index: 1000;">
+    <button id="langToggle" class="px-4 py-2 rounded-full bg-blue-500 text-white shadow-md hover:bg-blue-600 transition">
+      EN
+    </button>
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById("langToggle");
+    let lang = localStorage.getItem("lang") || "he";
+
+    toggleBtn.textContent = lang === "he" ? "EN" : "HE";
+
+    toggleBtn.addEventListener("click", () => {
+      lang = lang === "he" ? "en" : "he";
+      localStorage.setItem("lang", lang);
+      location.reload();
+    });
+  </script>
+</body>
+</html>
+
 
   <main>
     <section>
