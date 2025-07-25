@@ -101,3 +101,64 @@ export default function AddPersonForm({ onSubmit }) {
     </Card>
   );
 }
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent } from "@/components/ui/card";
+
+export default function AddPersonForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    gender: "",
+    birthDate: "",
+    birthPlace: "",
+    deathDate: "",
+    deathPlace: "",
+    image: "",
+    parents: "",
+    spouse: "",
+    children: "",
+    notes: ""
+  });
+
+  const [status, setStatus] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/suggest-person", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        setStatus("ההצעה נשלחה לאישור");
+        setFormData({
+          name: "",
+          gender: "",
+          birthDate: "",
+          birthPlace: "",
+          deathDate: "",
+          deathPlace: "",
+          image: "",
+          parents: "",
+          spouse: "",
+          children: "",
+          notes: ""
+        });
+      } else {
+        setStatus("שגיאה בשליחה");
+      }
+    } catch (error) {
+      console.error("שגיאה בשליחה:", error);
+      setStatus("שגיאה בשליחה");
+    }
+  };
+
+
