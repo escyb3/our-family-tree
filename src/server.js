@@ -206,8 +206,15 @@ app.post("/api/autofill", (req, res) => {
   };
   res.json(filled);
 });
-const aiRoutes = require("./routes/ai.js"); // או הנתיב הרלוונטי
-app.use(aiRoutes);
+// לוג בסיסי לפעילות
+const logStream = fs.createWriteStream(path.join(__dirname, "data", "activity.log"), { flags: 'a' });
+
+app.use((req, res, next) => {
+  const user = req.session.user ? req.session.user.username : "anonymous";
+  const log = `[${new Date().toISOString()}] ${user} => ${req.method} ${req.url}\n`;
+  logStream.write(log);
+  next();
+});
 
 
 app.listen(3000, () => console.log("השרת רץ על פורט 3000"));
