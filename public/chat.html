@@ -76,14 +76,29 @@
       <input type="text" id="user-input" placeholder="שאל שאלה על עץ המשפחה..." required />
       <button type="submit">שלח</button>
     </form>
+    <br />
+    <form id="relation-form">
+      <input type="text" id="name1" placeholder="שם ראשון" required />
+      <input type="text" id="name2" placeholder="שם שני" required />
+      <button type="submit">בדוק קשר משפחתי</button>
+    </form>
+    <br />
+    <form id="pdf-form" enctype="multipart/form-data">
+      <input type="file" name="file" required />
+      <button type="submit">נתח קובץ אילן יוחסין</button>
+    </form>
+    <br />
+    <form id="autofill-form">
+      <input type="text" id="auto-name" placeholder="שם חסר" required />
+      <button type="submit">השלם נתונים</button>
+    </form>
   </main>
   <script>
-    const form = document.getElementById("chat-form");
-    const input = document.getElementById("user-input");
     const chatBox = document.getElementById("chat-box");
 
-    form.addEventListener("submit", async (e) => {
+    document.getElementById("chat-form").addEventListener("submit", async (e) => {
       e.preventDefault();
+      const input = document.getElementById("user-input");
       const question = input.value.trim();
       if (!question) return;
 
@@ -96,12 +111,52 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question })
       });
-
       const data = await res.json();
       chatBox.innerHTML += `<div class="msg ai">${data.answer}</div>`;
       chatBox.scrollTop = chatBox.scrollHeight;
     });
+
+    document.getElementById("relation-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name1 = document.getElementById("name1").value.trim();
+      const name2 = document.getElementById("name2").value.trim();
+      if (!name1 || !name2) return;
+
+      const res = await fetch("/api/ask-relation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ person1: name1, person2: name2 })
+      });
+      const data = await res.json();
+      chatBox.innerHTML += `<div class="msg ai">קשר בין ${name1} ל-${name2}: ${data.answer}</div>`;
+    });
+
+    document.getElementById("pdf-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+
+      const res = await fetch("/api/parse-pdf", {
+        method: "POST",
+        body: formData
+      });
+      const data = await res.json();
+      chatBox.innerHTML += `<div class="msg ai">נתונים שהופקו מהקובץ: <pre>${JSON.stringify(data, null, 2)}</pre></div>`;
+    });
+
+    document.getElementById("autofill-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("auto-name").value.trim();
+      if (!name) return;
+
+      const res = await fetch("/api/autofill", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name })
+      });
+      const data = await res.json();
+      chatBox.innerHTML += `<div class="msg ai">השלמות מוצעות: <pre>${JSON.stringify(data, null, 2)}</pre></div>`;
+    });
   </script>
 </body>
 </html>
-
