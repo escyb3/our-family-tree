@@ -1,0 +1,125 @@
+/* בסיס עיצוב */
+body {
+  font-family: "Segoe UI", "Alef", "Heebo", sans-serif;
+  background: linear-gradient(to right, #f0f4f8, #e8ecf2);
+  margin: 0;
+  padding: 0;
+  color: #222;
+  direction: rtl;
+}
+
+a {
+  color: #0a5fc2;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* כותרת ראשית */
+header {
+  background-color: #0056b3;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 4px solid #004a99;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+/* כפתור שפה */
+.language-toggle {
+  background: white;
+  color: #0056b3;
+  border: 1px solid #0056b3;
+  border-radius: 20px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.language-toggle:hover {
+  background: #f0f8ff;
+}
+
+/* אזור תוכן */
+main {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: white;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+  border-radius: 12px;
+}
+
+/* טופס */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+input, select, textarea {
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+button {
+  background-color: #0074d9;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #005fa3;
+}
+
+/* הודעות / כרטיסים */
+.card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* תצוגת הודעות */
+.message {
+  background: #f1f5ff;
+  border: 1px solid #cddafd;
+  padding: 0.7rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+/* כותרת משנית */
+h2 {
+  font-size: 1.5rem;
+  color: #003366;
+  border-bottom: 2px solid #cce0ff;
+  padding-bottom: 0.3rem;
+}
+
+/* רספונסיביות */
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .language-toggle {
+    margin-top: 10px;
+  }
+}
