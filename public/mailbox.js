@@ -123,6 +123,16 @@ async function reply(threadId, body) {
     },
     body: JSON.stringify({ threadId, body }),
   });
+  function searchMessages() {
+  const q = document.getElementById("searchBox").value.toLowerCase();
+  const filtered = allMessages.filter(m =>
+    m.subject.toLowerCase().includes(q) ||
+    m.body.toLowerCase().includes(q) ||
+    m.from.toLowerCase().includes(q)
+  );
+  renderMessages(filtered);
+}
+
 
   if (res.ok) {
     alert("תגובה נשלחה בהצלחה");
