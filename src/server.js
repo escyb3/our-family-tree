@@ -301,7 +301,7 @@ app.get("/api/family-summary", (req, res) => {
   res.json(summary);
 });
   JSON.parse(fs.readFileSync("messages.json"))
-  : [];
+const example = [];
 
 function saveMessages() {
   fs.writeFileSync("messages.json", JSON.stringify(messages, null, 2));
