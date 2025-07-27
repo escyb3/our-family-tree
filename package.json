@@ -1,22 +1,32 @@
 {
   "name": "our-family-tree",
   "version": "1.0.0",
-  "description": "A family tree management app with OCR and AI support",
+  "description": "אתר אינטראקטיבי לעץ משפחה",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js"
   },
+  "keywords": [],
+  "author": "Yair Ben Abou",
+  "license": "MIT",
+  "type": "commonjs",
   "engines": {
     "node": ">=20.0.0"
   },
   "dependencies": {
-    "@google-cloud/translate": "^8.0.0",
-    "bcrypt": "^5.1.0",
-    "express": "^4.19.2",
-    "express-session": "^1.17.3",
-    "multer": "^2.0.0",
-    "pdf-parse": "^1.1.1",
-    "tesseract.js": "^4.1.1",
-    "uuid": "^9.0.0"
+    "@google/generative-ai": "^0.5.0",
+    "axios": "^1.6.8",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.4",
+    "form-data": "^4.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.13",
+    "sqlite3": "^5.1.7",
+    "uuid": "^9.0.1"
   }
 }
