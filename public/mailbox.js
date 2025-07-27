@@ -159,6 +159,26 @@ window.onload = () => {
   form.subject.value = draft.subject || "";
   form.body.value = draft.body || "";
 };
+const file = document.getElementById("attachment").files[0];
+let attachmentUrl = null;
+
+if (file) {
+  const formData = new FormData();
+  formData.append("attachment", file);
+  const uploadRes = await fetch("/upload-attachment", {
+    method: "POST",
+    body: formData
+  });
+  const uploadData = await uploadRes.json();
+  attachmentUrl = uploadData.url;
+}
+body: JSON.stringify({
+  to: form.to.value,
+  subject: form.subject.value,
+  body: form.body.value,
+  attachment: attachmentUrl,
+  type: form.type.value
+})
 
 
 
