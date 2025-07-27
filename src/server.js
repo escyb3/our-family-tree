@@ -162,22 +162,21 @@ app.use((req, res, next) => {
   next();
 });
 app.get("/messages", requireLogin, (req, res) => { inbox.innerHTML = data.map(m => `
+// בתוך פונקציה אסינכרונית, למשל כשמשתמש לוחץ על הודעה
+async function markAsRead(threadId) {
+  try {
+    await fetch(`/mark-read?threadId=${threadId}`);
+  } catch (err) {
+    console.error('Failed to mark as read', err);
+  }
+}
+<div class="msg-card ${m.read ? '' : 'unread'}" onclick="markAsRead('${m.threadId}')">
+</div>
 app.get("/mark-read", (req, res) => {
   const { threadId } = req.query;
   const msg = messages.find(m => m.threadId === threadId);
   if (msg) msg.read = true;
-  res.sendStatus(200); // סיום תקין
-});
-// client-side script (בדפדפן, לא ב-server.js!)
-(async () => {
-  await fetch(`/mark-read?threadId=${m.threadId}`);
-})();
-async function markAsRead(threadId) {
-  await fetch(`/mark-read?threadId=${threadId}`);
-}
-
-  saveMessages();
-  res.sendStatus(200);
+  res.sendStatus(200); // שלח תגובה כדי שהלקוח ידע שהבקשה הצליחה
 });
 <style>
   .unread { background: #e3f2fd; border-right: 3px solid #2196f3; }
