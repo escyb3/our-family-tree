@@ -76,7 +76,7 @@
 <body>
   <header>🧠 צ'אט גנאולוגי</header>
   <main>
-    <div class="section-title">שיחה חכמה</div>
+    <div class="section-title">🗣️ שיחה חכמה</div>
     <div id="chat-box"></div>
     <form id="chat-form">
       <input type="text" id="user-input" placeholder="שאל שאלה על עץ המשפחה..." required />
@@ -91,27 +91,12 @@
     </form>
     <div id="relation-result"></div>
 
-    <div class="section-title">📄 ניתוח אילן מ־PDF</div>
-    <form id="pdf-form">
-      <input type="file" id="pdf-file" accept="application/pdf" required />
+    <div class="section-title">📄 ניתוח PDF / תמונה / מסמך</div>
+    <form id="file-form">
+      <input type="file" id="doc-file" accept="application/pdf,.doc,.docx,.txt,image/*" required />
       <button type="submit">נתח קובץ</button>
     </form>
-    <pre id="pdf-result"></pre>
-
-    <div class="section-title">🖼️ ניתוח אילן מתמונה</div>
-    <form id="image-form">
-      <input type="file" id="image-file" accept="image/*" required />
-      <button type="submit">נתח תמונה</button>
-    </form>
-    <pre id="image-result"></pre>
-
-    <div class="section-title">🧬 קשר חכם (AI)</div>
-    <form id="relation-ai-form">
-      <input type="text" id="ai-name1" placeholder="שם ראשון" required />
-      <input type="text" id="ai-name2" placeholder="שם שני" required />
-      <button type="submit">בדוק קשר AI</button>
-    </form>
-    <div id="relation-ai-result"></div>
+    <pre id="file-result"></pre>
 
     <div class="section-title">⚙️ השלמה אוטומטית של פרטים</div>
     <form id="autofill-form">
@@ -120,89 +105,102 @@
       <button type="submit">השלם</button>
     </form>
     <pre id="autofill-result"></pre>
+
+    <div class="section-title">🧠 זיהוי קשרים מתוך תמונה או מסמך (OCR)</div>
+    <form id="ocr-form">
+      <input type="file" id="ocr-file" accept="image/*,.pdf" required />
+      <button type="submit">זהה קשרים</button>
+    </form>
+    <pre id="ocr-result"></pre>
+
+    <div class="section-title">🕸️ הצעת קשרים חסרים</div>
+    <form id="suggest-form">
+      <input type="text" id="suggest-name" placeholder="הזן שם לבדיקה" />
+      <button type="submit">הצע קשרים</button>
+    </form>
+    <pre id="suggest-result"></pre>
+
+    <div class="section-title">📊 סיכום אילן יוחסין</div>
+    <form id="summary-form">
+      <button type="submit">צור סיכום</button>
+    </form>
+    <pre id="summary-result"></pre>
+
   </main>
   <script>
-    const chatForm = document.getElementById("chat-form");
-    const input = document.getElementById("user-input");
     const chatBox = document.getElementById("chat-box");
 
-    chatForm.addEventListener("submit", async (e) => {
+    document.getElementById("chat-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const question = input.value.trim();
+      const question = userInput.value.trim();
       if (!question) return;
-
       chatBox.innerHTML += `<div class="msg user">${question}</div>`;
-      input.value = "";
-      chatBox.scrollTop = chatBox.scrollHeight;
-
+      userInput.value = "";
       const res = await fetch("/api/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question })
       });
-
       const data = await res.json();
       chatBox.innerHTML += `<div class="msg ai">${data.answer}</div>`;
-      chatBox.scrollTop = chatBox.scrollHeight;
     });
 
     document.getElementById("relation-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const name1 = document.getElementById("name1").value.trim();
-      const name2 = document.getElementById("name2").value.trim();
       const res = await fetch("/api/ask-relation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name1, name2 })
+        body: JSON.stringify({ name1: name1.value, name2: name2.value })
       });
       const data = await res.json();
-      document.getElementById("relation-result").innerText = `🔍 קשר: ${data.relation}`;
+      relationResult.textContent = `🔍 קשר: ${data.relation}`;
     });
 
-    document.getElementById("relation-ai-form").addEventListener("submit", async (e) => {
+    document.getElementById("file-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const name1 = document.getElementById("ai-name1").value.trim();
-      const name2 = document.getElementById("ai-name2").value.trim();
-      const res = await fetch("/api/ask-relation-smart", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name1, name2 })
-      });
-      const data = await res.json();
-      document.getElementById("relation-ai-result").innerText = `🤖 קשר AI: ${data.relation}`;
-    });
-
-    document.getElementById("pdf-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const file = document.getElementById("pdf-file").files[0];
       const formData = new FormData();
-      formData.append("file", file);
-      const res = await fetch("/api/parse-pdf", { method: "POST", body: formData });
+      formData.append("file", docFile.files[0]);
+      const res = await fetch("/api/parse-any", { method: "POST", body: formData });
       const data = await res.json();
-      document.getElementById("pdf-result").textContent = data.text || data.error;
-    });
-
-    document.getElementById("image-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const file = document.getElementById("image-file").files[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await fetch("/api/analyze-tree-image", { method: "POST", body: formData });
-      const data = await res.json();
-      document.getElementById("image-result").textContent = data.text || data.error;
+      fileResult.textContent = data.text || data.error;
     });
 
     document.getElementById("autofill-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const name = document.getElementById("partial-name").value;
-      const birthDate = document.getElementById("partial-birthDate").value;
       const res = await fetch("/api/autofill", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ partial: { name, birthDate } })
+        body: JSON.stringify({ partial: { name: partialName.value, birthDate: partialBirthDate.value } })
       });
       const data = await res.json();
-      document.getElementById("autofill-result").textContent = JSON.stringify(data, null, 2);
+      autofillResult.textContent = JSON.stringify(data, null, 2);
+    });
+
+    document.getElementById("ocr-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append("file", ocrFile.files[0]);
+      const res = await fetch("/api/ocr-parse", { method: "POST", body: formData });
+      const data = await res.json();
+      ocrResult.textContent = data.text || data.error;
+    });
+
+    document.getElementById("suggest-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const res = await fetch("/api/suggest-relations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: suggestName.value })
+      });
+      const data = await res.json();
+      suggestResult.textContent = data.suggestions?.join("\n") || data.error;
+    });
+
+    document.getElementById("summary-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const res = await fetch("/api/family-summary");
+      const data = await res.json();
+      summaryResult.textContent = data.summary || data.error;
     });
   </script>
 </body>
