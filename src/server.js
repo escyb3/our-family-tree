@@ -130,7 +130,6 @@ app.post("/reply-message", (req, res) => {
     res.status(404).send("הודעה לא נמצאה");
   }
 });
-const messagesPath = path.join(__dirname, "data", "messages.json");
 
 function saveMessages() {
   fs.writeFileSync(messagesPath, JSON.stringify(messages, null, 2));
