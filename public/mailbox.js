@@ -132,6 +132,26 @@ async function reply(threadId, body) {
   );
   renderMessages(filtered);
 }
+  // שמירת טיוטה
+form.to.oninput = saveDraft;
+form.subject.oninput = saveDraft;
+form.body.oninput = saveDraft;
+
+function saveDraft() {
+  localStorage.setItem("draft", JSON.stringify({
+    to: form.to.value,
+    subject: form.subject.value,
+    body: form.body.value
+  }));
+}
+
+window.onload = () => {
+  const draft = JSON.parse(localStorage.getItem("draft") || "{}");
+  form.to.value = draft.to || "";
+  form.subject.value = draft.subject || "";
+  form.body.value = draft.body || "";
+};
+
 
 
   if (res.ok) {
