@@ -1,7 +1,7 @@
 {
   "name": "our-family-tree",
   "version": "1.0.0",
-  "description": "Family tree project with Express and Google Gemini API",
+  "description": "Family tree website with user management, authentication and chat",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js"
@@ -10,13 +10,13 @@
     "node": ">=20.0.0"
   },
   "dependencies": {
-    "axios": "^1.6.0",
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.4.0",
-    "nodemailer": "^6.9.8"
+    "express-session": "^1.17.4",
+    "nodemailer": "^6.9.9",
+    "uuid": "^9.0.1"
   }
 }
