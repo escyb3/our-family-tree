@@ -88,6 +88,27 @@
         const { url } = await uploadRes.json();
         formData.append("attachment", url);
       }
+<script>
+  async function loadMessages() {
+    const res = await fetch('/messages');
+    const data = await res.json();
+    const inbox = document.getElementById("inbox");
+
+    inbox.innerHTML = data.map(m => `
+      <div class="msg-card ${m.read ? '' : 'unread'}" onclick="markAsRead('${m.threadId}')">
+        <p><strong>${m.subject}</strong></p>
+        <p>${m.body}</p>
+      </div>
+    `).join('');
+  }
+
+  async function markAsRead(threadId) {
+    await fetch(`/mark-read?threadId=${threadId}`);
+    loadMessages(); // רענון תיבת הדואר
+  }
+
+  window.onload = loadMessages;
+</script>
 
       await fetch("/send-message", {
         method: "POST",
