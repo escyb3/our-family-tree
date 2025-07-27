@@ -1,33 +1,179 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <input type="text" id="search" placeholder="חפש לפי נושא או שולח..." oninput="filterMessages()" style="width: 100%; padding: 0.5rem; margin-bottom: 1rem;" />
   <meta charset="UTF-8" />
   <title>📩 תיבת ההודעות</title>
-  <link rel="stylesheet" href="mailbox.css" />
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #0057a3;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.8rem;
+    }
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 1rem;
+    }
+    form, .filters {
+      background: white;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      background: #0057a3;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .msg-card {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .reply {
+      margin-top: 0.5rem;
+      padding-right: 1rem;
+      border-right: 2px solid #ccc;
+    }
+    .attachment {
+      margin-top: 0.5rem;
+    }
+  </style>
 </head>
 <body>
   <header>📩 תיבת ההודעות שלי</header>
   <main>
     <form id="send-form" enctype="multipart/form-data">
-      <h3>שלח הודעה חדשה</h3>
-      <input type="text" id="to" placeholder="אל: user@family.local" required />
+      <h3>שליחת הודעה חדשה</h3>
+      <input type="text" id="to" placeholder="אל: username@family.local" required />
       <input type="text" id="subject" placeholder="נושא" required />
       <select id="tag">
-        <option value="📝">📝 רגילה</option>
-        <option value="📢">📢 הודעה</option>
-        <option value="📷">📷 תמונה</option>
+        <option value="כללי">כללי</option>
+        <option value="שאלה">שאלה</option>
+        <option value="אירוע">אירוע</option>
+        <option value="מערכת">מערכת</option>
+        <option value="אחר">אחר</option>
       </select>
       <textarea id="body" rows="4" placeholder="תוכן ההודעה" required></textarea>
       <input type="file" id="attachment" />
       <button type="submit">שלח</button>
     </form>
 
-    <input type="search" id="search" placeholder="🔍 חפש הודעות..." />
+    <div class="filters">
+      <input type="text" id="search" placeholder="🔍 חיפוש לפי נושא או שולח..." />
+      <select id="tagFilter">
+        <option value="">-- סינון לפי תיוג --</option>
+        <option value="כללי">כללי</option>
+        <option value="שאלה">שאלה</option>
+        <option value="אירוע">אירוע</option>
+        <option value="מערכת">מערכת</option>
+        <option value="אחר">אחר</option>
+      </select>
+    </div>
 
-    <h2>📥 ההודעות שהתקבלו</h2>
     <div id="inbox"></div>
   </main>
-  <script src="mailbox.js"></script>
+
+  <script>
+    const form = document.getElementById("send-form");
+    const inbox = document.getElementById("inbox");
+    const search = document.getElementById("search");
+    const tagFilter = document.getElementById("tagFilter");
+
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append("to", form.to.value);
+      formData.append("subject", form.subject.value);
+      formData.append("tag", form.tag.value);
+      formData.append("body", form.body.value);
+      if (form.attachment.files[0]) {
+        formData.append("attachment", form.attachment.files[0]);
+      }
+      await fetch("/send-message", {
+        method: "POST",
+        body: formData
+      });
+      form.reset();
+      alert("ההודעה נשלחה");
+      loadMessages();
+    };
+
+    async function reply(threadId) {
+      const body = prompt("כתוב תגובה:");
+      if (!body) return;
+      await fetch("/reply-message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ threadId, body })
+      });
+      loadMessages();
+    }
+
+    function messageHTML(msg) {
+      return `
+        <div class="msg-card">
+          <p><strong>מ:</strong> ${msg.from}</p>
+          <p><strong>נושא:</strong> ${msg.subject} <em>(${msg.tag})</em></p>
+          <p>${msg.body}</p>
+          <p><strong>תאריך:</strong> ${new Date(msg.timestamp).toLocaleString()}</p>
+          ${msg.attachment ? `<div class="attachment"><a href="${msg.attachment}" target="_blank">📎 קובץ מצורף</a></div>` : ""}
+          ${msg.replies.map(r => `
+            <div class="reply">
+              <p><strong>${r.from}:</strong> ${r.body}</p>
+              <p>${new Date(r.timestamp).toLocaleString()}</p>
+            </div>
+          `).join("")}
+          <button onclick="reply('${msg.threadId}')">השב</button>
+        </div>
+      `;
+    }
+
+    async function loadMessages() {
+      const res = await fetch("/messages");
+      let data = await res.json();
+
+      const query = search.value.toLowerCase();
+      const tag = tagFilter.value;
+
+      if (query) {
+        data = data.filter(m =>
+          m.subject.toLowerCase().includes(query) ||
+          m.from.toLowerCase().includes(query)
+        );
+      }
+
+      if (tag) {
+        data = data.filter(m => m.tag === tag);
+      }
+
+      inbox.innerHTML = data.map(messageHTML).join("");
+    }
+
+    search.oninput = loadMessages;
+    tagFilter.onchange = loadMessages;
+
+    loadMessages();
+  </script>
 </body>
 </html>
