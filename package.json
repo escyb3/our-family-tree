@@ -1,5 +1,5 @@
 {
-  "name": "family-tree-portal",
+  "name": "our-family-tree",
   "version": "1.0.0",
   "description": "אתר עץ משפחה אינטראקטיבי עם הרשאות, תמונות, חיפוש, העלאות ו-Google AI",
   "main": "src/server.js",
@@ -25,9 +25,13 @@
     "nodemailer": "^6.9.13",
     "uuid": "^9.0.1",
     "@google-cloud/translate": "^8.0.3",
-    "fs-extra": "^11.2.0",
+    "fs-extra": "^11.2.0"
+  },
   "devDependencies": {
-    "nodemon": "^3.1.0",
+    "nodemon": "^3.1.0"
+  },
   "engines": {
-    "node": ">=20.0.0",
+    "node": ">=20.0.0"
+  }
+}
 
