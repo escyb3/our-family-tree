@@ -49,6 +49,24 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 let allMessages = [];
+form.to.value = localStorage.getItem("draft-to") || "";
+form.subject.value = localStorage.getItem("draft-subject") || "";
+form.body.value = localStorage.getItem("draft-body") || "";
+
+["to", "subject", "body"].forEach(id => {
+  document.getElementById(id).addEventListener("input", () => {
+    localStorage.setItem(`draft-${id}`, form[id].value);
+  });
+});
+
+form.onsubmit = async (e) => {
+  e.preventDefault();
+  ...
+  localStorage.removeItem("draft-to");
+  localStorage.removeItem("draft-subject");
+  localStorage.removeItem("draft-body");
+};
+
 
 async function loadMessages() {
   const res = await fetch("/messages");
