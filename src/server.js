@@ -150,6 +150,10 @@ app.post("/upload-attachment", upload.single("attachment"), (req, res) => {
   res.json({ url: "/uploads/" + req.file.filename });
 });
 // Middleware: דרוש התחברות לכל דפי HTML מסוימים
+const requireLogin = (req, res, next) => {
+  if (!req.session.user) return res.status(401).json({ error: "Unauthorized" });
+  next();
+};
 app.use((req, res, next) => {
   const protectedPages = ["/mailbox.html", "/calendar.html", "/dashboard.html"];
   if (protectedPages.includes(req.path) && !req.session.user) {
@@ -157,6 +161,11 @@ app.use((req, res, next) => {
   }
   next();
 });
+app.get("/messages", requireLogin, (req, res) => { ... });
+app.post("/send-message", requireLogin, (req, res) => { ... });
+app.post("/reply-message", requireLogin, (req, res) => { ... });
+app.get("/pending-people", auth("admin"), (req, res) => { ... });
+
 
 app.get("/pending-people", auth("admin"), (req, res) => res.json(pendingPeople));
 app.post("/add-person", auth(), (req, res) => {
