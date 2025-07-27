@@ -89,6 +89,19 @@ app.post("/delete-user", auth("admin"), (req, res) => {
   res.send("המשתמש נמחק");
 });
 
+const requireLogin = (req, res, next) => {
+  if (!req.session.user) return res.status(401).json({ error: "Unauthorized" });
+  next();
+};
+
+app.use((req, res, next) => {
+  const protectedPages = ["/mailbox.html", "/calendar.html", "/dashboard.html"];
+  if (protectedPages.includes(req.path) && !req.session.user) {
+    return res.redirect("/login.html");
+  }
+  next();
+});
+
 app.get("/messages", auth(), (req, res) => {
   const user = req.session.user.username + "@family.local";
   const query = req.query.q?.toLowerCase() || "";
@@ -109,12 +122,24 @@ app.get("/messages", auth(), (req, res) => {
   res.json(inbox.reverse());
 });
 
+app.get("/mark-read", (req, res) => {
+  const { threadId } = req.query;
+  const msg = messages.find(m => m.threadId === threadId);
+  if (msg) {
+    msg.read = true;
+    saveMessages();
+    res.json({ success: true });
+  } else {
+    res.status(404).json({ error: "Message not found" });
+  }
+});
+
 app.post("/send-message", auth(), (req, res) => {
   const { to, subject, body, type = "regular", attachment } = req.body;
-  const user = req.session.user.username + "@family.local";
+  const user = req.session.user;
 
   const msg = {
-    from: user,
+    from: user.username + "@family.local",
     to,
     subject,
     body,
@@ -122,7 +147,8 @@ app.post("/send-message", auth(), (req, res) => {
     timestamp: new Date().toISOString(),
     threadId: "msg" + Date.now(),
     replies: [],
-    attachment
+    attachment,
+    read: false
   };
 
   messages.push(msg);
@@ -149,68 +175,6 @@ app.post("/upload-attachment", upload.single("attachment"), (req, res) => {
   if (!req.file) return res.status(400).send("לא נשלח קובץ");
   res.json({ url: "/uploads/" + req.file.filename });
 });
-// Middleware: דרוש התחברות לכל דפי HTML מסוימים
-const requireLogin = (req, res, next) => {
-  if (!req.session.user) return res.status(401).json({ error: "Unauthorized" });
-  next();
-};
-app.use((req, res, next) => {
-  const protectedPages = ["/mailbox.html", "/calendar.html", "/dashboard.html"];
-  if (protectedPages.includes(req.path) && !req.session.user) {
-    return res.redirect("/login.html");
-  }
-  next();
-});
-app.get("/messages", requireLogin, (req, res) => { inbox.innerHTML = data.map(m => `
-app.get("/mark-read", (req, res) => {
-  const { threadId } = req.query;
-  const msg = messages.find(m => m.threadId === threadId);
-  if (msg) {
-    msg.read = true;
-    res.json({ success: true });
-  } else {
-    res.status(404).json({ error: "Message not found" });
-  }
-});
-
-const html = messages.map(m => {
-  const escapedThreadId = JSON.stringify(m.threadId); 
-  return `
-    <div class="msg-card ${m.read ? '' : 'unread'}" onclick="markAsRead(${escapedThreadId})">
-      <p><strong>${m.subject}</strong></p>
-      <p>${m.body}</p>
-    </div>
-  `;
-}).join("");
-
-
-</div>
-app.get("/mark-read", (req, res) => {
-  const { threadId } = req.query;
-  const msg = messages.find(m => m.threadId === threadId);
-  if (msg) msg.read = true;
-  res.sendStatus(200); // שלח תגובה כדי שהלקוח ידע שהבקשה הצליחה
-});
-<style>
-  .unread { background: #e3f2fd; border-right: 3px solid #2196f3; }
-</style>
-
-app.post("/send-message", requireLogin, (req, res) => { const msg = {
-  from: user.username + "@family.local",
-  to,
-  subject,
-  body,
-  timestamp: new Date().toISOString(),
-  threadId: "msg" + Date.now(),
-  replies: [],
-  attachment,
-  type,
-  read: false  // ✅ חדש!
-};
-});
-app.post("/reply-message", requireLogin, (req, res) => { ... });
-app.get("/pending-people", auth("admin"), (req, res) => { ... });
-
 
 app.get("/pending-people", auth("admin"), (req, res) => res.json(pendingPeople));
 app.post("/add-person", auth(), (req, res) => {
@@ -302,13 +266,13 @@ app.get("/api/family-summary", async (req, res) => {
   const summary = await ai.summarizeFamily();
   res.json({ summary });
 });
+
 app.get("/messages-sent", (req, res) => {
   const user = req.session.user;
   if (!user) return res.status(401).send("לא מחובר");
   const outbox = messages.filter(m => m.from === user.username + "@family.local");
   res.json(outbox.reverse());
 });
-
 
 app.listen(3000, () => {
   console.log("השרת רץ על פורט 3000");
