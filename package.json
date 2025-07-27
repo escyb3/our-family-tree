@@ -7,16 +7,17 @@
     "start": "node src/server.js"
   },
   "dependencies": {
+    "@google-cloud/translate": "^8.0.0",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "fs": "^0.0.1-security",
-    "multer": "^1.4.4",
+    "multer": "1.4.4-lts.1",
     "nodemailer": "^6.9.8",
     "path": "^0.12.7",
     "pdf-parse": "^1.1.1",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.1"
   }
 }
