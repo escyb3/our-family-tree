@@ -300,7 +300,6 @@ app.get("/api/family-summary", (req, res) => {
   const summary = ai.summarizeFamily();
   res.json(summary);
 });
-const messages = fs.existsSync("messages.json")
   ? JSON.parse(fs.readFileSync("messages.json"))
   : [];
 
