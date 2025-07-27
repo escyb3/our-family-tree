@@ -13,6 +13,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       container.innerHTML = "<p>אין הודעות בתיבה</p>";
       return;
     }
+    const { to, subject, body, attachment, type = "אישי" } = req.body;
+    body: JSON.stringify({
+  to: form.to.value,
+  subject: form.subject.value,
+  body: form.body.value,
+  type: form.type.value
+})
+
 
     messages.forEach((msg) => {
       const div = document.createElement("div");
