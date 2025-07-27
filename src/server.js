@@ -300,7 +300,7 @@ app.get("/api/family-summary", (req, res) => {
   const summary = ai.summarizeFamily();
   res.json(summary);
 });
-  ? JSON.parse(fs.readFileSync("messages.json"))
+  JSON.parse(fs.readFileSync("messages.json"))
   : [];
 
 function saveMessages() {
