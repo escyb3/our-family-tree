@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <title>📩 תיבת הודעות</title>
   <link rel="stylesheet" href="/style.css" />
-  <input type="text" id="searchBox" placeholder="🔍 חפש הודעה..." oninput="searchMessages()" />
-
   <style>
     body { font-family: sans-serif; background: #f7f9fc; margin: 0; }
     header { background: #0057a3; color: white; padding: 1rem; text-align: center; font-size: 1.6rem; }
@@ -28,12 +26,14 @@
     <button id="tab-inbox" class="active">📥 התקבלו</button>
     <button id="tab-sent">📤 נשלחו</button>
   </nav>
+
   <div style="margin-bottom: 1rem;">
-  סנן לפי:
-  <button onclick="filterByType('all')">📩 הכל</button>
-  <button onclick="filterByType('regular')">👨‍👩‍👧‍👦 משפחה</button>
-  <button onclick="filterByType('system')">💻 מערכת</button>
-</div>
+    סנן לפי:
+    <button onclick="filterByType('all')">📩 הכל</button>
+    <button onclick="filterByType('regular')">👨‍👩‍👧‍👦 משפחה</button>
+    <button onclick="filterByType('system')">💻 מערכת</button>
+  </div>
+
   <div class="container">
     <form id="send-form">
       <h3>שליחת הודעה חדשה</h3>
@@ -50,13 +50,11 @@
     </form>
 
     <input type="text" id="search" placeholder="🔍 חפש לפי נושא או שולח..." />
-
     <div id="messages"></div>
   </div>
+
   <script>
-    await fetch(`/mark-read?threadId=${threadId}`);
-  fetch("/api/user")
-    .then(res => {
+    fetch("/api/user").then(res => {
       if (!res.ok) location.href = "/login.html";
     });
 
@@ -64,6 +62,7 @@
     const tabSent = document.getElementById("tab-sent");
     const messagesEl = document.getElementById("messages");
     const searchInput = document.getElementById("search");
+
     let inbox = [], sent = [];
     let currentTab = "inbox";
 
@@ -75,69 +74,15 @@
       tabSent.classList.toggle("active", currentTab === "sent");
     }
 
-    document.getElementById("send-form").onsubmit = async (e) => {
-      e.preventDefault();
-      const formData = new FormData();
-      formData.append("to", document.getElementById("to").value);
-      formData.append("subject", document.getElementById("subject").value);
-      formData.append("type", document.getElementById("type").value);
-      formData.append("body", document.getElementById("body").value);
-      const file = document.getElementById("attachment").files[0];
-      if (file) {
-        const uploadRes = await fetch("/upload-attachment", { method: "POST", body: formData });
-        const { url } = await uploadRes.json();
-        formData.append("attachment", url);
-      }
-<script>
-  async function loadMessages() {
-    const res = await fetch('/messages');
-    const data = await res.json();
-    const inbox = document.getElementById("inbox");
-
-    inbox.innerHTML = data.map(m => `
-      <div class="msg-card ${m.read ? '' : 'unread'}" onclick="markAsRead('${m.threadId}')">
-        <p><strong>${m.subject}</strong></p>
-        <p>${m.body}</p>
-      </div>
-    `).join('');
-  }
-
-  async function markAsRead(threadId) {
-    await fetch(`/mark-read?threadId=${threadId}`);
-    loadMessages(); // רענון תיבת הדואר
-  }
-
-  window.onload = loadMessages;
-</script>
-
-      await fetch("/send-message", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          to: formData.get("to"),
-          subject: formData.get("subject"),
-          body: formData.get("body"),
-          type: formData.get("type"),
-          attachment: formData.get("attachment")
-        })
-      });
-
-      alert("הודעה נשלחה");
-      document.getElementById("send-form").reset();
-      await loadMessages();
-    };
+    function currentUser() {
+      return sessionStorage.getItem("email") || "user@family.local";
+    }
 
     searchInput.oninput = () => renderMessages();
 
-    async function loadMessages() {
-      inbox = await (await fetch("/messages")).json();
-      sent = inbox.filter(m => m.from === currentUser());
-      inbox = inbox.filter(m => m.to === currentUser());
-      renderMessages();
-    }
-
-    function currentUser() {
-      return sessionStorage.getItem("email") || "user@family.local";
+    async function markAsRead(threadId) {
+      await fetch(`/mark-read?threadId=${threadId}`);
+      await loadMessages();
     }
 
     function renderMessages() {
@@ -146,7 +91,7 @@
         .filter(m => m.subject.toLowerCase().includes(term) || m.from.toLowerCase().includes(term));
 
       messagesEl.innerHTML = msgs.map(m => `
-        <div class="msg-card ${m.type === 'reminder' ? 'important' : ''}">
+        <div class="msg-card ${!m.read ? 'unread' : ''} ${m.type === 'reminder' ? 'important' : ''}" onclick="markAsRead('${m.threadId}')">
           <p><strong>מ:</strong> ${m.from}</p>
           <p><strong>נושא:</strong> ${m.subject}</p>
           ${m.attachment ? `<p>📎 <a href="${m.attachment}" target="_blank">קובץ מצורף</a></p>` : ""}
@@ -154,8 +99,8 @@
           <p><strong>תאריך:</strong> ${new Date(m.timestamp).toLocaleString()}</p>
           ${m.replies.map(r => `<div class="reply"><strong>${r.from}:</strong> ${r.body} <br/><small>${new Date(r.timestamp).toLocaleString()}</small></div>`).join("")}
           <div class="actions">
-            <button onclick="reply('${m.threadId}')">💬 השב</button>
-            <button onclick="deleteMessage('${m.threadId}')">🗑️ מחק</button>
+            <button onclick="event.stopPropagation(); reply('${m.threadId}')">💬 השב</button>
+            <button onclick="event.stopPropagation(); deleteMessage('${m.threadId}')">🗑️ מחק</button>
           </div>
         </div>
       `).join("");
@@ -179,6 +124,44 @@
         body: JSON.stringify({ threadId })
       });
       await loadMessages();
+    }
+
+    document.getElementById("send-form").onsubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append("to", document.getElementById("to").value);
+      formData.append("subject", document.getElementById("subject").value);
+      formData.append("type", document.getElementById("type").value);
+      formData.append("body", document.getElementById("body").value);
+      const file = document.getElementById("attachment").files[0];
+      if (file) {
+        const uploadRes = await fetch("/upload-attachment", { method: "POST", body: formData });
+        const { url } = await uploadRes.json();
+        formData.append("attachment", url);
+      }
+
+      await fetch("/send-message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          to: formData.get("to"),
+          subject: formData.get("subject"),
+          body: formData.get("body"),
+          type: formData.get("type"),
+          attachment: formData.get("attachment")
+        })
+      });
+
+      alert("הודעה נשלחה");
+      document.getElementById("send-form").reset();
+      await loadMessages();
+    };
+
+    async function loadMessages() {
+      const data = await (await fetch("/messages")).json();
+      sent = data.filter(m => m.from === currentUser());
+      inbox = data.filter(m => m.to === currentUser());
+      renderMessages();
     }
 
     loadMessages();
