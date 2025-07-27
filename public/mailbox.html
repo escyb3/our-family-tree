@@ -2,176 +2,150 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>📩 תיבת ההודעות</title>
+  <title>📩 תיבת הודעות</title>
+  <link rel="stylesheet" href="/style.css" />
   <style>
-    body {
-      font-family: sans-serif;
-      background: #f5f7fa;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #0057a3;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.8rem;
-    }
-    main {
-      max-width: 900px;
-      margin: auto;
-      padding: 1rem;
-    }
-    form, .filters {
-      background: white;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 0.5rem;
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-    }
-    button {
-      padding: 0.5rem 1rem;
-      background: #0057a3;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .msg-card {
-      background: white;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-    .reply {
-      margin-top: 0.5rem;
-      padding-right: 1rem;
-      border-right: 2px solid #ccc;
-    }
-    .attachment {
-      margin-top: 0.5rem;
-    }
+    body { font-family: sans-serif; background: #f7f9fc; margin: 0; }
+    header { background: #0057a3; color: white; padding: 1rem; text-align: center; font-size: 1.6rem; }
+    nav { display: flex; justify-content: center; gap: 1rem; background: #e0e0e0; padding: 0.5rem; }
+    nav button { padding: 0.5rem 1rem; cursor: pointer; border: none; border-radius: 5px; background: #d0d0d0; }
+    nav button.active { background: #0057a3; color: white; }
+    .container { max-width: 800px; margin: auto; padding: 1rem; }
+    form { display: flex; flex-direction: column; gap: 0.5rem; background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 0 6px rgba(0,0,0,0.1); margin-bottom: 1rem; }
+    input, textarea, select { padding: 0.5rem; font-size: 1rem; border: 1px solid #ccc; border-radius: 6px; }
+    .msg-card { background: white; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    .reply { margin-top: 0.5rem; padding-right: 1rem; border-right: 2px solid #ccc; }
+    .important { background: #fff4cc; }
+    .msg-card .actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+    #search { margin-bottom: 1rem; padding: 0.5rem; width: 100%; }
   </style>
 </head>
 <body>
-  <header>📩 תיבת ההודעות שלי</header>
-  <main>
-    <form id="send-form" enctype="multipart/form-data">
+  <header>📩 תיבת ההודעות</header>
+  <nav>
+    <button id="tab-inbox" class="active">📥 התקבלו</button>
+    <button id="tab-sent">📤 נשלחו</button>
+  </nav>
+  <div class="container">
+    <form id="send-form">
       <h3>שליחת הודעה חדשה</h3>
       <input type="text" id="to" placeholder="אל: username@family.local" required />
       <input type="text" id="subject" placeholder="נושא" required />
-      <select id="tag">
-        <option value="כללי">כללי</option>
-        <option value="שאלה">שאלה</option>
-        <option value="אירוע">אירוע</option>
-        <option value="מערכת">מערכת</option>
-        <option value="אחר">אחר</option>
+      <select id="type">
+        <option value="regular">הודעה רגילה</option>
+        <option value="reminder">תזכורת</option>
+        <option value="announcement">הודעה כללית</option>
       </select>
-      <textarea id="body" rows="4" placeholder="תוכן ההודעה" required></textarea>
       <input type="file" id="attachment" />
-      <button type="submit">שלח</button>
+      <textarea id="body" rows="4" placeholder="תוכן ההודעה" required></textarea>
+      <button type="submit">📤 שלח</button>
     </form>
 
-    <div class="filters">
-      <input type="text" id="search" placeholder="🔍 חיפוש לפי נושא או שולח..." />
-      <select id="tagFilter">
-        <option value="">-- סינון לפי תיוג --</option>
-        <option value="כללי">כללי</option>
-        <option value="שאלה">שאלה</option>
-        <option value="אירוע">אירוע</option>
-        <option value="מערכת">מערכת</option>
-        <option value="אחר">אחר</option>
-      </select>
-    </div>
+    <input type="text" id="search" placeholder="🔍 חפש לפי נושא או שולח..." />
 
-    <div id="inbox"></div>
-  </main>
+    <div id="messages"></div>
+  </div>
 
   <script>
-    const form = document.getElementById("send-form");
-    const inbox = document.getElementById("inbox");
-    const search = document.getElementById("search");
-    const tagFilter = document.getElementById("tagFilter");
+    const tabInbox = document.getElementById("tab-inbox");
+    const tabSent = document.getElementById("tab-sent");
+    const messagesEl = document.getElementById("messages");
+    const searchInput = document.getElementById("search");
+    let inbox = [], sent = [];
+    let currentTab = "inbox";
 
-    form.onsubmit = async (e) => {
+    tabInbox.onclick = () => { currentTab = "inbox"; updateTabs(); renderMessages(); };
+    tabSent.onclick = () => { currentTab = "sent"; updateTabs(); renderMessages(); };
+
+    function updateTabs() {
+      tabInbox.classList.toggle("active", currentTab === "inbox");
+      tabSent.classList.toggle("active", currentTab === "sent");
+    }
+
+    document.getElementById("send-form").onsubmit = async (e) => {
       e.preventDefault();
       const formData = new FormData();
-      formData.append("to", form.to.value);
-      formData.append("subject", form.subject.value);
-      formData.append("tag", form.tag.value);
-      formData.append("body", form.body.value);
-      if (form.attachment.files[0]) {
-        formData.append("attachment", form.attachment.files[0]);
+      formData.append("to", document.getElementById("to").value);
+      formData.append("subject", document.getElementById("subject").value);
+      formData.append("type", document.getElementById("type").value);
+      formData.append("body", document.getElementById("body").value);
+      const file = document.getElementById("attachment").files[0];
+      if (file) {
+        const uploadRes = await fetch("/upload-attachment", { method: "POST", body: formData });
+        const { url } = await uploadRes.json();
+        formData.append("attachment", url);
       }
+
       await fetch("/send-message", {
         method: "POST",
-        body: formData
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          to: formData.get("to"),
+          subject: formData.get("subject"),
+          body: formData.get("body"),
+          type: formData.get("type"),
+          attachment: formData.get("attachment")
+        })
       });
-      form.reset();
-      alert("ההודעה נשלחה");
-      loadMessages();
+
+      alert("הודעה נשלחה");
+      document.getElementById("send-form").reset();
+      await loadMessages();
     };
 
+    searchInput.oninput = () => renderMessages();
+
+    async function loadMessages() {
+      inbox = await (await fetch("/messages")).json();
+      sent = inbox.filter(m => m.from === currentUser());
+      inbox = inbox.filter(m => m.to === currentUser());
+      renderMessages();
+    }
+
+    function currentUser() {
+      return sessionStorage.getItem("email") || "user@family.local";
+    }
+
+    function renderMessages() {
+      const term = searchInput.value.toLowerCase();
+      const msgs = (currentTab === "inbox" ? inbox : sent)
+        .filter(m => m.subject.toLowerCase().includes(term) || m.from.toLowerCase().includes(term));
+
+      messagesEl.innerHTML = msgs.map(m => `
+        <div class="msg-card ${m.type === 'reminder' ? 'important' : ''}">
+          <p><strong>מ:</strong> ${m.from}</p>
+          <p><strong>נושא:</strong> ${m.subject}</p>
+          ${m.attachment ? `<p>📎 <a href="${m.attachment}" target="_blank">קובץ מצורף</a></p>` : ""}
+          <p>${m.body}</p>
+          <p><strong>תאריך:</strong> ${new Date(m.timestamp).toLocaleString()}</p>
+          ${m.replies.map(r => `<div class="reply"><strong>${r.from}:</strong> ${r.body} <br/><small>${new Date(r.timestamp).toLocaleString()}</small></div>`).join("")}
+          <div class="actions">
+            <button onclick="reply('${m.threadId}')">💬 השב</button>
+            <button onclick="deleteMessage('${m.threadId}')">🗑️ מחק</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
     async function reply(threadId) {
-      const body = prompt("כתוב תגובה:");
-      if (!body) return;
+      const content = prompt("כתוב תגובה:");
+      if (!content) return;
       await fetch("/reply-message", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ threadId, body })
+        body: JSON.stringify({ threadId, body: content })
       });
-      loadMessages();
+      await loadMessages();
     }
 
-    function messageHTML(msg) {
-      return `
-        <div class="msg-card">
-          <p><strong>מ:</strong> ${msg.from}</p>
-          <p><strong>נושא:</strong> ${msg.subject} <em>(${msg.tag})</em></p>
-          <p>${msg.body}</p>
-          <p><strong>תאריך:</strong> ${new Date(msg.timestamp).toLocaleString()}</p>
-          ${msg.attachment ? `<div class="attachment"><a href="${msg.attachment}" target="_blank">📎 קובץ מצורף</a></div>` : ""}
-          ${msg.replies.map(r => `
-            <div class="reply">
-              <p><strong>${r.from}:</strong> ${r.body}</p>
-              <p>${new Date(r.timestamp).toLocaleString()}</p>
-            </div>
-          `).join("")}
-          <button onclick="reply('${msg.threadId}')">השב</button>
-        </div>
-      `;
+    async function deleteMessage(threadId) {
+      await fetch("/delete-message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ threadId })
+      });
+      await loadMessages();
     }
-
-    async function loadMessages() {
-      const res = await fetch("/messages");
-      let data = await res.json();
-
-      const query = search.value.toLowerCase();
-      const tag = tagFilter.value;
-
-      if (query) {
-        data = data.filter(m =>
-          m.subject.toLowerCase().includes(query) ||
-          m.from.toLowerCase().includes(query)
-        );
-      }
-
-      if (tag) {
-        data = data.filter(m => m.tag === tag);
-      }
-
-      inbox.innerHTML = data.map(messageHTML).join("");
-    }
-
-    search.oninput = loadMessages;
-    tagFilter.onchange = loadMessages;
 
     loadMessages();
   </script>
