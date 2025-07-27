@@ -2,10 +2,7 @@ services:
   - type: web
     name: our-family-tree
     env: node
-    buildCommand: npm install
-    startCommand: npm start
+    buildCommand: npm ci
+    startCommand: node src/server.js
     nodeVersion: 20
     autoDeploy: true
-    envVars:
-      - key: NODE_ENV
-        value: production
