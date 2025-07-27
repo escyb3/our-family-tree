@@ -24,7 +24,7 @@ app.use(session({ secret: "secret", resave: false, saveUninitialized: true }));
 const usersPath = path.join(__dirname, "data", "users.json");
 let users = JSON.parse(fs.readFileSync(usersPath));
 const messagesPath = path.join(__dirname, "data", "messages.json");
-let messages = fs.existsSync(messagesPath)  JSON.parse(fs.readFileSync(messagesPath)) : [];
+let messages = fs.existsSync(messagesPath) ? JSON.parse(fs.readFileSync(messagesPath)) : [];
 const pendingPath = path.join(__dirname, "data", "pending.json");
 let pendingPeople = fs.existsSync(pendingPath) ? JSON.parse(fs.readFileSync(pendingPath)) : [];
 
