@@ -165,6 +165,16 @@
     }
 
     loadMessages();
+    <select id="type">
+  <option value="אישי">אישי</option>
+  <option value="משפחתי">משפחתי</option>
+  <option value="מנהלי">מנהלי</option>
+  <option value="תמיכה">תמיכה</option>
+</select>
+<p><strong>סוג:</strong> ${m.type || "אישי"}</p>
+<input type="file" id="attachment" />
+${m.attachment ? `<p>📎 קובץ מצורף: <a href="${m.attachment}" target="_blank">פתיחה</a></p>` : ""}
+
   </script>
 </body>
 </html>
