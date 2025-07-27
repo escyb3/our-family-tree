@@ -161,8 +161,38 @@ app.use((req, res, next) => {
   }
   next();
 });
-app.get("/messages", requireLogin, (req, res) => { ... });
-app.post("/send-message", requireLogin, (req, res) => { ... });
+app.get("/messages", requireLogin, (req, res) => { inbox.innerHTML = data.map(m => `
+  <div class="msg-card ${m.read ? '' : 'unread'}">
+    ...
+  </div>
+`).join("");
+});
+// client-side
+await fetch(`/mark-read?threadId=${m.threadId}`);
+app.get("/mark-read", (req, res) => {
+  const { threadId } = req.query;
+  const msg = messages.find(m => m.threadId === threadId);
+  if (msg) msg.read = true;
+  saveMessages();
+  res.sendStatus(200);
+});
+<style>
+  .unread { background: #e3f2fd; border-right: 3px solid #2196f3; }
+</style>
+
+app.post("/send-message", requireLogin, (req, res) => { const msg = {
+  from: user.username + "@family.local",
+  to,
+  subject,
+  body,
+  timestamp: new Date().toISOString(),
+  threadId: "msg" + Date.now(),
+  replies: [],
+  attachment,
+  type,
+  read: false  // ✅ חדש!
+};
+});
 app.post("/reply-message", requireLogin, (req, res) => { ... });
 app.get("/pending-people", auth("admin"), (req, res) => { ... });
 
