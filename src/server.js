@@ -12,7 +12,6 @@ const ai = require("./ai");
 const app = express();
 const translate = new Translate({ key: process.env.GOOGLE_API_KEY });
 
-// Set up multer for file uploads
 const storage = multer.diskStorage({
   destination: path.join(__dirname, "uploads"),
   filename: (req, file, cb) => {
@@ -20,35 +19,27 @@ const storage = multer.diskStorage({
     cb(null, uuidv4() + ext);
   }
 });
-const upload = multer({
-  storage,
-  limits: { fileSize: 10 * 1024 * 1024 } // עד 10MB
-});
+const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
 
-// Middleware
 app.use(express.static("public"));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: "secret", resave: false, saveUninitialized: true }));
 
-// Data files
 const usersPath = path.join(__dirname, "data", "users.json");
 const messagesPath = path.join(__dirname, "data", "messages.json");
 const pendingPath = path.join(__dirname, "data", "pending.json");
 const eventsPath = path.join(__dirname, "data", "events.json");
 
-// Load data
 let users = fs.existsSync(usersPath) ? JSON.parse(fs.readFileSync(usersPath)) : [];
 let messages = fs.existsSync(messagesPath) ? JSON.parse(fs.readFileSync(messagesPath)) : [];
 let pendingPeople = fs.existsSync(pendingPath) ? JSON.parse(fs.readFileSync(pendingPath)) : [];
 
-// Save helpers
 const saveUsers = () => fs.writeFileSync(usersPath, JSON.stringify(users, null, 2));
 const saveMessages = () => fs.writeFileSync(messagesPath, JSON.stringify(messages, null, 2));
 const savePending = () => fs.writeFileSync(pendingPath, JSON.stringify(pendingPeople, null, 2));
 
-// Auth middleware
 const auth = (role) => (req, res, next) => {
   const user = req.session.user;
   if (!user || (role && user.role !== role && user.role !== "super")) {
@@ -57,7 +48,6 @@ const auth = (role) => (req, res, next) => {
   next();
 };
 
-// Activity logger
 const logStream = fs.createWriteStream(path.join(__dirname, "data", "activity.log"), { flags: "a" });
 app.use((req, res, next) => {
   const user = req.session.user ? req.session.user.username : "anonymous";
@@ -66,7 +56,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Auth routes
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
   const user = users.find(u => u.username === username);
@@ -77,7 +66,6 @@ app.post("/login", (req, res) => {
   res.status(401).send("פרטי התחברות שגויים");
 });
 
-// User management
 app.get("/admin-users", auth("admin"), (req, res) => res.json(users));
 app.post("/create-user", auth("admin"), (req, res) => {
   const { username, password, email, side, role } = req.body;
@@ -101,29 +89,40 @@ app.post("/delete-user", auth("admin"), (req, res) => {
   res.send("המשתמש נמחק");
 });
 
-// Messages
-app.get("/messages", (req, res) => {
-  const user = req.session.user;
-  if (!user) return res.status(401).send("לא מחובר");
-  const inbox = messages.filter(m => m.to === user.username + "@family.local");
+app.get("/messages", auth(), (req, res) => {
+  const user = req.session.user.username + "@family.local";
+  const query = req.query.q?.toLowerCase() || "";
+  const typeFilter = req.query.type || "all";
+  let inbox = messages.filter(m => m.to === user);
+
+  if (query) {
+    inbox = inbox.filter(m =>
+      m.subject?.toLowerCase().includes(query) ||
+      m.from?.toLowerCase().includes(query)
+    );
+  }
+
+  if (typeFilter !== "all") {
+    inbox = inbox.filter(m => m.type === typeFilter);
+  }
+
   res.json(inbox.reverse());
 });
 
-app.post("/send-message", (req, res) => {
-  const user = req.session.user;
-  if (!user) return res.status(401).send("לא מחובר");
+app.post("/send-message", auth(), (req, res) => {
+  const { to, subject, body, type = "regular", attachment } = req.body;
+  const user = req.session.user.username + "@family.local";
 
-  const { to, subject, body, attachment, type = "regular" } = req.body;
   const msg = {
-    from: user.username + "@family.local",
+    from: user,
     to,
     subject,
     body,
+    type,
     timestamp: new Date().toISOString(),
     threadId: "msg" + Date.now(),
     replies: [],
-    attachment,
-    type
+    attachment
   };
 
   messages.push(msg);
@@ -131,16 +130,13 @@ app.post("/send-message", (req, res) => {
   res.send("נשלח בהצלחה");
 });
 
-app.post("/reply-message", (req, res) => {
-  const user = req.session.user;
-  if (!user) return res.status(401).send("לא מחובר");
-
+app.post("/reply-message", auth(), (req, res) => {
   const { threadId, body } = req.body;
   const msg = messages.find(m => m.threadId === threadId);
   if (!msg) return res.status(404).send("הודעה לא נמצאה");
 
   msg.replies.push({
-    from: user.username + "@family.local",
+    from: req.session.user.username + "@family.local",
     body,
     timestamp: new Date().toISOString()
   });
@@ -150,24 +146,21 @@ app.post("/reply-message", (req, res) => {
 });
 
 app.post("/upload-attachment", upload.single("attachment"), (req, res) => {
-  const file = req.file;
-  if (!file) return res.status(400).send("לא נשלח קובץ");
-  const url = "/uploads/" + file.filename;
-  res.json({ url });
+  if (!req.file) return res.status(400).send("לא נשלח קובץ");
+  res.json({ url: "/uploads/" + req.file.filename });
 });
 
-// Pending people
-app.post("/add-person", (req, res) => {
+app.get("/pending-people", auth("admin"), (req, res) => res.json(pendingPeople));
+app.post("/add-person", auth(), (req, res) => {
   const person = {
     ...req.body,
     id: "p" + Date.now(),
-    submittedBy: req.session.user?.username || "unknown"
+    submittedBy: req.session.user.username
   };
   pendingPeople.push(person);
   savePending();
-  res.send("התווסף בהצלחה ואישורך ממתין לאישור מנהל.");
+  res.send("התווסף בהצלחה. ממתין לאישור מנהל.");
 });
-app.get("/pending-people", auth("admin"), (req, res) => res.json(pendingPeople));
 app.post("/approve-person", auth("admin"), (req, res) => {
   const { id, side } = req.body;
   const index = pendingPeople.findIndex(p => p.id === id);
@@ -180,10 +173,10 @@ app.post("/approve-person", auth("admin"), (req, res) => {
   const sideData = fs.existsSync(sidePath) ? JSON.parse(fs.readFileSync(sidePath)) : [];
   sideData.push(approved);
   fs.writeFileSync(sidePath, JSON.stringify(sideData, null, 2));
-  res.send("אושר ונשמר");
+
+  res.send("נשמר ואושר");
 });
 
-// Events
 app.get("/events", (req, res) => {
   const events = fs.existsSync(eventsPath) ? JSON.parse(fs.readFileSync(eventsPath)) : [];
   res.json(events);
@@ -195,7 +188,6 @@ app.post("/events", (req, res) => {
   res.sendStatus(200);
 });
 
-// API
 app.get("/api/user", (req, res) => {
   if (!req.session.user) return res.status(401).json({ error: "לא מחובר" });
   res.json(req.session.user);
@@ -211,6 +203,7 @@ app.post("/api/ask", async (req, res) => {
   res.json({ answer });
 });
 
+// AI Routes
 app.post("/api/ask-ai", async (req, res) => {
   const { question } = req.body;
   const answer = await ai.askAI(question);
@@ -248,7 +241,6 @@ app.get("/api/family-summary", async (req, res) => {
   res.json({ summary });
 });
 
-// Start the server
 app.listen(3000, () => {
   console.log("השרת רץ על פורט 3000");
 });
