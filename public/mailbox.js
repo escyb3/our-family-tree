@@ -48,6 +48,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     container.innerHTML = `<p style="color:red">${err.message}</p>`;
   }
 });
+let allMessages = [];
+
+async function loadMessages() {
+  const res = await fetch("/messages");
+  allMessages = await res.json();
+  renderMessages(allMessages);
+}
+
+function filterByType(type) {
+  if (type === 'all') return renderMessages(allMessages);
+  const filtered = allMessages.filter(m => m.type === type);
+  renderMessages(filtered);
+}
+
+function renderMessages(data) {
+  inbox.innerHTML = data.map(...).join(""); // כמו קודם
+}
 
 async function reply(threadId, body) {
   const res = await fetch("/reply-message", {
