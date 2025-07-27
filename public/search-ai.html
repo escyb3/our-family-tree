@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>צ'אט גנאולוגי חכם</title>
+  <meta charset="UTF-8" />
+  <title>חיפוש גנאולוגי חכם</title>
   <style>
     body {
       font-family: sans-serif;
-      background: #f0f4f8;
+      background: #f8f9fa;
       padding: 0;
       margin: 0;
       display: flex;
@@ -14,7 +14,7 @@
       height: 100vh;
     }
     header {
-      background-color: #0057a3;
+      background: #0066cc;
       color: white;
       padding: 1rem;
       text-align: center;
@@ -22,112 +22,88 @@
     }
     main {
       flex: 1;
-      display: flex;
-      flex-direction: column;
       max-width: 800px;
       margin: 0 auto;
-      padding: 1rem;
-    }
-    #chat-box {
-      flex: 1;
-      overflow-y: auto;
-      background: white;
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      margin-bottom: 1rem;
-    }
-    .msg {
-      margin: 0.5rem 0;
-    }
-    .msg.user {
-      text-align: right;
-      color: #0057a3;
-    }
-    .msg.ai {
-      text-align: left;
-      color: #333;
+      padding: 2rem;
     }
     form {
       display: flex;
       gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
     }
-    input[type="text"] {
+    input[type="text"], input[type="file"] {
       flex: 1;
       padding: 0.7rem;
       border: 1px solid #ccc;
       border-radius: 8px;
     }
     button {
-      padding: 0.7rem 1rem;
-      background: #0057a3;
+      padding: 0.7rem 1.2rem;
+      background: #0066cc;
       color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
     }
-    .examples {
-      margin-top: 1rem;
-      background: #e8f0ff;
+    .result, .ai-result {
+      background: white;
       padding: 1rem;
-      border-radius: 8px;
+      border-radius: 10px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
     }
-    .examples h3 {
-      margin: 0 0 0.5rem;
-    }
-    .examples ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .examples li {
-      margin-bottom: 0.3rem;
+    h2 {
+      margin-top: 2rem;
     }
   </style>
 </head>
 <body>
-  <header>🧠 צ'אט גנאולוגי</header>
+  <header>🔍 חיפוש AI גנאולוגי</header>
   <main>
-    <div id="chat-box"></div>
-    <form id="chat-form">
-      <input type="text" id="user-input" placeholder="שאל שאלה על עץ המשפחה... למשל: 'מי הילדים של שלמה בן אבו? או 'הראה לי קרובים מהונגריה'" required />
-      <button type="submit">שלח</button>
+    <form id="search-form">
+      <input type="text" id="query" placeholder="הקלד שם, תאריך או מקום..." required />
+      <button type="submit">חפש</button>
     </form>
-    <div class="examples">
-      <h3>🧪 דוגמאות לחיפושים חכמים:</h3>
-      <ul>
-        <li>📍 איפה נולדה רחל לייבנר?</li>
-        <li>👨‍👩‍👧‍👦 מי הנכדים של אתא מלכה?</li>
-        <li>🕯️ מי נספה בשואה?</li>
-        <li>🎂 ימי הולדת בחודש יולי</li>
-        <li>🌍 קרובי משפחה בפולין</li>
-        <li>🧩 קשר משפחתי בין ראובן לאסתר</li>
-      </ul>
-    </div>
+
+    <div class="result" id="results-box">אין תוצאות עדיין</div>
+
+    <h2>או נתח תמונה/מסמך</h2>
+    <form id="image-form">
+      <input type="file" id="image-file" accept="image/*,.pdf" required />
+      <button type="submit">נתח</button>
+    </form>
+
+    <div class="ai-result" id="ai-output"></div>
   </main>
+
   <script>
-    const form = document.getElementById("chat-form");
-    const input = document.getElementById("user-input");
-    const chatBox = document.getElementById("chat-box");
-
-    form.addEventListener("submit", async (e) => {
+    document.getElementById("search-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const question = input.value.trim();
-      if (!question) return;
-
-      chatBox.innerHTML += `<div class="msg user">${question}</div>`;
-      input.value = "";
-      chatBox.scrollTop = chatBox.scrollHeight;
-
+      const query = document.getElementById("query").value;
       const res = await fetch("/api/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question })
+        body: JSON.stringify({ question: query })
+      });
+      const data = await res.json();
+      document.getElementById("results-box").textContent = data.answer || "לא נמצאו תוצאות.";
+    });
+
+    document.getElementById("image-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const file = document.getElementById("image-file").files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const endpoint = file.type === "application/pdf" ? "/api/parse-pdf" : "/api/parse-image";
+      const res = await fetch(endpoint, {
+        method: "POST",
+        body: formData
       });
 
       const data = await res.json();
-      chatBox.innerHTML += `<div class="msg ai">${data.answer}</div>`;
-      chatBox.scrollTop = chatBox.scrollHeight;
+      document.getElementById("ai-output").textContent = data.text || data.error || "שגיאה בעיבוד הקובץ";
     });
   </script>
 </body>
