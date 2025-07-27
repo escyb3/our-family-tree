@@ -262,7 +262,6 @@ app.get("/api/family-summary", async (req, res) => {
   res.json({ summary });
 });
 // למעלה
-const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const ai = require("./ai"); // בהתאם למיקום הקובץ ai.js
 
