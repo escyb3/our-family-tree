@@ -130,7 +130,6 @@ app.post("/reply-message", (req, res) => {
     res.status(404).send("הודעה לא נמצאה");
   }
 });
-let messages = [];
 const messagesPath = path.join(__dirname, "data", "messages.json");
 if (fs.existsSync(messagesPath)) {
   messages = JSON.parse(fs.readFileSync(messagesPath));
