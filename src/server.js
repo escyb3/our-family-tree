@@ -133,6 +133,68 @@ app.post("/reply-message", (req, res) => {
     res.status(404).send("הודעה לא נמצאה");
   }
 });
+let messages = [];
+const messagesPath = path.join(__dirname, "data", "messages.json");
+if (fs.existsSync(messagesPath)) {
+  messages = JSON.parse(fs.readFileSync(messagesPath));
+}
+
+function saveMessages() {
+  fs.writeFileSync(messagesPath, JSON.stringify(messages, null, 2));
+}
+app.post("/send-message", (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).send("לא מחובר");
+
+  const { to, subject, body, attachment, type = "regular" } = req.body;
+  const msg = {
+    from: user.username + "@family.local",
+    to,
+    subject,
+    body,
+    timestamp: new Date().toISOString(),
+    threadId: "msg" + Date.now(),
+    replies: [],
+    attachment,
+    type
+  };
+
+  messages.push(msg);
+  saveMessages();
+  res.send("נשלח בהצלחה");
+});
+app.post("/reply-message", (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).send("לא מחובר");
+
+  const { threadId, body } = req.body;
+  const msg = messages.find(m => m.threadId === threadId);
+  if (!msg) return res.status(404).send("לא נמצא");
+
+  msg.replies.push({
+    from: user.username + "@family.local",
+    body,
+    timestamp: new Date().toISOString()
+  });
+
+  saveMessages();
+  res.send("תגובה נוספה");
+});
+app.get("/messages", (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).send("לא מחובר");
+
+  const myInbox = messages.filter(m => m.to === user.username + "@family.local");
+  res.json(myInbox.reverse());
+});
+app.post("/upload-attachment", upload.single("attachment"), (req, res) => {
+  const file = req.file;
+  if (!file) return res.status(400).send("לא נשלח קובץ");
+
+  const url = "/uploads/" + file.filename;
+  res.json({ url });
+});
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Pending people
 app.post("/add-person", (req, res) => {
@@ -220,5 +282,9 @@ app.get("/api/family-summary", async (req, res) => {
   res.json({ summary });
 });
 
+const upload = multer({
+  dest: path.join(__dirname, "uploads"),
+  limits: { fileSize: 10 * 1024 * 1024 } // עד 10MB
+});
 // Start server
 app.listen(3000, () => console.log("השרת רץ על פורט 3000"));
