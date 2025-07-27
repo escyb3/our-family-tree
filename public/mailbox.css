@@ -1,0 +1,87 @@
+body {
+  font-family: sans-serif;
+  background: #f5f7fa;
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+}
+
+header {
+  background-color: #0057a3;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+main {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+input, textarea, select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+button {
+  padding: 0.6rem 1rem;
+  background: #0057a3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #003f80;
+}
+
+#search {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.msg-card {
+  background: white;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 4px rgba(0,0,0,0.1);
+}
+
+.msg-card p {
+  margin: 0.4rem 0;
+}
+
+.reply {
+  border-right: 3px solid #ddd;
+  margin-top: 0.5rem;
+  padding-right: 1rem;
+  color: #333;
+}
+
+.attachment-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: #0057a3;
+  text-decoration: underline;
+}
