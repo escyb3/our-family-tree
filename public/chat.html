@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -126,6 +126,13 @@
     </form>
     <pre id="summary-result"></pre>
 
+    <div class="section-title">🌍 מפת נדידה משפחתית</div>
+    <form id="migration-form">
+      <input type="text" id="migration-name" placeholder="הזן שם לבדיקה" />
+      <button type="submit">צפה במפה</button>
+    </form>
+    <div id="migration-result"></div>
+
   </main>
   <script>
     const chatBox = document.getElementById("chat-box");
@@ -201,6 +208,17 @@
       const res = await fetch("/api/family-summary");
       const data = await res.json();
       summaryResult.textContent = data.summary || data.error;
+    });
+
+    document.getElementById("migration-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const res = await fetch("/api/migration-map", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: migrationName.value })
+      });
+      const data = await res.json();
+      migrationResult.innerHTML = data.mapHtml || data.error;
     });
   </script>
 </body>
