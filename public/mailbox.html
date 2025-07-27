@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>📩 תיבת הודעות</title>
   <link rel="stylesheet" href="/style.css" />
+
   <style>
     body { font-family: sans-serif; background: #f7f9fc; margin: 0; }
     header { background: #0057a3; color: white; padding: 1rem; text-align: center; font-size: 1.6rem; }
@@ -26,6 +27,12 @@
     <button id="tab-inbox" class="active">📥 התקבלו</button>
     <button id="tab-sent">📤 נשלחו</button>
   </nav>
+  <div style="margin-bottom: 1rem;">
+  סנן לפי:
+  <button onclick="filterByType('all')">📩 הכל</button>
+  <button onclick="filterByType('regular')">👨‍👩‍👧‍👦 משפחה</button>
+  <button onclick="filterByType('system')">💻 מערכת</button>
+</div>
   <div class="container">
     <form id="send-form">
       <h3>שליחת הודעה חדשה</h3>
