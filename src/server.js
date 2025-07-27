@@ -173,7 +173,13 @@ app.get("/mark-read", (req, res) => {
   }
 });
 
-<div class="msg-card ${m.read ?' : 'unread'}" onclick="markAsRead('${m.threadId}')">
+const html = messages.map(m => `
+  <div class="msg-card ${m.read ? '' : 'unread'}" onclick="markAsRead('${m.threadId}')">
+    <p><strong>${m.subject}</strong></p>
+    <p>${m.body}</p>
+  </div>
+`).join("");
+
 </div>
 app.get("/mark-read", (req, res) => {
   const { threadId } = req.query;
