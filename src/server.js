@@ -261,5 +261,46 @@ app.get("/api/family-summary", async (req, res) => {
   const summary = await summarizeFamily();
   res.json({ summary });
 });
+// למעלה
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+const ai = require("./ai"); // בהתאם למיקום הקובץ ai.js
+
+// API – שאילתות AI
+app.post("/api/ask", async (req, res) => {
+  const answer = await ai.askAI(req.body.question);
+  res.json({ answer });
+});
+
+app.post("/api/ask-relation", async (req, res) => {
+  const relation = ai.checkRelation(req.body.name1, req.body.name2);
+  res.json({ relation });
+});
+
+app.post("/api/parse-any", upload.single("file"), async (req, res) => {
+  const result = await ai.parseAny(req.file.path);
+  res.json(result);
+});
+
+app.post("/api/autofill", async (req, res) => {
+  const result = ai.autofillPerson(req.body.partial);
+  res.json(result);
+});
+
+app.post("/api/ocr-parse", upload.single("file"), async (req, res) => {
+  const result = await ai.ocrParse(req.file.path);
+  res.json(result);
+});
+
+app.post("/api/suggest-relations", async (req, res) => {
+  const result = ai.suggestRelations(req.body.name);
+  res.json(result);
+});
+
+app.get("/api/family-summary", (req, res) => {
+  const summary = ai.summarizeFamily();
+  res.json(summary);
+});
+
 
 app.listen(3000, () => console.log("השרת רץ על פורט 3000"));
