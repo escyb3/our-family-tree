@@ -219,5 +219,48 @@ app.use((req, res, next) => {
   logStream.write(log);
   next();
 });
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+const { askAI, checkRelation, parseAny, autofillPerson, ocrParse, suggestRelations, summarizeFamily } = require("./ai");
+
+app.post("/api/ask", async (req, res) => {
+  const { question } = req.body;
+  const answer = await askAI(question);
+  res.json({ answer });
+});
+
+app.post("/api/ask-relation", async (req, res) => {
+  const { name1, name2 } = req.body;
+  const relation = await checkRelation(name1, name2);
+  res.json({ relation });
+});
+
+app.post("/api/parse-any", upload.single("file"), async (req, res) => {
+  const result = await parseAny(req.file.path);
+  res.json(result);
+});
+
+app.post("/api/autofill", async (req, res) => {
+  const { partial } = req.body;
+  const result = await autofillPerson(partial);
+  res.json(result);
+});
+
+app.post("/api/ocr-parse", upload.single("file"), async (req, res) => {
+  const result = await ocrParse(req.file.path);
+  res.json(result);
+});
+
+app.post("/api/suggest-relations", async (req, res) => {
+  const { name } = req.body;
+  const suggestions = await suggestRelations(name);
+  res.json({ suggestions });
+});
+
+app.get("/api/family-summary", async (req, res) => {
+  const summary = await summarizeFamily();
+  res.json({ summary });
+});
+
 
 app.listen(3000, () => console.log("השרת רץ על פורט 3000"));
