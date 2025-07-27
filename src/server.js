@@ -275,7 +275,6 @@ app.get("/api/family-summary", async (req, res) => {
 });
 
   dest: path.join(__dirname, "uploads"),
-limits: { fileSize: 10 * 1024 * 1024 }
 });
 
 // Start server
