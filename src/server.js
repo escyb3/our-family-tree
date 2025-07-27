@@ -149,6 +149,14 @@ app.post("/upload-attachment", upload.single("attachment"), (req, res) => {
   if (!req.file) return res.status(400).send("לא נשלח קובץ");
   res.json({ url: "/uploads/" + req.file.filename });
 });
+// Middleware: דרוש התחברות לכל דפי HTML מסוימים
+app.use((req, res, next) => {
+  const protectedPages = ["/mailbox.html", "/calendar.html", "/dashboard.html"];
+  if (protectedPages.includes(req.path) && !req.session.user) {
+    return res.redirect("/login.html");
+  }
+  next();
+});
 
 app.get("/pending-people", auth("admin"), (req, res) => res.json(pendingPeople));
 app.post("/add-person", auth(), (req, res) => {
