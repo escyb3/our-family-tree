@@ -1,184 +1,32 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>תיבת הודעות</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #f0f2f5;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    header {
-      background: #0057a3;
-      color: white;
-      padding: 1rem;
-      font-size: 1.6rem;
-      text-align: center;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      background: #e0e0e0;
-    }
-    nav button {
-      flex: 1;
-      padding: 0.8rem;
-      font-size: 1rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-    nav button.active {
-      background: #c0dfff;
-      font-weight: bold;
-    }
-    main {
-      max-width: 800px;
-      margin: auto;
-      padding: 1rem;
-      flex: 1;
-    }
-    form, .msg-card {
-      background: white;
-      margin-bottom: 1rem;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-    input, textarea, select {
-      width: 100%;
-      padding: 0.5rem;
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    button {
-      padding: 0.4rem 1rem;
-      background: #0057a3;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .reply {
-      margin-top: 0.5rem;
-      padding-right: 1rem;
-      border-right: 2px solid #ccc;
-    }
-    .controls {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 0.5rem;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <title>📩 תיבת ההודעות</title>
+  <link rel="stylesheet" href="mailbox.css" />
 </head>
 <body>
-  <header>📩 תיבת ההודעות</header>
-  <nav>
-    <button id="inbox-tab" class="active" onclick="showTab('inbox')">📥 התקבלו</button>
-    <button id="sent-tab" onclick="showTab('sent')">📤 נשלחו</button>
-  </nav>
+  <header>📩 תיבת ההודעות שלי</header>
   <main>
-    <form id="send-form">
+    <form id="send-form" enctype="multipart/form-data">
       <h3>שלח הודעה חדשה</h3>
-      <input type="text" id="to" list="recipients" placeholder="אל: username@family.local" required />
-      <datalist id="recipients"></datalist>
+      <input type="text" id="to" placeholder="אל: user@family.local" required />
       <input type="text" id="subject" placeholder="נושא" required />
-      <textarea id="body" rows="3" placeholder="תוכן ההודעה" required></textarea>
+      <select id="tag">
+        <option value="📝">📝 רגילה</option>
+        <option value="📢">📢 הודעה</option>
+        <option value="📷">📷 תמונה</option>
+      </select>
+      <textarea id="body" rows="4" placeholder="תוכן ההודעה" required></textarea>
+      <input type="file" id="attachment" />
       <button type="submit">שלח</button>
     </form>
 
-    <div id="inbox" class="tab"></div>
-    <div id="sent" class="tab" style="display: none"></div>
+    <input type="search" id="search" placeholder="🔍 חפש הודעות..." />
+
+    <h2>📥 ההודעות שהתקבלו</h2>
+    <div id="inbox"></div>
   </main>
-
-  <script>
-    const inboxEl = document.getElementById("inbox");
-    const sentEl = document.getElementById("sent");
-    const form = document.getElementById("send-form");
-    const datalist = document.getElementById("recipients");
-
-    async function loadMessages() {
-      const [inbox, sent, users] = await Promise.all([
-        fetch("/messages").then(r => r.json()),
-        fetch("/sent-messages").then(r => r.json()),
-        fetch("/admin-users").then(r => r.json()).catch(() => [])
-      ]);
-
-      datalist.innerHTML = users.map(u => `<option value="${u.username}@family.local">`).join("");
-
-      inboxEl.innerHTML = inbox.map(renderMessage).join("");
-      sentEl.innerHTML = sent.map(renderMessage).join("");
-    }
-
-    function renderMessage(m) {
-      return `
-        <div class="msg-card">
-          <p><strong>מ:</strong> ${m.from}</p>
-          <p><strong>אל:</strong> ${m.to}</p>
-          <p><strong>נושא:</strong> ${m.subject}</p>
-          <p>${m.body}</p>
-          <p><strong>תאריך:</strong> ${new Date(m.timestamp).toLocaleString()}</p>
-          ${m.replies?.map(r => `<div class="reply"><strong>${r.from}:</strong> ${r.body}<br>${new Date(r.timestamp).toLocaleString()}</div>`).join("") || ""}
-          <div class="controls">
-            <button onclick="reply('${m.threadId}')">השב</button>
-            <button onclick="deleteMessage('${m.threadId}')">🗑️ מחק</button>
-          </div>
-        </div>
-      `;
-    }
-
-    async function reply(threadId) {
-      const text = prompt("כתוב תגובה להודעה");
-      if (!text) return;
-      await fetch("/reply-message", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ threadId, body: text })
-      });
-      loadMessages();
-    }
-
-    async function deleteMessage(threadId) {
-      if (!confirm("למחוק את ההודעה?")) return;
-      await fetch("/delete-message", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ threadId })
-      });
-      loadMessages();
-    }
-
-    form.onsubmit = async (e) => {
-      e.preventDefault();
-      await fetch("/send-message", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          to: form.to.value,
-          subject: form.subject.value,
-          body: form.body.value
-        })
-      });
-      form.reset();
-      alert("הודעה נשלחה");
-      loadMessages();
-    };
-
-    function showTab(tab) {
-      document.querySelectorAll(".tab").forEach(t => t.style.display = "none");
-      document.getElementById(tab).style.display = "block";
-      document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
-      document.getElementById(tab + "-tab").classList.add("active");
-    }
-
-    loadMessages();
-  </script>
+  <script src="mailbox.js"></script>
 </body>
 </html>
