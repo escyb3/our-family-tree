@@ -168,7 +168,7 @@ app.get("/messages", requireLogin, (req, res) => { inbox.innerHTML = data.map(m 
 `).join("");
 });
 // client-side
-await fetch(`/mark-read?threadId=${m.threadId}`);
+await fetch(`/mark-readthreadId=${m.threadId}`);
 app.get("/mark-read", (req, res) => {
   const { threadId } = req.query;
   const msg = messages.find(m => m.threadId === threadId);
