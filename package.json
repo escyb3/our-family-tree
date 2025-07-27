@@ -1,22 +1,22 @@
 {
   "name": "our-family-tree",
   "version": "1.0.0",
-  "description": "",
+  "description": "Family tree project with Express and Google Gemini API",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js"
   },
-  "dependencies": {
-    "express": "^4.19.2",
-    "cookie-parser": "^1.4.6",
-    "dotenv": "^16.3.2",
-    "ejs": "^3.1.9",
-    "bcrypt": "^5.1.1",
-    "nodemailer": "^6.9.10",
-    "body-parser": "^1.20.2",
-    "uuid": "^9.0.1"
-  },
   "engines": {
     "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.0",
+    "nodemailer": "^6.9.8"
   }
 }
