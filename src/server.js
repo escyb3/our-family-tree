@@ -287,6 +287,13 @@ app.get("/api/family-summary", async (req, res) => {
   const summary = await ai.summarizeFamily();
   res.json({ summary });
 });
+app.get("/messages-sent", (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).send("לא מחובר");
+  const outbox = messages.filter(m => m.from === user.username + "@family.local");
+  res.json(outbox.reverse());
+});
+
 
 app.listen(3000, () => {
   console.log("השרת רץ על פורט 3000");
