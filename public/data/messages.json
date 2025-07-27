@@ -1,1 +1,12 @@
-[]
+{
+  "from": "admin@family.local",
+  "to": "all@family.local",
+  "subject": "שדרוג חשוב באתר",
+  "body": "הודעות פנימיות שודרגו!",
+  "timestamp": "...",
+  "tag": "📢 מערכת",
+  "read": false,
+  "attachment": "/uploads/update.pdf",
+  "threadId": "msg12345",
+  "replies": [...]
+}
