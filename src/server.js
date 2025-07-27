@@ -5,7 +5,6 @@ const fs = require("fs");
 const express = require("express");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
-const multer = require("multer");
 const pdfParse = require("pdf-parse");
 const { v4: uuidv4 } = require("uuid");
 const { Translate } = require("@google-cloud/translate").v2;
