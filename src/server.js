@@ -1,4 +1,5 @@
 // server.js
+const aiRoutes = require("./routes/aiRoutes");
 const express = require("express");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
