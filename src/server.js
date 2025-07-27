@@ -162,17 +162,28 @@ app.use((req, res, next) => {
   next();
 });
 app.get("/messages", requireLogin, (req, res) => { inbox.innerHTML = data.map(m => `
-  <div class="msg-card ${m.read ? '' : 'unread'}">
+// HTML יצירת כרטיס ההודעה
+const cardsHtml = messages.map(m => `
+  <div class="msg-card ${m.read ? '' : 'unread'}" data-thread-id="${m.threadId}">
     ...
   </div>
 `).join("");
+
+// client-side JS (לשליחה לשרת בעת קריאת הודעה)
+document.querySelectorAll(".msg-card").forEach(card => {
+  card.addEventListener("click", async () => {
+    const threadId = card.dataset.threadId;
+    await fetch(`/mark-read?threadId=${threadId}`);
+  });
 });
-// client-side
-await fetch(`/mark-readthreadId=${m.threadId}`);
+
+// שרת Express – סימון הודעה כנקראה
 app.get("/mark-read", (req, res) => {
   const { threadId } = req.query;
   const msg = messages.find(m => m.threadId === threadId);
   if (msg) msg.read = true;
+  res.sendStatus(200);
+});
   saveMessages();
   res.sendStatus(200);
 });
