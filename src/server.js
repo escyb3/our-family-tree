@@ -274,7 +274,6 @@ app.get("/api/family-summary", async (req, res) => {
   res.json({ summary });
 });
 
- const upload = multer({
   dest: path.join(__dirname, "uploads"),
   limits: { fileSize: 10 * 1024 * 1024 } // עד 10MB
 });
