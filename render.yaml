@@ -3,7 +3,6 @@ services:
     name: our-family-tree
     env: node
     buildCommand: npm install
-    startCommand: npm start
-    envVars:
-      - key: NODE_VERSION
-        value: 18
+    startCommand: node src/server.js
+    nodeVersion: 20
+    autoDeploy: true
