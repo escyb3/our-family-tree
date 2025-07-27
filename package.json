@@ -1,27 +1,27 @@
 {
   "name": "our-family-tree",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "עץ משפחה אינטראקטיבי עם שדרוגים מתקדמים",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js"
   },
   "dependencies": {
+    "@vitalets/google-translate-api": "^8.0.0",
+    "axios": "^1.6.7",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "fs": "0.0.1-security",
-    "multer": "^1.4.4",
+    "multer": "^1.4.4-lts.1",
     "nodemailer": "^6.9.8",
+    "openai": "^4.38.2",
     "path": "^0.12.7",
     "pdf-parse": "^1.1.1",
-    "uuid": "^9.0.0",
-    "google-translate-api-x": "^2.3.0",
-    "cors": "^2.8.5",
-    "openai": "^4.38.2",
     "tesseract.js": "^4.0.2",
-    "axios": "^1.6.7"
+    "uuid": "^9.0.0"
   }
 }
