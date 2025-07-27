@@ -1,6 +1,6 @@
 {
   "name": "our-family-tree",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "עץ משפחה אינטראקטיבי עם שדרוגים מתקדמים",
   "main": "src/server.js",
   "scripts": {
