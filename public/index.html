@@ -1,5 +1,20 @@
 <html> <lang="he" dir="rtl">
 <head>
+  <div id="user-profile" style="text-align:left; padding: 0.5rem;"></div>
+
+<script>
+  fetch("/api/user")
+    .then(res => res.json())
+    .then(user => {
+      if (user.username)
+        document.getElementById("user-profile").innerHTML = `
+          <span style="font-weight:bold;">${user.username}</span>
+          <span style="color:gray;">(${user.role})</span>
+          <a href="/logout" style="margin-right:10px; color: red;">התנתק</a>
+        `;
+    });
+</script>
+
   <meta charset="UTF-8" />
   <title>אתר המשפחה - Ben Abou, Elharrar ועוד</title>
   <link rel="stylesheet" href="/style.css" />
