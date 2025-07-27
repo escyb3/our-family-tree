@@ -173,7 +173,7 @@ app.get("/mark-read", (req, res) => {
   }
 });
 
-<div class="msg-card ${m.read ? '' : 'unread'}" onclick="markAsRead('${m.threadId}')">
+<div class="msg-card ${m.read ?' : 'unread'}" onclick="markAsRead('${m.threadId}')">
 </div>
 app.get("/mark-read", (req, res) => {
   const { threadId } = req.query;
