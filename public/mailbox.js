@@ -66,6 +66,37 @@ form.onsubmit = async (e) => {
   localStorage.removeItem("draft-subject");
   localStorage.removeItem("draft-body");
 };
+ <div>
+  <button onclick="showInbox()">📥 נכנסו</button>
+  <button onclick="showSent()">📤 נשלחו</button>
+</div>
+async function showInbox() {
+  const res = await fetch("/messages");
+  allMessages = await res.json();
+  renderMessages(allMessages);
+}
+
+async function showSent() {
+  const res = await fetch("/messages-sent");
+  const sent = await res.json();
+  renderMessages(sent);
+}
+msg.replies.map(r => `
+  <div class="reply">
+    <p><strong>${r.from}</strong>: ${r.body}</p>
+    <p>${new Date(r.timestamp).toLocaleString()}</p>
+  </div>
+`).join("")
+<style>
+.reply {
+  background: #f1f1f1;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border-radius: 6px;
+  margin-right: 1rem;
+  border-right: 4px solid #2196f3;
+}
+</style>
 
 
 async function loadMessages() {
