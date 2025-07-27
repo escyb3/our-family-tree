@@ -300,6 +300,48 @@ app.get("/api/family-summary", (req, res) => {
   const summary = ai.summarizeFamily();
   res.json(summary);
 });
+const messages = fs.existsSync("messages.json")
+  ? JSON.parse(fs.readFileSync("messages.json"))
+  : [];
+
+function saveMessages() {
+  fs.writeFileSync("messages.json", JSON.stringify(messages, null, 2));
+}
+app.post("/send-message", (req, res) => {
+  const msg = {
+    from: req.session.user.username + "@family.local",
+    to: req.body.to,
+    subject: req.body.subject,
+    body: req.body.body,
+    timestamp: new Date().toISOString(),
+    threadId: "msg" + Date.now(),
+    replies: []
+  };
+  messages.push(msg);
+  saveMessages();
+  res.send("הודעה נשלחה");
+});
+app.get("/messages", (req, res) => {
+  const inbox = messages.filter(m =>
+    m.to === req.session.user.username + "@family.local"
+  );
+  res.json(inbox);
+});
+app.post("/reply-message", (req, res) => {
+  const msg = messages.find(m => m.threadId === req.body.threadId);
+  if (msg) {
+    msg.replies.push({
+      from: req.session.user.username + "@family.local",
+      body: req.body.body,
+      timestamp: new Date().toISOString()
+    });
+    saveMessages();
+    res.send("תגובה נשלחה");
+  } else {
+    res.status(404).send("הודעה לא נמצאה");
+  }
+});
+
 
 
 app.listen(3000, () => console.log("השרת רץ על פורט 3000"));
