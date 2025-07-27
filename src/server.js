@@ -131,9 +131,6 @@ app.post("/reply-message", (req, res) => {
   }
 });
 const messagesPath = path.join(__dirname, "data", "messages.json");
-if (fs.existsSync(messagesPath)) {
-  messages = JSON.parse(fs.readFileSync(messagesPath));
-}
 
 function saveMessages() {
   fs.writeFileSync(messagesPath, JSON.stringify(messages, null, 2));
