@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>שליחת הודעת מערכת</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f4f8;
+      padding: 2rem;
+      max-width: 700px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #0057a3;
+    }
+    form {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    input, textarea, select {
+      padding: 0.8rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      background: #0057a3;
+      color: white;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .success {
+      text-align: center;
+      color: green;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>📣 שליחת הודעה מערכתית</h1>
+  <form id="admin-message-form">
+    <label>נושא ההודעה:</label>
+    <input type="text" id="subject" required />
+
+    <label>תוכן ההודעה:</label>
+    <textarea id="body" rows="5" required></textarea>
+
+    <label>סוג ההודעה:</label>
+    <select id="messageType" required>
+      <option value="system">📢 מערכת</option>
+      <option value="greeting">🎉 ברכה</option>
+      <option value="reminder">⏰ תזכורת</option>
+      <option value="genealogy">🧬 מידע גנאלוגי</option>
+      <option value="event">📆 אירוע</option>
+    </select>
+
+    <button type="submit">שלח לכל המשתמשים</button>
+    <div class="success" id="successMsg" style="display: none;">✅ נשלח בהצלחה!</div>
+  </form>
+
+  <script>
+    const form = document.getElementById("admin-message-form");
+    const success = document.getElementById("successMsg");
+
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+
+      const res = await fetch("/send-admin-message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          subject: form.subject.value,
+          body: form.body.value,
+          type: form.messageType.value
+        })
+      });
+
+      if (res.ok) {
+        success.style.display = "block";
+        form.reset();
+      } else {
+        alert("שגיאה בשליחה");
+      }
+    };
+  </script>
+</body>
+</html>
