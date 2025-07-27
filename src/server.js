@@ -162,14 +162,17 @@ app.use((req, res, next) => {
   next();
 });
 app.get("/messages", requireLogin, (req, res) => { inbox.innerHTML = data.map(m => `
-// בתוך פונקציה אסינכרונית, למשל כשמשתמש לוחץ על הודעה
-async function markAsRead(threadId) {
-  try {
-    await fetch(`/mark-read?threadId=${threadId}`);
-  } catch (err) {
-    console.error('Failed to mark as read', err);
+app.get("/mark-read", (req, res) => {
+  const { threadId } = req.query;
+  const msg = messages.find(m => m.threadId === threadId);
+  if (msg) {
+    msg.read = true;
+    res.json({ success: true });
+  } else {
+    res.status(404).json({ error: "Message not found" });
   }
-}
+});
+
 <div class="msg-card ${m.read ? '' : 'unread'}" onclick="markAsRead('${m.threadId}')">
 </div>
 app.get("/mark-read", (req, res) => {
