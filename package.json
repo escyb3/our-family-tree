@@ -1,34 +1,39 @@
 {
   "name": "our-family-tree",
-  "version": "1.0.0",
-  "description": "אתר עץ משפחתי עם כל הפיצ'רים והחיבורים",
+  "version": "1.2.0",
+  "description": "אתר עץ משפחה עם הרשאות, קבצים, תרגום ו־AI",
   "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
-  },
-  "engines": {
-    "node": ">=20.0.0"
+    "start": "node src/server.js"
   },
   "dependencies": {
+    "@google-cloud/translate": "^8.0.0",
+    "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.19.2",
-    "express-session": "^1.17.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.0",
+    "fs-extra": "^11.2.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.2.1",
+    "moment": "^2.29.4",
+    "mongoose": "^8.3.0",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.12",
-    "pdf-parse": "^1.1.1",
-    "uuid": "^9.0.1"
+    "pdf-parse": "^1.1.1"
   },
-  "devDependencies": {
-    "nodemon": "^3.1.0"
+  "engines": {
+    "node": ">=20.0.0"
   },
-  "keywords": [],
+  "keywords": [
+    "family-tree",
+    "nodejs",
+    "express",
+    "mongodb",
+    "multer",
+    "translate",
+    "google-ai"
+  ],
   "author": "Yair Ben Abou",
   "license": "MIT"
 }
