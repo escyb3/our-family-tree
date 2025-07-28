@@ -317,6 +317,127 @@ app.post("/upload-attachment", upload.single("attachment"), (req, res) => {
   if (!req.file) return res.status(400).send("אין קובץ");
   res.json({ url: "/uploads/" + req.file.filename });
 });
+let messages = [];
+let drafts = [];
+let users = ["admin@family.local", "user1@family.local", "user2@family.local"];
+
+// העלאת קבצים
+const upload = multer({ dest: "uploads/" });
+
+// אימות משתמש (פשוט)
+app.get("/api/user", (req, res) => {
+  res.json({ username: "user1@family.local" });
+});
+
+// שליחת הודעה
+app.post("/api/send", upload.fields([{ name: 'attachment' }, { name: 'media' }]), (req, res) => {
+  const { to, subject, body, type } = req.body;
+  const recipients = to.split(",").map(s => s.trim());
+  const sender = "user1@family.local"; // דוגמה
+  const timestamp = new Date().toISOString();
+
+  const attachments = [];
+  if (req.files?.attachment) {
+    attachments.push(`/uploads/${req.files.attachment[0].filename}`);
+  }
+  if (req.files?.media) {
+    attachments.push(`/uploads/${req.files.media[0].filename}`);
+  }
+
+  recipients.forEach(recipient => {
+    messages.push({
+      id: Date.now() + Math.random(),
+      from: sender,
+      to: recipient,
+      subject,
+      body,
+      type,
+      attachments,
+      timestamp,
+      unread: true,
+      replies: []
+    });
+  });
+
+  res.json({ success: true });
+});
+
+// שמירת טיוטה
+app.post("/api/draft", (req, res) => {
+  drafts.push({ ...req.body, timestamp: new Date().toISOString() });
+  res.json({ success: true });
+});
+
+// קבלת הודעות
+app.get("/api/messages", (req, res) => {
+  const user = "user1@family.local";
+  const inbox = messages.filter(msg => msg.to === user);
+  const sent = messages.filter(msg => msg.from === user);
+  res.json({ inbox, sent });
+});
+
+// שליחת תגובה
+app.post("/api/reply", (req, res) => {
+  const { messageId, body } = req.body;
+  const user = "user1@family.local";
+  const message = messages.find(m => m.id == messageId);
+  if (message) {
+    message.replies = message.replies || [];
+    message.replies.push({
+      from: user,
+      body,
+      timestamp: new Date().toISOString()
+    });
+  }
+  res.json({ success: true });
+});
+
+// סיכום שרשור עם AI (פשוט)
+app.post("/api/summarize", (req, res) => {
+  const { threadId } = req.body;
+  const thread = messages.find(m => m.id == threadId);
+  if (!thread) return res.status(404).json({ error: "לא נמצא" });
+
+  const summary = `
+🧾 נושא: ${thread.subject}
+📤 מאת: ${thread.from}
+📥 אל: ${thread.to}
+🕒 נשלח ב-${thread.timestamp}
+
+תוכן ראשי:
+${thread.body}
+
+תשובות:
+${(thread.replies || []).map(r => `- ${r.from}: ${r.body}`).join("\n")}
+  `;
+  res.json({ summary });
+});
+
+// סטטיסטיקה בסיסית
+app.get("/api/stats", (req, res) => {
+  const user = "user1@family.local";
+  const sent = messages.filter(m => m.from === user).length;
+  const received = messages.filter(m => m.to === user).length;
+  const unread = messages.filter(m => m.to === user && m.unread).length;
+
+  res.json({ sent, received, unread });
+});
+
+// אנשי קשר תכופים
+app.get("/api/contacts", (req, res) => {
+  const user = "user1@family.local";
+  const contacts = {};
+
+  messages.forEach(msg => {
+    const contact = msg.to === user ? msg.from : msg.to;
+    contacts[contact] = (contacts[contact] || 0) + 1;
+  });
+
+  const frequent = Object.entries(contacts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([contact]) => contact);
+
 
 app.listen(3000, () => {
   console.log("השרת רץ על פורט 3000");
