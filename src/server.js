@@ -318,7 +318,6 @@ app.post("/upload-attachment", upload.single("attachment"), (req, res) => {
   res.json({ url: "/uploads/" + req.file.filename });
 });
 let drafts = [];
-let users = ["admin@family.local", "user1@family.local", "user2@family.local"];
 
 // העלאת קבצים
 const upload = multer({ dest: "uploads/" });
