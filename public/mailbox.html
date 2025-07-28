@@ -179,6 +179,28 @@
 <p><strong>סוג:</strong> ${m.type || "אישי"}</p>
 <input type="file" id="attachment" />
 ${m.attachment ? `<p>📎 קובץ מצורף: <a href="${m.attachment}" target="_blank">פתיחה</a></p>` : ""}
+    
+    <section id="inbox">
+      <h2>📥 ההודעות שהתקבלו</h2>
+      <div id="messages"></div>
+    </section>
+
+    <section id="contacts">
+      <h2>👥 אנשי קשר תכופים</h2>
+      <ul id="contact-list"></ul>
+    </section>
+
+    <section id="stats">
+      <h2>📊 סטטיסטיקת פעילות</h2>
+      <div id="stats-content"></div>
+    </section>
+  </main>
+
+  <script src="js/inbox.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/inbox-ai.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/contacts.js"></script>
 
   </script>
 </body>
