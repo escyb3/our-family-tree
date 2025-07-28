@@ -1,41 +1,83 @@
-<!-- public/migration-map.html -->
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>מפת נדודים משפחתית</title>
-  <script src="https://cdn.jsdelivr.net/npm/leaflet/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet/dist/leaflet.css"/>
+  <meta charset="UTF-8">
+  <title>מפת הנדידה המשפחתית</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <style>
-    body, html { margin: 0; padding: 0; height: 100%; }
+    body { font-family: sans-serif; margin: 0; padding: 0; }
     #map { height: 100vh; }
+    #searchPanel {
+      position: absolute; top: 10px; right: 10px; z-index: 1000;
+      background: rgba(255,255,255,0.9); padding: 10px; border-radius: 12px;
+    }
+    #searchInput { width: 200px; padding: 5px; }
+    .highlighted-line { stroke: red !important; stroke-width: 5 !important; }
   </style>
 </head>
 <body>
+  <div id="searchPanel">
+    <input id="searchInput" type="text" placeholder="חפש אדם או משפחה...">
+    <button onclick="searchPerson()">🔍</button>
+  </div>
   <div id="map"></div>
   <script>
-    const map = L.map('map').setView([31.7683, 35.2137], 2); // Israel center
+    const map = L.map('map').setView([32.0853, 34.7818], 5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    const migrations = [
-      { name: "מרוקו", lat: 31.7917, lon: -7.0926 },
-      { name: "צרפת", lat: 46.6034, lon: 1.8883 },
-      { name: "ישראל", lat: 31.7683, lon: 35.2137 },
-      { name: "פולין", lat: 51.9194, lon: 19.1451 },
-      { name: "הולנד", lat: 52.1326, lon: 5.2913 }
-    ];
+    const migrationData = [] // ייטען מהשרת עם נתוני תנועה: שם, תאריכים, מקומות
 
-    for (let i = 0; i < migrations.length; i++) {
-      const m = migrations[i];
-      L.marker([m.lat, m.lon]).addTo(map).bindPopup(m.name);
-      if (i > 0) {
-        const prev = migrations[i - 1];
-        L.polyline([[prev.lat, prev.lon], [m.lat, m.lon]], { color: "blue" }).addTo(map);
-      }
+    function drawMigrationPaths(data) {
+      data.forEach(family => {
+        const latlngs = family.path.map(p => [p.lat, p.lng]);
+        const polyline = L.polyline(latlngs, {
+          color: 'blue',
+          weight: 3,
+          opacity: 0.6,
+          smoothFactor: 1
+        }).addTo(map);
+
+        polyline.on('mouseover', () => polyline.setStyle({ color: 'orange', weight: 6 }));
+        polyline.on('mouseout', () => polyline.setStyle({ color: 'blue', weight: 3 }));
+
+        polyline.bindPopup(`<b>${family.name}</b><br>${family.events.map(e => e.type + ': ' + e.date).join('<br>')}`);
+      });
     }
+
+    function searchPerson() {
+      const term = document.getElementById('searchInput').value.toLowerCase();
+      map.eachLayer(layer => {
+        if (layer instanceof L.Polyline && layer.getPopup()) {
+          const content = layer.getPopup().getContent().toLowerCase();
+          if (content.includes(term)) {
+            layer.setStyle({ color: 'red', weight: 5 });
+            layer.openPopup();
+          } else {
+            layer.setStyle({ color: 'blue', weight: 3 });
+          }
+        }
+      });
+    }
+
+    // דוגמה לטעינת נתוני AI תבניות נדידה
+    function detectMigrationPatterns(data) {
+      // כאן תבוצע קריאה לשרת או TF.js לניתוח תנועה גאוגרפית ע"י AI
+      // למשל: חציית יבשות, תנועות דרום-צפון, מערב-מזרח וכו'
+    }
+
+    // נטען מהשרת (בפועל עם fetch או AJAX)
+    fetch('/api/migration-data')
+      .then(res => res.json())
+      .then(data => {
+        drawMigrationPaths(data);
+        detectMigrationPatterns(data);
+      });
   </script>
 </body>
 </html>
-
