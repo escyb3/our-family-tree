@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
+  <script>
+       fetch("/api/user").then(res => {
+      if (!res.ok) location.href = "/login.html";
+    });
+  </script>
   <meta charset="UTF-8" />
   <title>📩 תיבת הודעות</title>
   <link rel="stylesheet" href="/style.css" />
