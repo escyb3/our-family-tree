@@ -317,10 +317,6 @@ app.post("/upload-attachment", upload.single("attachment"), (req, res) => {
   if (!req.file) return res.status(400).send("אין קובץ");
   res.json({ url: "/uploads/" + req.file.filename });
 });
-let drafts = [];
-
-// העלאת קבצים
-const upload = multer({ dest: "uploads/" });
 
 // אימות משתמש (פשוט)
 app.get("/api/user", (req, res) => {
