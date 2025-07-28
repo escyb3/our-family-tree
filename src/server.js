@@ -295,7 +295,7 @@ app.post("/send-message", (req, res) => {
     replies: [],
     attachment,
     type
-  };
+  };//
   messages.push(msg);
   saveMessages();
   res.send("נשלח");
@@ -432,7 +432,46 @@ app.get("/api/contacts", (req, res) => {
     .slice(0, 5)
     .map(([contact]) => contact);
 
+  // הגשה של קבצים סטטיים (כולל migration-map.html)
+app.use(express.static('public'));
+
+// נתוני הדגמה למסלולי נדידה — תוכל להחליף בקובץ JSON אמיתי או בקריאה לבסיס נתונים
+const migrationData = [
+  {
+    name: "משפחת בן אבו",
+    path: [
+      { lat: 33.5731, lng: -7.5898, date: "1900", place: "קזבלנקה, מרוקו", type: "נולדו" },
+      { lat: 32.0853, lng: 34.7818, date: "1948", place: "תל אביב, ישראל", type: "היגרו" },
+      { lat: 31.7683, lng: 35.2137, date: "1970", place: "ירושלים, ישראל", type: "עברו" }
+    ],
+    events: [
+      { type: "נולדו", date: "1900", place: "קזבלנקה" },
+      { type: "היגרו", date: "1948", place: "תל אביב" },
+      { type: "עברו", date: "1970", place: "ירושלים" }
+    ]
+  },
+  {
+    name: "משפחת ויינברגר",
+    path: [
+      { lat: 49.6829, lng: 21.7709, date: "1885", place: "קרוסנו, פולין", type: "נולדו" },
+      { lat: 50.1109, lng: 8.6821, date: "1933", place: "פרנקפורט, גרמניה", type: "עברו" },
+      { lat: 40.7128, lng: -74.0060, date: "1941", place: "ניו יורק, ארה״ב", type: "היגרו" }
+    ],
+    events: [
+      { type: "נולדו", date: "1885", place: "קרוסנו" },
+      { type: "עברו", date: "1933", place: "פרנקפורט" },
+      { type: "היגרו", date: "1941", place: "ניו יורק" }
+    ]
+  }
+];
+
+// API למפת הנדידה
+app.get('/api/migration-data', (req, res) => {
+  res.json(migrationData);
+});
+
+
 
 app.listen(3000, () => {
   console.log("השרת רץ על פורט 3000");
-});
+});//
