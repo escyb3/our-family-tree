@@ -465,11 +465,15 @@ const migrationData = [
   }
 ];
 
-// API למפת הנדידה
 app.get('/api/migration-data', (req, res) => {
-  res.json(migrationData);
+  fs.readFile(path.join(__dirname, 'data', 'migration-data.json'), 'utf8', (err, data) => {
+    if (err) {
+      console.error('שגיאה בקריאת קובץ JSON:', err);
+      return res.status(500).json({ error: 'שגיאה בשרת' });
+    }
+    res.json(JSON.parse(data));
+  });
 });
-
 
 
 app.listen(3000, () => {
