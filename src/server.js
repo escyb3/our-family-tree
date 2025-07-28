@@ -273,6 +273,50 @@ app.get("/messages-sent", (req, res) => {
   const outbox = messages.filter(m => m.from === user.username + "@family.local");
   res.json(outbox.reverse());
 });
+app.use("/messages", (req, res, next) => {
+  if (!req.session.user) return res.status(401).send("לא מחובר");
+  next();
+});
+app.get("/messages", (req, res) => {
+  const inbox = messages.filter(m => m.to === req.session.user.username + "@family.local");
+  res.json(inbox);
+});
+app.post("/send-message", (req, res) => {
+  if (!req.session.user) return res.status(401).send("לא מחובר");
+
+  const { to, subject, body, attachment, type = "regular" } = req.body;
+  const msg = {
+    from: req.session.user.username + "@family.local",
+    to,
+    subject,
+    body,
+    timestamp: new Date().toISOString(),
+    threadId: "msg" + Date.now(),
+    replies: [],
+    attachment,
+    type
+  };
+  messages.push(msg);
+  saveMessages();
+  res.send("נשלח");
+});
+app.post("/reply-message", (req, res) => {
+  if (!req.session.user) return res.status(401).send("לא מחובר");
+  const { threadId, body } = req.body;
+  const msg = messages.find(m => m.threadId === threadId);
+  if (!msg) return res.status(404).send("לא נמצא");
+  msg.replies.push({
+    from: req.session.user.username + "@family.local",
+    body,
+    timestamp: new Date().toISOString()
+  });
+  saveMessages();
+  res.send("נשלח");
+});
+app.post("/upload-attachment", upload.single("attachment"), (req, res) => {
+  if (!req.file) return res.status(400).send("אין קובץ");
+  res.json({ url: "/uploads/" + req.file.filename });
+});
 
 app.listen(3000, () => {
   console.log("השרת רץ על פורט 3000");
