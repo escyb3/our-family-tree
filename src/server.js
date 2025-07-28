@@ -317,7 +317,6 @@ app.post("/upload-attachment", upload.single("attachment"), (req, res) => {
   if (!req.file) return res.status(400).send("אין קובץ");
   res.json({ url: "/uploads/" + req.file.filename });
 });
-let messages = [];
 let drafts = [];
 let users = ["admin@family.local", "user1@family.local", "user2@family.local"];
 
