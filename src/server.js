@@ -609,8 +609,6 @@ app.post("/api/forum/new-thread", (req, res) => {
     res.status(500).json({ error: "שגיאה ביצירת דיון" });
   }
 });
-const path = require("path");
-const fs = require("fs");
 
 const forumFile = path.join(__dirname, "data", "forum.json");
 
