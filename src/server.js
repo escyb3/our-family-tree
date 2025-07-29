@@ -162,7 +162,7 @@ app.use((req, res, next) => {
 
   const users = JSON.parse(fs.readFileSync("./data/users.json"));
   res.status(401).send("שם משתמש או סיסמא שגויים");
-});
+});//
 // מתוך POST /api/login
 const user = users.find(u => u.username === req.body.username);
 if (!user) return res.status(401).send("שם משתמש שגוי");
