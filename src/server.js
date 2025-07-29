@@ -24,6 +24,41 @@ const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
 app.use(express.static("public"));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.json());
+
+const forumFile = path.join(__dirname, "data", "forum.json");
+
+// יצירת קובץ הפורום אם לא קיים
+if (!fs.existsSync(forumFile)) {
+  fs.writeFileSync(forumFile, JSON.stringify([]));
+}
+
+// יצירת דיון חדש
+app.post("/api/forum/create", async (req, res) => {
+  try {
+    const { title, content, author } = req.body;
+    if (!title || !content || !author) {
+      return res.status(400).json({ error: "Missing fields" });
+    }
+
+    const discussions = JSON.parse(fs.readFileSync(forumFile));
+    const newDiscussion = {
+      id: Date.now(),
+      title,
+      content,
+      author,
+      createdAt: new Date(),
+      comments: []
+    };
+
+    discussions.unshift(newDiscussion);
+    fs.writeFileSync(forumFile, JSON.stringify(discussions, null, 2));
+    res.status(200).json({ success: true, discussion: newDiscussion });
+  } catch (error) {
+    console.error("Error creating discussion:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: "secret", resave: false, saveUninitialized: true }));
 
