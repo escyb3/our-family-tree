@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>פורום המשפחה</title>
   <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/@tailwindcss/forms"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
   <style>
     .mention { color: #2563eb; font-weight: bold; cursor: pointer; }
@@ -17,12 +16,10 @@
   <div class="max-w-5xl mx-auto p-6">
     <h1 class="text-3xl font-bold mb-6 text-center">🌳 פורום המשפחה הגנאולוגי</h1>
 
-    <!-- כפתור פתיחת דיון -->
     <div class="text-right mb-4">
       <button id="open-thread-btn" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded">➕ פתח דיון חדש</button>
     </div>
 
-    <!-- טופס דיון חדש -->
     <section id="new-thread-form" class="hidden bg-white p-4 rounded shadow mb-6">
       <h2 class="text-xl font-semibold mb-2">דיון חדש</h2>
       <form id="thread-form" enctype="multipart/form-data">
@@ -33,7 +30,6 @@
       </form>
     </section>
 
-    <!-- שאלות נפוצות -->
     <details class="mb-6 bg-yellow-100 p-4 rounded">
       <summary class="cursor-pointer font-bold">❓ שאלות נפוצות גנאולוגיות</summary>
       <ul class="list-disc list-inside mt-2">
@@ -43,101 +39,10 @@
       </ul>
     </details>
 
-    <!-- תצוגת דיונים -->
     <section id="threads-container"></section>
   </div>
 
-  <script>
-    const mentionRegex = /@([\u0590-\u05FF\w]+)/g;
-
-    document.getElementById('open-thread-btn').onclick = () => {
-      document.getElementById('new-thread-form').classList.toggle('hidden');
-    };
-
-    document.getElementById('thread-form').onsubmit = async (e) => {
-      e.preventDefault();
-      const title = document.getElementById('thread-title').value.trim();
-      const content = document.getElementById('thread-content').value.trim();
-      const file = document.getElementById('thread-file').files[0];
-
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("content", content);
-      if (file) formData.append("file", file);
-
-      try {
-        await axios.post('/api/forum/threads', formData);
-        location.reload();
-      } catch (err) {
-        alert("שגיאה ביצירת דיון");
-      }
-    };
-
-    const formatContent = (text) => {
-      return text.replace(mentionRegex, (_, user) =>
-        `<span class="mention" onclick="alert('המשתמש @${user} קיבל התראה!')">@${user}</span>`
-      );
-    };
-
-    const renderReplies = (replies) => {
-      if (!replies || !replies.length) return '';
-      return replies.map(reply => `
-        <div class="ml-4 mt-2 bg-white p-2 rounded border">
-          <div class="text-sm">${formatContent(reply.content)}</div>
-          <small class="text-gray-500">נכתב על ידי: ${reply.author || "אנונימי"}</small>
-        </div>
-      `).join('');
-    };
-
-    const renderThread = (thread) => {
-      return `
-        <div class="bg-white p-4 rounded shadow mb-6">
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-xl font-bold">${thread.title}</h3>
-            <span class="badge">${thread.badge || "משתמש חדש"}</span>
-          </div>
-          ${thread.imageUrl ? `<img src="${thread.imageUrl}" class="max-w-xs rounded mb-2">` : ''}
-          <p>${formatContent(thread.content)}</p>
-          <small class="text-gray-500">נכתב על ידי: ${thread.author || 'אנונימי'}</small>
-
-          <!-- תגובות -->
-          <div class="reply-box mt-4">
-            <form onsubmit="submitReply(event, '${thread._id}')">
-              <textarea placeholder="הגב לדיון..." class="w-full p-2 border rounded mb-2" required></textarea>
-              <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">💬 הגב</button>
-            </form>
-            <div>${renderReplies(thread.replies)}</div>
-          </div>
-        </div>
-      `;
-    };
-
-    async function loadThreads() {
-      const container = document.getElementById("threads-container");
-      try {
-        const res = await axios.get("/api/forum/threads");
-        container.innerHTML = res.data.map(renderThread).join('');
-      } catch (e) {
-        container.innerHTML = `<p class="text-red-600">שגיאה בטעינת דיונים</p>`;
-      }
-    }
-
-    async function submitReply(e, threadId) {
-      e.preventDefault();
-      const textarea = e.target.querySelector("textarea");
-      const content = textarea.value.trim();
-      if (!content) return;
-
-      try {
-        await axios.post(`/api/forum/threads/${threadId}/replies`, { content });
-        loadThreads(); // רענון תגובות
-      } catch (err) {
-        alert("שגיאה בשליחת תגובה");
-      }
-    }
-
-    loadThreads();
-    <script src="/forum.js"></script>
-  </script>
+  <!-- טוען את קובץ הפורום מהצד לקוח -->
+  <script src="/forum.js"></script>
 </body>
 </html>
