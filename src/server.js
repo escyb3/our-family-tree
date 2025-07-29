@@ -511,8 +511,6 @@ app.get('/api/migration-data', (req, res) => {
     res.json(JSON.parse(data));
   });
 });
-// ודא שתיקיית data קיימת
-const dataDir = path.join(__dirname, "data");
 
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir);
