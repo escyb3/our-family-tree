@@ -4,7 +4,6 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const path = require("path");
-const fs = require("fs");
 const { v4: uuid } = require("uuid");
 const { requireLogin, getUserInfo } = require("../middleware/auth");
 const ai = require("../utils/ai-tools");
