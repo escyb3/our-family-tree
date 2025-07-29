@@ -22,38 +22,7 @@
       <button id="submit-thread" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">פרסם דיון</button>
     </section>
 
-    <section id="forum-threads" class="space-y-4">
-      <!-- דיונים יוזנו כאן -->
-    </section>
-  </main>
-
-  <script>
-    const newThreadBtn = document.getElementById('new-thread-btn');
-    const newThreadForm = document.getElementById('new-thread-form');
-    const submitThreadBtn = document.getElementById('submit-thread');
-    const titleInput = document.getElementById('title-input');
-    const contentInput = document.getElementById('content-input');
-    const forumThreads = document.getElementById('forum-threads');
-
-    newThreadBtn.addEventListener('click', () => {
-      newThreadForm.classList.toggle('hidden');
-    });
-
-    submitThreadBtn.addEventListener('click', async () => {
-      const title = titleInput.value.trim();
-      const content = contentInput.value.trim();
-      if (!title || !content) return alert('יש למלא כותרת ותוכן');
-      try {
-        const res = await axios.post('/api/forum/threads', { title, content });
-        addThreadToDOM(res.data);
-        titleInput.value = '';
-        contentInput.value = '';
-        newThreadForm.classList.add('hidden');
-      } catch (err) {
-        alert('שגיאה בפרסום דיון');
-      }
-    });
-
+    
   <main class="p-4 max-w-6xl mx-auto space-y-4">
     <!-- סרגל עליון -->
     <div class="flex flex-wrap gap-4 items-center">
