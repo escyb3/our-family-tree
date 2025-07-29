@@ -77,6 +77,39 @@ app.post("/api/forum/threads", (req, res) => {
     res.status(500).json({ success: false, error: "שגיאה ביצירת דיון" });
   }
 });
+// קריאת כל השרשורים
+app.get("/api/forum", (req, res) => {
+  fs.readFile("forum.json", (err, data) => {
+    if (err) return res.status(500).send("Error reading forum data");
+    const threads = JSON.parse(data);
+    res.json(threads);
+  });
+});
+// יצירת שרשור חדש
+app.post("/api/forum", (req, res) => {
+  fs.readFile("forum.json", (err, data) => {
+    if (err) return res.status(500).send("Error reading forum data");
+
+    const threads = JSON.parse(data);
+    const newThread = {
+      _id: Date.now().toString(),
+      title: req.body.title,
+      body: req.body.body,
+      category: req.body.category || "כללי",
+      username: req.user.username,
+      createdAt: new Date(),
+      replies: [],
+    };
+
+    threads.push(newThread);
+
+    fs.writeFile("forum.json", JSON.stringify(threads, null, 2), (err) => {
+      if (err) return res.status(500).send("Error saving thread");
+      res.json({ success: true });
+    });
+  });
+});
+
 
 
 app.use(express.urlencoded({ extended: true }));
