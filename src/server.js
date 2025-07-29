@@ -478,4 +478,4 @@ app.get('/api/migration-data', (req, res) => {
 
 app.listen(3000, () => {
   console.log("השרת רץ על פורט 3000");
-});//
+}); //
