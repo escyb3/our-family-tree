@@ -3,6 +3,20 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
+fetch("/api/forum", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    title: "הכותרת שלי",
+    body: "הגוף שלי",
+    category: "כללי"
+  })
+})
+.then(res => res.json())
+.then(data => {
+  console.log("✅ נוצר דיון:", data);
+})
+.catch(err => console.error("❌ שגיאה:", err));
 const path = require("path");
 const { v4: uuid } = require("uuid");
 const { requireLogin, getUserInfo } = require("../middleware/auth");
