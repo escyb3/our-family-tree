@@ -512,13 +512,6 @@ app.get('/api/migration-data', (req, res) => {
   });
 });
 
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir);
-}
-if (!fs.existsSync(forumFile)) {
-  fs.writeFileSync(forumFile, "[]");
-}
-
 // החזרת כל הדיונים
 app.get("/api/forum/threads", (req, res) => {
   try {
