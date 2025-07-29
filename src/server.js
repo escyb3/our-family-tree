@@ -431,6 +431,8 @@ app.get("/api/contacts", (req, res) => {
     .sort((a, b) => b[1] - a[1])
     .slice(0, 5)
     .map(([contact]) => contact);
+  res.json(frequent);
+});
 
 // הגשה של קבצים סטטיים (כולל migration-map.html ו־script.js)
 app.use(express.static('public'));
