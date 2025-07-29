@@ -158,8 +158,6 @@ app.post("/login", (req, res) => {
   const users = JSON.parse(fs.readFileSync("./data/users.json"));
   res.status(401).send("שם משתמש או סיסמא שגויים");
 });
-const bcrypt = require("bcrypt");
-
 // מתוך POST /api/login
 const user = users.find(u => u.username === req.body.username);
 if (!user) return res.status(401).send("שם משתמש שגוי");
