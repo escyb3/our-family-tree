@@ -432,11 +432,11 @@ app.get("/api/contacts", (req, res) => {
     .slice(0, 5)
     .map(([contact]) => contact);
 
-  // הגשה של קבצים סטטיים (כולל migration-map.html)
+// הגשה של קבצים סטטיים (כולל migration-map.html ו־script.js)
 app.use(express.static('public'));
 
-// נתוני הדגמה למסלולי נדידה — תוכל להחליף בקובץ JSON אמיתי או בקריאה לבסיס נתונים
-const migrationData = [
+// מערך ברירת מחדל — יופעל רק אם לא מצליחים לקרוא מהקובץ
+const fallbackMigrationData = [
   {
     name: "משפחת בן אבו",
     path: [
@@ -448,19 +448,19 @@ const migrationData = [
       { type: "נולדו", date: "1900", place: "קזבלנקה" },
       { type: "היגרו", date: "1948", place: "תל אביב" },
       { type: "עברו", date: "1970", place: "ירושלים" }
-    }
-]; //
+    ]
+  },
   {
     name: "משפחת ויינברגר",
     path: [
-      { lat: 49.6829, lng: 21.7709, date: "1885", place: "קרוסנו, פולין", type: "נולדו" },
-      { lat: 50.1109, lng: 8.6821, date: "1933", place: "פרנקפורט, גרמניה", type: "עברו" },
-      { lat: 40.7128, lng: -74.0060, date: "1941", place: "ניו יורק, ארה״ב", type: "היגרו" }
+      { lat: 48.2082, lng: 16.3738, date: "1880", place: "וינה, אוסטריה", type: "נולדו" },
+      { lat: 47.3769, lng: 8.5417, date: "1938", place: "ציריך, שווייץ", type: "ברחו" },
+      { lat: 40.7128, lng: -74.0060, date: "1950", place: "ניו יורק, ארה״ב", type: "היגרו" }
     ],
     events: [
-      { type: "נולדו", date: "1885", place: "קרוסנו" },
-      { type: "עברו", date: "1933", place: "פרנקפורט" },
-      { type: "היגרו", date: "1941", place: "ניו יורק" }
+      { type: "נולדו", date: "1880", place: "וינה" },
+      { type: "ברחו", date: "1938", place: "ציריך" },
+      { type: "היגרו", date: "1950", place: "ניו יורק" }
     ]
   }
 ];
