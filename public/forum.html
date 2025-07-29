@@ -2,160 +2,86 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>פורום משפחתי</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
-  <style>
-    body { font-family: sans-serif; margin: 0; padding: 0; background: #f7f7f7; }
-    #forumContainer { padding: 20px; max-width: 900px; margin: auto; }
-    .post, .reply {
-      background: white; padding: 10px; margin-bottom: 10px; border-radius: 10px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    }
-    .reply { margin-right: 20px; background: #f9f9f9; }
-    .post-header { font-weight: bold; display: flex; justify-content: space-between; }
-    .actions { font-size: 0.9em; color: #555; margin-top: 5px; }
-    .active-users { background: #e0f7fa; padding: 5px 10px; border-radius: 8px; display: inline-block; margin-bottom: 10px; }
-    #newPost, #imageUpload { margin-top: 10px; width: 100%; }
-    .tag { background: #d1ecf1; color: #0c5460; padding: 2px 6px; margin-left: 5px; border-radius: 4px; display: inline-block; }
-    .liked { color: red; }
-  </style>
+  <title>הפורום המשפחתי</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="/scripts/forum.js"></script>
 </head>
 <body>
-  <div id="forumContainer">
-    <h2>📣 פורום משפחתי</h2>
-    
-    <div id="activeUsers" class="active-users">משתמשים פעילים: <span id="usersList">...</span></div>
+  <header>
+    <h1>📣 הפורום המשפחתי</h1>
+    <div id="user-info"></div>
+  </header>
 
-    <textarea id="newPost" placeholder="כתוב הודעה... תוכל לתייג מישהו עם @יוסי או להוסיף #נושא"></textarea>
-    <input type="file" id="imageUpload" accept="image/*">
-    <button onclick="postMessage()">📨 שלח</button>
+  <main>
+    <section id="forum-controls">
+      <button onclick="openNewThreadForm()">➕ פתח דיון חדש</button>
+      <input type="text" id="search-box" placeholder="🔍 חיפוש בפורום" oninput="searchForum()">
+      <label><input type="checkbox" onchange="toggleActiveUsers()"> הצג משתמשים פעילים</label>
+    </section>
 
-    <div id="draftBox" style="margin-top:10px; font-size: 0.9em; color: #777;"></div>
+    <section id="new-thread-form" style="display:none;">
+      <h2>📝 דיון חדש</h2>
+      <input id="thread-title" placeholder="כותרת הדיון">
+      <textarea id="thread-content" placeholder="תוכן ההודעה הראשית..."></textarea>
+      <input type="text" id="thread-tags" placeholder="תגיות (מופרדות בפסיקים)">
+      <input type="file" id="image-upload" accept="image/*" onchange="previewImage()">
+      <div id="image-preview"></div>
+      <label><input type="checkbox" id="anonymous"> פרסום אנונימי</label>
+      <button onclick="submitNewThread()">📤 פרסם</button>
+      <button onclick="saveDraft()">💾 שמור טיוטה</button>
+    </section>
 
-    <div id="forumPosts"></div>
-  </div>
+    <section id="forum-threads">
+      <!-- דיונים ייטענו כאן -->
+    </section>
+  </main>
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    const socket = io();
-    const forumPosts = document.getElementById('forumPosts');
+  <template id="thread-template">
+    <article class="thread">
+      <h3 class="thread-title"></h3>
+      <div class="thread-meta">
+        <span class="author"></span> • <span class="timestamp"></span>
+        <button onclick="shareThread(this)">📤 שיתוף</button>
+        <span class="likes">👍 <span class="like-count">0</span></span>
+        <button onclick="voteThread(this, 1)">⬆️</button>
+        <button onclick="voteThread(this, -1)">⬇️</button>
+        <button onclick="replyToThread(this)">💬 הגב</button>
+        <button onclick="markAsSolved(this)">✅ נפתר</button>
+      </div>
+      <div class="thread-content"></div>
+      <div class="thread-tags"></div>
+      <div class="thread-attachments"></div>
+      <div class="emoji-reactions">❤️ 😄 🤔</div>
+      <div class="edit-history-toggle" onclick="toggleHistory(this)">📜 היסטוריית עריכות</div>
+      <section class="replies">
+        <!-- תגובות -->
+      </section>
+      <form class="reply-form" style="display:none;" onsubmit="submitReply(event)">
+        <textarea class="reply-text" placeholder="כתוב תגובה..."></textarea>
+        <input type="file" class="reply-image" accept="image/*">
+        <label><input type="checkbox" class="anonymous-reply"> אנונימי</label>
+        <button type="submit">📨 שלח</button>
+      </form>
+    </article>
+  </template>
 
-    document.getElementById('newPost').addEventListener('input', () => {
-      localStorage.setItem('draft', document.getElementById('newPost').value);
-      showDraftStatus();
-    });
+  <template id="reply-template">
+    <div class="reply">
+      <span class="reply-author"></span>: <span class="reply-content"></span>
+      <div class="reply-meta">
+        <span class="reply-timestamp"></span>
+        <span class="likes">👍 <span class="like-count">0</span></span>
+        <button onclick="voteReply(this, 1)">⬆️</button>
+        <button onclick="voteReply(this, -1)">⬇️</button>
+        <button onclick="startPrivateMessage(this)">📩 הודעה פרטית</button>
+        <button onclick="reactEmoji(this)">😊</button>
+      </div>
+    </div>
+  </template>
 
-    function showDraftStatus() {
-      const draft = localStorage.getItem('draft');
-      if (draft && draft.length > 0) {
-        document.getElementById('draftBox').innerText = '📝 טיוטה נשמרה אוטומטית';
-      } else {
-        document.getElementById('draftBox').innerText = '';
-      }
-    }
-
-    function extractTags(text) {
-      const hashtags = [...text.matchAll(/#(\w+)/g)].map(m => m[1]);
-      const mentions = [...text.matchAll(/@(\w+)/g)].map(m => m[1]);
-      return { hashtags, mentions };
-    }
-
-    function postMessage() {
-      const content = document.getElementById('newPost').value.trim();
-      const imageFile = document.getElementById('imageUpload').files[0];
-      if (!content && !imageFile) return;
-
-      const { hashtags, mentions } = extractTags(content);
-      const post = {
-        id: Date.now(),
-        user: 'אתה',
-        content,
-        tags: hashtags,
-        mentions,
-        timestamp: new Date().toISOString(),
-        image: null
-      };
-
-      if (imageFile) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          post.image = reader.result;
-          emitPost(post);
-        };
-        reader.readAsDataURL(imageFile);
-      } else {
-        emitPost(post);
-      }
-    }
-
-    function emitPost(post) {
-      socket.emit('forum-post', post);
-      localStorage.removeItem('draft');
-      document.getElementById('newPost').value = '';
-      document.getElementById('imageUpload').value = '';
-      renderPost(post);
-    }
-
-    function renderPost(post) {
-      const container = document.createElement('div');
-      container.className = 'post';
-      container.innerHTML = `
-        <div class="post-header">
-          <span><b>${post.user}</b> <small>${new Date(post.timestamp).toLocaleString()}</small></span>
-          <span>
-            <i class="fas fa-thumbs-up" onclick="likePost(this)"> ❤️</i>
-            <i class="fas fa-reply" onclick="replyTo('${post.id}')"> 💬</i>
-            <i class="fas fa-envelope" onclick="privateMessage('${post.user}')"> ✉️</i>
-          </span>
-        </div>
-        <div>${formatContent(post.content)}</div>
-        ${post.tags?.map(t => `<span class="tag">#${t}</span>`).join('') || ''}
-        ${post.image ? `<div><img src="${post.image}" style="max-width: 100%; border-radius: 8px; margin-top: 5px;"></div>` : ''}
-        <div class="actions">
-          🔗 <a href="/tree?ref=${post.id}" target="_blank">קישור לאילן</a>
-        </div>
-        <div class="replies" id="replies-${post.id}"></div>
-      `;
-      forumPosts.prepend(container);
-    }
-
-    function likePost(el) {
-      el.classList.toggle('liked');
-    }
-
-    function replyTo(postId) {
-      const reply = prompt("כתוב תגובה:");
-      if (reply) {
-        const container = document.createElement('div');
-        container.className = 'reply';
-        container.innerHTML = `<b>אתה</b>: ${formatContent(reply)}`;
-        document.getElementById(`replies-${postId}`).appendChild(container);
-      }
-    }
-
-    function privateMessage(user) {
-      alert(`הודעה פרטית תישלח אל ${user} (לשלב בהמשך למייל/טלגרם).`);
-    }
-
-    function formatContent(text) {
-      return text
-        .replace(/@(\w+)/g, '<b>@$1</b>')
-        .replace(/#(\w+)/g, '<i>#$1</i>');
-    }
-
-    socket.on('forum-post', renderPost);
-
-    // הצגת משתמשים פעילים
-    socket.on('active-users', users => {
-      document.getElementById('usersList').innerText = users.join(', ');
-    });
-
-    window.onload = () => {
-      showDraftStatus();
-      const saved = localStorage.getItem('draft');
-      if (saved) document.getElementById('newPost').value = saved;
-    };
-  </script>
+  <footer>
+    <p>🧠 מופעל ע״י AI – מזהה נושאים כפולים, מסווג תגיות, מקשר לאילן יוחסין</p>
+    <p>🎯 צבור נקודות על השתתפות, קבל תגמולים!</p>
+  </footer>
 </body>
 </html>
-
