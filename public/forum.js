@@ -1,51 +1,62 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const threadForm = document.getElementById("thread-form");
+  const threadForm = document.getElementById("new-thread-form");
   const threadList = document.getElementById("thread-list");
 
-  // הצגת שרשורים קיימים
-  fetch("/api/forum/threads")
-    .then(res => res.json())
-    .then(threads => {
+  // שליחת טופס יצירת דיון חדש
+  if (threadForm) {
+    threadForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const title = document.getElementById("title").value;
+      const body = document.getElementById("body").value;
+      const category = document.getElementById("category").value;
+
+      try {
+        const res = await fetch("/api/forum", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title, body, category })
+        });
+
+        const result = await res.json();
+        alert("✅ דיון נוצר בהצלחה");
+        window.location.reload();
+      } catch (err) {
+        console.error("❌ שגיאה ביצירת דיון:", err);
+        alert("❌ שגיאה ביצירת דיון");
+      }
+    });
+  }
+
+  // טען את רשימת הדיונים
+  async function loadThreads() {
+    try {
+      const res = await fetch("/api/forum");
+      const threads = await res.json();
+
+      if (!Array.isArray(threads)) {
+        threadList.innerHTML = "<p>❌ שגיאה בטעינת דיונים</p>";
+        return;
+      }
+
       threadList.innerHTML = "";
-      threads.reverse().forEach(thread => {
-        const li = document.createElement("li");
-        li.innerHTML = `
+
+      threads.reverse().forEach((thread) => {
+        const div = document.createElement("div");
+        div.className = "thread";
+        div.innerHTML = `
           <h3>${thread.title}</h3>
+          <p><strong>נושא:</strong> ${thread.category}</p>
           <p>${thread.body}</p>
-          <small>נכתב ע"י ${thread.username} ב-${new Date(thread.createdAt).toLocaleString()}</small>
+          <p><em>נוצר על ידי ${thread.username || "אנונימי"} בתאריך ${new Date(thread.createdAt).toLocaleString("he-IL")}</em></p>
           <hr>
         `;
-        threadList.appendChild(li);
+        threadList.appendChild(div);
       });
-    })
-    .catch(err => {
-      threadList.innerHTML = "<p>שגיאה בטעינת דיונים</p>";
-      console.error("שגיאה:", err);
-    });
+    } catch (err) {
+      console.error("❌ שגיאה בטעינת דיונים:", err);
+      threadList.innerHTML = "<p>❌ לא ניתן לטעון דיונים כרגע.</p>";
+    }
+  }
 
-  // יצירת דיון חדש
-  threadForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const title = threadForm.title.value;
-    const body = threadForm.body.value;
-
-    fetch("/api/forum", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, body, username: "משתמש" }),
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          alert("הדיון נוסף בהצלחה!");
-          location.reload();
-        } else {
-          alert("שגיאה ביצירת דיון");
-        }
-      })
-      .catch(err => {
-        alert("שגיאה בחיבור לשרת");
-        console.error(err);
-      });
-  });
+  loadThreads();
 });
