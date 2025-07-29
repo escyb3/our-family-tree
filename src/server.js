@@ -158,6 +158,15 @@ app.post("/login", (req, res) => {
   const users = JSON.parse(fs.readFileSync("./data/users.json"));
   res.status(401).send("שם משתמש או סיסמא שגויים");
 });
+const bcrypt = require("bcrypt");
+
+// מתוך POST /api/login
+const user = users.find(u => u.username === req.body.username);
+if (!user) return res.status(401).send("שם משתמש שגוי");
+
+const match = await bcrypt.compare(req.body.password, user.password);
+if (!match) return res.status(401).send("סיסמה שגויה");
+
 
 app.get("/admin-users", auth("admin"), (req, res) => res.json(users));
 app.post("/create-user", auth("admin"), (req, res) => {
