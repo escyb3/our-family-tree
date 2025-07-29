@@ -475,7 +475,8 @@ app.get('/api/migration-data', (req, res) => {
   });
 });
 
-
-app.listen(3000, () => {
-  console.log("השרת רץ על פורט 3000");
-}); //
+// הפעלת השרת
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${3000}`);
+});
