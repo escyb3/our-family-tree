@@ -85,30 +85,34 @@ app.get("/api/forum", (req, res) => {
     res.json(threads);
   });
 });
-// יצירת שרשור חדש
 app.post("/api/forum", (req, res) => {
-  fs.readFile("forum.json", (err, data) => {
+  fs.readFile(forumFile, (err, data) => {
     if (err) return res.status(500).send("Error reading forum data");
 
-    const threads = JSON.parse(data);
+    let threads = [];
+    try {
+      threads = JSON.parse(data);
+    } catch (e) {
+      threads = [];
+    }
+
     const newThread = {
       _id: Date.now().toString(),
       title: req.body.title,
       body: req.body.body,
       category: req.body.category || "כללי",
-      username: req.user.username,
+      username: req.user?.username || "אנונימי",
       createdAt: new Date(),
       replies: [],
     };
 
-    threads.push(newThread);
-
-    fs.writeFile("forum.json", JSON.stringify(threads, null, 2), (err) => {
+    fs.writeFile(forumFile, JSON.stringify([...threads, newThread], null, 2), (err) => {
       if (err) return res.status(500).send("Error saving thread");
       res.json({ success: true });
     });
   });
 });
+
 
 
 
