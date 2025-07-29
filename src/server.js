@@ -155,7 +155,8 @@ app.post("/login", (req, res) => {
     req.session.user = user;
     return res.redirect("/dashboard.html");
   }
-  res.status(401).send("פרטי התחברות שגויים");
+  const users = JSON.parse(fs.readFileSync("./data/users.json"));
+  res.status(401).send("שם משתמש או סיסמא שגויים");
 });
 
 app.get("/admin-users", auth("admin"), (req, res) => res.json(users));
