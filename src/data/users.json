@@ -10,5 +10,12 @@
     "password": "$2b$10$zTppzP4TrF0YoA5Z5QW9B.DMTknuDxbVGqthBRRx1WWDFsChWKUme",
     "role": "user",
     "side": "Elharrar"
-  }
+  },
+  {
+    {
+  "username": "family_user",
+  "password": "$2b$10$7ge93WpWbSRhL/T0n9cEsu9kCqc3GBYqIlTeSKsP9ULmD6abts4WS"
+    "role": "user".
+    "side": "Weinberger"
+}
 ]
