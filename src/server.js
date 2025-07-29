@@ -513,7 +513,6 @@ app.get('/api/migration-data', (req, res) => {
 });
 // ודא שתיקיית data קיימת
 const dataDir = path.join(__dirname, "data");
-const forumFile = path.join(dataDir, "forum.json");
 
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir);
