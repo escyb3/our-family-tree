@@ -610,7 +610,6 @@ app.post("/api/forum/new-thread", (req, res) => {
   }
 });
 
-app.post("/api/forum", (req, res) => {
   console.log("📥 POST /api/forum נקרא");
 
   fs.readFile(forumFile, (err, data) => {
