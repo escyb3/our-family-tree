@@ -605,19 +605,38 @@ app.post("/api/forum", (req, res) => {
 
     threads.push(newThread);
 
-fs.writeFile(forumFile, JSON.stringify(threads, null, 2), (err) => {
-  if (err) {
-    console.error("❌ שגיאה בכתיבה לקובץ:", err);
-    return res.status(500).send("Error saving thread");
-  }
-  console.log("✅ השרשור נשמר בהצלחה");
-  res.json({ success: true });
-});
+// יצירת פוסט חדש בפורום
+app.post("/api/forum", (req, res) => {
+  const { title, content, creator } = req.body;
+  const forumFile = path.join(__dirname, "data", "forum.json");
 
+  fs.readFile(forumFile, "utf8", (err, data) => {
+    const threads = data ? JSON.parse(data) : [];
+    const newThread = {
+      id: threads.length + 1,
+      title,
+      content,
+      creator,
+      timestamp: new Date().toISOString(),
+      replies: [],
+    };
+    threads.push(newThread);
+
+    fs.writeFile(forumFile, JSON.stringify(threads, null, 2), (err) => {
+      if (err) {
+        console.error("❌ שגיאה בכתיבה לקובץ:", err);
+        return res.status(500).send("Error saving thread");
+      }
+      console.log("✅ השרשור נשמר בהצלחה");
+      res.json({ success: true });
+    });
+  });
+});
 
 // הפעלת השרת
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
 
