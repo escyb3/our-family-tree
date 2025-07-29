@@ -619,5 +619,5 @@ app.post("/api/forum", (req, res) => {
 // הפעלת השרת
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`✅ השרת פועל על פורט ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
