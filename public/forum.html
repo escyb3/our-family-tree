@@ -1,117 +1,142 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>פורום המשפחה</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/socket.io/client-dist/socket.io.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@tailwindcss/forms"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <style>
+    .mention { color: #2563eb; font-weight: bold; cursor: pointer; }
+    .badge { background-color: #f59e0b; color: white; padding: 2px 6px; border-radius: 6px; margin-right: 4px; font-size: 0.75rem; }
+    .reply-box { margin-top: 1rem; background: #f9fafb; border-radius: 8px; padding: 1rem; }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-  <header class="bg-blue-900 text-white p-4 flex justify-between items-center shadow-md">
-    <h1 class="text-2xl font-bold">פורום המשפחה</h1>
-    <button id="new-post-btn" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded text-white">+ דיון חדש</button>
-  </header>
-    <main class="p-4 space-y-4 max-w-4xl mx-auto">
-    <section id="new-thread-form" class="hidden bg-white p-4 rounded shadow space-y-2">
-      <input id="title-input" type="text" placeholder="כותרת הדיון" class="w-full border rounded p-2" />
-      <textarea id="content-input" placeholder="תוכן הפוסט" class="w-full border rounded p-2"></textarea>
-      <button id="submit-thread" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">פרסם דיון</button>
+<body class="bg-gray-100 text-gray-900">
+  <div class="max-w-5xl mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6 text-center">🌳 פורום המשפחה הגנאולוגי</h1>
+
+    <!-- כפתור פתיחת דיון -->
+    <div class="text-right mb-4">
+      <button id="open-thread-btn" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded">➕ פתח דיון חדש</button>
+    </div>
+
+    <!-- טופס דיון חדש -->
+    <section id="new-thread-form" class="hidden bg-white p-4 rounded shadow mb-6">
+      <h2 class="text-xl font-semibold mb-2">דיון חדש</h2>
+      <form id="thread-form" enctype="multipart/form-data">
+        <input type="text" id="thread-title" placeholder="כותרת הדיון" required class="w-full p-2 border rounded mb-2"/>
+        <textarea id="thread-content" placeholder="תוכן הדיון (אפשר להשתמש ב־@שם לאזכור)" required class="w-full p-2 border rounded mb-2"></textarea>
+        <input type="file" id="thread-file" accept="image/*" class="mb-2"/>
+        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">📝 פרסם דיון</button>
+      </form>
     </section>
 
-    
-  <main class="p-4 max-w-6xl mx-auto space-y-4">
-    <!-- סרגל עליון -->
-    <div class="flex flex-wrap gap-4 items-center">
-      <input type="text" id="search-input" class="p-2 border rounded w-full md:w-64" placeholder="🔍 חיפוש בפורום...">
-      <select id="category-filter" class="p-2 border rounded">
-        <option value="">כל הקטגוריות</option>
-        <option>שואה</option>
-        <option>צפון אפריקה</option>
-        <option>קהילות אשכנז</option>
-        <option>DNA גנאולוגי</option>
-        <option>כללי</option>
-      </select>
-      <select id="sort-select" class="p-2 border rounded">
-        <option value="popular">פופולריים</option>
-        <option value="newest">החדשים ביותר</option>
-      </select>
-    </div>
+    <!-- שאלות נפוצות -->
+    <details class="mb-6 bg-yellow-100 p-4 rounded">
+      <summary class="cursor-pointer font-bold">❓ שאלות נפוצות גנאולוגיות</summary>
+      <ul class="list-disc list-inside mt-2">
+        <li>איך מזהים קרבה בין שני בני משפחה?</li>
+        <li>מה ההבדל בין אילן משפחה לקובץ GEDCOM?</li>
+        <li>איך מוסיפים צילומים למסמכים?</li>
+      </ul>
+    </details>
 
-    <!-- הצגת משתמשים פעילים -->
-    <div class="bg-white p-3 rounded shadow">
-      <h2 class="font-semibold mb-2">👥 משתמשים פעילים עכשיו:</h2>
-      <div id="active-users" class="flex flex-wrap gap-2 text-sm text-blue-600"></div>
-    </div>
-
-    <!-- דיונים -->
-    <section id="threads" class="space-y-4">
-      <!-- כאן יתווספו שרשורי הפוסטים -->
-    </section>
-
-    <!-- אזור טיוטה -->
-    <div id="draft-area" class="hidden mt-6 bg-yellow-100 p-4 rounded shadow">
-      <h3 class="font-semibold text-lg">📝 טיוטה שמורה</h3>
-      <p class="text-sm text-gray-700">יש לך טיוטה שלא פורסמה. <button class="underline text-blue-600" onclick="resumeDraft()">חזור אליה</button></p>
-    </div>
-  </main>
-
-  <!-- תבנית דיון -->
-  <template id="thread-template">
-    <article class="bg-white p-4 rounded shadow space-y-2">
-      <header class="flex justify-between items-center">
-        <div>
-          <h3 class="text-xl font-bold text-blue-700">{title}</h3>
-          <p class="text-sm text-gray-500">נכתב ע"י <span class="font-semibold">@{author}</span> ב־<span>{date}</span></p>
-        </div>
-        <div class="flex items-center gap-2 text-gray-500">
-          <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">{category}</span>
-          <i class="fas fa-thumbtack" title="מוצמד" style="{pinnedStyle}"></i>
-        </div>
-      </header>
-      <div class="text-base leading-relaxed markdown">{content}</div>
-      <div class="flex justify-between items-center text-sm text-gray-600 mt-2">
-        <div class="flex gap-2">
-          <button class="like-btn text-blue-600 hover:underline">👍 {likes}</button>
-          <button class="reply-btn text-purple-600 hover:underline">💬 תגובה</button>
-        </div>
-        <div class="flex gap-2">
-          <span>🏅 {badges}</span>
-          <span>📎 {attachments}</span>
-        </div>
-      </div>
-      <!-- תגובות -->
-      <div class="replies mt-4 space-y-2 pl-4 border-l-2 border-blue-200">
-        <!-- תגובות כאן -->
-      </div>
-    </article>
-  </template>
-
-  <!-- מודל ליצירת פוסט חדש -->
-  <div id="new-post-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-    <div class="bg-white p-6 rounded w-full max-w-2xl space-y-4 shadow-xl">
-      <h2 class="text-xl font-bold">+ פתיחת דיון חדש</h2>
-      <input id="new-title" type="text" class="w-full border p-2 rounded" placeholder="כותרת הדיון">
-      <select id="new-category" class="w-full border p-2 rounded">
-        <option>כללי</option>
-        <option>שואה</option>
-        <option>צפון אפריקה</option>
-        <option>קהילות אשכנז</option>
-        <option>DNA גנאולוגי</option>
-      </select>
-      <textarea id="new-content" class="w-full h-32 border p-2 rounded" placeholder="תוכן הדיון... תומך ב־Markdown כולל קישורים לאילן, תמונות, אזכורים וכו'"></textarea>
-      <div class="flex justify-between items-center">
-        <input type="file" id="new-attachment">
-        <button id="post-btn" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded text-white">פרסם</button>
-      </div>
-    </div>
+    <!-- תצוגת דיונים -->
+    <section id="threads-container"></section>
   </div>
 
   <script>
-    // כאן נטפל בהצגת דיונים, תגובות, אזכורים, חיפוש, טיוטות, העלאות, הצמדות, הצבעות, AI סיכום, PDF וכו'
+    const mentionRegex = /@([\u0590-\u05FF\w]+)/g;
+
+    document.getElementById('open-thread-btn').onclick = () => {
+      document.getElementById('new-thread-form').classList.toggle('hidden');
+    };
+
+    document.getElementById('thread-form').onsubmit = async (e) => {
+      e.preventDefault();
+      const title = document.getElementById('thread-title').value.trim();
+      const content = document.getElementById('thread-content').value.trim();
+      const file = document.getElementById('thread-file').files[0];
+
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", content);
+      if (file) formData.append("file", file);
+
+      try {
+        await axios.post('/api/forum/threads', formData);
+        location.reload();
+      } catch (err) {
+        alert("שגיאה ביצירת דיון");
+      }
+    };
+
+    const formatContent = (text) => {
+      return text.replace(mentionRegex, (_, user) =>
+        `<span class="mention" onclick="alert('המשתמש @${user} קיבל התראה!')">@${user}</span>`
+      );
+    };
+
+    const renderReplies = (replies) => {
+      if (!replies || !replies.length) return '';
+      return replies.map(reply => `
+        <div class="ml-4 mt-2 bg-white p-2 rounded border">
+          <div class="text-sm">${formatContent(reply.content)}</div>
+          <small class="text-gray-500">נכתב על ידי: ${reply.author || "אנונימי"}</small>
+        </div>
+      `).join('');
+    };
+
+    const renderThread = (thread) => {
+      return `
+        <div class="bg-white p-4 rounded shadow mb-6">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-xl font-bold">${thread.title}</h3>
+            <span class="badge">${thread.badge || "משתמש חדש"}</span>
+          </div>
+          ${thread.imageUrl ? `<img src="${thread.imageUrl}" class="max-w-xs rounded mb-2">` : ''}
+          <p>${formatContent(thread.content)}</p>
+          <small class="text-gray-500">נכתב על ידי: ${thread.author || 'אנונימי'}</small>
+
+          <!-- תגובות -->
+          <div class="reply-box mt-4">
+            <form onsubmit="submitReply(event, '${thread._id}')">
+              <textarea placeholder="הגב לדיון..." class="w-full p-2 border rounded mb-2" required></textarea>
+              <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">💬 הגב</button>
+            </form>
+            <div>${renderReplies(thread.replies)}</div>
+          </div>
+        </div>
+      `;
+    };
+
+    async function loadThreads() {
+      const container = document.getElementById("threads-container");
+      try {
+        const res = await axios.get("/api/forum/threads");
+        container.innerHTML = res.data.map(renderThread).join('');
+      } catch (e) {
+        container.innerHTML = `<p class="text-red-600">שגיאה בטעינת דיונים</p>`;
+      }
+    }
+
+    async function submitReply(e, threadId) {
+      e.preventDefault();
+      const textarea = e.target.querySelector("textarea");
+      const content = textarea.value.trim();
+      if (!content) return;
+
+      try {
+        await axios.post(`/api/forum/threads/${threadId}/replies`, { content });
+        loadThreads(); // רענון תגובות
+      } catch (err) {
+        alert("שגיאה בשליחת תגובה");
+      }
+    }
+
+    loadThreads();
   </script>
 </body>
 </html>
