@@ -649,7 +649,6 @@ app.post("/api/forum/new-thread", (req, res) => {
       res.json({ success: true });
     });
   });
-});
 
 
 // הפעלת השרת
