@@ -580,49 +580,14 @@ app.get("/api/forum/threads", (req, res) => {
   }
 });
 
-// יצירת דיון חדש
-app.post("/api/forum/new-thread", (req, res) => {
-  const { title, content, category, author } = req.body;
-
-  if (!title || !content || !author) {
-    return res.status(400).json({ error: "נא למלא כותרת, תוכן ומחבר" });
-  }
-
-  try {
-    const threads = JSON.parse(fs.readFileSync(forumFile));
-
-    const newThread = {
-      id: Date.now(),
-      title,
-      content,
-      category: category || "כללי",
-      author,
-      timestamp: new Date().toISOString(),
-      replies: [],
-    };
-
-    threads.unshift(newThread);
-    fs.writeFileSync(forumFile, JSON.stringify(threads, null, 2));
-    res.status(201).json({ success: true, thread: newThread });
-  } catch (err) {
-    console.error("שגיאה ביצירת דיון:", err);
-    res.status(500).json({ error: "שגיאה ביצירת דיון" });
-  }
-});
-
-  console.log("📥 POST /api/forum נקרא");
-
-  fs.readFile(forumFile, (err, data) => {
-    if (err) {
-      console.error("❌ שגיאה בקריאת forum.json:", err);
-      return res.status(500).send("Error reading forum data");
-    }
-
+app.post("/api/forum", (req, res) => {
+  fs.readFile("forum.json", (err, data) => {
     let threads = [];
     try {
       threads = JSON.parse(data);
     } catch (e) {
       console.error("❌ שגיאה ב־JSON:", e);
+          console.log("✅ נוצר שרשור חדש:", newThread);
       threads = [];
     }
 
@@ -636,11 +601,9 @@ app.post("/api/forum/new-thread", (req, res) => {
       replies: [],
     };
 
-    console.log("✅ נוצר שרשור חדש:", newThread);
-
     threads.push(newThread);
 
-    fs.writeFile(forumFile, JSON.stringify(threads, null, 2), (err) => {
+   fs.writeFile(forumFile, JSON.stringify(threads, null, 2), (err) => {
       if (err) {
         console.error("❌ שגיאה בכתיבה לקובץ:", err);
         return res.status(500).send("Error saving thread");
@@ -649,6 +612,7 @@ app.post("/api/forum/new-thread", (req, res) => {
       res.json({ success: true });
     });
   });
+    });
 
 
 // הפעלת השרת
