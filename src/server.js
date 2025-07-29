@@ -148,13 +148,18 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post("/login", (req, res) => {
-  const { username, password } = req.body;
-  const user = users.find(u => u.username === username);
-  if (user && bcrypt.compareSync(password, user.password)) {
-    req.session.user = user;
-    return res.redirect("/dashboard.html");
   }
+  app.post("/api/login", async (req, res) => {
+  const users = JSON.parse(fs.readFileSync("./data/users.json"));
+  const user = users.find(u => u.username === req.body.username);
+  if (!user) return res.status(401).send("שם משתמש שגוי");
+
+  const match = await bcrypt.compare(req.body.password, user.password);
+  if (!match) return res.status(401).send("סיסמה שגויה");
+
+  res.send({ success: true, user: { username: user.username, role: user.role, side: user.side } });
+});
+
   const users = JSON.parse(fs.readFileSync("./data/users.json"));
   res.status(401).send("שם משתמש או סיסמא שגויים");
 });
