@@ -609,6 +609,53 @@ app.post("/api/forum/new-thread", (req, res) => {
     res.status(500).json({ error: "שגיאה ביצירת דיון" });
   }
 });
+const path = require("path");
+const fs = require("fs");
+
+const forumFile = path.join(__dirname, "data", "forum.json");
+
+app.post("/api/forum", (req, res) => {
+  console.log("📥 POST /api/forum נקרא");
+
+  fs.readFile(forumFile, (err, data) => {
+    if (err) {
+      console.error("❌ שגיאה בקריאת forum.json:", err);
+      return res.status(500).send("Error reading forum data");
+    }
+
+    let threads = [];
+    try {
+      threads = JSON.parse(data);
+    } catch (e) {
+      console.error("❌ שגיאה ב־JSON:", e);
+      threads = [];
+    }
+
+    const newThread = {
+      _id: Date.now().toString(),
+      title: req.body.title,
+      body: req.body.body,
+      category: req.body.category || "כללי",
+      username: req.user?.username || "אנונימי",
+      createdAt: new Date(),
+      replies: [],
+    };
+
+    console.log("✅ נוצר שרשור חדש:", newThread);
+
+    threads.push(newThread);
+
+    fs.writeFile(forumFile, JSON.stringify(threads, null, 2), (err) => {
+      if (err) {
+        console.error("❌ שגיאה בכתיבה לקובץ:", err);
+        return res.status(500).send("Error saving thread");
+      }
+      console.log("✅ השרשור נשמר בהצלחה");
+      res.json({ success: true });
+    });
+  });
+});
+
 
 // הפעלת השרת
 const PORT = process.env.PORT || 3000;
