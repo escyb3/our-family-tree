@@ -476,6 +476,57 @@ app.get('/api/migration-data', (req, res) => {
     res.json(JSON.parse(data));
   });
 });
+// ודא שתיקיית data קיימת
+const dataDir = path.join(__dirname, "data");
+const forumFile = path.join(dataDir, "forum.json");
+
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir);
+}
+if (!fs.existsSync(forumFile)) {
+  fs.writeFileSync(forumFile, "[]");
+}
+
+// החזרת כל הדיונים
+app.get("/api/forum/threads", (req, res) => {
+  try {
+    const threads = JSON.parse(fs.readFileSync(forumFile));
+    res.json(threads);
+  } catch (err) {
+    console.error("שגיאה בקריאת דיונים:", err);
+    res.status(500).json({ error: "שגיאה בקריאת דיונים" });
+  }
+});
+
+// יצירת דיון חדש
+app.post("/api/forum/new-thread", (req, res) => {
+  const { title, content, category, author } = req.body;
+
+  if (!title || !content || !author) {
+    return res.status(400).json({ error: "נא למלא כותרת, תוכן ומחבר" });
+  }
+
+  try {
+    const threads = JSON.parse(fs.readFileSync(forumFile));
+
+    const newThread = {
+      id: Date.now(),
+      title,
+      content,
+      category: category || "כללי",
+      author,
+      timestamp: new Date().toISOString(),
+      replies: [],
+    };
+
+    threads.unshift(newThread);
+    fs.writeFileSync(forumFile, JSON.stringify(threads, null, 2));
+    res.status(201).json({ success: true, thread: newThread });
+  } catch (err) {
+    console.error("שגיאה ביצירת דיון:", err);
+    res.status(500).json({ error: "שגיאה ביצירת דיון" });
+  }
+});
 
 // הפעלת השרת
 const PORT = process.env.PORT || 3000;
