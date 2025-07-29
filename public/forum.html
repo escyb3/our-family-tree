@@ -2,86 +2,109 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>הפורום המשפחתי</title>
-  <link rel="stylesheet" href="/styles.css">
-  <script defer src="/scripts/forum.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>פורום המשפחה</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/socket.io/client-dist/socket.io.min.js"></script>
 </head>
-<body>
-  <header>
-    <h1>📣 הפורום המשפחתי</h1>
-    <div id="user-info"></div>
+<body class="bg-gray-50 text-gray-800">
+  <header class="bg-blue-900 text-white p-4 flex justify-between items-center shadow-md">
+    <h1 class="text-2xl font-bold">פורום המשפחה</h1>
+    <button id="new-post-btn" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded text-white">+ דיון חדש</button>
   </header>
 
-  <main>
-    <section id="forum-controls">
-      <button onclick="openNewThreadForm()">➕ פתח דיון חדש</button>
-      <input type="text" id="search-box" placeholder="🔍 חיפוש בפורום" oninput="searchForum()">
-      <label><input type="checkbox" onchange="toggleActiveUsers()"> הצג משתמשים פעילים</label>
+  <main class="p-4 max-w-6xl mx-auto space-y-4">
+    <!-- סרגל עליון -->
+    <div class="flex flex-wrap gap-4 items-center">
+      <input type="text" id="search-input" class="p-2 border rounded w-full md:w-64" placeholder="🔍 חיפוש בפורום...">
+      <select id="category-filter" class="p-2 border rounded">
+        <option value="">כל הקטגוריות</option>
+        <option>שואה</option>
+        <option>צפון אפריקה</option>
+        <option>קהילות אשכנז</option>
+        <option>DNA גנאולוגי</option>
+        <option>כללי</option>
+      </select>
+      <select id="sort-select" class="p-2 border rounded">
+        <option value="popular">פופולריים</option>
+        <option value="newest">החדשים ביותר</option>
+      </select>
+    </div>
+
+    <!-- הצגת משתמשים פעילים -->
+    <div class="bg-white p-3 rounded shadow">
+      <h2 class="font-semibold mb-2">👥 משתמשים פעילים עכשיו:</h2>
+      <div id="active-users" class="flex flex-wrap gap-2 text-sm text-blue-600"></div>
+    </div>
+
+    <!-- דיונים -->
+    <section id="threads" class="space-y-4">
+      <!-- כאן יתווספו שרשורי הפוסטים -->
     </section>
 
-    <section id="new-thread-form" style="display:none;">
-      <h2>📝 דיון חדש</h2>
-      <input id="thread-title" placeholder="כותרת הדיון">
-      <textarea id="thread-content" placeholder="תוכן ההודעה הראשית..."></textarea>
-      <input type="text" id="thread-tags" placeholder="תגיות (מופרדות בפסיקים)">
-      <input type="file" id="image-upload" accept="image/*" onchange="previewImage()">
-      <div id="image-preview"></div>
-      <label><input type="checkbox" id="anonymous"> פרסום אנונימי</label>
-      <button onclick="submitNewThread()">📤 פרסם</button>
-      <button onclick="saveDraft()">💾 שמור טיוטה</button>
-    </section>
-
-    <section id="forum-threads">
-      <!-- דיונים ייטענו כאן -->
-    </section>
+    <!-- אזור טיוטה -->
+    <div id="draft-area" class="hidden mt-6 bg-yellow-100 p-4 rounded shadow">
+      <h3 class="font-semibold text-lg">📝 טיוטה שמורה</h3>
+      <p class="text-sm text-gray-700">יש לך טיוטה שלא פורסמה. <button class="underline text-blue-600" onclick="resumeDraft()">חזור אליה</button></p>
+    </div>
   </main>
 
+  <!-- תבנית דיון -->
   <template id="thread-template">
-    <article class="thread">
-      <h3 class="thread-title"></h3>
-      <div class="thread-meta">
-        <span class="author"></span> • <span class="timestamp"></span>
-        <button onclick="shareThread(this)">📤 שיתוף</button>
-        <span class="likes">👍 <span class="like-count">0</span></span>
-        <button onclick="voteThread(this, 1)">⬆️</button>
-        <button onclick="voteThread(this, -1)">⬇️</button>
-        <button onclick="replyToThread(this)">💬 הגב</button>
-        <button onclick="markAsSolved(this)">✅ נפתר</button>
+    <article class="bg-white p-4 rounded shadow space-y-2">
+      <header class="flex justify-between items-center">
+        <div>
+          <h3 class="text-xl font-bold text-blue-700">{title}</h3>
+          <p class="text-sm text-gray-500">נכתב ע"י <span class="font-semibold">@{author}</span> ב־<span>{date}</span></p>
+        </div>
+        <div class="flex items-center gap-2 text-gray-500">
+          <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">{category}</span>
+          <i class="fas fa-thumbtack" title="מוצמד" style="{pinnedStyle}"></i>
+        </div>
+      </header>
+      <div class="text-base leading-relaxed markdown">{content}</div>
+      <div class="flex justify-between items-center text-sm text-gray-600 mt-2">
+        <div class="flex gap-2">
+          <button class="like-btn text-blue-600 hover:underline">👍 {likes}</button>
+          <button class="reply-btn text-purple-600 hover:underline">💬 תגובה</button>
+        </div>
+        <div class="flex gap-2">
+          <span>🏅 {badges}</span>
+          <span>📎 {attachments}</span>
+        </div>
       </div>
-      <div class="thread-content"></div>
-      <div class="thread-tags"></div>
-      <div class="thread-attachments"></div>
-      <div class="emoji-reactions">❤️ 😄 🤔</div>
-      <div class="edit-history-toggle" onclick="toggleHistory(this)">📜 היסטוריית עריכות</div>
-      <section class="replies">
-        <!-- תגובות -->
-      </section>
-      <form class="reply-form" style="display:none;" onsubmit="submitReply(event)">
-        <textarea class="reply-text" placeholder="כתוב תגובה..."></textarea>
-        <input type="file" class="reply-image" accept="image/*">
-        <label><input type="checkbox" class="anonymous-reply"> אנונימי</label>
-        <button type="submit">📨 שלח</button>
-      </form>
+      <!-- תגובות -->
+      <div class="replies mt-4 space-y-2 pl-4 border-l-2 border-blue-200">
+        <!-- תגובות כאן -->
+      </div>
     </article>
   </template>
 
-  <template id="reply-template">
-    <div class="reply">
-      <span class="reply-author"></span>: <span class="reply-content"></span>
-      <div class="reply-meta">
-        <span class="reply-timestamp"></span>
-        <span class="likes">👍 <span class="like-count">0</span></span>
-        <button onclick="voteReply(this, 1)">⬆️</button>
-        <button onclick="voteReply(this, -1)">⬇️</button>
-        <button onclick="startPrivateMessage(this)">📩 הודעה פרטית</button>
-        <button onclick="reactEmoji(this)">😊</button>
+  <!-- מודל ליצירת פוסט חדש -->
+  <div id="new-post-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded w-full max-w-2xl space-y-4 shadow-xl">
+      <h2 class="text-xl font-bold">+ פתיחת דיון חדש</h2>
+      <input id="new-title" type="text" class="w-full border p-2 rounded" placeholder="כותרת הדיון">
+      <select id="new-category" class="w-full border p-2 rounded">
+        <option>כללי</option>
+        <option>שואה</option>
+        <option>צפון אפריקה</option>
+        <option>קהילות אשכנז</option>
+        <option>DNA גנאולוגי</option>
+      </select>
+      <textarea id="new-content" class="w-full h-32 border p-2 rounded" placeholder="תוכן הדיון... תומך ב־Markdown כולל קישורים לאילן, תמונות, אזכורים וכו'"></textarea>
+      <div class="flex justify-between items-center">
+        <input type="file" id="new-attachment">
+        <button id="post-btn" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded text-white">פרסם</button>
       </div>
     </div>
-  </template>
+  </div>
 
-  <footer>
-    <p>🧠 מופעל ע״י AI – מזהה נושאים כפולים, מסווג תגיות, מקשר לאילן יוחסין</p>
-    <p>🎯 צבור נקודות על השתתפות, קבל תגמולים!</p>
-  </footer>
+  <script>
+    // כאן נטפל בהצגת דיונים, תגובות, אזכורים, חיפוש, טיוטות, העלאות, הצמדות, הצבעות, AI סיכום, PDF וכו'
+  </script>
 </body>
 </html>
