@@ -1,88 +1,32 @@
-let map;
+document.addEventListener("DOMContentLoaded", async () => {
+  const res = await fetch("/messages");
+  const messages = await res.json();
 
-function initMap() {
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: 31.7683, lng: 35.2137 }, // ירושלים כמרכז התחלה
-    zoom: 4,
-    mapTypeId: 'terrain'
-  });
+  const list = document.getElementById("message-list");
+  list.innerHTML = messages.map(m => `
+    <div class="msg-card ${m.read ? '' : 'unread'}" data-thread="${m.threadId}">
+      <div><strong>${m.subject}</strong></div>
+      <div>מאת: ${m.from}</div>
+      <div>${new Date(m.timestamp).toLocaleString()}</div>
+    </div>
+  `).join("");
 
-  fetch('/api/migration-data')
-    .then(response => response.json())
-    .then(data => {
-      data.forEach(family => {
-        drawMigrationPath(family);
-        placeEvents(family);
-      });
-    })
-    .catch(error => {
-      console.error("שגיאה בטעינת נתוני ההגירה:", error);
-    });
-}
+  list.querySelectorAll(".msg-card").forEach(el => {
+    el.addEventListener("click", async () => {
+      const threadId = el.dataset.thread;
 
-function drawMigrationPath(family) {
-  const coordinates = family.path.map(point => ({ lat: point.lat, lng: point.lng }));
-  
-  const path = new google.maps.Polyline({
-    path: coordinates,
-    geodesic: true,
-    strokeColor: getColor(family.name),
-    strokeOpacity: 0.9,
-    strokeWeight: 4
-  });
+      // שליחה לשרת לסמן כהודעה שנקראה
+      try {
+        const response = await fetch(`/mark-read?threadId=${threadId}`);
+        const data = await response.json();
+        if (data.success) {
+          el.classList.remove("unread");
+        }
+      } catch (err) {
+        console.error("שגיאה בסימון כהודעה נקראה", err);
+      }
 
-  path.setMap(map);
-
-  // תווית התחלה וסיום
-  const start = family.path[0];
-  const end = family.path[family.path.length - 1];
-
-  new google.maps.Marker({
-    position: { lat: start.lat, lng: start.lng },
-    map,
-    title: `נקודת התחלה: ${start.place}`,
-    icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-  });
-
-  new google.maps.Marker({
-    position: { lat: end.lat, lng: end.lng },
-    map,
-    title: `נקודת סיום: ${end.place}`,
-    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
-  });
-}
-
-function placeEvents(family) {
-  family.path.forEach(point => {
-    const marker = new google.maps.Marker({
-      position: { lat: point.lat, lng: point.lng },
-      map,
-      title: `${point.type}: ${point.place} (${point.date})`,
-      icon: getIconForType(point.type)
-    });
-
-    const info = new google.maps.InfoWindow({
-      content: `<strong>${family.name}</strong><br>${point.type} ב־${point.place}<br>שנה: ${point.date}`
-    });
-
-    marker.addListener("click", () => {
-      info.open(map, marker);
+      // כאן תוכל להוסיף פעולה לפתיחת ההודעה המלאה (modal, redirect וכו׳)
     });
   });
-}
-
-function getIconForType(type) {
-  const icons = {
-    "נולדו": "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-    "היגרו": "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
-    "ברחו": "http://maps.google.com/mapfiles/ms/icons/orange-dot.png",
-    "עברו": "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
-  };
-  return icons[type] || "http://maps.google.com/mapfiles/ms/icons/ltblue-dot.png";
-}
-
-function getColor(name) {
-  const hash = Array.from(name).reduce((sum, char) => sum + char.charCodeAt(0), 0);
-  const colors = ["#FF5733", "#33FF57", "#3357FF", "#F39C12", "#8E44AD", "#16A085"];
-  return colors[hash % colors.length];
-}
+});
