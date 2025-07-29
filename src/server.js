@@ -448,8 +448,8 @@ const migrationData = [
       { type: "נולדו", date: "1900", place: "קזבלנקה" },
       { type: "היגרו", date: "1948", place: "תל אביב" },
       { type: "עברו", date: "1970", place: "ירושלים" }
-    ]
-  },
+    }
+]; //
   {
     name: "משפחת ויינברגר",
     path: [
