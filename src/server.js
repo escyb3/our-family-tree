@@ -582,28 +582,6 @@ app.get("/api/forum/threads", (req, res) => {
   }
 });
 
-app.post("/api/forum", (req, res) => {
-  fs.readFile("forum.json", (err, data) => {
-    let threads = [];
-    try {
-      threads = JSON.parse(data);
-    } catch (e) {
-      console.error("❌ שגיאה ב־JSON:", e);
-          console.log("✅ נוצר שרשור חדש:", newThread);
-      threads = [];
-    }
-
-    const newThread = {
-      _id: Date.now().toString(),
-      title: req.body.title,
-      body: req.body.body,
-      category: req.body.category || "כללי",
-      username: req.session.user?.username || "אנונימי",
-      createdAt: new Date(),
-      replies: [],
-    };
-
-    threads.push(newThread);
 
 // יצירת פוסט חדש בפורום
 app.post("/api/forum", (req, res) => {
