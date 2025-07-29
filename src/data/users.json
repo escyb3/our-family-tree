@@ -16,5 +16,29 @@
     "password": "$2b$10$7ge93WpWbSRhL/T0n9cEsu9kCqc3GBYqIlTeSKsP9ULmD6abts4WS",
     "role": "user",
     "side": "Weinberger"
+  },
+  {
+    "username": "yanai",
+    "password": "$2b$10$zTppzP4TrF0YoA5Z5QW9B.DMTknuDxbVGqthBRRx1WWDFsChWKUme",
+    "role": "user",
+    "side": "Ben David"
+  },
+  {
+    "username": "avishai",
+    "password": "$2b$10$zTppzP4TrF0YoA5Z5QW9B.DMTknuDxbVGqthBRRx1WWDFsChWKUme",
+    "role": "user",
+    "side": "Barenbaum"
+  },
+  {
+    "username": "merav",
+    "password": "$2b$10$zTppzP4TrF0YoA5Z5QW9B.DMTknuDxbVGqthBRRx1WWDFsChWKUme",
+    "role": "user",
+    "side": "Fass-Schneck"
+  },
+  {
+    "username": "isaac",
+    "password": "$2b$10$zTppzP4TrF0YoA5Z5QW9B.DMTknuDxbVGqthBRRx1WWDFsChWKUme",
+    "role": "user",
+    "side": "Italiaander"
   }
 ]
