@@ -12,10 +12,9 @@
     "side": "Elharrar"
   },
   {
-    {
-  "username": "family_user",
-  "password": "$2b$10$7ge93WpWbSRhL/T0n9cEsu9kCqc3GBYqIlTeSKsP9ULmD6abts4WS"
+    "username": "family_user",
+    "password": "$2b$10$7ge93WpWbSRhL/T0n9cEsu9kCqc3GBYqIlTeSKsP9ULmD6abts4WS",
     "role": "user",
     "side": "Weinberger"
-}
+  }
 ]
