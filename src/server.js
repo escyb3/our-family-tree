@@ -631,7 +631,7 @@ app.post("/api/forum/new-thread", (req, res) => {
       title: req.body.title,
       body: req.body.body,
       category: req.body.category || "כללי",
-      username: req.user?.username || "אנונימי",
+      username: req.session.user?.username || "אנונימי",
       createdAt: new Date(),
       replies: [],
     };
