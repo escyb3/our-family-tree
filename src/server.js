@@ -610,8 +610,6 @@ app.post("/api/forum/new-thread", (req, res) => {
   }
 });
 
-const forumFile = path.join(__dirname, "data", "forum.json");
-
 app.post("/api/forum", (req, res) => {
   console.log("📥 POST /api/forum נקרא");
 
