@@ -605,19 +605,19 @@ app.post("/api/forum", (req, res) => {
 
     threads.push(newThread);
 
-    fs.writeFile(forumFile, JSON.stringify(threads, null, 2), (err) => {
-      if (err) {
-        console.error("❌ שגיאה בכתיבה לקובץ:", err);
-        return res.status(500).send("Error saving thread");
-      }
-      console.log("✅ השרשור נשמר בהצלחה");
-      res.json({ success: true });
-    });
-  });
+fs.writeFile(forumFile, JSON.stringify(threads, null, 2), (err) => {
+  if (err) {
+    console.error("❌ שגיאה בכתיבה לקובץ:", err);
+    return res.status(500).send("Error saving thread");
+  }
+  console.log("✅ השרשור נשמר בהצלחה");
+  res.json({ success: true });
 });
+
 
 // הפעלת השרת
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
