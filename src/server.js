@@ -506,12 +506,20 @@ const fallbackMigrationData = [
 app.get('/api/migration-data', (req, res) => {
   fs.readFile(path.join(__dirname, 'data', 'migration-data.json'), 'utf8', (err, data) => {
     if (err) {
-      console.error('שגיאה בקריאת קובץ JSON:', err);
-      return res.status(500).json({ error: 'שגיאה בשרת' });
+      console.warn('⚠️ לא נמצא קובץ migration-data.json – מחזיר נתוני ברירת מחדל');
+      return res.json(fallbackMigrationData);
     }
-    res.json(JSON.parse(data));
+
+    try {
+      const parsed = JSON.parse(data);
+      res.json(parsed);
+    } catch (e) {
+      console.error("שגיאה בניתוח JSON:", e);
+      res.json(fallbackMigrationData);
+    }
   });
 });
+
 
 // החזרת כל הדיונים
 app.get("/api/forum/threads", (req, res) => {
