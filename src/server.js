@@ -125,7 +125,6 @@ app.use((req, res, next) => {
   next();
 });
 
-{
   app.post("/api/login", async (req, res) => {
   const users = JSON.parse(fs.readFileSync("./data/users.json"));
   const user = users.find(u => u.username === req.body.username);
