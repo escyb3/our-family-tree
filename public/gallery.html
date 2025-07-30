@@ -1,20 +1,48 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>גלריית תמונות משפחתית</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; padding: 20px; }
-    .gallery img { width: 100%; border-radius: 10px; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>הגלרייה המשפחתית</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script>
+    async function loadGallery() {
+      const response = await fetch('/gallery.json');
+      const images = await response.json();
+      const container = document.getElementById('gallery');
+
+      images.forEach(img => {
+        const div = document.createElement('div');
+        div.className = 'relative group';
+
+        const image = document.createElement('img');
+        image.src = img.path;
+        image.alt = img.name;
+        image.className = 'rounded-lg shadow hover:scale-105 transition w-full';
+
+        const caption = document.createElement('div');
+        caption.className = 'absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-sm p-2 opacity-0 group-hover:opacity-100 transition';
+        caption.innerText = img.name + (img.family ? ` – ${img.family}` : '');
+
+        div.appendChild(image);
+        div.appendChild(caption);
+        container.appendChild(div);
+      });
+    }
+
+    window.onload = loadGallery;
+  </script>
 </head>
-<body>
-  <h1>📸 גלריית תמונות</h1>
-  <div class="gallery">
-    <img src="images/frank.jpg" alt="Frank van der Velde (1943-2025)">
-    <img src="images/family1.jpg" alt="משפחה">
-    <img src="images/family2.jpg" alt="אירוע">
+<body class="bg-gray-50 min-h-screen py-10 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-4xl font-bold text-blue-800">📷 גלריית תמונות משפחתיות</h1>
+      <a href="/upload_picture.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Upload Picture</a>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4" id="gallery">
+      <!-- תמונות ייטענו כאן דינמית -->
+    </div>
   </div>
   <p><a href="index.html">חזרה לעמוד הבית</a></p>
 </body>
