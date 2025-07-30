@@ -86,6 +86,12 @@ app.post("/api/forum/new", (req, res) => {
     });
   });
 });
+app.post("/api/draft", (req, res) => {
+  let drafts = [];
+  drafts.push({ ...req.body, timestamp: new Date().toISOString() });
+  res.json({ success: true });
+});
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: "secret", resave: false, saveUninitialized: true }));
