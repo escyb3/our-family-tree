@@ -331,19 +331,6 @@ app.use("/messages", (req, res, next) => {
   next();
 });
 
-app.post("/reply-message", (req, res) => {
-  if (!req.session.user) return res.status(401).send("לא מחובר");
-  const { threadId, body } = req.body;
-  const msg = messages.find(m => m.threadId === threadId);
-  if (!msg) return res.status(404).send("לא נמצא");
-  msg.replies.push({
-    from: req.session.user.username + "@family.local",
-    body,
-    timestamp: new Date().toISOString()
-  });
-  saveMessages();
-  res.send("נשלח");
-});
 app.post("/upload-attachment", upload.single("attachment"), (req, res) => {
   if (!req.file) return res.status(400).send("אין קובץ");
   res.json({ url: "/uploads/" + req.file.filename });
