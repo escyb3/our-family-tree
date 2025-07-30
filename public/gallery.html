@@ -5,41 +5,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>גלריית תמונות משפחתית</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    #modal {
+      display: none;
+    }
+  </style>
   <script>
-    async function loadGallery(filter = "") {
-      const response = await fetch('/gallery.json');
-      const images = await response.json();
+    let allImages = [];
+
+    async function loadGallery(filter = "", sortBy = "name") {
+      if (!allImages.length) {
+        const response = await fetch('/gallery.json');
+        allImages = await response.json();
+      }
+
       const container = document.getElementById('gallery');
       container.innerHTML = "";
 
-      images
-        .filter(img => img.name.toLowerCase().includes(filter.toLowerCase()) || img.family.toLowerCase().includes(filter.toLowerCase()))
-        .forEach(img => {
-          const div = document.createElement('div');
-          div.className = 'relative group';
+      let filtered = allImages.filter(img =>
+        img.name.toLowerCase().includes(filter.toLowerCase()) ||
+        img.family.toLowerCase().includes(filter.toLowerCase())
+      );
 
-          const image = document.createElement('img');
-          image.src = img.path;
-          image.alt = img.name;
-          image.className = 'rounded-lg shadow hover:scale-105 transition w-full';
+      if (sortBy === 'family') {
+        filtered.sort((a, b) => a.family.localeCompare(b.family));
+      } else if (sortBy === 'name') {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      }
 
-          const caption = document.createElement('div');
-          caption.className = 'absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-sm p-2 opacity-0 group-hover:opacity-100 transition';
-          caption.innerText = img.name + (img.family ? ` – ${img.family}` : '');
+      filtered.forEach(img => {
+        const div = document.createElement('div');
+        div.className = 'relative group cursor-pointer';
 
-          div.appendChild(image);
-          div.appendChild(caption);
-          container.appendChild(div);
-        });
+        const image = document.createElement('img');
+        image.src = img.path;
+        image.alt = img.name;
+        image.className = 'rounded-lg shadow hover:scale-105 transition w-full';
+        image.onclick = () => openModal(img);
+
+        const caption = document.createElement('div');
+        caption.className = 'absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-sm p-2 opacity-0 group-hover:opacity-100 transition';
+        caption.innerText = img.name + (img.family ? ` – ${img.family}` : '');
+
+        div.appendChild(image);
+        div.appendChild(caption);
+        container.appendChild(div);
+      });
+    }
+
+    function openModal(img) {
+      const modal = document.getElementById('modal');
+      const modalImg = document.getElementById('modalImg');
+      const modalCaption = document.getElementById('modalCaption');
+      modalImg.src = img.path;
+      modalCaption.innerText = img.name + (img.family ? ` – ${img.family}` : '');
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
     }
 
     function changeDirection() {
       const html = document.documentElement;
-      if (html.dir === 'rtl') {
-        html.dir = 'ltr';
-      } else {
-        html.dir = 'rtl';
-      }
+      html.dir = html.dir === 'rtl' ? 'ltr' : 'rtl';
+    }
+
+    function updateSort(select) {
+      const sortBy = select.value;
+      const filterInput = document.getElementById('searchInput').value;
+      loadGallery(filterInput, sortBy);
     }
 
     window.onload = () => loadGallery();
@@ -49,16 +84,29 @@
   <div class="max-w-6xl mx-auto">
     <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
       <h1 class="text-4xl font-bold text-blue-800">📷 גלריית תמונות משפחתית</h1>
-      <div class="flex gap-2">
-        <input type="text" placeholder="🔍 חפש תמונה..." class="border rounded p-2 text-sm" oninput="loadGallery(this.value)" />
+      <div class="flex flex-wrap gap-2 items-center">
+        <input id="searchInput" type="text" placeholder="🔍 חפש תמונה..." class="border rounded p-2 text-sm" oninput="loadGallery(this.value, document.getElementById('sortSelect').value)" />
+        <select id="sortSelect" onchange="updateSort(this)" class="border rounded p-2 text-sm">
+          <option value="name">מיין לפי שם</option>
+          <option value="family">מיין לפי משפחה</option>
+        </select>
         <button onclick="changeDirection()" class="bg-gray-300 px-3 py-2 rounded text-sm">החלף כיוון</button>
-        <a href="/upload-photo.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">העלה תמונה</a>
+        <a href="/upload_picture.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">העלה תמונה</a>
       </div>
     </div>
 
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4" id="gallery">
       <!-- תמונות ייטענו כאן דינמית -->
     </div>
-  <p><a href="index.html">חזרה לעמוד הבית</a></p>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50" onclick="closeModal()">
+    <div class="max-w-3xl mx-auto relative">
+      <img id="modalImg" src="" alt="" class="rounded shadow-xl max-h-[80vh] mx-auto" />
+      <div id="modalCaption" class="text-white text-center mt-4 text-lg"></div>
+      <button onclick="closeModal()" class="absolute top-0 right-0 m-4 text-white text-2xl">&times;</button>
+    </div>
+  </div>
 </body>
 </html>
