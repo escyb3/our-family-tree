@@ -331,25 +331,6 @@ app.use("/messages", (req, res, next) => {
   next();
 });
 
-app.post("/send-message", (req, res) => {
-  if (!req.session.user) return res.status(401).send("לא מחובר");
-
-  const { to, subject, body, attachment, type = "regular" } = req.body;
-  const msg = {
-    from: req.session.user.username + "@family.local",
-    to,
-    subject,
-    body,
-    timestamp: new Date().toISOString(),
-    threadId: "msg" + Date.now(),
-    replies: [],
-    attachment,
-    type
-  };//
-  messages.push(msg);
-  saveMessages();
-  res.send("נשלח");
-});
 app.post("/reply-message", (req, res) => {
   if (!req.session.user) return res.status(401).send("לא מחובר");
   const { threadId, body } = req.body;
