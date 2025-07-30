@@ -33,23 +33,17 @@ if (!fs.existsSync(forumFile)) {
 }
 
 // קריאת כל השרשורים
-app.get("/api/forum", (req, res) => {
-  fs.readFile("forum.json", (err, data) => {
+    app.get("/api/forum", (req, res) => {
+  fs.readFile(forumFile, "utf8", (err, data) => {
     if (err) return res.status(500).send("Error reading forum data");
-    const threads = JSON.parse(data);
-    res.json(threads);
+    try {
+      const threads = JSON.parse(data);
+      res.json(threads);
+    } catch (e) {
+      res.status(500).send("Error parsing forum data");
+    }
   });
 });
-app.post("/api/forum", (req, res) => {
-  fs.readFile(forumFile, (err, data) => {
-    if (err) return res.status(500).send("Error reading forum data");
-
-    let threads = [];
-    try {
-      threads = JSON.parse(data);
-    } catch (e) {
-      threads = [];
-    }
 
     const newThread = {
       _id: Date.now().toString(),
@@ -67,9 +61,6 @@ app.post("/api/forum", (req, res) => {
     });
   });
 });
-
-
-
 
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: "secret", resave: false, saveUninitialized: true }));
