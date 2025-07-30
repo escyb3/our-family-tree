@@ -32,50 +32,30 @@ if (!fs.existsSync(forumFile)) {
   fs.writeFileSync(forumFile, JSON.stringify([]));
 }
 
-// קריאת כל השרשורים
-    app.get("/api/forum", (req, res) => {
-  fs.readFile(forumFile, "utf8", (err, data) => {
-    if (err) return res.status(500).send("Error reading forum data");
-    try {
-      const threads = JSON.parse(data);
-      res.json(threads);
-    } catch (e) {
-      res.status(500).send("Error parsing forum data");
-    }
-  });
-});
-
-    const newThread = {
-      _id: Date.now().toString(),
-      title: req.body.title,
-      body: req.body.body,
-      category: req.body.category || "כללי",
-      username: req.user?.username || "אנונימי",
-      createdAt: new Date(),
-      replies: [],
-    };
-// יצירת שרשור חדש
 app.post("/api/forum/new", (req, res) => {
-  const newThread = req.body;
+  const newThread = {
+    _id: Date.now().toString(),
+    title: req.body.title,
+    body: req.body.body,
+    category: req.body.category || "כללי",
+    username: req.user?.username || "אנונימי",
+    createdAt: new Date(),
+    replies: [],
+  };
+
   const forumFile = path.join(__dirname, "data", "forum.json");
+  const threads = fs.existsSync(forumFile) ? JSON.parse(fs.readFileSync(forumFile)) : [];
+  threads.push(newThread);
 
-  fs.readFile(forumFile, "utf8", (err, data) => {
+  fs.writeFile(forumFile, JSON.stringify(threads, null, 2), (err) => {
     if (err) {
-      console.error("שגיאה בקריאת קובץ הפורום:", err);
-      return res.status(500).send("שגיאה בקריאת הפורום");
+      console.error("שגיאה בכתיבה ל־forum.json:", err);
+      return res.status(500).send("שגיאה בשרת");
     }
-
-    let threads = [];
-    try {
-      threads = JSON.parse(data);
-    } catch (parseErr) {
-      console.error("שגיאה בפענוח קובץ הפורום:", parseErr);
-    }
-
+    res.json({ success: true });
     newThread.id = Date.now();
     newThread.replies = [];
     threads.push(newThread);
-
     fs.writeFile(forumFile, JSON.stringify(threads, null, 2), (err) => {
       if (err) {
         console.error("שגיאה בכתיבה לקובץ:", err);
@@ -86,6 +66,8 @@ app.post("/api/forum/new", (req, res) => {
     });
   });
 });
+
+
 app.post("/api/draft", (req, res) => {
   let drafts = [];
   drafts.push({ ...req.body, timestamp: new Date().toISOString() });
