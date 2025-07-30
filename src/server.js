@@ -402,13 +402,6 @@ app.post("/api/draft", (req, res) => {
   res.json({ success: true });
 });
 
-// קבלת הודעות
-app.get("/api/messages", (req, res) => {
-  const user = "user1@family.local";
-  const inbox = messages.filter(msg => msg.to === user);
-  const sent = messages.filter(msg => msg.from === user);
-  res.json({ inbox, sent });
-});
 
 // שליחת תגובה
 app.post("/api/reply", (req, res) => {
