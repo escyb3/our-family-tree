@@ -398,13 +398,6 @@ app.post("/api/send", upload.fields([{ name: 'attachment' }, { name: 'media' }])
   res.json({ success: true });
 });
 
-// שמירת טיוטה
-app.post("/api/draft", (req, res) => {
-  drafts.push({ ...req.body, timestamp: new Date().toISOString() });
-  res.json({ success: true });
-});
-
-
 // שליחת תגובה
 app.post("/api/reply", (req, res) => {
   const { messageId, body } = req.body;
