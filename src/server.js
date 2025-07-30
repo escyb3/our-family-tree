@@ -537,9 +537,6 @@ app.get("/api/forum/threads", (req, res) => {
   }
 });
 
-
-// … כל הקוד הקודם של server.js …
-
 // יצירת שרשור חדש
 app.post("/api/forum/new", (req, res) => {
   const newThread = req.body;
