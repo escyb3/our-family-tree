@@ -538,28 +538,29 @@ app.get("/api/forum/threads", (req, res) => {
 });
 
 
-app.post("/api/forum", (req, res) => {
-  const { title, author, content } = req.body;
-  const newThread = {
-    id: Date.now(),
-    title,
-    author,
-    content,
-    date: new Date().toISOString(),
-    comments: []
-  };
+// … כל הקוד הקודם של server.js …
 
-  fs.readFile(forumFile, (err, data) => {
-    let threads = [];
-    if (!err && data.length > 0) {
-      try {
-        threads = JSON.parse(data);
-      } catch (parseErr) {
-        console.error("❌ שגיאה בפיענוח forum.json:", parseErr);
-      }
+// יצירת שרשור חדש
+app.post("/api/forum/new", (req, res) => {
+  const newThread = req.body;
+  const forumFile = path.join(__dirname, "data", "forum.json");
+
+  fs.readFile(forumFile, "utf8", (err, data) => {
+    if (err) {
+      console.error("שגיאה בקריאת קובץ הפורום:", err);
+      return res.status(500).send("שגיאה בקריאת הפורום");
     }
 
-    threads.unshift(newThread);
+    let threads = [];
+    try {
+      threads = JSON.parse(data);
+    } catch (parseErr) {
+      console.error("שגיאה בפענוח קובץ הפורום:", parseErr);
+    }
+
+    newThread.id = Date.now();
+    newThread.replies = [];
+    threads.push(newThread);
 
     fs.writeFile(forumFile, JSON.stringify(threads, null, 2), (err) => {
       if (err) {
@@ -569,7 +570,9 @@ app.post("/api/forum", (req, res) => {
       console.log("✅ השרשור נשמר בהצלחה");
       res.json({ success: true });
     });
-    
+  });
+});
+
 // הפעלת השרת
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
