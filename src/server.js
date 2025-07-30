@@ -276,6 +276,45 @@ app.post("/reply-message", auth(), (req, res) => {
   saveMessages();
   res.send("תגובה נשלחה");
 });
+// קריאת כל האירועים
+app.get("/api/calendar", (req, res) => {
+  fs.readFile("data/calendar-events.json", "utf8", (err, data) => {
+    if (err) return res.json([]);
+    try {
+      const events = JSON.parse(data);
+      res.json(events);
+    } catch (e) {
+      res.status(500).json({ error: "שגיאה בקריאת נתוני לוח שנה" });
+    }
+  });
+});
+
+// הוספת אירוע חדש
+app.post("/api/calendar", (req, res) => {
+  const newEvent = {
+    id: Date.now().toString(),
+    title: req.body.title,
+    date: req.body.date,
+    type: req.body.type || "כללי",
+    description: req.body.description || "",
+    person: req.body.person || "", // אופציונלי: מקשר לאדם
+    createdAt: new Date()
+  };
+
+  fs.readFile("data/calendar-events.json", "utf8", (err, data) => {
+    let events = [];
+    if (!err && data) {
+      try {
+        events = JSON.parse(data);
+      } catch {}
+    }
+    events.push(newEvent);
+    fs.writeFile("data/calendar-events.json", JSON.stringify(events, null, 2), err => {
+      if (err) return res.status(500).json({ error: "שגיאה בשמירה" });
+      res.json({ success: true, event: newEvent });
+    });
+  });
+});
 
 app.post("/upload-attachment", upload.single("attachment"), (req, res) => {
   if (!req.file) return res.status(400).send("לא נשלח קובץ");
