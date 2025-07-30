@@ -189,6 +189,7 @@ app.get("/mark-read", (req, res) => {
 app.post("/send-message", auth(), (req, res) => {
   const { to, subject, body, type = "regular", attachment } = req.body;
   const user = req.session.user;
+    if (!req.session.user) return res.status(401).send("לא מחובר");
 
   const msg = {
     from: user.username + "@family.local",
