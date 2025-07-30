@@ -334,6 +334,27 @@ app.post("/api/ask", async (req, res) => {
   }
   res.json({ answer });
 });
+app.get("/dashboard", (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.redirect("/login");
+  res.send(`<h2>Welcome, ${user.name}!</h2><ul>` +
+    user.access.map(f => `<li><a href="/tree/${f}">Go to ${f} family tree</a></li>`).join("") +
+    `</ul><a href="/logout">Logout</a>`);
+});
+
+app.get("/tree/:family", (req, res) => {
+  const user = req.session.user;
+  const family = req.params.family;
+  if (!user || !user.access.includes(family)) {
+    return res.redirect("/login");
+  }
+  const templatePath = path.join(__dirname, "public", "tree_template.html");
+  fs.readFile(templatePath, "utf-8", (err, html) => {
+    if (err) return res.status(500).send("Error loading page");
+    const customized = html.replace(/__FAMILY__/g, family);
+    res.send(customized);
+  });
+});
 
 // AI Routes
 app.post("/api/ask-ai", async (req, res) => {
