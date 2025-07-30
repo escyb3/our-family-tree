@@ -569,10 +569,7 @@ app.post("/api/forum", (req, res) => {
       console.log("✅ השרשור נשמר בהצלחה");
       res.json({ success: true });
     });
-  });
-});
-
-
+    
 // הפעלת השרת
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
