@@ -497,39 +497,6 @@ app.get("/api/forum/threads", (req, res) => {
   }
 });
 
-// יצירת שרשור חדש
-app.post("/api/forum/new", (req, res) => {
-  const newThread = req.body;
-  const forumFile = path.join(__dirname, "data", "forum.json");
-
-  fs.readFile(forumFile, "utf8", (err, data) => {
-    if (err) {
-      console.error("שגיאה בקריאת קובץ הפורום:", err);
-      return res.status(500).send("שגיאה בקריאת הפורום");
-    }
-
-    let threads = [];
-    try {
-      threads = JSON.parse(data);
-    } catch (parseErr) {
-      console.error("שגיאה בפענוח קובץ הפורום:", parseErr);
-    }
-
-    newThread.id = Date.now();
-    newThread.replies = [];
-    threads.push(newThread);
-
-    fs.writeFile(forumFile, JSON.stringify(threads, null, 2), (err) => {
-      if (err) {
-        console.error("שגיאה בכתיבה לקובץ:", err);
-        return res.status(500).send("Error saving thread");
-      }
-      console.log("השרשור נשמר בהצלחה");
-      res.json({ success: true });
-    });
-  });
-});
-
 
 // הפעלת השרת
 const PORT = process.env.PORT || 3000;
