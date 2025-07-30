@@ -153,7 +153,47 @@ app.use((req, res, next) => {
   }
   next();
 });
+// דף התחברות (login.html)
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "login.html"));
+});
 
+// תהליך התחברות POST
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+  const users = loadUsers();
+  const user = users.find(u => u.username === username);
+
+  if (!user) return res.send("<p>Invalid username</p>");
+
+  const match = await bcrypt.compare(password, user.password);
+  if (!match) return res.send("<p>Invalid password</p>");
+
+  // הצלחה – שמירת סשן
+  req.session.user = {
+    username: user.username,
+    name: user.name,
+    access: user.access,
+  };
+
+  res.redirect("/tree/bromberg");
+});
+
+// יציאה מהמערכת
+app.get("/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.redirect("/login");
+  });
+});
+
+// הגנה על עמוד אילן יוחסין
+app.get("/tree/bromberg", (req, res) => {
+  const user = req.session.user;
+  if (!user || !user.access.includes("bromberg")) {
+    return res.redirect("/login");
+  }
+  res.sendFile(path.join(__dirname, "public", "tree_bromberg.html"));
+});
 app.get("/messages", auth(), (req, res) => {
   const user = req.session.user.username + "@family.local";
   const query = req.query.q?.toLowerCase() || "";
