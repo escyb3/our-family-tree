@@ -179,7 +179,9 @@ app.get("/messages", auth(), (req, res) => {
   const typeFilter = req.query.type || "all";
   let inbox = messages.filter(m => m.to === user);
     const inbox = messages.filter(m => m.to === req.session.user.username + "@family.local");
-  res.json(inbox);
+   const inbox = messages.filter(msg => msg.to === user);
+  const sent = messages.filter(msg => msg.from === user);
+  res.json({ inbox, sent });
 });
 
   if (query) {
