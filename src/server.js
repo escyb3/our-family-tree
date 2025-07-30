@@ -583,22 +583,28 @@ app.get("/api/forum/threads", (req, res) => {
 });
 
 
-// יצירת פוסט חדש בפורום
 app.post("/api/forum", (req, res) => {
-  const { title, content, creator } = req.body;
-  const forumFile = path.join(__dirname, "data", "forum.json");
+  const { title, author, content } = req.body;
+  const newThread = {
+    id: Date.now(),
+    title,
+    author,
+    content,
+    date: new Date().toISOString(),
+    comments: []
+  };
 
-  fs.readFile(forumFile, "utf8", (err, data) => {
-    const threads = data ? JSON.parse(data) : [];
-    const newThread = {
-      id: threads.length + 1,
-      title,
-      content,
-      creator,
-      timestamp: new Date().toISOString(),
-      replies: [],
-    };
-    threads.push(newThread);
+  fs.readFile(forumFile, (err, data) => {
+    let threads = [];
+    if (!err && data.length > 0) {
+      try {
+        threads = JSON.parse(data);
+      } catch (parseErr) {
+        console.error("❌ שגיאה בפיענוח forum.json:", parseErr);
+      }
+    }
+
+    threads.unshift(newThread);
 
     fs.writeFile(forumFile, JSON.stringify(threads, null, 2), (err) => {
       if (err) {
@@ -610,6 +616,7 @@ app.post("/api/forum", (req, res) => {
     });
   });
 });
+
 
 // הפעלת השרת
 const PORT = process.env.PORT || 3000;
