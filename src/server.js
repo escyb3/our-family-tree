@@ -329,10 +329,7 @@ app.use("/messages", (req, res, next) => {
   if (!req.session.user) return res.status(401).send("לא מחובר");
   next();
 });
-app.get("/messages", (req, res) => {
-  const inbox = messages.filter(m => m.to === req.session.user.username + "@family.local");
-  res.json(inbox);
-});
+
 app.post("/send-message", (req, res) => {
   if (!req.session.user) return res.status(401).send("לא מחובר");
 
