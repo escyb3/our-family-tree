@@ -177,11 +177,31 @@ app.get("/messages", auth(), (req, res) => {
   const user = req.session.user.username + "@family.local";
   const query = req.query.q?.toLowerCase() || "";
   const typeFilter = req.query.type || "all";
-  let inbox = messages.filter(m => m.to === user);
-   const inbox = messages.filter(msg => msg.to === user);
+
+  const inbox = messages.filter(msg => msg.to === user);
   const sent = messages.filter(msg => msg.from === user);
+
   res.json({ inbox, sent });
 });
+let inbox = messages.filter(msg => msg.to === user);
+let sent = messages.filter(msg => msg.from === user);
+
+if (query) {
+  inbox = inbox.filter(msg =>
+    msg.subject.toLowerCase().includes(query) ||
+    msg.body.toLowerCase().includes(query)
+  );
+  sent = sent.filter(msg =>
+    msg.subject.toLowerCase().includes(query) ||
+    msg.body.toLowerCase().includes(query)
+  );
+}
+
+if (typeFilter !== "all") {
+  inbox = inbox.filter(msg => msg.type === typeFilter);
+  sent = sent.filter(msg => msg.type === typeFilter);
+}
+
 
   if (query) {
     inbox = inbox.filter(m =>
