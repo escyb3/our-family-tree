@@ -32,28 +32,6 @@ if (!fs.existsSync(forumFile)) {
   fs.writeFileSync(forumFile, JSON.stringify([]));
 }
 
-
-
- 
-app.post("/api/forum/threads", (req, res) => {
-  try {
-    const forumData = JSON.parse(fs.readFileSync(forumFile, "utf8"));
-    const newThread = {
-      id: Date.now(),
-      title: req.body.title,
-      content: req.body.content,
-      author: req.body.author,
-      timestamp: new Date().toISOString(),
-      replies: [],
-    };
-    forumData.push(newThread);
-    fs.writeFileSync(forumFile, JSON.stringify(forumData, null, 2));
-    res.status(201).json({ success: true });
-  } catch (err) {
-    console.error("שגיאה ביצירת דיון:", err);
-    res.status(500).json({ success: false, error: "שגיאה ביצירת דיון" });
-  }
-});
 // קריאת כל השרשורים
 app.get("/api/forum", (req, res) => {
   fs.readFile("forum.json", (err, data) => {
