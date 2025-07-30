@@ -2,135 +2,47 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>לוח שנה משפחתי</title>
-  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css' rel='stylesheet' />
-  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js'></script>
+  <title>לווח השנה המשפחתי</title>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+  <script src="/calendar.js" defer></script>
   <style>
-    body {
-      font-family: sans-serif;
-      margin: 0;
-      padding: 0;
-      direction: rtl;
-      background: #f2f6fc;
-    }
-    header {
-      background-color: #0057a3;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      font-size: 1.8em;
-    }
-    #calendar {
-      max-width: 1000px;
-      margin: 40px auto;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .event-controls {
-      max-width: 900px;
-      margin: 20px auto;
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .event-controls input, .event-controls select, .event-controls button {
-      padding: 10px;
-      margin: 6px;
-      font-size: 1em;
-    }
-    .event-list {
-      max-width: 900px;
-      margin: 10px auto;
-      background: #ffffff;
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
-    }
-    .event-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 6px 0;
-    }
+    body { font-family: Arial, sans-serif; direction: rtl; background: #f9f9f9; }
+    #calendar { max-width: 900px; margin: 40px auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .fc .fc-button-primary { background-color: #007bff; border: none; }
+    #addEventForm { max-width: 600px; margin: 20px auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    label { display: block; margin-top: 10px; }
+    input, select, button { width: 100%; padding: 8px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
   </style>
 </head>
 <body>
+  <h2 style="text-align:center;"> לוח השנה - אירועים משפחתיים</h2>
 
-<header>📅 לוח שנה משפחתי</header>
+  <div id="calendar"></div>
 
-<div class="event-controls">
-  <h3>➕ הוסף אירוע</h3>
-  <input type="text" id="title" placeholder="שם האירוע" required />
-  <input type="date" id="date" required />
-  <select id="type">
-    <option value="">סוג אירוע</option>
-    <option>🎂 יום הולדת</option>
-    <option>🕯️ אזכרה</option>
-    <option>📆 אחר</option>
-  </select>
-  <button onclick="addEvent()">הוסף</button>
-</div>
+  <form id="addEventForm">
+    <h3>הוסף אירוע חדש</h3>
+    <label>שם האירוע:</label>
+    <input type="text" id="eventTitle" required>
 
-<div class="event-list" id="eventList"></div>
+    <label>תאריך:</label>
+    <input type="date" id="eventDate" required>
 
-<div id='calendar'></div>
+    <label>סוג אירוע:</label>
+    <select id="eventType">
+      <option value="birthday">יום הולדת</option>
+      <option value="yahrzeit">אזכרה</option>
+      <option value="wedding">נישאוין</option>
+      <option value="other">אחר</option>
+    </select>
 
-<script>
-  let calendar;
-  let storedEvents = JSON.parse(localStorage.getItem("familyEvents") || "[]");
+    <label>אם לחזור שנתית:</label>
+    <select id="repeatYearly">
+      <option value="yes">כן</option>
+      <option value="no">לא</option>
+    </select>
 
-  document.addEventListener('DOMContentLoaded', function() {
-    const calendarEl = document.getElementById('calendar');
-    calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      locale: 'he',
-      events: storedEvents
-    });
-    calendar.render();
-    renderEventList();
-  });
-
-  function addEvent() {
-    const title = document.getElementById("title").value;
-    const date = document.getElementById("date").value;
-    const type = document.getElementById("type").value;
-
-    if (title && date) {
-      const newEvent = { title: type + ' ' + title, start: date };
-      calendar.addEvent(newEvent);
-      storedEvents.push(newEvent);
-      localStorage.setItem("familyEvents", JSON.stringify(storedEvents));
-      document.getElementById("title").value = "";
-      document.getElementById("date").value = "";
-      document.getElementById("type").value = "";
-      renderEventList();
-    }
-  }
-
-  function deleteEvent(index) {
-    storedEvents.splice(index, 1);
-    localStorage.setItem("familyEvents", JSON.stringify(storedEvents));
-    calendar.removeAllEvents();
-    storedEvents.forEach(evt => calendar.addEvent(evt));
-    renderEventList();
-  }
-
-  function renderEventList() {
-    const listDiv = document.getElementById("eventList");
-    if (!storedEvents.length) {
-      listDiv.innerHTML = "<p style='text-align:center'>אין אירועים</p>";
-      return;
-    }
-    listDiv.innerHTML = storedEvents.map((e, i) => `
-      <div class="event-item">
-        <span>${e.title} – ${e.start}</span>
-        <button onclick="deleteEvent(${i})">❌ מחק</button>
-      </div>
-    `).join("");
-  }
-</script>
-
+    <button type="submit">הוסף אירוע</button>
+  </form>
 </body>
 </html>
