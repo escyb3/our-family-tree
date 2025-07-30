@@ -32,32 +32,9 @@ if (!fs.existsSync(forumFile)) {
   fs.writeFileSync(forumFile, JSON.stringify([]));
 }
 
-// יצירת דיון חדש
-app.post("/api/forum/create", async (req, res) => {
-  try {
-    const { title, content, author } = req.body;
-    if (!title || !content || !author) {
-      return res.status(400).json({ error: "Missing fields" });
-    }
 
-    const discussions = JSON.parse(fs.readFileSync(forumFile));
-    const newDiscussion = {
-      id: Date.now(),
-      title,
-      content,
-      author,
-      createdAt: new Date(),
-      comments: []
-    };
 
-    discussions.unshift(newDiscussion);
-    fs.writeFileSync(forumFile, JSON.stringify(discussions, null, 2));
-    res.status(200).json({ success: true, discussion: newDiscussion });
-  } catch (error) {
-    console.error("Error creating discussion:", error);
-    res.status(500).json({ error: "Server error" });
-  }
-});
+ 
 app.post("/api/forum/threads", (req, res) => {
   try {
     const forumData = JSON.parse(fs.readFileSync(forumFile, "utf8"));
