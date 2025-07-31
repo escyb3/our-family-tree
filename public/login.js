@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await res.json();
       console.log("✅ התחברות הצליחה:", data);
-      location.href = "/"; // מעביר לעמוד הבית או לכל עמוד אחר
+      location.href = "/index.html"; // מעביר לעמוד הבית או לכל עמוד אחר
     } catch (err) {
       console.error("שגיאה בהתחברות:", err);
       alert("⚠️ שגיאה בלתי צפויה בהתחברות");
