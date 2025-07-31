@@ -1,14 +1,12 @@
 [
   {
     "username": "admin",
-    "password": "$2b$10$zTppzP4TrF0YoA5Z5QW9B.DMTknuDxbVGqthBRRx1WWDFsChWKUme",
-    "role": "admin",
-    "side": "Ben Abou"
+    "password": "$2b$10$yZxHRh23bURlF2f0kJZtTeZV.LkYhTzhE.qKsc1ZpEbaH1tb/3KiC" // 
+    "side": "Bromberg
   },
   {
     "username": "avishaiexample",
-    "password": "$2b$10$e4YEr3BWqBksPvN8CqMy7OZ0mX1pX9zWj8TbnlqnMkzjMFQXZZs7C",
-    "role": "user",
+    "password": "$2b$10$WuPND9cMOXPJeUSV6Lz/LeJPc9XZcNwDUoFbcQQuO3E7AgFT/3sya" // 
     "side": "Bromberg"
   }
 ]
