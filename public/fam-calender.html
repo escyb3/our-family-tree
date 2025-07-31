@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📅 לוח שנה משפחתי</title>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment-hijri@2.1.2/moment-hijri.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@hebcal/core@2.4.1/dist/index.umd.js"></script>
+  <style>
+    body { font-family: sans-serif; background-color: #f9fafb; }
+    #calendar { max-width: 900px; margin: 40px auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 0 10px #ddd; }
+  </style>
+</head>
+<body>
+  <h1 class="text-3xl text-center text-blue-800 mt-10">📅 לוח שנה משפחתי</h1>
+  <div id="calendar"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const calendarEl = document.getElementById('calendar');
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'he',
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,listMonth'
+        },
+        events: [
+          {
+            title: '🎂 יום הולדת - יעקב בן דוד',
+            start: '2025-09-13',
+            color: '#facc15'
+          },
+          {
+            title: '🕯️ אזכרה - רחל ברנבוים',
+            start: '2025-11-01',
+            color: '#f87171'
+          },
+          {
+            title: '💍 נישואין - חיים ורות לייבנר',
+            start: '2025-08-03',
+            color: '#60a5fa'
+          }
+        ]
+      });
+      calendar.render();
+    });
+  </script>
+</body>
+</html>
