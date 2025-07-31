@@ -106,26 +106,39 @@ app.use((req, res, next) => {
   next();
 });
 
-  app.post("/api/login", async (req, res) => {
+ app.post("/api/login", async (req, res) => {
   const usersPath = path.join(__dirname, "data", "users.json");
 
-if (!fs.existsSync(usersPath)) {
-  console.error("❌ קובץ users.json לא נמצא ב:", usersPath);
-  return res.status(500).send("קובץ משתמשים לא נמצא");
-}
+  if (!fs.existsSync(usersPath)) {
+    console.error("❌ קובץ users.json לא נמצא ב:", usersPath);
+    return res.status(500).send("קובץ משתמשים לא נמצא");
+  }
 
-try {
-  const raw = fs.readFileSync(usersPath, "utf8");
-  console.log("📄 תוכן users.json:", raw);
-  const users = JSON.parse(raw);
-  const user = users.find(u => u.username === req.body.username);
-  if (!user) return res.status(401).send("שם משתמש שגוי");
+  try {
+    const raw = fs.readFileSync(usersPath, "utf8");
+    console.log("📄 תוכן users.json:", raw);
+    const users = JSON.parse(raw);
+    const user = users.find(u => u.username === req.body.username);
+    if (!user) return res.status(401).send("שם משתמש שגוי");
 
-  const match = await bcrypt.compare(req.body.password, user.password);
-  if (!match) return res.status(401).send("סיסמה שגויה");
+    const match = await bcrypt.compare(req.body.password, user.password);
+    if (!match) return res.status(401).send("סיסמה שגויה");
 
-  res.send({ success: true, user: { username: user.username, role: user.role, side: user.side } });
+    // התחברות מוצלחת
+    req.session.user = {
+      username: user.username,
+      role: user.role,
+      side: user.side
+    };
+
+    res.send({ success: true, user: req.session.user });
+
+  } catch (err) {
+    console.error("שגיאה בתהליך התחברות:", err);
+    res.status(500).send("שגיאה בשרת");
+  }
 });
+
 
 app.get("/admin-users", auth("admin"), (req, res) => res.json(users));
 app.post("/create-user", auth("admin"), (req, res) => {
