@@ -49,6 +49,31 @@
       });
       calendar.render();
     });
+    
+  <form id="addEventForm">
+    <h3>הוסף אירוע חדש</h3>
+    <label>שם האירוע:</label>
+    <input type="text" id="eventTitle" required>
+
+    <label>תאריך:</label>
+    <input type="date" id="eventDate" required>
+
+    <label>סוג אירוע:</label>
+    <select id="eventType">
+      <option value="birthday">יום הולדת</option>
+      <option value="yahrzeit">אזכרה</option>
+      <option value="wedding">נישואין</option>
+      <option value="other">אחר</option>
+    </select>
+
+    <label>אם לחזור שנתית:</label>
+    <select id="repeatYearly">
+      <option value="yes">כן</option>
+      <option value="no">לא</option>
+    </select>
+
+    <button type="submit">הוסף אירוע</button>
+  </form>
   </script>
 </body>
 </html>
