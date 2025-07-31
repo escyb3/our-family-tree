@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>פרופיל אישי - עץ משפחה</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <div class="max-w-4xl mx-auto py-10 px-6">
+    <div class="bg-white rounded-xl shadow p-6 flex flex-col sm:flex-row gap-6">
+      <img id="personImage" src="" alt="תמונה" class="w-40 h-40 object-cover rounded-full border-4 border-blue-400" />
+      <div>
+        <h1 id="personName" class="text-3xl font-bold text-blue-700 mb-2">שם מלא</h1>
+        <p id="birth" class="text-sm">🍼 תאריך לידה: --</p>
+        <p id="death" class="text-sm">🕯️ תאריך פטירה: --</p>
+        <p id="family" class="text-sm">👨‍👩‍👧‍👦 משפחה: --</p>
+
+        <div class="mt-4">
+          <h2 class="font-semibold text-lg mb-1">קשרים משפחתיים</h2>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            <li id="parents">הורים: --</li>
+            <li id="spouse">בן/בת זוג: --</li>
+            <li id="children">ילדים: --</li>
+            <li id="siblings">אחים/אחיות: --</li>
+          </ul>
+        </div>
+
+        <div class="mt-6 flex gap-3 flex-wrap">
+          <a href="#" class="text-sm bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">הצע תיקון</a>
+          <a href="#" class="text-sm bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400">הוסף תמונה</a>
+          <a href="#" class="text-sm bg-yellow-400 text-white px-4 py-2 rounded hover:bg-yellow-500">שמור לזיכרון</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // דוגמה — נטען מידע מאובייקט JSON בעתיד (אפשר לחבר ל־bromberg.json)
+    const examplePerson = {
+      name: "Robert Brunton",
+      birth: "1880",
+      death: "1943",
+      family: "Bromberg",
+      parents: ["Moshe Bromberg", "Lea Bromberg"],
+      spouse: "Rivka Barenbaum",
+      children: ["David Bromberg", "Moshe Bromberg", "Malka Bromberg", "Abba Bromberg" "Rachel Bromberg"],
+      siblings: ["Ida Kasner", "Harry Browne"],
+      image: "/images/brunton_robert.jpg"
+    };
+
+    document.getElementById('personName').innerText = examplePerson.name;
+    document.getElementById('birth').innerText = `🍼 תאריך לידה: ${examplePerson.birth}`;
+    document.getElementById('death').innerText = `🕯️ תאריך פטירה: ${examplePerson.death}`;
+    document.getElementById('family').innerText = `👨‍👩‍👧‍👦 משפחה: ${examplePerson.family}`;
+    document.getElementById('parents').innerText = `הורים: ${examplePerson.parents.join(", ")}`;
+    document.getElementById('spouse').innerText = `בן/בת זוג: ${examplePerson.spouse}`;
+    document.getElementById('children').innerText = `ילדים: ${examplePerson.children.join(", ")}`;
+    document.getElementById('siblings').innerText = `אחים/אחיות: ${examplePerson.siblings.join(", ")}`;
+    document.getElementById('personImage').src = examplePerson.image;
+  </script>
+</body>
+</html>
