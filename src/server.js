@@ -190,6 +190,10 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
   let users = [];
+  {
+  "username": "admin",
+  "password": "family2025"
+}
 
   try {
     users = JSON.parse(fs.readFileSync(path.join(__dirname, "data", "users.json")));
@@ -212,13 +216,7 @@ app.post("/login", (req, res) => {
     res.json({ success: true });
   });
 });
-POST /api/login
-Content-Type: application/json
 
-{
-  "username": "admin",
-  "password": "family2025"
-}
 
 
 // יציאה מהמערכת
