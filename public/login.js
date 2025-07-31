@@ -1,5 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("form");
+  fetch("/api/login", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ username, password })
+})
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
