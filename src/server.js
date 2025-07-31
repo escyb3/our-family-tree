@@ -105,7 +105,7 @@ app.use((req, res, next) => {
   next();
 });
 
- app.post("/api/login", async (req, res) => {
+app.post("/api/login", async (req, res) => {
   const usersPath = path.join(__dirname, "data", "users.json");
 
   if (!fs.existsSync(usersPath)) {
@@ -115,28 +115,36 @@ app.use((req, res, next) => {
 
   try {
     const raw = fs.readFileSync(usersPath, "utf8");
-    console.log("📄 תוכן users.json:", raw);
     const users = JSON.parse(raw);
     const user = users.find(u => u.username === req.body.username);
-    if (!user) return res.status(401).send("שם משתמש שגוי");
+
+    if (!user) {
+      console.warn("👤 שם משתמש לא קיים:", req.body.username);
+      return res.status(401).send("שם משתמש שגוי");
+    }
 
     const match = await bcrypt.compare(req.body.password, user.password);
-    if (!match) return res.status(401).send("סיסמה שגויה");
+    if (!match) {
+      console.warn("🔑 סיסמה שגויה עבור:", req.body.username);
+      return res.status(401).send("סיסמה שגויה");
+    }
 
-    // התחברות מוצלחת
+    // התחברות מוצלחת - שמירה בסשן
     req.session.user = {
       username: user.username,
       role: user.role,
       side: user.side
     };
 
-    res.send({ success: true, user: req.session.user });
+    // שליחה ללקוח ישירות מהאובייקט המקורי ולא מה-session
+    res.send({ success: true, user: { username: user.username, role: user.role, side: user.side } });
 
   } catch (err) {
-    console.error("שגיאה בתהליך התחברות:", err);
+    console.error("❗ שגיאה בתהליך התחברות:", err);
     res.status(500).send("שגיאה בשרת");
   }
 });
+
 
 
 app.get("/admin-users", auth("admin"), (req, res) => res.json(users));
