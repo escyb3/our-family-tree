@@ -105,12 +105,13 @@ app.use((req, res, next) => {
   next();
 });
 
+// תהליך התחברות POST
 app.post("/api/login", async (req, res) => {
   const usersPath = path.join(__dirname, "data", "users.json");
 
   if (!fs.existsSync(usersPath)) {
     console.error("❌ קובץ users.json לא נמצא ב:", usersPath);
-    return res.status(500).send("קובץ משתמשים לא נמצא");
+    return res.status(500).json({ success: false, message: "קובץ משתמשים לא נמצא" });
   }
 
   try {
@@ -119,33 +120,28 @@ app.post("/api/login", async (req, res) => {
     const user = users.find(u => u.username === req.body.username);
 
     if (!user) {
-      console.warn("👤 שם משתמש לא קיים:", req.body.username);
-      return res.status(401).send("שם משתמש שגוי");
+      return res.status(401).json({ success: false, message: "שם משתמש שגוי" });
     }
 
     const match = await bcrypt.compare(req.body.password, user.password);
     if (!match) {
-      console.warn("🔑 סיסמה שגויה עבור:", req.body.username);
-      return res.status(401).send("סיסמה שגויה");
+      return res.status(401).json({ success: false, message: "סיסמה שגויה" });
     }
 
-    // התחברות מוצלחת - שמירה בסשן
+    // התחברות מוצלחת
     req.session.user = {
       username: user.username,
       role: user.role,
       side: user.side
     };
 
-    // שליחה ללקוח ישירות מהאובייקט המקורי ולא מה-session
-    res.send({ success: true, user: { username: user.username, role: user.role, side: user.side } });
+    res.json({ success: true, user: req.session.user });
 
   } catch (err) {
-    console.error("❗ שגיאה בתהליך התחברות:", err);
-    res.status(500).send("שגיאה בשרת");
+    console.error("שגיאה בתהליך התחברות:", err);
+    res.status(500).json({ success: false, message: "שגיאה בשרת" });
   }
 });
-
-
 
 app.get("/admin-users", auth("admin"), (req, res) => res.json(users));
 app.post("/create-user", auth("admin"), (req, res) => {
