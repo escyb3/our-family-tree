@@ -153,6 +153,19 @@ app.post("/api/login", async (req, res) => {
     res.status(500).json({ success: false, message: "שגיאה בשרת" });
   }
 });
+// פונקציה לטעינת אירועים
+function loadEvents() {
+  if (!fs.existsSync(eventsPath)) return [];
+  return JSON.parse(fs.readFileSync(eventsPath, "utf8"));
+}
+
+// פונקציה לשמירת אירועים
+function saveEvents(events) {
+  fs.writeFileSync(eventsPath, JSON.stringify(events, null, 2));
+}
+
+const EMAIL_FROM = process.env.EMAIL_USER || "our-family@domain.com";
+
 // API להוספת אירוע
 app.post("/api/events", (req, res) => {
   const events = loadEvents();
@@ -162,32 +175,32 @@ app.post("/api/events", (req, res) => {
   res.status(201).json({ message: "אירוע נשמר בהצלחה" });
 });
 
-// API לשליפת כל האירועים
-app.get("/api/events", (req, res) => {
-  res.json(loadEvents());
-});
+
 
 // שליחה אוטומטית של ברכות כל יום ב־08:00
 cron.schedule("0 8 * * *", () => {
   const today = new Date().toISOString().split("T")[0];
   const events = loadEvents();
+
   events.forEach(event => {
     if (event.start === today && event.extendedProps?.email) {
       const msg = `שלום! היום חל ${event.title} (${today}) – ברכה חמה ממשפחתכם!`;
+      
       transporter.sendMail({
         from: `Our Family Tree <${EMAIL_FROM}>`,
         to: event.extendedProps.email,
         subject: `🎉 תזכורת לאירוע משפחתי היום`,
         text: msg
       }, err => {
-        if (err) console.error("שגיאה בשליחה:", err);
-        else console.log("ברכה נשלחה ל:", event.extendedProps.email);
+        if (err) {
+          console.error("❌ שגיאה בשליחת אימייל ל-", event.extendedProps.email, err);
+        } else {
+          console.log("✅ נשלחה ברכה ל-", event.extendedProps.email);
+        }
       });
     }
   });
 });
-
-
 
 app.get("/admin-users", auth("admin"), (req, res) => res.json(users));
 app.post("/create-user", auth("admin"), (req, res) => {
