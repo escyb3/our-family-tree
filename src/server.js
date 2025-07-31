@@ -425,10 +425,23 @@ app.post("/events", (req, res) => {
   res.sendStatus(200);
 });
 
-app.get("/api/user", (req, res) => {
-  if (!req.session.user) return res.status(401).json({ error: "לא מחובר" });
-  res.json(req.session.user);
+const usersPath = path.join(__dirname, "data", "users.json");
+
+app.get("/api/users", (req, res) => {
+  fs.readFile(usersPath, "utf8", (err, data) => {
+    if (err) {
+      console.error("שגיאה בקריאת משתמשים:", err);
+      return res.status(500).json({ error: "שגיאה בשרת" });
+    }
+    try {
+      const users = JSON.parse(data);
+      res.json(users);
+    } catch (e) {
+      res.status(500).json({ error: "שגיאה בניתוח נתוני המשתמשים" });
+    }
+  });
 });
+
 
 app.post("/api/ask", async (req, res) => {
   const { question, lang } = req.body;
