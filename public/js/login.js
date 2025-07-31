@@ -1,34 +1,28 @@
 // login.js
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.querySelector("form");
+document.querySelector("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  const username = document.querySelector("#username").value;
+  const password = document.querySelector("#password").value;
 
-    const username = document.querySelector("#username").value.trim();
-    const password = document.querySelector("#password").value.trim();
+  try {
+    const res = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
 
-    try {
-      const res = await fetch("/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        credentials: "include", // חשוב לשמירת session
-        body: JSON.stringify({ username, password })
-      });
+    const data = await res.json();
 
-      if (res.ok) {
-        // התחברות הצליחה
-        window.location.href = "/index";
-      } else {
-        const data = await res.json();
-        alert(data.error || "שם משתמש או סיסמה שגויים");
-      }
-    } catch (err) {
-      console.error("שגיאה בעת ניסיון התחברות:", err);
-      alert("שגיאה בשרת. נסה שוב מאוחר יותר.");
+    if (res.ok && data.success) {
+      alert("התחברת בהצלחה!");
+      window.location.href = "/"; // או /dashboard.html אם יש לך דף ראשי למשתמשים
+    } else {
+      alert(data.message || "שגיאה בהתחברות");
     }
-  });
+  } catch (err) {
+    console.error("שגיאה בעת ניסיון התחברות:", err);
+    alert("שגיאה בשרת. נסה שוב מאוחר יותר.");
+  }
 });
