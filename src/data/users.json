@@ -1,14 +1,8 @@
 [
   {
     "username": "admin",
-    "password": "$2b$10$zxbvYxQwP0LUbToJh5tvfuNWczHrrfw88peNfRgjPd0VZBdVUSsY2",
+    "password": "$2b$10$e4N8Es0ImqSKm5NpmEmLNeZa7.LbpJabmq8gT6Q8oxADDAZsm3i3i",
     "role": "admin",
-    "side": "Ben Abou"
-  },
-  {
-    "username": "avishaiexample",
-    "password": "$2b$10$Zr3hP8xgLExdA7zm0IUNzebEKSJ2UUSzGi3/4KZC71tuw9eMxCMFy",
-    "role": "user",
-    "side": "Bromberg"
+    "side": "all"
   }
 ]
