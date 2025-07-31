@@ -435,6 +435,10 @@ app.get("/api/users", (req, res) => {
     }
   });
 });
+app.get("/api/user", (req, res) => {
+  if (!req.session.user) return res.status(401).json({ error: "Unauthorized" });
+  res.json(req.session.user);
+});
 
 
 app.post("/api/ask", async (req, res) => {
