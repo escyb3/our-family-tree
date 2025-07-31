@@ -111,6 +111,9 @@ app.post("/api/login", async (req, res) => {
 
   if (!fs.existsSync(usersPath)) {
     console.error("❌ קובץ users.json לא נמצא ב:", usersPath);
+    console.log("📥 ניסיון התחברות של:", req.body);
+    console.log("🔐 משתמש נמצא:", user);
+console.log("🔑 תוצאת השוואת סיסמה:", match);
     return res.status(500).json({ success: false, message: "קובץ משתמשים לא נמצא" });
   }
 
