@@ -2,47 +2,89 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>לוח השנה המשפחתי</title>
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
-  <script src="/calendar.js" defer></script>
-  <style>
-    body { font-family: Arial, sans-serif; direction: rtl; background: #f9f9f9; }
-    #calendar { max-width: 900px; margin: 40px auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    .fc .fc-button-primary { background-color: #007bff; border: none; }
-    #addEventForm { max-width: 600px; margin: 20px auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    label { display: block; margin-top: 10px; }
-    input, select, button { width: 100%; padding: 8px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📅 לוח שנה משפחתי</title>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment-hijri@2.1.2/moment-hijri.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@hebcal/core@2.4.1/dist/index.umd.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-  <h2 style="text-align:center;"> 📆 לוח שנה - אירועים משפחתיים</h2>
+<body class="bg-gray-50 text-gray-800">
+  <div class="max-w-6xl mx-auto py-10 px-6">
+    <h1 class="text-4xl font-bold text-center text-blue-800 mb-8">📅 לוח שנה משפחתי</h1>
 
-  <div id="calendar"></div>
+    <div id="calendar" class="bg-white p-6 rounded-xl shadow mb-12"></div>
 
-  <form id="addEventForm">
-    <h3>הוסף אירוע חדש</h3>
-    <label>שם האירוע:</label>
-    <input type="text" id="eventTitle" required>
+    <form id="addEventForm" class="bg-white p-6 rounded-xl shadow space-y-4 max-w-2xl mx-auto">
+      <h3 class="text-xl font-semibold text-gray-700 mb-4">➕ הוסף אירוע חדש</h3>
 
-    <label>תאריך:</label>
-    <input type="date" id="eventDate" required>
+      <div>
+        <label class="block text-sm font-medium text-gray-600">שם האירוע:</label>
+        <input type="text" id="eventTitle" class="mt-1 block w-full border border-gray-300 rounded p-2" required>
+      </div>
 
-    <label>סוג אירוע:</label>
-    <select id="eventType">
-      <option value="birthday">יום הולדת</option>
-      <option value="yahrzeit">אזכרה</option>
-      <option value="wedding">נישואין</option>
-      <option value="other">אחר</option>
-    </select>
+      <div>
+        <label class="block text-sm font-medium text-gray-600">תאריך:</label>
+        <input type="date" id="eventDate" class="mt-1 block w-full border border-gray-300 rounded p-2" required>
+      </div>
 
-    <label>אם לחזור שנתית:</label>
-    <select id="repeatYearly">
-      <option value="yes">כן</option>
-      <option value="no">לא</option>
-    </select>
+      <div>
+        <label class="block text-sm font-medium text-gray-600">סוג אירוע:</label>
+        <select id="eventType" class="mt-1 block w-full border border-gray-300 rounded p-2">
+          <option value="birthday">🎂 יום הולדת</option>
+          <option value="yahrzeit">🕯️ אזכרה</option>
+          <option value="wedding">💍 נישואין</option>
+          <option value="other">📌 אחר</option>
+        </select>
+      </div>
 
-    <button type="submit">הוסף אירוע</button>
-  </form>
+      <div>
+        <label class="block text-sm font-medium text-gray-600">אם לחזור שנתית:</label>
+        <select id="repeatYearly" class="mt-1 block w-full border border-gray-300 rounded p-2">
+          <option value="yes">✅ כן</option>
+          <option value="no">❌ לא</option>
+        </select>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">הוסף אירוע</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const calendarEl = document.getElementById('calendar');
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'he',
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,listMonth'
+        },
+        events: [
+          {
+            title: '🎂 יום הולדת - יעקב בן דוד',
+            start: '2025-09-13',
+            color: '#facc15'
+          },
+          {
+            title: '🕯️ אזכרה - רחל ברנבוים',
+            start: '2025-11-01',
+            color: '#f87171'
+          },
+          {
+            title: '💍 נישואין - חיים ורות לייבנר',
+            start: '2025-08-03',
+            color: '#60a5fa'
+          }
+        ]
+      });
+      calendar.render();
+    });
+  </script>
 </body>
 </html>
