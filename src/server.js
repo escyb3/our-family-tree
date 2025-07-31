@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const pdfParse = require("pdf-parse");
 const { v4: uuidv4 } = require("uuid");
 const nodemailer = require("nodemailer");
+const cron = require("node-cron");
 const { Translate } = require("@google-cloud/translate").v2;
 const ai = require("./ai");
 
