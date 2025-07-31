@@ -152,6 +152,16 @@
       <li>📱 תמיכה בעיצוב רספונסיבי לנייד</li>
     </ul>
   </main>
+    fetch("/api/user")
+  .then(res => {
+    if (!res.ok) location.href = "/login.html";
+    else return res.json();
+  })
+  .then(user => {
+    console.log("User is logged in:", user);
+    // עדכון UI בהתאם
+  });
+
 
     <section class="hero-image">
       <img src="/assets/family-hero.jpg" alt="תמונת משפחה" />
