@@ -144,7 +144,7 @@ const usersPath = path.join(__dirname, "data", "users.json");
       console.log("✅ קובץ users.json נוצר עם משתמש admin");
     }
 
-    const raw = fs.readFileSync(usersPath, "utf8");
+    raw = fs.readFileSync(usersPath, "utf8");
     const users = JSON.parse(raw);
     const user = users.find(u => u.username === req.body.username);
     if (!user) return res.status(401).send("שם משתמש שגוי");
