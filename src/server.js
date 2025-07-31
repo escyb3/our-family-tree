@@ -6,6 +6,7 @@ const session = require("express-session");
 const bcrypt = require("bcrypt");
 const pdfParse = require("pdf-parse");
 const { v4: uuidv4 } = require("uuid");
+const nodemailer = require("nodemailer");
 const { Translate } = require("@google-cloud/translate").v2;
 const ai = require("./ai");
 
