@@ -118,7 +118,6 @@ try {
   const raw = fs.readFileSync(usersPath, "utf8");
   console.log("📄 תוכן users.json:", raw);
   const users = JSON.parse(raw);
-  const users = JSON.parse(fs.readFileSync("./data/users.json"));
   const user = users.find(u => u.username === req.body.username);
   if (!user) return res.status(401).send("שם משתמש שגוי");
 
