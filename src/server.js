@@ -174,15 +174,6 @@ app.post("/login", (req, res) => {
   });
 });
 
-  // הצלחה – שמירת סשן
-  req.session.user = {
-    username: user.username,
-    name: user.name,
-    access: user.access,
-  };
-
-  res.redirect("/tree/bromberg");
-});
 
 // יציאה מהמערכת
 app.get("/logout", (req, res) => {
