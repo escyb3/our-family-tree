@@ -153,6 +153,40 @@ app.post("/api/login", async (req, res) => {
     res.status(500).json({ success: false, message: "שגיאה בשרת" });
   }
 });
+// API להוספת אירוע
+app.post("/api/events", (req, res) => {
+  const events = loadEvents();
+  const newEvent = req.body;
+  events.push(newEvent);
+  saveEvents(events);
+  res.status(201).json({ message: "אירוע נשמר בהצלחה" });
+});
+
+// API לשליפת כל האירועים
+app.get("/api/events", (req, res) => {
+  res.json(loadEvents());
+});
+
+// שליחה אוטומטית של ברכות כל יום ב־08:00
+cron.schedule("0 8 * * *", () => {
+  const today = new Date().toISOString().split("T")[0];
+  const events = loadEvents();
+  events.forEach(event => {
+    if (event.start === today && event.extendedProps?.email) {
+      const msg = `שלום! היום חל ${event.title} (${today}) – ברכה חמה ממשפחתכם!`;
+      transporter.sendMail({
+        from: `Our Family Tree <${EMAIL_FROM}>`,
+        to: event.extendedProps.email,
+        subject: `🎉 תזכורת לאירוע משפחתי היום`,
+        text: msg
+      }, err => {
+        if (err) console.error("שגיאה בשליחה:", err);
+        else console.log("ברכה נשלחה ל:", event.extendedProps.email);
+      });
+    }
+  });
+});
+
 
 
 app.get("/admin-users", auth("admin"), (req, res) => res.json(users));
