@@ -130,6 +130,16 @@ console.log("🔑 תוצאת השוואת סיסמה:", match);
     if (!match) {
       return res.status(401).json({ success: false, message: "סיסמה שגויה" });
     }
+    const adminUser = {
+  username: "admin",
+  password: bcrypt.hashSync("family2025", 10), // סיסמה מוצפנת
+  role: "admin",
+  side: "all"
+};
+
+const users = [adminUser];
+
+fs.writeFileSync(path.join(__dirname, "data", "users.json"), JSON.stringify(users, null, 2));
 
     // התחברות מוצלחת
     req.session.user = {
@@ -190,11 +200,6 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
   let users = [];
-  {
-  "username": "admin",
-  "password": "family2025"
-}
-
   try {
     users = JSON.parse(fs.readFileSync(path.join(__dirname, "data", "users.json")));
   } catch (e) {
