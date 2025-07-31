@@ -315,7 +315,6 @@ app.post("/api/calendar", (req, res) => {
     });
   });
 });
-const eventsPath = path.join(__dirname, "data", "events.json");
 
 // יצירת קובץ אירועים אם לא קיים
 if (!fs.existsSync(eventsPath)) {
