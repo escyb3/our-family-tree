@@ -132,16 +132,25 @@ console.log("🔑 תוצאת השוואת סיסמה:", match);
     }
 const usersPath = path.join(__dirname, "data", "users.json");
 
-if (!fs.existsSync(usersPath)) {
-  const adminUser = {
-    username: "admin",
-    password: bcrypt.hashSync("family2025", 10),
-    role: "admin",
-    side: "all"
-  };
-  const initialUsers = [adminUser];
-  fs.writeFileSync(usersPath, JSON.stringify(initialUsers, null, 2));
-  console.log("✅ קובץ users.json נוצר עם משתמש admin");
+ if (!fs.existsSync(usersPath)) {
+      const adminUser = {
+        username: "admin",
+        password: bcrypt.hashSync("family2025", 10),
+        role: "admin",
+        side: "all"
+      };
+      const initialUsers = [adminUser];
+      fs.writeFileSync(usersPath, JSON.stringify(initialUsers, null, 2));
+      console.log("✅ קובץ users.json נוצר עם משתמש admin");
+    }
+
+    const raw = fs.readFileSync(usersPath, "utf8");
+    const users = JSON.parse(raw);
+    const user = users.find(u => u.username === req.body.username);
+    if (!user) return res.status(401).send("שם משתמש שגוי");
+
+    const match = await bcrypt.compare(req.body.password, user.password);
+    if (!match) return res.status(401).send("סיסמה שגויה");
 
     // התחברות מוצלחת
     req.session.user = {
