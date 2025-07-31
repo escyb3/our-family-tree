@@ -159,15 +159,20 @@ app.get("/login", (req, res) => {
 });
 
 // תהליך התחברות POST
-app.post("/login", async (req, res) => {
+app.post("/login", (req, res) => {
   const { username, password } = req.body;
-  const users = loadUsers();
+  const users = JSON.parse(fs.readFileSync(path.join(__dirname, "data", "users.json")));
   const user = users.find(u => u.username === username);
 
-  if (!user) return res.send("<p>Invalid username</p>");
+  if (!user) return res.status(401).send("שם משתמש לא קיים");
 
-  const match = await bcrypt.compare(password, user.password);
-  if (!match) return res.send("<p>Invalid password</p>");
+  bcrypt.compare(password, user.password, (err, result) => {
+    if (err || !result) return res.status(401).send("סיסמה שגויה");
+
+    req.session.user = { username: user.username, role: user.role, side: user.side };
+    res.json({ success: true });
+  });
+});
 
   // הצלחה – שמירת סשן
   req.session.user = {
