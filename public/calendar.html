@@ -15,6 +15,17 @@
   <div class="max-w-6xl mx-auto py-10 px-6">
     <h1 class="text-4xl font-bold text-center text-blue-800 mb-8">📅 לוח שנה משפחתי</h1>
 
+    <div class="bg-white p-4 rounded-xl mb-6">
+      <label class="block text-sm font-medium text-gray-600 mb-2">🔍 סינון לפי סוג אירוע:</label>
+      <select id="filterType" class="border border-gray-300 rounded p-2 w-full">
+        <option value="all">הצג הכל</option>
+        <option value="birthday">🎂 יום הולדת</option>
+        <option value="yahrzeit">🕯️ אזכרה</option>
+        <option value="wedding">💍 נישואין</option>
+        <option value="other">📌 אחר</option>
+      </select>
+    </div>
+
     <div id="calendar" class="bg-white p-6 rounded-xl shadow mb-12"></div>
 
     <form id="addEventForm" class="bg-white p-6 rounded-xl shadow space-y-4 max-w-2xl mx-auto">
@@ -48,6 +59,16 @@
         </select>
       </div>
 
+      <div>
+        <label class="block text-sm font-medium text-gray-600">תאריך עברי (יחושב אוטומטית):</label>
+        <input type="text" id="hebrewDate" class="mt-1 block w-full border border-gray-300 rounded p-2" readonly>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-600">כתובת אימייל לברכה (אופציונלי):</label>
+        <input type="email" id="email" class="mt-1 block w-full border border-gray-300 rounded p-2">
+      </div>
+
       <div class="text-center">
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">הוסף אירוע</button>
       </div>
@@ -55,6 +76,8 @@
   </div>
 
   <script>
+    const savedEvents = JSON.parse(localStorage.getItem('familyEvents')) || [];
+
     document.addEventListener('DOMContentLoaded', function() {
       const calendarEl = document.getElementById('calendar');
       const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -65,25 +88,68 @@
           center: 'title',
           right: 'dayGridMonth,listMonth'
         },
-        events: [
-          {
-            title: '🎂 יום הולדת - יעקב בן דוד',
-            start: '2025-09-13',
-            color: '#facc15'
-          },
-          {
-            title: '🕯️ אזכרה - רחל ברנבוים',
-            start: '2025-11-01',
-            color: '#f87171'
-          },
-          {
-            title: '💍 נישואין - חיים ורות לייבנר',
-            start: '2025-08-03',
-            color: '#60a5fa'
-          }
-        ]
+        events: savedEvents
       });
       calendar.render();
+
+      const filterSelect = document.getElementById('filterType');
+      filterSelect.addEventListener('change', () => {
+        const type = filterSelect.value;
+        calendar.removeAllEvents();
+        const filtered = type === 'all' ? savedEvents : savedEvents.filter(e => e.extendedProps.type === type);
+        filtered.forEach(e => calendar.addEvent(e));
+      });
+
+      document.getElementById('eventDate').addEventListener('change', async function() {
+        const date = this.value;
+        if (date) {
+          const [y, m, d] = date.split('-').map(Number);
+          const hebDate = new Hebcal.HDate(new Date(y, m - 1, d));
+          document.getElementById('hebrewDate').value = hebDate.renderGematriya();
+        }
+      });
+
+      document.getElementById('addEventForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const title = document.getElementById('eventTitle').value;
+        const date = document.getElementById('eventDate').value;
+        const type = document.getElementById('eventType').value;
+        const repeat = document.getElementById('repeatYearly').value;
+        const email = document.getElementById('email').value;
+
+        const icons = {
+          birthday: '🎂',
+          yahrzeit: '🕯️',
+          wedding: '💍',
+          other: '📌'
+        };
+
+        const colors = {
+          birthday: '#facc15',
+          yahrzeit: '#f87171',
+          wedding: '#60a5fa',
+          other: '#a78bfa'
+        };
+
+        const newEvent = {
+          title: `${icons[type]} ${title}`,
+          start: date,
+          color: colors[type],
+          extendedProps: {
+            type: type,
+            repeatYearly: repeat === 'yes',
+            email: email
+          }
+        };
+
+        calendar.addEvent(newEvent);
+        savedEvents.push(newEvent);
+        localStorage.setItem('familyEvents', JSON.stringify(savedEvents));
+
+        alert('🎉 האירוע נוסף בהצלחה!');
+        document.getElementById('addEventForm').reset();
+        document.getElementById('hebrewDate').value = '';
+      });
     });
   </script>
 </body>
