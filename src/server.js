@@ -212,6 +212,14 @@ app.post("/login", (req, res) => {
     res.json({ success: true });
   });
 });
+POST /api/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "family2025"
+}
+
 
 // יציאה מהמערכת
 app.get("/logout", (req, res) => {
