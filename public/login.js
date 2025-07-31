@@ -1,19 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("form");
 
-  fetch("/api/login", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ username, password })
-})
-
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+
     const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value;
 
     try {
-      const res = await fetch("/login", {
+      const res = await fetch("/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -21,15 +16,15 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({ username, password }),
       });
 
-      if (!res.ok) {
-        const error = await res.text();
-        alert("❌ שגיאה בהתחברות: " + error);
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        alert("❌ שגיאה בהתחברות: " + (data.message || "שגיאה לא ידועה"));
         return;
       }
 
-      const data = await res.json();
       console.log("✅ התחברות הצליחה:", data);
-      location.href = "/index.html"; // מעביר לעמוד הבית או לכל עמוד אחר
+      location.href = "/index.html";
     } catch (err) {
       console.error("שגיאה בהתחברות:", err);
       alert("⚠️ שגיאה בלתי צפויה בהתחברות");
