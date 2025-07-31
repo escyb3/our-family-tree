@@ -421,8 +421,6 @@ app.post("/events", (req, res) => {
   res.sendStatus(200);
 });
 
-const usersPath = path.join(__dirname, "data", "users.json");
-
 app.get("/api/users", (req, res) => {
   fs.readFile(usersPath, "utf8", (err, data) => {
     if (err) {
