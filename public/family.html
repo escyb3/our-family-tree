@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>משפחות - עץ משפחה</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen py-10 px-6">
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold text-blue-800 mb-6">🏠 בחירת משפחה</h1>
+    <p class="text-sm text-gray-600 mb-4">בחר את אחת המשפחות שלפי הנתונים בקובץ <code>users.json</code> מותר לך לצפות בהן:</p>
+
+    <ul id="familyList" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <!-- ניצור כאן כרטיסי משפחות -->
+    </ul>
+  </div>
+
+  <script>
+    const userAccess = ["Ben Abou", "Bromberg", "Malca"]; // נטען לפי cookies / session בעתיד
+
+    const families = [
+      "Ben Abou", "Elharrar", "Malca", "Ben David",
+      "Bromberg", "Barenbaum", "Fass-Schneck", "Weinberger",
+      "Leibner", "van der Velde", "Behr", "de Vries",
+      "Italiaander", "Izaks", "Chapon", "Groenstad", "Elook"
+    ];
+
+    const container = document.getElementById("familyList");
+    families.forEach(fam => {
+      if (userAccess.includes(fam)) {
+        const link = document.createElement("a");
+        link.href = `/families/${fam.toLowerCase().replace(/\s+/g, "_")}.html`;
+        link.className = "block bg-white p-4 rounded-xl shadow hover:shadow-lg transition";
+        link.innerHTML = `<h2 class='text-lg font-semibold text-blue-700'>${fam}</h2>`;
+        container.appendChild(link);
+      }
+    });
+  </script>
+</body>
+</html>
