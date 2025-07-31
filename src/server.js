@@ -107,6 +107,17 @@ app.use((req, res, next) => {
 });
 
   app.post("/api/login", async (req, res) => {
+  const usersPath = path.join(__dirname, "data", "users.json");
+
+if (!fs.existsSync(usersPath)) {
+  console.error("❌ קובץ users.json לא נמצא ב:", usersPath);
+  return res.status(500).send("קובץ משתמשים לא נמצא");
+}
+
+try {
+  const raw = fs.readFileSync(usersPath, "utf8");
+  console.log("📄 תוכן users.json:", raw);
+  const users = JSON.parse(raw);
   const users = JSON.parse(fs.readFileSync("./data/users.json"));
   const user = users.find(u => u.username === req.body.username);
   if (!user) return res.status(401).send("שם משתמש שגוי");
