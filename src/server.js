@@ -315,6 +315,73 @@ app.post("/api/calendar", (req, res) => {
     });
   });
 });
+const eventsPath = path.join(__dirname, "data", "events.json");
+
+// יצירת קובץ אירועים אם לא קיים
+if (!fs.existsSync(eventsPath)) {
+  fs.writeFileSync(eventsPath, JSON.stringify([]));
+}
+
+// קריאת כל האירועים
+app.get("/api/events", (req, res) => {
+  try {
+    const events = JSON.parse(fs.readFileSync(eventsPath));
+    res.json(events);
+  } catch (e) {
+    console.error("שגיאה בקריאת אירועים:", e);
+    res.status(500).json({ error: "שגיאה בקריאת אירועים" });
+  }
+});
+
+// יצירת אירוע חדש
+app.post("/api/events", (req, res) => {
+  try {
+    const events = JSON.parse(fs.readFileSync(eventsPath));
+    const newEvent = {
+      id: "e" + Date.now(),
+      title: req.body.title,
+      date: req.body.date,
+      type: req.body.type || "כללי",
+      personId: req.body.personId || null,
+      description: req.body.description || ""
+    };
+    events.push(newEvent);
+    fs.writeFileSync(eventsPath, JSON.stringify(events, null, 2));
+    res.json({ success: true, event: newEvent });
+  } catch (e) {
+    console.error("שגיאה ביצירת אירוע:", e);
+    res.status(500).json({ error: "שגיאה בשמירת האירוע" });
+  }
+});
+
+// עדכון אירוע קיים
+app.put("/api/events/:id", (req, res) => {
+  try {
+    const events = JSON.parse(fs.readFileSync(eventsPath));
+    const idx = events.findIndex(e => e.id === req.params.id);
+    if (idx === -1) return res.status(404).json({ error: "אירוע לא נמצא" });
+
+    events[idx] = { ...events[idx], ...req.body };
+    fs.writeFileSync(eventsPath, JSON.stringify(events, null, 2));
+    res.json({ success: true });
+  } catch (e) {
+    console.error("שגיאה בעדכון אירוע:", e);
+    res.status(500).json({ error: "שגיאה בעדכון" });
+  }
+});
+
+// מחיקת אירוע
+app.delete("/api/events/:id", (req, res) => {
+  try {
+    let events = JSON.parse(fs.readFileSync(eventsPath));
+    events = events.filter(e => e.id !== req.params.id);
+    fs.writeFileSync(eventsPath, JSON.stringify(events, null, 2));
+    res.json({ success: true });
+  } catch (e) {
+    console.error("שגיאה במחיקת אירוע:", e);
+    res.status(500).json({ error: "שגיאה במחיקה" });
+  }
+});
 
 app.post("/upload-attachment", upload.single("attachment"), (req, res) => {
   if (!req.file) return res.status(400).send("לא נשלח קובץ");
