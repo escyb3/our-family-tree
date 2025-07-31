@@ -161,18 +161,30 @@ app.get("/login", (req, res) => {
 // תהליך התחברות POST
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
-  const users = JSON.parse(fs.readFileSync(path.join(__dirname, "data", "users.json")));
-  const user = users.find(u => u.username === username);
+  let users = [];
 
+  try {
+    users = JSON.parse(fs.readFileSync(path.join(__dirname, "data", "users.json")));
+  } catch (e) {
+    console.error("❌ שגיאה בקריאת users.json:", e);
+    return res.status(500).send("שגיאה בשרת, נסה שוב מאוחר יותר");
+  }
+
+  const user = users.find(u => u.username === username);
   if (!user) return res.status(401).send("שם משתמש לא קיים");
 
   bcrypt.compare(password, user.password, (err, result) => {
-    if (err || !result) return res.status(401).send("סיסמה שגויה");
+    if (err) {
+      console.error("❌ שגיאה בהשוואת סיסמא:", err);
+      return res.status(500).send("שגיאה בשרת, נסה שוב מאוחר יותר");
+    }
+    if (!result) return res.status(401).send("סיסמה שגויה");
 
     req.session.user = { username: user.username, role: user.role, side: user.side };
     res.json({ success: true });
   });
 });
+
 
 
 // יציאה מהמערכת
