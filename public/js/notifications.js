@@ -1,4 +1,5 @@
-//js/notifications.js
+const currentUser = window.currentUser || sessionStorage.getItem("username");
+
 setInterval(async () => {
   try {
     const res = await fetch("/api/messages");
