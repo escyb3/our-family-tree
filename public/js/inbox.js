@@ -1,7 +1,41 @@
-const inbox = document.getElementById("messages");
+const inboxContainer = document.getElementById("messages");
 const form = document.getElementById("send-form");
 const search = document.getElementById("search");
 const tagFilter = document.getElementById("tag-filter");
+
+const currentUser = window.currentUser || localStorage.getItem("username");
+
+async function loadMessages() {
+  const res = await fetch("/api/messages");
+  const data = await res.json();
+
+  if (!Array.isArray(data)) {
+    console.error("⚠️ הנתונים שהתקבלו אינם מערך:", data);
+    inboxContainer.innerHTML = "<p>❌ שגיאה בטעינת הודעות</p>";
+    return;
+  }
+
+  const filtered = data
+    .filter(m => m.to === currentUser)
+    .filter(m =>
+      (!search.value || m.subject.includes(search.value) || m.from.includes(search.value)) &&
+      (!tagFilter.value || m.type === tagFilter.value)
+    );
+
+  inboxContainer.innerHTML = filtered.map(m => `
+    <div class="msg-card">
+      <p><strong>מ:</strong> ${m.from}</p>
+      <p><strong>נושא:</strong> ${m.subject}</p>
+      <p>${m.body}</p>
+      ${m.attachment ? `<p><a href="${m.attachment}" target="_blank">📎 קובץ מצורף</a></p>` : ""}
+      <p><strong>תאריך:</strong> ${new Date(m.timestamp).toLocaleString()}</p>
+      ${(m.replies || []).map((r, i) => `
+        <div class="reply"><strong>#${i + 1} ${r.from}:</strong> ${r.body}</div>
+      `).join("")}
+      <button onclick="reply('${m.threadId}')">🔁 השב</button>
+    </div>
+  `).join("") || "<p>אין הודעות בתיבה</p>";
+}
 
 form.onsubmit = async (e) => {
   e.preventDefault();
@@ -35,35 +69,16 @@ form.onsubmit = async (e) => {
   loadMessages();
 };
 
-async function loadMessages() {
-  const res = await fetch("/messages");
-  const data = await res.json();
-  const filtered = data.filter(
-    m =>
-      (!search.value || m.subject.includes(search.value) || m.from.includes(search.value)) &&
-      (!tagFilter.value || m.type === tagFilter.value)
-  );
-  inbox.innerHTML = filtered.map(m => `
-    <div class="msg-card">
-      <p><strong>מ:</strong> ${m.from}</p>
-      <p><strong>נושא:</strong> ${m.subject}</p>
-      <p>${m.body}</p>
-      ${m.attachment ? `<p><a href="${m.attachment}" target="_blank">📎 קובץ מצורף</a></p>` : ""}
-      <p><strong>תאריך:</strong> ${new Date(m.timestamp).toLocaleString()}</p>
-      ${m.replies.map(r => `<div class="reply"><strong>${r.from}:</strong> ${r.body}</div>`).join("")}
-      <button onclick="reply('${m.threadId}')">🔁 השב</button>
-    </div>
-  `).join("");
-}
-
 async function reply(threadId) {
   const content = prompt("כתוב תגובה:");
   if (!content) return;
+
   await fetch("/reply-message", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ threadId, body: content })
   });
+
   loadMessages();
 }
 
