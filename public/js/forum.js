@@ -76,6 +76,11 @@ async function createThread() {
     alert("❌ שגיאה ביצירת שרשור");
   }
 }
+function formatDate(dateStr) {
+  const options = { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+  return new Date(dateStr).toLocaleString('he-IL', options);
+}
+const date = formatDate(thread.createdAt);
 
 async function replyToThread(threadId) {
   const input = document.getElementById(`reply-${threadId}`);
