@@ -98,6 +98,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>פורום המשפחה</title>
+  <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.3/dist/index.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
   <style>
@@ -113,11 +114,16 @@
     <div class="text-right mb-4">
       <button id="open-thread-btn" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded">➕ פתח דיון חדש</button>
     </div>
+    <button onclick="toggleDarkMode()" style="position:fixed;top:10px;left:10px;">🌓 מצב כהה</button>
+    <function toggleDarkMode() {
+  document.body.classList.toggle("dark-mode");
+}
 
  <h2>📌 פתח נושא חדש</h2>
   <form id="new-thread-form">
     <input type="text" id="title" placeholder="כותרת נושא" required>
     <textarea id="content" placeholder="תוכן ההודעה" required></textarea>
+    <button type="button" id="emoji-btn">😀</button>
     <button type="submit">📨 שלח</button>
   </form>
 </div>
