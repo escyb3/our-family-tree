@@ -160,6 +160,18 @@ function loadEvents() {
   if (!fs.existsSync(eventsPath)) return [];
   return JSON.parse(fs.readFileSync(eventsPath, "utf8"));
 }
+// שליפת כל ההודעות (API למשתמש המחובר)
+app.get("/api/messages", (req, res) => {
+  try {
+    const messagesPath = path.join(__dirname, "data", "messages.json");
+    if (!fs.existsSync(messagesPath)) return res.json([]);
+    const messages = JSON.parse(fs.readFileSync(messagesPath, "utf8"));
+    res.json(messages);
+  } catch (err) {
+    console.error("❌ שגיאה בקריאת ההודעות:", err);
+    res.status(500).json({ error: "שגיאה בשרת" });
+  }
+});
 
 // שומר את האירועים
 function saveEvents(events) {
