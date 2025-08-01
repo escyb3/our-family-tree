@@ -555,6 +555,19 @@ app.get("/api/user", (req, res) => {
   res.json(req.session.user);
 });
 
+app.post("/mark-seen", (req, res) => {
+  const threadId = req.body.threadId;
+  const messagesPath = path.join(__dirname, "data", "messages.json");
+  if (!fs.existsSync(messagesPath)) return res.status(404).end();
+
+  const messages = JSON.parse(fs.readFileSync(messagesPath));
+  const msg = messages.find(m => m.threadId === threadId);
+  if (msg) msg.seen = true;
+
+  fs.writeFileSync(messagesPath, JSON.stringify(messages, null, 2));
+  res.json({ success: true });
+});
+
 
 
 app.post("/api/ask", async (req, res) => {
