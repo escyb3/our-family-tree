@@ -1,6 +1,100 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
+  <style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 0;
+    direction: rtl;
+  }
+
+  .forum-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+
+  h1, h2 {
+    text-align: center;
+    color: #333;
+  }
+
+  .thread, .reply {
+    border-bottom: 1px solid #ddd;
+    padding: 16px;
+    transition: background 0.3s;
+  }
+
+  .thread:hover {
+    background: #f9f9f9;
+  }
+
+  .thread-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0077aa;
+    margin-bottom: 8px;
+  }
+
+  .thread-meta, .reply-meta {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 6px;
+  }
+
+  .thread-content, .reply-text {
+    font-size: 15px;
+    color: #444;
+  }
+
+  form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  input[type="text"], textarea {
+    padding: 10px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 100%;
+  }
+
+  button {
+    padding: 10px;
+    background-color: #0077aa;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  button:hover {
+    background-color: #005f8d;
+  }
+
+  .reply {
+    background-color: #f7fafd;
+    border-radius: 8px;
+    margin: 10px 0 10px 30px;
+    padding: 12px;
+  }
+
+  .reply-form {
+    margin-top: 15px;
+    background: #eef4f7;
+    padding: 15px;
+    border-radius: 8px;
+  }
+</style>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>פורום המשפחה</title>
@@ -20,15 +114,13 @@
       <button id="open-thread-btn" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded">➕ פתח דיון חדש</button>
     </div>
 
-    <section id="new-thread-form" class="hidden bg-white p-4 rounded shadow mb-6">
-      <h2 class="text-xl font-semibold mb-2">דיון חדש</h2>
-      <form id="thread-form" enctype="multipart/form-data">
-        <input type="text" id="thread-title" placeholder="כותרת הדיון" required class="w-full p-2 border rounded mb-2"/>
-        <textarea id="thread-content" placeholder="תוכן הדיון (אפשר להשתמש ב־@שם לאזכור)" required class="w-full p-2 border rounded mb-2"></textarea>
-        <input type="file" id="thread-file" accept="image/*" class="mb-2"/>
-        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">📝 פרסם דיון</button>
-      </form>
-    </section>
+ <h2>📌 פתח נושא חדש</h2>
+  <form id="new-thread-form">
+    <input type="text" id="title" placeholder="כותרת נושא" required>
+    <textarea id="content" placeholder="תוכן ההודעה" required></textarea>
+    <button type="submit">📨 שלח</button>
+  </form>
+</div>
 
     <details class="mb-6 bg-yellow-100 p-4 rounded">
       <summary class="cursor-pointer font-bold">❓ שאלות נפוצות גנאולוגיות</summary>
