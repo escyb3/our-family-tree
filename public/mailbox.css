@@ -85,3 +85,12 @@ button:hover {
   color: #0057a3;
   text-decoration: underline;
 }
+.unseen {
+  border: 2px solid red;
+  background-color: #fff3f3;
+}
+.seen-mark {
+  color: green;
+  font-weight: bold;
+}
+
