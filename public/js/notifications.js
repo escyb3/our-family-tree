@@ -1,3 +1,4 @@
+//js/notifications.js
 setInterval(async () => {
   try {
     const res = await fetch("/api/messages");
