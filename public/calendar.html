@@ -7,13 +7,25 @@
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/moment-hijri@2.1.2/moment-hijri.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@hebcal/core@2.4.1/dist/index.umd.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .ltr * {
+      direction: ltr !important;
+      text-align: left !important;
+    }
+    .rtl * {
+      direction: rtl !important;
+      text-align: right !important;
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50 text-gray-800 rtl">
   <div class="max-w-6xl mx-auto py-10 px-6">
-    <h1 class="text-4xl font-bold text-center text-blue-800 mb-8">📅 לוח שנה משפחתי</h1>
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-4xl font-bold text-blue-800">📅 לוח שנה משפחתי</h1>
+      <button id="toggleLang" class="bg-gray-200 px-4 py-2 rounded">ENGLISH</button>
+    </div>
 
     <div class="bg-white p-4 rounded-xl mb-6">
       <label class="block text-sm font-medium text-gray-600 mb-2">🔍 סינון לפי סוג אירוע:</label>
@@ -31,85 +43,69 @@
     <form id="addEventForm" class="bg-white p-6 rounded-xl shadow space-y-4 max-w-2xl mx-auto">
       <h3 class="text-xl font-semibold text-gray-700 mb-4">➕ הוסף אירוע חדש</h3>
 
-      <div>
-        <label class="block text-sm font-medium text-gray-600">שם האירוע:</label>
-        <input type="text" id="eventTitle" class="mt-1 block w-full border border-gray-300 rounded p-2" required>
-      </div>
+      <input type="text" id="eventTitle" class="w-full border p-2 rounded" placeholder="שם האירוע" required>
+      <input type="date" id="eventDate" class="w-full border p-2 rounded" required>
 
-      <div>
-        <label class="block text-sm font-medium text-gray-600">תאריך:</label>
-        <input type="date" id="eventDate" class="mt-1 block w-full border border-gray-300 rounded p-2" required>
-      </div>
+      <select id="eventType" class="w-full border p-2 rounded">
+        <option value="birthday">🎂 יום הולדת</option>
+        <option value="yahrzeit">🕯️ אזכרה</option>
+        <option value="wedding">💍 נישואין</option>
+        <option value="other">📌 אחר</option>
+      </select>
 
-      <div>
-        <label class="block text-sm font-medium text-gray-600">סוג אירוע:</label>
-        <select id="eventType" class="mt-1 block w-full border border-gray-300 rounded p-2">
-          <option value="birthday">🎂 יום הולדת</option>
-          <option value="yahrzeit">🕯️ אזכרה</option>
-          <option value="wedding">💍 נישואין</option>
-          <option value="other">📌 אחר</option>
-        </select>
-      </div>
+      <select id="repeatYearly" class="w-full border p-2 rounded">
+        <option value="yes">✅ חוזר כל שנה</option>
+        <option value="no">❌ חד פעמי</option>
+      </select>
 
-      <div>
-        <label class="block text-sm font-medium text-gray-600">אם לחזור שנתית:</label>
-        <select id="repeatYearly" class="mt-1 block w-full border border-gray-300 rounded p-2">
-          <option value="yes">✅ כן</option>
-          <option value="no">❌ לא</option>
-        </select>
-      </div>
+      <input type="text" id="hebrewDate" class="w-full border p-2 rounded" readonly placeholder="תאריך עברי (אוטומטי)">
+      <input type="email" id="email" class="w-full border p-2 rounded" placeholder="אימייל לברכה (אופציונלי)">
 
-      <div>
-        <label class="block text-sm font-medium text-gray-600">תאריך עברי (יחושב אוטומטית):</label>
-        <input type="text" id="hebrewDate" class="mt-1 block w-full border border-gray-300 rounded p-2" readonly>
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-gray-600">כתובת אימייל לברכה (אופציונלי):</label>
-        <input type="email" id="email" class="mt-1 block w-full border border-gray-300 rounded p-2">
-      </div>
-
-      <div class="text-center">
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">הוסף אירוע</button>
-      </div>
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">הוסף אירוע</button>
     </form>
   </div>
 
   <script>
-    const savedEvents = JSON.parse(localStorage.getItem('familyEvents')) || [];
+    const icons = {
+      birthday: '🎂', yahrzeit: '🕯️', wedding: '💍', other: '📌'
+    };
+    const colors = {
+      birthday: '#facc15', yahrzeit: '#f87171', wedding: '#60a5fa', other: '#a78bfa'
+    };
+    let lang = 'he';
 
-    document.addEventListener('DOMContentLoaded', function() {
+    async function fetchEvents() {
+      const res = await fetch('/api/events');
+      return await res.json();
+    }
+
+    function toggleLanguage() {
+      lang = lang === 'he' ? 'en' : 'he';
+      document.documentElement.lang = lang;
+      document.body.classList.toggle('rtl');
+      document.body.classList.toggle('ltr');
+      document.getElementById('toggleLang').textContent = lang === 'he' ? 'ENGLISH' : 'עברית';
+    }
+
+    document.getElementById('toggleLang').addEventListener('click', toggleLanguage);
+
+    document.addEventListener('DOMContentLoaded', async function() {
       const calendarEl = document.getElementById('calendar');
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         locale: 'he',
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,listMonth'
-        },
-        events: savedEvents
+        headerToolbar: { left: 'prev,next today', center: 'title', right: 'dayGridMonth,listMonth' },
+        events: await fetchEvents()
       });
       calendar.render();
 
-      const filterSelect = document.getElementById('filterType');
-      filterSelect.addEventListener('change', () => {
-        const type = filterSelect.value;
-        calendar.removeAllEvents();
-        const filtered = type === 'all' ? savedEvents : savedEvents.filter(e => e.extendedProps.type === type);
-        filtered.forEach(e => calendar.addEvent(e));
+      document.getElementById('eventDate').addEventListener('change', function() {
+        const [y, m, d] = this.value.split('-').map(Number);
+        const hebDate = new Hebcal.HDate(new Date(y, m - 1, d));
+        document.getElementById('hebrewDate').value = hebDate.renderGematriya();
       });
 
-      document.getElementById('eventDate').addEventListener('change', async function() {
-        const date = this.value;
-        if (date) {
-          const [y, m, d] = date.split('-').map(Number);
-          const hebDate = new Hebcal.HDate(new Date(y, m - 1, d));
-          document.getElementById('hebrewDate').value = hebDate.renderGematriya();
-        }
-      });
-
-      document.getElementById('addEventForm').addEventListener('submit', function(e) {
+      document.getElementById('addEventForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         const title = document.getElementById('eventTitle').value;
         const date = document.getElementById('eventDate').value;
@@ -117,38 +113,36 @@
         const repeat = document.getElementById('repeatYearly').value;
         const email = document.getElementById('email').value;
 
-        const icons = {
-          birthday: '🎂',
-          yahrzeit: '🕯️',
-          wedding: '💍',
-          other: '📌'
-        };
-
-        const colors = {
-          birthday: '#facc15',
-          yahrzeit: '#f87171',
-          wedding: '#60a5fa',
-          other: '#a78bfa'
-        };
-
         const newEvent = {
           title: `${icons[type]} ${title}`,
           start: date,
           color: colors[type],
           extendedProps: {
-            type: type,
+            type,
             repeatYearly: repeat === 'yes',
-            email: email
+            email,
+            language: lang
           }
         };
 
-        calendar.addEvent(newEvent);
-        savedEvents.push(newEvent);
-        localStorage.setItem('familyEvents', JSON.stringify(savedEvents));
+        await fetch('/api/events', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newEvent)
+        });
 
+        calendar.addEvent(newEvent);
         alert('🎉 האירוע נוסף בהצלחה!');
-        document.getElementById('addEventForm').reset();
+        this.reset();
         document.getElementById('hebrewDate').value = '';
+      });
+
+      document.getElementById('filterType').addEventListener('change', async () => {
+        const type = document.getElementById('filterType').value;
+        calendar.removeAllEvents();
+        const events = await fetchEvents();
+        const filtered = type === 'all' ? events : events.filter(e => e.extendedProps.type === type);
+        filtered.forEach(e => calendar.addEvent(e));
       });
     });
   </script>
