@@ -29,17 +29,6 @@
     <h1>🗣️ פורום משפחתנו</h1>
   </header>
 
-  <div class="container">
-    <div class="search-filter">
-      <input type="text" id="searchInput" placeholder="🔍 חפש שרשור...">
-      <select id="categoryFilter">
-        <option value="all">כל הנושאים</option>
-        <option value="history">היסטוריה משפחתית</option>
-        <option value="questions">שאלות</option>
-        <option value="updates">עדכונים</option>
-      </select>
-      <button onclick="toggleDarkMode()">🌓 מצב כהה</button>
-    </div>
 
     <div id="threadsContainer"></div>
 
@@ -57,6 +46,43 @@
         <button type="submit">📤 פרסם</button>
       </form>
     </div>
+  
+  <div class="container">
+    <div class="search-filter">
+      <input type="text" id="searchInput" placeholder="🔍 חפש שרשור...">
+      <select id="categoryFilter">
+        <option value="all">כל הנושאים</option>
+        <option value="history">היסטוריה משפחתית</option>
+        <option value="questions">שאלות</option>
+        <option value="updates">עדכונים</option>
+      </select>
+      <button onclick="toggleDarkMode()">🌓 מצב כהה</button>
+    </div>
+    <input id="searchInput" placeholder="🔍 חפש שרשורים...">
+<select id="categoryFilter">
+  <option value="">כל הנושאים</option>
+  <option value="שאלות">שאלות</option>
+  <option value="עדכונים">עדכונים</option>
+  <option value="היסטוריה משפחתית">היסטוריה משפחתית</option>
+</select>
+
+<form id="newThreadForm" enctype="multipart/form-data">
+  <input name="title" placeholder="כותרת" required>
+  <textarea name="content" placeholder="תוכן" required></textarea>
+  <select name="category" required>
+    <option value="שאלות">שאלות</option>
+    <option value="עדכונים">עדכונים</option>
+    <option value="היסטוריה משפחתית">היסטוריה משפחתית</option>
+  </select>
+  <input type="file" name="file">
+  <button type="submit">📤 פרסם</button>
+</form>
+
+<div id="threadList"></div>
+
+<hr>
+<h3>🗂️ כל השרשורים שנפתחו</h3>
+<div id="threadArchive"></div>
 
     <div class="footer">
       <hr>
