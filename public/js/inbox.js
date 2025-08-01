@@ -36,6 +36,28 @@ async function loadMessages() {
     </div>
   `).join("") || "<p>אין הודעות בתיבה</p>";
 }
+inboxContainer.innerHTML = filtered.map(m => `
+  <div class="msg-card ${m.seen ? '' : 'unseen'}">
+    <p><strong>מ:</strong> ${m.from}</p>
+    <p><strong>נושא:</strong> ${m.subject}</p>
+    <p>${m.body}</p>
+    ${m.attachment ? `<p><a href="${m.attachment}" target="_blank">📎 קובץ מצורף</a></p>` : ""}
+    <p><strong>תאריך:</strong> ${new Date(m.timestamp).toLocaleString()}</p>
+    ${(m.replies || []).map((r, i) => `
+      <div class="reply"><strong>#${i + 1} ${r.from}:</strong> ${r.body}</div>
+    `).join("")}
+    <button onclick="reply('${m.threadId}')">🔁 השב</button>
+    ${!m.seen ? `<button onclick="markAsSeen('${m.threadId}')">✅ סמן כנקראה</button>` : "<span class='seen-mark'>✔️ נקראה</span>"}
+  </div>
+`).join("") || "<p>אין הודעות בתיבה</p>";
+async function markAsSeen(threadId) {
+  await fetch("/mark-seen", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ threadId })
+  });
+  loadMessages();
+}
 
 form.onsubmit = async (e) => {
   e.preventDefault();
