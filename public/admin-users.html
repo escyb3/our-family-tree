@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>ניהול משתמשים</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    body { max-width: 600px; margin: auto; padding: 2em; font-family: sans-serif; }
+    input, select, button { width: 100%; margin-bottom: 1em; padding: 0.5em; }
+  </style>
+</head>
+<body>
+  <h1>👤 הוספת משתמש חדש</h1>
+  <form id="user-form">
+    <input type="text" id="username" placeholder="שם משתמש" required>
+    <input type="password" id="password" placeholder="סיסמה" required>
+    <select id="role">
+      <option value="user">משתמש רגיל</option>
+      <option value="admin">מנהל</option>
+    </select>
+    <input type="text" id="side" placeholder="צד משפחה (לדוגמה: ben_abou)">
+    <button type="submit">➕ צור משתמש</button>
+    <p id="result"></p>
+  </form>
+</body>
+<script>
+document.getElementById("user-form").onsubmit = async (e) => {
+  e.preventDefault();
+  const res = await fetch("/api/add-user", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: username.value,
+      password: password.value,
+      role: role.value,
+      side: side.value
+    })
+  });
+  const data = await res.json();
+  result.textContent = data.success ? "✅ נוצר משתמש בהצלחה" : "❌ שגיאה: " + (data.error || "בעיה לא ידועה");
+  if (data.success) document.getElementById("user-form").reset();
+};
+</script>
+</html>
