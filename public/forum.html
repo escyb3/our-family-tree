@@ -4,57 +4,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>פורום משפחתי</title>
-  <link rel="stylesheet" href="/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.3/dist/index.min.js"></script>
+  <link rel="stylesheet" href="/styles.css">
   <style>
-    body { font-family: sans-serif; padding: 1rem; }
-    .dark-mode { background: #121212; color: #e0e0e0; }
-    .dark-mode input, .dark-mode textarea { background: #2a2a2a; color: white; }
-    .thread { border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; }
-    .reply { margin-right: 1rem; border-right: 3px solid #ccc; padding-right: 1rem; }
-    .favorite { color: gold; font-weight: bold; cursor: pointer; }
-    .filters { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
-    .thread.hidden { display: none; }
-    .attachment { margin-top: 0.5rem; }
-    @media(max-width: 600px) {
-      .filters { flex-direction: column; }
+    body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 0; }
+    header { background-color: #3f51b5; color: white; padding: 1rem; text-align: center; }
+    .container { max-width: 900px; margin: 2rem auto; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .search-filter { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    input, select, button, textarea { font-family: inherit; padding: 0.5rem; border-radius: 5px; border: 1px solid #ccc; }
+    .thread { border-top: 1px solid #ddd; padding: 1rem 0; position: relative; }
+    .thread h3 { margin: 0; color: #333; }
+    .favorite { position: absolute; left: 10px; top: 10px; cursor: pointer; color: #888; }
+    .favorite.active { color: gold; }
+    .new-thread, .reply-form { margin-top: 2rem; background: #fafafa; padding: 1rem; border: 1px dashed #ccc; border-radius: 5px; }
+    .footer { margin-top: 3rem; font-size: 0.9rem; color: #666; text-align: center; }
+    .dark-mode { background-color: #222; color: white; }
+    .dark-mode input, .dark-mode textarea, .dark-mode select { background-color: #333; color: white; border-color: #555; }
+    @media (max-width: 600px) {
+      .search-filter { flex-direction: column; }
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>🗣️ פורום משפחתנו</h1>
+  </header>
 
-  <button onclick="toggleDarkMode()">🌓 מצב כהה</button>
-
-  <h1>פורום משפחתי 🧵</h1>
-
-  <div class="filters">
-    <input type="text" id="searchInput" placeholder="🔍 חפש נושא...">
-    <select id="categoryFilter">
-      <option value="all">כל הנושאים</option>
-      <option value="שאלה">שאלה</option>
-      <option value="עדכון">עדכון</option>
-      <option value="היסטוריה">היסטוריה משפחתית</option>
-    </select>
-  </div>
-
-  <div id="threadsContainer"></div>
-
-  <h2>✏️ פתח שרשור חדש</h2>
-  <form id="newThreadForm">
-    <input type="text" id="title" placeholder="כותרת" required><br>
-    <textarea id="content" placeholder="תוכן" required></textarea>
-    <br>
-    <label>קטגוריה:
-      <select id="category">
-        <option value="שאלה">שאלה</option>
-        <option value="עדכון">עדכון</option>
-        <option value="היסטוריה">היסטוריה משפחתית</option>
+  <div class="container">
+    <div class="search-filter">
+      <input type="text" id="searchInput" placeholder="🔍 חפש שרשור...">
+      <select id="categoryFilter">
+        <option value="all">כל הנושאים</option>
+        <option value="history">היסטוריה משפחתית</option>
+        <option value="questions">שאלות</option>
+        <option value="updates">עדכונים</option>
       </select>
-    </label>
-    <br>
-    <label>קובץ מצורף: <input type="file" id="attachment"></label><br>
-    <button type="submit">📤 פרסם</button>
-  </form>
+      <button onclick="toggleDarkMode()">🌓 מצב כהה</button>
+    </div>
+
+    <div id="threadsContainer"></div>
+
+    <div class="new-thread">
+      <h2>פתח שרשור חדש</h2>
+      <form id="newThreadForm">
+        <input type="text" name="title" placeholder="כותרת" required><br><br>
+        <select name="category">
+          <option value="history">היסטוריה משפחתית</option>
+          <option value="questions">שאלות</option>
+          <option value="updates">עדכונים</option>
+        </select><br><br>
+        <textarea name="content" rows="4" placeholder="מה ברצונך לשתף?" required></textarea><br><br>
+        <input type="file" name="attachment"><br><br>
+        <button type="submit">📤 פרסם</button>
+      </form>
+    </div>
+
+    <div class="footer">
+      <hr>
+      <p>📌 כל השרשורים מוצגים לפי סדר כרונולוגי. ניתן לסמן מועדפים.</p>
+    </div>
+  </div>
 
   <script src="js/forum.js"></script>
   <script>
@@ -64,3 +72,4 @@
   </script>
 </body>
 </html>
+
