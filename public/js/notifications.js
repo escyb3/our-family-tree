@@ -1,8 +1,19 @@
-//js/notifications.js
 setInterval(async () => {
-  const res = await fetch("/messages");
-  const messages = await res.json();
-  const unseen = messages.filter(m => !m.seen).length;
-  const notif = document.getElementById("notifications");
-  notif.innerHTML = unseen ? `🔴 ${unseen} הודעות חדשות` : "";
+  try {
+    const res = await fetch("/api/messages");
+    const messages = await res.json();
+
+    if (!Array.isArray(messages)) {
+      console.warn("⚠️ תגובת הודעות אינה מערך:", messages);
+      return;
+    }
+
+    const notif = document.getElementById("notifications");
+    if (!notif) return;
+
+    const unseen = messages.filter(m => !m.seen && m.to === currentUser).length;
+    notif.innerHTML = unseen ? `🔴 ${unseen} הודעות חדשות` : "";
+  } catch (err) {
+    console.error("❌ שגיאה בשליפת הודעות:", err);
+  }
 }, 10000);
