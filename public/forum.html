@@ -134,7 +134,7 @@
     <function toggleDarkMode() {
   document.body.classList.toggle("dark-mode");
 }
-
+<div class="thread-meta">⏱️ תגובה אחרונה: <span>${formatDate(thread.lastReply || thread.createdAt)}</span></div>
  <h2>📌 פתח נושא חדש</h2>
   <form id="new-thread-form">
     <input type="text" id="title" placeholder="כותרת נושא" required>
