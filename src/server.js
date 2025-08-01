@@ -244,6 +244,29 @@ app.post("/delete-user", auth("admin"), (req, res) => {
   saveUsers();
   res.send("המשתמש נמחק");
 });
+app.post("/api/add-user", (req, res) => {
+  if (!req.session.user || req.session.user.role !== "admin") {
+    return res.status(403).json({ error: "גישה אסורה" });
+  }
+
+  const usersPath = path.join(__dirname, "data", "users.json");
+  const { username, password, role, side } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ error: "חובה למלא שם משתמש וסיסמה" });
+  }
+
+  const users = JSON.parse(fs.readFileSync(usersPath));
+  if (users.find(u => u.username === username)) {
+    return res.status(400).json({ error: "שם משתמש כבר קיים" });
+  }
+
+  const hashed = bcrypt.hashSync(password, 10);
+  users.push({ username, password: hashed, role, side });
+  fs.writeFileSync(usersPath, JSON.stringify(users, null, 2));
+
+  res.json({ success: true });
+});
 
 const requireLogin = (req, res, next) => {
   if (!req.session.user) return res.status(401).json({ error: "Unauthorized" });
