@@ -220,6 +220,46 @@
       const data = await res.json();
       migrationResult.innerHTML = data.mapHtml || data.error;
     });
+     en: {
+        title: "🧠 Genealogy Chatbot",
+        header: "🧠 Genealogy Chat",
+        smartChat: "🗣️ Smart Conversation",
+        sendBtn: "Send",
+        relationCheck: "🔗 Check Family Relation",
+        checkRelation: "Check Relation",
+        firstName: "First Name",
+        secondName: "Second Name",
+        askFamily: "Ask about the family tree..."
+      }
+    };
+
+    let currentLang = "he";
+
+    document.getElementById("langToggle").addEventListener("click", () => {
+      currentLang = currentLang === "he" ? "en" : "he";
+      applyTranslations(currentLang);
+    });
+
+    function applyTranslations(lang) {
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "he" ? "rtl" : "ltr";
+
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        if (translations[lang][key]) {
+          el.placeholder = translations[lang][key];
+        }
+      });
+    }
+
+    applyTranslations(currentLang);
   </script>
 </body>
 </html>
