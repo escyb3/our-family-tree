@@ -1,173 +1,67 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <style>
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background: #f4f6f8;
-    margin: 0;
-    padding: 0;
-    direction: rtl;
-  }
-
-  .forum-container {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  }
-
-  h1, h2 {
-    text-align: center;
-    color: #333;
-  }
-
-  .thread, .reply {
-    border-bottom: 1px solid #ddd;
-    padding: 16px;
-    transition: background 0.3s;
-  }
-
-  .thread:hover {
-    background: #f9f9f9;
-  }
-
-  .thread-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #0077aa;
-    margin-bottom: 8px;
-  }
-
-  .thread-meta, .reply-meta {
-    font-size: 13px;
-    color: #666;
-    margin-bottom: 6px;
-  }
-
-  .thread-content, .reply-text {
-    font-size: 15px;
-    color: #444;
-  }
-
-  form {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  input[type="text"], textarea {
-    padding: 10px;
-    font-size: 15px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    width: 100%;
-  }
-
-  button {
-    padding: 10px;
-    background-color: #0077aa;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-
-  button:hover {
-    background-color: #005f8d;
-  }
-
-  .reply {
-    background-color: #f7fafd;
-    border-radius: 8px;
-    margin: 10px 0 10px 30px;
-    padding: 12px;
-  }
-
-  .reply-form {
-    margin-top: 15px;
-    background: #eef4f7;
-    padding: 15px;
-    border-radius: 8px;
-  }
-    .dark-mode {
-  background-color: #121212;
-  color: #e0e0e0;
-}
-.dark-mode .forum-container {
-  background-color: #1e1e1e;
-  border: 1px solid #333;
-}
-.dark-mode input, .dark-mode textarea {
-  background-color: #2a2a2a;
-  color: white;
-  border-color: #444;
-}
-.dark-mode button {
-  background-color: #333;
-}
-</style>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>פורום המשפחה</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>פורום משפחתי</title>
+  <link rel="stylesheet" href="/style.css">
   <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.3/dist/index.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
   <style>
-    .mention { color: #2563eb; font-weight: bold; cursor: pointer; }
-    .badge { background-color: #f59e0b; color: white; padding: 2px 6px; border-radius: 6px; margin-right: 4px; font-size: 0.75rem; }
-    .reply-box { margin-top: 1rem; background: #f9fafb; border-radius: 8px; padding: 1rem; }
+    body { font-family: sans-serif; padding: 1rem; }
+    .dark-mode { background: #121212; color: #e0e0e0; }
+    .dark-mode input, .dark-mode textarea { background: #2a2a2a; color: white; }
+    .thread { border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; }
+    .reply { margin-right: 1rem; border-right: 3px solid #ccc; padding-right: 1rem; }
+    .favorite { color: gold; font-weight: bold; cursor: pointer; }
+    .filters { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .thread.hidden { display: none; }
+    .attachment { margin-top: 0.5rem; }
+    @media(max-width: 600px) {
+      .filters { flex-direction: column; }
+    }
   </style>
 </head>
-<body class="bg-gray-100 text-gray-900">
-  <div class="max-w-5xl mx-auto p-6">
-    <h1 class="text-3xl font-bold mb-6 text-center">🌳 פורום המשפחה הגנאולוגי</h1>
+<body>
 
-    <div class="text-right mb-4">
-      <button id="open-thread-btn" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded">➕ פתח דיון חדש</button>
-    </div>
-    <button onclick="toggleDarkMode()" style="position:fixed;top:10px;left:10px;">🌓 מצב כהה</button>
-    <function toggleDarkMode() {
-  document.body.classList.toggle("dark-mode");
-}
-<div class="thread-meta">⏱️ תגובה אחרונה: <span>${formatDate(thread.lastReply || thread.createdAt)}</span></div>
- <h2>📌 פתח נושא חדש</h2>
-  <form id="new-thread-form">
-    <input type="text" id="title" placeholder="כותרת נושא" required>
-    <textarea id="content" placeholder="תוכן ההודעה" required></textarea>
-    <button type="button" id="emoji-btn">😀</button>
-    <button type="submit">📨 שלח</button>
-  </form>
-</div>
+  <button onclick="toggleDarkMode()">🌓 מצב כהה</button>
 
-    <details class="mb-6 bg-yellow-100 p-4 rounded">
-      <summary class="cursor-pointer font-bold">❓ שאלות נפוצות גנאולוגיות</summary>
-      <ul class="list-disc list-inside mt-2">
-        <li>איך מזהים קרבה בין שני בני משפחה?</li>
-        <li>מה ההבדל בין אילן משפחה לקובץ GEDCOM?</li>
-        <li>איך מוסיפים צילומים למסמכים?</li>
-      </ul>
-    </details>
+  <h1>פורום משפחתי 🧵</h1>
 
-    <section id="threads-container"></section>
+  <div class="filters">
+    <input type="text" id="searchInput" placeholder="🔍 חפש נושא...">
+    <select id="categoryFilter">
+      <option value="all">כל הנושאים</option>
+      <option value="שאלה">שאלה</option>
+      <option value="עדכון">עדכון</option>
+      <option value="היסטוריה">היסטוריה משפחתית</option>
+    </select>
   </div>
-  <h2>צור שרשור חדש</h2>
-<div id="new-thread">
-  <input type="text" id="thread-title" placeholder="כותרת השרשור" />
-  <textarea id="thread-content" placeholder="תוכן ההודעה"></textarea>
-  <button id="create-thread-btn">צור</button>
-</div>
 
-<hr>
-<h2>שרשורים אחרונים</h2>
-<div id="threads-container"></div>
+  <div id="threadsContainer"></div>
 
+  <h2>✏️ פתח שרשור חדש</h2>
+  <form id="newThreadForm">
+    <input type="text" id="title" placeholder="כותרת" required><br>
+    <textarea id="content" placeholder="תוכן" required></textarea>
+    <button type="button" id="emoji-btn">😀</button>
+    <br>
+    <label>קטגוריה:
+      <select id="category">
+        <option value="שאלה">שאלה</option>
+        <option value="עדכון">עדכון</option>
+        <option value="היסטוריה">היסטוריה משפחתית</option>
+      </select>
+    </label>
+    <br>
+    <label>קובץ מצורף: <input type="file" id="attachment"></label><br>
+    <button type="submit">📤 פרסם</button>
+  </form>
 
-  <!-- טוען את קובץ הפורום מהצד לקוח -->
-  <script src="/js/forum.js"></script>
+  <script src="js/forum.js"></script>
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+  </script>
 </body>
 </html>
