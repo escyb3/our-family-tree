@@ -1,4 +1,4 @@
-const currentUser = window.currentUser || sessionStorage.getItem("username");
+const user = window.currentUser || localStorage.getItem("username");
 
 setInterval(async () => {
   try {
@@ -12,8 +12,8 @@ setInterval(async () => {
 
     const notif = document.getElementById("notifications");
     if (!notif) return;
-    
-window.currentUser = window.currentUser || localStorage.getItem("username");
+
+    const unseen = messages.filter(m => !m.seen && m.to === user).length;
     notif.innerHTML = unseen ? `🔴 ${unseen} הודעות חדשות` : "";
   } catch (err) {
     console.error("❌ שגיאה בשליפת הודעות:", err);
