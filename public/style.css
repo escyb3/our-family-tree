@@ -263,4 +263,38 @@ button:hover {
   margin: 0.5em;
   border-radius: 6px;
 }
+.inbox-list {
+  width: 35%;
+  float: right;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.preview-pane {
+  width: 60%;
+  float: left;
+  padding: 10px;
+  background: #f8f8f8;
+  border-right: 1px solid #ccc;
+  min-height: 300px;
+}
+.thread-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+.thread-item.unread {
+  font-weight: bold;
+  background: #eef;
+}
+.preview-body .thumb {
+  max-width: 200px;
+  display: block;
+  margin-top: 10px;
+}
+.reply {
+  margin-top: 8px;
+  background: #f1f1f1;
+  padding: 5px;
+}
+
 
