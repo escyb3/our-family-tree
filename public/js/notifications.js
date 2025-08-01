@@ -12,8 +12,8 @@ setInterval(async () => {
 
     const notif = document.getElementById("notifications");
     if (!notif) return;
-
-    const unseen = messages.filter(m => !m.seen && m.to === currentUser).length;
+    
+window.currentUser = window.currentUser || localStorage.getItem("username");
     notif.innerHTML = unseen ? `🔴 ${unseen} הודעות חדשות` : "";
   } catch (err) {
     console.error("❌ שגיאה בשליפת הודעות:", err);
