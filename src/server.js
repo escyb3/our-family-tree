@@ -793,6 +793,61 @@ app.get("/api/forum/threads", (req, res) => {
     res.status(500).json({ error: "שגיאה בקריאת דיונים" });
   }
 });
+// פונקציית עזר לטעינה
+function loadForum() {
+  if (!fs.existsSync(forumPath)) return [];
+  const raw = fs.readFileSync(forumPath, "utf8");
+  return JSON.parse(raw);
+}
+
+// פונקציית עזר לשמירה
+function saveForum(data) {
+  fs.writeFileSync(forumPath, JSON.stringify(data, null, 2));
+}
+
+// שליפת כל השרשורים
+app.get("/api/forum/threads", (req, res) => {
+  const threads = loadForum();
+  res.json(threads);
+});
+
+// יצירת שרשור חדש
+app.post("/api/forum/thread", (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ message: "לא מחובר" });
+
+  const threads = loadForum();
+  const newThread = {
+    id: Date.now().toString(),
+    title: req.body.title,
+    content: req.body.content,
+    author: user.username,
+    date: new Date(),
+    replies: []
+  };
+  threads.unshift(newThread);
+  saveForum(threads);
+  res.status(201).json({ success: true });
+});
+
+// תגובה לשרשור
+app.post("/api/forum/thread/:id/reply", (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ message: "לא מחובר" });
+
+  const threads = loadForum();
+  const thread = threads.find(t => t.id === req.params.id);
+  if (!thread) return res.status(404).json({ message: "שרשור לא נמצא" });
+
+  const reply = {
+    author: user.username,
+    text: req.body.text,
+    date: new Date()
+  };
+  thread.replies.push(reply);
+  saveForum(threads);
+  res.json({ success: true });
+});
 
 
 // הפעלת השרת
