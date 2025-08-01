@@ -1,3 +1,4 @@
+//js/stats.js
 (async function() {
   const res = await fetch("/messages");
   const messages = await res.json();
