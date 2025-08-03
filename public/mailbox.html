@@ -90,24 +90,7 @@
     <h1>📩 תיבת ההודעות</h1>
     <button id="compose-toggle">📝 Compose</button>
   </header>
-
-  <div class="main">
-    <div class="content">
-      <input id="search" placeholder="🔍 חפש נושא או שולח..." />
-      <select id="tag-filter">
-        <option value="">🗂️ כל הסוגים</option>
-        <option value="משפחתי">משפחתי</option>
-        <option value="אישי">אישי</option>
-        <option value="מנהלי">מנהלי</option>
-        <option value="תמיכה">תמיכה</option>
-      </select>
-      <input type="date" id="date-filter" />
-      <select id="sort-mode">
-        <option value="inbox">📥 התקבלו</option>
-        <option value="sent">📤 נשלחו</option>
-      </select>
-
-      <div id="send-form">
+    <div id="send-form">
         <input type="text" id="to" placeholder="אל: משתמש/ים" required autocomplete="on" />
         <input type="text" id="subject" placeholder="נושא ההודעה" required />
         <textarea id="body" placeholder="תוכן ההודעה" rows="4" required></textarea>
@@ -125,6 +108,22 @@
         <button type="submit">📨 שלח</button>
         <button type="button" onclick="saveDraft()">💾 שמור טיוטה</button>
       </div>
+
+  <div class="main">
+    <div class="content">
+      <input id="search" placeholder="🔍 חפש נושא או שולח..." />
+      <select id="tag-filter">
+        <option value="">🗂️ כל הסוגים</option>
+        <option value="משפחתי">משפחתי</option>
+        <option value="אישי">אישי</option>
+        <option value="מנהלי">מנהלי</option>
+        <option value="תמיכה">תמיכה</option>
+      </select>
+      <input type="date" id="date-filter" />
+      <select id="sort-mode">
+        <option value="inbox">📥 התקבלו</option>
+        <option value="sent">📤 נשלחו</option>
+      </select>
 
       <div id="drafts-container"></div>
       <div id="messages"></div>
