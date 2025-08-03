@@ -122,6 +122,7 @@ async function loadMessages() {
     </div>
   `).join("");
 }
+<button onclick='forwardMessage(${JSON.stringify(msg)})'>📤 העבר</button>
 
 function preview(msg) {
   const el = document.getElementById("preview-content");
