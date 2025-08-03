@@ -1,132 +1,36 @@
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <title>📋 דשבורד ניהול משתמשים</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f8f9fa;
-      text-align: center;
-      padding: 20px;
-    }
-    table {
-      width: 90%;
-      margin: 20px auto;
-      border-collapse: collapse;
-      background-color: #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    th, td {
-      padding: 12px;
-      border: 1px solid #ddd;
-    }
-    th {
-      background-color: #007bff;
-      color: white;
-    }
-    tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-    button {
-      padding: 6px 10px;
-      color: white;
-      background-color: #dc3545;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #c82333;
-    }
-    .edit-btn {
-      background-color: #ffc107;
-      margin-left: 5px;
-    }
-    .edit-btn:hover {
-      background-color: #e0a800;
-    }
-  </style>
-  <script>
-    async function deleteUser(username) {
-      if (confirm("האם אתה בטוח שברצונך למחוק את המשתמש '" + username + "'?")) {
-        const res = await fetch("/delete-user", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username })
-        });
-        const msg = await res.text();
-        alert(msg);
-        location.reload();
-      }
-    }
+<html>
+  <head>Admin Dashboard-Manage Users (only accessible to SuperAdmins)</head>
+  <body>
+<form id="new-user-form">
+  <input name="username" placeholder="שם משתמש" required>
+  <input name="password" type="password" placeholder="סיסמה" required>
+  <input name="side" placeholder="צד משפחה (למשל: ben_abou)">
+  <select name="role">
+    <option value="user">User</option>
+    <option value="admin">Admin</option>
+  </select>
+  <button type="submit">הוסף משתמש</button>
+</form>
 
-    function openEditModal(user) {
-      const newRole = prompt("שנה תפקיד עבור " + user.username, user.role);
-      if (newRole) {
-        const newSide = prompt("שנה צד משפחתי עבור " + user.username, user.side);
-        fetch("/update-user", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username: user.username, role: newRole, side: newSide })
-        })
-        .then(res => res.text())
-        .then(msg => {
-          alert(msg);
-          location.reload();
-        });
-      }
-    }
-
-    window.onload = () => {
-      fetch("/admin-users")
-        .then(res => res.json())
-        .then(users => {
-          const table = document.getElementById("userTable");
-          users.forEach(u => {
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-              <td>${u.username}</td>
-              <td>${u.role}</td>
-              <td>${u.side}</td>
-              <td>
-                <button onclick="deleteUser('${u.username}')">🗑️ מחק</button>
-                <button class="edit-btn" onclick='openEditModal(${JSON.stringify(u)})'>✏️ ערוך</button>
-              </td>
-            `;
-            table.appendChild(tr);
-          });
-        });
-    };
-  </script>
-</head>
-<body>
-  <main>
-    <h1>📋 דשבורד ניהול משתמשים</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>שם משתמש</th>
-          <th>תפקיד</th>
-          <th>צד משפחתי</th>
-          <th>פעולות</th>
-        </tr>
-      </thead>
-      <tbody id="userTable">
-        <!-- ייטען מהשרת -->
-      </tbody>
-    </table>
-  </main>
-  <import AdminPendingView from "@/components/AdminPendingView";
-
-<export default function AdminDashboard() {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">ממשק ניהול</h1>
-      <AdminPendingView />
-    </div>
-  );
-}
+<script>
+document.getElementById("new-user-form").onsubmit = async e => {
+  e.preventDefault();
+  const form = e.target;
+  const body = {
+    username: form.username.value,
+    password: form.password.value,
+    role: form.role.value,
+    side: form.side.value
+  };
+  const res = await fetch("/api/add-user", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  if (data.success) alert("✅ נוצר משתמש בהצלחה");
+  else alert("❌ שגיאה: " + (data.error || "לא ידוע"));
+};
+</script>
 </body>
 </html>
