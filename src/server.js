@@ -80,10 +80,13 @@ app.get("/api/drafts", (req, res) => {
 
 
 app.post("/api/save-draft", async (req, res) => {
-  const draft = { ...req.body, from: req.user.username, draft: true, timestamp: Date.now() };
-  const saved = await db.messages.insert(draft);
-  res.json({ success: true, id: saved._id });
+  const { to, subject, body, type, from } = req.body;
+  const draft = { id: uuid(), to, subject, body, type, from, draft: true, timestamp: new Date().toISOString() };
+  db.data.messages.push(draft);
+  await db.write();
+  res.json({ success: true, draft });
 });
+
 
 app.delete("/api/draft/:id", async (req, res) => {
   const result = await db.messages.deleteOne({ _id: req.params.id, from: req.user.username, draft: true });
