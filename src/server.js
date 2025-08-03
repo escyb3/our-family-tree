@@ -313,7 +313,21 @@ let drafts = {}; // שמירת טיוטות לפי משתמש];
     res.json({ success: true });
   });
 });
+app.post("/api/draft", (req, res) => {
+  const { username = "admin", draft } = req.body;
+  drafts[username] = draft;
+  res.json({ success: true });
+});
 
+app.get("/api/draft", (req, res) => {
+  const username = req.query.username || "admin";
+  res.json(drafts[username] || {});
+});
+app.post("/api/delete-message", (req, res) => {
+  const { id } = req.body;
+  messages = messages.filter(m => m.id !== id);
+  res.json({ success: true });
+});
 
 
 // יציאה מהמערכת
