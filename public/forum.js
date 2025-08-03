@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     newThreadForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const title = newThreadForm.title.value.trim();
-      const body = newThreadForm.body.value.trim() ;
+      const body = newThreadForm.content.value.trim();
       const category = newThreadForm.category.value.trim();
 
       if (!title || !body) return alert("יש למלא כותרת ותוכן");
