@@ -40,8 +40,7 @@
         <option value="sent">📤 נשלחו</option>
       </select>
       <button id="compose-toggle">✏️ הודעה חדשה</button>
-          <form id="send-form" class="compose-form">
-      <h3>✉️ שליחת הודעה חדשה</h3>
+<h3>✉️ שליחת הודעה חדשה</h3>
       <input type="text" id="to" placeholder="אל: username@family.local (או כמה נמענים עם פסיקים)" required />
       <input type="text" id="subject" placeholder="נושא ההודעה" required />
       <textarea id="body" placeholder="תוכן ההודעה" rows="4" required></textarea>
@@ -61,6 +60,34 @@
       <button type="button" onclick="saveDraft()">💾 שמור טיוטה</button>
     </form>
     </div>
+<style>
+.compose-button {
+  background-color: #1a73e8;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 24px;
+  cursor: pointer;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+#send-form {
+  display: none;
+}
+#send-form.show {
+  display: flex;
+  flex-direction: column;
+}
+</style>
+
+<script>
+document.getElementById("compose-toggle").addEventListener("click", () => {
+  document.getElementById("send-form").classList.toggle("show");
+});
+</script>
 
 
     <div class="message-list" id="messages"></div>
