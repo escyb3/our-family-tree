@@ -70,10 +70,21 @@ app.post("/api/forum/new", (req, res) => {
 });
 
 
-app.post("/api/draft", (req, res) => {
-  let drafts = [];
-  drafts.push({ ...req.body, timestamp: new Date().toISOString() });
-  res.json({ success: true });
+// טיוטות
+app.get("/api/drafts", async (req, res) => {
+  const drafts = await db.messages.find({ from: req.user.username, draft: true });
+  res.json(drafts);
+});
+
+app.post("/api/save-draft", async (req, res) => {
+  const draft = { ...req.body, from: req.user.username, draft: true, timestamp: Date.now() };
+  const saved = await db.messages.insert(draft);
+  res.json({ success: true, id: saved._id });
+});
+
+app.delete("/api/draft/:id", async (req, res) => {
+  const result = await db.messages.deleteOne({ _id: req.params.id, from: req.user.username, draft: true });
+  res.json({ success: result.deletedCount === 1 });
 });
 
 
