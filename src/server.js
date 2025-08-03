@@ -676,10 +676,23 @@ app.use("/messages", (req, res, next) => {
 });
 
 app.post("/upload-attachment", upload.single("attachment"), (req, res) => {
-  if (!req.file) return res.status(400).send("אין קובץ");
-  res.json({ url: "/uploads/" + req.file.filename });
+  const file = req.file;
+  const url = "/uploads/" + file.filename;
+  res.json({ url });
 });
 
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+app.post("/api/mark-important", (req, res) => {
+  const { id, important } = req.body;
+  const msg = messages.find(m => m.id === id);
+  if (msg) {
+    msg.important = important;
+    res.json({ success: true });
+  } else {
+    res.status(404).json({ error: "Message not found" });
+  }
+});
 // אימות משתמש (פשוט)
 app.get("/api/user", (req, res) => {
   res.json({ username: "user1@family.local" });
