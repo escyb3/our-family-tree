@@ -5,32 +5,99 @@
   <title>📩 תיבת הודעות</title>
   <link rel="stylesheet" href="/style.css" />
   <style>
-    .compose-form { display: none; }
-    .compose-form.show { display: block; }
-    .preview-pane { background: #fff; border-radius: 8px; box-shadow: 0 0 4px rgba(0,0,0,0.1); padding: 1rem; margin-top: 1rem; min-height: 200px; }
-    .msg-card img.thumb { max-width: 100px; max-height: 100px; margin-top: 0.5rem; border-radius: 4px; }
-    .msg-card.important { background: #fff8cc; border-left: 4px solid orange; }
-    .drafts { margin-top: 2rem; background: #f2f2f2; padding: 1rem; border-radius: 8px; }
-    .drafts h3 { margin-bottom: 0.5rem; }
-    .reply-count { font-size: 0.85rem; color: #555; }
+    body {
+      font-family: sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      background: #0b5394;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 { margin: 0; font-size: 1.5rem; }
+    #compose-toggle {
+      background: #00aaff;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .main {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+    .sidebar {
+      width: 250px;
+      background: #fff;
+      border-left: 1px solid #ccc;
+      padding: 1rem;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.05);
+    }
+    .content {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+    .msg-card {
+      background: white;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 6px;
+      box-shadow: 0 0 4px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .msg-card:hover { background: #eef; }
+    .msg-card.unread { font-weight: bold; background: #fdfdfd; }
+    .reply { margin-top: 0.5rem; border-right: 2px solid #ccc; padding-right: 0.5rem; }
+    #send-form {
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      background: white;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+    }
+    #send-form.show { display: flex; }
+    input, textarea, select {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button { cursor: pointer; }
+    #preview-content {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 6px;
+      box-shadow: 0 0 4px rgba(0,0,0,0.1);
+    }
   </style>
-  <script>
-    fetch("/api/user").then(res => { if (!res.ok) location.href = "/login.html" });
-  </script>
 </head>
 <body>
   <header>
-    📩 תיבת ההודעות שלי
-    <span id="notification-icon">🔔</span>
+    <h1>📩 תיבת ההודעות</h1>
+    <button id="compose-toggle">📝 Compose</button>
   </header>
 
-  <div class="container">
-    <div class="search-bar">
-      <input id="search" placeholder="🔍 חיפוש לפי נושא/שולח" />
+  <div class="main">
+    <div class="content">
+      <input id="search" placeholder="🔍 חפש נושא או שולח..." />
       <select id="tag-filter">
         <option value="">🗂️ כל הסוגים</option>
-        <option value="אישי">אישי</option>
         <option value="משפחתי">משפחתי</option>
+        <option value="אישי">אישי</option>
         <option value="מנהלי">מנהלי</option>
         <option value="תמיכה">תמיכה</option>
       </select>
@@ -39,99 +106,43 @@
         <option value="inbox">📥 התקבלו</option>
         <option value="sent">📤 נשלחו</option>
       </select>
-      <button id="compose-toggle">✏️ הודעה חדשה</button>
-<h3>✉️ שליחת הודעה חדשה</h3>
-      <input type="text" id="to" placeholder="אל: username@family.local (או כמה נמענים עם פסיקים)" required />
-      <input type="text" id="subject" placeholder="נושא ההודעה" required />
-      <textarea id="body" placeholder="תוכן ההודעה" rows="4" required></textarea>
-      <label>סוג הודעה:
+
+      <div id="send-form">
+        <input type="text" id="to" placeholder="אל: משתמש/ים" required />
+        <input type="text" id="subject" placeholder="נושא ההודעה" required />
+        <textarea id="body" placeholder="תוכן ההודעה" rows="4" required></textarea>
         <select id="type">
           <option value="אישי">אישי</option>
           <option value="משפחתי">משפחתי</option>
           <option value="מנהלי">מנהלי</option>
           <option value="תמיכה">תמיכה</option>
         </select>
-      </label>
-      <input type="file" id="attachment" />
-      <label>🎤 הקלט קול/וידאו:
-        <input type="file" accept="audio/*,video/*" id="media-upload" />
-      </label>
-      <button type="submit">📨 שלח</button>
-      <button type="button" onclick="saveDraft()">💾 שמור טיוטה</button>
-    </form>
-    </div>
-<style>
-.compose-button {
-  background-color: #1a73e8;
-  color: white;
-  font-weight: bold;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 24px;
-  cursor: pointer;
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-#send-form {
-  display: none;
-}
-#send-form.show {
-  display: flex;
-  flex-direction: column;
-}
-</style>
-
-<script>
-document.getElementById("compose-toggle").addEventListener("click", () => {
-  document.getElementById("send-form").classList.toggle("show");
-});
-</script>
-
-
-    <div class="message-list" id="messages"></div>
-
-    <div id="message-preview" class="preview-pane">
-      <h3>תצוגה מקדימה</h3>
-      <div id="preview-content"></div>
-    </div>
-
-    <div class="drafts">
-      <h3>📝 טיוטות שמורות</h3>
-      <ul id="drafts-list"></ul>
-    </div>
-
-    <section id="contacts">
-      <h2>👥 אנשי קשר תכופים</h2>
-      <ul id="contact-list"></ul>
-    </section>
-
-    <section id="stats">
-      <h2>📊 סטטיסטיקת פעילות</h2>
-      <div id="stats-content"></div>
-    </section>
-
-    <section id="ai-summary">
-      <h2>🧠 סיכום אוטומטי עם AI</h2>
-      <div class="thread-actions">
-        <input type="text" id="thread-id" placeholder="📎 מזהה שיחה" />
-        <button onclick="summarizeThread()">סכם</button>
+        <input type="file" id="attachment" />
+        <button type="submit">📨 שלח</button>
+        <button type="button" onclick="saveDraft()">💾 שמור טיוטה</button>
       </div>
-      <div id="thread-summary"></div>
-    </section>
 
-    <section id="thread-view">
-      <h2>💬 תצוגת שרשור</h2>
-      <div id="thread-container"></div>
-    </section>
+      <div id="messages"></div>
+      <div id="preview-content">📭 אין הודעה נבחרת</div>
+    </div>
+
+    <div class="sidebar">
+      <h3>👤 אנשי קשר</h3>
+      <ul id="contact-list"></ul>
+      <h3>📊 סטטיסטיקות</h3>
+      <div id="stats-content"></div>
+      <h3>🧠 סיכום AI</h3>
+      <input type="text" id="thread-id" placeholder="מזהה שיחה" />
+      <button onclick="summarizeThread()">סכם</button>
+      <div id="thread-summary"></div>
+    </div>
   </div>
 
-  <script src="/js/inbox-ui.js"></script>
   <script src="/js/inbox.js"></script>
-  <script src="/js/notifications.js"></script>
-  <script src="/js/inbox-ai.js"></script>
-  <script src="/js/stats.js"></script>
+  <script src="/js/inbox-ui.js"></script>
   <script src="/js/contacts.js"></script>
+  <script src="/js/stats.js"></script>
+  <script src="/js/inbox-ai.js"></script>
+  <script src="/js/notifications.js"></script>
 </body>
 </html>
