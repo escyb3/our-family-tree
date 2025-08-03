@@ -239,6 +239,74 @@ cron.schedule("0 8 * * *", () => {
   });
 });
 
+const groups = {
+  "family@local": ["avishai@family.local", "merav@family.local", "yanai@family.local"]
+};
+
+// 🧠 תיוג AI
+router.post("/api/ask-ai", async (req, res) => {
+  const { question } = req.body;
+  const answer = `נושא משוער: משפחה`; // stub
+  res.json({ answer });
+});
+
+// 📅 תזמון שליחה
+const scheduled = [];
+router.post("/api/schedule-message", (req, res) => {
+  const msg = req.body;
+  msg.id = Date.now().toString();
+  if (msg.sendAt) scheduled.push(msg);
+  else messages.push(msg);
+  res.json({ success: true });
+});
+
+// קרא אוטומטית מתוזמנים כל 30 שניות
+setInterval(() => {
+  const now = Date.now();
+  for (let i = scheduled.length - 1; i >= 0; i--) {
+    if (new Date(scheduled[i].sendAt).getTime() <= now) {
+      messages.push(scheduled[i]);
+      scheduled.splice(i, 1);
+    }
+  }
+}, 30000);
+
+// 🧠 סיכום שרשור
+router.get("/api/thread/:id", (req, res) => {
+  const thread = messages.filter(m => m.threadId === req.params.id);
+  res.json({ messages: thread });
+});
+
+// 📍 מועדפים
+router.post("/api/message/:id/favorite", (req, res) => {
+  const msg = messages.find(m => m.id === req.params.id);
+  if (msg) msg.favorite = !msg.favorite;
+  res.json({ success: true });
+});
+
+// 📂 קבוצות
+router.get("/api/group/:name", (req, res) => {
+  const group = groups[req.params.name];
+  if (!group) return res.status(404).json({ error: "Not found" });
+  res.json({ members: group });
+});
+
+router.post("/api/save-draft", (req, res) => {
+  const d = req.body;
+  d.id = Date.now().toString();
+  d.timestamp = new Date();
+  drafts.push(d);
+  res.json({ success: true });
+});
+
+// 📜 הודעה בודדת (ל־forward)
+router.get("/api/message/:id", (req, res) => {
+  const msg = messages.find(m => m.id === req.params.id);
+  if (!msg) return res.status(404).json({ error: "Not found" });
+  res.json(msg);
+});
+
+
 app.get("/admin-users", auth("admin"), (req, res) => res.json(users));
 app.post("/create-user", auth("admin"), (req, res) => {
   const { username, password, email, side, role } = req.body;
