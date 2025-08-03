@@ -245,7 +245,7 @@ const groups = {
 
 // 📅 תזמון שליחה
 const scheduled = [];
-router.post("/api/schedule-message", (req, res) => {
+app.post("/api/schedule-message", (req, res) => {
   const msg = req.body;
   msg.id = Date.now().toString();
   if (msg.sendAt) scheduled.push(msg);
