@@ -1,64 +1,73 @@
 // js/drafts.js
 
+async function loadDrafts() {
+  try {
+    const res = await fetch("/api/drafts");
+    const drafts = await res.json();
+    const container = document.getElementById("drafts-container");
+    container.innerHTML = "<h3>💾 טיוטות</h3>";
+
+    if (!Array.isArray(drafts) || drafts.length === 0) {
+      container.innerHTML += "<p>אין טיוטות שמורות</p>";
+      return;
+    }
+
+    drafts.forEach(d => {
+      const card = document.createElement("div");
+      card.className = "msg-card";
+      card.innerHTML = `
+        <strong>${d.subject || "(ללא נושא)"}</strong><br>
+        <small>${d.to || "(לא נבחר נמען)"}</small><br>
+        <p>${d.body || ""}</p>
+        <div class="actions">
+          <button onclick='loadDraft(${JSON.stringify(d)})'>✏️ ערוך</button>
+          <button onclick='deleteDraft("${d._id}")'>🗑️ מחק</button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  } catch (err) {
+    console.error("❌ שגיאה בטעינת טיוטות:", err);
+  }
+}
+
 function saveDraft() {
-  const form = document.getElementById("send-form");
   const draft = {
-    to: form.querySelector("#to").value,
-    subject: form.querySelector("#subject").value,
-    body: form.querySelector("#body").value,
-    type: form.querySelector("#type").value,
-    timestamp: Date.now()
+    to: document.getElementById("to").value,
+    subject: document.getElementById("subject").value,
+    body: document.getElementById("body").value,
+    type: document.getElementById("type").value,
   };
 
-  let drafts = JSON.parse(localStorage.getItem("drafts") || "[]");
-  drafts.push(draft);
-  localStorage.setItem("drafts", JSON.stringify(drafts));
-  alert("💾 טיוטה נשמרה!");
-  form.reset();
+  fetch("/api/save-draft", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(draft),
+  })
+    .then(res => res.json())
+    .then(() => {
+      alert("📥 הטיוטה נשמרה!");
+      loadDrafts();
+    });
 }
 
-// הצגת טיוטות קיימות (למשל בעת טעינת הדף)
-function loadDrafts() {
-  const drafts = JSON.parse(localStorage.getItem("drafts") || "[]");
-  if (drafts.length === 0) return;
+function deleteDraft(id) {
+  if (!confirm("האם למחוק טיוטה זו?")) return;
 
-  const container = document.createElement("div");
-  container.innerHTML = "<h4>📂 טיוטות שמורות</h4>";
-  drafts.forEach((d, i) => {
-    const div = document.createElement("div");
-    div.className = "msg-card";
-    div.innerHTML = `
-      <strong>${d.subject || "ללא נושא"}</strong> <br>
-      <small>${new Date(d.timestamp).toLocaleString()}</small>
-      <p>${d.body.slice(0, 100)}...</p>
-      <button onclick="useDraft(${i})">✏️ ערוך</button>
-      <button onclick="deleteDraft(${i})">🗑️ מחק</button>
-    `;
-    container.appendChild(div);
-  });
-
-  document.querySelector(".content").prepend(container);
+  fetch(`/api/draft/${id}`, { method: "DELETE" })
+    .then(res => res.json())
+    .then(() => loadDrafts());
 }
 
-function useDraft(index) {
-  const drafts = JSON.parse(localStorage.getItem("drafts") || "[]");
-  const draft = drafts[index];
-  if (!draft) return;
+function loadDraft(draft) {
+  document.getElementById("to").value = draft.to || "";
+  document.getElementById("subject").value = draft.subject || "";
+  document.getElementById("body").value = draft.body || "";
+  document.getElementById("type").value = draft.type || "אישי";
 
   const form = document.getElementById("send-form");
   form.classList.add("show");
-  form.querySelector("#to").value = draft.to;
-  form.querySelector("#subject").value = draft.subject;
-  form.querySelector("#body").value = draft.body;
-  form.querySelector("#type").value = draft.type;
 }
 
-function deleteDraft(index) {
-  let drafts = JSON.parse(localStorage.getItem("drafts") || "[]");
-  drafts.splice(index, 1);
-  localStorage.setItem("drafts", JSON.stringify(drafts));
-  location.reload();
-}
-
-// הפעלה אוטומטית
+// טען טיוטות בהפעלה
 document.addEventListener("DOMContentLoaded", loadDrafts);
