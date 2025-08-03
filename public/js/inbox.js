@@ -4,7 +4,8 @@ const form = document.getElementById("send-form");
 const search = document.getElementById("search");
 const tagFilter = document.getElementById("tag-filter");
 const draftsList = document.getElementById("drafts-list");
-const currentUser = window.currentUser || localStorage.getItem("username");
+const username = localStorage.getItem("username");
+const currentUser = username + "@family.local";
 
 const drafts = JSON.parse(localStorage.getItem("drafts") || "[]");
 renderDrafts();
