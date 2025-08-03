@@ -92,3 +92,84 @@ search.oninput = loadMessages;
 tagFilter.onchange = loadMessages;
 
 loadMessages();
+// js/inbox.js
+let currentUser = "";
+
+fetch("/api/user").then(res => res.json()).then(user => {
+  currentUser = user.username;
+  loadMessages();
+});
+
+document.getElementById("send-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const to = document.getElementById("to").value;
+  const subject = document.getElementById("subject").value;
+  const body = document.getElementById("body").value;
+  const type = document.getElementById("type").value;
+
+  const res = await fetch("/api/messages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ to, subject, body, type })
+  });
+  if (res.ok) {
+    loadMessages();
+    document.getElementById("send-form").reset();
+    toggleCompose(false);
+  }
+});
+
+document.addEventListener("keydown", e => {
+  if (e.ctrlKey && e.key === "Enter") {
+    document.getElementById("send-form").requestSubmit();
+  }
+});
+
+document.getElementById("compose-toggle").addEventListener("click", () => {
+  const form = document.getElementById("send-form");
+  form.classList.toggle("show");
+});
+
+function toggleCompose(show) {
+  const form = document.getElementById("send-form");
+  form.classList.toggle("show", show);
+}
+
+function loadMessages() {
+  fetch("/api/messages")
+    .then(res => res.json())
+    .then(messages => {
+      const container = document.getElementById("messages");
+      container.innerHTML = "";
+      const search = document.getElementById("search").value.toLowerCase();
+      const tag = document.getElementById("tag-filter").value;
+      const date = document.getElementById("date-filter").value;
+      const sort = document.getElementById("sort-mode").value;
+
+      const filtered = messages.filter(m => {
+        const matchSearch = m.subject.toLowerCase().includes(search) || m.from.toLowerCase().includes(search);
+        const matchTag = !tag || m.type === tag;
+        const matchDate = !date || m.date?.startsWith(date);
+        const matchBox = sort === "sent" ? m.from === currentUser : m.to.includes(currentUser);
+        return matchSearch && matchTag && matchDate && matchBox;
+      });
+
+      filtered.forEach(msg => {
+        const card = document.createElement("div");
+        card.className = "msg-card" + (!msg.seen ? " unread" : "");
+        card.innerHTML = `<strong>${msg.subject}</strong><br><small>${msg.from} → ${msg.to}</small>`;
+        card.onclick = () => preview(msg);
+        container.appendChild(card);
+      });
+    });
+}
+
+function preview(msg) {
+  const preview = document.getElementById("preview-content");
+  preview.innerHTML = `<h4>${msg.subject}</h4><p>${msg.body}</p>`;
+}
+
+function saveDraft() {
+  alert("📥 טיוטה נשמרה (לא באמת)");
+}
+
