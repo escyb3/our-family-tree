@@ -1,31 +1,13 @@
-<html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <title>📩 תיבת הודעות</title>
   <link rel="stylesheet" href="/style.css" />
-    <link rel="stylesheet" href="/mailp.css" />
   <style>
-    body { font-family: sans-serif; background: #f7f9fc; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
-    header { background: #0057a3; color: white; padding: 1rem; text-align: center; font-size: 1.6rem; position: relative; }
-    #notification-icon { position: absolute; left: 1rem; top: 1rem; font-size: 1.5rem; cursor: pointer; }
-    nav { display: flex; justify-content: center; gap: 1rem; background: #e0e0e0; padding: 0.5rem; }
-    nav button { padding: 0.5rem 1rem; cursor: pointer; border: none; border-radius: 5px; background: #d0d0d0; }
-    nav button.active { background: #0057a3; color: white; }
-    .container { max-width: 1000px; margin: auto; padding: 1rem; flex: 1; }
-    form { display: flex; flex-direction: column; gap: 0.5rem; background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 0 6px rgba(0,0,0,0.1); margin-bottom: 1rem; }
-    input, textarea, select { padding: 0.5rem; font-size: 1rem; border: 1px solid #ccc; border-radius: 6px; }
-    .msg-card { background: white; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; box-shadow: 0 0 5px rgba(0,0,0,0.1); position: relative; }
-    .msg-card.unread::before { content: "🔴"; position: absolute; right: 1rem; top: 1rem; }
-    .reply { margin-top: 0.5rem; padding-right: 1rem; border-right: 2px solid #ccc; }
-    .important { background: #fff4cc; }
-    .msg-card .actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
-    #search { margin-bottom: 1rem; padding: 0.5rem; width: 100%; }
-    .filters { display: flex; gap: 1rem; margin-bottom: 1rem; }
-    #thread-summary { white-space: pre-line; background: #eef; padding: 0.5rem; border-radius: 6px; margin-top: 1rem; }
-    .thread-actions { display: flex; gap: 1rem; align-items: center; margin-top: 1rem; }
-    .thread-view { margin-top: 1rem; padding: 0.5rem; background: #f0f0f0; border-radius: 6px; }
-    .emoji-bar { display: flex; gap: 0.5rem; font-size: 1.2rem; margin-top: 0.5rem; }
+    .compose-form { display: none; }
+    .compose-form.show { display: block; }
+    .preview-pane { background: #fff; border-radius: 8px; box-shadow: 0 0 4px rgba(0,0,0,0.1); padding: 1rem; margin-top: 1rem; min-height: 200px; }
   </style>
   <script>
     fetch("/api/user").then(res => { if (!res.ok) location.href = "/login.html" });
@@ -36,34 +18,31 @@
     📩 תיבת ההודעות שלי
     <span id="notification-icon">🔔</span>
   </header>
-  <input id="search" placeholder="חיפוש בתיבה..." />
-<select id="tag-filter">
-  <option value="">הכל</option>
-  <option value="admin">מנהל</option>
-  <option value="family">משפחה</option>
-</select>
-<input id="date-filter" type="date" />
-
-<div id="inbox-list" class="inbox-list"></div>
-<div id="preview-pane" class="preview-pane">בחר הודעה לצפייה</div>
-
-  <div id="messages"></div>
-<form id="send-form">...</form>
-<input id="search" />
-<select id="tag-filter">...</select>
-<input type="file" id="attachment" />
-  <nav>
-    <button id="tab-inbox" class="active">📥 התקבלו</button>
-    <button id="tab-sent">📤 נשלחו</button>
-  </nav>
 
   <div class="container">
-    <form id="send-form">
+    <div class="search-bar">
+      <input id="search" placeholder="🔍 חיפוש לפי נושא/שולח" />
+      <select id="tag-filter">
+        <option value="">🗂️ כל הסוגים</option>
+        <option value="אישי">אישי</option>
+        <option value="משפחתי">משפחתי</option>
+        <option value="מנהלי">מנהלי</option>
+        <option value="תמיכה">תמיכה</option>
+      </select>
+      <input type="date" id="date-filter" />
+      <select id="sort-mode">
+        <option value="inbox">📥 התקבלו</option>
+        <option value="sent">📤 נשלחו</option>
+      </select>
+      <button id="compose-toggle">✏️ הודעה חדשה</button>
+    </div>
+
+    <form id="send-form" class="compose-form">
       <h3>✉️ שליחת הודעה חדשה</h3>
-      <input type="text" id="to" placeholder="אל: username@family.local (או מספר נמענים מופרדים בפסיק)" required />
+      <input type="text" id="to" placeholder="אל: username@family.local (או כמה נמענים עם פסיקים)" required />
       <input type="text" id="subject" placeholder="נושא ההודעה" required />
       <textarea id="body" placeholder="תוכן ההודעה" rows="4" required></textarea>
-      <label>🗂️ סוג הודעה:
+      <label>סוג הודעה:
         <select id="type">
           <option value="אישי">אישי</option>
           <option value="משפחתי">משפחתי</option>
@@ -72,34 +51,19 @@
         </select>
       </label>
       <input type="file" id="attachment" />
-      <label>🎤 הקלט הודעה קולית/וידאו:
+      <label>🎤 הקלט קול/וידאו:
         <input type="file" accept="audio/*,video/*" id="media-upload" />
       </label>
       <button type="submit">📨 שלח</button>
       <button type="button" onclick="saveDraft()">💾 שמור טיוטה</button>
     </form>
 
-    <div class="filters">
-      <input type="text" id="search" placeholder="🔎 חיפוש לפי נושא/שולח" oninput="renderMessages()" />
-      <select id="tag-filter" onchange="renderMessages()">
-        <option value="">🗂️ כל הסוגים</option>
-        <option value="אישי">אישי</option>
-        <option value="משפחתי">משפחתי</option>
-        <option value="מנהלי">מנהלי</option>
-        <option value="תמיכה">תמיכה</option>
-      </select>
-    </div>
-      <!-- תצוגת הודעה נבחרת -->
-  <div id="message-preview" class="w-1/2 p-4 overflow-y-auto h-screen bg-white">
-    <h3 class="text-lg font-semibold">תצוגה מקדימה</h3>
-    <div id="preview-content" class="mt-4"></div>
-  </div>
-</div>
+    <div class="message-list" id="messages"></div>
 
-    <section id="inbox">
-      <h2>📥 ההודעות שהתקבלו</h2>
-      <div id="messages"></div>
-    </section>
+    <div id="message-preview" class="preview-pane">
+      <h3>תצוגה מקדימה</h3>
+      <div id="preview-content"></div>
+    </div>
 
     <section id="contacts">
       <h2>👥 אנשי קשר תכופים</h2>
@@ -119,19 +83,18 @@
       </div>
       <div id="thread-summary"></div>
     </section>
-  
 
     <section id="thread-view">
       <h2>💬 תצוגת שרשור</h2>
-      <div id="thread-container" class="thread-view"></div>
+      <div id="thread-container"></div>
     </section>
   </div>
 
   <script src="/js/inbox-ui.js"></script>
-  <script src="js/inbox.js"></script>
-  <script src="js/notifications.js"></script>
-  <script src="js/inbox-ai.js"></script>
-  <script src="js/stats.js"></script>
-  <script src="js/contacts.js"></script>
+  <script src="/js/inbox.js"></script>
+  <script src="/js/notifications.js"></script>
+  <script src="/js/inbox-ai.js"></script>
+  <script src="/js/stats.js"></script>
+  <script src="/js/contacts.js"></script>
 </body>
 </html>
