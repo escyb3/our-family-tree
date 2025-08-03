@@ -106,3 +106,67 @@ toDate.onchange = renderMessages;
 folderSelect.onchange = renderMessages;
 
 loadMessages();
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("send-form");
+  const composeBtn = document.getElementById("compose-toggle");
+  const sendBtn = form?.querySelector("button[type='submit']");
+  const to = document.getElementById("to");
+  const subject = document.getElementById("subject");
+  const body = document.getElementById("body");
+  const type = document.getElementById("type");
+
+  if (!form || !composeBtn || !sendBtn) return;
+
+  // שליחה עם Ctrl + Enter
+  document.addEventListener("keydown", e => {
+    if (e.ctrlKey && e.key === "Enter") {
+      form.requestSubmit();
+    }
+  });
+
+  // כפתור Compose
+  composeBtn.addEventListener("click", () => {
+    form.classList.toggle("show");
+    if (form.classList.contains("show")) to?.focus();
+  });
+
+  // שליחת הודעה
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+
+    const attachment = document.getElementById("attachment")?.files[0];
+    let attachmentUrl = null;
+
+    if (attachment) {
+      const data = new FormData();
+      data.append("attachment", attachment);
+      const res = await fetch("/upload-attachment", {
+        method: "POST",
+        body: data
+      });
+      const json = await res.json();
+      attachmentUrl = json.url;
+    }
+
+    const res = await fetch("/api/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        to: to.value,
+        subject: subject.value,
+        body: body.value,
+        type: type.value,
+        attachment: attachmentUrl
+      })
+    });
+
+    if (res.ok) {
+      form.reset();
+      form.classList.remove("show");
+      if (typeof loadMessages === "function") loadMessages();
+    } else {
+      alert("שליחה נכשלה ❌");
+    }
+  });
+});
+
