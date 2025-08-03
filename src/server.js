@@ -71,10 +71,13 @@ app.post("/api/forum/new", (req, res) => {
 
 
 // טיוטות
-app.get("/api/drafts", async (req, res) => {
-  const drafts = await db.messages.find({ from: req.user.username, draft: true });
+app.get("/api/drafts", (req, res) => {
+  const user = req.user?.username || req.query.user;
+  const email = user + "@family.local";
+  const drafts = db.data.drafts.filter(d => d.from === email);
   res.json(drafts);
 });
+
 
 app.post("/api/save-draft", async (req, res) => {
   const draft = { ...req.body, from: req.user.username, draft: true, timestamp: Date.now() };
