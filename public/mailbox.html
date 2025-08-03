@@ -40,9 +40,7 @@
         <option value="sent">📤 נשלחו</option>
       </select>
       <button id="compose-toggle">✏️ הודעה חדשה</button>
-    </div>
-
-    <form id="send-form" class="compose-form">
+          <form id="send-form" class="compose-form">
       <h3>✉️ שליחת הודעה חדשה</h3>
       <input type="text" id="to" placeholder="אל: username@family.local (או כמה נמענים עם פסיקים)" required />
       <input type="text" id="subject" placeholder="נושא ההודעה" required />
@@ -62,6 +60,8 @@
       <button type="submit">📨 שלח</button>
       <button type="button" onclick="saveDraft()">💾 שמור טיוטה</button>
     </form>
+    </div>
+
 
     <div class="message-list" id="messages"></div>
 
