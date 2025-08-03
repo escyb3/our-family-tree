@@ -4,70 +4,37 @@ async function loadDrafts() {
   try {
     const res = await fetch("/api/drafts");
     const drafts = await res.json();
-    const container = document.getElementById("drafts-container");
-    container.innerHTML = "<h3>💾 טיוטות</h3>";
 
-    if (!Array.isArray(drafts) || drafts.length === 0) {
-      container.innerHTML += "<p>אין טיוטות שמורות</p>";
-      return;
-    }
+    const container = document.getElementById("drafts-list");
+    if (!container) return;
 
-    drafts.forEach(d => {
-      const card = document.createElement("div");
-      card.className = "msg-card";
-      card.innerHTML = `
-        <strong>${d.subject || "(ללא נושא)"}</strong><br>
-        <small>${d.to || "(לא נבחר נמען)"}</small><br>
-        <p>${d.body || ""}</p>
-        <div class="actions">
-          <button onclick='loadDraft(${JSON.stringify(d)})'>✏️ ערוך</button>
-          <button onclick='deleteDraft("${d._id}")'>🗑️ מחק</button>
-        </div>
-      `;
-      container.appendChild(card);
-    });
+    container.innerHTML = drafts.map(d => `
+      <div class="draft-card">
+        <p><strong>${d.subject}</strong></p>
+        <p>${d.body}</p>
+        <button onclick="editDraft('${d._id}')">✏️ ערוך</button>
+        <button onclick="deleteDraft('${d._id}')">🗑️ מחק</button>
+      </div>
+    `).join("");
   } catch (err) {
     console.error("❌ שגיאה בטעינת טיוטות:", err);
   }
 }
 
-function saveDraft() {
-  const draft = {
-    to: document.getElementById("to").value,
-    subject: document.getElementById("subject").value,
-    body: document.getElementById("body").value,
-    type: document.getElementById("type").value,
-  };
-
-  fetch("/api/save-draft", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(draft),
-  })
-    .then(res => res.json())
-    .then(() => {
-      alert("📥 הטיוטה נשמרה!");
-      loadDrafts();
-    });
+async function deleteDraft(id) {
+  await fetch(`/api/draft/${id}`, { method: "DELETE" });
+  loadDrafts();
 }
 
-function deleteDraft(id) {
-  if (!confirm("האם למחוק טיוטה זו?")) return;
-
-  fetch(`/api/draft/${id}`, { method: "DELETE" })
-    .then(res => res.json())
-    .then(() => loadDrafts());
-}
-
-function loadDraft(draft) {
-  document.getElementById("to").value = draft.to || "";
-  document.getElementById("subject").value = draft.subject || "";
-  document.getElementById("body").value = draft.body || "";
-  document.getElementById("type").value = draft.type || "אישי";
-
+async function editDraft(id) {
+  const res = await fetch(`/api/draft/${id}`);
+  const draft = await res.json();
   const form = document.getElementById("send-form");
-  form.classList.add("show");
-}
 
-// טען טיוטות בהפעלה
-document.addEventListener("DOMContentLoaded", loadDrafts);
+  form.to.value = draft.to;
+  form.subject.value = draft.subject;
+  form.body.value = draft.body;
+  form.dataset.draftId = id;
+
+  toggleCompose(true);
+}
