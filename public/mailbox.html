@@ -108,7 +108,7 @@
       </select>
 
       <div id="send-form">
-        <input type="text" id="to" placeholder="אל: משתמש/ים" required />
+        <input type="text" id="to" placeholder="אל: משתמש/ים" required autocomplete="on" />
         <input type="text" id="subject" placeholder="נושא ההודעה" required />
         <textarea id="body" placeholder="תוכן ההודעה" rows="4" required></textarea>
         <select id="type">
@@ -117,7 +117,11 @@
           <option value="מנהלי">מנהלי</option>
           <option value="תמיכה">תמיכה</option>
         </select>
-        <input type="file" id="attachment" />
+        <input type="file" id="attachment" accept="image/*,application/pdf" />
+        <label><input type="checkbox" id="important" /> ⭐ חשוב</label>
+        <label>🕓 תזמון שליחה:
+          <input type="datetime-local" id="schedule-time" />
+        </label>
         <button type="submit">📨 שלח</button>
         <button type="button" onclick="saveDraft()">💾 שמור טיוטה</button>
       </div>
