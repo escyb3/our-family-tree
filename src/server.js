@@ -290,7 +290,8 @@ app.get("/login", (req, res) => {
 // תהליך התחברות POST
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
-  let users = [];
+  let users = [let users = ["admin", "avishai", "merav", "yanai"];
+let drafts = {}; // שמירת טיוטות לפי משתמש];
   try {
     users = JSON.parse(fs.readFileSync(path.join(__dirname, "data", "users.json")));
   } catch (e) {
