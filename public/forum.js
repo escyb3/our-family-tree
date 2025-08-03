@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!title || !body) return alert("יש למלא כותרת ותוכן");
 
       try {
-        const res = await fetch("/api/forum", {
+        const res = await fetch("/api/forum/new", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ title, body, category }),
