@@ -265,26 +265,26 @@ setInterval(() => {
 }, 30000);
 
 // 🧠 סיכום שרשור
-router.get("/api/thread/:id", (req, res) => {
+app.get("/api/thread/:id", (req, res) => {
   const thread = messages.filter(m => m.threadId === req.params.id);
   res.json({ messages: thread });
 });
 
 // 📍 מועדפים
-router.post("/api/message/:id/favorite", (req, res) => {
+app.post("/api/message/:id/favorite", (req, res) => {
   const msg = messages.find(m => m.id === req.params.id);
   if (msg) msg.favorite = !msg.favorite;
   res.json({ success: true });
 });
 
 // 📂 קבוצות
-router.get("/api/group/:name", (req, res) => {
+app.get("/api/group/:name", (req, res) => {
   const group = groups[req.params.name];
   if (!group) return res.status(404).json({ error: "Not found" });
   res.json({ members: group });
 });
 
-router.post("/api/save-draft", (req, res) => {
+app.post("/api/save-draft", (req, res) => {
   const d = req.body;
   d.id = Date.now().toString();
   d.timestamp = new Date();
@@ -293,7 +293,7 @@ router.post("/api/save-draft", (req, res) => {
 });
 
 // 📜 הודעה בודדת (ל־forward)
-router.get("/api/message/:id", (req, res) => {
+app.get("/api/message/:id", (req, res) => {
   const msg = messages.find(m => m.id === req.params.id);
   if (!msg) return res.status(404).json({ error: "Not found" });
   res.json(msg);
