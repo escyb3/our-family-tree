@@ -243,13 +243,6 @@ const groups = {
   "family@local": ["avishai@family.local", "merav@family.local", "yanai@family.local"]
 };
 
-// 🧠 תיוג AI
-router.post("/api/ask-ai", async (req, res) => {
-  const { question } = req.body;
-  const answer = `נושא משוער: משפחה`; // stub
-  res.json({ answer });
-});
-
 // 📅 תזמון שליחה
 const scheduled = [];
 router.post("/api/schedule-message", (req, res) => {
