@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const threadList = document.getElementById("threadList");
   const newThreadForm = document.getElementById("newThreadForm");
   const usernameDisplay = document.getElementById("usernameDisplay");
+  id="threadsContainer"
 
   // בדיקת משתמש מחובר
   let currentUser = null;
