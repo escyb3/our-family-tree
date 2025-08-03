@@ -63,6 +63,7 @@ textarea {
   padding: 1rem;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   transition: 0.2s ease;
+  cursor: pointer;
 }
 
 .msg-card:hover {
@@ -151,6 +152,38 @@ button.secondary:hover {
   display: block;
 }
 
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.thread-header {
+  background: #f6f8fc;
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-weight: bold;
+  border: 1px solid #dadce0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.thread-body {
+  display: none;
+  flex-direction: column;
+  padding: 0.5rem 1rem;
+}
+
+.thread.open .thread-body {
+  display: flex;
+  background: white;
+  border: 1px solid #dadce0;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 0.5rem;
@@ -168,5 +201,3 @@ button.secondary:hover {
     width: 100%;
   }
 }
-
-
