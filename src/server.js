@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const sqlite3 = require("sqlite3").verbose();
 const session = require("express-session");
 const bcrypt = require("bcrypt");
 const pdfParse = require("pdf-parse");
@@ -13,6 +14,8 @@ const ai = require("./ai");
 
 const app = express();
 const translate = new Translate({ key: process.env.GOOGLE_API_KEY });
+const db = new sqlite3.Database("./mailbox.db");
+
 
 const storage = multer.diskStorage({
   destination: path.join(__dirname, "uploads"),
