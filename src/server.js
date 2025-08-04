@@ -276,6 +276,27 @@ cron.schedule("0 8 * * *", () => {
     }
   });
 });
+// סיכום עם LocalAI
+app.post('/api/summarize', async (req, res) => {
+  const { thread } = req.body;
+  try {
+    const prompt = 'סכם את השיחה הבאה בעברית:\n' + thread;
+    const response = await fetch('http://localhost:8080/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'gpt-3.5-turbo',
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.5
+      })
+    });
+    const json = await response.json();
+    res.send(json.choices[0].message);
+  } catch (e) {
+    res.status(500).send('שגיאה בסיכום AI');
+  }
+});
+
 
 const groups = {
   "family@local": ["avishai@family.local", "merav@family.local", "yanai@family.local"]
