@@ -68,7 +68,32 @@ app.post("/api/forum/new", (req, res) => {
     });
   });
 });
+// Init tables
+const initTables = () => {
+  db.run(`CREATE TABLE IF NOT EXISTS messages (
+    id TEXT PRIMARY KEY,
+    fromUser TEXT,
+    toUser TEXT,
+    subject TEXT,
+    body TEXT,
+    type TEXT,
+    timestamp TEXT,
+    favorite INTEGER DEFAULT 0,
+    threadId TEXT
+  )`);
 
+  db.run(`CREATE TABLE IF NOT EXISTS drafts (
+    id TEXT PRIMARY KEY,
+    fromUser TEXT,
+    toUser TEXT,
+    subject TEXT,
+    body TEXT,
+    type TEXT,
+    timestamp TEXT
+  )`);
+};
+
+initTables();
 
 // טיוטות
 app.get("/api/drafts", (req, res) => {
