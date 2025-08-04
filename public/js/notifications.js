@@ -11,11 +11,6 @@ fetch("/api/user")
     console.warn("⚠️ לא הצלחנו לקבל משתמש מחובר:", err);
   });
 
-async function checkNotifications() {
-  try {
-    const res = await fetch("/api/messages");
-    const messages = await res.json();
-
     if (!Array.isArray(messages)) {
       console.warn("⚠️ תגובת הודעות אינה מערך:", messages);
       return;
