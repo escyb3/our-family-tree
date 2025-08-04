@@ -86,7 +86,17 @@ app.post("/api/save-draft", async (req, res) => {
   await db.write();
   res.json({ success: true, draft });
 });
-
+// 📈 אנליטיקה בסיסית
+app.get("/api/stats", (req, res) => {
+  db.all(`SELECT fromUser, COUNT(*) as count FROM messages GROUP BY fromUser`, [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    const stats = {
+      total: rows.reduce((a, r) => a + r.count, 0),
+      byUser: Object.fromEntries(rows.map(r => [r.fromUser, r.count]))
+    };
+    res.json(stats);
+  });
+});
 
 app.delete("/api/draft/:id", async (req, res) => {
   const result = await db.messages.deleteOne({ _id: req.params.id, from: req.user.username, draft: true });
