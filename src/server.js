@@ -24,6 +24,12 @@ const storage = multer.diskStorage({
     cb(null, uuidv4() + ext);
   }
 });
+// חיבור למסד נתונים PostgreSQL
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL || "postgresql://postgres:password@localhost/family_mail",
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
+});
+
 const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
 
 app.use(express.static("public"));
