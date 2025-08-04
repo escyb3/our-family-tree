@@ -2,171 +2,94 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>📩 תיבת הודעות</title>
-  <link rel="stylesheet" href="/style.css" />
+  <title>📬 תיבת ההודעות</title>
+  <link rel="stylesheet" href="/style.css">
   <style>
-    body {
-      font-family: sans-serif;
-      background: #f4f4f4;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
-    header {
-      background: #0b5394;
-      color: white;
-      padding: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    header h1 { margin: 0; font-size: 1.5rem; }
-    #compose-toggle {
-      background: #00aaff;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .main {
-      display: flex;
-      flex: 1;
-      overflow: hidden;
-    }
-    .sidebar {
-      width: 250px;
-      background: #fff;
-      border-left: 1px solid #ccc;
-      padding: 1rem;
-      box-shadow: -2px 0 5px rgba(0,0,0,0.05);
-    }
-    .content {
-      flex: 1;
-      padding: 1rem;
-      overflow-y: auto;
-    }
-    .msg-card {
-      background: white;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 6px;
-      box-shadow: 0 0 4px rgba(0,0,0,0.1);
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .msg-card:hover { background: #eef; }
-    .msg-card.unread { font-weight: bold; background: #fdfdfd; }
-    .reply { margin-top: 0.5rem; border-right: 2px solid #ccc; padding-right: 0.5rem; }
-    #send-form {
-      display: none;
-      flex-direction: column;
-      gap: 0.5rem;
-      background: white;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 0 6px rgba(0,0,0,0.1);
-    }
+    body { font-family: sans-serif; background: #f7f9fc; margin: 0; }
+    header { background: #0057a3; color: white; padding: 1rem; font-size: 1.5rem; text-align: center; position: relative; }
+    #compose-toggle { position: absolute; left: 1rem; top: 1rem; background: #fff; color: #0057a3; border: none; padding: 0.4rem 1rem; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    .container { display: flex; max-width: 1200px; margin: auto; gap: 1rem; padding: 1rem; }
+    #inbox-list, #preview-pane { flex: 1; background: white; border-radius: 8px; box-shadow: 0 0 6px rgba(0,0,0,0.1); padding: 1rem; overflow-y: auto; max-height: 80vh; }
+    .msg-card { border-bottom: 1px solid #ddd; padding: 0.5rem; cursor: pointer; }
+    .msg-card.unread { background: #eef; font-weight: bold; }
+    #send-form { display: none; flex-direction: column; gap: 0.5rem; background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 0 6px rgba(0,0,0,0.1); margin: 1rem auto; max-width: 700px; }
     #send-form.show { display: flex; }
-    input, textarea, select {
-      padding: 0.5rem;
-      font-size: 1rem;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
-    button { cursor: pointer; }
-    #preview-content {
-      background: #fff;
-      padding: 1rem;
-      border-radius: 6px;
-      box-shadow: 0 0 4px rgba(0,0,0,0.1);
-    }
+    input, textarea, select { padding: 0.5rem; font-size: 1rem; width: 100%; border: 1px solid #ccc; border-radius: 6px; }
+    button { padding: 0.5rem 1rem; border: none; border-radius: 6px; cursor: pointer; }
+    .filters { display: flex; gap: 1rem; margin: 1rem; }
+    #autocomplete-box { background: white; border: 1px solid #ccc; position: absolute; z-index: 1000; max-height: 200px; overflow-y: auto; }
+    #autocomplete-box div { padding: 5px; cursor: pointer; }
+    #autocomplete-box div:hover { background: #eef; }
   </style>
 </head>
 <body>
-  <div id="user-profile" style="text-align:left; padding: 0.5rem;"></div>
-
-<script>
-  fetch("/api/user")
-    .then(res => res.json())
-    .then(user => {
-      if (user.username)
-        document.getElementById("user-profile").innerHTML = `
-          <span style="font-weight:bold;">${user.username}</span>
-          <span style="color:gray;">(${user.role})</span>
-          <a href="/logout" style="margin-right:10px; color: red;">התנתק</a>
-        `;
-    });
   <header>
-    <h1>📩 תיבת ההודעות</h1>
-    <button id="compose-toggle">📝 Compose</button>
+    תיבת ההודעות שלי
+    <button id="compose-toggle">✉️ כתוב הודעה</button>
   </header>
-    <div id="send-form">
-        <input type="text" id="to" placeholder="אל: משתמש/ים" required autocomplete="on" />
-        <input type="text" id="subject" placeholder="נושא ההודעה" required />
-        <textarea id="body" placeholder="תוכן ההודעה" rows="4" required></textarea>
-        <select id="type">
-          <option value="אישי">אישי</option>
-          <option value="משפחתי">משפחתי</option>
-          <option value="מנהלי">מנהלי</option>
-          <option value="תמיכה">תמיכה</option>
-        </select>
-        <input type="file" id="attachment" accept="image/*,application/pdf" />
-        <label><input type="checkbox" id="important" /> ⭐ חשוב</label>
-        <label>🕓 תזמון שליחה:
-          <input type="datetime-local" id="schedule-time" />
-        </label>
-        <button type="submit">📨 שלח</button>
-        <button type="button" onclick="saveDraft()">💾 שמור טיוטה</button>
-      </div>
 
-  <div class="main">
-    <div class="content">
-      <input id="search" placeholder="🔍 חפש נושא או שולח..." />
-      <select id="tag-filter">
-        <option value="">🗂️ כל הסוגים</option>
-        <option value="משפחתי">משפחתי</option>
-        <option value="אישי">אישי</option>
-        <option value="מנהלי">מנהלי</option>
-        <option value="תמיכה">תמיכה</option>
-      </select>
-      <input type="date" id="date-filter" />
-      <select id="sort-mode">
-        <option value="inbox">📥 התקבלו</option>
-        <option value="sent">📤 נשלחו</option>
-      </select>
-
-      <div id="drafts-container"></div>
-      <div id="messages"></div>
-      <div id="preview-content">📭 אין הודעה נבחרת</div>
-    </div>
-
-    <div class="sidebar">
-      <h3>👤 אנשי קשר</h3>
-      <ul id="contact-list"></ul>
-      <h3>📊 סטטיסטיקות</h3>
-      <div id="stats-content"></div>
-      <h3>🧠 סיכום AI</h3>
-      <input type="text" id="thread-id" placeholder="מזהה שיחה" />
-      <button onclick="summarizeThread()">סכם</button>
-      <div id="thread-summary"></div>
-    </div>
+  <div class="filters">
+    <input id="search" placeholder="🔎 חפש לפי שולח/נושא">
+    <select id="tag-filter">
+      <option value="">🗂️ כל הסוגים</option>
+      <option value="אישי">אישי</option>
+      <option value="משפחתי">משפחתי</option>
+      <option value="מנהלי">מנהלי</option>
+      <option value="תמיכה">תמיכה</option>
+    </select>
+    <input id="date-filter" type="date">
+    <select id="sort-mode">
+      <option value="received">📥 התקבלו</option>
+      <option value="sent">📤 נשלחו</option>
+    </select>
   </div>
 
-  <script src="/js/inbox.js"></script>
+  <div class="container">
+    <div id="inbox-list">⏳ טוען הודעות...</div>
+    <div id="preview-pane">👁️ בחר הודעה לצפייה</div>
+  </div>
+
+  <form id="send-form">
+    <h3>✉️ הודעה חדשה</h3>
+    <input id="to" placeholder="אל: username@family.local" autocomplete="off">
+    <div id="autocomplete-box"></div>
+    <input id="subject" placeholder="נושא">
+    <textarea id="body" placeholder="תוכן ההודעה" rows="4"></textarea>
+    <select id="type">
+      <option value="אישי">אישי</option>
+      <option value="משפחתי">משפחתי</option>
+      <option value="מנהלי">מנהלי</option>
+      <option value="תמיכה">תמיכה</option>
+    </select>
+    <input type="file" id="attachment">
+    <input type="datetime-local" id="schedule-at" placeholder="שליחה מתוזמנת (רשות)">
+    <button type="submit">📨 שלח</button>
+    <button type="button" onclick="saveDraft()">💾 שמור טיוטה</button>
+  </form>
+
+  <section class="container">
+    <div style="flex: 1">
+      <h3>🧠 סיכום אוטומטי</h3>
+      <div class="thread-actions">
+        <input id="thread-id" placeholder="מזהה הודעה">
+        <button onclick="summarizeThread()">סכם עם GPT</button>
+      </div>
+      <div id="thread-summary"></div>
+    </div>
+
+    <div style="flex: 1">
+      <h3>📝 טיוטות</h3>
+      <div id="drafts-container">...</div>
+    </div>
+  </section>
+
   <script src="/js/inbox-ui.js"></script>
-  <script src="/js/contacts.js"></script>
-  <script src="/js/stats.js"></script>
-  <script src="/js/inbox-ai.js"></script>
-  <script src="/js/notifications.js"></script>
+  <script src="/js/inbox.js"></script>
   <script src="/js/compose-ui.js"></script>
   <script src="/js/drafts.js"></script>
-  <script src="/js/compose-ui.js"></script>
-<script src="/js/drafts.js"></script>
-<script src="/js/autocomplete.js"></script>
-<script src="/js/forward.js"></script>
-
+  <script src="/js/autocomplete.js"></script>
+  <script src="/js/forward.js"></script>
+  <script src="/js/inbox-ai.js"></script>
+  <script src="/js/notifications.js"></script>
 </body>
 </html>
