@@ -1,29 +1,38 @@
 // js/inbox.js - גרסה מתוקנת עם טיוטות, מחיקה, עריכה, תיוג חשוב, תגובות ו-thumbnails
+
+// הגדרת משתנים גלובליים
 const inboxContainer = document.getElementById("messages");
 const form = document.getElementById("send-form");
 const search = document.getElementById("search");
 const tagFilter = document.getElementById("tag-filter");
 const draftsList = document.getElementById("drafts-list");
-const username = localStorage.getItem("username");
-const currentUser = username + "@family.local";
+const usernameDisplay = document.getElementById("username-display"); // הוספתי הגדרה זו
 
-  // בדיקת משתמש מחובר
-  let currentUser = null;
+// הגדרת currentUser במקום אחד ובאופן בטוח
+let currentUser = null;
+
+// פונקציה אסינכרונית לטעינת נתונים ראשוניים ובדיקת משתמש
+async function initialize() {
   try {
     const res = await fetch("/api/user");
     if (res.ok) {
       const user = await res.json();
-      currentUser = user;
+      currentUser = user.username; // שומרים את שם המשתמש
       if (usernameDisplay) {
         usernameDisplay.textContent = `מחובר כ־${user.username}`;
       }
     } else {
+      // אם לא מחובר, מפנים לדף התחברות
       location.href = "/login.html";
     }
   } catch (err) {
     console.error("שגיאה בבדיקת התחברות:", err);
     location.href = "/login.html";
   }
+
+  // טוען הודעות רק לאחר שהמשתמש אומת
+  loadMessages();
+}
 
 const drafts = JSON.parse(localStorage.getItem("drafts") || "[]");
 renderDrafts();
@@ -114,6 +123,7 @@ function deleteDraft(i) {
 }
 
 async function loadMessages() {
+  if (!currentUser) return; // לא טוען הודעות אם המשתמש לא אומת
   const res = await fetch("/api/messages");
   const messages = await res.json();
 
@@ -125,6 +135,7 @@ async function loadMessages() {
     const matchSearch = m.subject.toLowerCase().includes(q) || m.from.toLowerCase().includes(q);
     const matchTag = !tag || m.type === tag;
     const matchDate = !date || (m.timestamp && m.timestamp.startsWith(date));
+    // עדכון: משווים ל-currentUser ישירות
     const matchBox = mode === "sent" ? m.from === currentUser : m.to.includes(currentUser);
     return matchSearch && matchTag && matchDate && matchBox;
   });
@@ -137,11 +148,19 @@ async function loadMessages() {
       <br><span class="reply-count">🔁 ${msg.replies?.length || 0} תגובות</span>
       <button onclick='preview(${JSON.stringify(msg)})'>👁️ צפייה</button>
       <button onclick='markImportant(${JSON.stringify(msg)})'>⭐ חשוב</button>
+      <button onclick='forwardMessage(${JSON.stringify(msg)})'>📤 העבר</button>
     </div>
   `).join("");
 }
-<button onclick='forwardMessage(${JSON.stringify(msg)})'>📤 העבר</button>
 
+// פונקציה חדשה: העברת הודעה
+function forwardMessage(msg) {
+  form.subject.value = `הועבר: ${msg.subject}`;
+  form.body.value = `--- הודעה מקורית ---\nמאת: ${msg.from}\nתוכן: ${msg.body}\n---------------------\n\n`;
+  toggleCompose(true);
+}
+
+// פונקציה חדשה: תצוגה מקדימה
 function preview(msg) {
   const el = document.getElementById("preview-content");
   el.innerHTML = `
@@ -167,4 +186,5 @@ tagFilter.onchange = loadMessages;
 document.getElementById("date-filter").onchange = loadMessages;
 document.getElementById("sort-mode").onchange = loadMessages;
 
-loadMessages();
+// מריצים את פונקציית האתחול
+initialize();
