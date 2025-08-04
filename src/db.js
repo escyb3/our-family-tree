@@ -1,38 +1,38 @@
-// server/db.js
-const Database = require('better-sqlite3');
-const db = new Database('./data/mailbox.db');
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('./data/family_mail.sqlite');
 
-// יצירת טבלאות אם לא קיימות
-db.exec(`
-CREATE TABLE IF NOT EXISTS messages (
-  id TEXT PRIMARY KEY,
-  fromUser TEXT,
-  toUser TEXT,
-  subject TEXT,
-  body TEXT,
-  type TEXT,
-  timestamp TEXT,
-  seen INTEGER DEFAULT 0,
-  threadId TEXT,
-  favorite INTEGER DEFAULT 0,
-  attachment TEXT,
-  sendAt TEXT
-);
+// יצירת טבלאות בסיס
+const init = () => {
+  db.run(`CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE,
+    password TEXT,
+    email TEXT,
+    role TEXT DEFAULT 'user'
+  )`);
 
-CREATE TABLE IF NOT EXISTS drafts (
-  id TEXT PRIMARY KEY,
-  fromUser TEXT,
-  toUser TEXT,
-  subject TEXT,
-  body TEXT,
-  type TEXT,
-  timestamp TEXT,
-  attachment TEXT
-);
+  db.run(`CREATE TABLE IF NOT EXISTS messages (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fromUser TEXT,
+    toUser TEXT,
+    subject TEXT,
+    body TEXT,
+    type TEXT,
+    seen BOOLEAN DEFAULT 0,
+    timestamp TEXT,
+    attachment TEXT,
+    isDraft BOOLEAN DEFAULT 0,
+    scheduledAt TEXT,
+    encrypted BOOLEAN DEFAULT 0
+  )`);
 
-CREATE TABLE IF NOT EXISTS users (
-  username TEXT PRIMARY KEY
-);
-`);
+  db.run(`CREATE TABLE IF NOT EXISTS replies (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    messageId INTEGER,
+    fromUser TEXT,
+    body TEXT,
+    timestamp TEXT
+  )`);
+};
 
-module.exports = db;
+module.exports = { db, init };
