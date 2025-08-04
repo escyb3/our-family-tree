@@ -1,10 +1,10 @@
 // js/forward.js
-
-function forwardMessage(msg) {
-  const form = document.getElementById("send-form");
+async function forwardMessage(id) {
+  const res = await fetch(`/api/message/${id}`);
+  const m = await res.json();
+  document.getElementById("to").value = "";
+  document.getElementById("subject").value = "Fw: " + m.subject;
+  document.getElementById("body").value = `-- Forwarded --\nFrom: ${m.fromUser}\n${m.body}`;
+  document.getElementById("type").value = m.type;
   toggleCompose(true);
-
-  form.subject.value = "Fw: " + msg.subject;
-  form.body.value = `---------- הודעה מועברת ----------\nמאת: ${msg.from}\nתאריך: ${new Date(msg.timestamp).toLocaleString()}\n\n${msg.body}`;
-  form.to.focus();
 }
