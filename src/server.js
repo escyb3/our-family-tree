@@ -5,6 +5,7 @@ const fs = require("fs");
 const sqlite3 = require("sqlite3").verbose();
 const session = require("express-session");
 const bcrypt = require("bcrypt");
+const pg = require("pg");
 const pdfParse = require("pdf-parse");
 const { v4: uuidv4 } = require("uuid");
 const nodemailer = require("nodemailer");
