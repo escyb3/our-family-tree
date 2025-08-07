@@ -12,6 +12,9 @@ const nodemailer = require("nodemailer");
 const cron = require("node-cron");
 const { Translate } = require("@google-cloud/translate").v2;
 const ai = require("./ai");
+const fetch = require("node-fetch");
+const crypto = require("crypto");
+const cors = require("cors");
 
 const app = express();
 const translate = new Translate({ key: process.env.GOOGLE_API_KEY });
