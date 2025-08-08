@@ -1,95 +1,177 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>📬 תיבת ההודעות</title>
-  <link rel="stylesheet" href="/style.css">
+  <meta charset="utf-8" />
+  <title>📬 תיבת הודעות חכמה</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/css/mailbox.css" />
   <style>
-    body { font-family: sans-serif; background: #f7f9fc; margin: 0; }
-    header { background: #0057a3; color: white; padding: 1rem; font-size: 1.5rem; text-align: center; position: relative; }
-    #compose-toggle { position: absolute; left: 1rem; top: 1rem; background: #fff; color: #0057a3; border: none; padding: 0.4rem 1rem; border-radius: 8px; font-weight: bold; cursor: pointer; }
-    .container { display: flex; max-width: 1200px; margin: auto; gap: 1rem; padding: 1rem; }
-    #inbox-list, #preview-pane { flex: 1; background: white; border-radius: 8px; box-shadow: 0 0 6px rgba(0,0,0,0.1); padding: 1rem; overflow-y: auto; max-height: 80vh; }
-    .msg-card { border-bottom: 1px solid #ddd; padding: 0.5rem; cursor: pointer; }
-    .msg-card.unread { background: #eef; font-weight: bold; }
-    #send-form { display: none; flex-direction: column; gap: 0.5rem; background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 0 6px rgba(0,0,0,0.1); margin: 1rem auto; max-width: 700px; }
-    #send-form.show { display: flex; }
-    input, textarea, select { padding: 0.5rem; font-size: 1rem; width: 100%; border: 1px solid #ccc; border-radius: 6px; }
-    button { padding: 0.5rem 1rem; border: none; border-radius: 6px; cursor: pointer; }
-    .filters { display: flex; gap: 1rem; margin: 1rem; }
-    #autocomplete-box { background: white; border: 1px solid #ccc; position: absolute; z-index: 1000; max-height: 200px; overflow-y: auto; }
-    #autocomplete-box div { padding: 5px; cursor: pointer; }
-    #autocomplete-box div:hover { background: #eef; }
+    /* מינימלי — תוכל להחליף בקובץ CSS חיצוני */
+    :root{
+      --bg:#f6f8fb; --card:#fff; --accent:#1a73e8; --muted:#6b7280; --danger:#dc2626;
+      --tag-family:#ffd6d0; --tag-work:#d6f5ff; --tag-shabbat:#fff2cc;
+    }
+    body{font-family:system-ui, -apple-system, "Segoe UI", Roboto; background:var(--bg); margin:0; color:#111;}
+    header{background:var(--accent); color:white; padding:12px 16px; display:flex; align-items:center; gap:12px;}
+    header h1{margin:0; font-size:18px;}
+    header .right{margin-left:auto; display:flex; gap:10px; align-items:center;}
+    .container{max-width:1100px; margin:18px auto; display:grid; grid-template-columns:320px 1fr 420px; gap:16px; padding:0 12px;}
+    .sidebar{background:var(--card); padding:12px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,.06);}
+    .compose-btn{display:block;background:var(--accent); color:white; border:none; border-radius:8px; padding:10px 12px; font-weight:600; cursor:pointer; width:100%;}
+    .search{display:flex; gap:8px; margin:8px 0;}
+    .search input{flex:1; padding:8px; border-radius:8px; border:1px solid #ddd;}
+    .folders, .tags, .contacts {margin-top:12px;}
+    .folders button{display:flex; justify-content:space-between; width:100%; padding:8px; border:none; background:transparent; cursor:pointer; border-radius:6px; text-align:right;}
+    .list-item{display:flex; gap:8px; align-items:center; padding:8px; border-radius:8px; cursor:pointer;}
+    .list-item:hover{background:#f1f5f9;}
+    .inbox-center{display:flex; flex-direction:column; gap:12px;}
+    .controls{display:flex; gap:8px; align-items:center;}
+    .messages-list{background:var(--card); border-radius:10px; padding:8px; min-height:400px; box-shadow:0 2px 8px rgba(0,0,0,.04); overflow:auto;}
+    .msg-row{display:flex; gap:12px; padding:10px; border-radius:8px; align-items:center; cursor:pointer; border-bottom:1px solid #f3f4f6;}
+    .msg-row.unread{background:linear-gradient(90deg,#eaf3ff00,#eaf3ff); font-weight:600;}
+    .msg-meta{flex:1;}
+    .msg-sub{color:var(--muted);}
+    .preview-pane{background:var(--card); border-radius:10px; padding:12px; box-shadow:0 2px 8px rgba(0,0,0,.04); min-height:400px; overflow:auto;}
+    .thread{border-top:1px solid #eee; padding-top:8px; margin-top:8px;}
+    .tag-chip{padding:4px 8px; border-radius:16px; font-size:12px;}
+    .dark { background: #0b1220; color: #e6eef8; }
+    .hidden{display:none;}
+    .compose-modal{position:fixed; right:50%; transform:translateX(50%); top:80px; width:720px; max-width:96%; z-index:1200;}
+    @media (max-width:1000px){ .container{grid-template-columns:1fr; } .preview-pane{order:3} .inbox-center{order:2} .sidebar{order:1}}
+    /* file icons */
+    .file-icon{width:40px;height:40px;border-radius:6px;background:#f3f6fb;display:flex;align-items:center;justify-content:center;font-weight:700}
   </style>
 </head>
 <body>
   <header>
-    תיבת ההודעות שלי
-    <button id="compose-toggle">✉️ כתוב הודעה</button>
+    <h1>📬 תיבת ההודעות</h1>
+    <div class="right">
+      <button id="dark-toggle" title="מצב לילה">🌙</button>
+      <div id="user-label">טעינה...</div>
+    </div>
   </header>
 
-  <div class="filters">
-    <input id="search" placeholder="🔎 חפש לפי שולח/נושא">
-    <select id="tag-filter">
-      <option value="">🗂️ כל הסוגים</option>
-      <option value="אישי">אישי</option>
-      <option value="משפחתי">משפחתי</option>
-      <option value="מנהלי">מנהלי</option>
-      <option value="תמיכה">תמיכה</option>
-    </select>
-    <input id="date-filter" type="date">
-    <select id="sort-mode">
-      <option value="received">📥 התקבלו</option>
-      <option value="sent">📤 נשלחו</option>
-    </select>
-  </div>
-
   <div class="container">
-    <div id="inbox-list">⏳ טוען הודעות...</div>
-    <div id="preview-pane">👁️ בחר הודעה לצפייה</div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <button class="compose-btn" id="compose-toggle">✍️ Compose</button>
+
+      <div class="search">
+        <input id="global-search" placeholder="🔎 חיפוש מהיר (שולח/נושא/תג)" />
+        <select id="sort-mode" title="מיון">
+          <option value="received">ממויין: התקבלו</option>
+          <option value="sent">ממויין: נשלחו</option>
+          <option value="important">ממויין: חשוב</option>
+        </select>
+      </div>
+
+      <div class="folders">
+        <h4>תיקיות</h4>
+        <div class="list-item" data-folder="inbox"><span>📥 תיבת נכנסים</span><small id="count-inbox" style="margin-left:auto"></small></div>
+        <div class="list-item" data-folder="sent"><span>📤 נשלחו</span></div>
+        <div class="list-item" data-folder="drafts"><span>📝 טיוטות</span></div>
+        <div class="list-item" data-folder="trash"><span>🗑️ סל מחזור</span></div>
+        <div class="list-item" data-folder="starred"><span>⭐ מועדפים</span></div>
+      </div>
+
+      <div class="tags">
+        <h4>תגים מותאמים</h4>
+        <div id="tags-container">
+          <!-- דינמי -->
+        </div>
+        <button id="add-tag">+ הוסף תג</button>
+      </div>
+
+      <div class="contacts" style="margin-top:12px;">
+        <h4>אנשי קשר</h4>
+        <ul id="contact-list" style="padding:0; list-style:none; margin:0;"></ul>
+      </div>
+    </aside>
+
+    <!-- CENTER: MESSAGES LIST -->
+    <section class="inbox-center">
+      <div class="controls">
+        <button id="refresh-btn">🔄 רענן</button>
+        <label><input type="checkbox" id="group-by-thread" /> קיבוץ לפי שיחה</label>
+        <label><input type="checkbox" id="auto-summary" /> סיכום אוטומטי בפתיחה</label>
+        <select id="date-filter">
+          <option value="">כל התאריכים</option>
+          <option value="7">7 ימים</option>
+          <option value="30">30 ימים</option>
+        </select>
+      </div>
+
+      <div class="messages-list" id="messages-list" aria-live="polite">
+        <!-- שורות הודעות -->
+      </div>
+    </section>
+
+    <!-- RIGHT: PREVIEW & THREAD -->
+    <aside class="preview-pane">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h3 id="preview-subject">בחר הודעה להצגה</h3>
+          <div id="preview-meta" style="color:var(--muted)"></div>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button id="pin-btn">📌</button>
+          <button id="fav-btn">⭐</button>
+          <button id="remind-btn">⏰ תזכורת</button>
+        </div>
+      </div>
+
+      <div id="preview-body" style="margin-top:8px;"></div>
+
+      <div id="attachments-area" style="margin-top:12px;"></div>
+
+      <div id="thread-area" class="thread"></div>
+
+      <div style="margin-top:12px; display:flex; gap:8px; align-items:center;">
+        <button id="reply-btn">🔁 השב</button>
+        <button id="forward-btn">🔀 העבר</button>
+        <button id="ai-reply-btn">🧠 הצע מענה חכם</button>
+      </div>
+
+      <div id="summary-area" style="margin-top:8px; background:#fff; padding:8px; border-radius:8px;"></div>
+    </aside>
   </div>
 
-  <form id="send-form">
-    <h3>✉️ הודעה חדשה</h3>
-    <input id="to" placeholder="אל: username@family.local" autocomplete="off">
-    <div id="autocomplete-box"></div>
-    <input id="subject" placeholder="נושא">
-    <textarea id="body" placeholder="תוכן ההודעה" rows="4"></textarea>
-    <select id="type">
-      <option value="אישי">אישי</option>
-      <option value="משפחתי">משפחתי</option>
-      <option value="מנהלי">מנהלי</option>
-      <option value="תמיכה">תמיכה</option>
-    </select>
-    <input type="file" id="attachment">
-    <input type="datetime-local" id="schedule-at" placeholder="שליחה מתוזמנת (רשות)">
-    <button type="submit">📨 שלח</button>
-    <button type="button" onclick="saveDraft()">💾 שמור טיוטה</button>
-  </form>
+  <!-- Compose modal (hidden) -->
+  <div id="compose-modal" class="compose-modal hidden" role="dialog" aria-hidden="true">
+    <div style="background:var(--card); padding:12px; border-radius:10px; box-shadow:0 6px 20px rgba(0,0,0,.12);">
+      <h3>✉️ שלח הודעה</h3>
+      <form id="compose-form">
+        <div style="display:flex; gap:8px;">
+          <input id="compose-to" placeholder="אל: user@family.local, או קבוצה group@family.local" style="flex:1;padding:8px;border-radius:8px;border:1px solid #ddd" />
+          <input id="compose-subject" placeholder="נושא" style="width:220px;padding:8px;border-radius:8px;border:1px solid #ddd" />
+        </div>
+        <textarea id="compose-body" rows="6" placeholder="כתוב כאן..." style="width:100%;margin-top:8px;padding:8px;border-radius:8px;border:1px solid #ddd"></textarea>
 
-  <section class="container">
-    <div style="flex: 1">
-      <h3>🧠 סיכום אוטומטי</h3>
-      <div class="thread-actions">
-        <input id="thread-id" placeholder="מזהה הודעה">
-        <button onclick="summarizeThread()">סכם עם GPT</button>
-      </div>
-      <div id="thread-summary"></div>
+        <div style="display:flex; gap:8px; align-items:center; margin-top:8px;">
+          <input type="file" id="compose-attachment" />
+          <select id="compose-type">
+            <option value="family">משפחתי</option><option value="personal">אישי</option><option value="admin">מנהלי</option>
+          </select>
+          <button type="button" id="send-now" class="compose-send">📨 שלח עכשיו</button>
+          <button type="button" id="save-draft">💾 שמור טיוטה</button>
+          <div style="margin-left:auto; color:var(--muted); font-size:12px;">Ctrl+Enter לשליחה מהירה</div>
+        </div>
+        <div id="compose-autosave" style="margin-top:6px; font-size:12px; color:var(--muted)"></div>
+      </form>
     </div>
+  </div>
 
-    <div style="flex: 1">
-      <h3>📝 טיוטות</h3>
-      <div id="drafts-container">...</div>
-    </div>
-  </section>
-
+  <!-- Script imports -->
+  <script src="/js/auth.js"></script>
   <script src="/js/inbox-ui.js"></script>
-  <script src="/js/inbox.js"></script>
-  <script src="/js/compose-ui.js"></script>
+  <script src="/js/compose.js"></script>
   <script src="/js/drafts.js"></script>
-  <script src="/js/autocomplete.js"></script>
-  <script src="/js/forward.js"></script>
-  <script src="/js/inbox-ai.js"></script>
+  <script src="/js/attachments.js"></script>
+  <script src="/js/contacts.js"></script>
   <script src="/js/notifications.js"></script>
+  <script src="/js/ai.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/calendar.js"></script>
+  <script src="/js/dashboard.js"></script>
 </body>
 </html>
