@@ -1073,6 +1073,24 @@ app.post("/api/forum/thread/:id/reply", (req, res) => {
   saveForum(threads);
   res.json({ success: true });
 });
+// 🧠 אינטגרציית AI (LocalAI)
+app.post("/api/ai/summarize", async (req, res) => {
+  try {
+    const { text } = req.body;
+    const aiRes = await fetch(`${process.env.LOCALAI_URL}/chat/completions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo", // או כל מודל שיש לך ב-LocalAI
+        messages: [{ role: "system", content: "סכם את ההודעה בקצרה" }, { role: "user", content: text }]
+      })
+    });
+    const data = await aiRes.json();
+    res.json({ summary: data.choices?.[0]?.message?.content || "" });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
 
 
 // הפעלת השרת
