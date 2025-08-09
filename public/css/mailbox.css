@@ -1,3 +1,16 @@
-/* public/css/mailbox.css */
-/* נמנע here long styles — השתמש בעיצוב מהמקטע inline או החלף */
-body.dark { background:#071026; color:#e6eef8; }
+:root{--bg:#f6f8fb;--card:#fff;--accent:#1a73e8;--muted:#666}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);margin:0}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:var(--accent);color:#fff}
+.brand{font-weight:700}
+.layout{display:flex;height:calc(100vh - 56px)}
+.sidebar{width:260px;padding:12px;background:#fff;border-left:1px solid #e6e6e6;overflow:auto}
+.main{flex:1;padding:12px;overflow:auto}
+.preview-pane{width:360px;padding:12px;background:#fff;border-right:1px solid #e6e6e6;overflow:auto}
+.inbox-list .msg{display:flex;justify-content:space-between;padding:12px;border-bottom:1px solid #eee;cursor:pointer}
+.inbox-list .msg.unread{background:linear-gradient(90deg,#eef6ff,#fff)}
+.btn{padding:8px 10px;border-radius:6px;border:0;cursor:pointer;background:#eee}
+.btn.primary{background:var(--accent);color:white}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center}
+.modal.hidden{display:none}
+.compose-form{background:#fff;padding:16px;border-radius:8px;width:640px;max-width:95%}
+.thumb{width:64px;height:64px;object-fit:cover;margin:4px}
