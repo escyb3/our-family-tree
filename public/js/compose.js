@@ -38,14 +38,24 @@
     const subject = document.getElementById('compose-subject').value;
     const body = document.getElementById('compose-body').value;
     const type = document.getElementById('compose-type').value;
-    const fd = new FormData();
-    fd.append('to', to);
-    fd.append('subject', subject);
-    fd.append('body', body);
-    fd.append('type', type);
-    if (ATTACH.files[0]) fd.append('attachment', ATTACH.files[0]);
+
+    // יצירת אובייקט JSON במקום FormData
+    const messageData = {
+      to: to,
+      subject: subject,
+      body: body,
+      type: type
+    };
+
     try {
-      const res = await fetch('/api/send', { method:'POST', body: fd });
+      // שליחת נתונים בפורמט JSON
+      const res = await fetch('/api/send', {
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(messageData)
+      });
       if (!res.ok) throw new Error('send failed');
       autosaveIndicator.textContent = 'נשלח בהצלחה';
       form.reset();
