@@ -4,9 +4,10 @@
   const list = document.getElementById('messages-list') || document.getElementById('drafts-list');
   async function loadDrafts(){
     try {
-      const res = await fetch('/api/drafts');
-      if (!res.ok) throw new Error('no drafts');
-      const drafts = await res.json();
+// קוד יעיל: טוען רק את הטיוטה הספציפית
+const res = await fetch(`/api/drafts/${id}`);
+if (!res.ok) throw new Error('טיוטה לא נמצאה');
+const d = await res.json();
       renderDrafts(drafts);
     } catch (e) {
       console.error('❌ שגיאה בטעינת טיוטות:', e);
