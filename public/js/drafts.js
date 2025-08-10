@@ -5,7 +5,7 @@
   async function loadDrafts(){
     try {
 // קוד יעיל: טוען רק את הטיוטה הספציפית
-const res = await fetch(`/api/drafts/${id}`);
+const res = await fetch(`/api/drafts`);
 if (!res.ok) throw new Error('טיוטה לא נמצאה');
 const d = await res.json();
       renderDrafts(drafts);
