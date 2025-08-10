@@ -169,7 +169,7 @@ app.get("/api/drafts", (req, res) => {
 
 app.post("/api/save-draft", async (req, res) => {
   const { to, subject, body, type, from } = req.body;
-  const draft = { id: uuid(), to, subject, body, type, from, draft: true, timestamp: new Date().toISOString() };
+  const draft = { id: uuidv4(), to, subject, body, type, from, draft: true, timestamp: new Date().toISOString() };
   db.data.messages.push(draft);
   await db.write();
   res.json({ success: true, draft });
