@@ -41,7 +41,26 @@ app.use(express.static("public"));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.json());
 
+// נתיבי קבצים גלובליים
+const dataDir = path.join(__dirname, "data");
+const messagesPath = path.join(dataDir, "messages.json");
+const draftsPath = path.join(dataDir, "drafts.json");
+const statsPath = path.join(dataDir, "stats.json");
 const forumFile = path.join(__dirname, "data", "forum.json");
+// --- אתחול קבצי נתונים: ודא שהקבצים קיימים לפני שהשרת מתחיל ---
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir);
+}
+if (!fs.existsSync(messagesPath)) {
+  fs.writeFileSync(messagesPath, JSON.stringify([], null, 2));
+}
+if (!fs.existsSync(draftsPath)) {
+  fs.writeFileSync(draftsPath, JSON.stringify([], null, 2));
+}
+if (!fs.existsSync(statsPath)) {
+  fs.writeFileSync(statsPath, JSON.stringify({}, null, 2));
+}
+// -----------------------------------------------------------
 
 // יצירת קובץ הפורום אם לא קיים
 if (!fs.existsSync(forumFile)) {
