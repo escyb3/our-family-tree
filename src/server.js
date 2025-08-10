@@ -127,9 +127,8 @@ app.get('/api/drafts', async (req, res) => {
 // --- נתיבים לטיפול בטיוטות ---
 
 // GET /api/drafts: שליפת כל הטיוטות של המשתמש
-app.get('/api/drafts', (req, res) => {
+app.get('/api/drafts', ensureAuthenticated, (req, res) => {
     const user = req.session.user;
-    if (!user) return res.status(401).json({ error: 'Unauthorized' });
 
     try {
         const draftsRaw = fs.readFileSync(draftsPath, 'utf8');
@@ -138,15 +137,14 @@ app.get('/api/drafts', (req, res) => {
         res.json(userDrafts);
     } catch (err) {
         console.error('שגיאה בשליפת טיוטות:', err);
-        res.status(500).json({ error: 'שגיאה בשרת' });
+        // במקרה של שגיאה, נחזיר מערך ריק כדי למנוע קריסה
+        res.status(500).json({ error: 'שגיאה בשרת, נתוני טיוטות לא תקינים' });
     }
 });
 
 // POST /api/drafts: שמירה או עדכון של טיוטה
-app.post('/api/drafts', (req, res) => {
+app.post('/api/drafts', ensureAuthenticated, (req, res) => {
     const user = req.session.user;
-    if (!user) return res.status(401).json({ error: 'Unauthorized' });
-
     const { id, to, subject, body } = req.body;
     let drafts = [];
 
@@ -155,7 +153,7 @@ app.post('/api/drafts', (req, res) => {
         drafts = JSON.parse(draftsRaw);
     } catch (err) {
         console.error('שגיאה בקריאת טיוטות:', err);
-        // אם הקובץ לא קיים, ניצור מערך ריק
+        // אם הקובץ לא קיים או ריק, ניצור מערך ריק
     }
 
     if (id) {
@@ -191,17 +189,14 @@ app.post('/api/drafts', (req, res) => {
 });
 
 // DELETE /api/drafts/:id: מחיקת טיוטה
-app.delete('/api/drafts/:id', (req, res) => {
+app.delete('/api/drafts/:id', ensureAuthenticated, (req, res) => {
     const user = req.session.user;
-    if (!user) return res.status(401).json({ error: 'Unauthorized' });
-
     const draftId = req.params.id;
 
     try {
         const draftsRaw = fs.readFileSync(draftsPath, 'utf8');
         let drafts = JSON.parse(draftsRaw);
         
-        // סינון הטיוטה למחיקה (מוודאים שהיא שייכת למשתמש המחובר)
         const updatedDrafts = drafts.filter(d => d.id !== draftId || d.from !== user.username);
         
         fs.writeFileSync(draftsPath, JSON.stringify(updatedDrafts, null, 2));
