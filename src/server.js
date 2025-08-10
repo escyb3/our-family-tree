@@ -19,6 +19,7 @@ const cors = require("cors");
 const app = express();
 const translate = new Translate({ key: process.env.GOOGLE_API_KEY });
 const db = new sqlite3.Database("./mailbox.db");
+const usersPath = path.join(__dirname, "data", "users.json");
 
 
 const storage = multer.diskStorage({
