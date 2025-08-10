@@ -233,6 +233,28 @@ function ensureAuthenticated(req, res, next) {
     return res.status(401).json({ error: 'Unauthorized: User not logged in' });
 }
 
+// POST /api/mark-seen: סימון הודעה כנקראה
+app.post('/api/mark-seen', ensureAuthenticated, (req, res) => {
+    const user = req.session.user;
+    const { id } = req.body;
+    let allMessages = readJsonFile(messagesPath, []);
+
+    const msgToUpdate = allMessages.find(m => m.id === id);
+    if (msgToUpdate && (msgToUpdate.to && msgToUpdate.to.includes(user.username))) {
+        msgToUpdate.seen = true;
+        try {
+            fs.writeFileSync(messagesPath, JSON.stringify(allMessages, null, 2));
+            return res.json({ success: true, message: 'הודעה סומנה כנקראה' });
+        } catch (err) {
+            console.error('שגיאה בסימון הודעה כנקראה:', err);
+            return res.status(500).json({ error: 'שגיאה בשרת' });
+        }
+    }
+    res.status(404).json({ error: 'הודעה לא נמצאה או שאין למשתמש הרשאה לסמן אותה' });
+});
+
+// --- נתיבים לטיפול בהודעות ---
+
 // GET /api/messages: שליפת הודעות של המשתמש המחובר
 app.get('/api/messages', ensureAuthenticated, (req, res) => {
     const user = req.session.user;
