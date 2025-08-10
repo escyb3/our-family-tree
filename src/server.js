@@ -115,6 +115,33 @@ app.get("/api/drafts", (req, res) => {
   const drafts = db.data.drafts.filter(d => d.from === email);
   res.json(drafts);
 });
+// drafts endpoints
+app.get('/api/drafts', async (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ error: 'Unauthorized' });
+  const r = await query('SELECT * FROM drafts WHERE user_username=$1 ORDER BY updated_at DESC', [user.username]);
+  res.json(r.rows);
+});
+
+app.post('/api/drafts', async (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ error: 'Unauthorized' });
+  const { id, subject, body, attachments } = req.body;
+  if (id) {
+    await query('UPDATE drafts SET subject=$1, body=$2, attachments=$3, updated_at=now() WHERE id=$4', [subject, body, JSON.stringify(attachments||[]), id]);
+    res.json({ success: true });
+  } else {
+    const r = await query('INSERT INTO drafts (user_username, subject, body, attachments) VALUES ($1,$2,$3,$4) RETURNING *', [user.username, subject, body, JSON.stringify(attachments||[])]);
+    res.json({ success: true, draft: r.rows[0] });
+  }
+});
+
+app.delete('/api/drafts/:id', async (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ error: 'Unauthorized' });
+  await query('DELETE FROM drafts WHERE id=$1 AND user_username=$2', [req.params.id, user.username]);
+  res.json({ success: true });
+});
 
 
 app.post("/api/save-draft", async (req, res) => {
