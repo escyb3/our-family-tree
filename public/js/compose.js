@@ -54,7 +54,7 @@
       if (window.fetchMessages) window.fetchMessages();
     } catch (err) {
       console.error(err);
-      alert('שגיאה בשליחה');
+      autosaveIndicator.textContent = 'שגיאה בשליחה';
     }
   }
 
