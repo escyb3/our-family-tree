@@ -310,33 +310,38 @@ app.get('/api/messages/all', ensureAuthenticated, (req, res) => {
     }
 });
 
-// POST /api/send: שליחת הודעה חדשה
-app.post('/api/send', ensureAuthenticated, (req, res) => {
-    const user = req.session.user;
-    if (!user) {
-        return res.status(401).json({ error: 'משתמש לא מאומת.' });
-    }
-    const { to, subject, body } = req.body;
-    
-    const newMessage = {
-        id: uuidv4(),
-        from: user.username,
-        to: to,
-        subject: subject,
-        body: body,
-        timestamp: new Date().toISOString(),
-        seen: false // הודעה חדשה, לא נקראה
-    };
+// נתיב API לשליחת הודעה חדשה
+app.post("/api/send", (req, res) => {
+  const user = req.session.user;
+  if (!user) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
 
-    try {
-        const allMessages = readJsonFile(messagesPath, []);
-        allMessages.push(newMessage);
-        fs.writeFileSync(messagesPath, JSON.stringify(allMessages, null, 2));
-        res.json({ success: true, message: 'ההודעה נשלחה בהצלחה' });
-    } catch (err) {
-        console.error('שגיאה בשליחת הודעה:', err);
-        res.status(500).json({ error: 'שגיאה בשרת' });
+  const { to, subject, body } = req.body;
+  const newMessage = {
+    id: uuidv4(), // יצירת מזהה ייחודי עבור ההודעה
+    from: user.username,
+    to: to,
+    subject: subject,
+    body: body,
+    timestamp: new Date().toISOString(),
+    seen: false,
+  };
+
+  fs.readFile(messagesPath, "utf8", (err, data) => {
+    let messages = [];
+    if (!err) {
+      messages = JSON.parse(data);
     }
+    messages.push(newMessage);
+    fs.writeFile(messagesPath, JSON.stringify(messages, null, 2), (writeErr) => {
+      if (writeErr) {
+        console.error("שגיאה בכתיבת הודעה:", writeErr);
+        return res.status(500).json({ success: false, message: "שגיאה בשרת" });
+      }
+      res.json({ success: true, message: "ההודעה נשלחה בהצלחה" });
+    });
+  });
 });
 
 // POST /api/mark-seen: סימון הודעה כנקראה
