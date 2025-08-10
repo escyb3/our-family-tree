@@ -216,24 +216,20 @@ app.post("/api/login", async (req, res) => {
     fs.writeFileSync(usersPath, JSON.stringify(initialUsers, null, 2));
     console.log("✅ נוצר קובץ users.json עם משתמש admin ברירת מחדל");
   }
-
-  try {
+   try {
     const usersRaw = fs.readFileSync(usersPath, "utf8");
     const users = JSON.parse(usersRaw);
 
     const user = users.find(u => u.username === req.body.username);
     if (!user) {
-      console.log("❌ שם משתמש לא נמצא:", req.body.username);
       return res.status(401).json({ success: false, message: "שם משתמש שגוי" });
     }
 
     const match = await bcrypt.compare(req.body.password, user.password);
     if (!match) {
-      console.log("❌ סיסמה שגויה עבור:", req.body.username);
       return res.status(401).json({ success: false, message: "סיסמה שגויה" });
     }
 
-    // התחברות מוצלחת
     req.session.user = {
       username: user.username,
       role: user.role,
@@ -247,6 +243,12 @@ app.post("/api/login", async (req, res) => {
     console.error("❌ שגיאה בתהליך התחברות:", err);
     res.status(500).json({ success: false, message: "שגיאה בשרת" });
   }
+});
+
+app.get("/api/users", (req, res) => {
+  fs.readFile(usersPath, "utf8", (err, data) => {
+    // ...
+  });
 });
 // טוען את האירועים מהקובץ
 function loadEvents() {
