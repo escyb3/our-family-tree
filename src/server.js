@@ -1091,6 +1091,19 @@ app.post("/api/ai/summarize", async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
+// mark seen
+app.post('/api/messages/seen', async (req, res) => {
+  const { id } = req.body;
+  await query('UPDATE messages SET seen=true WHERE id=$1', [id]);
+  res.json({ success: true });
+});
+// contacts (simple frequent contacts)
+app.get('/api/contacts', async (req, res) => {
+  const user = req.session.user; if (!user) return res.status(401).json({ error: 'Unauthorized' });
+  const email = user.username + '@family.local';
+  const r = await query('SELECT "from","to", count(*) as cnt FROM messages WHERE "from"=$1 OR "to"=$1 GROUP BY "from","to"', [email]);
+  res.json(r.rows);
+});
 
 
 // הפעלת השרת
