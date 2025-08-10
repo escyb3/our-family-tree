@@ -82,6 +82,13 @@ app.post("/api/forum/new", (req, res) => {
     });
   });
 });
+// פונקציית Middleware לבדיקת אימות משתמש
+function ensureAuthenticated(req, res, next) {
+    if (req.session && req.session.user && req.session.user.username) {
+        return next();
+    }
+    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
+}
 // Init tables
 const initTables = () => {
   db.run(`CREATE TABLE IF NOT EXISTS messages (
