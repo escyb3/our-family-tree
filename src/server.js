@@ -110,40 +110,62 @@ const initTables = () => {
 initTables();
 
 // טיוטות
+app.get('/api/drafts', async (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ error: 'Unauthorized' });
+
+  try {
+    // שליפת טיוטות של המשתמש, ממוינות לפי תאריך עדכון יורד
+    const r = await query('SELECT * FROM drafts WHERE user_username=$1 ORDER BY updated_at DESC', [user.username]);
+    res.json(r.rows);
+  } catch (err) {
+    console.error('שגיאה בשליפת טיוטות:', err);
+    res.status(500).json({ error: 'שגיאה בשרת' });
+  }
+});
+
+// נתיב POST: שמירה או עדכון של טיוטה
+app.post('/api/drafts', async (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ error: 'Unauthorized' });
+
+  const { id, subject, body, attachments } = req.body;
+  try {
+    if (id) {
+      // עדכון טיוטה קיימת
+      await query('UPDATE drafts SET subject=$1, body=$2, attachments=$3, updated_at=now() WHERE id=$4 AND user_username=$5', [subject, body, JSON.stringify(attachments||[]), id, user.username]);
+      res.json({ success: true, message: 'טיוטה עודכנה' });
+    } else {
+      // יצירת טיוטה חדשה
+      const r = await query('INSERT INTO drafts (user_username, subject, body, attachments) VALUES ($1,$2,$3,$4) RETURNING *', [user.username, subject, body, JSON.stringify(attachments||[])]);
+      res.json({ success: true, draft: r.rows[0], message: 'טיוטה נשמרה' });
+    }
+  } catch (err) {
+    console.error('שגיאה בשמירת טיוטה:', err);
+    res.status(500).json({ error: 'שגיאה בשרת' });
+  }
+});
+
+// נתיב DELETE: מחיקת טיוטה ספציפית
+app.delete('/api/drafts/:id', async (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ error: 'Unauthorized' });
+
+  try {
+    // מחיקת טיוטה רק אם היא שייכת למשתמש
+    await query('DELETE FROM drafts WHERE id=$1 AND user_username=$2', [req.params.id, user.username]);
+    res.json({ success: true, message: 'טיוטה נמחקה' });
+  } catch (err) {
+    console.error('שגיאה במחיקת טיוטה:', err);
+    res.status(500).json({ error: 'שגיאה בשרת' });
+  }
+});
 app.get("/api/drafts", (req, res) => {
   const user = req.user?.username || req.query.user;
   const email = user + "@family.local";
   const drafts = db.data.drafts.filter(d => d.from === email);
   res.json(drafts);
 });
-// drafts endpoints
-app.get('/api/drafts', async (req, res) => {
-  const user = req.session.user;
-  if (!user) return res.status(401).json({ error: 'Unauthorized' });
-  const r = await query('SELECT * FROM drafts WHERE user_username=$1 ORDER BY updated_at DESC', [user.username]);
-  res.json(r.rows);
-});
-
-app.post('/api/drafts', async (req, res) => {
-  const user = req.session.user;
-  if (!user) return res.status(401).json({ error: 'Unauthorized' });
-  const { id, subject, body, attachments } = req.body;
-  if (id) {
-    await query('UPDATE drafts SET subject=$1, body=$2, attachments=$3, updated_at=now() WHERE id=$4', [subject, body, JSON.stringify(attachments||[]), id]);
-    res.json({ success: true });
-  } else {
-    const r = await query('INSERT INTO drafts (user_username, subject, body, attachments) VALUES ($1,$2,$3,$4) RETURNING *', [user.username, subject, body, JSON.stringify(attachments||[])]);
-    res.json({ success: true, draft: r.rows[0] });
-  }
-});
-
-app.delete('/api/drafts/:id', async (req, res) => {
-  const user = req.session.user;
-  if (!user) return res.status(401).json({ error: 'Unauthorized' });
-  await query('DELETE FROM drafts WHERE id=$1 AND user_username=$2', [req.params.id, user.username]);
-  res.json({ success: true });
-});
-
 
 app.post("/api/save-draft", async (req, res) => {
   const { to, subject, body, type, from } = req.body;
