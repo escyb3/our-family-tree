@@ -303,6 +303,14 @@ app.get("/api/stats", (req, res) => {
     res.json(stats);
   });
 });
+// פונקציית Middleware לבדיקת אימות משתמש
+function ensureAuthenticated(req, res, next) {
+    if (req.session && req.session.user && req.session.user.username) {
+        return next();
+    }
+    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
+}
+
 
 // --- נתיבים לטיפול בהודעות ---
 
