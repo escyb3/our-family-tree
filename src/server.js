@@ -253,29 +253,69 @@ app.post('/api/mark-seen', ensureAuthenticated, (req, res) => {
     res.status(404).json({ error: 'הודעה לא נמצאה או שאין למשתמש הרשאה לסמן אותה' });
 });
 
+
+// POST /api/mark-seen: סימון הודעה כנקראה
+app.post('/api/mark-seen', ensureAuthenticated, (req, res) => {
+    const user = req.session.user;
+    const { id } = req.body;
+    let allMessages = readJsonFile(messagesPath, []);
+
+    const msgToUpdate = allMessages.find(m => m.id === id);
+    if (msgToUpdate && (msgToUpdate.to && msgToUpdate.to.includes(user.username))) {
+        msgToUpdate.seen = true;
+        try {
+            fs.writeFileSync(messagesPath, JSON.stringify(allMessages, null, 2));
+            return res.json({ success: true, message: 'הודעה סומנה כנקראה' });
+        } catch (err) {
+            console.error('שגיאה בסימון הודעה כנקראה:', err);
+            return res.status(500).json({ error: 'שגיאה בשרת' });
+        }
+    }
+    res.status(404).json({ error: 'הודעה לא נמצאה או שאין למשתמש הרשאה לסמן אותה' });
+});
+
 // --- נתיבים לטיפול בהודעות ---
 
 // GET /api/messages: שליפת הודעות של המשתמש המחובר
 app.get('/api/messages', ensureAuthenticated, (req, res) => {
     const user = req.session.user;
-    const allMessages = readJsonFile(messagesPath, []);
-
-    // סינון הודעות שהמשתמש הוא הנמען או השולח שלהן
-    const userMessages = allMessages.filter(msg =>
-        (msg.to && msg.to.includes(user.username)) || (msg.from && msg.from.includes(user.username))
-    );
-    res.json(userMessages);
+    if (!user) {
+        return res.status(401).json({ error: 'משתמש לא מאומת.' });
+    }
+    try {
+        const allMessages = readJsonFile(messagesPath, []);
+        // סינון הודעות שהמשתמש הוא הנמען או השולח שלהן
+        const userMessages = allMessages.filter(msg =>
+            (msg.to && msg.to.includes(user.username)) || (msg.from && msg.from.includes(user.username))
+        );
+        res.json(userMessages);
+    } catch (err) {
+        console.error('שגיאה בשליפת הודעות:', err);
+        res.status(500).json({ error: 'שגיאה בשרת' });
+    }
 });
 
 // GET /api/messages/all: שליפת כל ההודעות (לצורך ניהול או בדיקה)
 app.get('/api/messages/all', ensureAuthenticated, (req, res) => {
-    const allMessages = readJsonFile(messagesPath, []);
-    res.json(allMessages);
+    const user = req.session.user;
+    if (!user) {
+        return res.status(401).json({ error: 'משתמש לא מאומת.' });
+    }
+    try {
+        const allMessages = readJsonFile(messagesPath, []);
+        res.json(allMessages);
+    } catch (err) {
+        console.error('שגיאה בשליפת כל ההודעות:', err);
+        res.status(500).json({ error: 'שגיאה בשרת' });
+    }
 });
 
 // POST /api/send: שליחת הודעה חדשה
 app.post('/api/send', ensureAuthenticated, (req, res) => {
     const user = req.session.user;
+    if (!user) {
+        return res.status(401).json({ error: 'משתמש לא מאומת.' });
+    }
     const { to, subject, body } = req.body;
     
     const newMessage = {
@@ -302,21 +342,23 @@ app.post('/api/send', ensureAuthenticated, (req, res) => {
 // POST /api/mark-seen: סימון הודעה כנקראה
 app.post('/api/mark-seen', ensureAuthenticated, (req, res) => {
     const user = req.session.user;
+    if (!user) {
+        return res.status(401).json({ error: 'משתמש לא מאומת.' });
+    }
     const { id } = req.body;
-    let allMessages = readJsonFile(messagesPath, []);
-
-    const msgToUpdate = allMessages.find(m => m.id === id);
-    if (msgToUpdate && (msgToUpdate.to && msgToUpdate.to.includes(user.username))) {
-        msgToUpdate.seen = true;
-        try {
+    try {
+        let allMessages = readJsonFile(messagesPath, []);
+        const msgToUpdate = allMessages.find(m => m.id === id);
+        if (msgToUpdate && (msgToUpdate.to && msgToUpdate.to.includes(user.username))) {
+            msgToUpdate.seen = true;
             fs.writeFileSync(messagesPath, JSON.stringify(allMessages, null, 2));
             return res.json({ success: true, message: 'הודעה סומנה כנקראה' });
-        } catch (err) {
-            console.error('שגיאה בסימון הודעה כנקראה:', err);
-            return res.status(500).json({ error: 'שגיאה בשרת' });
         }
+        res.status(404).json({ error: 'הודעה לא נמצאה או שאין למשתמש הרשאה לסמן אותה' });
+    } catch (err) {
+        console.error('שגיאה בסימון הודעה כנקראה:', err);
+        res.status(500).json({ error: 'שגיאה בשרת' });
     }
-    res.status(404).json({ error: 'הודעה לא נמצאה או שאין למשתמש הרשאה לסמן אותה' });
 });
 
 // --- נתיבים לטיפול בטיוטות ---
@@ -324,62 +366,83 @@ app.post('/api/mark-seen', ensureAuthenticated, (req, res) => {
 // GET /api/drafts: שליפת כל הטיוטות של המשתמש
 app.get('/api/drafts', ensureAuthenticated, (req, res) => {
     const user = req.session.user;
-    const allDrafts = readJsonFile(draftsPath, []);
-    const userDrafts = allDrafts.filter(d => d.from === user.username);
-    res.json(userDrafts);
+    if (!user) {
+        return res.status(401).json({ error: 'משתמש לא מאומת.' });
+    }
+    try {
+        const allDrafts = readJsonFile(draftsPath, []);
+        const userDrafts = allDrafts.filter(d => d.from === user.username);
+        res.json(userDrafts);
+    } catch (err) {
+        console.error('שגיאה בשליפת טיוטות:', err);
+        res.status(500).json({ error: 'שגיאה בשרת' });
+    }
 });
 
 // POST /api/drafts: שמירה או עדכון של טיוטה
 // נתיב זה יכול לשמש גם ליצירת טיוטה חדשה וגם לעדכון טיוטה קיימת
 app.post('/api/drafts', ensureAuthenticated, (req, res) => {
     const user = req.session.user;
+    if (!user) {
+        return res.status(401).json({ error: 'משתמש לא מאומת.' });
+    }
     const { id, to, subject, body } = req.body;
-    let drafts = readJsonFile(draftsPath, []);
-
-    if (id) {
-        const draftIndex = drafts.findIndex(d => d.id === id && d.from === user.username);
-        if (draftIndex !== -1) {
-            drafts[draftIndex] = {
-                ...drafts[draftIndex],
+    try {
+        let drafts = readJsonFile(draftsPath, []);
+        if (id) {
+            const draftIndex = drafts.findIndex(d => d.id === id && d.from === user.username);
+            if (draftIndex !== -1) {
+                drafts[draftIndex] = {
+                    ...drafts[draftIndex],
+                    to: to,
+                    subject: subject,
+                    body: body,
+                    timestamp: new Date().toISOString()
+                };
+                fs.writeFileSync(draftsPath, JSON.stringify(drafts, null, 2));
+                return res.json({ success: true, message: 'טיוטה עודכנה', draft: drafts[draftIndex] });
+            } else {
+                return res.status(404).json({ error: 'טיוטה לא נמצאה' });
+            }
+        } else {
+            const newDraft = {
+                id: uuidv4(),
+                from: user.username,
                 to: to,
                 subject: subject,
                 body: body,
                 timestamp: new Date().toISOString()
             };
+            drafts.push(newDraft);
             fs.writeFileSync(draftsPath, JSON.stringify(drafts, null, 2));
-            return res.json({ success: true, message: 'טיוטה עודכנה', draft: drafts[draftIndex] });
-        } else {
-            return res.status(404).json({ error: 'טיוטה לא נמצאה' });
+            return res.json({ success: true, message: 'טיוטה נשמרה', draft: newDraft });
         }
-    } else {
-        const newDraft = {
-            id: uuidv4(),
-            from: user.username,
-            to: to,
-            subject: subject,
-            body: body,
-            timestamp: new Date().toISOString()
-        };
-        drafts.push(newDraft);
-        fs.writeFileSync(draftsPath, JSON.stringify(drafts, null, 2));
-        return res.json({ success: true, message: 'טיוטה נשמרה', draft: newDraft });
+    } catch (err) {
+        console.error('שגיאה בשמירת טיוטה:', err);
+        res.status(500).json({ error: 'שגיאה בשרת' });
     }
 });
 
 // DELETE /api/drafts/:id: מחיקת טיוטה
 app.delete('/api/drafts/:id', ensureAuthenticated, (req, res) => {
     const user = req.session.user;
+    if (!user) {
+        return res.status(401).json({ error: 'משתמש לא מאומת.' });
+    }
     const draftId = req.params.id;
-
-    let drafts = readJsonFile(draftsPath, []);
-    const draftToDelete = drafts.find(d => d.id === draftId && d.from === user.username);
-
-    if (draftToDelete) {
-        const updatedDrafts = drafts.filter(d => d.id !== draftId || d.from !== user.username);
-        fs.writeFileSync(draftsPath, JSON.stringify(updatedDrafts, null, 2));
-        return res.json({ success: true, message: 'הטיוטה נמחקה בהצלחה' });
-    } else {
-        return res.status(404).json({ error: 'טיוטה לא נמצאה או שאין למשתמש הרשאה למחוק אותה' });
+    try {
+        let drafts = readJsonFile(draftsPath, []);
+        const draftToDelete = drafts.find(d => d.id === draftId && d.from === user.username);
+        if (draftToDelete) {
+            const updatedDrafts = drafts.filter(d => d.id !== draftId || d.from !== user.username);
+            fs.writeFileSync(draftsPath, JSON.stringify(updatedDrafts, null, 2));
+            return res.json({ success: true, message: 'הטיוטה נמחקה בהצלחה' });
+        } else {
+            return res.status(404).json({ error: 'טיוטה לא נמצאה או שאין למשתמש הרשאה למחוק אותה' });
+        }
+    } catch (err) {
+        console.error('שגיאה במחיקת טיוטה:', err);
+        res.status(500).json({ error: 'שגיאה בשרת' });
     }
 });
 
@@ -388,13 +451,19 @@ app.delete('/api/drafts/:id', ensureAuthenticated, (req, res) => {
 // GET /api/stats: נתיב חדש שאני מוסיף כדי לטפל בשגיאות שראית ביומן
 app.get('/api/stats', ensureAuthenticated, (req, res) => {
     const user = req.session.user;
-    const allMessages = readJsonFile(messagesPath, []);
-
-    const sent = allMessages.filter(m => m.from === user.username).length;
-    const received = allMessages.filter(m => m.to === user.username).length;
-    const unread = allMessages.filter(m => m.to === user.username && !m.seen).length;
-
-    res.json({ sent, received, unread });
+    if (!user) {
+        return res.status(401).json({ error: 'משתמש לא מאומת.' });
+    }
+    try {
+        const allMessages = readJsonFile(messagesPath, []);
+        const sent = allMessages.filter(m => m.from === user.username).length;
+        const received = allMessages.filter(m => m.to && m.to.includes(user.username)).length;
+        const unread = allMessages.filter(m => m.to && m.to.includes(user.username) && !m.seen).length;
+        res.json({ sent, received, unread });
+    } catch (err) {
+        console.error('שגיאה בשליפת נתוני סטטיסטיקה:', err);
+        res.status(500).json({ error: 'שגיאה בשרת' });
+    }
 });
 
 app.use(express.urlencoded({ extended: true }));
