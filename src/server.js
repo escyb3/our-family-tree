@@ -233,21 +233,19 @@ function ensureAuthenticated(req, res, next) {
     return res.status(401).json({ error: 'Unauthorized: User not logged in' });
 }
 
-
-// --- נתיבים לטיפול בהודעות ---
-
 // GET /api/messages: שליפת הודעות של המשתמש המחובר
 app.get('/api/messages', ensureAuthenticated, (req, res) => {
     const user = req.session.user;
     const allMessages = readJsonFile(messagesPath, []);
 
-    const userMessages = allMessages.filter(msg => 
-        msg.to === user.username || msg.from === user.username
+    // סינון הודעות שהמשתמש הוא הנמען או השולח שלהן
+    const userMessages = allMessages.filter(msg =>
+        (msg.to && msg.to.includes(user.username)) || (msg.from && msg.from.includes(user.username))
     );
     res.json(userMessages);
 });
 
-// GET /api/messages/all: שליפת כל ההודעות
+// GET /api/messages/all: שליפת כל ההודעות (לצורך ניהול או בדיקה)
 app.get('/api/messages/all', ensureAuthenticated, (req, res) => {
     const allMessages = readJsonFile(messagesPath, []);
     res.json(allMessages);
@@ -264,7 +262,8 @@ app.post('/api/send', ensureAuthenticated, (req, res) => {
         to: to,
         subject: subject,
         body: body,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        seen: false // הודעה חדשה, לא נקראה
     };
 
     try {
@@ -278,6 +277,26 @@ app.post('/api/send', ensureAuthenticated, (req, res) => {
     }
 });
 
+// POST /api/mark-seen: סימון הודעה כנקראה
+app.post('/api/mark-seen', ensureAuthenticated, (req, res) => {
+    const user = req.session.user;
+    const { id } = req.body;
+    let allMessages = readJsonFile(messagesPath, []);
+
+    const msgToUpdate = allMessages.find(m => m.id === id);
+    if (msgToUpdate && (msgToUpdate.to && msgToUpdate.to.includes(user.username))) {
+        msgToUpdate.seen = true;
+        try {
+            fs.writeFileSync(messagesPath, JSON.stringify(allMessages, null, 2));
+            return res.json({ success: true, message: 'הודעה סומנה כנקראה' });
+        } catch (err) {
+            console.error('שגיאה בסימון הודעה כנקראה:', err);
+            return res.status(500).json({ error: 'שגיאה בשרת' });
+        }
+    }
+    res.status(404).json({ error: 'הודעה לא נמצאה או שאין למשתמש הרשאה לסמן אותה' });
+});
+
 // --- נתיבים לטיפול בטיוטות ---
 
 // GET /api/drafts: שליפת כל הטיוטות של המשתמש
@@ -289,6 +308,7 @@ app.get('/api/drafts', ensureAuthenticated, (req, res) => {
 });
 
 // POST /api/drafts: שמירה או עדכון של טיוטה
+// נתיב זה יכול לשמש גם ליצירת טיוטה חדשה וגם לעדכון טיוטה קיימת
 app.post('/api/drafts', ensureAuthenticated, (req, res) => {
     const user = req.session.user;
     const { id, to, subject, body } = req.body;
@@ -329,26 +349,31 @@ app.delete('/api/drafts/:id', ensureAuthenticated, (req, res) => {
     const user = req.session.user;
     const draftId = req.params.id;
 
-    try {
-        let drafts = readJsonFile(draftsPath, []);
+    let drafts = readJsonFile(draftsPath, []);
+    const draftToDelete = drafts.find(d => d.id === draftId && d.from === user.username);
+
+    if (draftToDelete) {
         const updatedDrafts = drafts.filter(d => d.id !== draftId || d.from !== user.username);
-        
         fs.writeFileSync(draftsPath, JSON.stringify(updatedDrafts, null, 2));
-        res.json({ success: true, message: 'הטיוטה נמחקה בהצלחה' });
-    } catch (err) {
-        console.error('שגיאה במחיקת טיוטה:', err);
-        res.status(500).json({ error: 'שגיאה בשרת' });
+        return res.json({ success: true, message: 'הטיוטה נמחקה בהצלחה' });
+    } else {
+        return res.status(404).json({ error: 'טיוטה לא נמצאה או שאין למשתמש הרשאה למחוק אותה' });
     }
 });
+
+// --- נתיבים לטיפול בסטטיסטיקות ---
 
 // GET /api/stats: נתיב חדש שאני מוסיף כדי לטפל בשגיאות שראית ביומן
 app.get('/api/stats', ensureAuthenticated, (req, res) => {
     const user = req.session.user;
+    const allMessages = readJsonFile(messagesPath, []);
 
-    const stats = readJsonFile(statsPath, {});
-    res.json(stats);
+    const sent = allMessages.filter(m => m.from === user.username).length;
+    const received = allMessages.filter(m => m.to === user.username).length;
+    const unread = allMessages.filter(m => m.to === user.username && !m.seen).length;
+
+    res.json({ sent, received, unread });
 });
-
 
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: "secret", resave: false, saveUninitialized: true }));
