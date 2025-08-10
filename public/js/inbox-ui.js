@@ -247,8 +247,6 @@
         document.getElementById('add-tag')?.addEventListener('click', () => {
             console.log('[Prompt]: שם תג נדרש');
             // במקרה אמיתי, נדרשת כאן תיבת דיאלוג מותאמת אישית
-            // const name = showPrompt('שם תג:');
-            // אם היה prompt היינו משתמשים בו
             const name = window.prompt('שם תג:');
             if (!name) return;
             const color = window.prompt('צבע רקע (hex או מילים):', '#ffefc2') || '#ffefc2';
