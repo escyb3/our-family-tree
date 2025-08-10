@@ -238,9 +238,56 @@ app.get("/api/stats", (req, res) => {
   });
 });
 
-app.delete("/api/draft/:id", async (req, res) => {
-  const result = await db.messages.deleteOne({ _id: req.params.id, from: req.user.username, draft: true });
-  res.json({ success: result.deletedCount === 1 });
+// --- נתיבים לטיפול בהודעות ---
+
+// GET /api/messages: שליפת הודעות של המשתמש המחובר
+app.get('/api/messages', (req, res) => {
+    const user = req.session.user;
+    if (!user) return res.status(401).json({ error: 'Unauthorized' });
+
+    try {
+        const messagesRaw = fs.readFileSync(messagesPath, 'utf8');
+        const allMessages = JSON.parse(messagesRaw);
+
+        // סינון הודעות ששייכות למשתמש (נשלחו אליו או על ידו)
+        const userMessages = allMessages.filter(msg => 
+            msg.to === user.username || msg.from === user.username
+        );
+        res.json(userMessages);
+    } catch (err) {
+        console.error('שגיאה בשליפת הודעות:', err);
+        res.status(500).json({ error: 'שגיאה בשרת' });
+    }
+});
+
+// POST /api/send: שליחת הודעה חדשה
+app.post('/api/send', (req, res) => {
+    const user = req.session.user;
+    if (!user) return res.status(401).json({ error: 'Unauthorized' });
+
+    const { to, subject, body } = req.body;
+    
+    // יצירת אובייקט ההודעה עם מזהה ייחודי
+    const newMessage = {
+        id: uuidv4(),
+        from: user.username,
+        to: to,
+        subject: subject,
+        body: body,
+        timestamp: new Date().toISOString()
+    };
+
+    try {
+        const messagesRaw = fs.readFileSync(messagesPath, 'utf8');
+        const allMessages = JSON.parse(messagesRaw);
+        allMessages.push(newMessage);
+        fs.writeFileSync(messagesPath, JSON.stringify(allMessages, null, 2));
+
+        res.json({ success: true, message: 'ההודעה נשלחה בהצלחה' });
+    } catch (err) {
+        console.error('שגיאה בשליחת הודעה:', err);
+        res.status(500).json({ error: 'שגיאה בשרת' });
+    }
 });
 
 
