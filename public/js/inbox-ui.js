@@ -10,9 +10,12 @@
   const summaryArea = document.getElementById('summary-area');
   const countInbox = document.getElementById('count-inbox');
 
-  let messages = []; // fetched
+  let messages = []; // הודעות שנקראו מהשרת
   let currentFolder = 'inbox';
   let tags = JSON.parse(localStorage.getItem('user-tags') || '[]');
+
+  // משתמשים בפונקציה הזו כדי למנוע קריסת קוד
+  window.currentUser = window.currentUser || 'testuser';
 
   // UI helpers
   function formatDate(ts) {
@@ -25,7 +28,7 @@
     if (['pdf'].includes(ext)) return '📄';
     if (['zip','rar'].includes(ext)) return '🗜️';
     if (['mp3','wav','m4a'].includes(ext)) return '🔊';
-    return '📎';
+    return '�';
   }
 
   async function fetchMessages() {
@@ -33,14 +36,12 @@
       const res = await fetch('/api/messages');
       if (!res.ok) throw new Error('fetch messages failed');
       const data = await res.json();
-      // support old endpoints that return {inbox:[],sent:[]}
       if (Array.isArray(data)) messages = data;
-      else if (data.inbox) messages = data.inbox.concat(data.sent || []);
       else messages = [];
       renderList();
     } catch (err) {
       console.error('❌ שגיאה בשליפת הודעות:', err);
-      listEl.innerHTML = `<div style="padding:12px;color:#a00">שגיאה בטעינת הודעות</div>`;
+      listEl.innerHTML = `<div style="padding:12px;color:#a00">שגיאה בטעינת הודעות. אנא ודא שאתה מחובר ושהשרת תקין.</div>`;
     }
   }
 
@@ -49,18 +50,18 @@
     const sortMode = document.getElementById('sort-mode').value;
     const groupThreads = document.getElementById('group-by-thread').checked;
     const dateFilter = document.getElementById('date-filter').value;
-    // filter by folder
+    
     let rows = messages.slice();
     if (currentFolder === 'inbox') rows = rows.filter(m => m.to && m.to.includes(window.currentUser));
     if (currentFolder === 'sent') rows = rows.filter(m => m.from && m.from.includes(window.currentUser));
     if (currentFolder === 'drafts') rows = rows.filter(m => m.draft);
     if (currentFolder === 'trash') rows = rows.filter(m => m.deleted);
-    // search
+    
     if (search) {
       rows = rows.filter(m => (m.subject||'').toLowerCase().includes(search) ||
         (m.from||'').toLowerCase().includes(search) || (m.body||'').toLowerCase().includes(search));
     }
-    // date filter
+    
     if (dateFilter) {
       const days = parseInt(dateFilter,10);
       if (!isNaN(days)) {
@@ -68,10 +69,10 @@
         rows = rows.filter(m => new Date(m.timestamp).getTime() >= cutoff);
       }
     }
-    // sort
+    
     rows.sort((a,b)=> new Date(b.timestamp)-new Date(a.timestamp));
     if (sortMode==='important') rows.sort((a,b)=> (b.important?1:0)-(a.important?1:0));
-    // group threads
+    
     if (groupThreads) {
       const byThread = {};
       rows.forEach(m => {
@@ -100,6 +101,7 @@
         </div>`;
       }).join('');
     }
+    
     countInbox.textContent = messages.filter(m => m.to && m.to.includes(window.currentUser)).length;
   }
 
@@ -115,27 +117,28 @@
   async function openMessage(id) {
     const msg = messages.find(m=>String(m.id)===String(id));
     if (!msg) return;
-    // mark seen
-    try { await fetch('/mark-seen', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ threadId: msg.threadId || msg.id }) }); } catch(e){}
-    // render preview
+
+    // TODO: mark seen functionality needs to be added to the server
+    // try { await fetch('/mark-seen', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ threadId: msg.threadId || msg.id }) }); } catch(e){}
+
     previewSubject.textContent = msg.subject || '(ללא נושא)';
     previewMeta.textContent = `${msg.from} → ${msg.to} · ${formatDate(msg.timestamp)}`;
     previewBody.innerHTML = `<div style="white-space:pre-wrap">${escapeHtml(msg.body||'')}</div>`;
-    // attachments
+    
     attachmentsArea.innerHTML = '';
     (msg.attachments||msg.attachment? (msg.attachments||[msg.attachment]) : []).forEach(a=>{
       const el = document.createElement('div');
       el.innerHTML = `<div style="display:flex;gap:8px;align-items:center"><div class="file-icon">${iconForFile(a)}</div><a href="${a}" target="_blank">${a.split('/').pop()}</a></div>`;
       attachmentsArea.appendChild(el);
     });
-    // thread replies
+    
     threadArea.innerHTML = '';
     (msg.replies||[]).forEach((r,i)=>{
       const d = document.createElement('div');
       d.innerHTML = `<div style="padding:8px;border-radius:8px;margin-top:8px;background:#fafafa"><strong>#${i+1} ${r.from}</strong> <small style="color:var(--muted)">${formatDate(r.timestamp)}</small><div style="margin-top:6px">${escapeHtml(r.body)}</div></div>`;
       threadArea.appendChild(d);
     });
-    // auto summary (optional)
+    
     if (document.getElementById('auto-summary').checked) {
       summaryArea.textContent = 'ביצוע סיכום...';
       try {
@@ -165,18 +168,20 @@
     fetchMessages();
     bindListClicks();
     renderTags();
-    // sidebar folder clicks
+    
     document.querySelectorAll('.list-item').forEach(el=>{
       el.addEventListener('click', ()=> {
         currentFolder = el.dataset.folder;
         renderList();
       });
     });
+    
     document.getElementById('refresh-btn').addEventListener('click', fetchMessages);
     document.getElementById('global-search').addEventListener('input', renderList);
     document.getElementById('group-by-thread').addEventListener('change', renderList);
     document.getElementById('sort-mode').addEventListener('change', renderList);
     document.getElementById('date-filter').addEventListener('change', renderList);
+    
     document.getElementById('add-tag').addEventListener('click', ()=>{
       const name = prompt('שם תג:');
       if (!name) return;
@@ -185,13 +190,14 @@
       localStorage.setItem('user-tags', JSON.stringify(tags));
       renderTags();
     });
-    // apply / delete tag buttons (event delegation)
+    
     document.getElementById('tags-container').addEventListener('click', async e=>{
       if (e.target.classList.contains('apply-tag')) {
         const tag = e.target.dataset.tag;
         const id = prompt('הכנס ID של ההודעה להחלת תג (או בחר מממשק):');
         if (!id) return alert('אין id');
         try {
+          // This endpoint is not defined in the server, needs to be updated
           await fetch('/api/mark-important', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ id, important:true, tag }) });
           alert('תוייג בהצלחה');
           fetchMessages();
@@ -204,49 +210,51 @@
         renderTags();
       }
     });
-    // pin/fav/remind actions
+    
     document.getElementById('fav-btn').addEventListener('click', async ()=>{
-      // toggle favorite for currently previewed message
       const id = getCurrentPreviewId();
       if (!id) return alert('אין הודעה נבחרת');
       const msg = messages.find(m=>String(m.id)===String(id));
       msg.favorite = !msg.favorite;
+      // This endpoint is not defined in the server, needs to be updated
       await fetch('/api/mark-important',{method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ id, important: msg.favorite })});
       renderList();
     });
+    
     document.getElementById('reply-btn').addEventListener('click', ()=> {
       const id = getCurrentPreviewId();
       if (!id) return alert('בחר הודעה');
       const text = prompt('תגובה:');
       if (!text) return;
+      // This endpoint is not defined in the server, needs to be updated
       fetch('/reply-message',{method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ threadId: id, body:text })}).then(()=>fetchMessages());
     });
+    
     document.getElementById('forward-btn').addEventListener('click', ()=> {
       const id = getCurrentPreviewId();
       if (!id) return alert('בחר הודעה');
       const to = prompt('למי להעביר? (user@family.local)');
       if (!to) return;
       const msg = messages.find(m=>String(m.id)===String(id));
+      // This endpoint expects FormData, but the server expects JSON
       fetch('/api/send', { method:'POST', body: createFormData({ to, subject:'FW: '+msg.subject, body: msg.body }) }).then(()=>fetchMessages());
     });
 
-    // helper to get currently previewed message ID by subject
     function getCurrentPreviewId(){
       const subj = previewSubject.textContent;
       const msg = messages.find(m=>m.subject === subj || String(m.id)===subj);
       return msg && msg.id;
     }
 
-    // small interval refresh
-    setInterval(fetchMessages, 60_000);
-  }
+    function createFormData(obj){
+      const fd = new FormData();
+      for (const k in obj) fd.append(k,obj[k]);
+      return fd;
+    }
 
-  function createFormData(obj){
-    const fd = new FormData();
-    for (const k in obj) fd.append(k,obj[k]);
-    return fd;
+    setInterval(fetchMessages, 60_000);
   }
 
   start();
 })();
-
+�
