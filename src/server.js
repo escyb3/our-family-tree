@@ -130,6 +130,13 @@ app.get('/api/drafts', async (req, res) => {
     res.status(500).json({ error: 'שגיאה בשרת' });
   }
 });
+// פונקציית Middleware לבדיקת אימות משתמש
+function ensureAuthenticated(req, res, next) {
+    if (req.session && req.session.user && req.session.user.username) {
+        return next();
+    }
+    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
+}
 
 // --- נתיבים לטיפול בטיוטות ---
 
