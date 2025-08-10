@@ -219,12 +219,55 @@ app.get("/api/drafts", (req, res) => {
   res.json(drafts);
 });
 
-app.post("/api/save-draft", async (req, res) => {
-  const { to, subject, body, type, from } = req.body;
-  const draft = { id: uuidv4(), to, subject, body, type, from, draft: true, timestamp: new Date().toISOString() };
-  db.data.messages.push(draft);
-  await db.write();
-  res.json({ success: true, draft });
+// POST /api/drafts: שמירה או עדכון של טיוטה
+app.post('/api/drafts', (req, res) => {
+    // בדיקה ראשונית לוודא שהמשתמש מחובר
+    if (!req.session || !req.session.user || !req.session.user.username) {
+        return res.status(401).json({ error: 'Unauthorized: User not logged in' });
+    }
+
+    const user = req.session.user;
+    const { id, to, subject, body } = req.body;
+    let drafts = [];
+
+    try {
+        // קריאה מקובץ הטיוטות
+        const draftsRaw = fs.readFileSync(draftsPath, 'utf8');
+        drafts = JSON.parse(draftsRaw);
+    } catch (err) {
+        // אם הקובץ לא קיים, ניצור מערך ריק כדי למנוע שגיאה
+    }
+
+    if (id) {
+        // עדכון טיוטה קיימת
+        const draftIndex = drafts.findIndex(d => d.id === id && d.from === user.username);
+        if (draftIndex !== -1) {
+            drafts[draftIndex] = {
+                ...drafts[draftIndex],
+                to: to,
+                subject: subject,
+                body: body,
+                timestamp: new Date().toISOString()
+            };
+            fs.writeFileSync(draftsPath, JSON.stringify(drafts, null, 2));
+            return res.json({ success: true, message: 'טיוטה עודכנה', draft: drafts[draftIndex] });
+        } else {
+            return res.status(404).json({ error: 'טיוטה לא נמצאה' });
+        }
+    } else {
+        // שמירת טיוטה חדשה
+        const newDraft = {
+            id: uuidv4(),
+            from: user.username,
+            to: to,
+            subject: subject,
+            body: body,
+            timestamp: new Date().toISOString()
+        };
+        drafts.push(newDraft);
+        fs.writeFileSync(draftsPath, JSON.stringify(drafts, null, 2));
+        return res.json({ success: true, message: 'טיוטה נשמרה', draft: newDraft });
+    }
 });
 // 📈 אנליטיקה בסיסית
 app.get("/api/stats", (req, res) => {
