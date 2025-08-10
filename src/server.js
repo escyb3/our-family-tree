@@ -194,6 +194,13 @@ app.post('/api/drafts', ensureAuthenticated, (req, res) => {
         return res.json({ success: true, message: 'טיוטה נשמרה', draft: newDraft });
     }
 });
+// פונקציית Middleware לבדיקת אימות משתמש
+function ensureAuthenticated(req, res, next) {
+    if (req.session && req.session.user && req.session.user.username) {
+        return next();
+    }
+    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
+}
 
 // DELETE /api/drafts/:id: מחיקת טיוטה
 app.delete('/api/drafts/:id', ensureAuthenticated, (req, res) => {
@@ -213,6 +220,13 @@ app.delete('/api/drafts/:id', ensureAuthenticated, (req, res) => {
         res.status(500).json({ error: 'שגיאה בשרת' });
     }
 });
+// פונקציית Middleware לבדיקת אימות משתמש
+function ensureAuthenticated(req, res, next) {
+    if (req.session && req.session.user && req.session.user.username) {
+        return next();
+    }
+    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
+}
 
 app.get("/api/drafts", (req, res) => {
   const user = req.user?.username || req.query.user;
@@ -334,6 +348,13 @@ app.post('/api/send', (req, res) => {
         res.status(500).json({ error: 'שגיאה בשרת' });
     }
 });
+// פונקציית Middleware לבדיקת אימות משתמש
+function ensureAuthenticated(req, res, next) {
+    if (req.session && req.session.user && req.session.user.username) {
+        return next();
+    }
+    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
+}
 
 
 app.use(express.urlencoded({ extended: true }));
@@ -482,6 +503,13 @@ cron.schedule("0 8 * * *", () => {
     }
   });
 });
+// פונקציית Middleware לבדיקת אימות משתמש
+function ensureAuthenticated(req, res, next) {
+    if (req.session && req.session.user && req.session.user.username) {
+        return next();
+    }
+    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
+}
 // סיכום עם LocalAI
 app.post('/api/summarize', async (req, res) => {
   const { thread } = req.body;
@@ -502,6 +530,13 @@ app.post('/api/summarize', async (req, res) => {
     res.status(500).send('שגיאה בסיכום AI');
   }
 });
+// פונקציית Middleware לבדיקת אימות משתמש
+function ensureAuthenticated(req, res, next) {
+    if (req.session && req.session.user && req.session.user.username) {
+        return next();
+    }
+    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
+}
 
 
 const groups = {
@@ -541,6 +576,13 @@ app.post("/api/message/:id/favorite", (req, res) => {
   if (msg) msg.favorite = !msg.favorite;
   res.json({ success: true });
 });
+// פונקציית Middleware לבדיקת אימות משתמש
+function ensureAuthenticated(req, res, next) {
+    if (req.session && req.session.user && req.session.user.username) {
+        return next();
+    }
+    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
+}
 
 // 📂 קבוצות
 app.get("/api/group/:name", (req, res) => {
@@ -548,6 +590,13 @@ app.get("/api/group/:name", (req, res) => {
   if (!group) return res.status(404).json({ error: "Not found" });
   res.json({ members: group });
 });
+// פונקציית Middleware לבדיקת אימות משתמש
+function ensureAuthenticated(req, res, next) {
+    if (req.session && req.session.user && req.session.user.username) {
+        return next();
+    }
+    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
+}
 
 app.post("/api/save-draft", (req, res) => {
   const d = req.body;
@@ -563,7 +612,13 @@ app.get("/api/message/:id", (req, res) => {
   if (!msg) return res.status(404).json({ error: "Not found" });
   res.json(msg);
 });
-
+// פונקציית Middleware לבדיקת אימות משתמש
+function ensureAuthenticated(req, res, next) {
+    if (req.session && req.session.user && req.session.user.username) {
+        return next();
+    }
+    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
+}
 
 app.get("/admin-users", auth("admin"), (req, res) => res.json(users));
 app.post("/create-user", auth("admin"), (req, res) => {
@@ -610,9 +665,13 @@ app.post("/api/add-user", (req, res) => {
 
   res.json({ success: true });
 });
-
-
-
+// פונקציית Middleware לבדיקת אימות משתמש
+function ensureAuthenticated(req, res, next) {
+    if (req.session && req.session.user && req.session.user.username) {
+        return next();
+    }
+    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
+}
 const requireLogin = (req, res, next) => {
   if (!req.session.user) return res.status(401).json({ error: "Unauthorized" });
   next();
