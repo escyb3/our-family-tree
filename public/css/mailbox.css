@@ -1,6 +1,6 @@
-/* mailbox.css - עיצוב משודרג לתיבת ההודעות */
+/* mailbox-gmail.css - עיצוב מודרני בסגנון Gmail */
 
-/* Reset כללי */
+/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -8,70 +8,70 @@
 }
 
 body {
-  font-family: "Segoe UI", Tahoma, sans-serif;
-  background-color: #f4f6f8;
-  color: #333;
+  font-family: "Roboto", Arial, sans-serif;
+  background-color: #f5f7fa;
+  color: #202124;
   direction: rtl;
 }
 
 header {
-  background: linear-gradient(135deg, #4f93ff, #0056d6);
-  color: #fff;
-  padding: 15px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #dadce0;
+  padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 header h1 {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
 header nav a {
-  color: #fff;
+  color: #1a73e8;
   margin-left: 15px;
   text-decoration: none;
-  font-weight: bold;
-  transition: opacity 0.2s;
+  font-weight: 500;
 }
 
 header nav a:hover {
-  opacity: 0.8;
+  text-decoration: underline;
 }
 
 main {
   padding: 20px;
 }
 
-/* תיבת הודעה */
+/* הודעה */
 .message {
   background: #fff;
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  border-radius: 8px;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  border-right: 5px solid transparent;
-  transition: background 0.2s, border-right 0.2s;
-}
-
-.message.unread {
-  background: #e9f0ff;
-  border-right: 5px solid #4f93ff;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  transition: background 0.2s, box-shadow 0.2s;
+  cursor: pointer;
 }
 
 .message:hover {
-  background: #f0f4f8;
+  background: #f1f3f4;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.message.unread {
+  font-weight: 500;
+  background: #e8f0fe;
 }
 
 .message .avatar {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  object-fit: cover;
   margin-left: 15px;
+  object-fit: cover;
 }
 
 .message-content {
@@ -80,101 +80,84 @@ main {
 
 .message-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
 }
 
 .message-header h3 {
-  font-size: 1rem;
-  margin-bottom: 5px;
+  font-size: 0.95rem;
+  color: #202124;
 }
 
 .message-header small {
-  color: #666;
+  color: #5f6368;
 }
 
 .message-body {
-  color: #444;
-  font-size: 0.9rem;
-  margin-top: 5px;
+  font-size: 0.85rem;
+  color: #5f6368;
+  margin-top: 3px;
 }
 
-.tags {
-  margin-top: 8px;
-}
-
+/* תגים */
 .tag {
   display: inline-block;
-  padding: 4px 8px;
-  border-radius: 6px;
+  padding: 2px 6px;
+  border-radius: 12px;
   font-size: 0.75rem;
-  margin-left: 5px;
+  margin-left: 4px;
   font-weight: bold;
   color: #fff;
 }
 
-.tag-family {
-  background-color: #28a745;
-}
+.tag-family { background-color: #1a73e8; }
+.tag-admin { background-color: #d93025; }
+.tag-important { background-color: #fbbc04; }
 
-.tag-admin {
-  background-color: #dc3545;
-}
+/* group aliases */
+.group-alias.family { border-right: 5px solid #1a73e8; }
+.group-alias.admin { border-right: 5px solid #d93025; }
 
-.tag-important {
-  background-color: #ff9800;
-}
-
-/* group aliases - family@ , admin@ */
-.group-alias.family {
-  background-color: #d4edda;
-  border-right: 5px solid #28a745;
-}
-
-.group-alias.admin {
-  background-color: #f8d7da;
-  border-right: 5px solid #dc3545;
-}
-
-/* Dark Mode */
+/* מצב לילה */
 body.dark {
-  background-color: #1e1e1e;
-  color: #ddd;
+  background-color: #202124;
+  color: #e8eaed;
 }
 
 body.dark header {
-  background: linear-gradient(135deg, #333, #111);
+  background: #303134;
+  border-bottom: 1px solid #5f6368;
 }
 
 body.dark .message {
-  background: #2c2c2c;
-  color: #ddd;
+  background: #303134;
+  border-color: #5f6368;
 }
 
 body.dark .message.unread {
-  background: #263238;
+  background: #3c4043;
 }
 
-body.dark .tag {
-  opacity: 0.85;
+body.dark .message:hover {
+  background: #3c4043;
 }
 
-/* כפתור Compose */
+/* כפתור Compose מרחף */
 .compose-btn {
-  background: #4f93ff;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #1a73e8;
   color: #fff;
-  padding: 10px 20px;
   border: none;
   border-radius: 50px;
-  font-size: 1rem;
+  padding: 12px 24px;
+  font-size: 0.95rem;
   cursor: pointer;
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   transition: background 0.2s;
 }
 
 .compose-btn:hover {
-  background: #0056d6;
+  background: #1558b0;
 }
