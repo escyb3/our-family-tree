@@ -334,40 +334,27 @@ function ensureAuthenticated(req, res, next) {
 // --- נתיבים לטיפול בהודעות ---
 
 // GET /api/messages: שליפת הודעות של המשתמש המחובר
-app.get('/api/messages', (req, res) => {
+app.get('/api/messages', ensureAuthenticated, (req, res) => {
     const user = req.session.user;
-    if (!user) return res.status(401).json({ error: 'Unauthorized' });
+    const allMessages = readJsonFile(messagesPath, []);
 
-    try {
-        const messagesRaw = fs.readFileSync(messagesPath, 'utf8');
-        const allMessages = JSON.parse(messagesRaw);
-
-        // סינון הודעות ששייכות למשתמש (נשלחו אליו או על ידו)
-        const userMessages = allMessages.filter(msg => 
-            msg.to === user.username || msg.from === user.username
-        );
-        res.json(userMessages);
-    } catch (err) {
-        console.error('שגיאה בשליפת הודעות:', err);
-        res.status(500).json({ error: 'שגיאה בשרת' });
-    }
+    const userMessages = allMessages.filter(msg => 
+        msg.to === user.username || msg.from === user.username
+    );
+    res.json(userMessages);
 });
-// פונקציית Middleware לבדיקת אימות משתמש
-function ensureAuthenticated(req, res, next) {
-    if (req.session && req.session.user && req.session.user.username) {
-        return next();
-    }
-    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
-}
+
+// GET /api/messages/all: שליפת כל ההודעות
+app.get('/api/messages/all', ensureAuthenticated, (req, res) => {
+    const allMessages = readJsonFile(messagesPath, []);
+    res.json(allMessages);
+});
 
 // POST /api/send: שליחת הודעה חדשה
-app.post('/api/send', (req, res) => {
+app.post('/api/send', ensureAuthenticated, (req, res) => {
     const user = req.session.user;
-    if (!user) return res.status(401).json({ error: 'Unauthorized' });
-
     const { to, subject, body } = req.body;
     
-    // יצירת אובייקט ההודעה עם מזהה ייחודי
     const newMessage = {
         id: uuidv4(),
         from: user.username,
@@ -378,24 +365,86 @@ app.post('/api/send', (req, res) => {
     };
 
     try {
-        const messagesRaw = fs.readFileSync(messagesPath, 'utf8');
-        const allMessages = JSON.parse(messagesRaw);
+        const allMessages = readJsonFile(messagesPath, []);
         allMessages.push(newMessage);
         fs.writeFileSync(messagesPath, JSON.stringify(allMessages, null, 2));
-
         res.json({ success: true, message: 'ההודעה נשלחה בהצלחה' });
     } catch (err) {
         console.error('שגיאה בשליחת הודעה:', err);
         res.status(500).json({ error: 'שגיאה בשרת' });
     }
 });
-// פונקציית Middleware לבדיקת אימות משתמש
-function ensureAuthenticated(req, res, next) {
-    if (req.session && req.session.user && req.session.user.username) {
-        return next();
+
+// --- נתיבים לטיפול בטיוטות ---
+
+// GET /api/drafts: שליפת כל הטיוטות של המשתמש
+app.get('/api/drafts', ensureAuthenticated, (req, res) => {
+    const user = req.session.user;
+    const allDrafts = readJsonFile(draftsPath, []);
+    const userDrafts = allDrafts.filter(d => d.from === user.username);
+    res.json(userDrafts);
+});
+
+// POST /api/drafts: שמירה או עדכון של טיוטה
+app.post('/api/drafts', ensureAuthenticated, (req, res) => {
+    const user = req.session.user;
+    const { id, to, subject, body } = req.body;
+    let drafts = readJsonFile(draftsPath, []);
+
+    if (id) {
+        const draftIndex = drafts.findIndex(d => d.id === id && d.from === user.username);
+        if (draftIndex !== -1) {
+            drafts[draftIndex] = {
+                ...drafts[draftIndex],
+                to: to,
+                subject: subject,
+                body: body,
+                timestamp: new Date().toISOString()
+            };
+            fs.writeFileSync(draftsPath, JSON.stringify(drafts, null, 2));
+            return res.json({ success: true, message: 'טיוטה עודכנה', draft: drafts[draftIndex] });
+        } else {
+            return res.status(404).json({ error: 'טיוטה לא נמצאה' });
+        }
+    } else {
+        const newDraft = {
+            id: uuidv4(),
+            from: user.username,
+            to: to,
+            subject: subject,
+            body: body,
+            timestamp: new Date().toISOString()
+        };
+        drafts.push(newDraft);
+        fs.writeFileSync(draftsPath, JSON.stringify(drafts, null, 2));
+        return res.json({ success: true, message: 'טיוטה נשמרה', draft: newDraft });
     }
-    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
-}
+});
+
+// DELETE /api/drafts/:id: מחיקת טיוטה
+app.delete('/api/drafts/:id', ensureAuthenticated, (req, res) => {
+    const user = req.session.user;
+    const draftId = req.params.id;
+
+    try {
+        let drafts = readJsonFile(draftsPath, []);
+        const updatedDrafts = drafts.filter(d => d.id !== draftId || d.from !== user.username);
+        
+        fs.writeFileSync(draftsPath, JSON.stringify(updatedDrafts, null, 2));
+        res.json({ success: true, message: 'הטיוטה נמחקה בהצלחה' });
+    } catch (err) {
+        console.error('שגיאה במחיקת טיוטה:', err);
+        res.status(500).json({ error: 'שגיאה בשרת' });
+    }
+});
+
+// GET /api/stats: נתיב חדש שאני מוסיף כדי לטפל בשגיאות שראית ביומן
+app.get('/api/stats', ensureAuthenticated, (req, res) => {
+    const user = req.session.user;
+
+    const stats = readJsonFile(statsPath, {});
+    res.json(stats);
+});
 
 
 app.use(express.urlencoded({ extended: true }));
