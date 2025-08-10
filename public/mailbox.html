@@ -2,45 +2,10 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <title>📬 תיבת הודעות חכמה</title>
+  <title>📬תיבת הודעות</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="/css/mailbox.css" />
   <style>
-    /* מינימלי — תוכל להחליף בקובץ CSS חיצוני */
-    :root{
-      --bg:#f6f8fb; --card:#fff; --accent:#1a73e8; --muted:#6b7280; --danger:#dc2626;
-      --tag-family:#ffd6d0; --tag-work:#d6f5ff; --tag-shabbat:#fff2cc;
-    }
-    body{font-family:system-ui, -apple-system, "Segoe UI", Roboto; background:var(--bg); margin:0; color:#111;}
-    header{background:var(--accent); color:white; padding:12px 16px; display:flex; align-items:center; gap:12px;}
-    header h1{margin:0; font-size:18px;}
-    header .right{margin-left:auto; display:flex; gap:10px; align-items:center;}
-    .container{max-width:1100px; margin:18px auto; display:grid; grid-template-columns:320px 1fr 420px; gap:16px; padding:0 12px;}
-    .sidebar{background:var(--card); padding:12px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,.06);}
-    .compose-btn{display:block;background:var(--accent); color:white; border:none; border-radius:8px; padding:10px 12px; font-weight:600; cursor:pointer; width:100%;}
-    .search{display:flex; gap:8px; margin:8px 0;}
-    .search input{flex:1; padding:8px; border-radius:8px; border:1px solid #ddd;}
-    .folders, .tags, .contacts {margin-top:12px;}
-    .folders button{display:flex; justify-content:space-between; width:100%; padding:8px; border:none; background:transparent; cursor:pointer; border-radius:6px; text-align:right;}
-    .list-item{display:flex; gap:8px; align-items:center; padding:8px; border-radius:8px; cursor:pointer;}
-    .list-item:hover{background:#f1f5f9;}
-    .inbox-center{display:flex; flex-direction:column; gap:12px;}
-    .controls{display:flex; gap:8px; align-items:center;}
-    .messages-list{background:var(--card); border-radius:10px; padding:8px; min-height:400px; box-shadow:0 2px 8px rgba(0,0,0,.04); overflow:auto;}
-    .msg-row{display:flex; gap:12px; padding:10px; border-radius:8px; align-items:center; cursor:pointer; border-bottom:1px solid #f3f4f6;}
-    .msg-row.unread{background:linear-gradient(90deg,#eaf3ff00,#eaf3ff); font-weight:600;}
-    .msg-meta{flex:1;}
-    .msg-sub{color:var(--muted);}
-    .preview-pane{background:var(--card); border-radius:10px; padding:12px; box-shadow:0 2px 8px rgba(0,0,0,.04); min-height:400px; overflow:auto;}
-    .thread{border-top:1px solid #eee; padding-top:8px; margin-top:8px;}
-    .tag-chip{padding:4px 8px; border-radius:16px; font-size:12px;}
-    .dark { background: #0b1220; color: #e6eef8; }
-    .hidden{display:none;}
-    .compose-modal{position:fixed; right:50%; transform:translateX(50%); top:80px; width:720px; max-width:96%; z-index:1200;}
-    @media (max-width:1000px){ .container{grid-template-columns:1fr; } .preview-pane{order:3} .inbox-center{order:2} .sidebar{order:1}}
-    /* file icons */
-    .file-icon{width:40px;height:40px;border-radius:6px;background:#f3f6fb;display:flex;align-items:center;justify-content:center;font-weight:700}
-  </style>
 </head>
 <body>
   <header>
