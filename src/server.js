@@ -401,7 +401,6 @@ function ensureAuthenticated(req, res, next) {
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: "secret", resave: false, saveUninitialized: true }));
 
-const messagesPath = path.join(__dirname, "data", "messages.json");
 const pendingPath = path.join(__dirname, "data", "pending.json");
 const eventsPath = path.join(__dirname, "data", "events.json");
 
