@@ -1403,7 +1403,8 @@ app.get('/api/contacts', async (req, res) => {
 // הפעלת השרת
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${1000}`);
+      console.log('🎉 השרת מוכן לקבל בקשות!');
 });
 
 
