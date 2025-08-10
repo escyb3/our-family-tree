@@ -124,42 +124,94 @@ app.get('/api/drafts', async (req, res) => {
   }
 });
 
-// נתיב POST: שמירה או עדכון של טיוטה
-app.post('/api/drafts', async (req, res) => {
-  const user = req.session.user;
-  if (!user) return res.status(401).json({ error: 'Unauthorized' });
+// --- נתיבים לטיפול בטיוטות ---
 
-  const { id, subject, body, attachments } = req.body;
-  try {
-    if (id) {
-      // עדכון טיוטה קיימת
-      await query('UPDATE drafts SET subject=$1, body=$2, attachments=$3, updated_at=now() WHERE id=$4 AND user_username=$5', [subject, body, JSON.stringify(attachments||[]), id, user.username]);
-      res.json({ success: true, message: 'טיוטה עודכנה' });
-    } else {
-      // יצירת טיוטה חדשה
-      const r = await query('INSERT INTO drafts (user_username, subject, body, attachments) VALUES ($1,$2,$3,$4) RETURNING *', [user.username, subject, body, JSON.stringify(attachments||[])]);
-      res.json({ success: true, draft: r.rows[0], message: 'טיוטה נשמרה' });
-    }
-  } catch (err) {
-    console.error('שגיאה בשמירת טיוטה:', err);
-    res.status(500).json({ error: 'שגיאה בשרת' });
-  }
+// GET /api/drafts: שליפת כל הטיוטות של המשתמש
+app.get('/api/drafts', (req, res) => {
+    const user = req.session.user;
+    if (!user) return res.status(401).json({ error: 'Unauthorized' });
+
+    try {
+        const draftsRaw = fs.readFileSync(draftsPath, 'utf8');
+        const allDrafts = JSON.parse(draftsRaw);
+        const userDrafts = allDrafts.filter(d => d.from === user.username);
+        res.json(userDrafts);
+    } catch (err) {
+        console.error('שגיאה בשליפת טיוטות:', err);
+        res.status(500).json({ error: 'שגיאה בשרת' });
+    }
 });
 
-// נתיב DELETE: מחיקת טיוטה ספציפית
-app.delete('/api/drafts/:id', async (req, res) => {
-  const user = req.session.user;
-  if (!user) return res.status(401).json({ error: 'Unauthorized' });
+// POST /api/drafts: שמירה או עדכון של טיוטה
+app.post('/api/drafts', (req, res) => {
+    const user = req.session.user;
+    if (!user) return res.status(401).json({ error: 'Unauthorized' });
 
-  try {
-    // מחיקת טיוטה רק אם היא שייכת למשתמש
-    await query('DELETE FROM drafts WHERE id=$1 AND user_username=$2', [req.params.id, user.username]);
-    res.json({ success: true, message: 'טיוטה נמחקה' });
-  } catch (err) {
-    console.error('שגיאה במחיקת טיוטה:', err);
-    res.status(500).json({ error: 'שגיאה בשרת' });
-  }
+    const { id, to, subject, body } = req.body;
+    let drafts = [];
+
+    try {
+        const draftsRaw = fs.readFileSync(draftsPath, 'utf8');
+        drafts = JSON.parse(draftsRaw);
+    } catch (err) {
+        console.error('שגיאה בקריאת טיוטות:', err);
+        // אם הקובץ לא קיים, ניצור מערך ריק
+    }
+
+    if (id) {
+        // עדכון טיוטה קיימת
+        const draftIndex = drafts.findIndex(d => d.id === id && d.from === user.username);
+        if (draftIndex !== -1) {
+            drafts[draftIndex] = {
+                ...drafts[draftIndex],
+                to: to,
+                subject: subject,
+                body: body,
+                timestamp: new Date().toISOString()
+            };
+            fs.writeFileSync(draftsPath, JSON.stringify(drafts, null, 2));
+            return res.json({ success: true, message: 'טיוטה עודכנה', draft: drafts[draftIndex] });
+        } else {
+            return res.status(404).json({ error: 'טיוטה לא נמצאה' });
+        }
+    } else {
+        // שמירת טיוטה חדשה
+        const newDraft = {
+            id: uuidv4(),
+            from: user.username,
+            to: to,
+            subject: subject,
+            body: body,
+            timestamp: new Date().toISOString()
+        };
+        drafts.push(newDraft);
+        fs.writeFileSync(draftsPath, JSON.stringify(drafts, null, 2));
+        return res.json({ success: true, message: 'טיוטה נשמרה', draft: newDraft });
+    }
 });
+
+// DELETE /api/drafts/:id: מחיקת טיוטה
+app.delete('/api/drafts/:id', (req, res) => {
+    const user = req.session.user;
+    if (!user) return res.status(401).json({ error: 'Unauthorized' });
+
+    const draftId = req.params.id;
+
+    try {
+        const draftsRaw = fs.readFileSync(draftsPath, 'utf8');
+        let drafts = JSON.parse(draftsRaw);
+        
+        // סינון הטיוטה למחיקה (מוודאים שהיא שייכת למשתמש המחובר)
+        const updatedDrafts = drafts.filter(d => d.id !== draftId || d.from !== user.username);
+        
+        fs.writeFileSync(draftsPath, JSON.stringify(updatedDrafts, null, 2));
+        res.json({ success: true, message: 'הטיוטה נמחקה בהצלחה' });
+    } catch (err) {
+        console.error('שגיאה במחיקת טיוטה:', err);
+        res.status(500).json({ error: 'שגיאה בשרת' });
+    }
+});
+
 app.get("/api/drafts", (req, res) => {
   const user = req.user?.username || req.query.user;
   const email = user + "@family.local";
