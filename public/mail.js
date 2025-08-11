@@ -20,9 +20,8 @@ const GEMINI_TTS_VOICE = "Kore"; // קול ברירת מחדל
 // ערכות נושא לאפליקציה
 const defaultThemes = {
   light: { name: 'בהיר', bg: 'bg-gray-100', text: 'text-gray-800', primary: 'bg-indigo-600', secondary: 'bg-white', panel: 'bg-white', icon: 'sun', textSecondary: 'text-gray-600' }
-  dark: { name: 'כהה', bg: 'bg-gray-900', text: 'text-gray-100', primary: 'bg-slate-800', secondary: 'bg-gray-800', panel: 'bg-gray-800', icon: <Moon size={20} />, textSecondary: 'text-gray-400' },
-  green: { name: 'ירוק', bg: 'bg-emerald-950', text: 'text-emerald-100', primary: 'bg-emerald-700', secondary: 'bg-emerald-800', panel: 'bg-emerald-800', icon: <Palette size={20} />, textSecondary: 'text-emerald-400' },
-};
+    dark: { name: 'כהה', bg: 'bg-gray-900', text: 'text-gray-100', primary: 'bg-slate-800', secondary: 'bg-gray-800', panel: 'bg-gray-800', icon: 'moon', textSecondary: 'text-gray-400' }
+green: { name: 'ירוק', bg: 'bg-emerald-950', text: 'text-emerald-100', primary: 'bg-emerald-700', secondary: 'bg-emerald-800', panel: 'bg-emerald-800', icon: 'palette', textSecondary: 'text-emerald-400' },
 
 // פונקציה להמרת PCM ל-WAV
 const pcmToWav = (pcmData, sampleRate) => {
