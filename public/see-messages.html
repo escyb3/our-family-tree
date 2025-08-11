@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אפליקציית דואר</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        [contenteditable]:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex font-sans">
+    
+    <!-- Notification Banner -->
+    <div id="notification-banner" class="fixed top-0 left-0 right-0 bg-blue-500 text-white text-center p-3 z-50 transition-all duration-300 hidden animate-pulse"></div>
+
+    <div class="flex-1 flex">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white shadow-xl flex flex-col p-4 border-l">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-blue-600">דואר</h1>
+                <span id="user-id-display" class="text-sm text-gray-600">מזהה: טוען...</span>
+            </div>
+            <div class="space-y-2">
+                <button id="compose-btn" class="w-full bg-blue-600 text-white font-bold py-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors">
+                    מייל חדש
+                </button>
+                <nav class="mt-8 space-y-2">
+                    <button id="inbox-btn" class="sidebar-btn active w-full text-right flex items-center p-3 rounded-lg transition-colors bg-blue-100 text-blue-800 font-bold">
+                        <span class="text-xl ml-3">📬</span>
+                        <span>דואר נכנס</span>
+                    </button>
+                    <button id="sent-btn" class="sidebar-btn w-full text-right flex items-center p-3 rounded-lg transition-colors text-gray-600 hover:bg-gray-100">
+                        <span class="text-xl ml-3">✉️</span>
+                        <span>דואר נשלח</span>
+                    </button>
+                    <button id="drafts-btn" class="sidebar-btn w-full text-right flex items-center p-3 rounded-lg transition-colors text-gray-600 hover:bg-gray-100">
+                        <span class="text-xl ml-3">📝</span>
+                        <span>טיוטות</span>
+                    </button>
+                    <button id="trash-btn" class="sidebar-btn w-full text-right flex items-center p-3 rounded-lg transition-colors text-gray-600 hover:bg-gray-100">
+                        <span class="text-xl ml-3">🗑️</span>
+                        <span>אשפה</span>
+                    </button>
+                    <button id="mailing-lists-btn" class="sidebar-btn w-full text-right flex items-center p-3 rounded-lg transition-colors text-gray-600 hover:bg-gray-100">
+                        <span class="text-xl ml-3">👥</span>
+                        <span>קבוצות דיוור</span>
+                    </button>
+                    <button id="contacts-btn" class="sidebar-btn w-full text-right flex items-center p-3 rounded-lg transition-colors text-gray-600 hover:bg-gray-100">
+                        <span class="text-xl ml-3">📖</span>
+                        <span>אנשי קשר</span>
+                    </button>
+                    <button id="settings-btn" class="sidebar-btn w-full text-right flex items-center p-3 rounded-lg transition-colors text-gray-600 hover:bg-gray-100">
+                        <span class="text-xl ml-3">⚙️</span>
+                        <span>הגדרות</span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- Main Content Area -->
+        <div id="content-area" class="flex-1 flex flex-col bg-gray-50">
+            <!-- Content will be rendered here by JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Modal for Mailing Lists -->
+    <div id="mailing-list-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <form id="mailing-list-form" class="bg-white p-6 rounded-lg shadow-2xl max-w-lg w-full">
+            <h3 id="mailing-list-modal-title" class="text-xl font-bold mb-4 border-b pb-2">יצירת קבוצת דיוור חדשה</h3>
+            <div class="mb-4">
+                <label for="list-name" class="block text-gray-700 font-semibold mb-2">שם הקבוצה</label>
+                <input type="text" id="list-name" placeholder="הכנס שם לקבוצת הדיוור" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-semibold mb-2">בחר חברים</label>
+                <div id="mailing-list-users-container" class="space-y-2 max-h-48 overflow-y-auto p-2 border rounded-lg bg-gray-50">
+                    <!-- Users will be populated here -->
+                </div>
+            </div>
+            <div class="flex justify-end space-x-2 mt-4">
+                <button type="button" id="mailing-list-modal-cancel" class="bg-gray-300 text-gray-800 rounded-full p-2 px-4 hover:bg-gray-400 transition-colors">בטל</button>
+                <button type="submit" id="mailing-list-submit-btn" class="bg-blue-600 text-white rounded-full p-2 px-4 hover:bg-blue-700 transition-colors">צור רשימה</button>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Modal for Contacts -->
+    <div id="contact-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <form id="contact-form" class="bg-white p-6 rounded-lg shadow-2xl max-w-lg w-full">
+            <h3 id="contact-modal-title" class="text-xl font-bold mb-4 border-b pb-2">הוספת איש קשר חדש</h3>
+            <div class="mb-4">
+                <label for="contact-id" class="block text-gray-700 font-semibold mb-2">מזהה משתמש</label>
+                <input type="text" id="contact-id" placeholder="הכנס מזהה משתמש של איש קשר" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            <div class="mb-4">
+                <label for="contact-name" class="block text-gray-700 font-semibold mb-2">שם איש קשר</label>
+                <input type="text" id="contact-name" placeholder="הכנס שם לאיש הקשר" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            <div class="flex justify-end space-x-2 mt-4">
+                <button type="button" id="contact-modal-cancel" class="bg-gray-300 text-gray-800 rounded-full p-2 px-4 hover:bg-gray-400 transition-colors">בטל</button>
+                <button type="submit" id="contact-submit-btn" class="bg-blue-600 text-white rounded-full p-2 px-4 hover:bg-blue-700 transition-colors">הוסף איש קשר</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, doc, setDoc, addDoc, serverTimestamp, query, orderBy, deleteDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global state and Firebase setup
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : '';
+        let db, auth, userId;
+        let emails = {
+            inbox: [],
+            sent: [],
+            drafts: [],
+            trash: []
+        };
+        let contacts = [];
+        let mailingLists = [];
+        let allUsers = [];
+        let signature = '';
+        let currentView = 'inbox';
+        let selectedEmail = null;
+
+        const contentArea = document.getElementById('content-area');
+        const notificationBanner = document.getElementById('notification-banner');
+        const sidebarButtons = document.querySelectorAll('.sidebar-btn');
+
+        // Initialize App
+        async function initializeAppAndAuth() {
+            if (Object.keys(firebaseConfig).length === 0) {
+                console.log('Firebase config not found. App will run without persistence.');
+                return;
+            }
+
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+
+            if (initialAuthToken) {
+                await signInWithCustomToken(auth, initialAuthToken);
+            } else {
+                await signInAnonymously(auth);
+            }
+
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    userId = user.uid;
+                    document.getElementById('user-id-display').textContent = `מזהה: ${userId.substring(0, 8)}`;
+                    setupRealtimeListeners();
+                    renderContent(); // Initial render
+                } else {
+                    userId = null;
+                    document.getElementById('user-id-display').textContent = 'מזהה: טוען...';
+                }
+            });
+        }
+
+        // Set up Firestore listeners
+        function setupRealtimeListeners() {
+            // Listen to all users
+            const usersRef = collection(db, `artifacts/${appId}/users/${userId}/users`);
+            onSnapshot(usersRef, (snapshot) => {
+                allUsers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            });
+
+            // Listen to inbox
+            const inboxRef = query(collection(db, `artifacts/${appId}/users/${userId}/inbox`), orderBy('timestamp', 'desc'));
+            onSnapshot(inboxRef, (snapshot) => {
+                const newEmails = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                if (newEmails.length > emails.inbox.length) {
+                    showNotification(`מייל חדש מ: ${newEmails[0].from}`);
+                }
+                emails.inbox = newEmails;
+                if (currentView === 'inbox' && !selectedEmail) renderContent();
+            });
+
+            // Listen to sent
+            const sentRef = query(collection(db, `artifacts/${appId}/users/${userId}/sent`), orderBy('timestamp', 'desc'));
+            onSnapshot(sentRef, (snapshot) => {
+                emails.sent = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                if (currentView === 'sent' && !selectedEmail) renderContent();
+            });
+
+            // Listen to drafts
+            const draftsRef = query(collection(db, `artifacts/${appId}/users/${userId}/drafts`), orderBy('timestamp', 'desc'));
+            onSnapshot(draftsRef, (snapshot) => {
+                emails.drafts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                if (currentView === 'drafts' && !selectedEmail) renderContent();
+            });
+            
+            // Listen to trash
+            const trashRef = query(collection(db, `artifacts/${appId}/users/${userId}/trash`), orderBy('timestamp', 'desc'));
+            onSnapshot(trashRef, (snapshot) => {
+                emails.trash = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                if (currentView === 'trash' && !selectedEmail) renderContent();
+            });
+            
+            // Listen to mailing lists
+            const listsRef = collection(db, `artifacts/${appId}/users/${userId}/mailing_lists`);
+            onSnapshot(listsRef, (snapshot) => {
+                mailingLists = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                if (currentView === 'mailing-lists') renderContent();
+            });
+            
+            // Listen to contacts
+            const contactsRef = collection(db, `artifacts/${appId}/users/${userId}/contacts`);
+            onSnapshot(contactsRef, (snapshot) => {
+                contacts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                if (currentView === 'contacts') renderContent();
+            });
+
+            // Listen to settings (signature)
+            const settingsRef = doc(db, `artifacts/${appId}/users/${userId}/settings`, 'userSettings');
+            onSnapshot(settingsRef, (docSnapshot) => {
+                if (docSnapshot.exists()) {
+                    signature = docSnapshot.data().signature || '';
+                } else {
+                    signature = '';
+                }
+                if (currentView === 'settings') renderContent();
+            });
+        }
+        
+        // --- UI Rendering Functions ---
+
+        function showNotification(message) {
+            notificationBanner.textContent = message;
+            notificationBanner.classList.remove('hidden');
+            setTimeout(() => {
+                notificationBanner.classList.add('hidden');
+            }, 3000);
+        }
+
+        function renderMailList(folder, filter = 'all', searchTerm = '') {
+            let folderEmails = emails[folder];
+            if (filter === 'unread') {
+                folderEmails = folderEmails.filter(e => !e.isRead);
+            }
+            if (filter === 'important') {
+                folderEmails = folderEmails.filter(e => e.isImportant);
+            }
+            if (searchTerm) {
+                folderEmails = folderEmails.filter(e =>
+                    e.subject?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    e.from?.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+
+            return `
+                <div class="p-4 border-b flex justify-between items-center bg-gray-50">
+                    <h2 class="text-xl font-semibold text-gray-800">
+                        ${folder === 'inbox' ? 'דואר נכנס' : folder === 'sent' ? 'דואר נשלח' : folder === 'drafts' ? 'טיוטות' : 'אשפה'}
+                    </h2>
+                    <div class="flex items-center space-x-4">
+                        ${folder === 'inbox' ? `
+                        <select id="filter-select" class="p-2 border rounded-full text-sm">
+                            <option value="all">הכל</option>
+                            <option value="unread">לא נקרא</option>
+                            <option value="important">חשוב</option>
+                        </select>` : ''}
+                        <input type="text" id="search-input" placeholder="חפש בדואר..." value="${searchTerm}" class="p-2 border rounded-full w-1/3 text-right" />
+                    </div>
+                </div>
+                <div class="flex-1 overflow-y-auto">
+                    ${folderEmails.length > 0 ? folderEmails.map(email => `
+                    <div data-email-id="${email.id}" data-folder="${folder}" class="flex items-center p-4 border-b hover:bg-gray-100 transition-colors cursor-pointer ${!email.isRead && folder === 'inbox' ? 'bg-blue-50' : 'bg-white'}">
+                        <div class="flex-shrink-0 ml-4">
+                            <img src="https://placehold.co/50x50/FCA5A5/FFFFFF?text=P" alt="פרופיל" class="w-10 h-10 rounded-full" />
+                        </div>
+                        <div class="flex-1 overflow-hidden">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold text-gray-800 truncate ${!email.isRead && folder === 'inbox' ? 'font-bold' : ''}">
+                                    ${email.from}
+                                </span>
+                                <div class="flex items-center space-x-2">
+                                    <button data-email-id="${email.id}" data-folder="${folder}" class="toggle-important text-xl transition-transform hover:scale-110 ${email.isImportant ? 'text-yellow-400' : 'text-gray-400'}">
+                                        ★
+                                    </button>
+                                    <span class="text-sm text-gray-500">
+                                        ${email.timestamp?.toDate().toLocaleDateString('he-IL')}
+                                    </span>
+                                </div>
+                            </div>
+                            <h3 class="font-medium text-gray-700 truncate ${!email.isRead && folder === 'inbox' ? 'font-bold' : ''}">
+                                ${email.subject || '(ללא נושא)'}
+                            </h3>
+                            <p class="text-gray-500 text-sm truncate">${email.body}</p>
+                        </div>
+                    </div>
+                    `).join('') : `
+                    <p class="text-center text-gray-500 mt-10">אין מיילים בתיקייה זו.</p>
+                    `}
+                </div>
+            `;
+        }
+        
+        function renderEmailView(email, folder) {
+            return `
+                <div class="flex-1 p-6 overflow-y-auto">
+                    <div class="flex items-center justify-between mb-4 border-b pb-4">
+                        <button id="back-to-list-btn" class="text-blue-600 hover:underline flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                            </svg>
+                            חזור לתיקייה
+                        </button>
+                        <div class="flex space-x-2">
+                            ${folder !== 'trash' ? `
+                            <button id="move-to-trash-btn" data-email-id="${email.id}" data-folder="${folder}" class="bg-red-500 text-white p-2 rounded-full shadow-lg hover:bg-red-600 transition-colors">
+                                🗑️ מחק
+                            </button>
+                            ` : `
+                            <button id="restore-from-trash-btn" data-email-id="${email.id}" class="bg-green-500 text-white p-2 rounded-full shadow-lg hover:bg-green-600 transition-colors">
+                                ↩️ שחזר
+                            </button>
+                            <button id="permanent-delete-btn" data-email-id="${email.id}" class="bg-red-500 text-white p-2 rounded-full shadow-lg hover:bg-red-600 transition-colors">
+                                ⛔ מחק לצמיתות
+                            </button>
+                            `}
+                        </div>
+                    </div>
+                    <h2 class="text-2xl font-bold mb-2">${email.subject || '(ללא נושא)'}</h2>
+                    <div class="flex items-center text-gray-600 text-sm mb-4 border-b pb-4">
+                        <span class="font-medium">${email.from}</span>
+                        <span class="mx-2">אל</span>
+                        <span class="font-medium">${email.to}</span>
+                    </div>
+                    <div class="whitespace-pre-wrap text-gray-700" id="email-body-content"></div>
+                    ${email.attachment ? `
+                    <div class="mt-6 p-4 bg-gray-100 rounded-lg shadow-inner flex items-center space-x-4">
+                        <img src="https://placehold.co/100x100/A0A0A0/FFFFFF?text=קובץ מצורף" alt="קובץ מצורף" class="w-24 h-24 rounded-md" />
+                        <div>
+                            <h4 class="font-semibold text-gray-800">קובץ מצורף: ${email.attachmentName}</h4>
+                            <a href="${email.attachment}" download="${email.attachmentName}" class="text-blue-500 hover:underline">הורד קובץ</a>
+                        </div>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        function renderComposeView(draft = null) {
+            const htmlBody = draft?.htmlBody || `<p dir="rtl">${signature}</p>`;
+            return `
+                <div class="flex-1 p-6 overflow-y-auto">
+                    <h2 class="text-2xl font-bold mb-4">מייל חדש</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">אל</label>
+                            <div class="mt-1 flex items-center">
+                                <input type="text" id="compose-to" value="${draft?.to || ''}" placeholder="הזן מזהה משתמש או מזהה רשימת דיוור" class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+                                <select id="compose-recipient-select" class="ml-2 rounded-md border-gray-300 shadow-sm">
+                                    <option value="">בחר איש קשר או קבוצה</option>
+                                    ${contacts.map(c => `<option value="${c.userId}">${c.name}</option>`).join('')}
+                                    ${mailingLists.map(l => `<option value="${l.id}">${l.name}</option>`).join('')}
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">נושא</label>
+                            <input type="text" id="compose-subject" value="${draft?.subject || ''}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">גוף ההודעה</label>
+                            <div id="rich-text-editor" class="border border-gray-300 rounded-md shadow-sm">
+                                <div class="bg-gray-100 p-2 border-b flex space-x-2">
+                                    <button type="button" data-command="bold" class="rich-text-command font-bold p-1 rounded hover:bg-gray-200">B</button>
+                                    <button type="button" data-command="italic" class="rich-text-command italic p-1 rounded hover:bg-gray-200">I</button>
+                                    <button type="button" data-command="underline" class="rich-text-command underline p-1 rounded hover:bg-gray-200">U</button>
+                                </div>
+                                <div id="compose-body" contenteditable="true" class="min-h-[200px] p-3 outline-none focus:ring-2 focus:ring-blue-500 rounded-b-md" style="direction:rtl; text-align:right;">${htmlBody}</div>
+                            </div>
+                        </div>
+                        ${draft?.attachment ? `
+                        <div id="attachment-preview" class="mt-4 p-4 bg-gray-100 rounded-lg shadow-inner flex items-center space-x-4">
+                            <img src="https://placehold.co/100x100/A0A0A0/FFFFFF?text=קובץ מצורף" alt="קובץ מצורף" class="w-24 h-24 rounded-md" />
+                            <div>
+                                <h4 class="font-semibold text-gray-800">קובץ מצורף: ${draft.attachmentName}</h4>
+                                <button id="remove-attachment-btn" class="text-red-500 hover:underline">הסר</button>
+                            </div>
+                        </div>` : ''}
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium text-gray-700">צרף קובץ (סימולציה)</label>
+                            <input type="file" id="file-attachment" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                        </div>
+                    </div>
+                    <div class="mt-6 flex justify-end">
+                        <button id="send-email-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:bg-blue-700 transition-colors">שלח</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMailingListsView() {
+            const listsHtml = mailingLists.length > 0 ? mailingLists.map(list => `
+                <div class="p-4 bg-gray-50 rounded-lg shadow-sm border">
+                    <h3 class="font-bold text-lg">${list.name}</h3>
+                    <p class="text-gray-600 text-sm mt-1">מזהה קבוצה: ${list.id}</p>
+                    <p class="text-gray-500 text-sm mt-2">
+                        חברים: ${list.members.map(memberId => `משתמש ${memberId.substring(0, 8)}`).join(', ')}
+                    </p>
+                    <div class="mt-4 space-x-2">
+                        <button data-list-id="${list.id}" class="edit-list-btn bg-yellow-500 text-white text-sm px-3 py-1 rounded-full hover:bg-yellow-600">ערוך</button>
+                        <button data-list-id="${list.id}" class="delete-list-btn bg-red-500 text-white text-sm px-3 py-1 rounded-full hover:bg-red-600">מחק</button>
+                    </div>
+                </div>
+            `).join('') : `<p class="text-center text-gray-500 mt-10">אין קבוצות דיוור כרגע.</p>`;
+
+            return `
+                <div class="flex-1 p-6 overflow-y-auto">
+                    <div class="flex justify-between items-center mb-4 border-b pb-2">
+                        <h2 class="text-xl font-semibold">קבוצות דיוור</h2>
+                        <button id="create-list-btn" class="bg-blue-600 text-white p-2 px-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors">+ צור קבוצת דיוור</button>
+                    </div>
+                    <div class="space-y-4">${listsHtml}</div>
+                </div>
+            `;
+        }
+
+        function renderContactsView() {
+            const contactsHtml = contacts.length > 0 ? contacts.map(contact => `
+                <div class="p-4 bg-gray-50 rounded-lg shadow-sm border">
+                    <h3 class="font-bold text-lg">${contact.name}</h3>
+                    <p class="text-gray-600 text-sm mt-1">מזהה משתמש: ${contact.userId}</p>
+                    <div class="mt-4 space-x-2">
+                        <button data-user-id="${contact.userId}" class="send-mail-contact-btn bg-green-500 text-white text-sm px-3 py-1 rounded-full hover:bg-green-600">שלח מייל</button>
+                        <button data-contact-id="${contact.id}" class="edit-contact-btn bg-yellow-500 text-white text-sm px-3 py-1 rounded-full hover:bg-yellow-600">ערוך</button>
+                        <button data-contact-id="${contact.id}" class="delete-contact-btn bg-red-500 text-white text-sm px-3 py-1 rounded-full hover:bg-red-600">מחק</button>
+                    </div>
+                </div>
+            `).join('') : `<p class="text-center text-gray-500 mt-10">אין אנשי קשר.</p>`;
+
+            return `
+                <div class="flex-1 p-6 overflow-y-auto">
+                    <div class="flex justify-between items-center mb-4 border-b pb-2">
+                        <h2 class="text-xl font-semibold">אנשי קשר</h2>
+                        <button id="add-contact-btn" class="bg-blue-600 text-white p-2 px-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors">+ הוסף איש קשר</button>
+                    </div>
+                    <div class="space-y-4">${contactsHtml}</div>
+                </div>
+            `;
+        }
+
+        function renderSettingsView() {
+            return `
+                <div class="flex-1 p-6 overflow-y-auto">
+                    <h2 class="text-2xl font-bold mb-4">הגדרות</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">חתימת דוא"ל</label>
+                            <p class="text-sm text-gray-500 mb-2">החתימה הזו תתווסף אוטומטית לתחתית כל מייל חדש.</p>
+                            <div class="border border-gray-300 rounded-md shadow-sm">
+                                <div class="bg-gray-100 p-2 border-b flex space-x-2">
+                                    <button type="button" data-command="bold" class="rich-text-command font-bold p-1 rounded hover:bg-gray-200">B</button>
+                                    <button type="button" data-command="italic" class="rich-text-command italic p-1 rounded hover:bg-gray-200">I</button>
+                                    <button type="button" data-command="underline" class="rich-text-command underline p-1 rounded hover:bg-gray-200">U</button>
+                                </div>
+                                <div id="signature-editor" contenteditable="true" class="min-h-[200px] p-3 outline-none focus:ring-2 focus:ring-blue-500 rounded-b-md" style="direction:rtl; text-align:right;">${signature}</div>
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button id="save-signature-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:bg-green-700 transition-colors">שמור חתימה</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderContent() {
+            if (!userId) {
+                contentArea.innerHTML = `<p class="text-center text-gray-500 mt-10">מתחבר לשרת...</p>`;
+                return;
+            }
+
+            if (selectedEmail) {
+                const folder = selectedEmail.originalFolder || currentView;
+                contentArea.innerHTML = renderEmailView(selectedEmail, folder);
+                document.getElementById('email-body-content').innerHTML = selectedEmail.htmlBody || selectedEmail.body;
+            } else {
+                switch(currentView) {
+                    case 'inbox':
+                    case 'sent':
+                    case 'drafts':
+                    case 'trash':
+                        contentArea.innerHTML = renderMailList(currentView);
+                        break;
+                    case 'compose':
+                        contentArea.innerHTML = renderComposeView(emails.drafts.find(d => d.id === 'currentDraft'));
+                        break;
+                    case 'mailing-lists':
+                        contentArea.innerHTML = renderMailingListsView();
+                        break;
+                    case 'contacts':
+                        contentArea.innerHTML = renderContactsView();
+                        break;
+                    case 'settings':
+                        contentArea.innerHTML = renderSettingsView();
+                        break;
+                    default:
+                        contentArea.innerHTML = `<p class="text-center text-gray-500 mt-10">בחר תיקייה מהצד.</p>`;
+                }
+            }
+            attachEventListeners();
+        }
+
+        // --- Event Handlers and Firebase Interactions ---
+        function attachEventListeners() {
+            // Sidebar buttons
+            sidebarButtons.forEach(btn => {
+                btn.onclick = () => {
+                    sidebarButtons.forEach(b => {
+                        b.classList.remove('active', 'bg-blue-100', 'text-blue-800', 'font-bold');
+                        b.classList.add('text-gray-600', 'hover:bg-gray-100');
+                    });
+                    btn.classList.add('active', 'bg-blue-100', 'text-blue-800', 'font-bold');
+                    btn.classList.remove('text-gray-600', 'hover:bg-gray-100');
+                    currentView = btn.id.split('-')[0];
+                    selectedEmail = null;
+                    renderContent();
+                };
+            });
+            
+            // Mail list view events
+            document.querySelectorAll('[data-email-id]').forEach(el => {
+                el.onclick = (e) => {
+                    if (e.target.closest('.toggle-important')) return;
+                    const emailId = el.dataset.emailId;
+                    const folder = el.dataset.folder;
+                    const email = emails[folder].find(e => e.id === emailId);
+                    selectedEmail = email;
+                    if (folder === 'inbox' && !email.isRead) {
+                        markAsRead(emailId);
+                    }
+                    renderContent();
+                };
+            });
+            
+            document.querySelectorAll('.toggle-important').forEach(btn => {
+                btn.onclick = (e) => {
+                    e.stopPropagation();
+                    const emailId = btn.dataset.emailId;
+                    const folder = btn.dataset.folder;
+                    toggleImportant(emailId, folder);
+                };
+            });
+            
+            if (currentView === 'inbox') {
+                document.getElementById('filter-select')?.addEventListener('change', (e) => {
+                    renderContent(e.target.value);
+                });
+            }
+            document.getElementById('search-input')?.addEventListener('input', (e) => {
+                renderContent('all', e.target.value);
+            });
+
+            // Email view events
+            document.getElementById('back-to-list-btn')?.addEventListener('click', () => {
+                selectedEmail = null;
+                renderContent();
+            });
+            document.getElementById('move-to-trash-btn')?.addEventListener('click', (e) => {
+                const emailId = e.target.dataset.emailId;
+                const folder = e.target.dataset.folder;
+                moveToTrash(emailId, folder);
+                selectedEmail = null;
+                renderContent();
+            });
+            document.getElementById('restore-from-trash-btn')?.addEventListener('click', (e) => {
+                restoreFromTrash(e.target.dataset.emailId);
+                selectedEmail = null;
+                renderContent();
+            });
+            document.getElementById('permanent-delete-btn')?.addEventListener('click', (e) => {
+                if (window.confirm("האם אתה בטוח שברצונך למחוק לצמיתות?")) {
+                    permanentDelete(e.target.dataset.emailId);
+                    selectedEmail = null;
+                    renderContent();
+                }
+            });
+
+            // Compose view events
+            document.getElementById('compose-to')?.addEventListener('input', (e) => {
+                // Update the recipient select box to match
+                const select = document.getElementById('compose-recipient-select');
+                if (select) {
+                    select.value = e.target.value;
+                }
+            });
+            document.getElementById('compose-recipient-select')?.addEventListener('change', (e) => {
+                const input = document.getElementById('compose-to');
+                if (input) {
+                    input.value = e.target.value;
+                }
+            });
+            document.getElementById('send-email-btn')?.addEventListener('click', sendEmail);
+            document.getElementById('file-attachment')?.addEventListener('change', handleFileAttachment);
+            document.getElementById('remove-attachment-btn')?.addEventListener('click', (e) => {
+                const draftDocRef = doc(db, `artifacts/${appId}/users/${userId}/drafts`, 'currentDraft');
+                setDoc(draftDocRef, { attachment: null, attachmentName: null }, { merge: true });
+                renderContent();
+            });
+            document.querySelectorAll('.rich-text-command').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.execCommand(e.target.dataset.command, false, null);
+                });
+            });
+
+            // Mailing lists events
+            document.getElementById('create-list-btn')?.addEventListener('click', () => openMailingListModal());
+            document.getElementById('mailing-list-modal-cancel')?.addEventListener('click', () => closeMailingListModal());
+            document.getElementById('mailing-list-form')?.addEventListener('submit', handleMailingListSubmit);
+            document.querySelectorAll('.edit-list-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const listId = btn.dataset.listId;
+                    const list = mailingLists.find(l => l.id === listId);
+                    openMailingListModal(list);
+                });
+            });
+            document.querySelectorAll('.delete-list-btn').forEach(btn => {
+                btn.addEventListener('click', () => deleteMailingList(btn.dataset.listId));
+            });
+
+            // Contacts events
+            document.getElementById('add-contact-btn')?.addEventListener('click', () => openContactModal());
+            document.getElementById('contact-modal-cancel')?.addEventListener('click', () => closeContactModal());
+            document.getElementById('contact-form')?.addEventListener('submit', handleContactSubmit);
+            document.querySelectorAll('.send-mail-contact-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const recipientId = btn.dataset.userId;
+                    currentView = 'compose';
+                    renderContent();
+                    document.getElementById('compose-to').value = recipientId;
+                });
+            });
+            document.querySelectorAll('.edit-contact-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const contactId = btn.dataset.contactId;
+                    const contact = contacts.find(c => c.id === contactId);
+                    openContactModal(contact);
+                });
+            });
+            document.querySelectorAll('.delete-contact-btn').forEach(btn => {
+                btn.addEventListener('click', () => deleteContact(btn.dataset.contactId));
+            });
+            
+            // Settings events
+            document.getElementById('save-signature-btn')?.addEventListener('click', saveSignature);
+
+        }
+
+        // --- Core Application Logic Functions ---
+        async function markAsRead(emailId) {
+            if (!db || !userId) return;
+            try {
+                const emailDocRef = doc(db, `artifacts/${appId}/users/${userId}/inbox`, emailId);
+                await updateDoc(emailDocRef, { isRead: true });
+            } catch (error) {
+                console.error("Error marking email as read: ", error);
+            }
+        }
+        
+        async function toggleImportant(emailId, folder) {
+            if (!db || !userId) return;
+            try {
+                const emailDocRef = doc(db, `artifacts/${appId}/users/${userId}/${folder}`, emailId);
+                const docSnap = await getDoc(emailDocRef);
+                if (docSnap.exists()) {
+                    await updateDoc(emailDocRef, { isImportant: !docSnap.data().isImportant });
+                }
+            } catch (error) {
+                console.error("Error toggling important status: ", error);
+            }
+        }
+
+        async function moveToTrash(emailId, folder) {
+            if (!db || !userId) return;
+            try {
+                const emailDocRef = doc(db, `artifacts/${appId}/users/${userId}/${folder}`, emailId);
+                const docSnap = await getDoc(emailDocRef);
+                if (docSnap.exists()) {
+                    await addDoc(collection(db, `artifacts/${appId}/users/${userId}/trash`), {
+                        ...docSnap.data(),
+                        originalFolder: folder,
+                        deletedAt: serverTimestamp(),
+                    });
+                    await deleteDoc(emailDocRef);
+                }
+            } catch (error) {
+                console.error("Error moving email to trash: ", error);
+            }
+        }
+
+        async function restoreFromTrash(emailId) {
+            if (!db || !userId) return;
+            try {
+                const trashDocRef = doc(db, `artifacts/${appId}/users/${userId}/trash`, emailId);
+                const docSnap = await getDoc(trashDocRef);
+                if (docSnap.exists()) {
+                    const emailData = docSnap.data();
+                    await addDoc(collection(db, `artifacts/${appId}/users/${userId}/${emailData.originalFolder}`), {
+                        ...emailData,
+                        originalFolder: null,
+                        deletedAt: null,
+                    });
+                    await deleteDoc(trashDocRef);
+                }
+            } catch (error) {
+                console.error("Error restoring email: ", error);
+            }
+        }
+
+        async function permanentDelete(emailId) {
+            if (!db || !userId) return;
+            try {
+                await deleteDoc(doc(db, `artifacts/${appId}/users/${userId}/trash`, emailId));
+            } catch (error) {
+                console.error("Error permanently deleting email: ", error);
+            }
+        }
+        
+        async function sendEmail() {
+            const toInput = document.getElementById('compose-to');
+            const subjectInput = document.getElementById('compose-subject');
+            const bodyEditor = document.getElementById('compose-body');
+            const fileAttachment = document.getElementById('file-attachment');
+            
+            const to = toInput.value;
+            const subject = subjectInput.value;
+            const htmlBody = bodyEditor.innerHTML;
+            const plainBody = bodyEditor.textContent;
+            let attachment = null;
+            let attachmentName = null;
+
+            if (fileAttachment.files[0]) {
+                const file = fileAttachment.files[0];
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    attachment = e.target.result;
+                    attachmentName = file.name;
+                    await performSendEmail(to, subject, plainBody, htmlBody, attachment, attachmentName);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                await performSendEmail(to, subject, plainBody, htmlBody, null, null);
+            }
+        }
+
+        async function performSendEmail(to, subject, plainBody, htmlBody, attachment, attachmentName) {
+            if (!db || !userId || !to || (!subject && !plainBody && !htmlBody)) return;
+
+            try {
+                const email = {
+                    to,
+                    subject,
+                    body: plainBody,
+                    htmlBody,
+                    from: `משתמש ${userId.substring(0, 8)}`,
+                    attachment,
+                    attachmentName,
+                    timestamp: serverTimestamp(),
+                    isRead: true,
+                    isImportant: false,
+                };
+                
+                await addDoc(collection(db, `artifacts/${appId}/users/${userId}/sent`), email);
+                
+                const recipients = to.split(',').map(s => s.trim());
+                for (const recipient of recipients) {
+                    const mailingList = mailingLists.find(list => list.id === recipient);
+                    if (mailingList) {
+                        for (const memberId of mailingList.members) {
+                            await addDoc(collection(db, `artifacts/${appId}/users/${memberId}/inbox`), { ...email, isRead: false, isImportant: false });
+                        }
+                    } else {
+                        await addDoc(collection(db, `artifacts/${appId}/users/${recipient}/inbox`), { ...email, isRead: false, isImportant: false });
+                    }
+                }
+                
+                // Clear draft
+                const draftDocRef = doc(db, `artifacts/${appId}/users/${userId}/drafts`, 'currentDraft');
+                await deleteDoc(draftDocRef);
+
+                currentView = 'sent';
+                renderContent();
+            } catch (error) {
+                console.error("Error sending email: ", error);
+            }
+        }
+
+        async function handleFileAttachment(e) {
+             const file = e.target.files[0];
+             if (file) {
+                 const reader = new FileReader();
+                 reader.onload = (event) => {
+                     const draftDocRef = doc(db, `artifacts/${appId}/users/${userId}/drafts`, 'currentDraft');
+                     setDoc(draftDocRef, { attachment: event.target.result, attachmentName: file.name }, { merge: true });
+                     renderContent();
+                 };
+                 reader.readAsDataURL(file);
+             }
+         }
+         
+        let editingList = null;
+        function openMailingListModal(list = null) {
+            editingList = list;
+            const modal = document.getElementById('mailing-list-modal');
+            const title = document.getElementById('mailing-list-modal-title');
+            const listNameInput = document.getElementById('list-name');
+            const usersContainer = document.getElementById('mailing-list-users-container');
+            const submitBtn = document.getElementById('mailing-list-submit-btn');
+
+            title.textContent = list ? 'עריכת קבוצת דיוור' : 'יצירת קבוצת דיוור חדשה';
+            listNameInput.value = list ? list.name : '';
+            submitBtn.textContent = list ? 'שמור שינויים' : 'צור רשימה';
+            
+            usersContainer.innerHTML = allUsers.length > 0 ? allUsers.map(user => `
+                <div class="flex items-center">
+                    <input type="checkbox" id="list-user-${user.id}" value="${user.id}" ${list?.members.includes(user.id) ? 'checked' : ''} class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                    <label for="list-user-${user.id}" class="mr-2 text-gray-700">${user.name || `משתמש ${user.id.substring(0, 8)}`}</label>
+                </div>
+            `).join('') : `<p class="text-gray-500 text-sm">אין משתמשים נוספים</p>`;
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeMailingListModal() {
+            document.getElementById('mailing-list-modal').classList.add('hidden');
+        }
+
+        async function handleMailingListSubmit(e) {
+            e.preventDefault();
+            const listName = document.getElementById('list-name').value;
+            const selectedUsers = Array.from(document.querySelectorAll('#mailing-list-users-container input:checked')).map(el => el.value);
+
+            if (!listName || selectedUsers.length === 0) return;
+
+            try {
+                if (editingList) {
+                    const listDocRef = doc(db, `artifacts/${appId}/users/${userId}/mailing_lists`, editingList.id);
+                    await updateDoc(listDocRef, { name: listName, members: selectedUsers });
+                } else {
+                    await addDoc(collection(db, `artifacts/${appId}/users/${userId}/mailing_lists`), {
+                        name: listName,
+                        members: selectedUsers,
+                        createdAt: serverTimestamp(),
+                    });
+                }
+                closeMailingListModal();
+            } catch (error) {
+                console.error("Error saving mailing list: ", error);
+            }
+        }
+
+        async function deleteMailingList(listId) {
+            if (window.confirm("האם אתה בטוח שברצונך למחוק את קבוצת הדיוור הזו?")) {
+                if (!db || !userId) return;
+                try {
+                    await deleteDoc(doc(db, `artifacts/${appId}/users/${userId}/mailing_lists`, listId));
+                } catch (error) {
+                    console.error("Error deleting mailing list: ", error);
+                }
+            }
+        }
+        
+        let editingContact = null;
+        function openContactModal(contact = null) {
+            editingContact = contact;
+            const modal = document.getElementById('contact-modal');
+            const title = document.getElementById('contact-modal-title');
+            const contactIdInput = document.getElementById('contact-id');
+            const contactNameInput = document.getElementById('contact-name');
+            const submitBtn = document.getElementById('contact-submit-btn');
+
+            title.textContent = contact ? 'עריכת איש קשר' : 'הוספת איש קשר חדש';
+            contactIdInput.value = contact ? contact.userId : '';
+            contactNameInput.value = contact ? contact.name : '';
+            submitBtn.textContent = contact ? 'שמור שינויים' : 'הוסף איש קשר';
+
+            modal.classList.remove('hidden');
+        }
+        
+        function closeContactModal() {
+            document.getElementById('contact-modal').classList.add('hidden');
+        }
+        
+        async function handleContactSubmit(e) {
+            e.preventDefault();
+            const contactId = document.getElementById('contact-id').value;
+            const contactName = document.getElementById('contact-name').value;
+
+            if (!contactId || !contactName) return;
+
+            try {
+                if (editingContact) {
+                    const contactDocRef = doc(db, `artifacts/${appId}/users/${userId}/contacts`, editingContact.id);
+                    await updateDoc(contactDocRef, { name: contactName, userId: contactId });
+                } else {
+                    const contactDocRef = doc(collection(db, `artifacts/${appId}/users/${userId}/contacts`), contactId);
+                    await setDoc(contactDocRef, { name: contactName, userId: contactId });
+                }
+                closeContactModal();
+            } catch (error) {
+                console.error("Error saving contact: ", error);
+            }
+        }
+        
+        async function deleteContact(contactId) {
+            if (window.confirm("האם אתה בטוח שברצונך למחוק את איש הקשר הזה?")) {
+                if (!db || !userId) return;
+                try {
+                    await deleteDoc(doc(db, `artifacts/${appId}/users/${userId}/contacts`, contactId));
+                } catch (error) {
+                    console.error("Error deleting contact: ", error);
+                }
+            }
+        }
+        
+        async function saveSignature() {
+            if (!db || !userId) return;
+            const signatureHtml = document.getElementById('signature-editor').innerHTML;
+            try {
+                const settingsDocRef = doc(db, `artifacts/${appId}/users/${userId}/settings`, 'userSettings');
+                await setDoc(settingsDocRef, { signature: signatureHtml }, { merge: true });
+                showNotification("החתימה נשמרה בהצלחה!");
+            } catch (error) {
+                console.error("Error saving signature: ", error);
+                showNotification("שגיאה בשמירת החתימה.");
+            }
+        }
+        
+        // Initial app start
+        window.onload = initializeAppAndAuth;
+
+    </script>
+</body>
+</html>
