@@ -1,0 +1,14 @@
+/* styles.css - תוספות קטנות על Tailwind */
+html, body, #root {
+  height: 100%;
+}
+
+/* כדי להבטיח כפתורי קבצים נראים טוב בדפדפן */
+input[type="file"] {
+  outline: none;
+}
+
+/* עידוד תמיכה ב־rtl */
+[dir="rtl"] .space-x-reverse {
+  direction: rtl;
+}
