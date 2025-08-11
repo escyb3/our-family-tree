@@ -11,7 +11,15 @@ import {
    קונפיגורציה גלובלית
    =========================== */
 // אפשר להגדיר את משתני הסביבה בגב ה־HTML כמו שהוצע.
-const firebaseConfig = (typeof window.__firebase_config !== 'undefined') ? JSON.parse(window.__firebase_config) : {};
+const firebaseConfig = {
+  apiKey: "AIzaSyB2HVNHCEcciP5NdHxp3CoK6ga_xrWs9X0",
+  authDomain: "mail-inbox-12659.firebaseapp.com",
+  projectId: "mail-inbox-12659",
+  storageBucket: "mail-inbox-12659.firebasestorage.app",
+  messagingSenderId: "1072374074441",
+  appId: "1:1072374074441:web:79679d4c5299798efb8398",
+  measurementId: "G-LM4D6FG5WY"
+};
 const appId = (typeof window.__app_id !== 'undefined') ? window.__app_id : 'default-app-id';
 const initialAuthToken = (typeof window.__initial_auth_token !== 'undefined') ? window.__initial_auth_token : null;
 
