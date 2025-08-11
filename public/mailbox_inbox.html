@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>דוא"ל פנימי - Family Mail</title>
+
+  <!-- Tailwind CDN (לשמור על אותו עיצוב כמו ב-React) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- אפשרות להגדיר את קונפיגורציית Firebase כמשתנים גלובליים לפני טעינת app.js.
+       דוגמה:
+  <script>
+    window.__firebase_config = '{"apiKey":"...","authDomain":"...","projectId":"..."}';
+    window.__app_id = 'my-app-id';
+    window.__initial_auth_token = null; // או מחרוזת טוקן אם יש
+  </script>
+  -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100">
+
+  <div id="root"></div>
+
+  <!-- app.js כמודול (מייבא את מודולי Firebase מ-CDN) -->
+  <script type="module" src="mailinbox.js"></script>
+</body>
+</html>
