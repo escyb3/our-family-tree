@@ -7,30 +7,6 @@ import {
   getFirestore, collection, addDoc, onSnapshot, query, where, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
 
-// בדיקת משתמש מחובר
-let currentUser = null;
-try {
-  const res = await fetch("/api/user");
-  if (res.ok) {
-    const user = await res.json();
-    currentUser = user;
-    if (usernameDisplay) {
-      usernameDisplay.textContent = `מחובר כ־${user.username}`;
-    }
-  } else {
-    console.error(`שגיאה בהתחברות: קוד סטטוס ${res.status}`);
-    const errorMessage = await res.text();
-    console.error(`הודעת שגיאה מהשרת: ${errorMessage}`);
-    if (window.location.pathname !== "/login.html") {
-      location.href = "/login.html";
-    }
-  }
-} catch (err) {
-  console.error("שגיאה בבדיקת התחברות:", err);
-  if (window.location.pathname !== "/login.html") {
-    location.href = "/login.html";
-  }
-}
 
 /* ===========================
    קונפיגורציה גלובלית
@@ -745,5 +721,28 @@ function bootstrap() {
   setupRealtimeListeners();
   render();
 }
-
+// בדיקת משתמש מחובר
+let currentUser = null;
+try {
+  const res = await fetch("/api/user");
+  if (res.ok) {
+    const user = await res.json();
+    currentUser = user;
+    if (usernameDisplay) {
+      usernameDisplay.textContent = `מחובר כ־${user.username}`;
+    }
+  } else {
+    console.error(`שגיאה בהתחברות: קוד סטטוס ${res.status}`);
+    const errorMessage = await res.text();
+    console.error(`הודעת שגיאה מהשרת: ${errorMessage}`);
+    if (window.location.pathname !== "/login.html") {
+      location.href = "/login.html";
+    }
+  }
+} catch (err) {
+  console.error("שגיאה בבדיקת התחברות:", err);
+  if (window.location.pathname !== "/login.html") {
+    location.href = "/login.html";
+  }
+}
 bootstrap();
