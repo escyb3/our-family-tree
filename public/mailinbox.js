@@ -540,6 +540,18 @@ async function handleLoginFormSubmit(e) {
     render();
   }
 }
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
+async function registerUser(email, password) {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    // משתמש נוצר בהצלחה
+    console.log('User registered:', userCredential.user);
+  } catch (error) {
+    console.error('Registration error:', error);
+  }
+}
+
 
 
 async function handleSendEmail(e) {
