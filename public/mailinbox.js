@@ -510,20 +510,19 @@ async function handleLoginFormSubmit(e) {
 
     if (initialAuthToken) {
       try {
-        userCred = await signInWithCustomToken(auth, initialAuthToken);
+        userCred = await firebase.auth().signInWithCustomToken(initialAuthToken);
       } catch (tokenErr) {
         console.warn('Custom token login failed, fallback to anonymous login:', tokenErr);
-        userCred = await signInAnonymously(auth);
+        userCred = await firebase.auth().signInAnonymously();
       }
     } else {
-      userCred = await signInAnonymously(auth);
+      userCred = await firebase.auth().signInAnonymously();
     }
 
     emailAddress = `${username}@family.local`;
     userId = userCred.user.uid;
     currentView = 'mailbox';
     statusMessage = '';
-    // no need to call render here because onAuthStateChanged will set isAuthReady true
   } catch (err) {
     console.error('Login error:', err);
     statusMessage = t().loginError;
@@ -532,10 +531,10 @@ async function handleLoginFormSubmit(e) {
     render();
   }
 }
+
 async function registerUser(email, password) {
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    // משתמש נוצר בהצלחה
+    const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
     console.log('User registered:', userCredential.user);
   } catch (error) {
     console.error('Registration error:', error);
