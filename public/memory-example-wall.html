@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>קיר זיכרון משפחתי</title>
     <!-- Tailwind CSS CDN -->
-        <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body { font-family: 'Heebo', sans-serif; }
     </style>
     <!-- Firebase CDN scripts -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js"></script>
+    
           import firebaseConfig 
            apiKey: "AIzaSyDLdJ9QbuZ35ARRPg2oqSgq4raOqc8ygiU",
           authDomain: "memorials-ee781.firebaseapp.com",
@@ -25,10 +25,6 @@
         measurementId: "G-FGBNKRGQ6B"
         };
         
-        // Expose Firebase modules to the global scope for the Babel script
-         const { initializeApp, getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, getDoc, setDoc, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getStorage, ref, uploadBytes, getDownloadURL } = window.firebase;
-        };
-    </script>
     <!-- React and ReactDOM CDN -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -40,11 +36,10 @@
 
     <script type="text/babel">
         const { useState, useEffect } = React;
-        const { initializeApp, getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, getDoc, setDoc, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getStorage, ref, uploadBytes, getDownloadURL } = window.firebase;
-
+        
         // Custom modal component for displaying messages
         const MessageModal = ({ message, onClose }) => (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50">
             <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-sm relative text-center">
               <h2 className="text-xl font-bold mb-4 text-gray-800">הודעה</h2>
               <p className="text-gray-600 mb-6">{message}</p>
@@ -72,47 +67,57 @@
         ];
 
         // Component for a single memorial card with interactive features
-        const MemorialCard = ({ memorial, currentUserId }) => {
-          const [comments, setComments] = useState(memorial.comments || []);
+        const MemorialCard = ({ memorial, currentUserId, isFirebaseReady, app }) => {
           const [newComment, setNewComment] = useState('');
-          const db = getFirestore(window.app);
           const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-    
 
           // Handler for lighting a candle, updates Firestore
           const handleLightCandle = async () => {
+            if (!isFirebaseReady) {
+                console.error("Firebase is not ready.");
+                return;
+            }
             try {
-              const memorialRef = doc(db, 'artifacts', appId, 'public', 'data', 'memorials', memorial.id);
-              await updateDoc(memorialRef, {
-                candles: (memorial.candles || 0) + 1,
-              });
+                const db = firebase.firestore.getFirestore(app);
+                const memorialRef = firebase.firestore.doc(db, 'artifacts', appId, 'public', 'data', 'memorials', memorial.id);
+                await firebase.firestore.updateDoc(memorialRef, {
+                    candles: (memorial.candles || 0) + 1,
+                });
             } catch (error) {
-              console.error('Error updating candle count:', error);
+                console.error('Error updating candle count:', error);
             }
           };
 
           // Handler for adding a comment, updates Firestore
           const handleAddComment = async (e) => {
-            e.preventDefault();
-            if (newComment.trim() === '') return;
+              e.preventDefault();
+              if (newComment.trim() === '') return;
+              if (!isFirebaseReady) {
+                  console.error("Firebase is not ready.");
+                  return;
+              }
 
-            try {
-              const memorialRef = doc(db, 'artifacts', appId, 'public', 'data', 'memorials', memorial.id);
-              const updatedComments = [
-                ...comments,
-                {
-                  author: currentUserId, // Using the user ID as author
-                  text: newComment,
-                  timestamp: new Date().toLocaleString('he-IL'),
-                },
-              ];
-              await updateDoc(memorialRef, {
-                comments: updatedComments,
-              });
-              setNewComment('');
-            } catch (error) {
-              console.error('Error adding comment:', error);
-            }
+              try {
+                  const db = firebase.firestore.getFirestore(app);
+                  const memorialRef = firebase.firestore.doc(db, 'artifacts', appId, 'public', 'data', 'memorials', memorial.id);
+                  const docSnap = await firebase.firestore.getDoc(memorialRef);
+                  const currentComments = docSnap.exists() ? docSnap.data().comments || [] : [];
+
+                  const updatedComments = [
+                      ...currentComments,
+                      {
+                          author: currentUserId, // Using the user ID as author
+                          text: newComment,
+                          timestamp: new Date().toLocaleString('he-IL'),
+                      },
+                  ];
+                  await firebase.firestore.updateDoc(memorialRef, {
+                      comments: updatedComments,
+                  });
+                  setNewComment('');
+              } catch (error) {
+                  console.error('Error adding comment:', error);
+              }
           };
 
           return (
@@ -121,6 +126,7 @@
                 src={memorial.photoUrl}
                 alt={memorial.name}
                 className="w-32 h-32 rounded-full object-cover mb-4 border-4 border-gray-200"
+                onError={(e) => { e.target.src = 'https://placehold.co/150x150/E2E8F0/1A202C?text=N/A'; }}
               />
               <h3 className="text-3xl font-bold text-gray-800 mb-1">
                 {memorial.name}
@@ -137,11 +143,12 @@
                 <button
                   onClick={handleLightCandle}
                   className="bg-red-600 text-white font-bold py-2 px-6 rounded-full shadow-md hover:bg-red-700 transition"
+                  disabled={!isFirebaseReady}
                 >
                   🕯️ הדלק נר לזכרו
                 </button>
                 <span className="text-gray-700 font-medium">
-                  {memorial.candles} נרות נשמה הודלקו
+                  {(memorial.candles || 0)} נרות נשמה הודלקו
                 </span>
               </div>
 
@@ -172,10 +179,12 @@
                     placeholder="שתף זיכרון או כתוב מסר..."
                     className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-right"
                     rows="3"
+                    disabled={!isFirebaseReady}
                   ></textarea>
                   <button
                     type="submit"
-                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition"
+                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition disabled:bg-blue-300"
+                    disabled={!isFirebaseReady}
                   >
                     פרסם תגובה
                   </button>
@@ -192,13 +201,15 @@
             name: '',
             years: '',
             dedication: '',
-            photoFile: null, // Now stores the file object itself
+            photoFile: null,
           });
           const [isLoading, setIsLoading] = useState(true);
-          const [isUploading, setIsUploading] = useState(false); // New state for upload status
-          const [isGeneratingDedication, setIsGeneratingDedication] = useState(false); // New state for Gemini API call
+          const [isUploading, setIsUploading] = useState(false);
+          const [isGeneratingDedication, setIsGeneratingDedication] = useState(false);
           const [userId, setUserId] = useState('');
           const [errorMessage, setErrorMessage] = useState('');
+          const [isFirebaseReady, setIsFirebaseReady] = useState(false);
+          const [app, setApp] = useState(null);
 
           // Function to handle the Gemini API call for generating a dedication
           const handleGenerateDedication = async () => {
@@ -214,7 +225,7 @@
               let chatHistory = [];
               chatHistory.push({ role: "user", parts: [{ text: prompt }] });
               const payload = { contents: chatHistory };
-              const apiKey = "AIzaSyBhBW1_bshNIB3VS4JsGsQh6aCxB6g8WVE" 
+              const apiKey = "" 
               const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
               
               const response = await fetch(apiUrl, {
@@ -222,6 +233,10 @@
                  headers: { 'Content-Type': 'application/json' },
                  body: JSON.stringify(payload)
               });
+
+              if (response.status === 403) {
+                throw new Error("Gemini API returned a 403 Forbidden error. Check if the API key is correctly configured.");
+              }
 
               const result = await response.json();
               
@@ -244,74 +259,89 @@
 
           // Firebase initialization and authentication
           useEffect(() => {
-            let firebaseConfig;
-            try {
-                firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-                if (!firebaseConfig.apiKey) {
-                    throw new Error("Firebase configuration is missing or invalid.");
+            // Function to handle the initialization and data fetching
+            const setupFirebase = async () => {
+                console.log("Setting up Firebase...");
+                const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+                const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+                
+                if (!firebaseConfig) {
+                    setErrorMessage("שגיאה: קונפיגורציית Firebase לא נמצאה. אנא רענן את הדף.");
+                    setIsLoading(false);
+                    return;
                 }
-            } catch (error) {
-                console.error("Firebase config error:", error);
-                setErrorMessage("שגיאה: הגדרות Firebase אינן תקינות. אנא פנה למנהל האתר.");
-                setIsLoading(false);
-                return;
-            }
 
-            window.app = initializeApp(firebaseConfig);
-            const auth = getAuth(window.app);
-            const db = getFirestore(window.app);
-            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-            const publicCollectionPath = `artifacts/${appId}/public/data/memorials`;
-
-            const authenticateAndFetch = async () => {
-              try {
-                if (typeof __initial_auth_token !== 'undefined') {
-                  await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                  await signInAnonymously(auth);
-                }
-              } catch (error) {
-                console.error("Firebase Auth Error:", error);
-                setErrorMessage("שגיאה: התחברות ל-Firebase נכשלה. אנא נסה שוב.");
-                setIsLoading(false);
-                return;
-              }
-
-              onAuthStateChanged(auth, async (user) => {
-                if (user) {
+                try {
+                  const initializedApp = firebase.initializeApp(firebaseConfig);
+                  setApp(initializedApp);
+                  const auth = firebase.auth.getAuth(initializedApp);
+                  const db = firebase.firestore.getFirestore(initializedApp);
+                  
+                  let userCredential;
+                  if (initialAuthToken) {
+                    userCredential = await firebase.auth.signInWithCustomToken(auth, initialAuthToken);
+                  } else {
+                    userCredential = await firebase.auth.signInAnonymously(auth);
+                  }
+                  
+                  const user = userCredential.user;
                   setUserId(user.uid);
-                  const memorialsCollection = collection(db, publicCollectionPath);
+                  
+                  const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+                  const publicCollectionPath = `artifacts/${appId}/public/data/memorials`;
+                  const memorialsCollection = firebase.firestore.collection(db, publicCollectionPath);
 
                   // Seed the database with initial memorials if they don't exist
                   for (const memorial of initialMemorials) {
-                    const memorialRef = doc(db, publicCollectionPath, memorial.id);
-                    const docSnap = await getDoc(memorialRef);
+                    const memorialRef = firebase.firestore.doc(db, publicCollectionPath, memorial.id);
+                    const docSnap = await firebase.firestore.getDoc(memorialRef);
                     if (!docSnap.exists()) {
-                      await setDoc(memorialRef, memorial);
+                      await firebase.firestore.setDoc(memorialRef, memorial);
                     }
                   }
 
-                  // onSnapshot listens for real-time updates from Firestore
-                  const unsubscribe = onSnapshot(memorialsCollection, (snapshot) => {
+                  // Listen for real-time updates
+                  const unsubscribe = firebase.firestore.onSnapshot(memorialsCollection, (snapshot) => {
                     const fetchedMemorials = snapshot.docs.map(doc => ({
                       id: doc.id,
                       ...doc.data()
                     }));
                     setMemorials(fetchedMemorials);
                     setIsLoading(false);
+                    setIsFirebaseReady(true); // Set ready flag after successful data fetch
                   }, (error) => {
                     console.error("Error fetching memorials:", error);
                     setErrorMessage("שגיאה: קריאת נתונים מ-Firestore נכשלה. אנא נסה שוב.");
                     setIsLoading(false);
+                    setIsFirebaseReady(false);
                   });
 
                   return () => unsubscribe(); // Cleanup the listener on unmount
+                } catch (error) {
+                  console.error("Firebase Initialization or Auth Error:", error);
+                  setErrorMessage("שגיאה: התחברות ל-Firebase נכשלה. אנא נסה שוב.");
+                  setIsLoading(false);
+                  setIsFirebaseReady(false);
                 }
-              });
             };
             
-            authenticateAndFetch();
-            
+            // We use a loop with setTimeout to poll for the Firebase libraries to be ready.
+            const checkFirebaseReady = () => {
+              // Check if all necessary Firebase libraries are loaded
+              if (typeof firebase !== 'undefined' && 
+                  typeof firebase.auth !== 'undefined' && 
+                  typeof firebase.firestore !== 'undefined' && 
+                  typeof firebase.storage !== 'undefined') {
+                console.log("Firebase libraries are loaded. Starting setup...");
+                setupFirebase();
+              } else {
+                console.log("Waiting for Firebase scripts to load...");
+                setTimeout(checkFirebaseReady, 200);
+              }
+            };
+
+            // Start the readiness check
+            checkFirebaseReady();
           }, []);
 
           // Handler to update the form state as the user types
@@ -346,21 +376,26 @@
               setErrorMessage("יש למלא שם ושנות חיים.");
               return;
             }
+            if (!isFirebaseReady) {
+              console.error("Firebase is not ready.");
+              setErrorMessage("האפליקציה עדיין מתחברת ל-Firebase. אנא המתן.");
+              return;
+            }
 
             setIsUploading(true);
 
             try {
               const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-              const db = getFirestore(window.app);
-              const storage = getStorage(window.app);
+              const db = firebase.firestore.getFirestore(app);
+              const storage = firebase.storage.getStorage(app);
 
               let photoUrl = `https://placehold.co/150x150/E2E8F0/1A202C?text=${newMemorialData.name.charAt(0)}`;
 
               // If a file was selected, upload it to Firebase Storage
               if (newMemorialData.photoFile) {
-                const storageRef = ref(storage, `memorial-photos/${appId}/${Date.now()}-${newMemorialData.photoFile.name}`);
-                const snapshot = await uploadBytes(storageRef, newMemorialData.photoFile);
-                photoUrl = await getDownloadURL(snapshot.ref);
+                const storageRef = firebase.storage.ref(storage, `memorial-photos/${appId}/${Date.now()}-${newMemorialData.photoFile.name}`);
+                const snapshot = await firebase.storage.uploadBytes(storageRef, newMemorialData.photoFile);
+                photoUrl = await firebase.storage.getDownloadURL(snapshot.ref);
               }
 
               const newMemorial = {
@@ -372,8 +407,8 @@
                 photoUrl: photoUrl,
               };
 
-              const memorialsCollection = collection(db, 'artifacts', appId, 'public', 'data', 'memorials');
-              await addDoc(memorialsCollection, newMemorial);
+              const memorialsCollection = firebase.firestore.collection(db, 'artifacts', appId, 'public', 'data', 'memorials');
+              await firebase.firestore.addDoc(memorialsCollection, newMemorial);
 
               setNewMemorialData({ name: '', years: '', dedication: '', photoFile: null });
               setIsModalOpen(false);
@@ -398,6 +433,7 @@
                 <button
                   onClick={() => setIsModalOpen(true)}
                   className="mt-6 bg-blue-500 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-blue-600 transition"
+                  disabled={!isFirebaseReady}
                 >
                   ➕ הוסף זיכרון לקיר
                 </button>
@@ -408,14 +444,14 @@
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {memorials.map(memorial => (
-                    <MemorialCard key={memorial.id} memorial={memorial} currentUserId={userId} />
+                    <MemorialCard key={memorial.id} memorial={memorial} currentUserId={userId} isFirebaseReady={isFirebaseReady} app={app} />
                   ))}
                 </div>
               )}
 
               {/* The modal for adding a new memorial */}
               {isModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50">
                   <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md relative">
                     <button
                       onClick={() => setIsModalOpen(false)}
@@ -434,6 +470,7 @@
                           onChange={handleInputChange}
                           className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                           required
+                          disabled={!isFirebaseReady}
                         />
                       </div>
                       <div>
@@ -445,6 +482,7 @@
                           onChange={handleInputChange}
                           className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                           required
+                          disabled={!isFirebaseReady}
                         />
                       </div>
                       <div>
@@ -453,7 +491,7 @@
                           <button
                             type="button"
                             onClick={handleGenerateDedication}
-                            disabled={isGeneratingDedication}
+                            disabled={isGeneratingDedication || !isFirebaseReady}
                             className="text-sm text-blue-500 font-semibold hover:text-blue-700 transition disabled:text-gray-400"
                           >
                             {isGeneratingDedication ? 'יוצר...' : '✨ יצירת הקדשה'}
@@ -465,6 +503,7 @@
                           onChange={handleInputChange}
                           className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-1"
                           rows="3"
+                          disabled={!isFirebaseReady}
                         ></textarea>
                       </div>
                       <div>
@@ -475,12 +514,13 @@
                           onChange={handleFileChange}
                           className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                           accept="image/*"
+                          disabled={!isFirebaseReady}
                         />
                       </div>
                       <button
                         type="submit"
                         className="w-full bg-blue-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-600 transition mt-4 disabled:bg-blue-300"
-                        disabled={isUploading}
+                        disabled={isUploading || !isFirebaseReady}
                       >
                         {isUploading ? 'מעלה תמונה...' : 'פרסם זיכרון'}
                       </button>
@@ -499,9 +539,26 @@
             </div>
           );
         };
+        
+        // This function checks if Firebase scripts are loaded and then renders the app.
+        // This prevents race conditions where the app tries to use Firebase before it's ready.
+        const checkFirebaseReady = () => {
+          if (typeof firebase !== 'undefined' && 
+              typeof firebase.auth !== 'undefined' && 
+              typeof firebase.firestore !== 'undefined' && 
+              typeof firebase.storage !== 'undefined') {
+            console.log("Firebase libraries are loaded. Rendering App...");
+            ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+          } else {
+            console.log("Waiting for Firebase scripts to load...");
+            setTimeout(checkFirebaseReady, 200);
+          }
+        };
 
-        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-
+        // Start the readiness check once the DOM is ready
+        window.onload = checkFirebaseReady;
     </script>
 </body>
 </html>
+
+    
