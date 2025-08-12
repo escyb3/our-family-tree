@@ -250,7 +250,6 @@
         (async () => {
           try {
             if (window.__initial_auth_token) {
-              await auth.signInWithCustomToken(window.__initial_auth_token);
             } else {
               await auth.signInAnonymously();
             }
