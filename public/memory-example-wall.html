@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -36,6 +36,22 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
         const { initializeApp, getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, getDoc, setDoc, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getStorage, ref, uploadBytes, getDownloadURL } = window.firebase;
+
+        // Custom modal component for displaying messages
+        const MessageModal = ({ message, onClose }) => (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
+            <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-sm relative text-center">
+              <h2 className="text-xl font-bold mb-4 text-gray-800">הודעה</h2>
+              <p className="text-gray-600 mb-6">{message}</p>
+              <button
+                onClick={onClose}
+                className="bg-blue-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-600 transition"
+              >
+                סגור
+              </button>
+            </div>
+          </div>
+        );
 
         // Hardcoded initial data for Frank
         const initialMemorials = [
@@ -149,7 +165,6 @@
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder="שתף זיכרון או כתוב מסר..."
                     className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-right"
-                    dir="rtl"
                     rows="3"
                   ></textarea>
                   <button
@@ -175,11 +190,67 @@
           });
           const [isLoading, setIsLoading] = useState(true);
           const [isUploading, setIsUploading] = useState(false); // New state for upload status
+          const [isGeneratingDedication, setIsGeneratingDedication] = useState(false); // New state for Gemini API call
           const [userId, setUserId] = useState('');
+          const [errorMessage, setErrorMessage] = useState('');
+
+          // Function to handle the Gemini API call for generating a dedication
+          const handleGenerateDedication = async () => {
+            if (!newMemorialData.name || !newMemorialData.years) {
+              setErrorMessage("נא למלא את שם הנפטר/ת ושנות החיים לפני יצירת הקדשה.");
+              return;
+            }
+            
+            setIsGeneratingDedication(true);
+            
+            try {
+              const prompt = `כתוב הקדשה קצרה ומרגשת עבור קיר זיכרון. הזיכרון הוא עבור אדם בשם "${newMemorialData.name}", שחי בין השנים "${newMemorialData.years}". ההקדשה צריכה להיות מכובדת, לבבית, ובשפה עברית. התמקד בחשיבות הזיכרון והערך שלו.`;
+              let chatHistory = [];
+              chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+              const payload = { contents: chatHistory };
+              const apiKey = "" 
+              const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+              
+              const response = await fetch(apiUrl, {
+                 method: 'POST',
+                 headers: { 'Content-Type': 'application/json' },
+                 body: JSON.stringify(payload)
+              });
+
+              const result = await response.json();
+              
+              if (result.candidates && result.candidates.length > 0 &&
+                  result.candidates[0].content && result.candidates[0].content.parts &&
+                  result.candidates[0].content.parts.length > 0) {
+                const text = result.candidates[0].content.parts[0].text;
+                setNewMemorialData(prevData => ({ ...prevData, dedication: text }));
+              } else {
+                setErrorMessage("שגיאה ביצירת ההקדשה. אנא נסה שוב.");
+              }
+              
+            } catch (error) {
+              console.error("Error generating dedication:", error);
+              setErrorMessage('הייתה בעיה בשליחה ל-Gemini API. אנא נסה שוב.');
+            } finally {
+              setIsGeneratingDedication(false);
+            }
+          };
 
           // Firebase initialization and authentication
           useEffect(() => {
-            const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+            let firebaseConfig;
+            try {
+                firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+                if (!firebaseConfig.apiKey) {
+                    throw new Error("Firebase configuration is missing or invalid.");
+                }
+            } catch (error) {
+                console.error("Firebase config error:", error);
+                setErrorMessage("שגיאה: הגדרות Firebase אינן תקינות. אנא פנה למנהל האתר.");
+                setIsLoading(false);
+                return;
+            }
+
             window.app = initializeApp(firebaseConfig);
             const auth = getAuth(window.app);
             const db = getFirestore(window.app);
@@ -195,6 +266,9 @@
                 }
               } catch (error) {
                 console.error("Firebase Auth Error:", error);
+                setErrorMessage("שגיאה: התחברות ל-Firebase נכשלה. אנא נסה שוב.");
+                setIsLoading(false);
+                return;
               }
 
               onAuthStateChanged(auth, async (user) => {
@@ -221,6 +295,7 @@
                     setIsLoading(false);
                   }, (error) => {
                     console.error("Error fetching memorials:", error);
+                    setErrorMessage("שגיאה: קריאת נתונים מ-Firestore נכשלה. אנא נסה שוב.");
                     setIsLoading(false);
                   });
 
@@ -247,7 +322,7 @@
             const file = e.target.files[0];
             if (file) {
               if (file.size > 1024 * 1024 * 5) { // 5MB size limit
-                alert("הקובץ גדול מדי. נא לבחור תמונה קטנה יותר (עד 5MB).");
+                setErrorMessage("הקובץ גדול מדי. נא לבחור תמונה קטנה יותר (עד 5MB).");
                 e.target.value = '';
                 return;
               }
@@ -262,7 +337,7 @@
           const handleAddMemorial = async (e) => {
             e.preventDefault();
             if (!newMemorialData.name || !newMemorialData.years) {
-              alert("יש למלא שם ושנות חיים.");
+              setErrorMessage("יש למלא שם ושנות חיים.");
               return;
             }
 
@@ -299,7 +374,7 @@
 
             } catch (error) {
               console.error("Error adding new memorial:", error);
-              alert('הייתה בעיה בשמירת הזיכרון. אנא נסה שוב.');
+              setErrorMessage('הייתה בעיה בשמירת הזיכרון. אנא נסה שוב.');
             } finally {
               setIsUploading(false);
             }
@@ -352,7 +427,6 @@
                           value={newMemorialData.name}
                           onChange={handleInputChange}
                           className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          dir="rtl"
                           required
                         />
                       </div>
@@ -364,18 +438,26 @@
                           value={newMemorialData.years}
                           onChange={handleInputChange}
                           className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          dir="rtl"
                           required
                         />
                       </div>
                       <div>
-                        <label htmlFor="dedication" className="block text-gray-700 font-medium mb-1">הקדשה אישית (אופציונלי):</label>
+                        <div className="flex items-center justify-between">
+                          <label htmlFor="dedication" className="block text-gray-700 font-medium">הקדשה אישית (אופציונלי):</label>
+                          <button
+                            type="button"
+                            onClick={handleGenerateDedication}
+                            disabled={isGeneratingDedication}
+                            className="text-sm text-blue-500 font-semibold hover:text-blue-700 transition disabled:text-gray-400"
+                          >
+                            {isGeneratingDedication ? 'יוצר...' : '✨ יצירת הקדשה'}
+                          </button>
+                        </div>
                         <textarea
                           id="dedication"
                           value={newMemorialData.dedication}
                           onChange={handleInputChange}
-                          className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          dir="rtl"
+                          className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-1"
                           rows="3"
                         ></textarea>
                       </div>
@@ -399,6 +481,14 @@
                     </form>
                   </div>
                 </div>
+              )}
+
+              {/* Message Modal for errors and confirmations */}
+              {errorMessage && (
+                <MessageModal
+                  message={errorMessage}
+                  onClose={() => setErrorMessage('')}
+                />
               )}
             </div>
           );
