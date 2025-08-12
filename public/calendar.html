@@ -91,6 +91,10 @@
     document.getElementById('toggleLang').addEventListener('click', toggleLanguage);
 
     document.addEventListener('DOMContentLoaded', async function() {
+          const hebrew = document.getElementById("event-hebrew").value;
+    const type = document.getElementById("event-type").value;
+    const title = document.getElementById("event-title").value;
+    const date = document.getElementById("event-date").value;
       const calendarEl = document.getElementById('calendar');
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
