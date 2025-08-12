@@ -20,10 +20,9 @@ const initialAuthToken = (typeof window.__initial_auth_token !== 'undefined') ? 
 /* ===========
    Inits
    =========== */
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 /* =====
    טקסטים (עברית/אנגלית) - מותאם מהקוד המקורי
    ===== */
