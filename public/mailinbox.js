@@ -661,7 +661,7 @@ function filterEmails(emails) {
    =========================== */
 function setupRealtimeListeners() {
   // הקשבה לשינויי אימות
-  onAuthStateChanged(auth, (user) => {
+   firebase.auth().onAuthStateChanged(user => {
     isAuthReady = true;
     if (user) {
       userId = user.uid;
