@@ -287,7 +287,13 @@ useEffect(() => {
         }
       }
     }
-  });
+  }); // <-- סוגר כאן את onAuthStateChanged
+
+  return () => {
+    try { if (typeof unSubAuth === 'function') unSubAuth(); } catch (e) {}
+  }; // <-- סוגר את ה-return של ניקוי האפקט
+}, []); // <-- סוגר את ה-useEffect
+
 
   return () => {
     if (typeof unSubAuth === 'function') unSubAuth();
