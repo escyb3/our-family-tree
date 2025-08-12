@@ -1,13 +1,6 @@
 // app.js (type=module)
 // וודא שהגדרת window.__firebase_config ו־window.__app_id לפני טעינה או ערוך פה ידנית.
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-import {
-  getFirestore, collection, addDoc, onSnapshot, query, where, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-
-
 /* ===========================
    קונפיגורציה גלובלית
    =========================== */
