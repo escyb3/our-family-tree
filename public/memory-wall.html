@@ -247,23 +247,53 @@
 
         let unsubscribeCollection = null;
 
-firebase.initializeApp(firebaseConfig);
+useEffect(() => {
+  const firebaseConfig = { /* ... */ };
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  const appId = window.__app_id || 'default-app-id';
+  const memorialsCollection = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('memorials');
+
+  const initialSeed = [
+    {
+      id: 'frank-van-der-velde',
+      name: 'פרנק ון דר ולדה',
+      years: '1943 - 2025',
+      dedication: 'פרנק היה אדם אהוב, אבא, סבא, חבר, ונשמה חמה וטובה.',
+      photoUrl: 'https://placehold.co/150x150/E9D5FF/5B21B6?text=פרנק',
+      candles: 0,
+      comments: []
+    }
+  ];
 
   firebase.auth().signInAnonymously()
     .then(() => console.log('Signed in anonymously'))
     .catch(err => console.error('Auth error:', err));
-          const unSubAuth = auth.onAuthStateChanged(async (user) => {
-            if (user) {
-              setUserId(user.uid);
-              for (const s of initialSeed) {
-                try {
-                  const docRef = memorialsCollection.doc(s.id);
-                  const snap = await docRef.get();
-                  if (!snap.exists) await docRef.set(s);
-                } catch (err) {
-                  console.error('Seeding error for', s.id, err);
-                }
-              }
+
+  const unSubAuth = auth.onAuthStateChanged(async (user) => {
+    if (user) {
+      setUserId(user.uid);
+      for (const s of initialSeed) {
+        try {
+          const docRef = memorialsCollection.doc(s.id);
+          const snap = await docRef.get();
+          if (!snap.exists) await docRef.set(s);
+        } catch (err) {
+          console.error('Seeding error for', s.id, err);
+        }
+      }
+    }
+  });
+
+  return () => {
+    if (typeof unSubAuth === 'function') unSubAuth();
+  };
+}, []);
+
 
               unsubscribeCollection = memorialsCollection.onSnapshot(snapshot => {
                 const arr = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
