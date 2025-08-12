@@ -254,9 +254,10 @@
               await auth.signInAnonymously();
             }
           } catch (err) {
-            console.error('Auth error', err);
+      firebase.auth().signInAnonymously()
+  .then(() => console.log('Signed in anonymously'))
+  .catch((error) => console.error('Auth error', error));
           }
-
           const unSubAuth = auth.onAuthStateChanged(async (user) => {
             if (user) {
               setUserId(user.uid);
