@@ -256,7 +256,12 @@ useEffect(() => {
   const auth = firebase.auth();
   const db = firebase.firestore();
   const appId = window.__app_id || 'default-app-id';
-  const memorialsCollection = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('memorials');
+  const memorialsCollection = db
+    .collection('artifacts')
+    .doc(appId)
+    .collection('public')
+    .doc('data')
+    .collection('memorials');
 
   const initialSeed = [
     {
@@ -274,9 +279,12 @@ useEffect(() => {
     .then(() => console.log('Signed in anonymously'))
     .catch(err => console.error('Auth error:', err));
 
+  let unsubscribeCollection = null;
+
   const unSubAuth = auth.onAuthStateChanged(async (user) => {
     if (user) {
       setUserId(user.uid);
+
       for (const s of initialSeed) {
         try {
           const docRef = memorialsCollection.doc(s.id);
@@ -286,13 +294,28 @@ useEffect(() => {
           console.error('Seeding error for', s.id, err);
         }
       }
+
+      unsubscribeCollection = memorialsCollection.onSnapshot(
+        (snapshot) => {
+          const arr = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+          arr.sort((a, b) => (a.name || '').localeCompare(b.name || '', 'default'));
+          setMemorials(arr);
+          setIsLoading(false);
+        },
+        (err) => {
+          console.error('collection onSnapshot', err);
+          setIsLoading(false);
+        }
+      );
     }
-  }); // <-- סוגר כאן את onAuthStateChanged
+  });
 
   return () => {
-    try { if (typeof unSubAuth === 'function') unSubAuth(); } catch (e) {}
-  }; // <-- סוגר את ה-return של ניקוי האפקט
-}, []); // <-- סוגר את ה-useEffect
+    try { if (typeof unSubAuth === 'function') unSubAuth(); } catch {}
+    try { if (typeof unsubscribeCollection === 'function') unsubscribeCollection(); } catch {}
+  };
+}, []);
+
 
 
   return () => {
