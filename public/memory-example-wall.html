@@ -72,6 +72,15 @@
           const [newComment, setNewComment] = useState('');
           const db = getFirestore(window.app);
           const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+            const firebaseConfig = {
+  apiKey: "AIzaSyDLdJ9QbuZ35ARRPg2oqSgq4raOqc8ygiU",
+  authDomain: "memorials-ee781.firebaseapp.com",
+  projectId: "memorials-ee781",
+  storageBucket: "memorials-ee781.firebasestorage.app",
+  messagingSenderId: "566419126995",
+  appId: "1:566419126995:web:99291628f1baa4e9c87226",
+  measurementId: "G-FGBNKRGQ6B"
+};
 
           // Handler for lighting a candle, updates Firestore
           const handleLightCandle = async () => {
