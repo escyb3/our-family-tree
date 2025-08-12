@@ -18,14 +18,15 @@ try {
       usernameDisplay.textContent = `מחובר כ־${user.username}`;
     }
   } else {
-    // בודקים אם אנחנו כבר בדף ההתחברות כדי למנוע לולאה אינסופית
+    console.error(`שגיאה בהתחברות: קוד סטטוס ${res.status}`);
+    const errorMessage = await res.text();
+    console.error(`הודעת שגיאה מהשרת: ${errorMessage}`);
     if (window.location.pathname !== "/login.html") {
       location.href = "/login.html";
     }
   }
 } catch (err) {
   console.error("שגיאה בבדיקת התחברות:", err);
-  // בודקים שוב כדי למנוע לולאה אינסופית
   if (window.location.pathname !== "/login.html") {
     location.href = "/login.html";
   }
