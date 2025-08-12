@@ -515,11 +515,18 @@ async function handleLoginFormSubmit(e) {
 
   try {
     let userCred;
+
     if (initialAuthToken) {
-      userCred = await signInWithCustomToken(auth, initialAuthToken);
+      try {
+        userCred = await signInWithCustomToken(auth, initialAuthToken);
+      } catch (tokenErr) {
+        console.warn('Custom token login failed, fallback to anonymous login:', tokenErr);
+        userCred = await signInAnonymously(auth);
+      }
     } else {
       userCred = await signInAnonymously(auth);
     }
+
     emailAddress = `${username}@family.local`;
     userId = userCred.user.uid;
     currentView = 'mailbox';
@@ -533,6 +540,7 @@ async function handleLoginFormSubmit(e) {
     render();
   }
 }
+
 
 async function handleSendEmail(e) {
   if (e && e.preventDefault) e.preventDefault();
