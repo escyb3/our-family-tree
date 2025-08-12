@@ -247,17 +247,11 @@
 
         let unsubscribeCollection = null;
 
-        (async () => {
-          try {
-            if (window.__initial_auth_token) {
-            } else {
-              await auth.signInAnonymously();
-            }
-          } catch (err) {
-      firebase.auth().signInAnonymously()
-  .then(() => console.log('Signed in anonymously'))
-  .catch((error) => console.error('Auth error', error));
-          }
+firebase.initializeApp(firebaseConfig);
+
+  firebase.auth().signInAnonymously()
+    .then(() => console.log('Signed in anonymously'))
+    .catch(err => console.error('Auth error:', err));
           const unSubAuth = auth.onAuthStateChanged(async (user) => {
             if (user) {
               setUserId(user.uid);
