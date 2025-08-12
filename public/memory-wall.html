@@ -8,18 +8,16 @@
   <!-- React (UMD) -->
   <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-  <!-- Babel for in-browser JSX (convenience; remove for production) -->
+  <!-- Babel for in-browser JSX (development only) -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-  <!-- Firebase SDK (COMPAT UMD builds) -->
-  <!-- NOTE: using the *-compat.js builds exposes the global `firebase` object used by this file. -->
+  <!-- Firebase SDK (Compat UMD builds) -->
   <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-storage-compat.js"></script>
 
   <style>
-    /* small RTL-friendly font stack */
     @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;800&display=swap');
     body { font-family: 'Heebo', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
   </style>
@@ -27,371 +25,425 @@
 <body class="bg-gray-100 text-right">
   <div id="root"></div>
 
-  <!--
-    USAGE:
-      1) העתק את הקובץ הזה כ-index.html
-      2) לפני הטעינה, דאג להגדיר גלובלית (inline script או לפני הסקריפט הזה):
-         window.__firebase_config = { apiKey: '...', authDomain: '...', projectId: '...', storageBucket: '...', ... };
-         window.__app_id = 'your-app-id'; // אופציונלי (ברירת מחדל 'default-app-id')
-         window.__initial_auth_token = undefined; // או מחרוזת Token אם יש
-      3) פתח בדפדפן. הפיתוח עם Babel מתאים ל-dev בלבד.
-
-    FIXES IN THIS VERSION:
-      • Uses Firebase *compat* UMD builds so the global `firebase` object is defined.
-      • Ensures firebase.initializeApp only runs once (checks firebase.apps.length).
-      • Avoids re-initializing Firebase when the UI language changes.
-      • Resorts the memorials list when language toggles (so names are displayed in the selected locale).
-  -->
-
   <script type="text/babel">
-  const { useState, useEffect, useRef } = React;
 
-  // --- i18n strings (he / en) ---
-  const STRINGS = {
-    he: {
-      title: 'קיר זיכרון משפחתי 🕯️',
-      subtitle: '"האנשים שאנו אוהבים אינם עוזבים אותנו באמת"',
-      addMemory: '➕ הוסף זיכרון לקיר',
-      loading: 'טוען זיכרונות...',
-      lightCandle: '🕯️ הדלק נר לזכרו',
-      candlesCount: (n) => `${n} נרות נשמה הודלקו`,
-      commentsTitle: 'זיכרונות ותגובות',
-      noComments: 'עדיין אין תגובות. היה הראשון לשתף זיכרון.',
-      publishComment: 'פרסם תגובה',
-      addNewMemory: 'הוסף זיכרון חדש',
-      nameLabel: 'שם הנפטר/ת:',
-      yearsLabel: 'שנות חיים (לדוגמה: 1943 - 2025):',
-      dedicationLabel: 'הקדשה אישית (אופציונלי):',
-      uploadPhoto: 'העלה תמונה (עד 5MB):',
-      submitMemory: 'פרסם זיכרון',
-      uploading: 'מעלה תמונה...',
-      fileTooLarge: 'הקובץ גדול מדי. נא לבחור תמונה קטנה יותר (עד 5MB).',
-      errorSave: 'הייתה בעיה בשמירת הזיכרון. אנא נסה שוב.',
-      langToggle: 'EN'
-    },
-    en: {
-      title: 'Family Memorial Wall 🕯️',
-      subtitle: '"The ones we love never truly leave us."',
-      addMemory: '➕ Add Memorial',
-      loading: 'Loading memorials...',
-      lightCandle: '🕯️ Light a candle',
-      candlesCount: (n) => `${n} candles lit`,
-      commentsTitle: 'Memories & Comments',
-      noComments: 'No comments yet. Be the first to share a memory.',
-      publishComment: 'Publish Comment',
-      addNewMemory: 'Add New Memorial',
-      nameLabel: 'Name:',
-      yearsLabel: 'Years (e.g. 1943 - 2025):',
-      dedicationLabel: 'Dedication (optional):',
-      uploadPhoto: 'Upload Photo (up to 5MB):',
-      submitMemory: 'Publish Memorial',
-      uploading: 'Uploading photo...',
-      fileTooLarge: 'File too large. Choose an image under 5MB.',
-      errorSave: 'There was a problem saving the memorial. Please try again.',
-      langToggle: 'עברית'
+    const { useState, useEffect } = React;
+
+    // -- תרגום דו-לשוני --
+    const STRINGS = {
+      he: {
+        title: 'קיר זיכרון משפחתי 🕯️',
+        subtitle: '"האנשים שאנו אוהבים אינם עוזבים אותנו באמת"',
+        addMemory: '➕ הוסף זיכרון לקיר',
+        loading: 'טוען זיכרונות...',
+        lightCandle: '🕯️ הדלק נר לזכרו',
+        candlesCount: (n) => `${n} נרות נשמה הודלקו`,
+        commentsTitle: 'זיכרונות ותגובות',
+        noComments: 'עדיין אין תגובות. היה הראשון לשתף זיכרון.',
+        publishComment: 'פרסם תגובה',
+        addNewMemory: 'הוסף זיכרון חדש',
+        nameLabel: 'שם הנפטר/ת:',
+        yearsLabel: 'שנות חיים (לדוגמה: 1943 - 2025):',
+        dedicationLabel: 'הקדשה אישית (אופציונלי):',
+        uploadPhoto: 'העלה תמונה (עד 5MB):',
+        submitMemory: 'פרסם זיכרון',
+        uploading: 'מעלה תמונה...',
+        fileTooLarge: 'הקובץ גדול מדי. נא לבחור תמונה קטנה יותר (עד 5MB).',
+        errorSave: 'הייתה בעיה בשמירת הזיכרון. אנא נסה שוב.',
+        langToggle: 'EN'
+      },
+      en: {
+        title: 'Family Memorial Wall 🕯️',
+        subtitle: '"The ones we love never truly leave us."',
+        addMemory: '➕ Add Memorial',
+        loading: 'Loading memorials...',
+        lightCandle: '🕯️ Light a candle',
+        candlesCount: (n) => `${n} candles lit`,
+        commentsTitle: 'Memories & Comments',
+        noComments: 'No comments yet. Be the first to share a memory.',
+        publishComment: 'Publish Comment',
+        addNewMemory: 'Add New Memorial',
+        nameLabel: 'Name:',
+        yearsLabel: 'Years (e.g. 1943 - 2025):',
+        dedicationLabel: 'Dedication (optional):',
+        uploadPhoto: 'Upload Photo (up to 5MB):',
+        submitMemory: 'Publish Memorial',
+        uploading: 'Uploading photo...',
+        fileTooLarge: 'File too large. Choose an image under 5MB.',
+        errorSave: 'There was a problem saving the memorial. Please try again.',
+        langToggle: 'עברית'
+      }
+    };
+
+    // פונקציית עזר לתרגום
+    function t(lang, key, ...args) {
+      const s = STRINGS[lang][key];
+      return typeof s === 'function' ? s(...args) : s;
     }
-  };
 
-  // Helper: get string by key
-  function t(lang, key, ...args) {
-    const s = STRINGS[lang][key];
-    return typeof s === 'function' ? s(...args) : s;
-  }
-
-  // ---- MemorialCard component ----
-  function MemorialCard({ memorialId, initialData, lang, currentUserId, db }) {
-    const [memorial, setMemorial] = useState(initialData);
-    const [commentText, setCommentText] = useState('');
-    const [isCommentSubmitting, setIsCommentSubmitting] = useState(false);
-    const appId = window.__app_id || 'default-app-id';
-
-    // Subscribe to this memorial doc to get real-time updates (candles, comments, etc.)
-    useEffect(() => {
-      const docRef = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('memorials').doc(memorialId);
-      const unsubscribe = docRef.onSnapshot(docSnap => {
-        if (docSnap.exists) setMemorial({ id: docSnap.id, ...docSnap.data() });
-      }, err => console.error('memorial onSnapshot error', err));
-      return () => unsubscribe();
-    }, [memorialId]);
-
-    const handleLightCandle = async () => {
-      try {
-        const docRef = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('memorials').doc(memorialId);
-        // Use transaction to avoid race conditions
-        await db.runTransaction(async (tx) => {
-          const d = await tx.get(docRef);
-          if (!d.exists) return;
-          const current = d.data().candles || 0;
-          tx.update(docRef, { candles: current + 1 });
-        });
-      } catch (err) {
-        console.error('Error lighting candle', err);
-      }
-    };
-
-    const handleAddComment = async (e) => {
-      e && e.preventDefault();
-      if (!commentText.trim()) return;
-      setIsCommentSubmitting(true);
-      try {
-        const docRef = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('memorials').doc(memorialId);
-        const newComment = { author: currentUserId || 'anon', text: commentText.trim(), timestamp: new Date().toLocaleString(lang === 'he' ? 'he-IL' : 'en-US') };
-        // push comment atomically
-        await db.runTransaction(async (tx) => {
-          const d = await tx.get(docRef);
-          if (!d.exists) { tx.set(docRef, { comments: [newComment] }, { merge: true }); return; }
-          const existing = d.data().comments || [];
-          tx.update(docRef, { comments: [...existing, newComment] });
-        });
-        setCommentText('');
-      } catch (err) {
-        console.error('Error adding comment', err);
-      } finally {
-        setIsCommentSubmitting(false);
-      }
-    };
-
-    return (
-      <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center max-w-lg mx-auto transition-transform duration-300 hover:scale-105">
-        <img src={memorial.photoUrl} alt={memorial.name} className="w-32 h-32 rounded-full object-cover mb-4 border-4 border-gray-200" />
-        <h3 className="text-2xl font-bold text-gray-800 mb-1">{memorial.name}</h3>
-        <p className="text-gray-500 italic mb-2">{memorial.years}</p>
-        <p className="text-gray-600 text-center mb-4">{memorial.dedication}</p>
-
-        <div className="flex items-center gap-4 mt-4">
-          <button onClick={handleLightCandle} className="bg-red-600 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-red-700 transition">{t(lang,'lightCandle')}</button>
-          <span className="text-gray-700 font-medium">{t(lang,'candlesCount', memorial.candles || 0)}</span>
-        </div>
-
-        <div className="w-full mt-6">
-          <h4 className="text-xl font-bold mb-4 border-b pb-2 border-gray-200">{t(lang,'commentsTitle')}</h4>
-          <ul className="space-y-3 max-h-48 overflow-y-auto pr-2">
-            {(memorial.comments && memorial.comments.length > 0) ? (
-              memorial.comments.map((c, i) => (
-                <li key={i} className="bg-gray-50 p-3 rounded-lg shadow-sm">
-                  <p className="text-gray-800 text-sm">{c.text}</p>
-                  <div className="text-gray-400 text-xs mt-1">
-                    <span>מאת: {c.author}</span>
-                    <span className="mr-2"> | {c.timestamp}</span>
-                  </div>
-                </li>
-              ))
-            ) : (
-              <p className="text-gray-500 text-center text-sm">{t(lang,'noComments')}</p>
-            )}
-          </ul>
-
-          <form onSubmit={handleAddComment} className="mt-3 flex flex-col gap-2">
-            <textarea value={commentText} onChange={e=>setCommentText(e.target.value)} placeholder={t(lang,'noComments')} className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-right" rows="3" dir={lang==='he'?'rtl':'ltr'}></textarea>
-            <div className="flex gap-2 justify-end">
-              <button type="submit" disabled={isCommentSubmitting} className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition">{isCommentSubmitting? t(lang,'uploading') : t(lang,'publishComment')}</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    );
-  }
-
-  // ---- Main App ----
-  function App() {
-    const [lang, setLang] = useState('he');
-    const [memorials, setMemorials] = useState([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [newMemorial, setNewMemorial] = useState({ name: '', years: '', dedication: '', photoFile: null });
-    const [isLoading, setIsLoading] = useState(true);
-    const [isUploading, setIsUploading] = useState(false);
-    const [userId, setUserId] = useState(null);
-
-    // Initialize Firebase once
-    useEffect(() => {
-      const firebaseConfig = window.__firebase_config || {};
-      if (!firebaseConfig || Object.keys(firebaseConfig).length === 0) {
-        console.warn('No firebase config found on window.__firebase_config — add your config before loading the page.');
-      }
-      // Only initialize once (avoid re-init when React hot reloads or language toggles)
-      if (!window.firebaseInitialized) {
-        try {
-          if (!firebase.apps || firebase.apps.length === 0) {
-            firebase.initializeApp(firebaseConfig);
-          }
-          window.firebaseInitialized = true;
-        } catch (err) {
-          console.error('Firebase initialize error', err);
-        }
-      }
-
-      const auth = firebase.auth();
-      const db = firebase.firestore();
+    // --- רכיב כרטיס זיכרון ---
+    function MemorialCard({ memorialId, initialData, lang, currentUserId, db }) {
+      const [memorial, setMemorial] = useState(initialData);
+      const [commentText, setCommentText] = useState('');
+      const [isCommentSubmitting, setIsCommentSubmitting] = useState(false);
       const appId = window.__app_id || 'default-app-id';
-      const memorialsCollection = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('memorials');
 
-      const initialSeed = [
-        {
-          id: 'frank-van-der-velde',
-          name: 'פרנק ון דר ולדה',
-          years: '1943 - 2025',
-          dedication: 'פרנק היה אדם אהוב, אבא, סבא, חבר, ונשמה חמה וטובה.',
-          photoUrl: 'https://placehold.co/150x150/E9D5FF/5B21B6?text=פרנק',
-          candles: 0,
-          comments: []
-        }
-      ];
+      useEffect(() => {
+        const docRef = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('memorials').doc(memorialId);
+        const unsubscribe = docRef.onSnapshot(docSnap => {
+          if (docSnap.exists) setMemorial({ id: docSnap.id, ...docSnap.data() });
+        }, err => console.error('memorial onSnapshot error', err));
+        return () => unsubscribe();
+      }, [memorialId]);
 
-      let unsubscribeCollection = null;
-
-      (async () => {
+      const handleLightCandle = async () => {
         try {
-          if (window.__initial_auth_token) {
-            await auth.signInWithCustomToken(window.__initial_auth_token);
-          } else {
-            await auth.signInAnonymously();
-          }
+          const docRef = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('memorials').doc(memorialId);
+          await db.runTransaction(async (tx) => {
+            const d = await tx.get(docRef);
+            if (!d.exists) return;
+            const current = d.data().candles || 0;
+            tx.update(docRef, { candles: current + 1 });
+          });
         } catch (err) {
-          console.error('Auth error', err);
+          console.error('Error lighting candle', err);
         }
+      };
 
-        const unSubAuth = auth.onAuthStateChanged(async (user) => {
-          if (user) {
-            setUserId(user.uid);
-            // seed docs if missing
-            for (const s of initialSeed) {
-              try {
-                const docRef = memorialsCollection.doc(s.id);
-                const snap = await docRef.get();
-                if (!snap.exists) await docRef.set(s);
-              } catch (err) {
-                console.error('Seeding error for', s.id, err);
-              }
+      const handleAddComment = async (e) => {
+        e.preventDefault();
+        if (!commentText.trim()) return;
+        setIsCommentSubmitting(true);
+        try {
+          const docRef = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('memorials').doc(memorialId);
+          const newComment = {
+            author: currentUserId || 'anon',
+            text: commentText.trim(),
+            timestamp: new Date().toLocaleString(lang === 'he' ? 'he-IL' : 'en-US')
+          };
+          await db.runTransaction(async (tx) => {
+            const d = await tx.get(docRef);
+            if (!d.exists) {
+              tx.set(docRef, { comments: [newComment] }, { merge: true });
+              return;
             }
-
-            // listen for collection changes in realtime
-            unsubscribeCollection = memorialsCollection.onSnapshot(snapshot => {
-              const arr = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-              // sort by name for stable order (locale will be applied in a separate effect)
-              arr.sort((a,b)=> (a.name||'').localeCompare(b.name||'', 'default'));
-              setMemorials(arr);
-              setIsLoading(false);
-            }, err => { console.error('collection onSnapshot', err); setIsLoading(false); });
-          }
-        });
-
-        // cleanup function for auth listener + collection listener
-        return () => {
-          try { if (typeof unSubAuth === 'function') unSubAuth(); } catch (e) {}
-          try { if (typeof unsubscribeCollection === 'function') unsubscribeCollection(); } catch (e) {}
-        };
-      })();
-
-      // no dependency - run once
-    }, []);
-
-    // Re-sort memorials when language changes for proper localized ordering
-    useEffect(() => {
-      setMemorials(prev => [...prev].sort((a,b)=> (a.name||'').localeCompare(b.name||'', lang === 'he' ? 'he' : 'en')));
-    }, [lang]);
-
-    const handleInputChange = (e) => {
-      const { id, value } = e.target;
-      setNewMemorial(prev => ({ ...prev, [id]: value }));
-    };
-
-    const handleFileChange = (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      if (file.size > 5 * 1024 * 1024) {
-        alert(t(lang,'fileTooLarge'));
-        e.target.value = '';
-        return;
-      }
-      setNewMemorial(prev => ({ ...prev, photoFile: file }));
-    };
-
-    const handleAddMemorial = async (e) => {
-      e.preventDefault();
-      if (!newMemorial.name || !newMemorial.years) {
-        alert(t(lang,'nameLabel') + ' ' + t(lang,'yearsLabel'));
-        return;
-      }
-      setIsUploading(true);
-      try {
-        const appId = window.__app_id || 'default-app-id';
-        const db = firebase.firestore();
-        const storage = firebase.storage();
-        let photoUrl = `https://placehold.co/150x150/E2E8F0/1A202C?text=${encodeURIComponent(newMemorial.name.charAt(0) || 'M')}`;
-        if (newMemorial.photoFile) {
-          const storageRef = storage.ref(`memorial-photos/${appId}/${Date.now()}-${newMemorial.photoFile.name}`);
-          const snapshot = await storageRef.put(newMemorial.photoFile);
-          photoUrl = await snapshot.ref.getDownloadURL();
+            const existing = d.data().comments || [];
+            tx.update(docRef, { comments: [...existing, newComment] });
+          });
+          setCommentText('');
+        } catch (err) {
+          console.error('Error adding comment', err);
+        } finally {
+          setIsCommentSubmitting(false);
         }
-        const memorialData = { name: newMemorial.name, years: newMemorial.years, dedication: newMemorial.dedication || '', candles: 0, comments: [], photoUrl };
-        await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('memorials').add(memorialData);
-        setNewMemorial({ name: '', years: '', dedication: '', photoFile: null });
-        setIsModalOpen(false);
-      } catch (err) {
-        console.error(err);
-        alert(t(lang,'errorSave'));
-      } finally {
-        setIsUploading(false);
-      }
-    };
+      };
 
-    return (
-      <div className="min-h-screen p-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex justify-between items-center mb-8">
-            <div>
-              <h1 className="text-4xl font-bold text-gray-800">{t(lang,'title')}</h1>
-              <p className="text-gray-600 mt-1">{t(lang,'subtitle')}</p>
-            </div>
-            <div className="flex items-center gap-2">
-              <button onClick={()=>setLang(l=> l==='he'?'en':'he')} className="border px-3 py-2 rounded-md">{t(lang,'langToggle')}</button>
-              <button onClick={()=>setIsModalOpen(true)} className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition">{t(lang,'addMemory')}</button>
-            </div>
+      return (
+        <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center max-w-lg mx-auto transition-transform duration-300 hover:scale-105">
+          <img src={memorial.photoUrl} alt={memorial.name} className="w-32 h-32 rounded-full object-cover mb-4 border-4 border-gray-200" />
+          <h3 className="text-2xl font-bold text-gray-800 mb-1">{memorial.name}</h3>
+          <p className="text-gray-500 italic mb-2">{memorial.years}</p>
+          <p className="text-gray-600 text-center mb-4">{memorial.dedication}</p>
+
+          <div className="flex items-center gap-4 mt-4">
+            <button
+              onClick={handleLightCandle}
+              className="bg-red-600 text-white font-bold py-2 px-4 rounded-full shadow-md hover:bg-red-700 transition"
+            >
+              {t(lang, 'lightCandle')}
+            </button>
+            <span className="text-gray-700 font-medium">{t(lang, 'candlesCount', memorial.candles || 0)}</span>
           </div>
 
-          {isLoading ? (<p className="text-center text-gray-500">{t(lang,'loading')}</p>) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {memorials.map(m => (
-                <MemorialCard key={m.id} memorialId={m.id} initialData={m} lang={lang} currentUserId={userId} db={firebase.firestore()} />
-              ))}
+          <div className="w-full mt-6">
+            <h4 className="text-xl font-bold mb-4 border-b pb-2 border-gray-200">{t(lang, 'commentsTitle')}</h4>
+            <ul className="space-y-3 max-h-48 overflow-y-auto pr-2">
+              {(memorial.comments && memorial.comments.length > 0) ? (
+                memorial.comments.map((c, i) => (
+                  <li key={i} className="bg-gray-50 p-3 rounded-lg shadow-sm">
+                    <p className="text-gray-800 text-sm">{c.text}</p>
+                    <div className="text-gray-400 text-xs mt-1">
+                      <span>מאת: {c.author}</span>
+                      <span className="mr-2"> | {c.timestamp}</span>
+                    </div>
+                  </li>
+                ))
+              ) : (
+                <p className="text-gray-500 text-center text-sm">{t(lang, 'noComments')}</p>
+              )}
+            </ul>
+
+            <form onSubmit={handleAddComment} className="mt-3 flex flex-col gap-2">
+              <textarea
+                value={commentText}
+                onChange={e => setCommentText(e.target.value)}
+                placeholder={t(lang, 'noComments')}
+                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-right"
+                rows="3"
+                dir={lang === 'he' ? 'rtl' : 'ltr'}
+              />
+              <div className="flex gap-2 justify-end">
+                <button
+                  type="submit"
+                  disabled={isCommentSubmitting}
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition"
+                >
+                  {isCommentSubmitting ? t(lang, 'uploading') : t(lang, 'publishComment')}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      );
+    }
+
+    // --- רכיב ראשי ---
+    function App() {
+      const [lang, setLang] = useState('he');
+      const [memorials, setMemorials] = useState([]);
+      const [isModalOpen, setIsModalOpen] = useState(false);
+      const [newMemorial, setNewMemorial] = useState({ name: '', years: '', dedication: '', photoFile: null });
+      const [isLoading, setIsLoading] = useState(true);
+      const [isUploading, setIsUploading] = useState(false);
+      const [userId, setUserId] = useState(null);
+
+      useEffect(() => {
+        const firebaseConfig = window.__firebase_config || {
+          apiKey: "AIzaSyAZ6wbcoA4UqZtTFyCabUYweF35LKzd164",
+          authDomain: "memorials-b547c.firebaseapp.com",
+          projectId: "memorials-b547c",
+          storageBucket: "memorials-b547c.firebasestorage.app",
+          messagingSenderId: "231413009057",
+          appId: "1:231413009057:web:5b30ff9c0bd05f75043ee0",
+          measurementId: "G-1PGTTVHE1W"
+        };
+        if (!window.firebaseInitialized) {
+          try {
+            if (!firebase.apps.length) {
+              firebase.initializeApp(firebaseConfig);
+            }
+            window.firebaseInitialized = true;
+          } catch (err) {
+            console.error('Firebase initialize error', err);
+          }
+        }
+
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const appId = window.__app_id || 'default-app-id';
+        const memorialsCollection = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('memorials');
+
+        const initialSeed = [
+          {
+            id: 'frank-van-der-velde',
+            name: 'פרנק ון דר ולדה',
+            years: '1943 - 2025',
+            dedication: 'פרנק היה אדם אהוב, אבא, סבא, חבר, ונשמה חמה וטובה.',
+            photoUrl: 'https://placehold.co/150x150/E9D5FF/5B21B6?text=פרנק',
+            candles: 0,
+            comments: []
+          }
+        ];
+
+        let unsubscribeCollection = null;
+
+        (async () => {
+          try {
+            if (window.__initial_auth_token) {
+              await auth.signInWithCustomToken(window.__initial_auth_token);
+            } else {
+              await auth.signInAnonymously();
+            }
+          } catch (err) {
+            console.error('Auth error', err);
+          }
+
+          const unSubAuth = auth.onAuthStateChanged(async (user) => {
+            if (user) {
+              setUserId(user.uid);
+              for (const s of initialSeed) {
+                try {
+                  const docRef = memorialsCollection.doc(s.id);
+                  const snap = await docRef.get();
+                  if (!snap.exists) await docRef.set(s);
+                } catch (err) {
+                  console.error('Seeding error for', s.id, err);
+                }
+              }
+
+              unsubscribeCollection = memorialsCollection.onSnapshot(snapshot => {
+                const arr = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                arr.sort((a,b)=> (a.name||'').localeCompare(b.name||'', 'default'));
+                setMemorials(arr);
+                setIsLoading(false);
+              }, err => { console.error('collection onSnapshot', err); setIsLoading(false); });
+            }
+          });
+
+          return () => {
+            try { if (typeof unSubAuth === 'function') unSubAuth(); } catch (e) {}
+            try { if (typeof unsubscribeCollection === 'function') unsubscribeCollection(); } catch (e) {}
+          };
+        })();
+
+      }, []);
+
+      // סידור הזיכרונות לפי השפה
+      useEffect(() => {
+        setMemorials(prev => [...prev].sort((a,b) => (a.name||'').localeCompare(b.name||'', lang === 'he' ? 'he' : 'en')));
+      }, [lang]);
+
+      const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        setNewMemorial(prev => ({ ...prev, [id]: value }));
+      };
+
+      const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (file.size > 5 * 1024 * 1024) {
+          alert(t(lang,'fileTooLarge'));
+          e.target.value = '';
+          return;
+        }
+        setNewMemorial(prev => ({ ...prev, photoFile: file }));
+      };
+
+      const handleAddMemorial = async (e) => {
+        e.preventDefault();
+        if (!newMemorial.name || !newMemorial.years) {
+          alert(t(lang,'nameLabel') + ' ' + t(lang,'yearsLabel'));
+          return;
+        }
+        setIsUploading(true);
+        try {
+          const appId = window.__app_id || 'default-app-id';
+          const db = firebase.firestore();
+          const storage = firebase.storage();
+          let photoUrl = `https://placehold.co/150x150/E2E8F0/1A202C?text=${encodeURIComponent(newMemorial.name.charAt(0) || 'M')}`;
+          if (newMemorial.photoFile) {
+            const storageRef = storage.ref(`memorial-photos/${appId}/${Date.now()}-${newMemorial.photoFile.name}`);
+            const snapshot = await storageRef.put(newMemorial.photoFile);
+            photoUrl = await snapshot.ref.getDownloadURL();
+          }
+          const memorialData = {
+            name: newMemorial.name,
+            years: newMemorial.years,
+            dedication: newMemorial.dedication || '',
+            candles: 0,
+            comments: [],
+            photoUrl
+          };
+          await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('memorials').add(memorialData);
+          setNewMemorial({ name: '', years: '', dedication: '', photoFile: null });
+          setIsModalOpen(false);
+        } catch (err) {
+          console.error(err);
+          alert(t(lang,'errorSave'));
+        } finally {
+          setIsUploading(false);
+        }
+      };
+
+      return (
+        <div className="min-h-screen p-6">
+          <div className="max-w-5xl mx-auto">
+            <div className="flex justify-between items-center mb-8">
+              <div>
+                <h1 className="text-4xl font-bold text-gray-800">{t(lang,'title')}</h1>
+                <p className="text-gray-600 mt-1">{t(lang,'subtitle')}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <button onClick={() => setLang(l => l === 'he' ? 'en' : 'he')} className="border px-3 py-2 rounded-md">{t(lang,'langToggle')}</button>
+                <button onClick={() => setIsModalOpen(true)} className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition">{t(lang,'addMemory')}</button>
+              </div>
+            </div>
+
+            {isLoading ? (
+              <p className="text-center text-gray-500">{t(lang,'loading')}</p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {memorials.map(m => (
+                  <MemorialCard
+                    key={m.id}
+                    memorialId={m.id}
+                    initialData={m}
+                    lang={lang}
+                    currentUserId={userId}
+                    db={firebase.firestore()}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Modal */}
+          {isModalOpen && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50">
+              <div className="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md relative">
+                <button onClick={() => setIsModalOpen(false)} className="absolute top-3 left-3 text-gray-500 text-2xl">&times;</button>
+                <h2 className="text-2xl font-bold mb-4 text-center">{t(lang,'addNewMemory')}</h2>
+                <form onSubmit={handleAddMemorial} className="space-y-3 text-right">
+                  <div>
+                    <label htmlFor="name" className="block text-gray-700 mb-1">{t(lang,'nameLabel')}</label>
+                    <input
+                      id="name"
+                      value={newMemorial.name}
+                      onChange={handleInputChange}
+                      className="w-full p-3 rounded-lg border"
+                      dir={lang === 'he' ? 'rtl' : 'ltr'}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="years" className="block text-gray-700 mb-1">{t(lang,'yearsLabel')}</label>
+                    <input
+                      id="years"
+                      value={newMemorial.years}
+                      onChange={handleInputChange}
+                      className="w-full p-3 rounded-lg border"
+                      dir={lang === 'he' ? 'rtl' : 'ltr'}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="dedication" className="block text-gray-700 mb-1">{t(lang,'dedicationLabel')}</label>
+                    <textarea
+                      id="dedication"
+                      value={newMemorial.dedication}
+                      onChange={handleInputChange}
+                      className="w-full p-3 rounded-lg border"
+                      rows="3"
+                      dir={lang === 'he' ? 'rtl' : 'ltr'}
+                    ></textarea>
+                  </div>
+                  <div>
+                    <label htmlFor="photoFile" className="block text-gray-700 mb-1">{t(lang,'uploadPhoto')}</label>
+                    <input
+                      id="photoFile"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      className="w-full"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={isUploading}
+                    className="w-full bg-blue-500 text-white py-3 rounded-lg font-bold"
+                  >
+                    {isUploading ? t(lang,'uploading') : t(lang,'submitMemory')}
+                  </button>
+                </form>
+              </div>
             </div>
           )}
         </div>
+      );
+    }
 
-        {/* Modal */}
-        {isModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
-            <div className="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md relative">
-              <button onClick={()=>setIsModalOpen(false)} className="absolute top-3 left-3 text-gray-500 text-2xl">&times;</button>
-              <h2 className="text-2xl font-bold mb-4 text-center">{t(lang,'addNewMemory')}</h2>
-              <form onSubmit={handleAddMemorial} className="space-y-3 text-right">
-                <div>
-                  <label htmlFor="name" className="block text-gray-700 mb-1">{t(lang,'nameLabel')}</label>
-                  <input id="name" value={newMemorial.name} onChange={handleInputChange} className="w-full p-3 rounded-lg border" dir={lang==='he'?'rtl':'ltr'} required />
-                </div>
-                <div>
-                  <label htmlFor="years" className="block text-gray-700 mb-1">{t(lang,'yearsLabel')}</label>
-                  <input id="years" value={newMemorial.years} onChange={handleInputChange} className="w-full p-3 rounded-lg border" dir={lang==='he'?'rtl':'ltr'} required />
-                </div>
-                <div>
-                  <label htmlFor="dedication" className="block text-gray-700 mb-1">{t(lang,'dedicationLabel')}</label>
-                  <textarea id="dedication" value={newMemorial.dedication} onChange={handleInputChange} className="w-full p-3 rounded-lg border" rows="3" dir={lang==='he'?'rtl':'ltr'}></textarea>
-                </div>
-                <div>
-                  <label htmlFor="photoFile" className="block text-gray-700 mb-1">{t(lang,'uploadPhoto')}</label>
-                  <input id="photoFile" type="file" accept="image/*" onChange={handleFileChange} className="w-full" />
-                </div>
-                <button type="submit" disabled={isUploading} className="w-full bg-blue-500 text-white py-3 rounded-lg font-bold">{isUploading? t(lang,'uploading') : t(lang,'submitMemory')}</button>
-              </form>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  // Render
-  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    // Render React app
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 
   </script>
 </body>
