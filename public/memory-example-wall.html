@@ -26,11 +26,7 @@
         };
         
         // Expose Firebase modules to the global scope for the Babel script
-        window.firebase = {
-            initializeApp,
-            getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged,
-            getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, getDoc, setDoc,
-            getStorage, ref, uploadBytes, getDownloadURL
+         const { initializeApp, getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, getDoc, setDoc, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getStorage, ref, uploadBytes, getDownloadURL } = window.firebase;
         };
     </script>
     <!-- React and ReactDOM CDN -->
