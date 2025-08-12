@@ -1,0 +1,144 @@
+body {
+  font-family: 'Heebo', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.memorial-header {
+  text-align: center;
+  padding: 2rem;
+  background-color: #e9e9e9;
+}
+
+.memorial-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.memorials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.memorial-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.memorial-card:hover {
+  transform: translateY(-5px);
+}
+
+.memorial-card-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ccc;
+  margin-bottom: 1rem;
+}
+
+.memorial-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.memorial-card .dates {
+  font-style: italic;
+  color: #777;
+  margin-bottom: 1rem;
+}
+
+.dedication-text {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* אפקט נר דיגיטלי */
+.candle-container {
+  margin-top: 1.5rem;
+}
+
+.candle {
+  font-size: 2rem;
+  color: gold;
+  animation: flicker 1.5s infinite alternate;
+}
+
+@keyframes flicker {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+.add-memorial-section {
+  text-align: center;
+  padding: 2rem;
+}
+
+#addMemorialBtn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#addMemorialBtn:hover {
+  background-color: #0056b3;
+}
+
+/* עיצוב המודל */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 12px;
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
