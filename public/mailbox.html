@@ -1,57 +1,101 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>דוא"ל פנימי - Family Mail</title>
-  </head>
-  <body>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-
-
-  // בדיקת משתמש מחובר
-<let currentUser = null;
-try {
-  const res = await fetch("/api/user");
-  <if (res.ok) {
-    const user = await res.json();
-    currentUser = user;
-    if (usernameDisplay) {
-      usernameDisplay.textContent = `מחובר כ־${user.username}`;
-    }
-  } else {
-    console.error(`שגיאה בהתחברות: קוד סטטוס ${res.status}`);
-    const errorMessage = await res.text();
-    console.error(`הודעת שגיאה מהשרת: ${errorMessage}`);
-    if (window.location.pathname !== "/login.html") {
-      location.href = "/login.html";
-    }
-  }
-} catch (err) {
-  console.error("שגיאה בבדיקת התחברות:", err);
-  <if> (window.location.pathname !== "/login.html") {
-    location.href = "/login.html";
-  }
-}
-
-
-  <!-- אפשרות להגדיר את קונפיגורציית Firebase כמשתנים גלובליים לפני טעינת app.js.
-       דוגמה:
+  <meta charset="UTF-8" />
+  <title>דוא"ל פנימי – Family Mail</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./styles.css" />
+  <!-- אפשר להזריק קונפיגורציה גלובלית לפני טעינת האפליקציה: -->
   <script>
-    window.__firebase_config = '{"apiKey":"...","authDomain":"...","projectId":"..."}';
-    window.__app_id = 'my-app-id';
-    window.__initial_auth_token = null; // או מחרוזת טוקן אם יש
+    // דוגמה – החלף לערכים האמיתיים אצלך:
+    window.__firebase_config = {
+ apiKey: "AIzaSyAID_kPGA6Khczh0lIgd7E13LJS76JJ9nI",
+  authDomain: "mailbox-e0ce2.firebaseapp.com",
+  projectId: "mailbox-e0ce2",
+  storageBucket: "mailbox-e0ce2.firebasestorage.app",
+  messagingSenderId: "199399854104",
+  appId: "1:199399854104:web:6aec488e6aeee0dec3736d",
+  measurementId: "G-V3CSEQY5CR"
+    };
+    window.__app_id = "default-app-id";
+    // אופציונלי: אסימון התחברות מותאם
+    // window.__initial_auth_token = "YOUR_CUSTOM_TOKEN";
   </script>
-  -->
-  <link rel="stylesheet" href="styles.css">
+
+  <!-- Firebase (מודולרי, ESM מה-CDN) -->
+  <script type="module">
+    // נטען את מודולי Firebase כדי להשתמש מהם ב-app.js (שגם ESM)
+    // שים לב: app.js עצמו ייבא שוב – אין בעיה, הדפדפן יאחד.
+    import "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  </script>
 </head>
-<body class="bg-gray-100">
+<body>
+  <div id="app">
+    <!-- Header גלובלי קטן -->
+    <header class="app-header">
+      <div class="app-title">📧 דוא"ל פנימי</div>
+      <button id="languageToggle" class="ghost-btn" title="שפה">🌐</button>
+    </header>
 
-  <div id="root"></div>
+    <!-- אזור סטטוס כללי -->
+    <div id="globalStatus" class="global-status" hidden></div>
 
-  <!-- app.js כמודול (מייבא את מודולי Firebase מ-CDN) -->
-  <script type="module" src="mailinbox.js"></script>
+    <!-- View: Login -->
+    <section id="view-login" class="view view--centered">
+      <div class="card card--md">
+        <div class="center-icon">📧</div>
+        <h1 class="title">ברוכים הבאים</h1>
+        <p class="muted">הכנס שם משתמש כדי לנהל את תיבת הדואר המשפחתית שלך.</p>
+
+        <form id="loginForm" class="vstack gap">
+          <label class="label" for="usernameInput">שם משתמש</label>
+          <div class="input-with-suffix">
+            <input id="usernameInput" type="text" placeholder="לדוגמה: יונתן" required />
+            <span class="suffix">@family.local</span>
+          </div>
+          <button id="loginBtn" class="btn primary">התחבר</button>
+          <div id="loginStatus" class="form-status" hidden></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- View: Mailbox (sidebar + main) -->
+    <section id="view-mailbox" class="view view--fill" hidden>
+      <aside class="sidebar">
+        <div class="app-name">📧 דוא"ל פנימי</div>
+
+        <div class="user-block">
+          <div class="muted">ברוך הבא, <span id="sidebarUsername"></span>!</div>
+          <div class="tiny muted">כתובת המייל שלך:</div>
+          <div class="mono" id="sidebarEmail"></div>
+          <div class="tiny muted">מזהה משתמש:</div>
+          <div class="mono tiny" id="sidebarUid"></div>
+        </div>
+
+        <button id="btnCompose" class="btn primary block">✍️ הודעה חדשה</button>
+
+        <nav class="nav vstack gap">
+          <button class="nav-btn active" data-folder="inbox">📥 דואר נכנס</button>
+          <button class="nav-btn" data-folder="sent">📤 נשלח</button>
+          <button class="nav-btn" data-folder="trash">🗑️ אשפה</button>
+          <button class="nav-btn" data-folder="spam">🚫 זבל</button>
+        </nav>
+
+        <div class="spacer"></div>
+
+        <button id="btnContacts" class="nav-btn">👥 אנשי קשר</button>
+      </aside>
+
+      <main class="main">
+        <!-- כאן נטען דינמית: רשימת מיילים / תצוגת מייל / קומפוז / אנשי קשר -->
+        <div id="mainContent" class="stretch"></div>
+      </main>
+    </section>
+  </div>
+
+  <!-- אפליקציה (Vanilla JS) -->
+  <script type="module" src="./app.js"></script>
 </body>
 </html>
