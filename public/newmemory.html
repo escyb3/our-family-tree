@@ -24,15 +24,15 @@
 <body class="bg-gray-100 text-right">
   <div id="root"></div>
 
-  <!--
-    USAGE:
-      1) העתק את הקובץ הזה כ-index.html
-      2) לפני הטעינה, דאג להגדיר גלובלית (inline script או לפני הסקריפט הזה):
-         window.__firebase_config = { apiKey: '...', authDomain: '...', projectId: '...', ... };
-         window.__app_id = 'your-app-id'; // אופציונלי (ברירת מחדל 'default-app-id')
-         window.__initial_auth_token = undefined; // או מחרוזת Token אם יש
-      3) פתח בדפדפן. הפיתוח עם Babel מתאים ל-dev בלבד.
-  -->
+<const firebaseConfig = {
+  apiKey: "AIzaSyB6CtzBQMV9JXJSgL1gxKjdB2kP5UQ_63E",
+  <authDomain: "memorials-4f3f8.firebaseapp.com",
+  <projectId: "memorials-4f3f8",
+  <storageBucket: "memorials-4f3f8.firebasestorage.app",
+  <messagingSenderId: "456197169350",
+  <appId: "1:456197169350:web:7b5e0f161fdc8d3e9eb7c7",
+  <measurementId: "G-F1XVYMY9BE"
+};
 
   <script type="text/babel">
   const { useState, useEffect, useRef } = React;
