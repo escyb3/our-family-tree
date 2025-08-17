@@ -216,6 +216,19 @@ async function initTables() {
     replies JSONB DEFAULT '[]'::jsonb
   )`);
 }
+async function initTables() {
+  try {
+    const { error } = await supabase.from("messages").select("id").limit(1);
+    if (error) {
+      console.error("Supabase init error:", error.message);
+    } else {
+      console.log("✅ Supabase connection works");
+    }
+  } catch (err) {
+    console.error("DB init error:", err);
+  }
+}
+
 
 initTables().catch(err => console.error("DB init error:", err));
 
