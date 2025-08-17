@@ -1,8 +1,10 @@
+// -------------------------
+// הגדרות בסיסיות
+// -------------------------
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const sqlite3 = require("sqlite3").verbose();
 const session = require("express-session");
 const bcrypt = require("bcrypt");
 const pg = require("pg");
@@ -17,11 +19,40 @@ const crypto = require("crypto");
 const cors = require("cors");
 
 const app = express();
+
+// חיבור לתרגום של גוגל (משתמש במפתח מתוך .env)
 const translate = new Translate({ key: process.env.GOOGLE_API_KEY });
-const db = new sqlite3.Database("./mailbox.db");
-const usersPath = path.join(__dirname, "data", "users.json");
 
+// -------------------------
+// חיבור למסד נתונים PostgreSQL
+// -------------------------
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL || "postgresql://postgres:password@localhost/family_mail",
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
+});
 
+// פונקציה כללית להרצת שאילתות
+async function query(text, params) {
+  const client = await pool.connect();
+  try {
+    return await client.query(text, params);
+  } finally {
+    client.release();
+  }
+}
+
+// -------------------------
+// הגדרות אפליקציה
+// -------------------------
+app.use(cors());
+app.use(express.static("public"));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// -------------------------
+// אחסון קבצים עם multer
+// -------------------------
 const storage = multer.diskStorage({
   destination: path.join(__dirname, "uploads"),
   filename: (req, file, cb) => {
@@ -29,86 +60,39 @@ const storage = multer.diskStorage({
     cb(null, uuidv4() + ext);
   }
 });
-// חיבור למסד נתונים PostgreSQL
-const pool = new pg.Pool({
-  connectionString: process.env.DATABASE_URL || "postgresql://postgres:password@localhost/family_mail",
-  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
-});
+const upload = multer({ storage });
 
-app.use(express.static("public"));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use(express.json());
-
-// נתיבי קבצים גלובליים
+// -------------------------
+// נתיבי קבצים מקומיים
+// -------------------------
 const dataDir = path.join(__dirname, "data");
 const messagesPath = path.join(dataDir, "messages.json");
 const draftsPath = path.join(dataDir, "drafts.json");
 const statsPath = path.join(dataDir, "stats.json");
-const forumFile = path.join(__dirname, "data", "forum.json");
-// --- אתחול קבצי נתונים: ודא שהקבצים קיימים לפני שהשרת מתחיל ---
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir);
-}
-if (!fs.existsSync(messagesPath)) {
-  fs.writeFileSync(messagesPath, JSON.stringify([], null, 2));
-}
-if (!fs.existsSync(draftsPath)) {
-  fs.writeFileSync(draftsPath, JSON.stringify([], null, 2));
-}
-if (!fs.existsSync(statsPath)) {
-  fs.writeFileSync(statsPath, JSON.stringify({}, null, 2));
-}
-// -----------------------------------------------------------
+const forumFile = path.join(dataDir, "forum.json");
 
-// יצירת קובץ הפורום אם לא קיים
-if (!fs.existsSync(forumFile)) {
-  fs.writeFileSync(forumFile, JSON.stringify([]));
-}
+// ודא שכל התיקיות והקבצים קיימים
+if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir);
+if (!fs.existsSync(messagesPath)) fs.writeFileSync(messagesPath, JSON.stringify([], null, 2));
+if (!fs.existsSync(draftsPath)) fs.writeFileSync(draftsPath, JSON.stringify([], null, 2));
+if (!fs.existsSync(statsPath)) fs.writeFileSync(statsPath, JSON.stringify({}, null, 2));
+if (!fs.existsSync(forumFile)) fs.writeFileSync(forumFile, JSON.stringify([]));
 
-app.post("/api/forum/new", (req, res) => {
-  const newThread = {
-    _id: Date.now().toString(),
-    title: req.body.title,
-    body: req.body.body,
-    category: req.body.category || "כללי",
-    username: req.user?.username || "אנונימי",
-    createdAt: new Date(),
-    replies: [],
-  };
-
-  const forumFile = path.join(__dirname, "data", "forum.json");
-  const threads = fs.existsSync(forumFile) ? JSON.parse(fs.readFileSync(forumFile)) : [];
-  threads.push(newThread);
-
-  fs.writeFile(forumFile, JSON.stringify(threads, null, 2), (err) => {
-    if (err) {
-      console.error("שגיאה בכתיבה ל־forum.json:", err);
-      return res.status(500).send("שגיאה בשרת");
-    }
-    res.json({ success: true });
-    newThread.id = Date.now();
-    newThread.replies = [];
-    threads.push(newThread);
-    fs.writeFile(forumFile, JSON.stringify(threads, null, 2), (err) => {
-      if (err) {
-        console.error("שגיאה בכתיבה לקובץ:", err);
-        return res.status(500).send("Error saving thread");
-      }
-      console.log("השרשור נשמר בהצלחה");
-      res.json({ success: true });
-    });
-  });
-});
-// פונקציית Middleware לבדיקת אימות משתמש
+// -------------------------
+// Middleware לאימות משתמש
+// -------------------------
 function ensureAuthenticated(req, res, next) {
-    if (req.session && req.session.user && req.session.user.username) {
-        return next();
-    }
-    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
+  if (req.session && req.session.user && req.session.user.username) {
+    return next();
+  }
+  return res.status(401).json({ error: "Unauthorized: User not logged in" });
 }
-// Init tables
-const initTables = () => {
-  db.run(`CREATE TABLE IF NOT EXISTS messages (
+
+// -------------------------
+// יצירת טבלאות אם לא קיימות
+// -------------------------
+async function initTables() {
+  await query(`CREATE TABLE IF NOT EXISTS messages (
     id TEXT PRIMARY KEY,
     fromUser TEXT,
     toUser TEXT,
@@ -120,7 +104,7 @@ const initTables = () => {
     threadId TEXT
   )`);
 
-  db.run(`CREATE TABLE IF NOT EXISTS drafts (
+  await query(`CREATE TABLE IF NOT EXISTS drafts (
     id TEXT PRIMARY KEY,
     fromUser TEXT,
     toUser TEXT,
@@ -129,23 +113,46 @@ const initTables = () => {
     type TEXT,
     timestamp TEXT
   )`);
-};
 
-initTables();
+  await query(`CREATE TABLE IF NOT EXISTS forum (
+    id TEXT PRIMARY KEY,
+    title TEXT,
+    body TEXT,
+    category TEXT,
+    username TEXT,
+    createdAt TIMESTAMP,
+    replies JSONB DEFAULT '[]'::jsonb
+  )`);
+}
 
-// טיוטות
-app.get('/api/drafts', async (req, res) => {
-  const user = req.session.user;
-  if (!user) return res.status(401).json({ error: 'Unauthorized' });
+initTables().catch(err => console.error("DB init error:", err));
 
-  try {
-    // שליפת טיוטות של המשתמש, ממוינות לפי תאריך עדכון יורד
-    const r = await query('SELECT * FROM drafts WHERE user_username=$1 ORDER BY updated_at DESC', [user.username]);
-    res.json(r.rows);
-  } catch (err) {
-    console.error('שגיאה בשליפת טיוטות:', err);
-    res.status(500).json({ error: 'שגיאה בשרת' });
-  }
+// -------------------------
+// פורום – יצירת שרשור חדש
+// -------------------------
+app.post("/api/forum/new", ensureAuthenticated, async (req, res) => {
+  try {
+    const newThread = {
+      id: uuidv4(),
+      title: req.body.title,
+      body: req.body.body,
+      category: req.body.category || "כללי",
+      username: req.session.user.username,
+      createdAt: new Date(),
+      replies: [],
+    };
+
+    await query(
+      `INSERT INTO forum (id, title, body, category, username, createdAt, replies) 
+       VALUES ($1,$2,$3,$4,$5,$6,$7)`,
+      [newThread.id, newThread.title, newThread.body, newThread.category, newThread.username, newThread.createdAt, JSON.stringify([])]
+    );
+
+    res.json({ success: true, thread: newThread });
+  } catch (err) {
+    console.error("שגיאה ביצירת שרשור:", err);
+    res.status(500).json({ error: "שגיאה בשרת" });
+  }
 });
 // פונקציית Middleware לבדיקת אימות משתמש
 function ensureAuthenticated(req, res, next) {
@@ -293,202 +300,223 @@ app.get('/api/messages', ensureAuthenticated, (req, res) => {
     }
 });
 
-// GET /api/messages/all: שליפת כל ההודעות (לצורך ניהול או בדיקה)
-app.get('/api/messages/all', ensureAuthenticated, (req, res) => {
-    const user = req.session.user;
-    if (!user) {
-        return res.status(401).json({ error: 'משתמש לא מאומת.' });
-    }
-    try {
-        const allMessages = readJsonFile(messagesPath, []);
-        res.json(allMessages);
-    } catch (err) {
-        console.error('שגיאה בשליפת כל ההודעות:', err);
-        res.status(500).json({ error: 'שגיאה בשרת' });
-    }
+// -------------------------
+// GET /api/messages/all – שליפת כל ההודעות (בדיקה/ניהול)
+// -------------------------
+app.get("/api/messages/all", ensureAuthenticated, async (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ error: "משתמש לא מאומת." });
+
+  try {
+    const result = await query(`SELECT * FROM messages ORDER BY timestamp DESC`);
+    res.json(result.rows);
+  } catch (err) {
+    console.error("שגיאה בשליפת כל ההודעות:", err);
+    res.status(500).json({ error: "שגיאה בשרת" });
+  }
 });
 
-// נתיב API לשליחת הודעה חדשה
-app.post("/api/send", (req, res) => {
+// -------------------------
+// POST /api/send – שליחת הודעה חדשה
+// -------------------------
+app.post("/api/send", ensureAuthenticated, async (req, res) => {
   const user = req.session.user;
-  if (!user) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
+  if (!user) return res.status(401).json({ error: "Unauthorized" });
 
   const { to, subject, body } = req.body;
   const newMessage = {
-    id: uuidv4(), // יצירת מזהה ייחודי עבור ההודעה
-    from: user.username,
-    to: to,
-    subject: subject,
-    body: body,
+    id: uuidv4(),
+    fromUser: user.username,
+    toUser: to,
+    subject,
+    body,
+    type: "mail",
     timestamp: new Date().toISOString(),
-    seen: false,
+    favorite: 0,
+    threadId: null,
   };
 
-  fs.readFile(messagesPath, "utf8", (err, data) => {
-    let messages = [];
-    if (!err) {
-      messages = JSON.parse(data);
+  try {
+    await query(
+      `INSERT INTO messages (id, fromUser, toUser, subject, body, type, timestamp, favorite, threadId) 
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+      [
+        newMessage.id,
+        newMessage.fromUser,
+        newMessage.toUser,
+        newMessage.subject,
+        newMessage.body,
+        newMessage.type,
+        newMessage.timestamp,
+        newMessage.favorite,
+        newMessage.threadId,
+      ]
+    );
+
+    res.json({ success: true, message: "ההודעה נשלחה בהצלחה", newMessage });
+  } catch (err) {
+    console.error("שגיאה בכתיבת הודעה:", err);
+    res.status(500).json({ success: false, message: "שגיאה בשרת" });
+  }
+});
+
+// -------------------------
+// POST /api/mark-seen – סימון הודעה כנקראה
+// -------------------------
+app.post("/api/mark-seen", ensureAuthenticated, async (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ error: "משתמש לא מאומת." });
+
+  const { id } = req.body;
+
+  try {
+    const result = await query(
+      `UPDATE messages SET type = 'seen' 
+       WHERE id = $1 AND toUser = $2 RETURNING *`,
+      [id, user.username]
+    );
+
+    if (result.rowCount > 0) {
+      return res.json({ success: true, message: "הודעה סומנה כנקראה" });
+    } else {
+      return res.status(404).json({ error: "הודעה לא נמצאה או שאין הרשאה" });
     }
-    messages.push(newMessage);
-    fs.writeFile(messagesPath, JSON.stringify(messages, null, 2), (writeErr) => {
-      if (writeErr) {
-        console.error("שגיאה בכתיבת הודעה:", writeErr);
-        return res.status(500).json({ success: false, message: "שגיאה בשרת" });
+  } catch (err) {
+    console.error("שגיאה בסימון הודעה כנקראה:", err);
+    res.status(500).json({ error: "שגיאה בשרת" });
+  }
+});
+
+// -------------------------
+// GET /api/drafts – שליפת כל הטיוטות של המשתמש
+// -------------------------
+app.get("/api/drafts", ensureAuthenticated, async (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ error: "משתמש לא מאומת." });
+
+  try {
+    const result = await query(
+      `SELECT * FROM drafts WHERE fromUser = $1 ORDER BY timestamp DESC`,
+      [user.username]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error("שגיאה בשליפת טיוטות:", err);
+    res.status(500).json({ error: "שגיאה בשרת" });
+  }
+});
+
+// -------------------------
+// POST /api/drafts – שמירה/עדכון של טיוטה
+// -------------------------
+app.post("/api/drafts", ensureAuthenticated, async (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ error: "משתמש לא מאומת." });
+
+  const { id, to, subject, body } = req.body;
+
+  try {
+    if (id) {
+      const result = await query(
+        `UPDATE drafts 
+         SET toUser=$1, subject=$2, body=$3, timestamp=$4 
+         WHERE id=$5 AND fromUser=$6 RETURNING *`,
+        [to, subject, body, new Date().toISOString(), id, user.username]
+      );
+
+      if (result.rowCount > 0) {
+        return res.json({ success: true, message: "טיוטה עודכנה", draft: result.rows[0] });
+      } else {
+        return res.status(404).json({ error: "טיוטה לא נמצאה" });
       }
-      res.json({ success: true, message: "ההודעה נשלחה בהצלחה" });
+    } else {
+      const newDraft = {
+        id: uuidv4(),
+        fromUser: user.username,
+        toUser: to,
+        subject,
+        body,
+        timestamp: new Date().toISOString(),
+      };
+
+      await query(
+        `INSERT INTO drafts (id, fromUser, toUser, subject, body, timestamp) 
+         VALUES ($1,$2,$3,$4,$5,$6)`,
+        [
+          newDraft.id,
+          newDraft.fromUser,
+          newDraft.toUser,
+          newDraft.subject,
+          newDraft.body,
+          newDraft.timestamp,
+        ]
+      );
+
+      return res.json({ success: true, message: "טיוטה נשמרה", draft: newDraft });
+    }
+  } catch (err) {
+    console.error("שגיאה בשמירת טיוטה:", err);
+    res.status(500).json({ error: "שגיאה בשרת" });
+  }
+});
+
+// -------------------------
+// DELETE /api/drafts/:id – מחיקת טיוטה
+// -------------------------
+app.delete("/api/drafts/:id", ensureAuthenticated, async (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ error: "משתמש לא מאומת." });
+
+  const draftId = req.params.id;
+
+  try {
+    const result = await query(
+      `DELETE FROM drafts WHERE id=$1 AND fromUser=$2 RETURNING *`,
+      [draftId, user.username]
+    );
+
+    if (result.rowCount > 0) {
+      return res.json({ success: true, message: "הטיוטה נמחקה בהצלחה" });
+    } else {
+      return res.status(404).json({ error: "טיוטה לא נמצאה או שאין הרשאה למחוק אותה" });
+    }
+  } catch (err) {
+    console.error("שגיאה במחיקת טיוטה:", err);
+    res.status(500).json({ error: "שגיאה בשרת" });
+  }
+});
+
+// -------------------------
+// GET /api/stats – סטטיסטיקות הודעות
+// -------------------------
+app.get("/api/stats", ensureAuthenticated, async (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ error: "משתמש לא מאומת." });
+
+  try {
+    const sent = await query(`SELECT COUNT(*) FROM messages WHERE fromUser=$1`, [user.username]);
+    const received = await query(`SELECT COUNT(*) FROM messages WHERE toUser=$1`, [user.username]);
+    const unread = await query(
+      `SELECT COUNT(*) FROM messages WHERE toUser=$1 AND type != 'seen'`,
+      [user.username]
+    );
+
+    res.json({
+      sent: parseInt(sent.rows[0].count, 10),
+      received: parseInt(received.rows[0].count, 10),
+      unread: parseInt(unread.rows[0].count, 10),
     });
-  });
+  } catch (err) {
+    console.error("שגיאה בשליפת נתוני סטטיסטיקה:", err);
+    res.status(500).json({ error: "שגיאה בשרת" });
+  }
 });
 
-// POST /api/mark-seen: סימון הודעה כנקראה
-app.post('/api/mark-seen', ensureAuthenticated, (req, res) => {
-    const user = req.session.user;
-    if (!user) {
-        return res.status(401).json({ error: 'משתמש לא מאומת.' });
-    }
-    const { id } = req.body;
-    try {
-        let allMessages = readJsonFile(messagesPath, []);
-        const msgToUpdate = allMessages.find(m => m.id === id);
-        if (msgToUpdate && (msgToUpdate.to && msgToUpdate.to.includes(user.username))) {
-            msgToUpdate.seen = true;
-            fs.writeFileSync(messagesPath, JSON.stringify(allMessages, null, 2));
-            return res.json({ success: true, message: 'הודעה סומנה כנקראה' });
-        }
-        res.status(404).json({ error: 'הודעה לא נמצאה או שאין למשתמש הרשאה לסמן אותה' });
-    } catch (err) {
-        console.error('שגיאה בסימון הודעה כנקראה:', err);
-        res.status(500).json({ error: 'שגיאה בשרת' });
-    }
-});
-
-// --- נתיבים לטיפול בטיוטות ---
-
-// GET /api/drafts: שליפת כל הטיוטות של המשתמש
-app.get('/api/drafts', ensureAuthenticated, (req, res) => {
-    const user = req.session.user;
-    if (!user) {
-        return res.status(401).json({ error: 'משתמש לא מאומת.' });
-    }
-    try {
-        const allDrafts = readJsonFile(draftsPath, []);
-        const userDrafts = allDrafts.filter(d => d.from === user.username);
-        res.json(userDrafts);
-    } catch (err) {
-        console.error('שגיאה בשליפת טיוטות:', err);
-        res.status(500).json({ error: 'שגיאה בשרת' });
-    }
-});
-
-// POST /api/drafts: שמירה או עדכון של טיוטה
-// נתיב זה יכול לשמש גם ליצירת טיוטה חדשה וגם לעדכון טיוטה קיימת
-app.post('/api/drafts', ensureAuthenticated, (req, res) => {
-    const user = req.session.user;
-    if (!user) {
-        return res.status(401).json({ error: 'משתמש לא מאומת.' });
-    }
-    const { id, to, subject, body } = req.body;
-    try {
-        let drafts = readJsonFile(draftsPath, []);
-        if (id) {
-            const draftIndex = drafts.findIndex(d => d.id === id && d.from === user.username);
-            if (draftIndex !== -1) {
-                drafts[draftIndex] = {
-                    ...drafts[draftIndex],
-                    to: to,
-                    subject: subject,
-                    body: body,
-                    timestamp: new Date().toISOString()
-                };
-                fs.writeFileSync(draftsPath, JSON.stringify(drafts, null, 2));
-                return res.json({ success: true, message: 'טיוטה עודכנה', draft: drafts[draftIndex] });
-            } else {
-                return res.status(404).json({ error: 'טיוטה לא נמצאה' });
-            }
-        } else {
-            const newDraft = {
-                id: uuidv4(),
-                from: user.username,
-                to: to,
-                subject: subject,
-                body: body,
-                timestamp: new Date().toISOString()
-            };
-            drafts.push(newDraft);
-            fs.writeFileSync(draftsPath, JSON.stringify(drafts, null, 2));
-            return res.json({ success: true, message: 'טיוטה נשמרה', draft: newDraft });
-        }
-    } catch (err) {
-        console.error('שגיאה בשמירת טיוטה:', err);
-        res.status(500).json({ error: 'שגיאה בשרת' });
-    }
-});
-
-// DELETE /api/drafts/:id: מחיקת טיוטה
-app.delete('/api/drafts/:id', ensureAuthenticated, (req, res) => {
-    const user = req.session.user;
-    if (!user) {
-        return res.status(401).json({ error: 'משתמש לא מאומת.' });
-    }
-    const draftId = req.params.id;
-    try {
-        let drafts = readJsonFile(draftsPath, []);
-        const draftToDelete = drafts.find(d => d.id === draftId && d.from === user.username);
-        if (draftToDelete) {
-            const updatedDrafts = drafts.filter(d => d.id !== draftId || d.from !== user.username);
-            fs.writeFileSync(draftsPath, JSON.stringify(updatedDrafts, null, 2));
-            return res.json({ success: true, message: 'הטיוטה נמחקה בהצלחה' });
-        } else {
-            return res.status(404).json({ error: 'טיוטה לא נמצאה או שאין למשתמש הרשאה למחוק אותה' });
-        }
-    } catch (err) {
-        console.error('שגיאה במחיקת טיוטה:', err);
-        res.status(500).json({ error: 'שגיאה בשרת' });
-    }
-});
-
-// --- נתיבים לטיפול בסטטיסטיקות ---
-
-// GET /api/stats: נתיב חדש שאני מוסיף כדי לטפל בשגיאות שראית ביומן
-app.get('/api/stats', ensureAuthenticated, (req, res) => {
-    const user = req.session.user;
-    if (!user) {
-        return res.status(401).json({ error: 'משתמש לא מאומת.' });
-    }
-    try {
-        const allMessages = readJsonFile(messagesPath, []);
-        const sent = allMessages.filter(m => m.from === user.username).length;
-        const received = allMessages.filter(m => m.to && m.to.includes(user.username)).length;
-        const unread = allMessages.filter(m => m.to && m.to.includes(user.username) && !m.seen).length;
-        res.json({ sent, received, unread });
-    } catch (err) {
-        console.error('שגיאה בשליפת נתוני סטטיסטיקה:', err);
-        res.status(500).json({ error: 'שגיאה בשרת' });
-    }
-});
-
+// -------------------------
+// Middleware נוספים (session, לוגים וכו')
+// -------------------------
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: "secret", resave: false, saveUninitialized: true }));
-
-const pendingPath = path.join(__dirname, "data", "pending.json");
-const eventsPath = path.join(__dirname, "data", "events.json");
-
-let messages = fs.existsSync(messagesPath) ? JSON.parse(fs.readFileSync(messagesPath)) : [];
-let pendingPeople = fs.existsSync(pendingPath) ? JSON.parse(fs.readFileSync(pendingPath)) : [];
-
-const saveUsers = () => fs.writeFileSync(usersPath, JSON.stringify(users, null, 2));
-const saveMessages = () => fs.writeFileSync(messagesPath, JSON.stringify(messages, null, 2));
-const savePending = () => fs.writeFileSync(pendingPath, JSON.stringify(pendingPeople, null, 2));
-
-const auth = (role) => (req, res, next) => {
-  const user = req.session.user;
-  if (!user || (role && user.role !== role && user.role !== "super")) {
-    return res.status(403).send("אין הרשאה");
-  }
-  next();
-};
 
 const logStream = fs.createWriteStream(path.join(__dirname, "data", "activity.log"), { flags: "a" });
 app.use((req, res, next) => {
@@ -497,6 +525,7 @@ app.use((req, res, next) => {
   logStream.write(log);
   next();
 });
+
 
 // תהליך התחברות POST
 app.post("/api/login", async (req, res) => {
@@ -641,14 +670,14 @@ app.post('/api/summarize', async (req, res) => {
     res.status(500).send('שגיאה בסיכום AI');
   }
 });
-// פונקציית Middleware לבדיקת אימות משתמש
-function ensureAuthenticated(req, res, next) {
-    if (req.session && req.session.user && req.session.user.username) {
-        return next();
-    }
-    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
-}
 
+// Middleware לאימות משתמש (הגדרה יחידה!)
+function ensureAuthenticated(req, res, next) {
+  if (req.session && req.session.user && req.session.user.username) {
+    return next();
+  }
+  return res.status(401).json({ error: 'Unauthorized: User not logged in' });
+}
 
 const groups = {
   "family@local": ["avishai@family.local", "merav@family.local", "yanai@family.local"]
@@ -687,13 +716,6 @@ app.post("/api/message/:id/favorite", (req, res) => {
   if (msg) msg.favorite = !msg.favorite;
   res.json({ success: true });
 });
-// פונקציית Middleware לבדיקת אימות משתמש
-function ensureAuthenticated(req, res, next) {
-    if (req.session && req.session.user && req.session.user.username) {
-        return next();
-    }
-    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
-}
 
 // 📂 קבוצות
 app.get("/api/group/:name", (req, res) => {
@@ -701,13 +723,6 @@ app.get("/api/group/:name", (req, res) => {
   if (!group) return res.status(404).json({ error: "Not found" });
   res.json({ members: group });
 });
-// פונקציית Middleware לבדיקת אימות משתמש
-function ensureAuthenticated(req, res, next) {
-    if (req.session && req.session.user && req.session.user.username) {
-        return next();
-    }
-    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
-}
 
 app.post("/api/save-draft", (req, res) => {
   const d = req.body;
@@ -723,15 +738,10 @@ app.get("/api/message/:id", (req, res) => {
   if (!msg) return res.status(404).json({ error: "Not found" });
   res.json(msg);
 });
-// פונקציית Middleware לבדיקת אימות משתמש
-function ensureAuthenticated(req, res, next) {
-    if (req.session && req.session.user && req.session.user.username) {
-        return next();
-    }
-    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
-}
 
+// 👥 ניהול משתמשים (admin)
 app.get("/admin-users", auth("admin"), (req, res) => res.json(users));
+
 app.post("/create-user", auth("admin"), (req, res) => {
   const { username, password, email, side, role } = req.body;
   const hash = bcrypt.hashSync(password, 10);
@@ -739,6 +749,7 @@ app.post("/create-user", auth("admin"), (req, res) => {
   saveUsers();
   res.redirect("/admin-dashboard.html");
 });
+
 app.post("/update-user", auth("admin"), (req, res) => {
   const { username, role, side } = req.body;
   const user = users.find(u => u.username === username);
@@ -748,11 +759,13 @@ app.post("/update-user", auth("admin"), (req, res) => {
   saveUsers();
   res.send("עודכן בהצלחה");
 });
+
 app.post("/delete-user", auth("admin"), (req, res) => {
   users = users.filter(u => u.username !== req.body.username);
   saveUsers();
   res.send("המשתמש נמחק");
 });
+
 app.post("/api/add-user", (req, res) => {
   if (!req.session.user || req.session.user.role !== "admin") {
     return res.status(403).json({ error: "גישה אסורה" });
@@ -776,13 +789,7 @@ app.post("/api/add-user", (req, res) => {
 
   res.json({ success: true });
 });
-// פונקציית Middleware לבדיקת אימות משתמש
-function ensureAuthenticated(req, res, next) {
-    if (req.session && req.session.user && req.session.user.username) {
-        return next();
-    }
-    return res.status(401).json({ error: 'Unauthorized: User not logged in' });
-}
+
 const requireLogin = (req, res, next) => {
   if (!req.session.user) return res.status(401).json({ error: "Unauthorized" });
   next();
@@ -795,6 +802,7 @@ app.use((req, res, next) => {
   }
   next();
 });
+
 // דף התחברות (login.html)
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
@@ -804,7 +812,8 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
   let users = ["admin", "avishai", "merav", "yanai"];
-let drafts = {}; // שמירת טיוטות לפי משתמש];
+  let drafts = {}; // שמירת טיוטות לפי משתמש
+
   try {
     users = JSON.parse(fs.readFileSync(path.join(__dirname, "data", "users.json")));
   } catch (e) {
@@ -826,6 +835,7 @@ let drafts = {}; // שמירת טיוטות לפי משתמש];
     res.json({ success: true });
   });
 });
+
 app.post("/api/draft", (req, res) => {
   const { username = "admin", draft } = req.body;
   drafts[username] = draft;
@@ -836,6 +846,7 @@ app.get("/api/draft", (req, res) => {
   const username = req.query.username || "admin";
   res.json(drafts[username] || {});
 });
+
 app.post("/api/delete-message", (req, res) => {
   const { id } = req.body;
   messages = messages.filter(m => m.id !== id);
@@ -858,44 +869,52 @@ app.get("/tree/bromberg", (req, res) => {
   }
   res.sendFile(path.join(__dirname, "public", "tree_bromberg.html"));
 });
-app.get("/messages", auth(), (req, res) => {
-  const user = req.session.user.username + "@family.local";
-  const query = req.query.q?.toLowerCase() || "";
-  const typeFilter = req.query.type || "all";
-
-  let inbox = messages.filter(msg => msg.to === user);
-  let sent = messages.filter(msg => msg.from === user);
-
-  if (query) {
-    inbox = inbox.filter(msg =>
-      msg.subject?.toLowerCase().includes(query) ||
-      msg.body?.toLowerCase().includes(query) ||
-      msg.from?.toLowerCase().includes(query)
-    );
-    sent = sent.filter(msg =>
-      msg.subject?.toLowerCase().includes(query) ||
-      msg.body?.toLowerCase().includes(query) ||
-      msg.to?.toLowerCase().includes(query)
-    );
-  }
-
-  if (typeFilter !== "all") {
-    inbox = inbox.filter(msg => msg.type === typeFilter);
-    sent = sent.filter(msg => msg.type === typeFilter);
-  }
-
-  res.json({
-    inbox: inbox.reverse(),
-    sent: sent.reverse()
-  });
+// =========================
+// הודעות ומסרים
+// =========================
+app.use("/messages", (req, res, next) => {
+  if (!req.session.user) return res.status(401).send("לא מחובר");
+  next();
 });
 
+// שליחת הודעה
+app.post("/api/send", upload.fields([{ name: 'attachment' }, { name: 'media' }]), (req, res) => {
+  const { to, subject, body, type } = req.body;
+  const recipients = to.split(",").map(s => s.trim());
+  const sender = req.session.user.username + "@family.local";
+  const timestamp = new Date().toISOString();
 
-app.get("/mark-read", (req, res) => {
-  const { threadId } = req.query;
-  const msg = messages.find(m => m.threadId === threadId);
-  if (msg) {
-    msg.read = true;
+  const attachments = [];
+  if (req.files?.attachment) attachments.push(`/uploads/${req.files.attachment[0].filename}`);
+  if (req.files?.media) attachments.push(`/uploads/${req.files.media[0].filename}`);
+
+  recipients.forEach(recipient => {
+    messages.push({
+      id: Date.now() + Math.random(),
+      from: sender,
+      to: recipient,
+      subject,
+      body,
+      type,
+      attachments,
+      timestamp,
+      unread: true,
+      replies: []
+    });
+  });
+
+  saveMessages();
+  res.json({ success: true });
+});
+
+// תגובה להודעה
+app.post("/api/reply", (req, res) => {
+  const { messageId, body } = req.body;
+  const user = req.session.user.username + "@family.local";
+  const message = messages.find(m => m.id == messageId);
+  if (message) {
+    message.replies = message.replies || [];
+    message.replies.push({ from: user, body, timestamp: new Date().toISOString() });
     saveMessages();
     res.json({ success: true });
   } else {
@@ -903,226 +922,72 @@ app.get("/mark-read", (req, res) => {
   }
 });
 
-app.post("/send-message", auth(), (req, res) => {
-  const { to, subject, body, type = "regular", attachment } = req.body;
-  const user = req.session.user;
-    if (!req.session.user) return res.status(401).send("לא מחובר");
+// סיכום שרשור
+app.post("/api/summarize", (req, res) => {
+  const { threadId } = req.body;
+  const thread = messages.find(m => m.id == threadId);
+  if (!thread) return res.status(404).json({ error: "לא נמצא" });
 
-  const msg = {
-    from: user.username + "@family.local",
-    to,
-    subject,
-    body,
-    type,
-    timestamp: new Date().toISOString(),
-    threadId: "msg" + Date.now(),
-    replies: [],
-    attachment,
-    read: false
-  };
+  const summary = `
+🧾 נושא: ${thread.subject}
+📤 מאת: ${thread.from}
+📥 אל: ${thread.to}
+🕒 נשלח ב-${thread.timestamp}
 
-  messages.push(msg);
-  saveMessages();
-  res.send("נשלח בהצלחה");
+תוכן ראשי:
+${thread.body}
+
+תשובות:
+${(thread.replies || []).map(r => `- ${r.from}: ${r.body}`).join("\n")}
+  `;
+  res.json({ summary });
 });
 
-app.post("/reply-message", auth(), (req, res) => {
-  const { threadId, body } = req.body;
-  const msg = messages.find(m => m.threadId === threadId);
-  if (!msg) return res.status(404).send("הודעה לא נמצאה");
-
-  msg.replies.push({
-    from: req.session.user.username + "@family.local",
-    body,
-    timestamp: new Date().toISOString()
-  });
-
-  saveMessages();
-  res.send("תגובה נשלחה");
-});
-// קריאת כל האירועים
-app.get("/api/calendar", (req, res) => {
-  fs.readFile("data/calendar-events.json", "utf8", (err, data) => {
-    if (err) return res.json([]);
-    try {
-      const events = JSON.parse(data);
-      res.json(events);
-    } catch (e) {
-      res.status(500).json({ error: "שגיאה בקריאת נתוני לוח שנה" });
-    }
-  });
-});
-
-// הוספת אירוע חדש
-app.post("/api/calendar", (req, res) => {
-  const newEvent = {
-    id: Date.now().toString(),
-    title: req.body.title,
-    date: req.body.date,
-    type: req.body.type || "כללי",
-    description: req.body.description || "",
-    person: req.body.person || "", // אופציונלי: מקשר לאדם
-    createdAt: new Date()
-  };
-
-  fs.readFile("data/calendar-events.json", "utf8", (err, data) => {
-    let events = [];
-    if (!err && data) {
-      try {
-        events = JSON.parse(data);
-      } catch {}
-    }
-    events.push(newEvent);
-    fs.writeFile("data/calendar-events.json", JSON.stringify(events, null, 2), err => {
-      if (err) return res.status(500).json({ error: "שגיאה בשמירה" });
-      res.json({ success: true, event: newEvent });
-    });
-  });
-});
-
-// יצירת קובץ אירועים אם לא קיים
-if (!fs.existsSync(eventsPath)) {
-  fs.writeFileSync(eventsPath, JSON.stringify([]));
-}
-
-// קריאת כל האירועים
-app.get("/api/events", (req, res) => {
-  try {
-    const events = JSON.parse(fs.readFileSync(eventsPath));
-    res.json(events);
-  } catch (e) {
-    console.error("שגיאה בקריאת אירועים:", e);
-    res.status(500).json({ error: "שגיאה בקריאת אירועים" });
-  }
-});
-
-// יצירת אירוע חדש
-app.post("/api/events", (req, res) => {
-  try {
-    const events = JSON.parse(fs.readFileSync(eventsPath));
-    const newEvent = {
-      id: "e" + Date.now(),
-      title: req.body.title,
-      date: req.body.date,
-      type: req.body.type || "כללי",
-      personId: req.body.personId || null,
-      description: req.body.description || ""
-    };
-    events.push(newEvent);
-    fs.writeFileSync(eventsPath, JSON.stringify(events, null, 2));
-    res.json({ success: true, event: newEvent });
-  } catch (e) {
-    console.error("שגיאה ביצירת אירוע:", e);
-    res.status(500).json({ error: "שגיאה בשמירת האירוע" });
-  }
-});
-
-// עדכון אירוע קיים
-app.put("/api/events/:id", (req, res) => {
-  try {
-    const events = JSON.parse(fs.readFileSync(eventsPath));
-    const idx = events.findIndex(e => e.id === req.params.id);
-    if (idx === -1) return res.status(404).json({ error: "אירוע לא נמצא" });
-
-    events[idx] = { ...events[idx], ...req.body };
-    fs.writeFileSync(eventsPath, JSON.stringify(events, null, 2));
-    res.json({ success: true });
-  } catch (e) {
-    console.error("שגיאה בעדכון אירוע:", e);
-    res.status(500).json({ error: "שגיאה בעדכון" });
-  }
-});
-
-// מחיקת אירוע
-app.delete("/api/events/:id", (req, res) => {
-  try {
-    let events = JSON.parse(fs.readFileSync(eventsPath));
-    events = events.filter(e => e.id !== req.params.id);
-    fs.writeFileSync(eventsPath, JSON.stringify(events, null, 2));
-    res.json({ success: true });
-  } catch (e) {
-    console.error("שגיאה במחיקת אירוע:", e);
-    res.status(500).json({ error: "שגיאה במחיקה" });
-  }
-});
-
-app.post("/upload-attachment", upload.single("attachment"), (req, res) => {
-  if (!req.file) return res.status(400).send("לא נשלח קובץ");
-  res.json({ url: "/uploads/" + req.file.filename });
-});
-
-app.get("/pending-people", auth("admin"), (req, res) => res.json(pendingPeople));
-app.post("/add-person", auth(), (req, res) => {
-  const person = {
-    ...req.body,
-    id: "p" + Date.now(),
-    submittedBy: req.session.user.username
-  };
-  pendingPeople.push(person);
-  savePending();
-  res.send("התווסף בהצלחה. ממתין לאישור מנהל.");
-});
-app.post("/approve-person", auth("admin"), (req, res) => {
-  const { id, side } = req.body;
-  const index = pendingPeople.findIndex(p => p.id === id);
-  if (index === -1) return res.status(404).send("לא נמצא");
-
-  const approved = pendingPeople.splice(index, 1)[0];
-  savePending();
-
-  const sidePath = path.join(__dirname, "data", `${side}.json`);
-  const sideData = fs.existsSync(sidePath) ? JSON.parse(fs.readFileSync(sidePath)) : [];
-  sideData.push(approved);
-  fs.writeFileSync(sidePath, JSON.stringify(sideData, null, 2));
-
-  res.send("נשמר ואושר");
-});
-
-app.get("/events", (req, res) => {
-  const events = fs.existsSync(eventsPath) ? JSON.parse(fs.readFileSync(eventsPath)) : [];
-  res.json(events);
-});
-app.post("/events", (req, res) => {
-  const events = fs.existsSync(eventsPath) ? JSON.parse(fs.readFileSync(eventsPath)) : [];
-  events.push(req.body);
-  fs.writeFileSync(eventsPath, JSON.stringify(events, null, 2));
-  res.sendStatus(200);
-});
-
-app.get("/api/users", (req, res) => {
-  fs.readFile(usersPath, "utf8", (err, data) => {
-    if (err) {
-      console.error("שגיאה בקריאת משתמשים:", err);
-      return res.status(500).json({ error: "שגיאה בשרת" });
-    }
-    try {
-      const users = JSON.parse(data);
-      res.json(users);
-    } catch (e) {
-      res.status(500).json({ error: "שגיאה בניתוח נתוני המשתמשים" });
-    }
-  });
-});
-app.get("/api/user", (req, res) => {
-  if (!req.session.user) return res.status(401).send("Unauthorized");
-  res.json(req.session.user);
-});
-
-app.post("/mark-seen", (req, res) => {
-  const threadId = req.body.threadId;
-  const messagesPath = path.join(__dirname, "data", "messages.json");
-  if (!fs.existsSync(messagesPath)) return res.status(404).end();
-
-  const messages = JSON.parse(fs.readFileSync(messagesPath));
-  const msg = messages.find(m => m.threadId === threadId);
+// סימון כהוצג / קריאה
+app.post('/api/messages/seen', (req, res) => {
+  const { id } = req.body;
+  const msg = messages.find(m => m.id == id);
   if (msg) msg.seen = true;
-
-  fs.writeFileSync(messagesPath, JSON.stringify(messages, null, 2));
+  saveMessages();
   res.json({ success: true });
 });
 
+// סימון כהחשוב
+app.post("/api/mark-important", (req, res) => {
+  const { id, important } = req.body;
+  const msg = messages.find(m => m.id === id);
+  if (msg) {
+    msg.important = important;
+    saveMessages();
+    res.json({ success: true });
+  } else {
+    res.status(404).json({ error: "Message not found" });
+  }
+});
 
+// אנשי קשר תכופים
+app.get('/api/contacts', (req, res) => {
+  const user = req.session.user;
+  if (!user) return res.status(401).json({ error: 'Unauthorized' });
+  const email = user.username + '@family.local';
+  const contacts = {};
 
+  messages.forEach(msg => {
+    const contact = msg.to === email ? msg.from : msg.to;
+    contacts[contact] = (contacts[contact] || 0) + 1;
+  });
+
+  const frequent = Object.entries(contacts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([contact]) => contact);
+
+  res.json(frequent);
+});
+
+// =========================
+// AI Routes
+// =========================
 app.post("/api/ask", async (req, res) => {
   const { question, lang } = req.body;
   const answer = `שאלת: "${question}" - אנו עדיין לומדים את השאלה הזאת.`;
@@ -1132,29 +997,7 @@ app.post("/api/ask", async (req, res) => {
   }
   res.json({ answer });
 });
-app.get("/dashboard", (req, res) => {
-  const user = req.session.user;
-  if (!user) return res.redirect("/login");
-  res.send(`<h2>Welcome, ${user.name}!</h2><ul>` +
-    user.access.map(f => `<li><a href="/tree/${f}">Go to ${f} family tree</a></li>`).join("") +
-    `</ul><a href="/logout">Logout</a>`);
-});
 
-app.get("/tree/:family", (req, res) => {
-  const user = req.session.user;
-  const family = req.params.family;
-  if (!user || !user.access.includes(family)) {
-    return res.redirect("/login");
-  }
-  const templatePath = path.join(__dirname, "public", "tree_template.html");
-  fs.readFile(templatePath, "utf-8", (err, html) => {
-    if (err) return res.status(500).send("Error loading page");
-    const customized = html.replace(/__FAMILY__/g, family);
-    res.send(customized);
-  });
-});
-
-// AI Routes
 app.post("/api/ask-ai", async (req, res) => {
   const { question } = req.body;
   const answer = await ai.askAI(question);
@@ -1192,217 +1035,45 @@ app.get("/api/family-summary", async (req, res) => {
   res.json({ summary });
 });
 
-app.get("/messages-sent", (req, res) => {
-  const user = req.session.user;
-  if (!user) return res.status(401).send("לא מחובר");
-  const outbox = messages.filter(m => m.from === user.username + "@family.local");
-  res.json(outbox.reverse());
-});
-app.use("/messages", (req, res, next) => {
-  if (!req.session.user) return res.status(401).send("לא מחובר");
-  next();
-});
-
-app.post("/upload-attachment", upload.single("attachment"), (req, res) => {
-  const file = req.file;
-  const url = "/uploads/" + file.filename;
-  res.json({ url });
-});
-
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
-app.post("/api/mark-important", (req, res) => {
-  const { id, important } = req.body;
-  const msg = messages.find(m => m.id === id);
-  if (msg) {
-    msg.important = important;
-    res.json({ success: true });
-  } else {
-    res.status(404).json({ error: "Message not found" });
-  }
-});
-// אימות משתמש (פשוט)
-app.get("/api/user", (req, res) => {
-  res.json({ username: "user1@family.local" });
-});
-
-// שליחת הודעה
-app.post("/api/send", upload.fields([{ name: 'attachment' }, { name: 'media' }]), (req, res) => {
-  const { to, subject, body, type } = req.body;
-  const recipients = to.split(",").map(s => s.trim());
-  const sender = "user1@family.local"; // דוגמה
-  const timestamp = new Date().toISOString();
-
-  const attachments = [];
-  if (req.files?.attachment) {
-    attachments.push(`/uploads/${req.files.attachment[0].filename}`);
-  }
-  if (req.files?.media) {
-    attachments.push(`/uploads/${req.files.media[0].filename}`);
-  }
-
-  recipients.forEach(recipient => {
-    messages.push({
-      id: Date.now() + Math.random(),
-      from: sender,
-      to: recipient,
-      subject,
-      body,
-      type,
-      attachments,
-      timestamp,
-      unread: true,
-      replies: []
-    });
-  });
-
-  res.json({ success: true });
-});
-
-// שליחת תגובה
-app.post("/api/reply", (req, res) => {
-  const { messageId, body } = req.body;
-  const user = "user1@family.local";
-  const message = messages.find(m => m.id == messageId);
-  if (message) {
-    message.replies = message.replies || [];
-    message.replies.push({
-      from: user,
-      body,
-      timestamp: new Date().toISOString()
-    });
-  }
-  res.json({ success: true });
-});
-
-// סיכום שרשור עם AI (פשוט)
-app.post("/api/summarize", (req, res) => {
-  const { threadId } = req.body;
-  const thread = messages.find(m => m.id == threadId);
-  if (!thread) return res.status(404).json({ error: "לא נמצא" });
-
-  const summary = `
-🧾 נושא: ${thread.subject}
-📤 מאת: ${thread.from}
-📥 אל: ${thread.to}
-🕒 נשלח ב-${thread.timestamp}
-
-תוכן ראשי:
-${thread.body}
-
-תשובות:
-${(thread.replies || []).map(r => `- ${r.from}: ${r.body}`).join("\n")}
-  `;
-  res.json({ summary });
-});
-
-// סטטיסטיקה בסיסית
-app.get("/api/stats", (req, res) => {
-  const user = "user1@family.local";
-  const sent = messages.filter(m => m.from === user).length;
-  const received = messages.filter(m => m.to === user).length;
-  const unread = messages.filter(m => m.to === user && m.unread).length;
-
-  res.json({ sent, received, unread });
-});
-
-// אנשי קשר תכופים
-app.get("/api/contacts", (req, res) => {
-  const user = "user1@family.local";
-  const contacts = {};
-
-  messages.forEach(msg => {
-    const contact = msg.to === user ? msg.from : msg.to;
-    contacts[contact] = (contacts[contact] || 0) + 1;
-  });
-
-  const frequent = Object.entries(contacts)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 5)
-    .map(([contact]) => contact);
-  res.json(frequent);
-});
-
-// הגשה של קבצים סטטיים (כולל migration-map.html ו־script.js)
-app.use(express.static('public'));
-
-// מערך ברירת מחדל — יופעל רק אם לא מצליחים לקרוא מהקובץ
-const fallbackMigrationData = [
-  {
-    name: "משפחת בן אבו",
-    path: [
-      { lat: 33.5731, lng: -7.5898, date: "1900", place: "קזבלנקה, מרוקו", type: "נולדו" },
-      { lat: 32.0853, lng: 34.7818, date: "1948", place: "תל אביב, ישראל", type: "היגרו" },
-      { lat: 31.7683, lng: 35.2137, date: "1970", place: "ירושלים, ישראל", type: "עברו" }
-    ],
-    events: [
-      { type: "נולדו", date: "1900", place: "קזבלנקה" },
-      { type: "היגרו", date: "1948", place: "תל אביב" },
-      { type: "עברו", date: "1970", place: "ירושלים" }
-    ]
-  },
-  {
-    name: "משפחת ויינברגר",
-    path: [
-      { lat: 48.2082, lng: 16.3738, date: "1880", place: "וינה, אוסטריה", type: "נולדו" },
-      { lat: 47.3769, lng: 8.5417, date: "1938", place: "ציריך, שווייץ", type: "ברחו" },
-      { lat: 40.7128, lng: -74.0060, date: "1950", place: "ניו יורק, ארה״ב", type: "היגרו" }
-    ],
-    events: [
-      { type: "נולדו", date: "1880", place: "וינה" },
-      { type: "ברחו", date: "1938", place: "ציריך" },
-      { type: "היגרו", date: "1950", place: "ניו יורק" }
-    ]
-  }
-];
-
-app.get('/api/migration-data', (req, res) => {
-  fs.readFile(path.join(__dirname, 'data', 'migration-data.json'), 'utf8', (err, data) => {
-    if (err) {
-      console.warn('⚠️ לא נמצא קובץ migration-data.json – מחזיר נתוני ברירת מחדל');
-      return res.json(fallbackMigrationData);
-    }
-
-    try {
-      const parsed = JSON.parse(data);
-      res.json(parsed);
-    } catch (e) {
-      console.error("שגיאה בניתוח JSON:", e);
-      res.json(fallbackMigrationData);
-    }
-  });
-});
-
-
-// החזרת כל הדיונים
-app.get("/api/forum/threads", (req, res) => {
+// LocalAI Summarize
+app.post("/api/ai/summarize", async (req, res) => {
   try {
-    const threads = JSON.parse(fs.readFileSync(forumFile));
-    res.json(threads);
-  } catch (err) {
-    console.error("שגיאה בקריאת דיונים:", err);
-    res.status(500).json({ error: "שגיאה בקריאת דיונים" });
+    const { text } = req.body;
+    const aiRes = await fetch(`${process.env.LOCALAI_URL}/chat/completions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: [
+          { role: "system", content: "סכם את ההודעה בקצרה" },
+          { role: "user", content: text }
+        ]
+      })
+    });
+    const data = await aiRes.json();
+    res.json({ summary: data.choices?.[0]?.message?.content || "" });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
 });
-// פונקציית עזר לטעינה
+
+// =========================
+// פורום
+// =========================
 function loadForum() {
   if (!fs.existsSync(forumPath)) return [];
-  const raw = fs.readFileSync(forumPath, "utf8");
-  return JSON.parse(raw);
+  return JSON.parse(fs.readFileSync(forumPath, "utf8"));
 }
 
-// פונקציית עזר לשמירה
 function saveForum(data) {
   fs.writeFileSync(forumPath, JSON.stringify(data, null, 2));
 }
 
-// שליפת כל השרשורים
 app.get("/api/forum/threads", (req, res) => {
   const threads = loadForum();
   res.json(threads);
 });
 
-// יצירת שרשור חדש
 app.post("/api/forum/thread", (req, res) => {
   const user = req.session.user;
   if (!user) return res.status(401).json({ message: "לא מחובר" });
@@ -1421,7 +1092,6 @@ app.post("/api/forum/thread", (req, res) => {
   res.status(201).json({ success: true });
 });
 
-// תגובה לשרשור
 app.post("/api/forum/thread/:id/reply", (req, res) => {
   const user = req.session.user;
   if (!user) return res.status(401).json({ message: "לא מחובר" });
@@ -1430,82 +1100,14 @@ app.post("/api/forum/thread/:id/reply", (req, res) => {
   const thread = threads.find(t => t.id === req.params.id);
   if (!thread) return res.status(404).json({ message: "שרשור לא נמצא" });
 
-  const reply = {
-    author: user.username,
-    text: req.body.text,
-    date: new Date()
-  };
-  thread.replies.push(reply);
+  thread.replies.push({ author: user.username, text: req.body.text, date: new Date() });
   saveForum(threads);
   res.json({ success: true });
 });
-// 🧠 אינטגרציית AI (LocalAI)
-app.post("/api/ai/summarize", async (req, res) => {
-  try {
-    const { text } = req.body;
-    const aiRes = await fetch(`${process.env.LOCALAI_URL}/chat/completions`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo", // או כל מודל שיש לך ב-LocalAI
-        messages: [{ role: "system", content: "סכם את ההודעה בקצרה" }, { role: "user", content: text }]
-      })
-    });
-    const data = await aiRes.json();
-    res.json({ summary: data.choices?.[0]?.message?.content || "" });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-// mark seen
-app.post('/api/messages/seen', async (req, res) => {
-  const { id } = req.body;
-  await query('UPDATE messages SET seen=true WHERE id=$1', [id]);
-  res.json({ success: true });
-});
-// contacts (simple frequent contacts)
-app.get('/api/contacts', async (req, res) => {
-  const user = req.session.user; if (!user) return res.status(401).json({ error: 'Unauthorized' });
-  const email = user.username + '@family.local';
-  const r = await query('SELECT "from","to", count(*) as cnt FROM messages WHERE "from"=$1 OR "to"=$1 GROUP BY "from","to"', [email]);
-  res.json(r.rows);
-});
-// Multer להגדרת אחסון זמני לקבצים
-const upload = multer({ storage: multer.memoryStorage() });
 
-// Firebase config
-const firebaseConfig = {
-apiKey: "AIzaSyAID_kPGA6Khczh0lIgd7E13LJS76JJ9nI",
-  authDomain: "mailbox-e0ce2.firebaseapp.com",
-  projectId: "mailbox-e0ce2",
-  storageBucket: "mailbox-e0ce2.firebasestorage.app",
-  messagingSenderId: "199399854104",
-  appId: "1:199399854104:web:6aec488e6aeee0dec3736d",
-  measurementId: "G-V3CSEQY5CR"
-};
-
-// 📩 קבלת הודעה ושמירה בפיירבייס
-app.post("/api/messages", async (req, res) => {
-  try {
-    const docRef = await addDoc(collection(db, "messages"), req.body);
-    res.status(200).json({ id: docRef.id });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// 📩 שליפת הודעות
-app.get("/api/messages", async (req, res) => {
-  try {
-    const snapshot = await getDocs(collection(db, "messages"));
-    const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    res.json(data);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// 📤 העלאת קובץ ל-Firebase Storage
+// =========================
+// העלאות קבצים
+// =========================
 app.post("/api/upload", upload.single("file"), async (req, res) => {
   try {
     const storageRef = ref(storage, `uploads/${Date.now()}_${req.file.originalname}`);
@@ -1517,30 +1119,36 @@ app.post("/api/upload", upload.single("file"), async (req, res) => {
   }
 });
 
-// 🤖 קריאה ל-Gemini API
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// =========================
+// Gemini API
+// =========================
 app.post("/api/gemini", async (req, res) => {
   try {
     const { prompt } = req.body;
-
-    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + process.env.GEMINI_API_KEY, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
-    });
-
+    const response = await fetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" +
+      process.env.GEMINI_API_KEY,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+      }
+    );
     const data = await response.json();
     res.json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
-
-
+// =========================
 // הפעלת השרת
+// =========================
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-  console.log(`Server running on port ${1000}`);
-      console.log('🎉 השרת מוכן לקבל בקשות!');
+  console.log(`שרת המרכז המשפחתי פעיל בכתובת http://localhost:${PORT}`);
 });
 
 
