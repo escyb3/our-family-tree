@@ -30,19 +30,6 @@ const SUPABASE_KEY = process.env.SUPABASE_KEY || 'sb_secret_G--k9nK5CAvcdNN4_uIB
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // =========================
-// Middleware
-// =========================
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'supersecretkey',
-  resave: false,
-  saveUninitialized: true,
-}));
-
-// =========================
 // Helper functions
 // =========================
 function auth(role) {
