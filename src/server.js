@@ -52,17 +52,14 @@ async function initTables() {
   }
 }
 //Users Checker
-fetch('/api/user')
-  .then(res => {
-    if (!res.ok) throw new Error('Not authenticated');
-    return res.json();
-  })
-  .then(data => {
-    console.log('User:', data.user);
-  })
-  .catch(err => {
-    location.href = '/login.html';
-  });
+app.get('/api/user', (req, res) => {
+  if (req.session && req.session.user) {
+    res.json({ user: req.session.user });
+  } else {
+    res.status(401).json({ error: 'Not authenticated' });
+  }
+});
+
 // =========================
 // Auth & Session
 // =========================
