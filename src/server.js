@@ -35,8 +35,6 @@ const pool = new pg.Pool({
   ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
 });
 
-const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
-
 app.use(express.static("public"));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.json());
