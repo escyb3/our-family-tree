@@ -51,6 +51,18 @@ async function initTables() {
     console.error("DB init error:", err);
   }
 }
+//Users Checker
+fetch('/api/user')
+  .then(res => {
+    if (!res.ok) throw new Error('Not authenticated');
+    return res.json();
+  })
+  .then(data => {
+    console.log('User:', data.user);
+  })
+  .catch(err => {
+    location.href = '/login.html';
+  });
 // =========================
 // Auth & Session
 // =========================
