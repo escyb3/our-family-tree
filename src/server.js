@@ -29,9 +29,6 @@ const SUPABASE_URL = process.env.SUPABASE_URL || 'https://iyyxtqcdbsvpvhwrmxgv.s
 const SUPABASE_KEY = process.env.SUPABASE_KEY || 'sb_secret_G--k9nK5CAvcdNN4_uIB2w_PmgApJaK';
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const app = express();
-const PORT = process.env.PORT || 10000;
-
 // =========================
 // Middleware
 // =========================
