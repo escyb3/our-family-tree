@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "sqlite3": "*",
-  "better-sqlite3": "*",
+    "better-sqlite3": "*",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
@@ -24,14 +24,14 @@
     "fs-extra": "^11.2.0",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.13",
-      "node-cron": "^3.0.3",
-      "pg": "^8.7.3",
+    "node-cron": "^3.0.3",
+    "pg": "^8.7.3",
     "pdf-parse": "^1.1.1",
     "tesseract.js": "^4.0.2",
     "uuid": "^9.0.1",
     "@google-cloud/translate": "^8.0.3",
     "@google/generative-ai": "^0.3.0",
-     "@supabase/supabase-js": "^2.0.0",
+    "@supabase/supabase-js": "^2.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
@@ -40,5 +40,4 @@
     "node": ">=20.0.0"
   }
 }
-
 
