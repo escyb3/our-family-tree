@@ -51,14 +51,6 @@ async function initTables() {
     console.error("DB init error:", err);
   }
 }
-
-// =========================
-// Routes
-// =========================
-
-// Test root
-app.get('/', (req, res) => res.send('שרת משפחה פעיל!'));
-
 // =========================
 // Auth & Session
 // =========================
