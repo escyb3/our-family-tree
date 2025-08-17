@@ -69,7 +69,10 @@
         fileTooLarge: 'הקובץ גדול מדי. נא לבחור תמונה קטנה יותר (עד 5MB).',
         errorSave: 'הייתה בעיה בשמירת הזיכרון. אנא נסה שוב.',
         requiredFields: 'נא למלא את שם הנפטר/ת ושנות החיים.',
-        langToggle: 'EN'
+        langToggle: 'EN',
+        generateDedication: '✨ צור הקדשה אוטומטית',
+        generatePoem: '✨ צור שיר זיכרון',
+        generating: 'יוצר...'
       },
       en: {
         title: 'Family Memorial Wall 🕯️',
@@ -91,7 +94,10 @@
         fileTooLarge: 'File too large. Choose an image under 5MB.',
         errorSave: 'There was a problem saving the memorial. Please try again.',
         requiredFields: 'Please fill in the name and years.',
-        langToggle: 'עברית'
+        langToggle: 'עברית',
+        generateDedication: '✨ Generate Dedication',
+        generatePoem: '✨ Generate Poem',
+        generating: 'Generating...'
       }
     };
 
@@ -220,6 +226,7 @@
       const [newMemorial, setNewMemorial] = useState({ name: '', years: '', dedication: '', photoFile: null });
       const [isLoading, setIsLoading] = useState(true);
       const [isUploading, setIsUploading] = useState(false);
+      const [isGenerating, setIsGenerating] = useState(false);
       const [userId, setUserId] = useState(null);
       const [message, setMessage] = useState(null);
 
@@ -231,16 +238,18 @@
       // Initialize Firebase on component mount
       useEffect(() => {
         try {
-            // Use the global variables provided by the environment
-            const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+            // Use global variables if available, otherwise use a placeholder
+            const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+              apiKey: "PLACEHOLDER_API_KEY",
+              authDomain: "PLACEHOLDER_AUTH_DOMAIN",
+              projectId: "PLACEHOLDER_PROJECT_ID",
+              storageBucket: "PLACEHOLDER_STORAGE_BUCKET",
+              messagingSenderId: "PLACEHOLDER_MESSAGING_SENDER_ID",
+              appId: "PLACEHOLDER_APP_ID",
+            };
             const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
             const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
-            if (!firebaseConfig) {
-                console.warn('Firebase config is not available. Check environment variables.');
-                return;
-            }
-            
             // Initialize Firebase services
             const app = firebase.initializeApp(firebaseConfig);
             const auth = app.auth();
@@ -362,6 +371,96 @@
         }
       };
 
+      // --- Gemini API integrations ---
+
+      // פונקציה ליצירת הקדשה אוטומטית באמצעות Gemini
+      const handleGenerateDedication = async () => {
+        if (!newMemorial.name) {
+          setMessage(t(lang, 'requiredFields'));
+          return;
+        }
+        setIsGenerating(true);
+        const prompt = `כתוב הקדשה קצרה ומרגשת לזכר אדם שנפטר. שם הנפטר הוא "${newMemorial.name}". השתמש בטון מכובד ומנחם. ההקדשה צריכה להיות לא יותר מ-30 מילים.`;
+        try {
+          // fetch call to the Gemini API with exponential backoff
+          let chatHistory = [];
+          chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+          const payload = { contents: chatHistory };
+          const apiKey = "" 
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+          let response;
+          for (let i = 0; i < 3; i++) {
+              try {
+                  response = await fetch(apiUrl, {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify(payload)
+                  });
+                  if (response.status !== 429) {
+                      break;
+                  }
+                  await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+              } catch (e) {
+                  await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+              }
+          }
+          const result = await response.json();
+          const generatedText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (generatedText) {
+            setNewMemorial(prev => ({ ...prev, dedication: generatedText.trim() }));
+          }
+        } catch (err) {
+          console.error('Error generating dedication', err);
+          setMessage("הייתה בעיה ביצירת ההקדשה. אנא נסה שוב.");
+        } finally {
+          setIsGenerating(false);
+        }
+      };
+
+      // פונקציה ליצירת שיר זיכרון קצר באמצעות Gemini
+      const handleGeneratePoem = async () => {
+        if (!newMemorial.name) {
+          setMessage(t(lang, 'requiredFields'));
+          return;
+        }
+        setIsGenerating(true);
+        const prompt = `כתוב שיר זיכרון קצר על אדם אהוב שנפטר. שם הנפטר/ת: "${newMemorial.name}". התמקד בזיכרון, אהבה, וגעגוע. השיר צריך להיות בעל 4-6 שורות.`;
+        try {
+            // fetch call to the Gemini API with exponential backoff
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            const apiKey = "" 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            let response;
+            for (let i = 0; i < 3; i++) {
+                try {
+                    response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (response.status !== 429) {
+                        break;
+                    }
+                    await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+                } catch (e) {
+                    await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+                }
+            }
+            const result = await response.json();
+            const generatedText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (generatedText) {
+                setNewMemorial(prev => ({ ...prev, dedication: generatedText.trim() }));
+            }
+        } catch (err) {
+          console.error('Error generating poem', err);
+          setMessage("הייתה בעיה ביצירת השיר. אנא נסה שוב.");
+        } finally {
+          setIsGenerating(false);
+        }
+      };
+
       return (
         <div className="min-h-screen p-6">
           <div className="max-w-5xl mx-auto">
@@ -403,6 +502,15 @@
                   <div>
                     <label htmlFor="dedication" className="block text-gray-700 mb-1">{t(lang,'dedicationLabel')}</label>
                     <textarea id="dedication" value={newMemorial.dedication} onChange={handleInputChange} className="w-full p-3 rounded-lg border" rows="3" dir={lang==='he'?'rtl':'ltr'}></textarea>
+                    {/* Gemini API Buttons */}
+                    <div className="flex gap-2 mt-2">
+                      <button type="button" onClick={handleGenerateDedication} disabled={isGenerating || !newMemorial.name} className="flex-1 bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition disabled:bg-gray-400 disabled:cursor-not-allowed">
+                        {isGenerating ? t(lang, 'generating') : t(lang, 'generateDedication')}
+                      </button>
+                      <button type="button" onClick={handleGeneratePoem} disabled={isGenerating || !newMemorial.name} className="flex-1 bg-purple-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-600 transition disabled:bg-gray-400 disabled:cursor-not-allowed">
+                        {isGenerating ? t(lang, 'generating') : t(lang, 'generatePoem')}
+                      </button>
+                    </div>
                   </div>
                   <div>
                     <label htmlFor="photoFile" className="block text-gray-700 mb-1">{t(lang,'uploadPhoto')}</label>
