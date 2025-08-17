@@ -217,9 +217,15 @@ languageToggleBtn.addEventListener("click", () => {
 onAuthStateChanged(auth, (user) => {
   state.isAuthReady = true;
   state.userId = user ? user.uid : null;
-  // לא מרנדר ל־mailbox בלי אימייל שנקבע אחרי לוגין (מבוסס username)
+  if (user) {
+    console.log("User logged in:", user.uid, user.email || "Anonymous");
+    state.currentView = "mailbox";
+    render();
+  } else {
+    state.currentView = "login";
+    render();
+  }
 });
-
 // -------------------- Utility --------------------
 function showStatus(msg, opts={}) {
   if (!msg) { globalStatus.hidden = true; globalStatus.textContent = ""; return; }
