@@ -26,20 +26,30 @@ const translate = new Translate({ key: process.env.GOOGLE_API_KEY });
 // -------------------------
 // חיבור למסד נתונים PostgreSQL
 // -------------------------
-const pool = new pg.Pool({
-  connectionString: process.env.DATABASE_URL || "postgresql://postgres:password@localhost/family_mail",
-  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
+import pkg from "pg";
+import dotenv from "dotenv";
+dotenv.config();
+
+const { Pool } = pkg;
+
+const pool = new Pool({
+  host: process.env.PGHOST,
+  port: process.env.PGPORT,
+  user: process.env.PGUSER,
+  password: process.env.PGPASSWORD,
+  database: process.env.PGDATABASE,
+  ssl: { rejectUnauthorized: false } // אם ה‑DB בענן דורש SSL
 });
 
-// פונקציה כללית להרצת שאילתות
-async function query(text, params) {
-  const client = await pool.connect();
-  try {
-    return await client.query(text, params);
-  } finally {
-    client.release();
-  }
-}
+// בדיקת חיבור
+pool.query("SELECT NOW()")
+  .then(res => console.log("DB Connected:", res.rows[0]))
+  .catch(err => console.error("DB Connection Error:", err));
+
+// דוגמה: קבלת כל המשתמשים
+const usersRes = await pool.query("SELECT * FROM users");
+console.log(usersRes.rows);
+
 
 // -------------------------
 // הגדרות אפליקציה
