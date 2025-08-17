@@ -186,9 +186,10 @@ const state = {
 };
 
 // -------------------- Firebase Init --------------------
-const firebaseConfig = typeof window.__firebase_config !== "undefined" ? window.__firebase_config : {};
-const appId = typeof window.__app_id !== "undefined" ? window.__app_id : "default-app-id";
-
+if (!window.__firebase_config) {
+  console.error("Firebase config not found! Please set window.__firebase_config in index.html");
+}
+const firebaseConfig = window.__firebase_config || {};
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
