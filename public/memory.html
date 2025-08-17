@@ -15,17 +15,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
-    <script>
-    const firebaseConfig = {
-  apiKey: "AIzaSyB6CtzBQMV9JXJSgL1gxKjdB2kP5UQ_63E",
-  authDomain: "memorials-4f3f8.firebaseapp.com",
-  projectId: "memorials-4f3f8",
-  storageBucket: "memorials-4f3f8.firebasestorage.app",
-  messagingSenderId: "456197169350",
-  appId: "1:456197169350:web:7b5e0f161fdc8d3e9eb7c7",
-  measurementId: "G-F1XVYMY9BE"
-};
-    </script>
     <style>
         /* small RTL-friendly font stack */
         @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;800&display=swap');
@@ -249,12 +238,24 @@
       // Initialize Firebase on component mount
       useEffect(() => {
         try {
-            // Get Firebase config and auth token from environment variables
-            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-            const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-            const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+            // --- ערוך את הפרטים כאן כדי לחבר את האפליקציה לפרויקט Firebase שלך ---
+            // 1. הגדר את פרטי הקונפיגורציה של Firebase שלך (קבל אותם מהקונסולה של Firebase)
+            const firebaseConfig = {
+                apiKey: "AIzaSyB6CtzBQMV9JXJSgL1gxKjdB2kP5UQ_63E",
+                authDomain: "memorials-4f3f8.firebaseapp.com",
+                projectId: "memorials-4f3f8",
+                storageBucket: "memorials-4f3f8.firebasestorage.app",
+                messagingSenderId: "456197169350",
+                appId: "1:456197169350:web:7b5e0f161fdc8d3e9eb7c7",
+                measurementId: "G-F1XVYMY9BE"
+            };
 
-            // Initialize Firebase services
+            // 2. הגדר מזהה ייחודי עבור האפליקציה הזו במסד הנתונים
+            // זה ישמש כדי להפריד את הנתונים שלך מאחרים
+            const appId = "memorials-4f3f8";
+            setAppId(appId);
+
+            // --- אין צורך לערוך דבר מכאן ואילך ---
             const app = firebase.initializeApp(firebaseConfig);
             const auth = app.auth();
             const dbInstance = app.firestore();
@@ -262,17 +263,11 @@
             
             setDb(dbInstance);
             setStorage(storageInstance);
-            setAppId(appId);
-
-            // Authenticate the user
+            
+            // Authenticate the user anonymously
             (async () => {
                 try {
-                    // Use the provided custom token if available, otherwise sign in anonymously
-                    if (initialAuthToken) {
-                        await auth.signInWithCustomToken(initialAuthToken);
-                    } else {
-                        await auth.signInAnonymously();
-                    }
+                    await auth.signInAnonymously();
                 } catch (err) {
                     console.error('Auth error', err);
                 }
