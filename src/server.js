@@ -740,8 +740,9 @@ app.get("/api/message/:id", (req, res) => {
 });
 
 // 👥 ניהול משתמשים (admin)
-app.get("/admin-users", auth("admin"), (req, res) => res.json(users));
-
+app.get("/admin-users", auth("admin"), (req, res) => {
+  res.json(users);
+});
 app.post("/create-user", auth("admin"), (req, res) => {
   const { username, password, email, side, role } = req.body;
   const hash = bcrypt.hashSync(password, 10);
