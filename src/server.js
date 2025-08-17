@@ -1472,6 +1472,74 @@ app.get('/api/contacts', async (req, res) => {
   const r = await query('SELECT "from","to", count(*) as cnt FROM messages WHERE "from"=$1 OR "to"=$1 GROUP BY "from","to"', [email]);
   res.json(r.rows);
 });
+// Multer להגדרת אחסון זמני לקבצים
+const upload = multer({ storage: multer.memoryStorage() });
+
+// Firebase config
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+};
+
+// Init Firebase
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+const storage = getStorage(firebaseApp);
+
+// 📩 קבלת הודעה ושמירה בפיירבייס
+app.post("/api/messages", async (req, res) => {
+  try {
+    const docRef = await addDoc(collection(db, "messages"), req.body);
+    res.status(200).json({ id: docRef.id });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 📩 שליפת הודעות
+app.get("/api/messages", async (req, res) => {
+  try {
+    const snapshot = await getDocs(collection(db, "messages"));
+    const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 📤 העלאת קובץ ל-Firebase Storage
+app.post("/api/upload", upload.single("file"), async (req, res) => {
+  try {
+    const storageRef = ref(storage, `uploads/${Date.now()}_${req.file.originalname}`);
+    await uploadBytes(storageRef, req.file.buffer);
+    const url = await getDownloadURL(storageRef);
+    res.json({ url });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 🤖 קריאה ל-Gemini API
+app.post("/api/gemini", async (req, res) => {
+  try {
+    const { prompt } = req.body;
+
+    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + process.env.GEMINI_API_KEY, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
+    });
+
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 
 // הפעלת השרת
