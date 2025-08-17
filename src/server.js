@@ -23,33 +23,43 @@ const app = express();
 // חיבור לתרגום של גוגל (משתמש במפתח מתוך .env)
 const translate = new Translate({ key: process.env.GOOGLE_API_KEY });
 
-// -------------------------
-// חיבור למסד נתונים PostgreSQL
-// -------------------------
-import pkg from "pg";
-import dotenv from "dotenv";
-dotenv.config();
-
-const { Pool } = pkg;
-
-const pool = new Pool({
-  host: process.env.PGHOST,
-  port: process.env.PGPORT,
-  user: process.env.PGUSER,
-  password: process.env.PGPASSWORD,
-  database: process.env.PGDATABASE,
-  ssl: { rejectUnauthorized: false } // אם ה‑DB בענן דורש SSL
+// -------------------- Supabase --------------------
+const SUPABASE_URL = "https://iyyxtqcdbsvpvhwrmxgv.supabase.co";
+const SUPABASE_KEY = "sb_secret_G--k9nK5CAvcdNN4_uIB2w_PmgApJaK"; // server-side secret
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+// -------------------- Users API --------------------
+// קבלת כל המשתמשים
+app.get("/admin-users", auth("admin"), async (req, res) => {
+  const { data, error } = await supabase.from("users").select("*");
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data);
 });
 
-// בדיקת חיבור
-pool.query("SELECT NOW()")
-  .then(res => console.log("DB Connected:", res.rows[0]))
-  .catch(err => console.error("DB Connection Error:", err));
+// יצירת משתמש חדש
+app.post("/create-user", auth("admin"), async (req, res) => {
+  const { username, password, email, side, role } = req.body;
+  const hash = bcrypt.hashSync(password, 10);
 
-// דוגמה: קבלת כל המשתמשים
-const usersRes = await pool.query("SELECT * FROM users");
-console.log(usersRes.rows);
+  const { data, error } = await supabase.from("users").insert([
+    { username, password: hash, email, side, role }
+  ]);
 
+  if (error) return res.status(500).json({ error: error.message });
+  res.redirect("/admin-dashboard.html");
+});
+
+// דוגמת התחברות למערכת
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+  const { data, error } = await supabase.from("users").select("*").eq("username", username).single();
+  
+  if (error || !data) return res.status(401).send("Invalid login");
+  const valid = bcrypt.compareSync(password, data.password);
+  if (!valid) return res.status(401).send("Invalid login");
+
+  req.session.user = { username: data.username, role: data.role, id: data.id };
+  res.json({ message: "Logged in" });
+});
 
 // -------------------------
 // הגדרות אפליקציה
