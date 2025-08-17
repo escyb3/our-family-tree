@@ -25,10 +25,6 @@ const app = express();
 const translate = new Translate({ key: process.env.GOOGLE_API_KEY });
 
 // -------------------- Supabase --------------------
-const SUPABASE_URL = "https://iyyxtqcdbsvpvhwrmxgv.supabase.co";
-const SUPABASE_KEY = "sb_secret_G--k9nK5CAvcdNN4_uIB2w_PmgApJaK"; // server-side secret
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-// Supabase
 const { createClient } = require('@supabase/supabase-js');
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://iyyxtqcdbsvpvhwrmxgv.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_KEY || 'sb_secret_G--k9nK5CAvcdNN4_uIB2w_PmgApJaK';
