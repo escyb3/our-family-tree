@@ -100,6 +100,22 @@
         generating: 'Generating...'
       }
     };
+        useEffect(() => {
+  try {
+    // השורה הזו היא המקום שבו אתה משלב את פרטי התצורה שלך
+    const firebaseConfig = {
+      apiKey: "AIzaSyB6CtzBQMV9JXJSgL1gxKjdB2kP5UQ_63E",
+      authDomain: "memorials-4f3f8.firebaseapp.com",
+      projectId: "memorials-4f3f8",
+      storageBucket: "memorials-4f3f8.firebasestorage.app",
+      messagingSenderId: "456197169350",
+      appId: "1:456197169350:web:7b5e0f161fdc8d3e9eb7c7",
+      measurementId: "G-F1XVYMY9BE"
+    };
+
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
 
     // Helper: get string by key
     function t(lang, key, ...args) {
