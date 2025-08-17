@@ -28,39 +28,119 @@ const translate = new Translate({ key: process.env.GOOGLE_API_KEY });
 const SUPABASE_URL = "https://iyyxtqcdbsvpvhwrmxgv.supabase.co";
 const SUPABASE_KEY = "sb_secret_G--k9nK5CAvcdNN4_uIB2w_PmgApJaK"; // server-side secret
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-// -------------------- Users API --------------------
-// קבלת כל המשתמשים
-app.get("/admin-users", auth("admin"), async (req, res) => {
-  const { data, error } = await supabase.from("users").select("*");
-  if (error) return res.status(500).json({ error: error.message });
+// Supabase
+const { createClient } = require('@supabase/supabase-js');
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://iyyxtqcdbsvpvhwrmxgv.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_KEY || 'sb_secret_G--k9nK5CAvcdNN4_uIB2w_PmgApJaK';
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const app = express();
+const PORT = process.env.PORT || 10000;
+
+// =========================
+// Middleware
+// =========================
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'supersecretkey',
+  resave: false,
+  saveUninitialized: true,
+}));
+
+// =========================
+// Helper functions
+// =========================
+function auth(role) {
+  return (req, res, next) => {
+    if (!req.session.user) return res.status(401).json({ error: 'Unauthorized' });
+    if (role && req.session.user.role !== role) return res.status(403).json({ error: 'Forbidden' });
+    next();
+  };
+}
+
+// =========================
+// Supabase Table Setup (optional)
+// =========================
+async function initTables() {
+  try {
+    // אם הטבלה כבר קיימת אפשר לדלג
+    console.log("Supabase client ready. בדוק את הטבלאות דרך UI או SQL Editor.");
+  } catch (err) {
+    console.error("DB init error:", err);
+  }
+}
+
+// =========================
+// Routes
+// =========================
+
+// Test root
+app.get('/', (req, res) => res.send('שרת משפחה פעיל!'));
+
+// =========================
+// Auth & Session
+// =========================
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  const { data: users, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('username', username)
+    .limit(1);
+
+  if (error || users.length === 0) return res.status(401).json({ error: 'Invalid username or password' });
+
+  const user = users[0];
+  const match = await bcrypt.compare(password, user.password);
+  if (!match) return res.status(401).json({ error: 'Invalid username or password' });
+
+  req.session.user = {
+    id: user.id,
+    username: user.username,
+    role: user.role,
+    email: user.email,
+  };
+
+  res.json({ message: 'Logged in', user: req.session.user });
+});
+
+app.post('/logout', (req, res) => {
+  req.session.destroy();
+  res.json({ message: 'Logged out' });
+});
+
+// =========================
+// Admin: Users Management
+// =========================
+app.get('/admin-users', auth('admin'), async (req, res) => {
+  const { data, error } = await supabase.from('users').select('*');
+  if (error) return res.status(500).json({ error });
   res.json(data);
 });
 
-// יצירת משתמש חדש
-app.post("/create-user", auth("admin"), async (req, res) => {
-  const { username, password, email, side, role } = req.body;
-  const hash = bcrypt.hashSync(password, 10);
+app.post('/create-user', auth('admin'), async (req, res) => {
+  const { username, password, email, role } = req.body;
+  const hash = await bcrypt.hash(password, 10);
 
-  const { data, error } = await supabase.from("users").insert([
-    { username, password: hash, email, side, role }
+  const { data, error } = await supabase.from('users').insert([
+    { username, password: hash, email, role }
   ]);
 
-  if (error) return res.status(500).json({ error: error.message });
-  res.redirect("/admin-dashboard.html");
+  if (error) return res.status(500).json({ error });
+  res.json({ message: 'User created', user: data[0] });
 });
 
-// דוגמת התחברות למערכת
-app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
-  const { data, error } = await supabase.from("users").select("*").eq("username", username).single();
-  
-  if (error || !data) return res.status(401).send("Invalid login");
-  const valid = bcrypt.compareSync(password, data.password);
-  if (!valid) return res.status(401).send("Invalid login");
-
-  req.session.user = { username: data.username, role: data.role, id: data.id };
-  res.json({ message: "Logged in" });
+// =========================
+// Example: Get current user
+// =========================
+app.get('/me', (req, res) => {
+  if (!req.session.user) return res.status(401).json({ error: 'Unauthorized' });
+  res.json(req.session.user);
 });
+
 
 // -------------------------
 // הגדרות אפליקציה
