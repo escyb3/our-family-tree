@@ -1,34 +1,21 @@
-// app.js (type=module)
-// וודא שהגדרת window.__firebase_config ו־window.__app_id לפני טעינה או ערוך פה ידנית.
+// app.js (ESM, Vanilla JS)
+// -----------------------------------------------------------
+// תלות: Firebase v10 ESM מה-CDN (נטען ב-index.html) + fetch
+// -----------------------------------------------------------
 
-/* ===========================
-   קונפיגורציה גלובלית
-   =========================== */
-// אפשר להגדיר את משתני הסביבה בגב ה־HTML כמו שהוצע.
-const firebaseConfig = {
-  apiKey: "AIzaSyB2HVNHCEcciP5NdHxp3CoK6ga_xrWs9X0",
-  authDomain: "mail-inbox-12659.firebaseapp.com",
-  projectId: "mail-inbox-12659",
-  storageBucket: "mail-inbox-12659.firebasestorage.app",
-  messagingSenderId: "1072374074441",
-  appId: "1:1072374074441:web:79679d4c5299798efb8398",
-  measurementId: "G-LM4D6FG5WY"
-};
-const appId = (typeof window.__app_id !== 'undefined') ? window.__app_id : 'default-app-id';
-const initialAuthToken = (typeof window.__initial_auth_token !== 'undefined') ? window.__initial_auth_token : null;
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth, signInWithCustomToken, onAuthStateChanged, signInAnonymously
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore, collection, addDoc, onSnapshot, query, where, serverTimestamp,
+  doc, setDoc, deleteDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* ===========
-   Inits
-   =========== */
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
-/* =====
-   טקסטים (עברית/אנגלית) - מותאם מהקוד המקורי
-   ===== */
+// -------------------- שפה / טקסטים --------------------
 const lang = {
   he: {
-    appName: "דוא\"ל פנימי",
+    appName: 'דוא"ל פנימי',
     loginWelcome: "ברוכים הבאים",
     loginMessage: "הכנס שם משתמש כדי לנהל את תיבת הדואר המשפחתית שלך.",
     usernameLabel: "שם משתמש",
@@ -42,6 +29,9 @@ const lang = {
     newEmailButton: "הודעה חדשה",
     inboxFolder: "דואר נכנס",
     sentFolder: "נשלח",
+    trashFolder: "אשפה",
+    spamFolder: "זבל",
+    contacts: "אנשי קשר",
     searchPlaceholder: "חיפוש מיילים...",
     noEmailsFound: "לא נמצאו הודעות תואמות.",
     emailSubjectPlaceholder: "(ללא נושא)",
@@ -69,7 +59,29 @@ const lang = {
     download: "הורד",
     downloadNotSupported: "הערה: הורדת קבצים לא נתמכת בפלטפורמה זו.",
     richTextNote: "הטקסט נשלח כ-HTML כדי לשמור על העיצוב.",
-    editorToolbar: "סרגל עריכת טקסט"
+    editorToolbar: "סרגל עריכת טקסט",
+    contactsTitle: "אנשי קשר",
+    newContactButton: "הוסף איש קשר",
+    addContactTitle: "הוספת איש קשר",
+    contactNameLabel: "שם",
+    contactNamePlaceholder: "שם מלא או כינוי",
+    contactUsernameLabel: "שם משתמש",
+    addContactButton: "הוסף",
+    contactAdded: "איש קשר נוסף בהצלחה!",
+    noContacts: "לא נמצאו אנשי קשר.",
+    selectContact: "בחר איש קשר",
+    contactUsernamePlaceholder: "שם משתמש בלבד",
+    deleteContactConfirm: "האם אתה בטוח שברצונך למחוק איש קשר זה?",
+    contactsBack: "חזרה לדואר",
+    summarizeButton: "סכם הודעה",
+    summarizing: "מסכם...",
+    summaryError: "שגיאה בסיכום ההודעה.",
+    suggestRepliesButton: "הצע תשובות",
+    suggestingReplies: "מחפש תשובות...",
+    readEmailButton: "הקרא הודעה",
+    readingEmail: "מקריא...",
+    readingStopped: "ההקראה הופסקה.",
+    readEmailStopButton: "עצור הקראה"
   },
   en: {
     appName: "Internal Mail",
@@ -86,6 +98,9 @@ const lang = {
     newEmailButton: "New Message",
     inboxFolder: "Inbox",
     sentFolder: "Sent",
+    trashFolder: "Trash",
+    spamFolder: "Spam",
+    contacts: "Contacts",
     searchPlaceholder: "Search emails...",
     noEmailsFound: "No matching messages found.",
     emailSubjectPlaceholder: "(No Subject)",
@@ -113,621 +128,872 @@ const lang = {
     download: "Download",
     downloadNotSupported: "Note: File downloads are not supported on this platform.",
     richTextNote: "The text is sent as HTML to preserve formatting.",
-    editorToolbar: "Text Editor Toolbar"
+    editorToolbar: "Text Editor Toolbar",
+    contactsTitle: "Contacts",
+    newContactButton: "Add Contact",
+    addContactTitle: "Add Contact",
+    contactNameLabel: "Name",
+    contactNamePlaceholder: "Full name or nickname",
+    contactUsernameLabel: "Username",
+    addContactButton: "Add",
+    contactAdded: "Contact added successfully!",
+    noContacts: "No contacts found.",
+    selectContact: "Select a contact",
+    contactUsernamePlaceholder: "username only",
+    deleteContactConfirm: "Are you sure you want to delete this contact?",
+    contactsBack: "Back to mail",
+    summarizeButton: "Summarize Email",
+    summarizing: "Summarizing...",
+    summaryError: "Error summarizing email.",
+    suggestRepliesButton: "Suggest Replies",
+    suggestingReplies: "Suggesting replies...",
+    readEmailButton: "Read Email",
+    readingEmail: "Reading...",
+    readingStopped: "Reading stopped.",
+    readEmailStopButton: "Stop Reading"
   }
 };
 
-/* =========================
-   State variables (מחזיקים את מה ש־useState היה מחזיק)
-   ========================== */
-let username = '';
-let emailAddress = '';
-let currentView = 'login'; // 'login' | 'mailbox' | 'compose'
-let selectedEmail = null;
-let currentFolder = 'inbox';
-let inboxEmails = [];
-let sentEmails = [];
-let isAuthReady = false;
-let userId = '';
-let composeForm = { recipient: '', subject: '', body: '' };
-let loading = false;
-let statusMessage = '';
-let searchQuery = '';
-let geminiDraftPrompt = '';
-let isGeminiLoading = false;
-let isGeminiError = false;
-let language = 'he';
-let attachments = null;
+// -------------------- מצב גלובלי --------------------
+const state = {
+  language: "he",
+  t: lang["he"],
+  username: "",
+  emailAddress: "",
+  userId: null,
+  isAuthReady: false,
+  currentView: "login",    // login | mailbox
+  currentFolder: "inbox",  // inbox | sent | trash | spam
+  selectedEmail: null,
+  inboxEmails: [],
+  sentEmails: [],
+  searchQuery: "",
+  compose: { recipient: "", subject: "", body: "" },
+  attachments: null,
+  contacts: [],
+  newContact: { name: "", username: "" },
+  // Gemini
+  geminiDraftPrompt: "",
+  isGeminiLoading: false,
+  isGeminiError: false,
+  summary: null,
+  isSummarizing: false,
+  suggestedReplies: [],
+  isSuggestingReplies: false,
+  isTTSLoading: false,
+  isReading: false,
+  audioEl: null
+};
 
-/* refs to DOM nodes we'll create */
-let rootEl;
-let richTextEl;
+// -------------------- Firebase Init --------------------
+const firebaseConfig = typeof window.__firebase_config !== "undefined" ? window.__firebase_config : {};
+const appId = typeof window.__app_id !== "undefined" ? window.__app_id : "default-app-id";
 
-/* תחלופה לשפה */
-const t = () => lang[language];
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-/* ===========================
-   Utility: format date
-   =========================== */
-function formatTimestamp(ts) {
+// -------------------- עזרי DOM --------------------
+const $ = (sel, root=document) => root.querySelector(sel);
+const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+const elApp = $("#app");
+const viewLogin = $("#view-login");
+const viewMailbox = $("#view-mailbox");
+const mainContent = $("#mainContent");
+const globalStatus = $("#globalStatus");
+
+// -------------------- i18n / שפה --------------------
+const languageToggleBtn = $("#languageToggle");
+languageToggleBtn.addEventListener("click", () => {
+  state.language = state.language === "he" ? "en" : "he";
+  state.t = lang[state.language];
+  document.documentElement.dir = state.language === "he" ? "rtl" : "ltr";
+  render();
+});
+
+// -------------------- Auth listeners --------------------
+onAuthStateChanged(auth, (user) => {
+  state.isAuthReady = true;
+  state.userId = user ? user.uid : null;
+  // לא מרנדר ל־mailbox בלי אימייל שנקבע אחרי לוגין (מבוסס username)
+});
+
+// -------------------- Utility --------------------
+function showStatus(msg, opts={}) {
+  if (!msg) { globalStatus.hidden = true; globalStatus.textContent = ""; return; }
+  globalStatus.textContent = msg;
+  globalStatus.hidden = false;
+  if (opts.autoHide) setTimeout(() => showStatus(""), opts.autoHide);
+}
+function fmtDate(tsSeconds, locale) {
+  if (!tsSeconds) return "";
+  return new Date(tsSeconds * 1000).toLocaleString(locale, { dateStyle:"short", timeStyle:"short" });
+}
+function escapeHtml(s=""){
+  const d=document.createElement("div"); d.textContent=s; return d.innerHTML;
+}
+
+// -------------------- Login --------------------
+const loginForm = $("#loginForm");
+const usernameInput = $("#usernameInput");
+const loginStatus = $("#loginStatus");
+const loginBtn = $("#loginBtn");
+
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const username = usernameInput.value.trim();
+  if (!username) return;
+
+  loginStatus.hidden = false;
+  loginStatus.textContent = state.t.loginStatusConnecting;
+  loginBtn.disabled = true;
+
   try {
-    if (!ts) return '';
-    const ms = ts.seconds ? ts.seconds * 1000 : (ts.toMillis ? ts.toMillis() : Date.now());
-    return new Date(ms).toLocaleString(language === 'he' ? 'he-IL' : 'en-US', { dateStyle: 'short', timeStyle: 'short' });
-  } catch (e) {
-    return '';
-  }
-}
+    let cred;
+    const initialToken = typeof window.__initial_auth_token !== "undefined" ? window.__initial_auth_token : null;
+    if (initialToken) {
+      cred = await signInWithCustomToken(auth, initialToken);
+    } else {
+      cred = await signInAnonymously(auth);
+    }
 
-/* ===========================
-   Render functions (ייצוג ה־UI)
-   =========================== */
-function render() {
-  rootEl.innerHTML = ''; // ננקה ונבנה מחדש
-  if (!isAuthReady) {
-    renderLoading();
-    return;
-  }
-  if (currentView === 'login') {
-    renderLogin();
-  } else {
-    renderMailbox();
-  }
-}
+    state.username = username;
+    state.emailAddress = `${username}@family.local`;
+    state.userId = cred.user.uid;
+    state.currentView = "mailbox";
+    loginStatus.hidden = true;
 
-function renderLoading() {
-  rootEl.innerHTML = `
-    <div class="flex items-center justify-center h-screen bg-gray-100">
-      <div class="text-blue-500 w-12 h-12 animate-spin">⏳</div>
-    </div>
-  `;
-}
+    // התחלת מאזינים ל־Firestore
+    startRealtimeSubscriptions();
 
-function renderLogin() {
-  const html = `
-    <div class="flex items-center justify-center min-h-screen bg-gray-100 p-4">
-      <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
-        <div class="flex justify-center mb-6">
-          <div class="text-blue-500 w-12 h-12">✉️</div>
-        </div>
-        <h1 class="text-3xl font-extrabold text-center text-gray-800 mb-6">${t().loginWelcome}</h1>
-        <p class="text-center text-gray-600 mb-6">${t().loginMessage}</p>
-        <form id="login-form" class="space-y-4">
-          <div>
-            <label for="username" class="block text-sm font-medium text-gray-700">${t().usernameLabel}</label>
-            <div class="mt-1 flex rounded-md shadow-sm">
-              <input id="username" name="username" type="text" class="flex-1 block w-full rounded-md sm:text-sm border-gray-300 focus:border-blue-500 focus:ring-blue-500 transition duration-150 ease-in-out p-3" placeholder="${t().usernamePlaceholder}" required />
-              <span class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">@family.local</span>
-            </div>
-          </div>
-          <button id="login-button" type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
-            ${t().loginButton}
-          </button>
-        </form>
-        <p id="login-status" class="mt-4 text-center text-sm font-medium text-red-500">${statusMessage || ''}</p>
-      </div>
-    </div>
-  `;
-  rootEl.innerHTML = html;
-
-  // events
-  document.getElementById('login-form').addEventListener('submit', handleLoginFormSubmit);
-}
-
-function renderMailbox() {
-  // build mailbox layout
-  const inboxCount = inboxEmails.length;
-  const sentCount = sentEmails.length;
-  const leftDir = language === 'he' ? 'rtl' : 'ltr';
-
-  const mainContent = (currentView === 'compose') ? renderComposeHTML() : (selectedEmail ? renderEmailViewHTML() : renderEmailListHTML());
-
-  rootEl.innerHTML = `
-    <div class="flex h-screen bg-gray-100" dir="${leftDir}">
-      <div class="bg-white w-64 p-4 shadow-lg rounded-r-xl flex flex-col">
-        <div class="flex items-center space-x-2 mb-8" dir="ltr">
-          <div class="w-8 h-8 text-blue-500">✉️</div>
-          <span class="text-2xl font-bold text-gray-800">${t().appName}</span>
-        </div>
-
-        <button id="toggle-lang" class="flex items-center w-full px-4 py-2 rounded-md transition duration-150 ease-in-out text-gray-600 hover:bg-gray-100 mb-4">
-          🌐 <span class="mr-2">${language === 'he' ? 'English' : 'עברית'}</span>
-        </button>
-
-        <p class="text-sm font-medium text-gray-600 mb-2">${t().sidebarWelcome}${username}!</p>
-        <p class="text-xs text-gray-500 mb-2">${t().yourEmail}</p>
-        <p class="text-sm font-mono text-gray-700 mb-6">${emailAddress}</p>
-        <p class="text-xs text-gray-500 mb-6">${t().userId} ${userId || ''}</p>
-
-        <nav class="space-y-2 flex-1">
-          <button id="btn-new" class="flex items-center w-full px-4 py-2 rounded-md bg-blue-500 text-white font-semibold hover:bg-blue-600 mb-4">
-            ✏️ <span class="mr-2">${t().newEmailButton}</span>
-          </button>
-
-          <button id="btn-inbox" class="flex items-center w-full px-4 py-2 rounded-md ${currentFolder==='inbox' ? 'bg-blue-100 text-blue-600 font-semibold' : 'text-gray-600 hover:bg-gray-100'}">
-            📥 <span class="mr-2">${t().inboxFolder} (${inboxCount})</span>
-          </button>
-
-          <button id="btn-sent" class="flex items-center w-full px-4 py-2 rounded-md ${currentFolder==='sent' ? 'bg-blue-100 text-blue-600 font-semibold' : 'text-gray-600 hover:bg-gray-100'}">
-            📤 <span class="mr-2">${t().sentFolder} (${sentCount})</span>
-          </button>
-        </nav>
-      </div>
-
-      <div class="flex-1 p-8 overflow-y-auto">
-        <div class="bg-white rounded-xl shadow-lg h-full overflow-hidden">
-          ${mainContent}
-        </div>
-      </div>
-    </div>
-  `;
-
-  // attach events
-  document.getElementById('toggle-lang').addEventListener('click', () => {
-    language = (language === 'he') ? 'en' : 'he';
     render();
-  });
-  document.getElementById('btn-new').addEventListener('click', () => { currentView = 'compose'; selectedEmail = null; render(); });
-  document.getElementById('btn-inbox').addEventListener('click', () => { currentFolder = 'inbox'; selectedEmail = null; render(); });
-  document.getElementById('btn-sent').addEventListener('click', () => { currentFolder = 'sent'; selectedEmail = null; render(); });
+  } catch (err) {
+    console.error("Login error:", err);
+    loginStatus.hidden = false;
+    loginStatus.textContent = state.t.loginError;
+  } finally {
+    loginBtn.disabled = false;
+  }
+});
 
-  // after rendering main content, wire dynamic handlers inside it
-  wireMainContentHandlers();
+// -------------------- Firestore subscriptions --------------------
+let unsubscribeInbox = null;
+let unsubscribeSent = null;
+let unsubscribeContacts = null;
+
+function startRealtimeSubscriptions() {
+  stopRealtimeSubscriptions();
+  if (!state.userId || !state.emailAddress) return;
+
+  // Inbox
+  const inboxQ = query(
+    collection(db, `artifacts/${appId}/public/data/emails`),
+    where("recipient", "==", state.emailAddress)
+  );
+  unsubscribeInbox = onSnapshot(inboxQ, (snap) => {
+    const emails = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    emails.sort((a,b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+    state.inboxEmails = emails;
+    if (state.currentView === "mailbox" && state.currentFolder === "inbox" && !state.selectedEmail) renderMain();
+  });
+
+  // Sent
+  const sentQ = query(
+    collection(db, `artifacts/${appId}/public/data/emails`),
+    where("sender", "==", state.emailAddress)
+  );
+  unsubscribeSent = onSnapshot(sentQ, (snap) => {
+    const emails = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    emails.sort((a,b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+    state.sentEmails = emails;
+    if (state.currentView === "mailbox" && state.currentFolder === "sent" && !state.selectedEmail) renderMain();
+  });
+
+  // Contacts (per-user)
+  const contactsCol = collection(db, `artifacts/${appId}/users/${state.userId}/contacts`);
+  unsubscribeContacts = onSnapshot(contactsCol, (snap) => {
+    state.contacts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (state.currentView === "mailbox") renderMain(); // יעדכן את select בקומפוז
+  });
+}
+function stopRealtimeSubscriptions() {
+  if (unsubscribeInbox) { unsubscribeInbox(); unsubscribeInbox = null; }
+  if (unsubscribeSent) { unsubscribeSent(); unsubscribeSent = null; }
+  if (unsubscribeContacts) { unsubscribeContacts(); unsubscribeContacts = null; }
 }
 
-/* ---------- sub-templates ---------- */
-function renderEmailListHTML() {
-  const emails = (currentFolder === 'inbox') ? inboxEmails : sentEmails;
-  const filtered = filterEmails(emails);
+// -------------------- Rendering --------------------
+function render() {
+  // תצוגה
+  if (state.currentView === "login") {
+    viewLogin.hidden = false;
+    viewMailbox.hidden = true;
+    $("#loginForm .label").textContent = state.t.usernameLabel;
+    usernameInput.placeholder = state.t.usernamePlaceholder;
+    $("#loginBtn").textContent = state.t.loginButton;
+  } else {
+    viewLogin.hidden = true;
+    viewMailbox.hidden = false;
+    // Sidebar data
+    $("#sidebarUsername").textContent = state.username || "";
+    $("#sidebarEmail").textContent = state.emailAddress || "";
+    $("#sidebarUid").textContent = state.userId || "";
+    // Nav active
+    $$(".nav-btn").forEach(btn => {
+      const f = btn.getAttribute("data-folder");
+      if (!f) { btn.classList.toggle("active", state.currentView === "contacts"); return; }
+      btn.classList.toggle("active", state.currentFolder === f);
+    });
+    renderMain();
+  }
+}
 
-  let listHtml = `
-    <div class="p-4 flex flex-col h-full overflow-y-auto">
-      <div class="relative mb-4">
-        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">🔎</div>
-        <input id="search-input" type="text" value="${escapeHtml(searchQuery)}" placeholder="${t().searchPlaceholder}" class="block w-full rounded-md border-gray-300 pl-10 focus:border-blue-500 focus:ring-blue-500 transition duration-150 ease-in-out p-2" />
+function renderMain() {
+  // מבסיס JSX: compose / contacts / email / lists
+  if (state.currentView !== "mailbox") return;
+  if (state.selectedEmail) return renderEmailView();
+
+  if (state.currentFolder === "inbox") return renderEmailList(state.inboxEmails, "inbox");
+  if (state.currentFolder === "sent") return renderEmailList(state.sentEmails, "sent");
+  if (state.currentFolder === "trash") return renderEmailList([], "trash");
+  if (state.currentFolder === "spam") return renderEmailList([], "spam");
+  if (state.currentView === "contacts") return renderContactsView();
+  // compose is a mode triggered by button:
+  if (state.showCompose) return renderCompose();
+}
+
+// Sidebar buttons
+$("#btnCompose").addEventListener("click", () => {
+  state.showCompose = true;
+  state.selectedEmail = null;
+  mainContent.scrollTop = 0;
+  renderCompose();
+});
+$("#btnContacts").addEventListener("click", () => {
+  state.currentView = "mailbox"; // נשארים ב-mailbox
+  state.selectedEmail = null;
+  state.showCompose = false;
+  state.currentFolder = "inbox"; // לא חובה, רק לשמור עקביות
+  // מציגים Contacts כ־main panel
+  renderContactsView();
+});
+
+// Folder nav
+$$(".nav-btn[data-folder]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const folder = btn.getAttribute("data-folder");
+    state.currentFolder = folder;
+    state.selectedEmail = null;
+    state.showCompose = false;
+    renderMain();
+  });
+});
+
+// -------------------- UI builders --------------------
+function renderEmailList(items, folder) {
+  const t = state.t;
+  mainContent.innerHTML = `
+    <div class="section">
+      <div class="row">
+        <input id="searchInput" class="input" placeholder="${t.searchPlaceholder}" />
+      </div>
+      <h2 style="margin:12px 0 8px 0">${folderTitle(folder)}</h2>
+      <div id="emailList" class="list"></div>
+    </div>
+  `;
+  const list = $("#emailList", mainContent);
+  const searchInput = $("#searchInput", mainContent);
+  searchInput.value = state.searchQuery;
+
+  function applyFilter() {
+    state.searchQuery = searchInput.value.toLowerCase();
+    const filtered = (!state.searchQuery)
+      ? items
+      : items.filter(e =>
+          (e.subject||"").toLowerCase().includes(state.searchQuery) ||
+          (e.sender||"").toLowerCase().includes(state.searchQuery) ||
+          (e.body||"").toLowerCase().includes(state.searchQuery)
+        );
+    list.innerHTML = "";
+    if (!filtered.length) {
+      list.innerHTML = `<div class="muted center" style="padding:20px">${t.noMessagesInFolder}</div>`;
+      return;
+    }
+    for (const email of filtered) {
+      const el = document.createElement("div");
+      el.className = "mail-item";
+      el.innerHTML = `
+        <div class="meta">
+          <span class="from">${escapeHtml(email.sender||"")}</span>
+          <span class="date">${fmtDate(email.timestamp?.seconds, state.language === "he" ? "he-IL" : "en-US")}</span>
+        </div>
+        <div class="subject">${escapeHtml(email.subject||t.emailSubjectPlaceholder)}</div>
+      `;
+      el.addEventListener("click", () => {
+        state.selectedEmail = email;
+        state.showCompose = false;
+        renderEmailView();
+      });
+      list.appendChild(el);
+    }
+  }
+
+  searchInput.addEventListener("input", applyFilter);
+  applyFilter();
+}
+
+function folderTitle(f) {
+  const t = state.t;
+  return f === "inbox" ? t.inboxFolder : f === "sent" ? t.sentFolder : f === "trash" ? t.trashFolder : t.spamFolder;
+}
+
+function renderEmailView() {
+  const t = state.t;
+  const e = state.selectedEmail;
+  if (!e) return renderMain();
+
+  mainContent.innerHTML = `
+    <div class="section">
+      <div class="row right">
+        <button id="btnReply" class="btn">↩️ ${t.emailReply}</button>
+        <button id="btnBack" class="btn">🏠 ${t.emailBack}</button>
+      </div>
+      <h2 style="margin-top:10px">${escapeHtml(e.subject || t.emailSubjectPlaceholder)}</h2>
+      <div class="kv" style="margin:8px 0">
+        <div><span class="k">${t.emailFrom}</span> ${escapeHtml(e.sender||"")}</div>
+        <div><span class="k">${t.emailTo}</span> ${escapeHtml(e.recipient||"")}</div>
+      </div>
+      <div class="section" style="margin-top:10px">
+        <div class="email-body" id="emailBody"></div>
+        ${e.attachment ? `
+          <div class="section" style="margin-top:10px">
+            <div class="row">
+              <div class="k">📎 ${t.attachment}</div>
+              <div class="muted">${escapeHtml(e.attachment.name)} (${Math.round((e.attachment.size||0)/1024)} KB)</div>
+              <button id="btnDownload" class="btn">⬇️ ${t.download}</button>
+            </div>
+            <div class="tiny muted" style="margin-top:6px">${t.downloadNotSupported}</div>
+          </div>` : ``}
       </div>
 
-      <div class="flex-1 space-y-2 overflow-y-auto p-2">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">${currentFolder === 'inbox' ? t().inboxFolder : t().sentFolder}</h2>
+      <div class="section" style="margin-top:12px">
+        <div class="flex">
+          <button id="btnSummarize" class="btn purple">${t.summarizeButton}</button>
+          <button id="btnSuggest" class="btn purple">${t.suggestRepliesButton}</button>
+          <button id="btnRead" class="btn purple">${state.isReading ? t.readEmailStopButton : t.readEmailButton}</button>
+        </div>
+        <div id="aiOutputs" class="col" style="margin-top:10px;gap:8px"></div>
+      </div>
+
+      <audio id="ttsAudio" class="hidden"></audio>
+    </div>
   `;
 
-  if (filtered.length > 0) {
-    filtered.forEach(email => {
-      const dateStr = formatTimestamp(email.timestamp);
-      listHtml += `
-        <div data-id="${email.id}" class="email-item flex flex-col p-4 bg-gray-50 hover:bg-gray-100 rounded-lg cursor-pointer transition duration-150 ease-in-out shadow-sm mb-2">
-          <div class="flex justify-between items-center text-sm mb-1">
-            <span class="font-semibold text-gray-800">${escapeHtml(email.sender || '')}</span>
-            <span class="text-gray-500 text-xs">${escapeHtml(dateStr)}</span>
+  $("#emailBody").innerHTML = e.body || "";
+
+  $("#btnReply").addEventListener("click", () => {
+    state.showCompose = true;
+    state.compose = {
+      recipient: (e.sender||"").split("@")[0],
+      subject: `Re: ${e.subject||""}`,
+      body: ""
+    };
+    renderCompose();
+  });
+  $("#btnBack").addEventListener("click", () => {
+    state.selectedEmail = null;
+    renderMain();
+  });
+  if ($("#btnDownload")) {
+    $("#btnDownload").addEventListener("click", () => alert(state.t.downloadNotSupported));
+  }
+
+  $("#btnSummarize").addEventListener("click", handleSummarizeEmail);
+  $("#btnSuggest").addEventListener("click", handleSuggestReplies);
+  $("#btnRead").addEventListener("click", handleReadEmail);
+  state.audioEl = $("#ttsAudio");
+}
+
+function renderCompose() {
+  const t = state.t;
+  const hasContacts = state.contacts.length > 0;
+  mainContent.innerHTML = `
+    <div class="section">
+      <div class="row right">
+        <button id="btnBackToBox" class="btn">🏠 ${t.composeBack}</button>
+      </div>
+      <h2>${t.composeTitle}</h2>
+
+      <div class="col">
+        <label class="label">${t.recipientLabel}</label>
+        <div class="row">
+          ${hasContacts ? `
+            <select id="recipientSelect" class="input">
+              <option value="" disabled selected>${t.selectContact}</option>
+              ${state.contacts.map(c => `<option value="${escapeHtml(c.username)}">${escapeHtml(c.name)} (${escapeHtml(c.username)})</option>`).join("")}
+            </select>
+          ` : `
+            <input id="recipientInput" class="input" placeholder="${t.contactUsernamePlaceholder}" value="${escapeHtml(state.compose.recipient||"")}"/>
+          `}
+          <span class="badge">@family.local</span>
+        </div>
+      </div>
+
+      <div class="col" style="margin-top:8px">
+        <label class="label">${t.subjectLabel}</label>
+        <input id="subjectInput" class="input" value="${escapeHtml(state.compose.subject||"")}"/>
+      </div>
+
+      <div class="col" style="margin-top:8px">
+        <label class="label">${t.bodyLabel}</label>
+        <div class="toolbar">
+          <button class="tool" data-cmd="bold"><b>B</b></button>
+          <button class="tool" data-cmd="italic"><i>I</i></button>
+          <button class="tool" data-cmd="underline"><u>U</u></button>
+        </div>
+        <div id="richEditor" class="editor" contenteditable="true"></div>
+        <div class="hint">${t.richTextNote}</div>
+      </div>
+
+      <div class="col" style="margin-top:8px">
+        <label class="label">${t.attachmentsLabel}</label>
+        <input id="fileInput" type="file"/>
+        <div id="fileMeta" class="tiny muted" style="margin-top:4px"></div>
+      </div>
+
+      <div class="section" style="margin-top:12px">
+        <div class="row">
+          <div class="col" style="flex:1">
+            <div class="label" style="margin-bottom:4px">${t.composeGeminiTitle}</div>
+            <input id="geminiPrompt" class="input" placeholder="${t.geminiPlaceholder}" />
           </div>
-          <div class="text-sm font-medium text-gray-700 truncate">${escapeHtml(email.subject || '')}</div>
+          <button id="btnGemini" class="btn purple">${t.geminiButton}</button>
+        </div>
+        <div id="geminiError" class="form-status" hidden>${t.geminiError}</div>
+      </div>
+
+      <div class="row right" style="margin-top:12px">
+        <button id="btnSend" class="btn primary">${t.sendButton}</button>
+      </div>
+      <div id="composeStatus" class="form-status" hidden></div>
+    </div>
+  `;
+
+  // Init editor content (keep last typed, if any)
+  const editor = $("#richEditor");
+  editor.innerHTML = state.compose.body || "";
+
+  // Toolbar actions
+  $$(".tool", mainContent).forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      document.execCommand(btn.dataset.cmd,false,null);
+      editor.focus();
+    });
+  });
+
+  // Compose bindings
+  const subjectInput = $("#subjectInput");
+  const recipientSelect = $("#recipientSelect");
+  const recipientInput = $("#recipientInput");
+  subjectInput.addEventListener("input", ()=> state.compose.subject = subjectInput.value);
+  if (recipientSelect) {
+    recipientSelect.addEventListener("change", ()=> state.compose.recipient = recipientSelect.value);
+  } else if (recipientInput) {
+    recipientInput.addEventListener("input", ()=> state.compose.recipient = recipientInput.value);
+  }
+  editor.addEventListener("input", ()=> state.compose.body = editor.innerHTML);
+
+  // File attach
+  const fileInput = $("#fileInput");
+  const fileMeta = $("#fileMeta");
+  fileInput.addEventListener("change", ()=>{
+    const f = fileInput.files[0] || null;
+    state.attachments = f || null;
+    if (f) fileMeta.textContent = `${f.name} (${Math.round(f.size/1024)} KB)`;
+    else fileMeta.textContent = "";
+  });
+
+  // Back
+  $("#btnBackToBox").addEventListener("click", ()=>{
+    state.showCompose = false;
+    state.compose = { recipient:"", subject:"", body:"" };
+    renderMain();
+  });
+
+  // Gemini Draft
+  const btnGemini = $("#btnGemini");
+  const promptInput = $("#geminiPrompt");
+  btnGemini.addEventListener("click", async ()=>{
+    state.geminiDraftPrompt = promptInput.value.trim();
+    if (!state.geminiDraftPrompt) return;
+    await handleGeminiGenerate(editor);
+  });
+
+  // Send
+  $("#btnSend").addEventListener("click", handleSendEmail);
+}
+
+function renderContactsView() {
+  const t = state.t;
+  mainContent.innerHTML = `
+    <div class="section">
+      <div class="row right">
+        <button id="btnBackMail" class="btn">🏠 ${t.contactsBack}</button>
+      </div>
+      <h2>${t.contactsTitle}</h2>
+
+      <div class="section">
+        <h3 style="margin:0 0 8px 0">${t.addContactTitle}</h3>
+        <div class="col">
+          <label class="label">${t.contactNameLabel}</label>
+          <input id="contactName" class="input" placeholder="${t.contactNamePlaceholder}" />
+        </div>
+        <div class="col" style="margin-top:8px">
+          <label class="label">${t.contactUsernameLabel}</label>
+          <div class="row">
+            <input id="contactUsername" class="input" placeholder="${t.contactUsernamePlaceholder}" />
+            <span class="badge">@family.local</span>
+          </div>
+        </div>
+        <div class="row right" style="margin-top:8px">
+          <button id="btnAddContact" class="btn green">${t.addContactButton}</button>
+        </div>
+        <div id="contactStatus" class="form-status" hidden></div>
+      </div>
+
+      <div class="section" style="margin-top:12px">
+        <h3 style="margin:0 0 8px 0">${t.contactsTitle}</h3>
+        <div id="contactsList" class="list"></div>
+      </div>
+    </div>
+  `;
+
+  $("#btnBackMail").addEventListener("click", ()=>{
+    state.currentFolder = "inbox";
+    renderMain();
+  });
+
+  // Add contact
+  $("#btnAddContact").addEventListener("click", handleAddContact);
+
+  // List
+  const list = $("#contactsList");
+  list.innerHTML = "";
+  if (!state.contacts.length) {
+    list.innerHTML = `<div class="muted center" style="padding:20px">${t.noContacts}</div>`;
+  } else {
+    for (const c of state.contacts) {
+      const row = document.createElement("div");
+      row.className = "mail-item";
+      row.innerHTML = `
+        <div class="row" style="justify-content:space-between">
+          <div>
+            <div class="k">${escapeHtml(c.name||"")}</div>
+            <div class="tiny muted">${escapeHtml(c.username||"")}@family.local</div>
+          </div>
+          <button class="btn" data-id="${c.id}">🗑️</button>
         </div>
       `;
-    });
-  } else {
-    listHtml += `<p class="text-center text-gray-500 mt-8">${t().noMessagesInFolder}</p>`;
-  }
-
-  listHtml += `</div></div>`;
-  return listHtml;
-}
-
-function renderEmailViewHTML() {
-  if (!selectedEmail) return `<div class="p-4">${t().noMessagesInFolder}</div>`;
-  const attHtml = selectedEmail.attachment ? `
-    <div class="mt-4 p-3 bg-gray-100 rounded-md">
-      <h4 class="flex items-center font-semibold text-gray-800">📎 ${t().attachment}</h4>
-      <div class="flex items-center justify-between text-sm text-gray-600 mt-2">
-        <span>${escapeHtml(selectedEmail.attachment.name)} (${Math.round((selectedEmail.attachment.size||0)/1024)} KB)</span>
-        <button id="fake-download-btn" class="flex items-center text-blue-500 hover:underline">${t().download}</button>
-      </div>
-      <p class="text-xs text-red-500 mt-2">${t().downloadNotSupported}</p>
-    </div>
-  ` : '';
-
-  return `
-    <div class="p-4 flex flex-col h-full bg-white rounded-lg shadow-sm">
-      <div class="flex justify-between items-center mb-4 pb-4 border-b border-gray-200">
-        <h2 class="text-xl font-bold text-gray-800">${escapeHtml(selectedEmail.subject || '')}</h2>
-        <div class="flex space-x-2">
-          <button id="reply-btn" class="flex items-center px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-md hover:bg-blue-600">↩️ ${t().emailReply}</button>
-          <button id="back-btn" class="flex items-center px-4 py-2 bg-gray-200 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-300">🏠 ${t().emailBack}</button>
-        </div>
-      </div>
-
-      <div class="mb-4 text-sm text-gray-600">
-        <span class="font-semibold text-gray-800">${t().emailFrom}</span> ${escapeHtml(selectedEmail.sender || '')}
-        <br/>
-        <span class="font-semibold text-gray-800">${t().emailTo}</span> ${escapeHtml(selectedEmail.recipient || '')}
-      </div>
-
-      <div class="text-gray-700 flex-1 overflow-y-auto">
-        <div class="whitespace-pre-wrap">${selectedEmail.body || ''}</div>
-        ${attHtml}
-      </div>
-    </div>
-  `;
-}
-
-function renderComposeHTML() {
-  return `
-    <div class="p-4 flex flex-col h-full bg-white rounded-lg shadow-sm">
-      <div class="flex justify-between items-center mb-4 pb-4 border-b border-gray-200">
-        <h2 class="text-xl font-bold text-gray-800">${t().composeTitle}</h2>
-        <button id="compose-back" class="flex items-center px-4 py-2 bg-gray-200 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-300">🏠 ${t().composeBack}</button>
-      </div>
-
-      <form id="compose-form" class="flex-1 flex flex-col space-y-4">
-        <div>
-          <label class="block text-sm font-medium text-gray-700">${t().recipientLabel}</label>
-          <div class="mt-1 flex rounded-md shadow-sm">
-            <input id="recipient" type="text" value="${escapeHtml(composeForm.recipient)}" class="flex-1 block w-full rounded-md sm:text-sm border-gray-300 p-2" placeholder="${t().usernamePlaceholder}" required />
-            <span class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">@family.local</span>
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium text-gray-700">${t().subjectLabel}</label>
-          <input id="subject" type="text" value="${escapeHtml(composeForm.subject)}" class="mt-1 block w-full rounded-md shadow-sm sm:text-sm border-gray-300 p-2" />
-        </div>
-
-        <div class="flex flex-col">
-          <label class="block text-sm font-medium text-gray-700">${t().bodyLabel}</label>
-          <div class="flex items-center space-x-2 border-b border-gray-300 bg-gray-50 p-2 rounded-t-md">
-            <button type="button" data-cmd="bold" class="p-2 rounded-md hover:bg-gray-200">B</button>
-            <button type="button" data-cmd="italic" class="p-2 rounded-md hover:bg-gray-200">I</button>
-            <button type="button" data-cmd="underline" class="p-2 rounded-md hover:bg-gray-200">U</button>
-          </div>
-          <div id="rich-text-editor" contenteditable="true" class="mt-0 block w-full rounded-b-md shadow-sm sm:text-sm border border-gray-300 p-2 h-32 overflow-y-auto focus:outline-none">${composeForm.body || ''}</div>
-          <p class="text-xs text-gray-500 mt-2">${t().richTextNote}</p>
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium text-gray-700">${t().attachmentsLabel}</label>
-          <div class="mt-1 flex items-center space-x-2">
-            <input id="file-upload" type="file" class="block w-full text-sm text-gray-500" />
-            <span id="file-info" class="text-sm text-gray-700">${attachments ? `${escapeHtml(attachments.name)} (${Math.round(attachments.size/1024)} KB)` : ''}</span>
-          </div>
-        </div>
-
-        <div class="flex flex-col space-y-2 p-4 bg-gray-50 rounded-lg">
-          <h3 class="text-md font-bold text-gray-800">${t().composeGeminiTitle}</h3>
-          <div class="flex space-x-2">
-            <input id="gemini-prompt" type="text" value="${escapeHtml(geminiDraftPrompt)}" placeholder="${t().geminiPlaceholder}" class="flex-1 rounded-md p-2 border border-gray-300" />
-            <button id="gemini-btn" type="button" class="px-4 py-2 bg-purple-500 text-white rounded-md">${isGeminiLoading ? '...' : t().geminiButton}</button>
-          </div>
-          <p id="gemini-error" class="text-red-500 text-sm mt-2" style="display:${isGeminiError ? 'block':'none'};">${t().geminiError}</p>
-        </div>
-
-        <button id="send-btn" type="submit" class="w-full py-3 px-4 rounded-md text-white bg-blue-600">${t().sendButton}</button>
-        <p id="status-msg" class="mt-4 text-center text-sm font-medium text-green-500">${statusMessage || ''}</p>
-      </form>
-    </div>
-  `;
-}
-
-/* ===========================
-   Wire handlers for main content (search, list clicks, compose handlers)
-   =========================== */
-function wireMainContentHandlers() {
-  // search input
-  const searchInput = document.getElementById('search-input');
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      searchQuery = e.target.value;
-      // throttle: small delay (but simple re-render)
-      render();
-    });
-  }
-
-  // list items click
-  const items = Array.from(document.querySelectorAll('.email-item'));
-  items.forEach(it => {
-    it.addEventListener('click', () => {
-      const id = it.getAttribute('data-id');
-      const all = currentFolder === 'inbox' ? inboxEmails : sentEmails;
-      selectedEmail = all.find(x => x.id === id) || null;
-      currentView = 'mailbox';
-      render();
-    });
-  });
-
-  // view buttons
-  const backBtn = document.getElementById('back-btn');
-  if (backBtn) backBtn.addEventListener('click', () => { selectedEmail = null; render(); });
-
-  const replyBtn = document.getElementById('reply-btn');
-  if (replyBtn && selectedEmail) replyBtn.addEventListener('click', () => {
-    composeForm = { recipient: selectedEmail.sender, subject: `Re: ${selectedEmail.subject || ''}`, body: '' };
-    currentView = 'compose';
-    render();
-  });
-
-  // compose handlers
-  const composeBack = document.getElementById('compose-back');
-  if (composeBack) composeBack.addEventListener('click', () => { currentView = 'mailbox'; selectedEmail = null; render(); });
-
-  const composeFormEl = document.getElementById('compose-form');
-  if (composeFormEl) {
-    // formatting toolbar
-    Array.from(composeFormEl.querySelectorAll('button[data-cmd]')).forEach(btn => {
-      btn.addEventListener('click', () => {
-        const cmd = btn.getAttribute('data-cmd');
-        document.execCommand(cmd, false, null);
-        if (richTextEl) richTextEl.focus();
+      row.querySelector("button").addEventListener("click", async ()=>{
+        if (!confirm(state.t.deleteContactConfirm)) return;
+        try {
+          await deleteDoc(doc(db, `artifacts/${appId}/users/${state.userId}/contacts`, c.id));
+        } catch (e) {
+          console.error("Delete contact error:", e);
+        }
       });
-    });
-
-    richTextEl = document.getElementById('rich-text-editor');
-    if (richTextEl) {
-      richTextEl.addEventListener('input', (e) => {
-        composeForm.body = e.target.innerHTML;
-      });
+      list.appendChild(row);
     }
-
-    const fileInput = document.getElementById('file-upload');
-    if (fileInput) {
-      fileInput.addEventListener('change', (e) => {
-        attachments = e.target.files[0] || null;
-        const info = document.getElementById('file-info');
-        if (attachments) info.textContent = `${attachments.name} (${Math.round(attachments.size/1024)} KB)`;
-        else info.textContent = '';
-      });
-    }
-
-    // gemini:
-    const geminiBtn = document.getElementById('gemini-btn');
-    const geminiPromptInput = document.getElementById('gemini-prompt');
-    if (geminiPromptInput) geminiPromptInput.addEventListener('input', (e) => geminiDraftPrompt = e.target.value);
-    if (geminiBtn) geminiBtn.addEventListener('click', handleGeminiGenerate);
-
-    // send:
-    composeFormEl.addEventListener('submit', handleSendEmail);
-  }
-
-  // fake download
-  const fakeDownloadBtn = document.getElementById('fake-download-btn');
-  if (fakeDownloadBtn) fakeDownloadBtn.addEventListener('click', () => alert(t().downloadNotSupported));
-}
-
-/* ===========================
-   Actions: Login, send email, Gemini
-   =========================== */
-async function handleLoginFormSubmit(e) {
-  e.preventDefault();
-  const input = document.getElementById('username');
-  if (!input) return;
-  const val = input.value.trim();
-  if (!val) return;
-
-  username = val;
-  loading = true;
-  statusMessage = t().loginStatusConnecting;
-  render();
-
-  try {
-    let userCred;
-
-    if (initialAuthToken) {
-      try {
-        userCred = await firebase.auth().signInWithCustomToken(initialAuthToken);
-      } catch (tokenErr) {
-        console.warn('Custom token login failed, fallback to anonymous login:', tokenErr);
-        userCred = await firebase.auth().signInAnonymously();
-      }
-    } else {
-      userCred = await firebase.auth().signInAnonymously();
-    }
-
-    emailAddress = `${username}@family.local`;
-    userId = userCred.user.uid;
-    currentView = 'mailbox';
-    statusMessage = '';
-  } catch (err) {
-    console.error('Login error:', err);
-    statusMessage = t().loginError;
-  } finally {
-    loading = false;
-    render();
   }
 }
 
-async function registerUser(email, password) {
-  try {
-    const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-    console.log('User registered:', userCredential.user);
-  } catch (error) {
-    console.error('Registration error:', error);
-  }
-}
-
-
-
-async function handleSendEmail(e) {
-  if (e && e.preventDefault) e.preventDefault();
-  loading = true;
-  statusMessage = '';
-  render();
-
-  const recipientVal = document.getElementById('recipient')?.value.trim() || composeForm.recipient || '';
-  const subjectVal = document.getElementById('subject')?.value.trim() || composeForm.subject || '';
-  const bodyHtml = (document.getElementById('rich-text-editor')?.innerHTML) || composeForm.body || '';
+// -------------------- Actions --------------------
+async function handleSendEmail() {
+  const t = state.t;
+  const composeStatus = $("#composeStatus");
+  composeStatus.hidden = true;
 
   const newEmail = {
-    sender: emailAddress,
-    recipient: recipientVal,
-    subject: subjectVal || t().emailSubjectPlaceholder,
-    body: bodyHtml,
+    sender: state.emailAddress,
+    recipient: (state.compose.recipient||"").trim() + "@family.local",
+    subject: (state.compose.subject||"").trim() || t.emailSubjectPlaceholder,
+    body: state.compose.body || "",
     timestamp: serverTimestamp(),
-    attachment: attachments ? {
-      name: attachments.name,
-      size: attachments.size,
-      type: attachments.type
+    attachment: state.attachments ? {
+      name: state.attachments.name,
+      size: state.attachments.size,
+      type: state.attachments.type
     } : null
   };
 
   try {
     await addDoc(collection(db, `artifacts/${appId}/public/data/emails`), newEmail);
-    statusMessage = t().sendSuccess;
-    composeForm = { recipient: '', subject: '', body: '' };
-    attachments = null;
-    setTimeout(() => {
-      statusMessage = '';
-      currentView = 'mailbox';
-      render();
-    }, 1600);
+    composeStatus.textContent = t.sendSuccess;
+    composeStatus.hidden = false;
+    state.compose = { recipient:"", subject:"", body:"" };
+    state.attachments = null;
+    // חזרה לתיבה אחרי רגע
+    setTimeout(()=>{
+      state.showCompose = false;
+      renderMain();
+    }, 800);
   } catch (err) {
-    console.error('Send error:', err);
-    statusMessage = t().sendError;
-  } finally {
-    loading = false;
-    render();
+    console.error("Send email error:", err);
+    composeStatus.textContent = t.sendError;
+    composeStatus.hidden = false;
   }
 }
 
-/* ===== Gemini integration (calls API key if יש) =====
-   שים לב: הכנס את המפתח שלך ל־GEMINI_API_KEY למטה כדי שזה יעבוד.
-*/
-const GEMINI_API_KEY = ''; // <-- הכנס כאן את מפתח ה־API אם יש לך
+async function handleAddContact() {
+  const t = state.t;
+  const name = $("#contactName").value.trim();
+  const username = $("#contactUsername").value.trim();
+  const status = $("#contactStatus");
+  status.hidden = true;
 
-async function handleGeminiGenerate() {
-  if (!geminiDraftPrompt || !GEMINI_API_KEY) {
-    if (!GEMINI_API_KEY) {
-      alert('No Gemini API key set. Add it in app.js to enable this feature.');
-      return;
-    }
+  if (!name || !username) return;
+
+  try {
+    const id = crypto.randomUUID();
+    const ref = doc(db, `artifacts/${appId}/users/${state.userId}/contacts`, id);
+    await setDoc(ref, { name, username });
+    status.textContent = t.contactAdded;
+    status.hidden = false;
+    setTimeout(()=>status.hidden = true, 1500);
+    // טופס נקי
+    $("#contactName").value = "";
+    $("#contactUsername").value = "";
+  } catch (e) {
+    console.error("Add contact error:", e);
+    status.textContent = "אירעה שגיאה בהוספת איש הקשר.";
+    status.hidden = false;
+    setTimeout(()=>status.hidden = true, 1500);
   }
-
-  isGeminiLoading = true;
-  isGeminiError = false;
-  render();
-
-  const chatHistory = [{ role: "user", parts: [{ text: geminiDraftPrompt }] }];
-  const payload = { contents: chatHistory };
-  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${GEMINI_API_KEY}`;
-
-  let retries = 0;
-  const maxRetries = 3;
-  const initialDelay = 1000;
-
-  while (retries < maxRetries) {
-    try {
-      const resp = await fetch(apiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      if (resp.ok) {
-        const data = await resp.json();
-        const generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (generatedText && richTextEl) {
-          richTextEl.innerHTML = generatedText.replace(/\n/g, '<br/>');
-        }
-        break;
-      } else {
-        retries++;
-        await new Promise(r => setTimeout(r, initialDelay * Math.pow(2, retries-1)));
-      }
-    } catch (err) {
-      console.error('Gemini error', err);
-      retries++;
-      await new Promise(r => setTimeout(r, initialDelay * Math.pow(2, retries-1)));
-    }
-  }
-
-  if (retries === maxRetries) {
-    isGeminiError = true;
-  }
-  isGeminiLoading = false;
-  render();
 }
 
-/* ===========================
-   Filtering helper
-   =========================== */
-function filterEmails(emails) {
-  if (!searchQuery) return emails;
-  const q = searchQuery.toLowerCase();
-  return emails.filter(email =>
-    (email.subject || '').toLowerCase().includes(q) ||
-    (email.sender || '').toLowerCase().includes(q) ||
-    (stripHtml(email.body || '')).toLowerCase().includes(q)
-  );
+// -------------------- Gemini (Draft / Summarize / Replies / TTS) --------------------
+const GEMINI_API_KEY = ""; // ← הכנס כאן את המפתח שלך
+
+async function geminiFetch(url, payload) {
+  const res = await fetch(`${url}?key=${GEMINI_API_KEY}`, {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw new Error(`Gemini HTTP ${res.status}`);
+  return res.json();
 }
 
-/* ===========================
-   Firebase realtime listeners (מעתיק את ה־useEffect)
-   =========================== */
-function setupRealtimeListeners() {
-  // הקשבה לשינויי אימות
-   firebase.auth().onAuthStateChanged(user => {
-    isAuthReady = true;
-    if (user) {
-      userId = user.uid;
-      // set emailAddress left as-is (login flow sets it)
-      // when authenticated, תקשיב למסמכי אימייל
-      setupEmailSnapshots();
+async function handleGeminiGenerate(editorEl) {
+  if (!GEMINI_API_KEY) { alert("חסר GEMINI_API_KEY ב-app.js"); return; }
+  const t = state.t;
+  const errEl = $("#geminiError");
+  errEl.hidden = true;
+
+  try {
+    const payload = {
+      contents: [{ role:"user", parts:[{ text: state.geminiDraftPrompt }]}]
+    };
+    const data = await geminiFetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent",
+      payload
+    );
+    const generated = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (generated) {
+      const html = generated.replace(/\n/g,"<br/>");
+      editorEl.innerHTML = html;
+      state.compose.body = html;
     } else {
-      userId = null;
+      errEl.textContent = t.geminiError;
+      errEl.hidden = false;
     }
-    render();
+  } catch (e) {
+    console.error("Gemini draft error:", e);
+    errEl.textContent = t.geminiError;
+    errEl.hidden = false;
+  }
+}
+
+async function handleSummarizeEmail() {
+  if (!GEMINI_API_KEY) { alert("חסר GEMINI_API_KEY ב-app.js"); return; }
+  const e = state.selectedEmail;
+  if (!e) return;
+  state.isSummarizing = true;
+
+  const prompt = `Summarize the following email in a brief, concise paragraph. The email subject is "${e.subject}" and the body is "${(e.body||"").replace(/<[^>]*>?/gm,"")}."`;
+  try {
+    const payload = { contents:[{ role:"user", parts:[{ text: prompt }]}] };
+    const data = await geminiFetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent",
+      payload
+    );
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || state.t.summaryError;
+    state.summary = text;
+  } catch {
+    state.summary = state.t.summaryError;
+  } finally {
+    state.isSummarizing = false;
+    updateAiOutputs();
+  }
+}
+
+async function handleSuggestReplies() {
+  if (!GEMINI_API_KEY) { alert("חסר GEMINI_API_KEY ב-app.js"); return; }
+  const e = state.selectedEmail;
+  if (!e) return;
+  state.isSuggestingReplies = true;
+  state.suggestedReplies = [];
+
+  const prompt = `Given the email with the subject "${e.subject}" and body "${(e.body||"").replace(/<[^>]*>?/gm,"")}", suggest three very short and concise replies. Format them as a JSON array of strings. Do not include any text before or after the JSON. Example response: ["Thanks!", "I'll get back to you soon.", "Okay, I understand."]`;
+
+  try {
+    const payload = {
+      contents:[{ role:"user", parts:[{ text: prompt }]}],
+      generationConfig:{
+        responseMimeType:"application/json",
+        responseSchema:{ type:"ARRAY", items:{ type:"STRING" } }
+      }
+    };
+    const data = await geminiFetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent",
+      payload
+    );
+    const jsonText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    const arr = JSON.parse(jsonText || "[]");
+    state.suggestedReplies = Array.isArray(arr) ? arr : [];
+  } catch (e) {
+    console.error("Gemini replies error:", e);
+  } finally {
+    state.isSuggestingReplies = false;
+    updateAiOutputs();
+  }
+}
+
+function base64ToArrayBuffer(base64) {
+  const binaryString = atob(base64);
+  const len = binaryString.length;
+  const bytes = new Uint8Array(len);
+  for (let i=0;i<len;i++) bytes[i] = binaryString.charCodeAt(i);
+  return bytes.buffer;
+}
+function pcmToWav(pcm, sampleRate) {
+  const pcmData = new Int16Array(pcm);
+  const buffer = new ArrayBuffer(44 + pcmData.length * 2);
+  const view = new DataView(buffer);
+  let o = 0;
+  view.setUint32(o, 0x52494646, false); o+=4; // RIFF
+  view.setUint32(o, 36 + pcmData.length * 2, true); o+=4;
+  view.setUint32(o, 0x57415645, false); o+=4; // WAVE
+  view.setUint32(o, 0x666d7420, false); o+=4; // fmt
+  view.setUint32(o, 16, true); o+=4;         // chunk length
+  view.setUint16(o, 1, true); o+=2;          // PCM
+  view.setUint16(o, 1, true); o+=2;          // channels
+  view.setUint32(o, sampleRate, true); o+=4;
+  view.setUint32(o, sampleRate*2, true); o+=4; // byte rate
+  view.setUint16(o, 2, true); o+=2;           // block align
+  view.setUint16(o, 16, true); o+=2;          // bits per sample
+  view.setUint32(o, 0x64617461, false); o+=4; // data
+  view.setUint32(o, pcmData.length*2, true); o+=4;
+  for (let i=0;i<pcmData.length;i++,o+=2) view.setInt16(o, pcmData[i], true);
+  return new Blob([view], { type:"audio/wav" });
+}
+
+async function handleReadEmail() {
+  if (!GEMINI_API_KEY) { alert("חסר GEMINI_API_KEY ב-app.js"); return; }
+  const e = state.selectedEmail;
+  if (!e) return;
+
+  if (state.isReading) {
+    state.audioEl?.pause();
+    state.isReading = false;
+    updateAiOutputs();
+    return;
+  }
+
+  state.isTTSLoading = true;
+  updateAiOutputs();
+
+  const textToRead = `Subject: ${e.subject}. Body: ${(e.body||"").replace(/<[^>]*>?/gm, "")}`;
+  const payload = {
+    contents:[{ parts:[{ text: textToRead }]}],
+    generationConfig:{
+      responseModalities:["AUDIO"],
+      speechConfig:{ voiceConfig:{ prebuiltVoiceConfig:{ voiceName:"Algieba" } } }
+    },
+    model:"gemini-2.5-flash-preview-tts"
+  };
+
+  try {
+    const data = await geminiFetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent",
+      payload
+    );
+    const part = data?.candidates?.[0]?.content?.parts?.[0];
+    const audioData = part?.inlineData?.data;
+    const mimeType = part?.inlineData?.mimeType;
+    if (audioData && mimeType && mimeType.startsWith("audio/")) {
+      const rateMatch = mimeType.match(/rate=(\d+)/);
+      const sampleRate = rateMatch ? parseInt(rateMatch[1],10) : 24000;
+      const pcm = base64ToArrayBuffer(audioData);
+      const wavBlob = pcmToWav(pcm, sampleRate);
+      const url = URL.createObjectURL(wavBlob);
+      const audio = state.audioEl || new Audio();
+      audio.src = url;
+      audio.play();
+      state.audioEl = audio;
+      state.isReading = true;
+      audio.onended = ()=>{ state.isReading = false; updateAiOutputs(); };
+    } else {
+      console.error("TTS: no audio data");
+    }
+  } catch (err) {
+    console.error("Gemini TTS error:", err);
+  } finally {
+    state.isTTSLoading = false;
+    updateAiOutputs();
+  }
+}
+
+function updateAiOutputs() {
+  const wrap = $("#aiOutputs");
+  if (!wrap) return;
+  const t = state.t;
+  const parts = [];
+
+  if (state.isSummarizing) parts.push(`<div class="muted">${t.summarizing}</div>`);
+  if (state.summary) {
+    parts.push(`<div class="section"><div class="k">${t.summarizeButton}:</div><div style="margin-top:6px">${escapeHtml(state.summary)}</div></div>`);
+  }
+
+  if (state.isSuggestingReplies) parts.push(`<div class="muted">${t.suggestingReplies}</div>`);
+  if (state.suggestedReplies.length) {
+    const chips = state.suggestedReplies.map((r,i)=>`<button class="btn" data-reply="${escapeHtml(r)}">${escapeHtml(r)}</button>`).join(" ");
+    parts.push(`<div class="section"><div class="k">${t.suggestRepliesButton}:</div><div class="flex" style="margin-top:6px">${chips}</div></div>`);
+  }
+
+  if (state.isTTSLoading) parts.push(`<div class="muted">${t.readingEmail}</div>`);
+  if (state.isReading) parts.push(`<div class="badge">${t.readEmailStopButton}</div>`);
+
+  wrap.innerHTML = parts.join("") || "";
+  // click suggested replies => open compose
+  $$('button[data-reply]', wrap).forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const reply = btn.getAttribute("data-reply") || "";
+      const e = state.selectedEmail;
+      state.showCompose = true;
+      state.compose = {
+        recipient: (e.sender||"").split("@")[0],
+        subject: `Re: ${e.subject||""}`,
+        body: escapeHtml(reply)
+      };
+      renderCompose();
+      // הכנס תשובה לתוך העורך
+      const ed = $("#richEditor");
+      if (ed) { ed.innerHTML = reply; state.compose.body = reply; }
+    });
   });
 }
 
-let unsubscribeInbox = null;
-let unsubscribeSent = null;
-
-function setupEmailSnapshots() {
-  // נקה מאזינים ישנים
-  if (unsubscribeInbox) unsubscribeInbox();
-  if (unsubscribeSent) unsubscribeSent();
-
-  if (!userId || !emailAddress) return;
-
-  const inboxQuery = query(collection(db, `artifacts/${appId}/public/data/emails`), where('recipient', '==', emailAddress));
-  unsubscribeInbox = onSnapshot(inboxQuery, (snapshot) => {
-    const emails = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    emails.sort((a,b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
-    inboxEmails = emails;
-    render();
-  });
-
-  const sentQuery = query(collection(db, `artifacts/${appId}/public/data/emails`), where('sender', '==', emailAddress));
-  unsubscribeSent = onSnapshot(sentQuery, (snapshot) => {
-    const emails = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    emails.sort((a,b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
-    sentEmails = emails;
-    render();
-  });
-}
-
-/* ===========================
-   Helpers: escaping
-   =========================== */
-function escapeHtml(str) {
-  if (!str) return '';
-  return String(str).replace(/[&<>"']/g, function (s) {
-    return ({
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#39;'
-    })[s];
-  });
-}
-function stripHtml(html) {
-  return html.replace(/<[^>]+>/g, '');
-}
-
-/* ===========================
-   Initialize app
-   =========================== */
-function bootstrap() {
-  rootEl = document.getElementById('root');
-  if (!rootEl) throw new Error('Root element not found');
-
-  setupRealtimeListeners();
-  render();
-}
-bootstrap();
+// -------------------- התחל --------------------
+render();
