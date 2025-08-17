@@ -13,7 +13,7 @@ const { v4: uuidv4 } = require("uuid");
 const nodemailer = require("nodemailer");
 const cron = require("node-cron");
 const { Translate } = require("@google-cloud/translate").v2;
-import { createClient } from "@supabase/supabase-js";
+const { createClient } = require('@supabase/supabase-js');
 const ai = require("./ai");
 const fetch = require("node-fetch");
 const crypto = require("crypto");
