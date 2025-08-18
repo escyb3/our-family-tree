@@ -51,14 +51,6 @@ async function initTables() {
     console.error("DB init error:", err);
   }
 }
- // שמירה בסשן
-  req.session.user = {
-    id: users[0].id,
-    username: users[0].username,
-    role: users[0].role
-  };
-
-  res.json({ message: 'התחברת בהצלחה', user: req.session.user });
 
 
 // ✅ מחזיר את המשתמש המחובר
