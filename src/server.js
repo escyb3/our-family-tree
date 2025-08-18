@@ -972,11 +972,6 @@ app.post("/api/add-user", (req, res) => {
   res.json({ success: true });
 });
 
-const requireLogin = (req, res, next) => {
-  if (!req.session.user) return res.status(401).json({ error: "Unauthorized" });
-  next();
-};
-
 app.use((req, res, next) => {
   const protectedPages = ["/mailbox.html", "/calendar.html", "/dashboard.html"];
   if (protectedPages.includes(req.path) && !req.session.user) {
