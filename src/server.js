@@ -136,7 +136,7 @@ async function ensureAdminUser() {
       const { error: insertError } = await supabase
         .from('site_users')
         .insert([
-          { username: 'admin', password: 'familyadmin123', role: 'admin', side: 'all' }
+          { username: 'admin1', password: 'familyadmin123', role: 'admin', side: 'all' }
         ]);
 
       if (insertError) {
