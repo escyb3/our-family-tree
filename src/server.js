@@ -78,6 +78,24 @@ app.post('/api/logout', (req, res) => {
     res.json({ message: 'התנתקת בהצלחה' });
   });
   }); 
+function requireLogin(req, res, next) {
+  if (!req.session.user) {
+    return res.status(401).json({ message: "צריך להתחבר כדי לגשת" });
+  }
+  next();
+}
+
+// דוגמה: קריאה ל־messages
+app.get("/api/messages", requireLogin, async (req, res) => {
+  // כאן אתה כבר יודע שהמשתמש מחובר
+  const { data, error } = await supabase
+    .from("messages")
+    .select("*")
+    .eq("toUser", req.session.user.username);
+
+  if (error) return res.status(500).json({ message: "שגיאה בבסיס נתונים" });
+  res.json({ messages: data });
+});
 // =========================
 // Auth & Session
 // =========================
