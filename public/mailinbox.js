@@ -294,16 +294,18 @@ function startRealtimeSubscriptions() {
   if (!state.userId || !state.emailAddress) return;
 
   // Inbox
-  const inboxQ = query(
-    collection(db, `artifacts/${1:199399854104:web:6aec488e6aeee0dec3736d}/public/data/emails`),
-    where("recipient", "==", state.emailAddress)
-  );
-  unsubscribeInbox = onSnapshot(inboxQ, (snap) => {
-    const emails = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    emails.sort((a,b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
-    state.inboxEmails = emails;
-    if (state.currentView === "mailbox" && state.currentFolder === "inbox" && !state.selectedEmail) renderMain();
-  });
+const inboxQ = query(
+  collection(db, "artifacts/1:199399854104:web:6aec488e6aeee0dec3736d/public/data/emails"),
+  where("recipient", "==", state.emailAddress)
+);
+
+unsubscribeInbox = onSnapshot(inboxQ, (snap) => {
+  const emails = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  emails.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+  state.inboxEmails = emails;
+  if (state.currentView === "mailbox" && state.currentFolder === "inbox" && !state.selectedEmail) renderMain();
+});
+
 
   // Sent
   const sentQ = query(
