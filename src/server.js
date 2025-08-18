@@ -142,7 +142,7 @@ async function ensureAdminUser() {
       if (insertError) {
         console.error("Error creating admin user:", insertError.message);
       } else {
-        console.log("Admin user created: username=admin, password=admin123");
+        console.log("Admin user created: username=admin, password=familyadmin123");
       }
     } else {
       console.log("Users already exist, skipping admin creation.");
