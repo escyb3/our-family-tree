@@ -51,15 +51,33 @@ async function initTables() {
     console.error("DB init error:", err);
   }
 }
-//Users Checker
-app.get('/api/user', (req, res) => {
-  if (req.session && req.session.user) {
-    res.json({ user: req.session.user });
-  } else {
-    res.status(401).json({ error: 'Not authenticated' });
-  }
+ // שמירה בסשן
+  req.session.user = {
+    id: users[0].id,
+    username: users[0].username,
+    role: users[0].role
+  };
+
+  res.json({ message: 'התחברת בהצלחה', user: req.session.user });
 });
 
+// ✅ מחזיר את המשתמש המחובר
+app.get('/api/user', (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ error: 'לא מחובר' });
+  }
+  res.json({ user: req.session.user });
+});
+
+// ✅ התנתקות
+app.post('/api/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return res.status(500).json({ error: 'שגיאה בעת התנתקות' });
+    }
+    res.json({ message: 'התנתקת בהצלחה' });
+  });
+});
 // =========================
 // Auth & Session
 // =========================
