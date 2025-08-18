@@ -91,6 +91,41 @@ app.post('/logout', (req, res) => {
   req.session.destroy();
   res.json({ message: 'Logged out' });
 });
+// בדיקה ויצירת משתמש מנהל ראשוני אם הטבלה ריקה
+async function ensureAdminUser() {
+  try {
+    const { data, error } = await supabase
+      .from('site_users')
+      .select('*')
+      .limit(1);
+
+    if (error) {
+      console.error("Error checking site_users:", error.message);
+      return;
+    }
+
+    if (data.length === 0) {
+      const { error: insertError } = await supabase
+        .from('site_users')
+        .insert([
+          { username: 'admin', password: 'familyadmin123', role: 'admin', side: 'all' }
+        ]);
+
+      if (insertError) {
+        console.error("Error creating admin user:", insertError.message);
+      } else {
+        console.log("Admin user created: username=admin, password=admin123");
+      }
+    } else {
+      console.log("Users already exist, skipping admin creation.");
+    }
+  } catch (err) {
+    console.error("ensureAdminUser failed:", err);
+  }
+}
+
+// קריאה לפונקציה בעת עליית השרת
+ensureAdminUser();
 
 // =========================
 // Admin: Users Management
