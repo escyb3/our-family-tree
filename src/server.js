@@ -59,7 +59,7 @@ async function initTables() {
   };
 
   res.json({ message: 'התחברת בהצלחה', user: req.session.user });
-});
+
 
 // ✅ מחזיר את המשתמש המחובר
 app.get('/api/user', (req, res) => {
