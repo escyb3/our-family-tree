@@ -12,6 +12,23 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password })
       });
+       // לבדוק אם המשתמש מחובר
+async function checkUser() {
+  const res = await fetch('/api/user');
+  if (res.ok) {
+    const data = await res.json();
+    console.log("משתמש מחובר:", data.user);
+  } else {
+    console.log("לא מחובר");
+  }
+}
+
+// התנתקות
+async function logout() {
+  await fetch('/api/logout', { method: 'POST' });
+  console.log("התנתקת");
+}
+
 
       if (!res.ok) {
         const data = await res.json();
