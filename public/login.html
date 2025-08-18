@@ -1,4 +1,3 @@
- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +9,9 @@
 <body class="bg-gradient-to-br from-blue-100 to-white min-h-screen flex items-center justify-center">
   <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
     <h1 class="text-3xl font-bold mb-6 text-center text-blue-700">👋 Welcome to the Family Platform!</h1>
-    <form action="/login" method="POST" class="space-y-4">
+    
+    <!-- טופס ללא action -->
+    <form id="login-form" class="space-y-4">
       <div>
         <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
         <input type="text" id="username" name="username" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" />
@@ -23,8 +24,10 @@
         Log In
       </button>
     </form>
+
     <p class="text-center text-sm text-gray-500 mt-6">Access is restricted to registered family members only.</p>
-   <script src="login.js" defer></script>
   </div>
+
+  <script src="login.js" defer></script>
 </body>
 </html>
