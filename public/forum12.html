@@ -342,11 +342,11 @@
         // Check user authentication via external API
         async function checkUserAuth() {
             try {
-                // IMPORTANT: You must replace this with your actual, full API URL.
-                // This is a placeholder to demonstrate the concept.
-                // The URL must start with 'http://' or 'https://'
-                const apiUrl = 'https://your-server-api.com/api/user'; // <--- FIX: Changed from relative to absolute URL
-                const response = await fetch(apiUrl);
+                const api = '/api/user'; // נתיב ל־API מהשרת
+const response = await fetch(api); // משתמשים במשתנה api
+const data = await response.json(); // אם רוצים את התוכן
+console.log(data);
+
                 
                 // If the response is not ok, throw an error
                 if (!response.ok) {
