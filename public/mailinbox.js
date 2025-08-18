@@ -294,8 +294,9 @@ function startRealtimeSubscriptions() {
   if (!state.userId || !state.emailAddress) return;
 
 // Inbox
+const appId = "1:199399854104:web:6aec488e6aeee0dec3736d";
 const inboxQ = query(
-  collection(db, "artifacts/1:199399854104:web:6aec488e6aeee0dec3736d/public/data/emails"),
+  collection(db, `artifacts/${appId}/public/data/emails`),
   where("recipient", "==", state.emailAddress)
 );
 
