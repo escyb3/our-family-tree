@@ -293,10 +293,10 @@ function startRealtimeSubscriptions() {
   stopRealtimeSubscriptions();
   if (!state.userId || !state.emailAddress) return;
 
-  // Inbox
+// Inbox
 const inboxQ = query(
- collection(db, "artifacts/1:199399854104:web:6aec488e6aeee0dec3736d/public/data/emails")
-    where("recipient", "==", state.emailAddress)
+  collection(db, "artifacts/1:199399854104:web:6aec488e6aeee0dec3736d/public/data/emails"),
+  where("recipient", "==", state.emailAddress)
 );
 
 unsubscribeInbox = onSnapshot(inboxQ, (snap) => {
