@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>ממשק ניהול</title>
+</head>
+<body>
+  <h1>ניהול משתמשים</h1>
+
+  <form id="createUserForm">
+    <input type="text" id="newUsername" placeholder="שם משתמש חדש" required>
+    <input type="password" id="newPassword" placeholder="סיסמה" required>
+    <button type="submit">הוסף משתמש</button>
+  </form>
+
+  <p id="createUserMsg"></p>
+
+  <h2>רשימת משתמשים</h2>
+  <ul id="userList"></ul>
+
+  <script src="admin.js"></script>
+</body>
+</html>
