@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>פורום משפחתנו</title>
+    <!-- Tailwind CSS for a modern, responsive design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for a clean font -->
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, doc, getDoc, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, collection, query, where, getDocs, getCountFromServer } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+
+        window.firebase = {
+            initializeApp,
+            getFirestore,
+            doc,
+            getDoc,
+            addDoc,
+            setDoc,
+            updateDoc,
+            deleteDoc,
+            onSnapshot,
+            collection,
+            query,
+            where,
+            getDocs,
+            getCountFromServer,
+            getStorage,
+            storageRef,
+            uploadBytes,
+            getDownloadURL
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Heebo', sans-serif;
+            background-color: #f0f4f8;
+            transition: background-color 0.3s ease;
+        }
+        body.dark-mode {
+            background-color: #1a202c;
+        }
+        body.dark-mode .bg-white {
+            background-color: #2d3748;
+        }
+        body.dark-mode .text-gray-900 {
+            color: #e2e8f0;
+        }
+        body.dark-mode input,
+        body.dark-mode select,
+        body.dark-mode textarea {
+            background-color: #4a5568;
+            color: #e2e8f0;
+            border-color: #4a5568;
+        }
+        .text-ellipsis-2-lines {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+            padding-top: 150px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            text-align: center;
+            animation: slide-in 0.3s ease-out;
+        }
+        @keyframes slide-in {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .close-button {
+            color: #aaa;
+            float: left;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .notification-bubble {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ef4444; /* red-500 */
+            color: white;
+            border-radius: 9999px;
+            font-size: 0.75rem; /* text-xs */
+            font-weight: bold;
+            padding: 0 0.5rem;
+            min-width: 1rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="text-gray-900">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white p-6 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-bold">🗣️ פורום משפחתנו</h1>
+            <div class="flex items-center gap-4">
+                <span id="userIdDisplay" class="text-sm font-light text-blue-200"></span>
+                <button id="darkModeToggle" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300">
+                    🌓 מצב כהה
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="container mx-auto mt-8 p-6 lg:p-10 bg-white rounded-xl shadow-xl">
+
+        <!-- Main Threads List View -->
+        <div id="mainView" class="space-y-6">
+            <!-- Search and Filter Section -->
+            <div class="mb-8 flex flex-col md:flex-row gap-4 items-center">
+                <input type="text" id="searchInput" placeholder="🔍 חפש שרשור..." class="flex-grow w-full md:w-auto p-3 rounded-lg border-2 border-gray-300 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                <select id="categoryFilter" class="w-full md:w-auto p-3 rounded-lg border-2 border-gray-300 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                    <option value="all">כל הנושאים</option>
+                    <option value="history">היסטוריה משפחתית</option>
+                    <option value="questions">שאלות</option>
+                    <option value="updates">עדכונים</option>
+                </select>
+            </div>
+
+            <!-- Threads List Container -->
+            <div id="threadList">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-700">🗂️ כל השרשורים</h2>
+                <!-- Dynamic threads will be injected here by JS -->
+            </div>
+            
+            <!-- Divider -->
+            <div class="my-10 border-t-2 border-dashed border-gray-300"></div>
+
+            <!-- New Thread Form -->
+            <div id="newThreadSection" class="new-thread p-6 bg-gray-50 rounded-lg shadow-inner">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-700">💬 פתח שרשור חדש</h2>
+                <form id="newThreadForm" class="space-y-4">
+                    <input type="text" name="title" placeholder="כותרת השרשור..." required class="block w-full p-3 rounded-lg border-2 border-gray-300 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                    <select name="category" required class="block w-full p-3 rounded-lg border-2 border-gray-300 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                        <option value="history">היסטוריה משפחתית</option>
+                        <option value="questions">שאלות</option>
+                        <option value="updates">עדכונים</option>
+                    </select>
+                    <textarea name="content" rows="4" placeholder="שתף את מחשבותיך..." required class="block w-full p-3 rounded-lg border-2 border-gray-300 focus:ring-blue-500 focus:border-blue-500 transition-all"></textarea>
+                    <div class="flex items-center gap-4">
+                        <input type="file" id="fileInput" name="file" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        <span id="loadingIndicator" class="hidden text-gray-500">מעלה קובץ...</span>
+                    </div>
+                    <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full transition-colors duration-300 shadow-md hover:shadow-lg">
+                        📤 פרסם
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Single Thread View (hidden by default) -->
+        <div id="threadView" class="hidden">
+            <button id="backButtonFromThread" class="mb-4 text-blue-600 hover:underline">
+                <i class="fas fa-arrow-right"></i> חזור לכל השרשורים
+            </button>
+            
+            <div id="threadContent" class="p-6 bg-gray-50 rounded-lg shadow-inner mb-6">
+                <!-- Thread content will be loaded here -->
+            </div>
+
+            <div id="repliesList" class="space-y-4">
+                <h3 class="text-xl font-semibold text-gray-700">תגובות</h3>
+                <!-- Replies will be loaded here -->
+            </div>
+
+            <div id="replySection" class="mt-6 p-6 bg-gray-50 rounded-lg shadow-inner">
+                <h3 class="text-lg font-semibold text-gray-700 mb-4">הוסף תגובה</h3>
+                <form id="replyForm" class="space-y-4">
+                    <textarea name="replyContent" rows="3" placeholder="כתוב את התגובה שלך..." required class="block w-full p-3 rounded-lg border-2 border-gray-300 focus:ring-blue-500 focus:border-blue-500 transition-all"></textarea>
+                    <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full transition-colors duration-300 shadow-md hover:shadow-lg">
+                        ✉️ שלח תגובה
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- User Profile View (hidden by default) -->
+        <div id="profileView" class="hidden">
+            <button id="backButtonFromProfile" class="mb-4 text-blue-600 hover:underline">
+                <i class="fas fa-arrow-right"></i> חזור לכל השרשורים
+            </button>
+            <h2 id="profileTitle" class="text-2xl font-semibold mb-4 text-gray-700"></h2>
+            <div id="profileThreadsList" class="space-y-6">
+                <!-- User's threads will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Private Message View (hidden by default) -->
+        <div id="dmView" class="hidden">
+            <button id="backButtonFromDM" class="mb-4 text-blue-600 hover:underline">
+                <i class="fas fa-arrow-right"></i> חזור לכל השרשורים
+            </button>
+            <h2 id="dmTitle" class="text-2xl font-semibold mb-4 text-gray-700 flex items-center gap-2"></h2>
+            <div id="messageHistory" class="space-y-4 h-96 overflow-y-auto p-4 bg-gray-100 rounded-lg shadow-inner">
+                <!-- Messages will be loaded here -->
+            </div>
+            <form id="dmForm" class="mt-4 flex gap-2">
+                <input type="text" name="messageContent" placeholder="כתוב הודעה..." required class="flex-grow p-3 rounded-lg border-2 border-gray-300 focus:ring-blue-500 focus:border-blue-500">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full transition-colors duration-300">שלח</button>
+            </form>
+        </div>
+
+    </main>
+    
+    <!-- Custom Modal for Deletion Confirmation -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <p>האם אתה בטוח שברצונך למחוק פריט זה?</p>
+            <div class="mt-4 flex justify-center gap-4">
+                <button id="confirmDelete" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full">מחק</button>
+                <button id="cancelDelete" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full">ביטול</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Custom Modal for Editing -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3 class="text-xl font-bold mb-4">ערוך פריט</h3>
+            <form id="editForm" class="space-y-4">
+                <input type="text" id="editTitle" placeholder="כותרת השרשור..." class="hidden block w-full p-3 rounded-lg border-2 border-gray-300">
+                <textarea id="editContent" rows="4" placeholder="תוכן..." required class="block w-full p-3 rounded-lg border-2 border-gray-300"></textarea>
+                <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full">שמור שינויים</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Modal for Authentication Error -->
+    <div id="authErrorModal" class="modal">
+        <div class="modal-content">
+            <h3 class="text-xl font-bold mb-4 text-red-600">שגיאת אימות</h3>
+            <p>נדרשת כניסה למערכת כדי לבצע פעולה זו. אנא התחבר כדי להמשיך.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-gray-600 text-sm">
+        <p>📌 כל השרשורים מוצגים לפי סדר כרונולוגי.</p>
+        <p>&copy; 2024 פורום משפחתנו. כל הזכויות שמורות.</p>
+    </footer>
+
+    <!-- JavaScript for functionality -->
+    <script type="module">
+        const { initializeApp, getFirestore, collection, addDoc, onSnapshot, query, where, getDocs, getCountFromServer, doc, updateDoc, deleteDoc, getStorage, storageRef, uploadBytes, getDownloadURL } = window.firebase;
+
+        // User's specific Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyACnXDX1fcnaonBQgeT35oBLA5cAse7ekY",
+            authDomain: "forum-5e87a.firebaseapp.com",
+            projectId: "forum-5e87a",
+            storageBucket: "forum-5e87a.firebasestorage.app",
+            messagingSenderId: "1016957490060",
+            appId: "1:1016957490060:web:3551e41dda7fd59e7afca9",
+            measurementId: "G-XY37108JGV"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        let userId = null;
+        let unsubscribeThreads = null;
+        let unsubscribeReplies = null;
+        let unsubscribeDMs = null;
+        let currentThreadId = null;
+        let itemToDeleteRef = null;
+        let itemToEditRef = null;
+        let currentDmRecipientId = null;
+        let lastReadDmTimestamp = null;
+        let lastReadReplyTimestamp = null;
+
+        const mainView = document.getElementById('mainView');
+        const threadView = document.getElementById('threadView');
+        const profileView = document.getElementById('profileView');
+        const dmView = document.getElementById('dmView');
+        const threadList = document.getElementById('threadList');
+        const threadContent = document.getElementById('threadContent');
+        const repliesList = document.getElementById('repliesList');
+        const newThreadSection = document.getElementById('newThreadSection');
+        const newThreadForm = document.getElementById('newThreadForm');
+        const replySection = document.getElementById('replySection');
+        const replyForm = document.getElementById('replyForm');
+        const backButtonFromThread = document.getElementById('backButtonFromThread');
+        const backButtonFromProfile = document.getElementById('backButtonFromProfile');
+        const backButtonFromDM = document.getElementById('backButtonFromDM');
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const userIdDisplay = document.getElementById('userIdDisplay');
+        const profileTitle = document.getElementById('profileTitle');
+        const profileThreadsList = document.getElementById('profileThreadsList');
+        const dmTitle = document.getElementById('dmTitle');
+        const messageHistory = document.getElementById('messageHistory');
+        const dmForm = document.getElementById('dmForm');
+        const deleteModal = document.getElementById('deleteModal');
+        const confirmDeleteButton = document.getElementById('confirmDelete');
+        const cancelDeleteButton = document.getElementById('cancelDelete');
+        const editModal = document.getElementById('editModal');
+        const editForm = document.getElementById('editForm');
+        const editTitleInput = document.getElementById('editTitle');
+        const editContentTextarea = document.getElementById('editContent');
+        const modalCloseButtons = document.querySelectorAll('.close-button');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const authErrorModal = document.getElementById('authErrorModal');
+
+        // Check user authentication via external API
+        async function checkUserAuth() {
+            try {
+                // IMPORTANT: You must replace this with your actual, full API URL.
+                // This is a placeholder to demonstrate the concept.
+                // The URL must start with 'http://' or 'https://'
+                const apiUrl = 'https://your-server-api.com/api/user'; // <--- FIX: Changed from relative to absolute URL
+                const response = await fetch(apiUrl);
+                
+                // If the response is not ok, throw an error
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const userData = await response.json();
+                
+                if (userData && userData.userId) {
+                    userId = userData.userId;
+                    userIdDisplay.textContent = `משתמש: ${userId}`;
+                    console.log("Authenticated with user ID:", userId);
+                    
+                    // Setup listeners and show interactive elements
+                    setupRealtimeThreadsListener();
+                    setupNotificationListeners();
+                    newThreadSection.style.display = 'block';
+                    replySection.style.display = 'block';
+                } else {
+                    // User is not authenticated
+                    userId = null;
+                    userIdDisplay.textContent = 'לא מחובר';
+                    console.log("No user authenticated. Hiding interactive elements.");
+                    newThreadSection.style.display = 'none';
+                    replySection.style.display = 'none';
+                }
+            } catch (error) {
+                console.error("Error fetching user data from API:", error);
+                userId = null;
+                userIdDisplay.textContent = 'שגיאת חיבור';
+                newThreadSection.style.display = 'none';
+                replySection.style.display = 'none';
+            }
+        }
+
+        // Run the auth check on page load
+        checkUserAuth();
+
+        // Setup notification listeners for new DMs and replies
+        async function setupNotificationListeners() {
+            if (!userId) return;
+            // Get last read timestamps from local storage
+            lastReadDmTimestamp = localStorage.getItem(`lastReadDmTimestamp_${userId}`) || Date.now();
+            lastReadReplyTimestamp = localStorage.getItem(`lastReadReplyTimestamp_${userId}`) || Date.now();
+
+            // Listen for new DMs - FIX: Changed path from private to public
+            onSnapshot(collection(db, `artifacts/${appId}/public/data/chats`), (snapshot) => {
+                let unreadCount = 0;
+                snapshot.docChanges().forEach(change => {
+                    const chatId = change.doc.id;
+                    if (chatId.includes(userId)) {
+                        const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${chatId}/messages`);
+                        const q = query(messagesRef, where("createdAt", ">", new Date(parseInt(lastReadDmTimestamp))));
+                        getCountFromServer(q).then(count => {
+                            if (count.data().count > 0) {
+                                showNotification('יש לך הודעה חדשה!', 'DM');
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Listen for new replies to user's threads
+            const threadsRef = collection(db, `artifacts/${appId}/public/data/threads`);
+            const userThreadsQuery = query(threadsRef, where("authorId", "==", userId));
+            onSnapshot(userThreadsQuery, (snapshot) => {
+                snapshot.docChanges().forEach(change => {
+                    const threadId = change.doc.id;
+                    const repliesRef = collection(db, `artifacts/${appId}/public/data/threads/${threadId}/replies`);
+                    const q = query(repliesRef, where("createdAt", ">", new Date(parseInt(lastReadReplyTimestamp))));
+                    getCountFromServer(q).then(count => {
+                        if (count.data().count > 0) {
+                             showNotification('יש תגובה חדשה על אחד השרשורים שלך!', 'REPLY');
+                        }
+                    });
+                });
+            });
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.classList.add('fixed', 'top-4', 'right-4', 'bg-blue-600', 'text-white', 'p-4', 'rounded-lg', 'shadow-lg', 'z-50', 'animate-slide-in');
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 5000);
+        }
+
+        // Setup real-time listeners for threads
+        function setupRealtimeThreadsListener() {
+            if (unsubscribeThreads) {
+                unsubscribeThreads();
+            }
+            const threadsRef = collection(db, `artifacts/${appId}/public/data/threads`);
+            const threadsQuery = query(threadsRef); 
+            
+            unsubscribeThreads = onSnapshot(threadsQuery, (snapshot) => {
+                const threads = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                threads.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+                renderThreads(threads);
+                console.log("Threads updated in real-time.");
+            }, (error) => {
+                console.error("Error listening to threads:", error);
+            });
+        }
+
+        // Render Threads List
+        const renderThreads = (threads, container = threadList, showAuthorActions = true) => {
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedCategory = categoryFilter.value;
+
+            const filteredThreads = threads.filter(thread => {
+                const matchesSearch = thread.title.toLowerCase().includes(searchTerm) || thread.content.toLowerCase().includes(searchTerm);
+                const matchesCategory = selectedCategory === 'all' || thread.category === selectedCategory;
+                return matchesSearch && matchesCategory;
+            });
+
+            if (container === threadList) {
+                container.innerHTML = '<h2 class="text-2xl font-semibold mb-4 text-gray-700">🗂️ כל השרשורים</h2>';
+            } else {
+                 container.innerHTML = '';
+            }
+
+            if (filteredThreads.length === 0) {
+                container.innerHTML += '<p class="text-center text-gray-500">אין שרשורים עדיין. היה הראשון לפרסם!</p>';
+                return;
+            }
+
+            filteredThreads.forEach(thread => {
+                const threadElement = document.createElement('div');
+                threadElement.classList.add('relative', 'p-6', 'bg-white', 'rounded-lg', 'shadow-md', 'hover:shadow-lg', 'transition-all', 'duration-200', 'cursor-pointer', 'thread-item');
+                threadElement.dataset.id = thread.id;
+                
+                const isAuthor = thread.authorId === userId;
+                const favoriteIconClass = thread.isFavorite ? 'text-yellow-400' : 'text-gray-400 hover:text-yellow-400';
+                
+                const likesCount = (thread.likes?.length || 0);
+                const hasLiked = thread.likes?.includes(userId);
+                const likeIconClass = hasLiked ? 'text-red-500' : 'text-gray-400 hover:text-red-500';
+
+                let actionsHtml = '';
+                if (showAuthorActions && isAuthor) {
+                    actionsHtml = `
+                        <div class="absolute top-3 left-16 flex gap-2">
+                            <button class="edit-btn text-blue-500 hover:text-blue-700 transition-colors" data-id="${thread.id}"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn text-red-500 hover:text-red-700 transition-colors" data-id="${thread.id}"><i class="fas fa-trash"></i></button>
+                        </div>
+                    `;
+                }
+                
+                let fileHtml = '';
+                if (thread.fileUrl) {
+                    const fileType = thread.fileType || 'file';
+                    const isImage = fileType.startsWith('image/');
+                    const isVideo = fileType.startsWith('video/');
+                    
+                    if (isImage) {
+                        fileHtml = `<img src="${thread.fileUrl}" alt="Thread image" class="mt-4 rounded-lg max-h-96 w-full object-contain">`;
+                    } else if (isVideo) {
+                        fileHtml = `<video controls src="${thread.fileUrl}" class="mt-4 rounded-lg w-full max-h-96"></video>`;
+                    } else {
+                        fileHtml = `<a href="${thread.fileUrl}" target="_blank" class="mt-4 inline-block text-blue-500 hover:underline"><i class="fas fa-download"></i> הורד קובץ</a>`;
+                    }
+                }
+
+                threadElement.innerHTML = `
+                    <span class="favorite-icon absolute top-3 right-3 text-xl cursor-pointer transition-colors duration-200" data-id="${thread.id}"><i class="fas fa-star ${favoriteIconClass}"></i></span>
+                    ${actionsHtml}
+                    <h3 class="text-xl font-bold mb-1 text-blue-600">${thread.title}</h3>
+                    <p class="text-gray-700 mb-2 text-ellipsis-2-lines">${thread.content}</p>
+                    ${fileHtml}
+                    <div class="flex flex-col md:flex-row md:justify-between text-sm text-gray-500 mt-4">
+                        <span>נוצר על ידי: <span class="font-medium text-gray-600 cursor-pointer author-id" data-author-id="${thread.authorId}">${isAuthor ? 'אני' : thread.authorId}</span></span>
+                        <span>בתאריך: <span class="font-medium text-gray-600">${thread.createdAt ? new Date(thread.createdAt.seconds * 1000).toLocaleDateString('he-IL') : 'תאריך לא ידוע'}</span></span>
+                        <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800 self-start md:self-auto">${getCategoryName(thread.category)}</span>
+                    </div>
+                    <div class="flex items-center mt-2">
+                        <button class="like-btn" data-id="${thread.id}"><i class="fas fa-heart ${likeIconClass}"></i></button>
+                        <span class="text-sm text-gray-600 mr-2">${likesCount}</span>
+                    </div>
+                `;
+                container.appendChild(threadElement);
+            });
+        };
+
+        // Helper function to get category name
+        const getCategoryName = (category) => {
+            switch (category) {
+                case 'history': return 'היסטוריה משפחתית';
+                case 'questions': return 'שאלות';
+                case 'updates': return 'עדכונים';
+                default: return 'כללי';
+            }
+        };
+
+        // Open a single thread view
+        const openThread = async (threadId) => {
+            currentThreadId = threadId;
+            
+            // Hide other views
+            mainView.classList.add('hidden');
+            profileView.classList.add('hidden');
+            dmView.classList.add('hidden');
+            threadView.classList.remove('hidden');
+
+            const threadRef = doc(db, `artifacts/${appId}/public/data/threads`, threadId);
+            try {
+                const threadSnap = await getDoc(threadRef);
+                if (threadSnap.exists()) {
+                    const thread = threadSnap.data();
+                    const isAuthor = thread.authorId === userId;
+                    let actionsHtml = '';
+                    if (isAuthor) {
+                        actionsHtml = `
+                            <div class="flex gap-2 mb-4">
+                                <button class="edit-btn text-blue-500 hover:text-blue-700 transition-colors" data-id="${threadId}"><i class="fas fa-edit"></i> ערוך</button>
+                                <button class="delete-btn text-red-500 hover:text-red-700 transition-colors" data-id="${threadId}"><i class="fas fa-trash"></i> מחק</button>
+                            </div>
+                        `;
+                    }
+                    
+                    let fileHtml = '';
+                    if (thread.fileUrl) {
+                        const fileType = thread.fileType || 'file';
+                        const isImage = fileType.startsWith('image/');
+                        const isVideo = fileType.startsWith('video/');
+                        
+                        if (isImage) {
+                            fileHtml = `<img src="${thread.fileUrl}" alt="Thread image" class="mt-4 rounded-lg shadow-md max-h-96 w-full object-contain">`;
+                        } else if (isVideo) {
+                            fileHtml = `<video controls src="${thread.fileUrl}" class="mt-4 rounded-lg w-full max-h-96"></video>`;
+                        } else {
+                            fileHtml = `<a href="${thread.fileUrl}" target="_blank" class="mt-4 inline-block text-blue-500 hover:underline"><i class="fas fa-download"></i> הורד קובץ</a>`;
+                        }
+                    }
+
+                    threadContent.innerHTML = `
+                        ${actionsHtml}
+                        <h2 class="text-2xl font-bold mb-2">${thread.title}</h2>
+                        <p class="text-gray-700 mb-4">${thread.content}</p>
+                        ${fileHtml}
+                        <div class="flex flex-col md:flex-row md:justify-between text-sm text-gray-500 mt-4">
+                            <span>נוצר על ידי: <span class="font-medium text-gray-600 cursor-pointer author-id" data-author-id="${thread.authorId}">${isAuthor ? 'אני' : thread.authorId}</span></span>
+                            <span>בתאריך: <span class="font-medium text-gray-600">${thread.createdAt ? new Date(thread.createdAt.seconds * 1000).toLocaleDateString('he-IL') : 'תאריך לא ידוע'}</span></span>
+                            <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800 self-start md:self-auto">${getCategoryName(thread.category)}</span>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error("Error fetching thread:", error);
+                threadContent.innerHTML = `<p class="text-red-500">אירעה שגיאה בטעינת השרשור.</p>`;
+            }
+
+            // Replies listener
+            const repliesRef = collection(db, `artifacts/${appId}/public/data/threads/${threadId}/replies`);
+            const repliesQuery = query(repliesRef);
+            
+            if (unsubscribeReplies) {
+                unsubscribeReplies();
+            }
+
+            unsubscribeReplies = onSnapshot(repliesQuery, (snapshot) => {
+                const replies = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                replies.sort((a, b) => (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0));
+                renderReplies(replies);
+                console.log("Replies updated in real-time.");
+                
+                // Update last read timestamp for replies
+                localStorage.setItem(`lastReadReplyTimestamp_${userId}`, Date.now());
+            }, (error) => {
+                console.error("Error listening to replies:", error);
+            });
+        };
+
+        // Render replies for a single thread
+        const renderReplies = (replies) => {
+            repliesList.innerHTML = '<h3 class="text-xl font-semibold text-gray-700">תגובות</h3>';
+            if (replies.length === 0) {
+                repliesList.innerHTML += '<p class="text-center text-gray-500 mt-2">אין עדיין תגובות. היה הראשון להגיב!</p>';
+                return;
+            }
+            replies.forEach(reply => {
+                const replyElement = document.createElement('div');
+                replyElement.classList.add('p-4', 'bg-gray-100', 'rounded-lg', 'shadow-sm', 'relative');
+                
+                const isAuthor = reply.authorId === userId;
+                let actionsHtml = '';
+                if (isAuthor) {
+                    actionsHtml = `
+                        <div class="absolute top-2 left-2 flex gap-2">
+                            <button class="edit-reply-btn text-blue-500 hover:text-blue-700 transition-colors" data-id="${reply.id}"><i class="fas fa-edit"></i></button>
+                            <button class="delete-reply-btn text-red-500 hover:text-red-700 transition-colors" data-id="${reply.id}"><i class="fas fa-trash"></i></button>
+                        </div>
+                    `;
+                }
+
+                replyElement.innerHTML = `
+                    ${actionsHtml}
+                    <p class="text-gray-700">${reply.content}</p>
+                    <div class="flex justify-between text-xs text-gray-500 mt-2">
+                        <span>נכתב על ידי: <span class="font-medium cursor-pointer author-id" data-author-id="${reply.authorId}">${isAuthor ? 'אני' : reply.authorId}</span></span>
+                        <span>בתאריך: <span class="font-medium">${reply.createdAt ? new Date(reply.createdAt.seconds * 1000).toLocaleDateString('he-IL') : 'תאריך לא ידוע'}</span></span>
+                    </div>
+                `;
+                repliesList.appendChild(replyElement);
+            });
+        };
+
+        // Function to open profile view
+        const openProfile = async (authorId) => {
+            if (!userId) {
+                authErrorModal.style.display = 'flex';
+                return;
+            }
+            // Hide other views
+            mainView.classList.add('hidden');
+            threadView.classList.add('hidden');
+            dmView.classList.add('hidden');
+            profileView.classList.remove('hidden');
+
+            profileTitle.textContent = `כל השרשורים של ${authorId === userId ? 'אני' : authorId}`;
+
+            const threadsRef = collection(db, `artifacts/${appId}/public/data/threads`);
+            const q = query(threadsRef, where("authorId", "==", authorId));
+
+            try {
+                const querySnapshot = await getDocs(q);
+                const threads = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                threads.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+                renderThreads(threads, profileThreadsList, false);
+            } catch (error) {
+                console.error("Error fetching profile threads:", error);
+                profileThreadsList.innerHTML = `<p class="text-red-500">אירעה שגיאה בטעינת השרשורים של המשתמש.</p>`;
+            }
+        };
+
+        // Function to open DM view
+        const openDM = (recipientId) => {
+            if (!userId) {
+                authErrorModal.style.display = 'flex';
+                return;
+            }
+            if (recipientId === userId) { // Do not open DM with self
+                 return;
+            }
+            mainView.classList.add('hidden');
+            threadView.classList.add('hidden');
+            profileView.classList.add('hidden');
+            dmView.classList.remove('hidden');
+
+            currentDmRecipientId = recipientId;
+            dmTitle.textContent = `הודעה פרטית ל-${recipientId}`;
+
+            // Determine chat ID to ensure consistent sorting
+            const chatIds = [userId, recipientId].sort();
+            const chatId = chatIds.join('_');
+            
+            // FIX: Changed path from private to public
+            const dmRef = collection(db, `artifacts/${appId}/public/data/chats/${chatId}/messages`);
+            const q = query(dmRef);
+
+            if (unsubscribeDMs) {
+                unsubscribeDMs();
+            }
+
+            unsubscribeDMs = onSnapshot(q, (snapshot) => {
+                const messages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                messages.sort((a, b) => (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0));
+                renderDMs(messages);
+                console.log("DMs updated in real-time.");
+                
+                // Update last read timestamp for DMs
+                localStorage.setItem(`lastReadDmTimestamp_${userId}`, Date.now());
+            }, (error) => {
+                console.error("Error listening to DMs:", error);
+            });
+        };
+
+        const renderDMs = (messages) => {
+            messageHistory.innerHTML = '';
+            messages.forEach(msg => {
+                const isSender = msg.senderId === userId;
+                const alignment = isSender ? 'text-left bg-blue-100' : 'text-right bg-gray-200';
+                const msgElement = document.createElement('div');
+                msgElement.classList.add('p-3', 'rounded-lg', 'shadow-sm', alignment, 'w-fit', 'max-w-[75%]', 'self-end', 'float-left', 'clear-left', 'clear-right', 'my-2');
+                msgElement.innerHTML = `
+                    <p class="text-gray-800">${msg.content}</p>
+                    <div class="text-xs text-gray-500 mt-1">${isSender ? 'אני' : msg.senderId} - ${msg.createdAt ? new Date(msg.createdAt.seconds * 1000).toLocaleTimeString('he-IL') : 'תאריך לא ידוע'}</div>
+                `;
+                 messageHistory.appendChild(msgElement);
+                 messageHistory.scrollTop = messageHistory.scrollHeight;
+            });
+        };
+
+        // Event Listeners
+        searchInput.addEventListener('input', setupRealtimeThreadsListener);
+        categoryFilter.addEventListener('change', setupRealtimeThreadsListener);
+
+        newThreadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!userId) {
+                authErrorModal.style.display = 'flex';
+                return;
+            }
+            const formData = new FormData(newThreadForm);
+            
+            const file = formData.get('file');
+            
+            if (file && file.size > 0) {
+                 loadingIndicator.classList.remove('hidden');
+                 newThreadForm.querySelector('button').disabled = true;
+                 
+                try {
+                    const fileRef = storageRef(storage, `artifacts/${appId}/files/${file.name}_${Date.now()}`);
+                    await uploadBytes(fileRef, file);
+                    const fileUrl = await getDownloadURL(fileRef);
+                    await addThreadToDb(formData, fileUrl, file.type);
+                } catch (error) {
+                    console.error("Error uploading file:", error);
+                } finally {
+                    loadingIndicator.classList.add('hidden');
+                    newThreadForm.querySelector('button').disabled = false;
+                }
+            } else {
+                await addThreadToDb(formData, null, null);
+            }
+        });
+
+        const addThreadToDb = async (formData, fileUrl, fileType) => {
+            try {
+                await addDoc(collection(db, `artifacts/${appId}/public/data/threads`), {
+                    title: formData.get('title'),
+                    content: formData.get('content'),
+                    category: formData.get('category'),
+                    authorId: userId,
+                    createdAt: new Date(),
+                    likes: [],
+                    fileUrl: fileUrl,
+                    fileType: fileType
+                });
+                newThreadForm.reset();
+            } catch (error) {
+                console.error("Error adding document: ", error);
+            }
+        };
+
+        replyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!userId) {
+                authErrorModal.style.display = 'flex';
+                return;
+            }
+            const formData = new FormData(replyForm);
+            try {
+                if (currentThreadId) {
+                    await addDoc(collection(db, `artifacts/${appId}/public/data/threads/${currentThreadId}/replies`), {
+                        content: formData.get('replyContent'),
+                        authorId: userId,
+                        createdAt: new Date(),
+                    });
+                    replyForm.reset();
+                }
+            } catch (error) {
+                console.error("Error adding reply: ", error);
+            }
+        });
+
+        dmForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!userId) {
+                authErrorModal.style.display = 'flex';
+                return;
+            }
+            const formData = new FormData(dmForm);
+            const messageContent = formData.get('messageContent');
+            if (!messageContent) return;
+
+            const chatIds = [userId, currentDmRecipientId].sort();
+            const chatId = chatIds.join('_');
+
+            try {
+                // FIX: Changed path from private to public
+                await addDoc(collection(db, `artifacts/${appId}/public/data/chats/${chatId}/messages`), {
+                    content: messageContent,
+                    senderId: userId,
+                    createdAt: new Date(),
+                });
+                dmForm.reset();
+            } catch (error) {
+                console.error("Error sending DM:", error);
+            }
+        });
+
+        document.addEventListener('click', async (e) => {
+            const threadItem = e.target.closest('.thread-item');
+            const favoriteIcon = e.target.closest('.favorite-icon');
+            const likeButton = e.target.closest('.like-btn');
+            const editButton = e.target.closest('.edit-btn');
+            const deleteButton = e.target.closest('.delete-btn');
+            const authorIdLink = e.target.closest('.author-id');
+            const editReplyButton = e.target.closest('.edit-reply-btn');
+            const deleteReplyButton = e.target.closest('.delete-reply-btn');
+
+            if (!userId && (favoriteIcon || likeButton || editButton || deleteButton || editReplyButton || deleteReplyButton || dmForm)) {
+                authErrorModal.style.display = 'flex';
+                return;
+            }
+            
+            if (favoriteIcon) {
+                const threadId = favoriteIcon.dataset.id;
+                const threadRef = doc(db, `artifacts/${appId}/public/data/threads`, threadId);
+                const isCurrentlyFavorite = favoriteIcon.querySelector('i').classList.contains('text-yellow-400');
+                updateDoc(threadRef, { isFavorite: !isCurrentlyFavorite })
+                    .catch(error => console.error("Error updating favorite status:", error));
+            } else if (likeButton) {
+                const threadId = likeButton.dataset.id;
+                const threadRef = doc(db, `artifacts/${appId}/public/data/threads`, threadId);
+                const threadSnap = await getDoc(threadRef);
+                const threadData = threadSnap.data();
+                const likes = threadData.likes || [];
+                if (likes.includes(userId)) {
+                    // Unlike
+                    const newLikes = likes.filter(id => id !== userId);
+                    await updateDoc(threadRef, { likes: newLikes });
+                } else {
+                    // Like
+                    const newLikes = [...likes, userId];
+                    await updateDoc(threadRef, { likes: newLikes });
+                }
+            } else if (editButton) {
+                const threadId = editButton.dataset.id;
+                itemToEditRef = doc(db, `artifacts/${appId}/public/data/threads`, threadId);
+                const threadSnap = await getDoc(itemToEditRef);
+                const threadData = threadSnap.data();
+                editTitleInput.value = threadData.title;
+                editTitleInput.classList.remove('hidden');
+                editContentTextarea.value = threadData.content;
+                editModal.style.display = 'flex';
+            } else if (deleteButton) {
+                const threadId = deleteButton.dataset.id;
+                itemToDeleteRef = doc(db, `artifacts/${appId}/public/data/threads`, threadId);
+                deleteModal.style.display = 'flex';
+            } else if (editReplyButton) {
+                const replyId = editReplyButton.dataset.id;
+                itemToEditRef = doc(db, `artifacts/${appId}/public/data/threads/${currentThreadId}/replies`, replyId);
+                const replySnap = await getDoc(itemToEditRef);
+                const replyData = replySnap.data();
+                editTitleInput.classList.add('hidden');
+                editContentTextarea.value = replyData.content;
+                editModal.style.display = 'flex';
+            } else if (deleteReplyButton) {
+                const replyId = deleteReplyButton.dataset.id;
+                itemToDeleteRef = doc(db, `artifacts/${appId}/public/data/threads/${currentThreadId}/replies`, replyId);
+                deleteModal.style.display = 'flex';
+            } else if (authorIdLink) {
+                const authorId = authorIdLink.dataset.authorId;
+                if (e.ctrlKey || e.metaKey) { // Open DM on Ctrl/Cmd + click
+                    openDM(authorId);
+                } else {
+                    openProfile(authorId);
+                }
+            } else if (threadItem && !e.target.closest('button')) {
+                const threadId = threadItem.dataset.id;
+                openThread(threadId);
+            }
+        });
+        
+        // Handle back buttons
+        backButtonFromThread.addEventListener('click', () => {
+            mainView.classList.remove('hidden');
+            threadView.classList.add('hidden');
+            if (unsubscribeReplies) {
+                unsubscribeReplies();
+                unsubscribeReplies = null;
+            }
+        });
+
+        backButtonFromProfile.addEventListener('click', () => {
+            mainView.classList.remove('hidden');
+            profileView.classList.add('hidden');
+        });
+
+        backButtonFromDM.addEventListener('click', () => {
+            mainView.classList.remove('hidden');
+            dmView.classList.add('hidden');
+            if (unsubscribeDMs) {
+                unsubscribeDMs();
+                unsubscribeDMs = null;
+            }
+        });
+
+        // Modal event listeners
+        confirmDeleteButton.addEventListener('click', async () => {
+            try {
+                await deleteDoc(itemToDeleteRef);
+                deleteModal.style.display = 'none';
+                console.log("Document successfully deleted!");
+                // Go back to main page if deleting a thread
+                if (itemToDeleteRef.parent.id === 'threads') {
+                     backButtonFromThread.click();
+                }
+            } catch (error) {
+                console.error("Error removing document: ", error);
+            }
+        });
+
+        cancelDeleteButton.addEventListener('click', () => {
+            deleteModal.style.display = 'none';
+        });
+
+        editForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const updateData = {
+                content: editContentTextarea.value
+            };
+            if (!editTitleInput.classList.contains('hidden')) {
+                updateData.title = editTitleInput.value;
+            }
+            try {
+                await updateDoc(itemToEditRef, updateData);
+                editModal.style.display = 'none';
+                console.log("Document successfully updated!");
+            } catch (error) {
+                console.error("Error updating document: ", error);
+            }
+        });
+
+        modalCloseButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                deleteModal.style.display = 'none';
+                editModal.style.display = 'none';
+            });
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === deleteModal) {
+                deleteModal.style.display = 'none';
+            }
+            if (event.target === editModal) {
+                editModal.style.display = 'none';
+            }
+        });
+
+        // Dark Mode Toggle
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            darkModeToggle.textContent = isDarkMode ? '☀️ מצב בהיר' : '🌓 מצב כהה';
+        });
+    </script>
+</body>
+</html>
