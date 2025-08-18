@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Family Tree - Home</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- כותרת עליונה -->
+  <header class="bg-blue-600 text-white p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold">🌳 Our Family Tree</h1>
+    <nav>
+      <button id="logout-btn" class="hidden bg-red-500 px-3 py-1 rounded hover:bg-red-600">Logout</button>
+    </nav>
+  </header>
+
+  <!-- תוכן מרכזי -->
+  <main class="flex-1 p-6">
+    <div class="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow-lg">
+      <h2 class="text-2xl font-bold mb-4">ברוכים הבאים לאתר המשפחה!</h2>
+      <p class="text-gray-700 mb-6">
+        כאן תוכלו לשתף זיכרונות, הודעות ולשמור את סיפור המשפחה לדורות הבאים.
+      </p>
+
+      <!-- אזור זה מופיע תמיד -->
+      <section class="mb-6">
+        <h3 class="text-xl font-semibold mb-2">🌟 מידע ציבורי</h3>
+        <p class="text-gray-600">כל בני המשפחה יכולים לקרוא את הדף הזה גם בלי להתחבר.</p>
+      </section>
+
+      <!-- אזור זה מוסתר אם המשתמש לא מחובר -->
+      <section id="private-section" class="hidden">
+        <h3 class="text-xl font-semibold mb-2">🔒 תכונות למשפחה בלבד</h3>
+        <ul class="list-disc list-inside text-gray-700">
+          <li>📨 הודעות בין בני משפחה</li>
+          <li>💬 פורום משפחתי</li>
+          <li>🖼️ גלריית תמונות</li>
+          <li>📜 אילן יוחסין</li>
+        </ul>
+      </section>
+
+      <!-- הודעת אזהרה אם לא מחובר -->
+      <p id="login-warning" class="text-red-500 font-semibold hidden mt-4">
+        כדי לגשת לתכונות המשפחתיות יש להתחבר <a href="/login.html" class="underline">מכאן</a>.
+      </p>
+    </div>
+  </main>
+
+  <script src="index.js" defer></script>
+</body>
+</html>
