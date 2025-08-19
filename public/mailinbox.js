@@ -239,15 +239,26 @@ onAuthStateChanged(auth, (user) => {
 });
 
      // מאזינים לריל־טיים
-    startRealtimeSubscriptions();
-    startMailboxListener(user.uid); // אם באמת צריך את זה (ראו סעיף 5)
-  } else {
-    console.log("User not logged in");
-    stopRealtimeSubscriptions(); // לניקוי
+     // מאזינים לריל־טיים
+  startRealtimeSubscriptions();
+  startMailboxListener(user.uid); // אם באמת צריך את זה
+
+  // בדיקות חיבור - להריץ רק בסביבת dev
+  if (window.location.hostname === "localhost") {
+    (async () => {
+      try {
+        await createTestDoc();
+        await testFirestoreConnection();
+      } catch (err) {
+        console.error("Dev test failed:", err);
+      }
+    })();
   }
-// בתוך הבלוק if (user) של onAuthStateChanged
-await createTestDoc();
-await testFirestoreConnection();
+
+} else {
+  console.log("User not logged in");
+  stopRealtimeSubscriptions(); // לניקוי
+}
 
 
     // Listener לדואר
