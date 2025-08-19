@@ -229,27 +229,21 @@ onAuthStateChanged(auth, (user) => {
   state.userId = user ? user.uid : null;
 
   if (user) {
-    console.log("User logged in:", user.uid, user.email);
-    state.currentView = "mailbox";
+    console.log("User logged in:", user.uid);
+    
+    // כל הקריאות ל-Firestore כאן
+    testFirestoreConnection(user.uid);
+    createTestDoc(user.uid);
 
-    // קריאה ל-Firestore רק עכשיו
-    testFirestoreConnection(user.uid);  // רק אחרי שהמשתמש מחובר
-    createTestDoc(user.uid);             // רק אחרי שהמשתמש מחובר
-
+    // Listener לדואר
     const mailsRef = collection(db, "mails");
     const q = query(mailsRef, where("recipientId", "==", user.uid));
-
-    onSnapshot(q, (snapshot) => {
-      snapshot.docs.forEach(doc => {
-        console.log("Mail:", doc.data());
-      });
-    }, (error) => {
-      console.error("Snapshot listener error:", error);
-    });
+    onSnapshot(q, snapshot => {
+      snapshot.docs.forEach(doc => console.log("Mail:", doc.data()));
+    }, error => console.error("Snapshot listener error:", error));
 
   } else {
     console.log("User not logged in");
-    state.currentView = "login";
   }
 
   render();
