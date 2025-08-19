@@ -257,23 +257,26 @@ onAuthStateChanged(auth, (user) => {
 
   render();
 });
-  // כאן אפשר להשתמש ב-UID שלו לקרוא מה-Firestore
-    const mailsRef = collection(db, "mails");
-    const q = query(mailsRef, where("recipientId", "==", user.uid));
+// כאן אפשר להשתמש ב-UID שלו לקרוא מה-Firestore
+const mailsRef = collection(db, "mails");
+const q = query(mailsRef, where("recipientId", "==", user.uid));
 
-    onSnapshot(q, (snapshot) => {
-      snapshot.docs.forEach(doc => {
-        console.log("Mail:", doc.data());
-      });
-    }, (error) => {
-      console.error("Snapshot listener error:", error);
-    }
+onSnapshot(
+  q,
+  (snapshot) => {
+    snapshot.docs.forEach(doc => {
+      console.log("Mail:", doc.data());
     });
-
-  } else {
-    console.log("User not logged in");
+  },
+  (error) => {
+    console.error("Snapshot listener error:", error);
   }
-});
+);
+
+} else {
+  console.log("User not logged in");
+}
+
 // פונקציה לאתחול האזנה למיילים בזמן אמת
 function startMailboxListener(userId) {
   const mailRef = collection(db, "mails"); // שם הקולקשן שלך
