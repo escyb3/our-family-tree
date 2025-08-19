@@ -214,6 +214,12 @@ languageToggleBtn.addEventListener("click", () => {
   render();
 });
 
+// -------------------- Firebase Init --------------------
+const firebaseConfig = window.__firebase_config || {};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
 // -------------------- Auth listeners --------------------
 onAuthStateChanged(auth, (user) => {
   state.isAuthReady = true;
@@ -229,6 +235,7 @@ onAuthStateChanged(auth, (user) => {
 
   render();
 });
+
 // -------------------- Utility --------------------
 function showStatus(msg, opts={}) {
   if (!msg) { globalStatus.hidden = true; globalStatus.textContent = ""; return; }
