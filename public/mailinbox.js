@@ -232,7 +232,10 @@ onAuthStateChanged(auth, (user) => {
     console.log("User logged in:", user.uid, user.email);
     state.currentView = "mailbox";
 
-    // כאן אפשר להשתמש ב-UID שלו לקרוא מה-Firestore
+    // קריאה ל-Firestore רק עכשיו
+    testFirestoreConnection(user.uid);  // רק אחרי שהמשתמש מחובר
+    createTestDoc(user.uid);             // רק אחרי שהמשתמש מחובר
+
     const mailsRef = collection(db, "mails");
     const q = query(mailsRef, where("recipientId", "==", user.uid));
 
@@ -251,6 +254,7 @@ onAuthStateChanged(auth, (user) => {
 
   render();
 });
+
 
 // -------------------- עזרי DOM --------------------
 const $ = (sel, root=document) => root.querySelector(sel);
