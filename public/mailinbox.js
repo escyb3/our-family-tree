@@ -254,8 +254,6 @@ if (window.location.hostname === "localhost") {
     }
   })();
 }
-
- else {
   console.log("User not logged in");
   stopRealtimeSubscriptions(); // לניקוי
 }
