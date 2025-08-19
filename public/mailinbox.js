@@ -11,18 +11,7 @@ import { getFirestore, collection, addDoc, onSnapshot, query, where, serverTimes
          doc, setDoc, deleteDoc, getDoc } 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// יצירת דוקומנט לדוגמה
-async function createTestDoc() {
-  try {
-    const testDocRef = doc(db, "testCollection", "testDoc");
-    await setDoc(testDocRef, { hello: "world", timestamp: new Date() });
-    console.log("✅ Test doc created!");
-  } catch (error) {
-    console.error("❌ Failed to create test doc:", error);
-  }
-}
 
-createTestDoc();
 
 // -------------------- שפה / טקסטים --------------------
 const lang = {
