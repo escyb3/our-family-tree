@@ -231,7 +231,14 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("User logged in:", user.uid);
     console.log("Current user:", auth.currentUser);
-    
+
+     // מאזינים לריל־טיים
+    startRealtimeSubscriptions();
+    startMailboxListener(user.uid); // אם באמת צריך את זה (ראו סעיף 5)
+  } else {
+    console.log("User not logged in");
+    stopRealtimeSubscriptions(); // לניקוי
+  }
     // כל הקריאות ל-Firestore כאן
 testFirestoreConnection();
 createTestDoc();
