@@ -239,9 +239,9 @@ onAuthStateChanged(auth, (user) => {
     console.log("User not logged in");
     stopRealtimeSubscriptions(); // לניקוי
   }
-    // כל הקריאות ל-Firestore כאן
-testFirestoreConnection();
-createTestDoc();
+// בתוך הבלוק if (user) של onAuthStateChanged
+await createTestDoc();
+await testFirestoreConnection();
 
 
     // Listener לדואר
