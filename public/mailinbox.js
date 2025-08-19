@@ -306,13 +306,6 @@ function startMailboxListener(userId) {
   );
 }
 
-// הפעלת ההאזנה אחרי שהמשתמש מחובר
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    startMailboxListener(user.uid);
-  }
-});
-
 // -------------------- Utility --------------------
 function showStatus(msg, opts={}) {
   if (!msg) { globalStatus.hidden = true; globalStatus.textContent = ""; return; }
