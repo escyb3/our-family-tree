@@ -185,17 +185,18 @@ const state = {
 };
 
 // -------------------- עזרי DOM --------------------
-const $ = (sel, root=document) => root.querySelector(sel);
-const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+// שינוי שמות כדי למנוע התנגשויות
+const dom$ = (sel, root=document) => root.querySelector(sel);
+const dom$$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 
-const elApp = $("#app");
-const viewLogin = $("#view-login");
-const viewMailbox = $("#view-mailbox");
-const mainContent = $("#mainContent");
-const globalStatus = $("#globalStatus");
+const elApp = dom$("#app");
+const viewLogin = dom$("#view-login");
+const viewMailbox = dom$("#view-mailbox");
+const mainContent = dom$("#mainContent");
+const globalStatus = dom$("#globalStatus");
 
 // -------------------- i18n / שפה --------------------
-const languageToggleBtn = $("#languageToggle");
+const languageToggleBtn = dom$("#languageToggle");
 languageToggleBtn.addEventListener("click", () => {
   state.language = state.language === "he" ? "en" : "he";
   state.t = lang[state.language];
