@@ -184,26 +184,6 @@ const state = {
   audioEl: null
 };
 
-// -------------------- עזרי DOM --------------------
-// שינוי שמות כדי למנוע התנגשויות
-const dom$ = (sel, root=document) => root.querySelector(sel);
-const dom$$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
-
-const elApp = dom$("#app");
-const viewLogin = dom$("#view-login");
-const viewMailbox = dom$("#view-mailbox");
-const mainContent = dom$("#mainContent");
-const globalStatus = dom$("#globalStatus");
-
-// -------------------- i18n / שפה --------------------
-const languageToggleBtn = dom$("#languageToggle");
-languageToggleBtn.addEventListener("click", () => {
-  state.language = state.language === "he" ? "en" : "he";
-  state.t = lang[state.language];
-  document.documentElement.dir = state.language === "he" ? "rtl" : "ltr";
-  render();
-});
-
 // -------------------- Firebase Init --------------------
 const firebaseConfig = window.__firebase_config || {};
 const app = initializeApp(firebaseConfig);
