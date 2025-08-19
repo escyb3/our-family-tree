@@ -228,6 +228,18 @@ async function testFirestoreConnection() {
   }
 }
 
+// יצירת דוקומנט לדוגמה
+async function createTestDoc() {
+  try {
+    const testDocRef = doc(db, "testCollection", "testDoc");
+    await setDoc(testDocRef, { hello: "world", timestamp: new Date() });
+    console.log("✅ Test doc created!");
+  } catch (error) {
+    console.error("❌ Failed to create test doc:", error);
+  }
+}
+
+createTestDoc();
 // קרא לפונקציה אחרי אתחול Firebase
 testFirestoreConnection();
 
