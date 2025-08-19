@@ -208,6 +208,27 @@ const firebaseConfig = window.__firebase_config || {};
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+async function testFirestoreConnection() {
+  try {
+    console.log("Testing Firestore connection...");
+    const testDocRef = doc(db, "testCollection", "testDoc");
+    
+    // ננסה לקרוא את הדוקומנט
+    const docSnap = await getDoc(testDocRef);
+
+    if (docSnap.exists()) {
+      console.log("✅ Firestore connection OK. Test doc data:", docSnap.data());
+    } else {
+      console.log("⚠️ Firestore connection OK, but test doc does not exist.");
+    }
+  } catch (error) {
+    console.error("❌ Firestore connection failed:", error);
+  }
+}
+
+// קרא לפונקציה אחרי אתחול Firebase
+testFirestoreConnection();
+
 
 // -------------------- Auth listeners --------------------
 onAuthStateChanged(auth, (user) => {
