@@ -267,7 +267,7 @@ if (window.location.hostname === "localhost") {
     unsubscribeMails = onSnapshot(q, snap => {
       snap.docs.forEach(d => console.log("Mail:", d.data()));
     }, err => console.error("Snapshot listener error:", err));
-  } else {
+   else {
     if (unsubscribeMails) { unsubscribeMails(); unsubscribeMails = null; }
   }
 });
