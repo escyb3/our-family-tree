@@ -7,14 +7,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import {
   getAuth, signInWithCustomToken, onAuthStateChanged, signInAnonymously
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {
-  getFirestore, collection, addDoc, onSnapshot, query, where, serverTimestamp,
-  doc, setDoc, deleteDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import {
-  getFirestore, collection, addDoc, onSnapshot, query, where, serverTimestamp,
-  doc, setDoc, deleteDoc, getDoc   // <-- הוסף כאן את getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, where, serverTimestamp,
+         doc, setDoc, deleteDoc, getDoc } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // -------------------- שפה / טקסטים --------------------
 const lang = {
