@@ -8,7 +8,7 @@ import {
   getAuth, signInWithCustomToken, onAuthStateChanged, signInAnonymously
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, onSnapshot, query, where, serverTimestamp,
-         doc, setDoc, deleteDoc, getDoc } 
+         doc, setDoc, deleteDoc, getDoc, orderBy } 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // -------------------- שפה / טקסטים --------------------
