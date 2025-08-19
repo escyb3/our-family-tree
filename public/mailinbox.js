@@ -195,15 +195,6 @@ const state = {
   audioEl: null
 };
 
-// -------------------- Firebase Init --------------------
-if (!window.__firebase_config) {
-  console.error("Firebase config not found! Please set window.__firebase_config in index.html");
-}
-const firebaseConfig = window.__firebase_config || {};
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
 // -------------------- עזרי DOM --------------------
 const $ = (sel, root=document) => root.querySelector(sel);
 const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
