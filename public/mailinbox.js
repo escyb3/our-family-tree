@@ -215,7 +215,6 @@ languageToggleBtn.addEventListener("click", () => {
 });
 
 // -------------------- Auth listeners --------------------
-// -------------------- Auth listeners --------------------
 onAuthStateChanged(auth, (user) => {
   state.isAuthReady = true;
   state.userId = user ? user.uid : null;
@@ -230,7 +229,6 @@ onAuthStateChanged(auth, (user) => {
 
   render();
 });
-
 // -------------------- Utility --------------------
 function showStatus(msg, opts={}) {
   if (!msg) { globalStatus.hidden = true; globalStatus.textContent = ""; return; }
