@@ -231,6 +231,12 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("User logged in:", user.uid);
     console.log("Current user:", auth.currentUser);
+      } else {
+    console.log("User not logged in");
+  }
+
+  render();
+});
 
      // מאזינים לריל־טיים
     startRealtimeSubscriptions();
@@ -247,16 +253,14 @@ await testFirestoreConnection();
     // Listener לדואר
     const mailsRef = collection(db, "mails");
     const q = query(mailsRef, where("recipientId", "==", user.uid));
-    onSnapshot(q, snapshot => {
-      snapshot.docs.forEach(doc => console.log("Mail:", doc.data()));
-    }, error => console.error("Snapshot listener error:", error));
-
+    unsubscribeMails = onSnapshot(q, snap => {
+      snap.docs.forEach(d => console.log("Mail:", d.data()));
+    }, err => console.error("Snapshot listener error:", err));
   } else {
-    console.log("User not logged in");
+    if (unsubscribeMails) { unsubscribeMails(); unsubscribeMails = null; }
   }
-
-  render();
 });
+
 
 
 // -------------------- עזרי DOM --------------------
