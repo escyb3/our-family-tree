@@ -261,7 +261,7 @@ if (window.location.hostname === "localhost") {
 }
 
 
-    // Listener לדואר
+      // Listener לדואר
     const mailsRef = collection(db, "mails");
     const q = query(mailsRef, where("recipientId", "==", user.uid));
 
