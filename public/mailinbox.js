@@ -11,7 +11,6 @@ import { getFirestore, collection, addDoc, onSnapshot, query, where, serverTimes
          doc, setDoc, deleteDoc, getDoc } 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-import { collection, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const mailsRef = collection(db, "mails");
 const q = query(mailsRef, where("recipientId", "==", auth.currentUser.uid));
 
