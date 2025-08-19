@@ -11,19 +11,6 @@ import { getFirestore, collection, addDoc, onSnapshot, query, where, serverTimes
          doc, setDoc, deleteDoc, getDoc } 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const mailsRef = collection(db, "mails");
-const q = query(mailsRef, where("recipientId", "==", auth.currentUser.uid));
-
-onSnapshot(q, (snapshot) => {
-  snapshot.docs.forEach(doc => {
-    console.log("Mail:", doc.data());
-  });
-}, (error) => {
-  console.error("Snapshot listener error:", error);
-});
-
-
-
 // -------------------- שפה / טקסטים --------------------
 const lang = {
   he: {
@@ -249,6 +236,16 @@ async function createTestDoc() {
     console.error("❌ Failed to create test doc:", error);
   }
 }
+const mailsRef = collection(db, "mails");
+const q = query(mailsRef, where("recipientId", "==", auth.currentUser.uid));
+
+onSnapshot(q, (snapshot) => {
+  snapshot.docs.forEach(doc => {
+    console.log("Mail:", doc.data());
+  });
+}, (error) => {
+  console.error("Snapshot listener error:", error);
+});
 
 createTestDoc();
 // קרא לפונקציה אחרי אתחול Firebase
