@@ -257,7 +257,7 @@ onAuthStateChanged(auth, (user) => {
 
   render();
 });
- // כאן אפשר להשתמש ב-UID שלו לקרוא מה-Firestore
+  // כאן אפשר להשתמש ב-UID שלו לקרוא מה-Firestore
     const mailsRef = collection(db, "mails");
     const q = query(mailsRef, where("recipientId", "==", user.uid));
 
