@@ -250,11 +250,8 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("User logged in:", user.uid, user.email);
     state.currentView = "mailbox";
-  } else {
-    console.log("User logged out");
-    state.currentView = "login";
-  }
-   // כאן אפשר להשתמש ב-UID שלו לקרוא מה-Firestore
+
+    // כאן אפשר להשתמש ב-UID שלו לקרוא מה-Firestore
     const mailsRef = collection(db, "mails");
     const q = query(mailsRef, where("recipientId", "==", user.uid));
 
@@ -268,10 +265,12 @@ onAuthStateChanged(auth, (user) => {
 
   } else {
     console.log("User not logged in");
+    state.currentView = "login";
   }
-});
+
   render();
 });
+
 
 
 // פונקציה לאתחול האזנה למיילים בזמן אמת
