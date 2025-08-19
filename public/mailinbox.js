@@ -256,8 +256,6 @@ if (window.location.hostname === "localhost") {
 }
   console.log("User not logged in");
   stopRealtimeSubscriptions(); // לניקוי
-}
-
 
       // Listener לדואר
     const mailsRef = collection(db, "mails");
