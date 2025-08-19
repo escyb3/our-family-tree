@@ -284,16 +284,26 @@ function startMailboxListener(userId) {
 
   onSnapshot(q, (snapshot) => {
     const container = document.getElementById("mailContainer");
+    if (!container) {
+      console.error("❌ לא נמצא אלמנט עם id=mailContainer");
+      return; // עצור אם לא קיים
+    }
+
     container.innerHTML = ""; // נקה לפני הצגת עדכון חדש
+
+    if (snapshot.empty) {
+      container.innerHTML = "<p>📭 אין הודעות חדשות</p>";
+      return;
+    }
 
     snapshot.forEach((doc) => {
       const mail = doc.data();
       const mailDiv = document.createElement("div");
       mailDiv.classList.add("mail-item");
       mailDiv.innerHTML = `
-        <strong>From:</strong> ${mail.sender}<br>
-        <strong>Subject:</strong> ${mail.subject}<br>
-        <p>${mail.body}</p>
+        <strong>From:</strong> ${mail.sender || "Unknown"}<br>
+        <strong>Subject:</strong> ${mail.subject || "(ללא נושא)"}<br>
+        <p>${mail.body || ""}</p>
         <hr>
       `;
       container.appendChild(mailDiv);
@@ -302,6 +312,7 @@ function startMailboxListener(userId) {
     console.error("Error listening to mailbox:", error);
   });
 }
+
 
 // הפעלת ההאזנה אחרי שהמשתמש מחובר
 onAuthStateChanged(auth, (user) => {
