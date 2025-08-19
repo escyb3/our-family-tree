@@ -233,8 +233,9 @@ onAuthStateChanged(auth, (user) => {
     console.log("Current user:", auth.currentUser);
     
     // כל הקריאות ל-Firestore כאן
-    testFirestoreConnection(user.uid);
-    createTestDoc(user.uid);
+testFirestoreConnection();
+createTestDoc();
+
 
     // Listener לדואר
     const mailsRef = collection(db, "mails");
