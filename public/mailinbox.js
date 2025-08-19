@@ -267,11 +267,13 @@ onAuthStateChanged(auth, (user) => {
       });
     }, (error) => {
       console.error("Snapshot listener error:", error);
+    }
     });
 
   } else {
     console.log("User not logged in");
   }
+});
 // פונקציה לאתחול האזנה למיילים בזמן אמת
 function startMailboxListener(userId) {
   const mailRef = collection(db, "mails"); // שם הקולקשן שלך
