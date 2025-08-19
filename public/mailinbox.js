@@ -11,6 +11,16 @@ import {
   getFirestore, collection, addDoc, onSnapshot, query, where, serverTimestamp,
   doc, setDoc, deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+ // 2. הגדרות Firebase (כפי ששלחת)
+const firebaseConfig = {
+  apiKey: "AIzaSyACnXDX1fcnaonBQgeT35oBLA5cAse7ekY",
+  authDomain: "forum-5e87a.firebaseapp.com",
+  projectId: "forum-5e87a",
+  storageBucket: "forum-5e87a.firebasestorage.app",
+  messagingSenderId: "1016957490060",
+  appId: "1:1016957490060:web:3551e41dda7fd59e7afca9",
+  measurementId: "G-XY37108JGV"
+};
 
 // -------------------- שפה / טקסטים --------------------
 const lang = {
