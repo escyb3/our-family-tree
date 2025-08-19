@@ -215,18 +215,22 @@ languageToggleBtn.addEventListener("click", () => {
 });
 
 // -------------------- Auth listeners --------------------
+// -------------------- Auth listeners --------------------
 onAuthStateChanged(auth, (user) => {
   state.isAuthReady = true;
   state.userId = user ? user.uid : null;
+
   if (user) {
-    console.log("User logged in:", user.uid, user.email || "Anonymous");
+    console.log("User logged in:", user.uid, user.email);
     state.currentView = "mailbox";
-    render();
   } else {
+    console.log("User logged out");
     state.currentView = "login";
-    render();
   }
+
+  render();
 });
+
 // -------------------- Utility --------------------
 function showStatus(msg, opts={}) {
   if (!msg) { globalStatus.hidden = true; globalStatus.textContent = ""; return; }
