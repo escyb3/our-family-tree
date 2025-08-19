@@ -239,21 +239,21 @@ onAuthStateChanged(auth, (user) => {
 });
 
      // מאזינים לריל־טיים
-     // מאזינים לריל־טיים
   startRealtimeSubscriptions();
   startMailboxListener(user.uid); // אם באמת צריך את זה
 
-  // בדיקות חיבור - להריץ רק בסביבת dev
-  if (window.location.hostname === "localhost") {
-    (async () => {
-      try {
-        await createTestDoc();
-        await testFirestoreConnection();
-      } catch (err) {
-        console.error("Dev test failed:", err);
-      }
-    })();
-  }
+// בדיקות חיבור - להריץ רק בסביבת dev
+if (window.location.hostname === "localhost") {
+  (async () => {
+    console.log("Running Firestore dev tests...");
+    try {
+      await createTestDoc();
+      await testFirestoreConnection();
+    } catch (err) {
+      console.error("Dev test failed:", err);
+    }
+  })();
+}
 
 } else {
   console.log("User not logged in");
