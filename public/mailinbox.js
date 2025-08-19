@@ -230,6 +230,7 @@ onAuthStateChanged(auth, (user) => {
 
   if (user) {
     console.log("User logged in:", user.uid);
+    console.log("Current user:", auth.currentUser);
     
     // כל הקריאות ל-Firestore כאן
     testFirestoreConnection(user.uid);
