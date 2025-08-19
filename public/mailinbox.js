@@ -273,7 +273,7 @@ if (window.location.hostname === "localhost") {
       (err) => console.error("Snapshot listener error:", err)
     );
 
-  } else {
+  else {
     console.log("User not logged in");
     // נקה listener אם קיים
     if (unsubscribeMails) {
