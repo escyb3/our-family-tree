@@ -271,6 +271,24 @@ onAuthStateChanged(auth, (user) => {
   render();
 });
 
+// -------------------- עזרי DOM --------------------
+const $ = (sel, root=document) => root.querySelector(sel);
+const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+const elApp = $("#app");
+const viewLogin = $("#view-login");
+const viewMailbox = $("#view-mailbox");
+const mainContent = $("#mainContent");
+const globalStatus = $("#globalStatus");
+
+// -------------------- i18n / שפה --------------------
+const languageToggleBtn = $("#languageToggle");
+languageToggleBtn.addEventListener("click", () => {
+  state.language = state.language === "he" ? "en" : "he";
+  state.t = lang[state.language];
+  document.documentElement.dir = state.language === "he" ? "rtl" : "ltr";
+  render();
+});
 
 
 function startMailboxListener(userId) {
