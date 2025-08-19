@@ -264,11 +264,22 @@ if (window.location.hostname === "localhost") {
     // Listener לדואר
     const mailsRef = collection(db, "mails");
     const q = query(mailsRef, where("recipientId", "==", user.uid));
-    unsubscribeMails = onSnapshot(q, snap => {
-      snap.docs.forEach(d => console.log("Mail:", d.data()));
-    }, err => console.error("Snapshot listener error:", err));
-   else {
-    if (unsubscribeMails) { unsubscribeMails(); unsubscribeMails = null; }
+
+    unsubscribeMails = onSnapshot(
+      q,
+      (snap) => {
+        snap.docs.forEach(d => console.log("Mail:", d.data()));
+      },
+      (err) => console.error("Snapshot listener error:", err)
+    );
+
+  } else {
+    console.log("User not logged in");
+    // נקה listener אם קיים
+    if (unsubscribeMails) {
+      unsubscribeMails();
+      unsubscribeMails = null;
+    }
   }
 });
 
