@@ -501,15 +501,22 @@ $$(".nav-btn[data-folder]").forEach(btn => {
   });
 });
 
-  // Gemini Draft
-  const btnGemini = $("#btnGemini");
-  const promptInput = $("#geminiPrompt");
-  btnGemini.addEventListener("click", async ()=>{
-    state.geminiDraftPrompt = promptInput.value.trim();
-    if (!state.geminiDraftPrompt) return;
-    await handleGeminiGenerate(editor);
-  });
+  / Gemini Draft
+  const btnGemini = document.getElementById("btnGemini");
+  const promptInput = document.getElementById("geminiPrompt");
+  if (btnGemini && promptInput) {
+    btnGemini.addEventListener("click", async () => {
+      if (!state.userId) {
+        alert("You must be logged in to use Gemini");
+        return;
+      }
 
+      state.geminiDraftPrompt = promptInput.value.trim();
+      if (!state.geminiDraftPrompt) return;
+
+      await handleGeminiGenerate(editor); // פונקציה שלך לטיוטת Gemini
+    });
+  }
   // Send
   $("#btnSend").addEventListener("click", handleSendEmail);
 }
