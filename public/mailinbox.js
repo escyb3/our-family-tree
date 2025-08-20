@@ -480,6 +480,78 @@ function stopRealtimeSubscriptions() {
   if (unsubscribeContacts) { unsubscribeContacts(); unsubscribeContacts = null; }
 }
 
+  const dropZone = document.getElementById("dropZone");
+const attachmentInput = document.getElementById("attachmentInput");
+const attachmentList = document.getElementById("attachmentList");
+
+state.attachments = [];
+
+// פתיחת קובץ בלחיצה על ה-dropZone
+dropZone.addEventListener("click", () => attachmentInput.click());
+
+// טיפול בקבצים שנבחרו ידנית
+attachmentInput.addEventListener("change", (e) => handleFiles(e.target.files));
+
+// טיפול בקבצים שנגררו
+dropZone.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  dropZone.classList.add("dragover");
+});
+
+dropZone.addEventListener("dragleave", (e) => {
+  e.preventDefault();
+  dropZone.classList.remove("dragover");
+});
+
+dropZone.addEventListener("drop", (e) => {
+  e.preventDefault();
+  dropZone.classList.remove("dragover");
+  handleFiles(e.dataTransfer.files);
+});
+
+// פונקציה לעיבוד קבצים והוספתם ל-state + UI
+function handleFiles(files) {
+  const newFiles = Array.from(files);
+  state.attachments.push(...newFiles);
+  renderAttachmentList();
+}
+
+// הצגת רשימת קבצים עם אייקונים וכפתור הסרה
+function getFileIcon(file) {
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (['jpg','jpeg','png','gif'].includes(ext)) return '🖼️';
+  if (['pdf'].includes(ext)) return '📄';
+  if (['doc','docx'].includes(ext)) return '📝';
+  if (['zip','rar'].includes(ext)) return '🗜️';
+  return '📎';
+}
+
+function renderAttachmentList() {
+  attachmentList.innerHTML = "";
+  state.attachments.forEach((file, index) => {
+    const li = document.createElement("li");
+    li.innerHTML = `${getFileIcon(file)} ${file.name} (${Math.round(file.size / 1024)} KB)`;
+
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "Remove";
+    removeBtn.type = "button";
+    removeBtn.addEventListener("click", () => {
+      state.attachments.splice(index, 1);
+      renderAttachmentList();
+    });
+
+    li.appendChild(removeBtn);
+    attachmentList.appendChild(li);
+  });
+}
+
+// עדכון שדות compose
+document.getElementById("recipientInput").addEventListener("input", (e) => state.compose.recipient = e.target.value);
+document.getElementById("subjectInput").addEventListener("input", (e) => state.compose.subject = e.target.value);
+document.getElementById("bodyInput").addEventListener("input", (e) => state.compose.body = e.target.value);
+
+// קריאה לפונקציה לשליחה
+attachListeners();
 // -------------------- Rendering --------------------
 function render() {
   if (state.currentView === "login") {
