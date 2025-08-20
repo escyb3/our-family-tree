@@ -566,7 +566,6 @@ document.getElementById("bodyInput").addEventListener("input", (e) => state.comp
 // קריאה לפונקציה לשליחה
 attachListeners();
 // -------------------- Rendering --------------------
-// -------------------- Rendering --------------------
 function render() {
   const usernameInput = $("#usernameInput"); // לוודא שהאלמנט קיים
 
@@ -593,7 +592,6 @@ function render() {
     renderMain();
   }
 }
-
 function renderMain() {
   if (state.currentView !== "mailbox") return;
   if (state.selectedEmail) return renderEmailView();
@@ -610,8 +608,9 @@ function renderMain() {
   }
 
   if (state.currentView === "contacts") return renderContactsView();
-  if (state.showCompose) return renderCompose();
+  if (state.showCompose) return renderCompose(); // ← הסר את הנקודה
 }
+
 
 // Sidebar buttons
 $("#btnCompose").addEventListener("click", () => {
