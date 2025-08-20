@@ -319,6 +319,7 @@ languageToggleBtn.addEventListener("click", () => {
 });
 
 // -------------------- Login --------------------
+// -------------------- Login --------------------
 const loginForm = $("#loginForm");
 const usernameInput = $("#usernameInput");
 const loginStatus = $("#loginStatus");
@@ -342,14 +343,15 @@ loginForm.addEventListener("submit", async (e) => {
 
     const cred = await signInWithCustomToken(auth, initialToken);
 
+    // הגדרת המשתמש המחובר
     state.username = username;
     state.emailAddress = `${username}@family.local`;
     state.userId = cred.user.uid;
     state.currentView = "mailbox";
     loginStatus.hidden = true;
 
-    startRealtimeSubscriptions();
-    render();
+    startRealtimeSubscriptions(); // קריאה לבסיס נתונים/תצוגה
+    render(); // כל פעולה שממשיכה הלאה
   } catch (err) {
     console.error("Login error:", err);
     loginStatus.hidden = false;
@@ -358,6 +360,7 @@ loginForm.addEventListener("submit", async (e) => {
     loginBtn.disabled = false;
   }
 });
+
 
 // -------------------- Firestore subscriptions --------------------
 let unsubscribeInbox = null;
