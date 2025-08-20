@@ -244,6 +244,8 @@ onAuthStateChanged(auth, async (user) => {
   } else {
     console.log("User not logged in");
     state.currentView = "login";
+     render(); 
+}
 
 // -------------------- Listener לדואר --------------------
 function startMailboxListener(userId) {
