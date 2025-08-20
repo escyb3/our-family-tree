@@ -951,17 +951,19 @@ $("#btnSend")?.addEventListener("click", async () => {
       subject: subject || state.t.emailSubjectPlaceholder,
       body,
       timestamp: serverTimestamp(),
-      attachment: state.attachments ? { name: state.attachments.name, size: state.attachments.size } : null
+      attachment: state.attachments
+        ? { name: state.attachments.name, size: state.attachments.size }
+        : null
     });
     composeStatus.textContent = state.t.sendSuccess;
-    state.compose = { recipient:"", subject:"", body:"" };
+    state.compose = { recipient: "", subject: "", body: "" };
     state.attachments = null;
     renderCompose();
-  } catch(err) {
+  } catch (err) {
     console.error(err);
     composeStatus.textContent = state.t.sendError;
   }
-}); //סגירה חדשה
+}); // ✅ כאן נסגר ה־addEventListener
 // -------------------- Fake API Helpers --------------------
 async function fakeAISummarize(text) { return "סיכום הדוגמה: " + text.slice(0,100) + "…"; }
 async function fakeAISuggestReplies(text) { return ["תשובה 1","תשובה 2","תשובה 3"]; }
@@ -972,8 +974,5 @@ async function fakeGeminiDraft(prompt) { return "טיוטת Gemini AI לדוגמ
 function render() {
   console.log("Render called");
 }
-
-
-
 // -------------------- התחל --------------------
 render();
