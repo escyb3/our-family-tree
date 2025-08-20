@@ -323,6 +323,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const mainContent = $("#mainContent");
   const globalStatus = $("#globalStatus");
 
+  // חשיפה ל־window כדי שיהיה גלובלי
   window.$ = $;
   window.$$ = $$;
   window.elApp = elApp;
@@ -331,7 +332,61 @@ document.addEventListener("DOMContentLoaded", () => {
   window.mainContent = mainContent;
   window.globalStatus = globalStatus;
 
-  // עכשיו אפשר לקרוא ל-render() בבטחה
+  // -------------------- Rendering --------------------
+  function render() {
+    const usernameInput = $("#usernameInput");
+    const loginFormLabel = $("#loginForm .label");
+    const loginBtn = $("#loginBtn");
+    const sidebarUsername = $("#sidebarUsername");
+    const sidebarEmail = $("#sidebarEmail");
+    const sidebarUid = $("#sidebarUid");
+
+    if (state.currentView === "login") {
+      if (viewLogin) viewLogin.hidden = false;
+      if (viewMailbox) viewMailbox.hidden = true;
+
+      if (loginFormLabel) loginFormLabel.textContent = state.t.usernameLabel;
+      if (usernameInput) usernameInput.placeholder = state.t.usernamePlaceholder;
+      if (loginBtn) loginBtn.textContent = state.t.loginButton;
+
+    } else {
+      if (viewLogin) viewLogin.hidden = true;
+      if (viewMailbox) viewMailbox.hidden = false;
+
+      if (sidebarUsername) sidebarUsername.textContent = state.username || "";
+      if (sidebarEmail) sidebarEmail.textContent = state.emailAddress || "";
+      if (sidebarUid) sidebarUid.textContent = state.userId || "";
+
+      $$(".nav-btn").forEach(btn => {
+        const f = btn.getAttribute("data-folder");
+        if (!f) {
+          btn.classList.toggle("active", state.currentView === "contacts");
+          return;
+        }
+        btn.classList.toggle("active", state.currentFolder === f);
+      });
+
+      renderMain();
+    }
+  }
+
+  // -------------------- Render Main --------------------
+  function renderMain() {
+    if (state.currentView !== "mailbox") return;
+    if (state.selectedEmail) return renderEmailView();
+
+    switch (state.currentFolder) {
+      case "inbox": return renderEmailList(state.inboxEmails, "inbox");
+      case "sent": return renderEmailList(state.sentEmails, "sent");
+      case "trash": return renderEmailList([], "trash");
+      case "spam": return renderEmailList([], "spam");
+    }
+
+    if (state.currentView === "contacts") return renderContactsView();
+    if (state.showCompose) return renderCompose();
+  }
+
+  // קריאה ראשונית ל-render אחרי טעינת DOM
   render();
 });
 
@@ -568,64 +623,6 @@ document.getElementById("bodyInput").addEventListener("input", (e) => state.comp
 
 // קריאה לפונקציה לשליחה
 attachListeners();
-// -------------------- Rendering --------------------
-function render() {
-  const usernameInput = $("#usernameInput"); // לוודא שהאלמנט קיים
-  const loginFormLabel = $("#loginForm .label");
-  const loginBtn = $("#loginBtn");
-  const sidebarUsername = $("#sidebarUsername");
-  const sidebarEmail = $("#sidebarEmail");
-  const sidebarUid = $("#sidebarUid");
-
-  if (state.currentView === "login") {
-    if (viewLogin) viewLogin.hidden = false;
-    if (viewMailbox) viewMailbox.hidden = true;
-
-    if (loginFormLabel) loginFormLabel.textContent = state.t.usernameLabel;
-    if (usernameInput) usernameInput.placeholder = state.t.usernamePlaceholder;
-    if (loginBtn) loginBtn.textContent = state.t.loginButton;
-
-  } else {
-    if (viewLogin) viewLogin.hidden = true;
-    if (viewMailbox) viewMailbox.hidden = false;
-
-    if (sidebarUsername) sidebarUsername.textContent = state.username || "";
-    if (sidebarEmail) sidebarEmail.textContent = state.emailAddress || "";
-    if (sidebarUid) sidebarUid.textContent = state.userId || "";
-
-    $$(".nav-btn").forEach(btn => {
-      const f = btn.getAttribute("data-folder");
-      if (!f) {
-        btn.classList.toggle("active", state.currentView === "contacts");
-        return;
-      }
-      btn.classList.toggle("active", state.currentFolder === f);
-    });
-
-    renderMain();
-  }
-}
-
-function renderMain() {
-  if (state.currentView !== "mailbox") return;
-  if (state.selectedEmail) return renderEmailView();
-
-  switch (state.currentFolder) {
-    case "inbox":
-      return renderEmailList(state.inboxEmails, "inbox");
-    case "sent":
-      return renderEmailList(state.sentEmails, "sent");
-    case "trash":
-      return renderEmailList([], "trash");
-    case "spam":
-      return renderEmailList([], "spam");
-  }
-
-  if (state.currentView === "contacts") return renderContactsView();
-  if (state.showCompose) return renderCompose(); // ← אין נקודה בסוף
-}
-
-
 
 // Sidebar buttons
 $("#btnCompose").addEventListener("click", () => {
