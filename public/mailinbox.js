@@ -702,60 +702,14 @@ async function handleGeminiGenerate(editorEl) {
   }
 }
 
-async function handleSummarizeEmail() {
-  if (!GEMINI_API_KEY) { alert("חסר GEMINI_API_KEY ב-app.js"); return; }
-  const e = state.selectedEmail;
-  if (!e) return;
-  state.isSummarizing = true;
-
-  const prompt = `Summarize the following email in a brief, concise paragraph. The email subject is "${e.subject}" and the body is "${(e.body||"").replace(/<[^>]*>?/gm,"")}."`;
-  try {
-    const payload = { contents:[{ role:"user", parts:[{ text: prompt }]}] };
-    const data = await geminiFetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent",
-      payload
-    );
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || state.t.summaryError;
-    state.summary = text;
-  } catch {
-    state.summary = state.t.summaryError;
-  } finally {
-    state.isSummarizing = false;
-    updateAiOutputs();
-  }
+// -------------------- Helpers --------------------
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
 }
 
-async function handleSuggestReplies() {
-  if (!GEMINI_API_KEY) { alert("חסר GEMINI_API_KEY ב-app.js"); return; }
-  const e = state.selectedEmail;
-  if (!e) return;
-  state.isSuggestingReplies = true;
-  state.suggestedReplies = [];
-
-  const prompt = `Given the email with the subject "${e.subject}" and body "${(e.body||"").replace(/<[^>]*>?/gm,"")}", suggest three very short and concise replies. Format them as a JSON array of strings. Do not include any text before or after the JSON. Example response: ["Thanks!", "I'll get back to you soon.", "Okay, I understand."]`;
-
-  try {
-    const payload = {
-      contents:[{ role:"user", parts:[{ text: prompt }]}],
-      generationConfig:{
-        responseMimeType:"application/json",
-        responseSchema:{ type:"ARRAY", items:{ type:"STRING" } }
-      }
-    };
-    const data = await geminiFetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent",
-      payload
-    );
-    const jsonText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    const arr = JSON.parse(jsonText || "[]");
-    state.suggestedReplies = Array.isArray(arr) ? arr : [];
-  } catch (e) {
-    console.error("Gemini replies error:", e);
-  } finally {
-    state.isSuggestingReplies = false;
-    updateAiOutputs();
-  }
-}
+const $$ = (selector, root=document) => Array.from(root.querySelectorAll(selector));
 
 function base64ToArrayBuffer(base64) {
   const binaryString = atob(base64);
@@ -764,8 +718,8 @@ function base64ToArrayBuffer(base64) {
   for (let i=0;i<len;i++) bytes[i] = binaryString.charCodeAt(i);
   return bytes.buffer;
 }
-function pcmToWav(pcm, sampleRate) {
-  const pcmData = new Int16Array(pcm);
+
+function pcmToWav(pcmData, sampleRate) {
   const buffer = new ArrayBuffer(44 + pcmData.length * 2);
   const view = new DataView(buffer);
   let o = 0;
@@ -773,7 +727,7 @@ function pcmToWav(pcm, sampleRate) {
   view.setUint32(o, 36 + pcmData.length * 2, true); o+=4;
   view.setUint32(o, 0x57415645, false); o+=4; // WAVE
   view.setUint32(o, 0x666d7420, false); o+=4; // fmt
-  view.setUint32(o, 16, true); o+=4;         // chunk length
+  view.setUint32(o, 16, true); o+=4;
   view.setUint16(o, 1, true); o+=2;          // PCM
   view.setUint16(o, 1, true); o+=2;          // channels
   view.setUint32(o, sampleRate, true); o+=4;
@@ -786,8 +740,118 @@ function pcmToWav(pcm, sampleRate) {
   return new Blob([view], { type:"audio/wav" });
 }
 
+// -------------------- AI Outputs Update --------------------
+function updateAiOutputs() {
+  const wrap = $("#aiOutputs");
+  if (!wrap) return;
+  const t = state.t;
+  const parts = [];
+
+  if (state.isSummarizing) parts.push(`<div class="muted">${t.summarizing}</div>`);
+  if (state.summary) {
+    parts.push(`<div class="section"><div class="k">${t.summarizeButton}:</div><div style="margin-top:6px">${escapeHtml(state.summary)}</div></div>`);
+  }
+
+  if (state.isSuggestingReplies) parts.push(`<div class="muted">${t.suggestingReplies}</div>`);
+  if (state.suggestedReplies.length) {
+    const chips = state.suggestedReplies.map((r,i)=>`<button class="btn" data-reply="${escapeHtml(r)}">${escapeHtml(r)}</button>`).join(" ");
+    parts.push(`<div class="section"><div class="k">${t.suggestRepliesButton}:</div><div class="flex" style="margin-top:6px">${chips}</div></div>`);
+  }
+
+  if (state.isTTSLoading) parts.push(`<div class="muted">${t.readingEmail}</div>`);
+  if (state.isReading) parts.push(`<div class="badge">${t.readEmailStopButton}</div>`);
+
+  wrap.innerHTML = parts.join("") || "";
+
+  // click suggested replies => open compose
+  $$('button[data-reply]', wrap).forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const reply = btn.getAttribute("data-reply") || "";
+      const e = state.selectedEmail;
+      state.showCompose = true;
+      state.compose = {
+        recipient: (e.sender||"").split("@")[0],
+        subject: `Re: ${e.subject||""}`,
+        body: escapeHtml(reply)
+      };
+      renderCompose();
+      const ed = $("#richEditor");
+      if (ed) { ed.innerHTML = reply; state.compose.body = reply; }
+    });
+  });
+}
+
+// -------------------- Summarize Email --------------------
+async function handleSummarizeEmail() {
+  const e = state.selectedEmail;
+  if (!e) return;
+
+  state.isSummarizing = true;
+  updateAiOutputs();
+
+  const prompt = `Summarize the following email in a brief, concise paragraph. Subject: "${e.subject}". Body: "${(e.body||"").replace(/<[^>]*>?/gm,"")}"`;
+
+  try {
+    let summary = "";
+    if (typeof GEMINI_API_KEY !== "undefined") {
+      const payload = { contents:[{ role:"user", parts:[{ text: prompt }]}] };
+      const data = await geminiFetch(
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent",
+        payload
+      );
+      summary = data?.candidates?.[0]?.content?.parts?.[0]?.text || state.t.summaryError;
+    } else {
+      summary = await fakeAISummarize(e.body);
+    }
+    state.summary = summary;
+  } catch (err) {
+    console.error(err);
+    state.summary = state.t.summaryError;
+  } finally {
+    state.isSummarizing = false;
+    updateAiOutputs();
+  }
+}
+
+// -------------------- Suggest Replies --------------------
+async function handleSuggestReplies() {
+  const e = state.selectedEmail;
+  if (!e) return;
+  state.isSuggestingReplies = true;
+  state.suggestedReplies = [];
+
+  const prompt = `Given the email with subject "${e.subject}" and body "${(e.body||"").replace(/<[^>]*>?/gm,"")}", suggest three very short replies as a JSON array of strings.`;
+
+  try {
+    let arr = [];
+    if (typeof GEMINI_API_KEY !== "undefined") {
+      const payload = {
+        contents:[{ role:"user", parts:[{ text: prompt }]}],
+        generationConfig:{
+          responseMimeType:"application/json",
+          responseSchema:{ type:"ARRAY", items:{ type:"STRING" } }
+        }
+      };
+      const data = await geminiFetch(
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent",
+        payload
+      );
+      const jsonText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      arr = JSON.parse(jsonText || "[]");
+    } else {
+      arr = await fakeAISuggestReplies(e.body);
+    }
+    state.suggestedReplies = Array.isArray(arr) ? arr : [];
+  } catch (err) {
+    console.error("Gemini replies error:", err);
+  } finally {
+    state.isSuggestingReplies = false;
+    updateAiOutputs();
+  }
+}
+
+// -------------------- Read Email (TTS) --------------------
 async function handleReadEmail() {
-  if (!GEMINI_API_KEY) { alert("חסר GEMINI_API_KEY ב-app.js"); return; }
   const e = state.selectedEmail;
   if (!e) return;
 
@@ -812,17 +876,21 @@ async function handleReadEmail() {
   };
 
   try {
-    const data = await geminiFetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent",
-      payload
-    );
-    const part = data?.candidates?.[0]?.content?.parts?.[0];
-    const audioData = part?.inlineData?.data;
-    const mimeType = part?.inlineData?.mimeType;
+    let audioData, mimeType;
+    if (typeof GEMINI_API_KEY !== "undefined") {
+      const data = await geminiFetch(
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent",
+        payload
+      );
+      const part = data?.candidates?.[0]?.content?.parts?.[0];
+      audioData = part?.inlineData?.data;
+      mimeType = part?.inlineData?.mimeType;
+    }
+
     if (audioData && mimeType && mimeType.startsWith("audio/")) {
       const rateMatch = mimeType.match(/rate=(\d+)/);
       const sampleRate = rateMatch ? parseInt(rateMatch[1],10) : 24000;
-      const pcm = base64ToArrayBuffer(audioData);
+      const pcm = new Int16Array(base64ToArrayBuffer(audioData));
       const wavBlob = pcmToWav(pcm, sampleRate);
       const url = URL.createObjectURL(wavBlob);
       const audio = state.audioEl || new Audio();
@@ -841,118 +909,7 @@ async function handleReadEmail() {
     updateAiOutputs();
   }
 }
-
-function updateAiOutputs() {
-  const wrap = $("#aiOutputs");
-  if (!wrap) return;
-  const t = state.t;
-  const parts = [];
-
-  if (state.isSummarizing) parts.push(`<div class="muted">${t.summarizing}</div>`);
-  if (state.summary) {
-    parts.push(`<div class="section"><div class="k">${t.summarizeButton}:</div><div style="margin-top:6px">${escapeHtml(state.summary)}</div></div>`);
-  }
-
-  if (state.isSuggestingReplies) parts.push(`<div class="muted">${t.suggestingReplies}</div>`);
-  if (state.suggestedReplies.length) {
-    const chips = state.suggestedReplies.map((r,i)=>`<button class="btn" data-reply="${escapeHtml(r)}">${escapeHtml(r)}</button>`).join(" ");
-    parts.push(`<div class="section"><div class="k">${t.suggestRepliesButton}:</div><div class="flex" style="margin-top:6px">${chips}</div></div>`);
-  }
-
-  if (state.isTTSLoading) parts.push(`<div class="muted">${t.readingEmail}</div>`);
-  if (state.isReading) parts.push(`<div class="badge">${t.readEmailStopButton}</div>`);
-
-  wrap.innerHTML = parts.join("") || "";
-  // click suggested replies => open compose
-  $$('button[data-reply]', wrap).forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      const reply = btn.getAttribute("data-reply") || "";
-      const e = state.selectedEmail;
-      state.showCompose = true;
-      state.compose = {
-        recipient: (e.sender||"").split("@")[0],
-        subject: `Re: ${e.subject||""}`,
-        body: escapeHtml(reply)
-      };
-      renderCompose();
-      // הכנס תשובה לתוך העורך
-      const ed = $("#richEditor");
-      if (ed) { ed.innerHTML = reply; state.compose.body = reply; }
-    });
-  });
-}
-    // -------------------- AI / Gemini / TTS Handlers --------------------
-
-// Summarize Email
-async function handleSummarizeEmail() {
-  if (!state.selectedEmail) return;
-  const aiOutputs = $("#aiOutputs");
-  aiOutputs.innerHTML = "";
-  state.isSummarizing = true;
-
-  const statusDiv = document.createElement("div");
-  statusDiv.textContent = state.t.summarizing;
-  aiOutputs.appendChild(statusDiv);
-
-  try {
-    const summary = await fakeAISummarize(state.selectedEmail.body); // במקום זאת אפשר קריאה ל-API אמיתי
-    statusDiv.textContent = summary;
-    state.summary = summary;
-  } catch (err) {
-    console.error(err);
-    statusDiv.textContent = state.t.summaryError;
-  } finally {
-    state.isSummarizing = false;
-  }
-}
-
-// Suggest Replies
-async function handleSuggestReplies() {
-  if (!state.selectedEmail) return;
-  const aiOutputs = $("#aiOutputs");
-  aiOutputs.innerHTML = "";
-  state.isSuggestingReplies = true;
-
-  const statusDiv = document.createElement("div");
-  statusDiv.textContent = state.t.suggestingReplies;
-  aiOutputs.appendChild(statusDiv);
-
-  try {
-    const replies = await fakeAISuggestReplies(state.selectedEmail.body); // במקום זאת API אמיתי
-    statusDiv.innerHTML = replies.map(r=>`<div class="suggested-reply">${escapeHtml(r)}</div>`).join("<br>");
-    state.suggestedReplies = replies;
-  } catch(err) {
-    console.error(err);
-    statusDiv.textContent = state.t.summaryError;
-  } finally {
-    state.isSuggestingReplies = false;
-  }
-}
-
-// Read Email (TTS)
-function handleReadEmail() {
-  if (!state.selectedEmail) return;
-  const audioEl = state.audioEl;
-  if (!audioEl) return;
-
-  if (state.isReading) {
-    audioEl.pause();
-    audioEl.src = "";
-    state.isReading = false;
-    renderEmailView();
-    return;
-  }
-
-  state.isReading = true;
-  renderEmailView();
-
-  const text = state.selectedEmail.body || "";
-  const ttsUrl = fakeTTSUrl(text); // במקום זאת URL אמיתי ל-TTS
-  audioEl.src = ttsUrl;
-  audioEl.play();
-  audioEl.onended = () => { state.isReading=false; renderEmailView(); };
-}
-
+    
 // Gemini AI Draft
 $("#btnGemini")?.addEventListener("click", async () => {
   const prompt = $("#geminiPrompt").value.trim();
