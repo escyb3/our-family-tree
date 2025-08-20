@@ -312,26 +312,27 @@ function escapeHtml(s = "") {
 }
 
 // -------------------- DOM Helpers --------------------
-(function() {
-  const $ = (sel, root = document) => root.querySelector(sel);
-  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+document.addEventListener("DOMContentLoaded", () => {
+  (function() {
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-  // דומיינטים עיקריים
-  const elApp = $("#app");
-  const viewLogin = $("#view-login");
-  const viewMailbox = $("#view-mailbox");
-  const mainContent = $("#mainContent");
-  const globalStatus = $("#globalStatus");
+    const elApp = $("#app");
+    const viewLogin = $("#view-login");
+    const viewMailbox = $("#view-mailbox");
+    const mainContent = $("#mainContent");
+    const globalStatus = $("#globalStatus");
 
-  // אם צריך, ניתן לחשוף את $ ו-$$ לחוץ דרך window:
-  window.$ = $;
-  window.$$ = $$;
-  window.elApp = elApp;
-  window.viewLogin = viewLogin;
-  window.viewMailbox = viewMailbox;
-  window.mainContent = mainContent;
-  window.globalStatus = globalStatus;
-})();
+    window.$ = $;
+    window.$$ = $$;
+    window.elApp = elApp;
+    window.viewLogin = viewLogin;
+    window.viewMailbox = viewMailbox;
+    window.mainContent = mainContent;
+    window.globalStatus = globalStatus;
+  })();
+});
+
 
 // -------------------- i18n / שפה --------------------
 const languageToggleBtn = $("#languageToggle");
