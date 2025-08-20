@@ -942,7 +942,6 @@ $("#btnSend")?.addEventListener("click", async () => {
     composeStatus.textContent = "Recipient and body are required!";
     return;
   }
-  });
 
   try {
     const appId = "1:199399854104:web:6aec488e6aeee0dec3736d";
@@ -963,6 +962,7 @@ $("#btnSend")?.addEventListener("click", async () => {
     composeStatus.textContent = state.t.sendError;
   }
 });
+
 
 // -------------------- Fake API Helpers --------------------
 async function fakeAISummarize(text) { return "סיכום הדוגמה: " + text.slice(0,100) + "…"; }
