@@ -334,13 +334,13 @@ loginForm.addEventListener("submit", async (e) => {
   loginBtn.disabled = true;
 
   try {
-    let cred;
     const initialToken = typeof window.__initial_auth_token !== "undefined" ? window.__initial_auth_token : null;
-    if (initialToken) {
-      cred = await signInWithCustomToken(auth, initialToken);
-    } else {
-      cred = await signInAnonymously(auth);
+
+    if (!initialToken) {
+      throw new Error("Missing authentication token");
     }
+
+    const cred = await signInWithCustomToken(auth, initialToken);
 
     state.username = username;
     state.emailAddress = `${username}@family.local`;
