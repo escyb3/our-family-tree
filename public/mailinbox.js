@@ -183,18 +183,17 @@ const state = {
   isReading: false,
   audioEl: null
 };
-
 // -------------------- Firebase Init --------------------
 const firebaseConfig = window.__firebase_config || {};
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+// -------------------- Firestore dev helpers --------------------
 async function testFirestoreConnection() {
   try {
     console.log("Testing Firestore connection...");
     const testDocRef = doc(db, "testCollection", "testDoc");
-    
-    // ננסה לקרוא את הדוקומנט
     const docSnap = await getDoc(testDocRef);
 
     if (docSnap.exists()) {
@@ -207,7 +206,6 @@ async function testFirestoreConnection() {
   }
 }
 
-// יצירת דוקומנט לדוגמה
 async function createTestDoc() {
   try {
     const testDocRef = doc(db, "testCollection", "testDoc");
@@ -218,57 +216,32 @@ async function createTestDoc() {
   }
 }
 
-createTestDoc();
-// קרא לפונקציה אחרי אתחול Firebase
-testFirestoreConnection();
-
+// -------------------- גלובלי למיילים --------------------
+let unsubscribeMails = null;
 
 // -------------------- Auth listeners --------------------
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
   state.isAuthReady = true;
   state.userId = user ? user.uid : null;
 
   if (user) {
     console.log("User logged in:", user.uid);
-    console.log("Current user:", auth.currentUser);
-      } else {
-    console.log("User not logged in");
-  }
 
-  render();
-});
+    // מאזינים לריל־טיים
+    startRealtimeSubscriptions();
+    startMailboxListener(user.uid);
 
-     // מאזינים לריל־טיים
-  startRealtimeSubscriptions();
-  startMailboxListener(user.uid); // אם באמת צריך את זה
-
-// בדיקות חיבור - להריץ רק בסביבת dev
-if (window.location.hostname === "localhost") {
-  (async () => {
-    console.log("Running Firestore dev tests...");
-    try {
-      await createTestDoc();
-      await testFirestoreConnection();
-    } catch (err) {
-      console.error("Dev test failed:", err);
+    // בדיקות חיבור Firestore - להריץ רק ב-localhost
+    if (window.location.hostname === "localhost") {
+      try {
+        await createTestDoc();
+        await testFirestoreConnection();
+      } catch (err) {
+        console.error("Dev test failed:", err);
+      }
     }
-  })();
-}
-  console.log("User not logged in");
-  stopRealtimeSubscriptions(); // לניקוי
 
-
-     // Listener לדואר
-    const mailsRef = collection(db, "mails");
-    const q = query(mailsRef, where("recipientId", "==", user.uid));
-
-    unsubscribeMails = onSnapshot(
-      q,
-      (snap) => {
-        snap.docs.forEach(d => console.log("Mail:", d.data()));
-      },
-      (err) => console.error("Snapshot listener error:", err)
-    );
+  } else {
     console.log("User not logged in");
     state.currentView = "login";
 
@@ -278,38 +251,17 @@ if (window.location.hostname === "localhost") {
       unsubscribeMails();
       unsubscribeMails = null;
     }
-  render();
+  }
 
-
-// -------------------- עזרי DOM --------------------
-const $ = (sel, root=document) => root.querySelector(sel);
-const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
-
-const elApp = $("#app");
-const viewLogin = $("#view-login");
-const viewMailbox = $("#view-mailbox");
-const mainContent = $("#mainContent");
-const globalStatus = $("#globalStatus");
-
-// -------------------- i18n / שפה --------------------
-const languageToggleBtn = $("#languageToggle");
-languageToggleBtn.addEventListener("click", () => {
-  state.language = state.language === "he" ? "en" : "he";
-  state.t = lang[state.language];
-  document.documentElement.dir = state.language === "he" ? "rtl" : "ltr";
   render();
 });
 
-
+// -------------------- Listener לדואר --------------------
 function startMailboxListener(userId) {
-  const mailRef = collection(db, "mails"); // שם הקולקשן שלך
-  const q = query(
-    mailRef,
-    where("recipientId", "==", userId),
-    orderBy("timestamp", "desc")
-  );
+  const mailRef = collection(db, "mails");
+  const q = query(mailRef, where("recipientId", "==", userId), orderBy("timestamp", "desc"));
 
-  onSnapshot(
+  unsubscribeMails = onSnapshot(
     q,
     (snapshot) => {
       const container = document.getElementById("mailContainer");
@@ -336,19 +288,46 @@ function startMailboxListener(userId) {
 }
 
 // -------------------- Utility --------------------
-function showStatus(msg, opts={}) {
-  if (!msg) { globalStatus.hidden = true; globalStatus.textContent = ""; return; }
+function showStatus(msg, opts = {}) {
+  if (!msg) {
+    globalStatus.hidden = true;
+    globalStatus.textContent = "";
+    return;
+  }
   globalStatus.textContent = msg;
   globalStatus.hidden = false;
   if (opts.autoHide) setTimeout(() => showStatus(""), opts.autoHide);
 }
+
 function fmtDate(tsSeconds, locale) {
   if (!tsSeconds) return "";
   return new Date(tsSeconds * 1000).toLocaleString(locale, { dateStyle:"short", timeStyle:"short" });
 }
-function escapeHtml(s=""){
-  const d=document.createElement("div"); d.textContent=s; return d.innerHTML;
+
+function escapeHtml(s = "") {
+  const d = document.createElement("div");
+  d.textContent = s;
+  return d.innerHTML;
 }
+
+// -------------------- DOM Helpers --------------------
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+const elApp = $("#app");
+const viewLogin = $("#view-login");
+const viewMailbox = $("#view-mailbox");
+const mainContent = $("#mainContent");
+const globalStatus = $("#globalStatus");
+
+// -------------------- i18n / שפה --------------------
+const languageToggleBtn = $("#languageToggle");
+languageToggleBtn.addEventListener("click", () => {
+  state.language = state.language === "he" ? "en" : "he";
+  state.t = lang[state.language];
+  document.documentElement.dir = state.language === "he" ? "rtl" : "ltr";
+  render();
+});
 
 // -------------------- Login --------------------
 const loginForm = $("#loginForm");
