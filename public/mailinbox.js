@@ -279,7 +279,6 @@ if (window.location.hostname === "localhost") {
       unsubscribeMails = null;
     }
   render();
-});
 
 
 // -------------------- עזרי DOM --------------------
