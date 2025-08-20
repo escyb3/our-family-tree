@@ -608,8 +608,9 @@ function renderMain() {
   }
 
   if (state.currentView === "contacts") return renderContactsView();
-  if (state.showCompose) return renderCompose(); // ← הסר את הנקודה
+  if (state.showCompose) return renderCompose(); // ← אין נקודה בסוף
 }
+
 
 
 // Sidebar buttons
