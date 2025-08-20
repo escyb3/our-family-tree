@@ -949,6 +949,7 @@ $("#btnSend")?.addEventListener("click", async () => {
     composeStatus.textContent = "Recipient and body are required!";
     return;
   }
+  });
 
   try {
     const appId = "1:199399854104:web:6aec488e6aeee0dec3736d";
