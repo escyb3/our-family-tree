@@ -961,9 +961,7 @@ $("#btnSend")?.addEventListener("click", async () => {
     console.error(err);
     composeStatus.textContent = state.t.sendError;
   }
-});
-
-
+}); //סגירה חדשה
 // -------------------- Fake API Helpers --------------------
 async function fakeAISummarize(text) { return "סיכום הדוגמה: " + text.slice(0,100) + "…"; }
 async function fakeAISuggestReplies(text) { return ["תשובה 1","תשובה 2","תשובה 3"]; }
