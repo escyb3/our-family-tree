@@ -1008,11 +1008,11 @@ $("#btnSend")?.addEventListener("click", async () => {
 });
 
 // -------------------- Fake API Helpers --------------------
-// להחליף בקריאות אמיתיות ל-AI / TTS
-async function fakeAISummarize(text){ return "סיכום הדוגמה: "+text.slice(0,100)+"…"; }
-async function fakeAISuggestReplies(text){ return ["תשובה 1","תשובה 2","תשובה 3"]; }
-function fakeTTSUrl(text){ return `https://api.fakeTTS.com/speech?text=${encodeURIComponent(text)}`; }
-async function fakeGeminiDraft(prompt){ return "טיוטת Gemini AI לדוגמה עבור: "+prompt; }
+async function fakeAISummarize(text) { return "סיכום הדוגמה: " + text.slice(0,100) + "…"; }
+async function fakeAISuggestReplies(text) { return ["תשובה 1","תשובה 2","תשובה 3"]; }
+function fakeTTSUrl(text) { return `https://api.fakeTTS.com/speech?text=${encodeURIComponent(text)}`; }
+async function fakeGeminiDraft(prompt) { return "טיוטת Gemini AI לדוגמה עבור: " + prompt; }
+
 //-------Call Render------------------
 function render() {
   console.log("Render called");
