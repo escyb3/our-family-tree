@@ -519,7 +519,6 @@ $$(".nav-btn[data-folder]").forEach(btn => {
   }
   // Send
   $("#btnSend").addEventListener("click", handleSendEmail);
-});
 
 function renderContactsView() {
   const t = state.t;
