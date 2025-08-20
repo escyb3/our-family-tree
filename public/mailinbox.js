@@ -360,6 +360,32 @@ loginForm.addEventListener("submit", async (e) => {
     // לאחר התחברות מוצלחת
     startRealtimeSubscriptions(); // לדוגמה, חיבור ל-Firestore
     render();
+    // -------------------- Attach Event Listeners --------------------
+function attachListeners() {
+  const btnSend = document.getElementById("btnSend");
+  if (btnSend) {
+    btnSend.addEventListener("click", async () => {
+      const { recipient, subject, body } = state.compose;
+      if (!recipient || !body) return alert("Recipient and body are required");
+
+      try {
+        await addDoc(collection(db, `artifacts/1:199399854104:web:6aec488e6aeee0dec3736d/public/data/emails`), {
+          sender: state.emailAddress,
+          recipient: `${recipient}@family.local`,
+          subject: subject || "No Subject",
+          body,
+          timestamp: serverTimestamp(),
+          attachment: state.attachments ? { name: state.attachments.name, size: state.attachments.size } : null
+        });
+        alert("Email sent!");
+        state.compose = { recipient:"", subject:"", body:"" };
+        state.attachments = null;
+      } catch (err) {
+        console.error(err);
+        alert("Failed to send email");
+      }
+    });
+  }
 
 
 // -------------------- Firestore subscriptions --------------------
