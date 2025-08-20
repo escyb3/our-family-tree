@@ -568,19 +568,28 @@ attachListeners();
 // -------------------- Rendering --------------------
 function render() {
   const usernameInput = $("#usernameInput"); // לוודא שהאלמנט קיים
+  const loginFormLabel = $("#loginForm .label");
+  const loginBtn = $("#loginBtn");
+  const sidebarUsername = $("#sidebarUsername");
+  const sidebarEmail = $("#sidebarEmail");
+  const sidebarUid = $("#sidebarUid");
 
   if (state.currentView === "login") {
     if (viewLogin) viewLogin.hidden = false;
     if (viewMailbox) viewMailbox.hidden = true;
-    $("#loginForm .label") && ($("#loginForm .label").textContent = state.t.usernameLabel);
+
+    if (loginFormLabel) loginFormLabel.textContent = state.t.usernameLabel;
     if (usernameInput) usernameInput.placeholder = state.t.usernamePlaceholder;
-    $("#loginBtn")?.textContent = state.t.loginButton;
+    if (loginBtn) loginBtn.textContent = state.t.loginButton;
+
   } else {
     if (viewLogin) viewLogin.hidden = true;
     if (viewMailbox) viewMailbox.hidden = false;
-    $("#sidebarUsername")?.textContent = state.username || "";
-    $("#sidebarEmail")?.textContent = state.emailAddress || "";
-    $("#sidebarUid")?.textContent = state.userId || "";
+
+    if (sidebarUsername) sidebarUsername.textContent = state.username || "";
+    if (sidebarEmail) sidebarEmail.textContent = state.emailAddress || "";
+    if (sidebarUid) sidebarUid.textContent = state.userId || "";
+
     $$(".nav-btn").forEach(btn => {
       const f = btn.getAttribute("data-folder");
       if (!f) {
@@ -589,9 +598,11 @@ function render() {
       }
       btn.classList.toggle("active", state.currentFolder === f);
     });
+
     renderMain();
   }
 }
+
 function renderMain() {
   if (state.currentView !== "mailbox") return;
   if (state.selectedEmail) return renderEmailView();
