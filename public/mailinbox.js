@@ -250,11 +250,7 @@ onAuthStateChanged(auth, async (user) => {
     if (unsubscribeMails) {
       unsubscribeMails();
       unsubscribeMails = null;
-    }
-  }
-
-  render();
-});
+    }וחל?.>.>.ת,לחםוםםחיעבא
 
 // -------------------- Listener לדואר --------------------
 function startMailboxListener(userId) {
@@ -856,6 +852,138 @@ function updateAiOutputs() {
     });
   });
 }
+    // -------------------- AI / Gemini / TTS Handlers --------------------
+
+// Summarize Email
+async function handleSummarizeEmail() {
+  if (!state.selectedEmail) return;
+  const aiOutputs = $("#aiOutputs");
+  aiOutputs.innerHTML = "";
+  state.isSummarizing = true;
+
+  const statusDiv = document.createElement("div");
+  statusDiv.textContent = state.t.summarizing;
+  aiOutputs.appendChild(statusDiv);
+
+  try {
+    const summary = await fakeAISummarize(state.selectedEmail.body); // במקום זאת אפשר קריאה ל-API אמיתי
+    statusDiv.textContent = summary;
+    state.summary = summary;
+  } catch (err) {
+    console.error(err);
+    statusDiv.textContent = state.t.summaryError;
+  } finally {
+    state.isSummarizing = false;
+  }
+}
+
+// Suggest Replies
+async function handleSuggestReplies() {
+  if (!state.selectedEmail) return;
+  const aiOutputs = $("#aiOutputs");
+  aiOutputs.innerHTML = "";
+  state.isSuggestingReplies = true;
+
+  const statusDiv = document.createElement("div");
+  statusDiv.textContent = state.t.suggestingReplies;
+  aiOutputs.appendChild(statusDiv);
+
+  try {
+    const replies = await fakeAISuggestReplies(state.selectedEmail.body); // במקום זאת API אמיתי
+    statusDiv.innerHTML = replies.map(r=>`<div class="suggested-reply">${escapeHtml(r)}</div>`).join("<br>");
+    state.suggestedReplies = replies;
+  } catch(err) {
+    console.error(err);
+    statusDiv.textContent = state.t.summaryError;
+  } finally {
+    state.isSuggestingReplies = false;
+  }
+}
+
+// Read Email (TTS)
+function handleReadEmail() {
+  if (!state.selectedEmail) return;
+  const audioEl = state.audioEl;
+  if (!audioEl) return;
+
+  if (state.isReading) {
+    audioEl.pause();
+    audioEl.src = "";
+    state.isReading = false;
+    renderEmailView();
+    return;
+  }
+
+  state.isReading = true;
+  renderEmailView();
+
+  const text = state.selectedEmail.body || "";
+  const ttsUrl = fakeTTSUrl(text); // במקום זאת URL אמיתי ל-TTS
+  audioEl.src = ttsUrl;
+  audioEl.play();
+  audioEl.onended = () => { state.isReading=false; renderEmailView(); };
+}
+
+// Gemini AI Draft
+$("#btnGemini")?.addEventListener("click", async () => {
+  const prompt = $("#geminiPrompt").value.trim();
+  const geminiError = $("#geminiError");
+  geminiError.hidden = true;
+
+  if (!prompt) return;
+
+  try {
+    state.isGeminiLoading = true;
+    const draft = await fakeGeminiDraft(prompt); // קריאה ל-API אמיתי
+    state.compose.body = draft;
+    $("#richEditor").innerHTML = draft;
+  } catch(err) {
+    console.error(err);
+    geminiError.hidden = false;
+  } finally {
+    state.isGeminiLoading = false;
+  }
+});
+
+// Send Email
+$("#btnSend")?.addEventListener("click", async () => {
+  const composeStatus = $("#composeStatus");
+  composeStatus.hidden = false;
+  composeStatus.textContent = state.t.loginStatusConnecting;
+
+  const { recipient, subject, body } = state.compose;
+  if (!recipient || !body) {
+    composeStatus.textContent = "Recipient and body are required!";
+    return;
+  }
+
+  try {
+    const appId = "1:199399854104:web:6aec488e6aeee0dec3736d";
+    await addDoc(collection(db, `artifacts/${appId}/public/data/emails`), {
+      sender: state.emailAddress,
+      recipient: `${recipient}@family.local`,
+      subject: subject || state.t.emailSubjectPlaceholder,
+      body,
+      timestamp: serverTimestamp(),
+      attachment: state.attachments ? { name: state.attachments.name, size: state.attachments.size } : null
+    });
+    composeStatus.textContent = state.t.sendSuccess;
+    state.compose = { recipient:"", subject:"", body:"" };
+    state.attachments = null;
+    renderCompose();
+  } catch(err) {
+    console.error(err);
+    composeStatus.textContent = state.t.sendError;
+  }
+});
+
+// -------------------- Fake API Helpers --------------------
+// להחליף בקריאות אמיתיות ל-AI / TTS
+async function fakeAISummarize(text){ return "סיכום הדוגמה: "+text.slice(0,100)+"…"; }
+async function fakeAISuggestReplies(text){ return ["תשובה 1","תשובה 2","תשובה 3"]; }
+function fakeTTSUrl(text){ return `https://api.fakeTTS.com/speech?text=${encodeURIComponent(text)}`; }
+async function fakeGeminiDraft(prompt){ return "טיוטת Gemini AI לדוגמה עבור: "+prompt; }
+
 
 // -------------------- התחל --------------------
 render();
