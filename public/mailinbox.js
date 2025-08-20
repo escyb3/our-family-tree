@@ -501,7 +501,7 @@ $$(".nav-btn[data-folder]").forEach(btn => {
   });
 });
 
-  / Gemini Draft
+  // Gemini Draft
   const btnGemini = document.getElementById("btnGemini");
   const promptInput = document.getElementById("geminiPrompt");
   if (btnGemini && promptInput) {
