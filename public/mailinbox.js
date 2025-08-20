@@ -674,39 +674,111 @@ function renderContactsView() {
     renderMain();
   });
 
-  // Add contact
-  $("#btnAddContact").addEventListener("click", handleAddContact);
+ // Add contact
+const btnAddContact = document.getElementById("btnAddContact");
+if (btnAddContact) {
+  btnAddContact.addEventListener("click", handleAddContact);
+}
 
-  // List
-  const list = $("#contactsList");
-  list.innerHTML = "";
-  if (!state.contacts.length) {
-    list.innerHTML = `<div class="muted center" style="padding:20px">${t.noContacts}</div>`;
-  } else {
-    for (const c of state.contacts) {
-      const row = document.createElement("div");
-      row.className = "mail-item";
-      row.innerHTML = `
-        <div class="row" style="justify-content:space-between">
-          <div>
-            <div class="k">${escapeHtml(c.name||"")}</div>
-            <div class="tiny muted">${escapeHtml(c.username||"")}@family.local</div>
-          </div>
-          <button class="btn" data-id="${c.id}">🗑️</button>
+// List
+const list = document.getElementById("contactsList");
+if (!list) return;
+
+list.innerHTML = "";
+
+if (!state.contacts || !state.contacts.length) {
+  list.innerHTML = `<div class="muted center" style="padding:20px">${t.noContacts}</div>`;
+} else {
+  for (const c of state.contacts) {
+    const row = document.createElement("div");
+    row.className = "mail-item";
+
+    row.innerHTML = `
+      <div class="row" style="justify-content:space-between">
+        <div>
+          <div class="k">${escapeHtml(c.name || "")}</div>
+          <div class="tiny muted">${escapeHtml(c.username || "")}@family.local</div>
         </div>
-      `;
-      row.querySelector("button").addEventListener("click", async ()=>{
+        <button class="btn" data-id="${c.id}">🗑️</button>
+      </div>
+    `;
+
+    const btnDelete = row.querySelector("button");
+    if (btnDelete) {
+      btnDelete.addEventListener("click", async () => {
         if (!confirm(state.t.deleteContactConfirm)) return;
         try {
           await deleteDoc(doc(db, `artifacts/${appId}/users/${state.userId}/contacts`, c.id));
+          // עדכון רשימת אנשי קשר אחרי מחיקה
+          state.contacts = state.contacts.filter(contact => contact.id !== c.id);
+          row.remove();
         } catch (e) {
           console.error("Delete contact error:", e);
+          alert("Failed to delete contact. Please try again.");
         }
       });
-      list.appendChild(row);
     }
+
+    list.appendChild(row);
   }
 }
+  const recipientInput = document.getElementById("recipientInput");
+const contactSuggestions = document.getElementById("contactSuggestions");
+
+// פונקציה להצגת הצעות אנשי קשר
+function showContactSuggestions(value) {
+  contactSuggestions.innerHTML = "";
+  if (!value) {
+    contactSuggestions.style.display = "none";
+    return;
+  }
+
+  const filtered = state.contacts.filter(c =>
+    c.name.toLowerCase().includes(value.toLowerCase()) ||
+    c.username.toLowerCase().includes(value.toLowerCase())
+  );
+
+  filtered.forEach(c => {
+    const div = document.createElement("div");
+    div.textContent = `${c.name} (${c.username}@family.local)`;
+    div.addEventListener("click", () => {
+      recipientInput.value = c.username;
+      contactSuggestions.style.display = "none";
+    });
+    contactSuggestions.appendChild(div);
+  });
+
+  contactSuggestions.style.display = filtered.length ? "block" : "none";
+}
+
+// עדכון הצעות בזמן הקלדה
+recipientInput.addEventListener("input", (e) => showContactSuggestions(e.target.value));
+
+// הסתרת הצעות כשמקליקים מחוץ לשדה
+document.addEventListener("click", (e) => {
+  if (!recipientInput.contains(e.target) && !contactSuggestions.contains(e.target)) {
+    contactSuggestions.style.display = "none";
+  }
+});
+
+// Drag & Drop: אפשר לגרור שם איש קשר מהליסט לתוך השדה
+const contactsList = document.getElementById("contactsList");
+contactsList.querySelectorAll(".mail-item").forEach(item => {
+  item.draggable = true;
+  item.addEventListener("dragstart", (e) => {
+    e.dataTransfer.setData("text/plain", item.querySelector(".k").textContent);
+  });
+});
+
+recipientInput.addEventListener("dragover", (e) => e.preventDefault());
+recipientInput.addEventListener("drop", (e) => {
+  e.preventDefault();
+  const droppedName = e.dataTransfer.getData("text/plain");
+  const contact = state.contacts.find(c => c.name === droppedName);
+  if (contact) recipientInput.value = contact.username;
+});
+
+
 
 // -------------------- Actions --------------------
 async function handleSendEmail() {
