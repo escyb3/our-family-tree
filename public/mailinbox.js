@@ -329,7 +329,6 @@ languageToggleBtn.addEventListener("click", () => {
 });
 
 // -------------------- Login --------------------
-// -------------------- Login --------------------
 const loginForm = $("#loginForm");
 const usernameInput = $("#usernameInput");
 const loginStatus = $("#loginStatus");
@@ -341,35 +340,26 @@ loginForm.addEventListener("submit", async (e) => {
   if (!username) return;
 
   loginStatus.hidden = false;
-  loginStatus.textContent = state.t.loginStatusConnecting;
+  loginStatus.textContent = "Connecting...";
   loginBtn.disabled = true;
 
   try {
-    const initialToken = typeof window.__initial_auth_token !== "undefined" ? window.__initial_auth_token : null;
-
-    if (!initialToken) {
-      throw new Error("Missing authentication token");
-    }
+    // כאן נעשה login אמיתי עם Firebase Custom Token
+    const initialToken = window.__initial_auth_token || null;
+    if (!initialToken) throw new Error("Missing authentication token");
 
     const cred = await signInWithCustomToken(auth, initialToken);
 
-    // הגדרת המשתמש המחובר
     state.username = username;
     state.emailAddress = `${username}@family.local`;
     state.userId = cred.user.uid;
     state.currentView = "mailbox";
+
     loginStatus.hidden = true;
 
-    startRealtimeSubscriptions(); // קריאה לבסיס נתונים/תצוגה
-    render(); // כל פעולה שממשיכה הלאה
-  } catch (err) {
-    console.error("Login error:", err);
-    loginStatus.hidden = false;
-    loginStatus.textContent = state.t.loginError;
-  } finally {
-    loginBtn.disabled = false;
-  }
-});
+    // לאחר התחברות מוצלחת
+    startRealtimeSubscriptions(); // לדוגמה, חיבור ל-Firestore
+    render();
 
 
 // -------------------- Firestore subscriptions --------------------
