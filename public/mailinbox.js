@@ -572,7 +572,7 @@ function render() {
   if (state.currentView === "login") {
     if (viewLogin) viewLogin.hidden = false;
     if (viewMailbox) viewMailbox.hidden = true;
-    $("#loginForm .label")?.textContent = state.t.usernameLabel;
+    $("#loginForm .label") && ($("#loginForm .label").textContent = state.t.usernameLabel);
     if (usernameInput) usernameInput.placeholder = state.t.usernamePlaceholder;
     $("#loginBtn")?.textContent = state.t.loginButton;
   } else {
