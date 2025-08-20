@@ -274,7 +274,6 @@ if (window.location.hostname === "localhost") {
       unsubscribeMails();
       unsubscribeMails = null;
     }
-  }
 });
 
 
