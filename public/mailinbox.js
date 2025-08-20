@@ -245,21 +245,6 @@ onAuthStateChanged(auth, async (user) => {
     console.log("User not logged in");
     state.currentView = "login";
 
- // -------------------- Stop Realtime Listeners --------------------
-function stopRealtimeSubscriptions() {
-  // Inbox / Sent / Contacts
-  if (unsubscribeInbox) { unsubscribeInbox(); unsubscribeInbox = null; }
-  if (unsubscribeSent) { unsubscribeSent(); unsubscribeSent = null; }
-  if (unsubscribeContacts) { unsubscribeContacts(); unsubscribeContacts = null; }
-
-  // כל listener נוסף (למשל mailsRef)
-  if (typeof unsubscribeMails !== "undefined" && unsubscribeMails) {
-    unsubscribeMails();
-    unsubscribeMails = null;
-  }
-}
-
-
 // -------------------- Listener לדואר --------------------
 function startMailboxListener(userId) {
   const mailRef = collection(db, "mails");
