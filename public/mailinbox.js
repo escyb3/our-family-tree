@@ -359,9 +359,7 @@ loginForm.addEventListener("submit", async (e) => {
     state.currentView = "mailbox";
     loginStatus.hidden = true;
 
-    // התחלת מאזינים ל־Firestore
     startRealtimeSubscriptions();
-
     render();
   } catch (err) {
     console.error("Login error:", err);
@@ -381,20 +379,20 @@ function startRealtimeSubscriptions() {
   stopRealtimeSubscriptions();
   if (!state.userId || !state.emailAddress) return;
 
-// Inbox
-const appId = "1:199399854104:web:6aec488e6aeee0dec3736d";
-const inboxQ = query(
-  collection(db, `artifacts/${appId}/public/data/emails`),
-  where("recipient", "==", state.emailAddress)
-);
+  const appId = "1:199399854104:web:6aec488e6aeee0dec3736d";
 
-unsubscribeInbox = onSnapshot(inboxQ, (snap) => {
-  const emails = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  emails.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
-  state.inboxEmails = emails;
-  if (state.currentView === "mailbox" && state.currentFolder === "inbox" && !state.selectedEmail) renderMain();
-});
+  // Inbox
+  const inboxQ = query(
+    collection(db, `artifacts/${appId}/public/data/emails`),
+    where("recipient", "==", state.emailAddress)
+  );
 
+  unsubscribeInbox = onSnapshot(inboxQ, (snap) => {
+    const emails = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    emails.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+    state.inboxEmails = emails;
+    if (state.currentView === "mailbox" && state.currentFolder === "inbox" && !state.selectedEmail) renderMain();
+  });
 
   // Sent
   const sentQ = query(
@@ -408,13 +406,14 @@ unsubscribeInbox = onSnapshot(inboxQ, (snap) => {
     if (state.currentView === "mailbox" && state.currentFolder === "sent" && !state.selectedEmail) renderMain();
   });
 
-  // Contacts (per-user)
+  // Contacts
   const contactsCol = collection(db, `artifacts/${appId}/users/${state.userId}/contacts`);
   unsubscribeContacts = onSnapshot(contactsCol, (snap) => {
     state.contacts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    if (state.currentView === "mailbox") renderMain(); // יעדכן את select בקומפוז
+    if (state.currentView === "mailbox") renderMain();
   });
 }
+
 function stopRealtimeSubscriptions() {
   if (unsubscribeInbox) { unsubscribeInbox(); unsubscribeInbox = null; }
   if (unsubscribeSent) { unsubscribeSent(); unsubscribeSent = null; }
@@ -423,7 +422,6 @@ function stopRealtimeSubscriptions() {
 
 // -------------------- Rendering --------------------
 function render() {
-  // תצוגה
   if (state.currentView === "login") {
     viewLogin.hidden = false;
     viewMailbox.hidden = true;
@@ -433,11 +431,9 @@ function render() {
   } else {
     viewLogin.hidden = true;
     viewMailbox.hidden = false;
-    // Sidebar data
     $("#sidebarUsername").textContent = state.username || "";
     $("#sidebarEmail").textContent = state.emailAddress || "";
     $("#sidebarUid").textContent = state.userId || "";
-    // Nav active
     $$(".nav-btn").forEach(btn => {
       const f = btn.getAttribute("data-folder");
       if (!f) { btn.classList.toggle("active", state.currentView === "contacts"); return; }
@@ -448,16 +444,16 @@ function render() {
 }
 
 function renderMain() {
-  // מבסיס JSX: compose / contacts / email / lists
   if (state.currentView !== "mailbox") return;
   if (state.selectedEmail) return renderEmailView();
 
-  if (state.currentFolder === "inbox") return renderEmailList(state.inboxEmails, "inbox");
-  if (state.currentFolder === "sent") return renderEmailList(state.sentEmails, "sent");
-  if (state.currentFolder === "trash") return renderEmailList([], "trash");
-  if (state.currentFolder === "spam") return renderEmailList([], "spam");
+  switch (state.currentFolder) {
+    case "inbox": return renderEmailList(state.inboxEmails, "inbox");
+    case "sent": return renderEmailList(state.sentEmails, "sent");
+    case "trash": return renderEmailList([], "trash");
+    case "spam": return renderEmailList([], "spam");
+  }
   if (state.currentView === "contacts") return renderContactsView();
-  // compose is a mode triggered by button:
   if (state.showCompose) return renderCompose();
 }
 
@@ -468,256 +464,24 @@ $("#btnCompose").addEventListener("click", () => {
   mainContent.scrollTop = 0;
   renderCompose();
 });
+
 $("#btnContacts").addEventListener("click", () => {
-  state.currentView = "mailbox"; // נשארים ב-mailbox
+  state.currentView = "mailbox";
   state.selectedEmail = null;
   state.showCompose = false;
-  state.currentFolder = "inbox"; // לא חובה, רק לשמור עקביות
-  // מציגים Contacts כ־main panel
+  state.currentFolder = "inbox";
   renderContactsView();
 });
 
 // Folder nav
 $$(".nav-btn[data-folder]").forEach(btn => {
   btn.addEventListener("click", () => {
-    const folder = btn.getAttribute("data-folder");
-    state.currentFolder = folder;
+    state.currentFolder = btn.getAttribute("data-folder");
     state.selectedEmail = null;
     state.showCompose = false;
     renderMain();
   });
 });
-
-// -------------------- UI builders --------------------
-function renderEmailList(items, folder) {
-  const t = state.t;
-  mainContent.innerHTML = `
-    <div class="section">
-      <div class="row">
-        <input id="searchInput" class="input" placeholder="${t.searchPlaceholder}" />
-      </div>
-      <h2 style="margin:12px 0 8px 0">${folderTitle(folder)}</h2>
-      <div id="emailList" class="list"></div>
-    </div>
-  `;
-  const list = $("#emailList", mainContent);
-  const searchInput = $("#searchInput", mainContent);
-  searchInput.value = state.searchQuery;
-
-  function applyFilter() {
-    state.searchQuery = searchInput.value.toLowerCase();
-    const filtered = (!state.searchQuery)
-      ? items
-      : items.filter(e =>
-          (e.subject||"").toLowerCase().includes(state.searchQuery) ||
-          (e.sender||"").toLowerCase().includes(state.searchQuery) ||
-          (e.body||"").toLowerCase().includes(state.searchQuery)
-        );
-    list.innerHTML = "";
-    if (!filtered.length) {
-      list.innerHTML = `<div class="muted center" style="padding:20px">${t.noMessagesInFolder}</div>`;
-      return;
-    }
-    for (const email of filtered) {
-      const el = document.createElement("div");
-      el.className = "mail-item";
-      el.innerHTML = `
-        <div class="meta">
-          <span class="from">${escapeHtml(email.sender||"")}</span>
-          <span class="date">${fmtDate(email.timestamp?.seconds, state.language === "he" ? "he-IL" : "en-US")}</span>
-        </div>
-        <div class="subject">${escapeHtml(email.subject||t.emailSubjectPlaceholder)}</div>
-      `;
-      el.addEventListener("click", () => {
-        state.selectedEmail = email;
-        state.showCompose = false;
-        renderEmailView();
-      });
-      list.appendChild(el);
-    }
-  }
-
-  searchInput.addEventListener("input", applyFilter);
-  applyFilter();
-}
-
-function folderTitle(f) {
-  const t = state.t;
-  return f === "inbox" ? t.inboxFolder : f === "sent" ? t.sentFolder : f === "trash" ? t.trashFolder : t.spamFolder;
-}
-
-function renderEmailView() {
-  const t = state.t;
-  const e = state.selectedEmail;
-  if (!e) return renderMain();
-
-  mainContent.innerHTML = `
-    <div class="section">
-      <div class="row right">
-        <button id="btnReply" class="btn">↩️ ${t.emailReply}</button>
-        <button id="btnBack" class="btn">🏠 ${t.emailBack}</button>
-      </div>
-      <h2 style="margin-top:10px">${escapeHtml(e.subject || t.emailSubjectPlaceholder)}</h2>
-      <div class="kv" style="margin:8px 0">
-        <div><span class="k">${t.emailFrom}</span> ${escapeHtml(e.sender||"")}</div>
-        <div><span class="k">${t.emailTo}</span> ${escapeHtml(e.recipient||"")}</div>
-      </div>
-      <div class="section" style="margin-top:10px">
-        <div class="email-body" id="emailBody"></div>
-        ${e.attachment ? `
-          <div class="section" style="margin-top:10px">
-            <div class="row">
-              <div class="k">📎 ${t.attachment}</div>
-              <div class="muted">${escapeHtml(e.attachment.name)} (${Math.round((e.attachment.size||0)/1024)} KB)</div>
-              <button id="btnDownload" class="btn">⬇️ ${t.download}</button>
-            </div>
-            <div class="tiny muted" style="margin-top:6px">${t.downloadNotSupported}</div>
-          </div>` : ``}
-      </div>
-
-      <div class="section" style="margin-top:12px">
-        <div class="flex">
-          <button id="btnSummarize" class="btn purple">${t.summarizeButton}</button>
-          <button id="btnSuggest" class="btn purple">${t.suggestRepliesButton}</button>
-          <button id="btnRead" class="btn purple">${state.isReading ? t.readEmailStopButton : t.readEmailButton}</button>
-        </div>
-        <div id="aiOutputs" class="col" style="margin-top:10px;gap:8px"></div>
-      </div>
-
-      <audio id="ttsAudio" class="hidden"></audio>
-    </div>
-  `;
-
-  $("#emailBody").innerHTML = e.body || "";
-
-  $("#btnReply").addEventListener("click", () => {
-    state.showCompose = true;
-    state.compose = {
-      recipient: (e.sender||"").split("@")[0],
-      subject: `Re: ${e.subject||""}`,
-      body: ""
-    };
-    renderCompose();
-  });
-  $("#btnBack").addEventListener("click", () => {
-    state.selectedEmail = null;
-    renderMain();
-  });
-  if ($("#btnDownload")) {
-    $("#btnDownload").addEventListener("click", () => alert(state.t.downloadNotSupported));
-  }
-
-  $("#btnSummarize").addEventListener("click", handleSummarizeEmail);
-  $("#btnSuggest").addEventListener("click", handleSuggestReplies);
-  $("#btnRead").addEventListener("click", handleReadEmail);
-  state.audioEl = $("#ttsAudio");
-}
-
-function renderCompose() {
-  const t = state.t;
-  const hasContacts = state.contacts.length > 0;
-  mainContent.innerHTML = `
-    <div class="section">
-      <div class="row right">
-        <button id="btnBackToBox" class="btn">🏠 ${t.composeBack}</button>
-      </div>
-      <h2>${t.composeTitle}</h2>
-
-      <div class="col">
-        <label class="label">${t.recipientLabel}</label>
-        <div class="row">
-          ${hasContacts ? `
-            <select id="recipientSelect" class="input">
-              <option value="" disabled selected>${t.selectContact}</option>
-              ${state.contacts.map(c => `<option value="${escapeHtml(c.username)}">${escapeHtml(c.name)} (${escapeHtml(c.username)})</option>`).join("")}
-            </select>
-          ` : `
-            <input id="recipientInput" class="input" placeholder="${t.contactUsernamePlaceholder}" value="${escapeHtml(state.compose.recipient||"")}"/>
-          `}
-          <span class="badge">@family.local</span>
-        </div>
-      </div>
-
-      <div class="col" style="margin-top:8px">
-        <label class="label">${t.subjectLabel}</label>
-        <input id="subjectInput" class="input" value="${escapeHtml(state.compose.subject||"")}"/>
-      </div>
-
-      <div class="col" style="margin-top:8px">
-        <label class="label">${t.bodyLabel}</label>
-        <div class="toolbar">
-          <button class="tool" data-cmd="bold"><b>B</b></button>
-          <button class="tool" data-cmd="italic"><i>I</i></button>
-          <button class="tool" data-cmd="underline"><u>U</u></button>
-        </div>
-        <div id="richEditor" class="editor" contenteditable="true"></div>
-        <div class="hint">${t.richTextNote}</div>
-      </div>
-
-      <div class="col" style="margin-top:8px">
-        <label class="label">${t.attachmentsLabel}</label>
-        <input id="fileInput" type="file"/>
-        <div id="fileMeta" class="tiny muted" style="margin-top:4px"></div>
-      </div>
-
-      <div class="section" style="margin-top:12px">
-        <div class="row">
-          <div class="col" style="flex:1">
-            <div class="label" style="margin-bottom:4px">${t.composeGeminiTitle}</div>
-            <input id="geminiPrompt" class="input" placeholder="${t.geminiPlaceholder}" />
-          </div>
-          <button id="btnGemini" class="btn purple">${t.geminiButton}</button>
-        </div>
-        <div id="geminiError" class="form-status" hidden>${t.geminiError}</div>
-      </div>
-
-      <div class="row right" style="margin-top:12px">
-        <button id="btnSend" class="btn primary">${t.sendButton}</button>
-      </div>
-      <div id="composeStatus" class="form-status" hidden></div>
-    </div>
-  `;
-
-  // Init editor content (keep last typed, if any)
-  const editor = $("#richEditor");
-  editor.innerHTML = state.compose.body || "";
-
-  // Toolbar actions
-  $$(".tool", mainContent).forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      document.execCommand(btn.dataset.cmd,false,null);
-      editor.focus();
-    });
-  });
-
-  // Compose bindings
-  const subjectInput = $("#subjectInput");
-  const recipientSelect = $("#recipientSelect");
-  const recipientInput = $("#recipientInput");
-  subjectInput.addEventListener("input", ()=> state.compose.subject = subjectInput.value);
-  if (recipientSelect) {
-    recipientSelect.addEventListener("change", ()=> state.compose.recipient = recipientSelect.value);
-  } else if (recipientInput) {
-    recipientInput.addEventListener("input", ()=> state.compose.recipient = recipientInput.value);
-  }
-  editor.addEventListener("input", ()=> state.compose.body = editor.innerHTML);
-
-  // File attach
-  const fileInput = $("#fileInput");
-  const fileMeta = $("#fileMeta");
-  fileInput.addEventListener("change", ()=>{
-    const f = fileInput.files[0] || null;
-    state.attachments = f || null;
-    if (f) fileMeta.textContent = `${f.name} (${Math.round(f.size/1024)} KB)`;
-    else fileMeta.textContent = "";
-  });
-
-  // Back
-  $("#btnBackToBox").addEventListener("click", ()=>{
-    state.showCompose = false;
-    state.compose = { recipient:"", subject:"", body:"" };
-    renderMain();
-  });
 
   // Gemini Draft
   const btnGemini = $("#btnGemini");
