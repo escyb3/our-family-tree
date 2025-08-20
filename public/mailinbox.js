@@ -275,6 +275,16 @@ function startMailboxListener(userId) {
     }
   );
 }
+    // בתוך פונקציה שמופעלת אחרי render
+const btnSend = document.getElementById("btnSend");
+if (btnSend) {
+  btnSend.addEventListener("click", async () => {
+    // קוד לשליחת מייל
+  });
+} else {
+  console.warn("btnSend not found yet!");
+}
+
 
 // -------------------- Utility --------------------
 function showStatus(msg, opts = {}) {
