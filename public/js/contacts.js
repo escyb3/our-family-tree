@@ -1,4 +1,4 @@
-// public/js/contacts.js
+/ public/js/contacts.js
 
 // השלם את הקוד כולו ב-DOMContentLoaded event listener.
 // זה מבטיח שהקוד ירוץ רק לאחר שכל רכיבי ה-HTML נטענו.
@@ -29,6 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!res.ok) {
                 const errorText = await res.text();
                 throw new Error(`שגיאה בשרת: ${res.status} - ${errorText}`);
+            }
+
+            const contentType = res.headers.get("content-type");
+            if (!contentType || !contentType.includes("application/json")) {
+                const responseText = await res.text();
+                console.error("❌ התשובה אינה בפורמט JSON:", responseText);
+                throw new Error("השרת החזיר תגובה שאינה JSON.");
             }
 
             const contacts = await res.json();
