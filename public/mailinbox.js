@@ -362,6 +362,14 @@ loginForm.addEventListener("submit", async (e) => {
     // לאחר התחברות מוצלחת
     startRealtimeSubscriptions(); // לדוגמה, חיבור ל-Firestore
     render();
+  } catch (err) {
+    console.error("Login error:", err);
+    loginStatus.textContent = "Login failed";
+  } finally {
+    loginBtn.disabled = false;
+  }
+});
+
     // -------------------- Attach Event Listeners --------------------
 function attachListeners() {
   const btnSend = document.getElementById("btnSend");
