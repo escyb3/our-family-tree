@@ -370,32 +370,64 @@ loginForm.addEventListener("submit", async (e) => {
   }
 });
 
-    // -------------------- Attach Event Listeners --------------------
+// -------------------- Attach Event Listeners with File Upload --------------------
 function attachListeners() {
   const btnSend = document.getElementById("btnSend");
-  if (btnSend) {
-    btnSend.addEventListener("click", async () => {
-      const { recipient, subject, body } = state.compose;
-      if (!recipient || !body) return alert("Recipient and body are required");
+  if (!btnSend) return;
 
-      try {
-        await addDoc(collection(db, `artifacts/1:199399854104:web:6aec488e6aeee0dec3736d/public/data/emails`), {
-          sender: state.emailAddress,
-          recipient: `${recipient}@family.local`,
-          subject: subject || "No Subject",
-          body,
-          timestamp: serverTimestamp(),
-          attachment: state.attachments ? { name: state.attachments.name, size: state.attachments.size } : null
+  btnSend.addEventListener("click", async () => {
+    const { recipient, subject, body } = state.compose || {};
+    const attachments = state.attachments || [];
+
+    if (!recipient || !body) {
+      return alert("Recipient and body are required");
+    }
+
+    try {
+      const uploadedFiles = [];
+
+      // אם יש קבצים, העלאה ל-Firebase Storage
+      for (const file of attachments) {
+        const storageRef = ref(storage, `emails/${Date.now()}_${file.name}`);
+        await uploadBytes(storageRef, file);
+        const url = await getDownloadURL(storageRef);
+        uploadedFiles.push({
+          name: file.name,
+          size: file.size,
+          type: file.type || null,
+          url
         });
-        alert("Email sent!");
-        state.compose = { recipient:"", subject:"", body:"" };
-        state.attachments = null;
-      } catch (err) {
-        console.error(err);
-        alert("Failed to send email");
       }
-    });
-  }
+
+      // הכנת אובייקט email עם קישורים לקבצים
+      const emailData = {
+        sender: state.emailAddress,
+        recipient: `${recipient}@family.local`,
+        subject: subject || "No Subject",
+        body,
+        timestamp: serverTimestamp(),
+        attachments: uploadedFiles.length > 0 ? uploadedFiles : null
+      };
+
+      // הוספת המסמך ל-Firestore
+      await addDoc(
+        collection(db, `artifacts/1:199399854104:web:6aec488e6aeee0dec3736d/public/data/emails`),
+        emailData
+      );
+
+      alert("Email sent successfully!");
+      
+      // איפוס השדות אחרי שליחה
+      state.compose = { recipient: "", subject: "", body: "" };
+      state.attachments = [];
+      const inputs = document.querySelectorAll("#composeForm input, #composeForm textarea");
+      inputs.forEach(input => input.value = "");
+    } catch (err) {
+      console.error("Failed to send email:", err);
+      alert("Failed to send email. Please try again.");
+    }
+  });
+}
 
 
 // -------------------- Firestore subscriptions --------------------
