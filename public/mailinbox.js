@@ -258,7 +258,7 @@ if (window.location.hostname === "localhost") {
   stopRealtimeSubscriptions(); // לניקוי
 
 
-    // Listener לדואר
+     // Listener לדואר
     const mailsRef = collection(db, "mails");
     const q = query(mailsRef, where("recipientId", "==", user.uid));
 
@@ -269,6 +269,7 @@ if (window.location.hostname === "localhost") {
       },
       (err) => console.error("Snapshot listener error:", err)
     );
+
   } else {
     console.log("User not logged in");
     state.currentView = "login";
@@ -280,6 +281,9 @@ if (window.location.hostname === "localhost") {
       unsubscribeMails = null;
     }
   }
+
+  render();
+});
 
 
 // -------------------- עזרי DOM --------------------
