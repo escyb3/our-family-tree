@@ -566,22 +566,28 @@ document.getElementById("bodyInput").addEventListener("input", (e) => state.comp
 // קריאה לפונקציה לשליחה
 attachListeners();
 // -------------------- Rendering --------------------
+// -------------------- Rendering --------------------
 function render() {
+  const usernameInput = $("#usernameInput"); // לוודא שהאלמנט קיים
+
   if (state.currentView === "login") {
-    viewLogin.hidden = false;
-    viewMailbox.hidden = true;
-    $("#loginForm .label").textContent = state.t.usernameLabel;
-    usernameInput.placeholder = state.t.usernamePlaceholder;
-    $("#loginBtn").textContent = state.t.loginButton;
+    if (viewLogin) viewLogin.hidden = false;
+    if (viewMailbox) viewMailbox.hidden = true;
+    $("#loginForm .label")?.textContent = state.t.usernameLabel;
+    if (usernameInput) usernameInput.placeholder = state.t.usernamePlaceholder;
+    $("#loginBtn")?.textContent = state.t.loginButton;
   } else {
-    viewLogin.hidden = true;
-    viewMailbox.hidden = false;
-    $("#sidebarUsername").textContent = state.username || "";
-    $("#sidebarEmail").textContent = state.emailAddress || "";
-    $("#sidebarUid").textContent = state.userId || "";
+    if (viewLogin) viewLogin.hidden = true;
+    if (viewMailbox) viewMailbox.hidden = false;
+    $("#sidebarUsername")?.textContent = state.username || "";
+    $("#sidebarEmail")?.textContent = state.emailAddress || "";
+    $("#sidebarUid")?.textContent = state.userId || "";
     $$(".nav-btn").forEach(btn => {
       const f = btn.getAttribute("data-folder");
-      if (!f) { btn.classList.toggle("active", state.currentView === "contacts"); return; }
+      if (!f) {
+        btn.classList.toggle("active", state.currentView === "contacts");
+        return;
+      }
       btn.classList.toggle("active", state.currentFolder === f);
     });
     renderMain();
@@ -593,11 +599,16 @@ function renderMain() {
   if (state.selectedEmail) return renderEmailView();
 
   switch (state.currentFolder) {
-    case "inbox": return renderEmailList(state.inboxEmails, "inbox");
-    case "sent": return renderEmailList(state.sentEmails, "sent");
-    case "trash": return renderEmailList([], "trash");
-    case "spam": return renderEmailList([], "spam");
+    case "inbox":
+      return renderEmailList(state.inboxEmails, "inbox");
+    case "sent":
+      return renderEmailList(state.sentEmails, "sent");
+    case "trash":
+      return renderEmailList([], "trash");
+    case "spam":
+      return renderEmailList([], "spam");
   }
+
   if (state.currentView === "contacts") return renderContactsView();
   if (state.showCompose) return renderCompose();
 }
