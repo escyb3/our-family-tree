@@ -257,7 +257,8 @@ if (window.location.hostname === "localhost") {
   console.log("User not logged in");
   stopRealtimeSubscriptions(); // לניקוי
 
- // Listener לדואר
+
+    // Listener לדואר
     const mailsRef = collection(db, "mails");
     const q = query(mailsRef, where("recipientId", "==", user.uid));
 
@@ -268,16 +269,17 @@ if (window.location.hostname === "localhost") {
       },
       (err) => console.error("Snapshot listener error:", err)
     );
-
   } else {
     console.log("User not logged in");
-    // נקה listener אם קיים
+    state.currentView = "login";
+
+    // נקה listeners קיימים
+    stopRealtimeSubscriptions();
     if (unsubscribeMails) {
       unsubscribeMails();
       unsubscribeMails = null;
     }
   }
-}); //
 
 
 // -------------------- עזרי DOM --------------------
