@@ -54,11 +54,19 @@ async function initTables() {
 
 
 // ✅ מחזיר את המשתמש המחובר
-app.get('/api/user', (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).json({ error: 'לא מחובר' });
+app.get('/api/user', async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1]; // Bearer <token>
+    if (!token) return res.status(401).json({ error: 'לא מחובר' });
+
+    const { data: { user }, error } = await supabase.auth.getUser(token);
+    if (error || !user) return res.status(401).json({ error: 'לא מחובר' });
+
+    res.json({ user });
+  } catch (err) {
+    console.error("Error in /api/user:", err);
+    res.status(500).json({ error: 'שגיאת שרת' });
   }
-  res.json({ user: req.session.user });
 });
 
 // ✅ התנתקות
