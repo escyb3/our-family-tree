@@ -397,13 +397,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // -------------------- i18n / שפה --------------------
-const languageToggleBtn = $("#languageToggle");
+const languageToggleBtn = document.querySelector("#languageToggle");
+
 languageToggleBtn.addEventListener("click", () => {
   state.language = state.language === "he" ? "en" : "he";
   state.t = lang[state.language];
   document.documentElement.dir = state.language === "he" ? "rtl" : "ltr";
-  render();
+  render(); // אם יש לך פונקציה כזו שמרנדרת את המסך
 });
+
 
 // -------------------- Login --------------------
 const loginForm = $("#loginForm");
