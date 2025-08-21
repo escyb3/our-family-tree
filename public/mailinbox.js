@@ -254,6 +254,8 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 // -------------------- Listener לדואר --------------------
+let unsubscribeMails = null;
+
 function startMailboxListener(userId) {
   const mailRef = collection(db, "mails");
   const q = query(mailRef, where("recipientId", "==", userId), orderBy("timestamp", "desc"));
@@ -270,9 +272,9 @@ function startMailboxListener(userId) {
         const mailDiv = document.createElement("div");
         mailDiv.classList.add("mail-item");
         mailDiv.innerHTML = `
-          <strong>From:</strong> ${mail.sender}<br>
-          <strong>Subject:</strong> ${mail.subject}<br>
-          <p>${mail.body}</p>
+          <strong>From:</strong> ${escapeHtml(mail.sender)}<br>
+          <strong>Subject:</strong> ${escapeHtml(mail.subject)}<br>
+          <p>${escapeHtml(mail.body)}</p>
           <hr>
         `;
         container.appendChild(mailDiv);
@@ -283,7 +285,15 @@ function startMailboxListener(userId) {
     }
   );
 }
-    // בתוך פונקציה שמופעלת אחרי render
+
+// escapeHtml למניעת XSS
+function escapeHtml(s = "") {
+  const d = document.createElement("div");
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+// Listener לכפתור שליחה
 const btnSend = document.getElementById("btnSend");
 if (btnSend) {
   btnSend.addEventListener("click", async () => {
@@ -292,15 +302,6 @@ if (btnSend) {
 } else {
   console.warn("btnSend not found yet!");
 }
-function escapeHtml(s = "") {
-  const d = document.createElement("div");
-  d.textContent = s;
-  return d.innerHTML;
-}
-
-// ואז:
-<strong>Subject:</strong> ${escapeHtml(mail.subject)}<br>
-<p>${escapeHtml(mail.body)}</p>
 
 
 
