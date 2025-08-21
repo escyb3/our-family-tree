@@ -244,8 +244,12 @@ onAuthStateChanged(auth, async (user) => {
   } else {
     console.log("User not logged in");
     state.currentView = "login";
-     render(); 
-}
+    // אם יש לך פונקציה שמציגה מסך התחברות – תקרא לה כאן
+    if (typeof showLoginView === "function") {
+      showLoginView();
+    }
+  }
+});
 
 // -------------------- Listener לדואר --------------------
 function startMailboxListener(userId) {
