@@ -12,6 +12,7 @@ import { getFirestore, collection, addDoc, onSnapshot, query, where, serverTimes
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // -------------------- שפה / טקסטים --------------------
+// -------------------- שפה / טקסטים --------------------
 const lang = {
   he: {
     appName: 'דוא"ל פנימי',
@@ -179,6 +180,7 @@ const state = {
   isSummarizing: false,
   suggestedReplies: [],
   isSuggestingReplies: false,
+  // TTS
   isTTSLoading: false,
   isReading: false,
   audioEl: null
@@ -290,6 +292,16 @@ if (btnSend) {
 } else {
   console.warn("btnSend not found yet!");
 }
+function escapeHtml(s = "") {
+  const d = document.createElement("div");
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+// ואז:
+<strong>Subject:</strong> ${escapeHtml(mail.subject)}<br>
+<p>${escapeHtml(mail.body)}</p>
+
 
 
 // -------------------- Utility --------------------
@@ -448,10 +460,14 @@ loginForm.addEventListener("submit", async (e) => {
 });
 
 
-// -------------------- Attach Event Listeners with File Upload --------------------
+// -------------------- Attach Event Listeners with File Upload (Safe Version) --------------------
 function attachListeners() {
   const btnSend = document.getElementById("btnSend");
-  if (!btnSend) return;
+  const composeForm = document.getElementById("composeForm");
+  if (!btnSend || !composeForm) {
+    console.warn("btnSend or composeForm not found!");
+    return;
+  }
 
   btnSend.addEventListener("click", async () => {
     const { recipient, subject, body } = state.compose || {};
@@ -464,9 +480,19 @@ function attachListeners() {
     try {
       const uploadedFiles = [];
 
+      // בדיקה שה-storage מוגדר
+      if (!window.storage) {
+        console.error("Firebase Storage not initialized!");
+        return alert("Storage not available");
+      }
+
       // אם יש קבצים, העלאה ל-Firebase Storage
       for (const file of attachments) {
-        const storageRef = ref(storage, `emails/${Date.now()}_${file.name}`);
+        if (!file) continue;
+        const storageRef = ref(
+          storage,
+          `emails/${state.userId || "unknownUser"}/${Date.now()}_${file.name}`
+        );
         await uploadBytes(storageRef, file);
         const url = await getDownloadURL(storageRef);
         uploadedFiles.push({
@@ -479,7 +505,7 @@ function attachListeners() {
 
       // הכנת אובייקט email עם קישורים לקבצים
       const emailData = {
-        sender: state.emailAddress,
+        sender: state.emailAddress || "unknown@family.local",
         recipient: `${recipient}@family.local`,
         subject: subject || "No Subject",
         body,
@@ -487,19 +513,21 @@ function attachListeners() {
         attachments: uploadedFiles.length > 0 ? uploadedFiles : null
       };
 
-      // הוספת המסמך ל-Firestore
-      await addDoc(
-        collection(db, `artifacts/1:199399854104:web:6aec488e6aeee0dec3736d/public/data/emails`),
-        emailData
+      // יצירת מסמך ב-Firestore
+      const userEmailCollection = collection(
+        db,
+        `users/${state.userId || "unknownUser"}/emails`
       );
+      await addDoc(userEmailCollection, emailData);
 
       alert("Email sent successfully!");
-      
+
       // איפוס השדות אחרי שליחה
       state.compose = { recipient: "", subject: "", body: "" };
       state.attachments = [];
-      const inputs = document.querySelectorAll("#composeForm input, #composeForm textarea");
-      inputs.forEach(input => input.value = "");
+      const inputs = composeForm.querySelectorAll("input, textarea");
+      inputs.forEach(input => (input.value = ""));
+
     } catch (err) {
       console.error("Failed to send email:", err);
       alert("Failed to send email. Please try again.");
@@ -522,25 +550,23 @@ function startRealtimeSubscriptions() {
   // Inbox
   const inboxQ = query(
     collection(db, `artifacts/${appId}/public/data/emails`),
-    where("recipient", "==", state.emailAddress)
+    where("recipient", "==", state.emailAddress),
+    orderBy("timestamp", "desc")
   );
 
   unsubscribeInbox = onSnapshot(inboxQ, (snap) => {
-    const emails = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    emails.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
-    state.inboxEmails = emails;
+    state.inboxEmails = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     if (state.currentView === "mailbox" && state.currentFolder === "inbox" && !state.selectedEmail) renderMain();
   });
 
   // Sent
   const sentQ = query(
     collection(db, `artifacts/${appId}/public/data/emails`),
-    where("sender", "==", state.emailAddress)
+    where("sender", "==", state.emailAddress),
+    orderBy("timestamp", "desc")
   );
   unsubscribeSent = onSnapshot(sentQ, (snap) => {
-    const emails = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    emails.sort((a,b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
-    state.sentEmails = emails;
+    state.sentEmails = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     if (state.currentView === "mailbox" && state.currentFolder === "sent" && !state.selectedEmail) renderMain();
   });
 
@@ -558,34 +584,39 @@ function stopRealtimeSubscriptions() {
   if (unsubscribeContacts) { unsubscribeContacts(); unsubscribeContacts = null; }
 }
 
-  const dropZone = document.getElementById("dropZone");
+// -------------------- Attachments --------------------
+const dropZone = document.getElementById("dropZone");
 const attachmentInput = document.getElementById("attachmentInput");
 const attachmentList = document.getElementById("attachmentList");
 
 state.attachments = [];
 
-// פתיחת קובץ בלחיצה על ה-dropZone
-dropZone.addEventListener("click", () => attachmentInput.click());
+// בדיקה לפני הוספת מאזינים
+if (dropZone && attachmentInput && attachmentList) {
 
-// טיפול בקבצים שנבחרו ידנית
-attachmentInput.addEventListener("change", (e) => handleFiles(e.target.files));
+  // פתיחת קובץ בלחיצה על ה-dropZone
+  dropZone.addEventListener("click", () => attachmentInput.click());
 
-// טיפול בקבצים שנגררו
-dropZone.addEventListener("dragover", (e) => {
-  e.preventDefault();
-  dropZone.classList.add("dragover");
-});
+  // טיפול בקבצים שנבחרו ידנית
+  attachmentInput.addEventListener("change", (e) => handleFiles(e.target.files));
 
-dropZone.addEventListener("dragleave", (e) => {
-  e.preventDefault();
-  dropZone.classList.remove("dragover");
-});
+  // טיפול בקבצים שנגררו
+  dropZone.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropZone.classList.add("dragover");
+  });
 
-dropZone.addEventListener("drop", (e) => {
-  e.preventDefault();
-  dropZone.classList.remove("dragover");
-  handleFiles(e.dataTransfer.files);
-});
+  dropZone.addEventListener("dragleave", (e) => {
+    e.preventDefault();
+    dropZone.classList.remove("dragover");
+  });
+
+  dropZone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropZone.classList.remove("dragover");
+    handleFiles(e.dataTransfer.files);
+  });
+}
 
 // פונקציה לעיבוד קבצים והוספתם ל-state + UI
 function handleFiles(files) {
@@ -605,6 +636,7 @@ function getFileIcon(file) {
 }
 
 function renderAttachmentList() {
+  if (!attachmentList) return;
   attachmentList.innerHTML = "";
   state.attachments.forEach((file, index) => {
     const li = document.createElement("li");
@@ -623,31 +655,41 @@ function renderAttachmentList() {
   });
 }
 
-// עדכון שדות compose
-document.getElementById("recipientInput").addEventListener("input", (e) => state.compose.recipient = e.target.value);
-document.getElementById("subjectInput").addEventListener("input", (e) => state.compose.subject = e.target.value);
-document.getElementById("bodyInput").addEventListener("input", (e) => state.compose.body = e.target.value);
+// -------------------- Compose Inputs --------------------
+const recipientInput = document.getElementById("recipientInput");
+const subjectInput = document.getElementById("subjectInput");
+const bodyInput = document.getElementById("bodyInput");
 
-// קריאה לפונקציה לשליחה
-attachListeners();
+if (recipientInput) recipientInput.addEventListener("input", (e) => state.compose.recipient = e.target.value);
+if (subjectInput) subjectInput.addEventListener("input", (e) => state.compose.subject = e.target.value);
+if (bodyInput) bodyInput.addEventListener("input", (e) => state.compose.body = e.target.value);
 
-// Sidebar buttons
-$("#btnCompose").addEventListener("click", () => {
-  state.showCompose = true;
-  state.selectedEmail = null;
-  mainContent.scrollTop = 0;
-  renderCompose();
-});
+// -------------------- Compose / Send --------------------
+attachListeners(); // ודא שפונקציה זו קיימת
 
-$("#btnContacts").addEventListener("click", () => {
-  state.currentView = "mailbox";
-  state.selectedEmail = null;
-  state.showCompose = false;
-  state.currentFolder = "inbox";
-  renderContactsView();
-});
+// -------------------- Sidebar / Navigation --------------------
+const btnCompose = document.getElementById("btnCompose");
+const btnContacts = document.getElementById("btnContacts");
 
-// Folder nav
+if (btnCompose) {
+  btnCompose.addEventListener("click", () => {
+    state.showCompose = true;
+    state.selectedEmail = null;
+    if (mainContent) mainContent.scrollTop = 0;
+    renderCompose();
+  });
+}
+
+if (btnContacts) {
+  btnContacts.addEventListener("click", () => {
+    state.currentView = "mailbox";
+    state.selectedEmail = null;
+    state.showCompose = false;
+    state.currentFolder = "inbox";
+    renderContactsView();
+  });
+}
+
 $$(".nav-btn[data-folder]").forEach(btn => {
   btn.addEventListener("click", () => {
     state.currentFolder = btn.getAttribute("data-folder");
@@ -657,27 +699,37 @@ $$(".nav-btn[data-folder]").forEach(btn => {
   });
 });
 
-  // Gemini Draft
-  const btnGemini = document.getElementById("btnGemini");
-  const promptInput = document.getElementById("geminiPrompt");
-  if (btnGemini && promptInput) {
-    btnGemini.addEventListener("click", async () => {
-      if (!state.userId) {
-        alert("You must be logged in to use Gemini");
-        return;
-      }
+ // -------------------- Gemini Draft --------------------
+const btnGemini = document.getElementById("btnGemini");
+const promptInput = document.getElementById("geminiPrompt");
 
-      state.geminiDraftPrompt = promptInput.value.trim();
-      if (!state.geminiDraftPrompt) return;
+if (btnGemini && promptInput) {
+  btnGemini.addEventListener("click", async () => {
+    if (!state.userId) {
+      alert("You must be logged in to use Gemini");
+      return;
+    }
 
+    state.geminiDraftPrompt = promptInput.value.trim();
+    if (!state.geminiDraftPrompt) return;
+
+    if (typeof handleGeminiGenerate === "function") {
       await handleGeminiGenerate(editor); // פונקציה שלך לטיוטת Gemini
-    });
-  }
-  // Send
-  $("#btnSend").addEventListener("click", handleSendEmail);
+    }
+  });
+}
 
+// Send button
+const btnSend = document.getElementById("btnSend");
+if (btnSend) {
+  btnSend.addEventListener("click", handleSendEmail);
+}
+
+// -------------------- Contacts View --------------------
 function renderContactsView() {
   const t = state.t;
+  const appId = "1:199399854104:web:6aec488e6aeee0dec3736d"; // הוספנו את ההגדרה
+
   mainContent.innerHTML = `
     <div class="section">
       <div class="row right">
@@ -711,115 +763,118 @@ function renderContactsView() {
     </div>
   `;
 
-  $("#btnBackMail").addEventListener("click", ()=>{
-    state.currentFolder = "inbox";
-    renderMain();
-  });
+  const btnBackMail = document.getElementById("btnBackMail");
+  if (btnBackMail) {
+    btnBackMail.addEventListener("click", () => {
+      state.currentFolder = "inbox";
+      renderMain();
+    });
+  }
 
- // Add contact
-const btnAddContact = document.getElementById("btnAddContact");
-if (btnAddContact) {
-  btnAddContact.addEventListener("click", handleAddContact);
-}
+  const btnAddContact = document.getElementById("btnAddContact");
+  if (btnAddContact) {
+    btnAddContact.addEventListener("click", handleAddContact);
+  }
 
-// List
-const list = document.getElementById("contactsList");
-if (!list) return;
+  const list = document.getElementById("contactsList");
+  if (!list) return;
 
-list.innerHTML = "";
+  list.innerHTML = "";
 
-if (!state.contacts || !state.contacts.length) {
-  list.innerHTML = `<div class="muted center" style="padding:20px">${t.noContacts}</div>`;
-} else {
-  for (const c of state.contacts) {
-    const row = document.createElement("div");
-    row.className = "mail-item";
+  if (!state.contacts || !state.contacts.length) {
+    list.innerHTML = `<div class="muted center" style="padding:20px">${t.noContacts}</div>`;
+  } else {
+    for (const c of state.contacts) {
+      const row = document.createElement("div");
+      row.className = "mail-item";
 
-    row.innerHTML = `
-      <div class="row" style="justify-content:space-between">
-        <div>
-          <div class="k">${escapeHtml(c.name || "")}</div>
-          <div class="tiny muted">${escapeHtml(c.username || "")}@family.local</div>
+      row.innerHTML = `
+        <div class="row" style="justify-content:space-between">
+          <div>
+            <div class="k">${escapeHtml(c.name || "")}</div>
+            <div class="tiny muted">${escapeHtml(c.username || "")}@family.local</div>
+          </div>
+          <button class="btn" data-id="${c.id}">🗑️</button>
         </div>
-        <button class="btn" data-id="${c.id}">🗑️</button>
-      </div>
-    `;
+      `;
 
-    const btnDelete = row.querySelector("button");
-    if (btnDelete) {
-      btnDelete.addEventListener("click", async () => {
-        if (!confirm(state.t.deleteContactConfirm)) return;
-        try {
-          await deleteDoc(doc(db, `artifacts/${appId}/users/${state.userId}/contacts`, c.id));
-          // עדכון רשימת אנשי קשר אחרי מחיקה
-          state.contacts = state.contacts.filter(contact => contact.id !== c.id);
-          row.remove();
-        } catch (e) {
-          console.error("Delete contact error:", e);
-          alert("Failed to delete contact. Please try again.");
-        }
+      const btnDelete = row.querySelector("button");
+      if (btnDelete) {
+        btnDelete.addEventListener("click", async () => {
+          if (!confirm(state.t.deleteContactConfirm)) return;
+          try {
+            await deleteDoc(doc(db, `artifacts/${appId}/users/${state.userId}/contacts`, c.id));
+            state.contacts = state.contacts.filter(contact => contact.id !== c.id);
+            row.remove();
+          } catch (e) {
+            console.error("Delete contact error:", e);
+            alert("Failed to delete contact. Please try again.");
+          }
+        });
+      }
+
+      list.appendChild(row);
+    }
+  }
+
+  // Contact suggestions
+  const recipientInput = document.getElementById("recipientInput");
+  const contactSuggestions = document.getElementById("contactSuggestions");
+
+  if (recipientInput && contactSuggestions) {
+    function showContactSuggestions(value) {
+      contactSuggestions.innerHTML = "";
+      if (!value) {
+        contactSuggestions.style.display = "none";
+        return;
+      }
+
+      const filtered = state.contacts.filter(c =>
+        c.name.toLowerCase().includes(value.toLowerCase()) ||
+        c.username.toLowerCase().includes(value.toLowerCase())
+      );
+
+      filtered.forEach(c => {
+        const div = document.createElement("div");
+        div.textContent = `${c.name} (${c.username}@family.local)`;
+        div.addEventListener("click", () => {
+          recipientInput.value = c.username;
+          contactSuggestions.style.display = "none";
+        });
+        contactSuggestions.appendChild(div);
       });
+
+      contactSuggestions.style.display = filtered.length ? "block" : "none";
     }
 
-    list.appendChild(row);
-  }
-}
-  const recipientInput = document.getElementById("recipientInput");
-const contactSuggestions = document.getElementById("contactSuggestions");
+    recipientInput.addEventListener("input", (e) => showContactSuggestions(e.target.value));
 
-// פונקציה להצגת הצעות אנשי קשר
-function showContactSuggestions(value) {
-  contactSuggestions.innerHTML = "";
-  if (!value) {
-    contactSuggestions.style.display = "none";
-    return;
-  }
-
-  const filtered = state.contacts.filter(c =>
-    c.name.toLowerCase().includes(value.toLowerCase()) ||
-    c.username.toLowerCase().includes(value.toLowerCase())
-  );
-
-  filtered.forEach(c => {
-    const div = document.createElement("div");
-    div.textContent = `${c.name} (${c.username}@family.local)`;
-    div.addEventListener("click", () => {
-      recipientInput.value = c.username;
-      contactSuggestions.style.display = "none";
+    document.addEventListener("click", (e) => {
+      if (!recipientInput.contains(e.target) && !contactSuggestions.contains(e.target)) {
+        contactSuggestions.style.display = "none";
+      }
     });
-    contactSuggestions.appendChild(div);
-  });
 
-  contactSuggestions.style.display = filtered.length ? "block" : "none";
-}
-
-// עדכון הצעות בזמן הקלדה
-recipientInput.addEventListener("input", (e) => showContactSuggestions(e.target.value));
-
-// הסתרת הצעות כשמקליקים מחוץ לשדה
-document.addEventListener("click", (e) => {
-  if (!recipientInput.contains(e.target) && !contactSuggestions.contains(e.target)) {
-    contactSuggestions.style.display = "none";
+    recipientInput.addEventListener("dragover", (e) => e.preventDefault());
+    recipientInput.addEventListener("drop", (e) => {
+      e.preventDefault();
+      const droppedName = e.dataTransfer.getData("text/plain");
+      const contact = state.contacts.find(c => c.name === droppedName);
+      if (contact) recipientInput.value = contact.username;
+    });
   }
-});
 
-// Drag & Drop: אפשר לגרור שם איש קשר מהליסט לתוך השדה
-const contactsList = document.getElementById("contactsList");
-contactsList.querySelectorAll(".mail-item").forEach(item => {
-  item.draggable = true;
-  item.addEventListener("dragstart", (e) => {
-    e.dataTransfer.setData("text/plain", item.querySelector(".k").textContent);
-  });
-});
-
-recipientInput.addEventListener("dragover", (e) => e.preventDefault());
-recipientInput.addEventListener("drop", (e) => {
-  e.preventDefault();
-  const droppedName = e.dataTransfer.getData("text/plain");
-  const contact = state.contacts.find(c => c.name === droppedName);
-  if (contact) recipientInput.value = contact.username;
-});
-
+  // Drag & Drop from list
+  if (list) {
+    list.querySelectorAll(".mail-item").forEach(item => {
+      item.draggable = true;
+      item.addEventListener("dragstart", (e) => {
+        const kElem = item.querySelector(".k");
+        if (kElem) e.dataTransfer.setData("text/plain", kElem.textContent);
+      });
+    });
+  }
+}
 
 
 // -------------------- Actions --------------------
@@ -828,27 +883,35 @@ async function handleSendEmail() {
   const composeStatus = $("#composeStatus");
   composeStatus.hidden = true;
 
+  // attachments כ-array
+  const attachmentsData = state.attachments && state.attachments.length
+    ? state.attachments.map(f => ({
+        name: f.name,
+        size: f.size,
+        type: f.type
+      }))
+    : null;
+
   const newEmail = {
     sender: state.emailAddress,
-    recipient: (state.compose.recipient||"").trim() + "@family.local",
-    subject: (state.compose.subject||"").trim() || t.emailSubjectPlaceholder,
+    recipient: (state.compose.recipient || "").trim() + "@family.local",
+    subject: (state.compose.subject || "").trim() || t.emailSubjectPlaceholder,
     body: state.compose.body || "",
     timestamp: serverTimestamp(),
-    attachment: state.attachments ? {
-      name: state.attachments.name,
-      size: state.attachments.size,
-      type: state.attachments.type
-    } : null
+    attachment: attachmentsData
   };
 
   try {
     await addDoc(collection(db, `artifacts/${appId}/public/data/emails`), newEmail);
     composeStatus.textContent = t.sendSuccess;
     composeStatus.hidden = false;
-    state.compose = { recipient:"", subject:"", body:"" };
-    state.attachments = null;
+
+    // איפוס compose ו־attachments
+    state.compose = { recipient: "", subject: "", body: "" };
+    state.attachments = [];
+
     // חזרה לתיבה אחרי רגע
-    setTimeout(()=>{
+    setTimeout(() => {
       state.showCompose = false;
       renderMain();
     }, 800);
@@ -866,6 +929,11 @@ async function handleAddContact() {
   const status = $("#contactStatus");
   status.hidden = true;
 
+  if (!state.userId) { 
+    alert("You must be logged in to add contacts");
+    return;
+  }
+
   if (!name || !username) return;
 
   try {
@@ -874,7 +942,8 @@ async function handleAddContact() {
     await setDoc(ref, { name, username });
     status.textContent = t.contactAdded;
     status.hidden = false;
-    setTimeout(()=>status.hidden = true, 1500);
+    setTimeout(() => status.hidden = true, 1500);
+
     // טופס נקי
     $("#contactName").value = "";
     $("#contactUsername").value = "";
@@ -882,7 +951,7 @@ async function handleAddContact() {
     console.error("Add contact error:", e);
     status.textContent = "אירעה שגיאה בהוספת איש הקשר.";
     status.hidden = false;
-    setTimeout(()=>status.hidden = true, 1500);
+    setTimeout(() => status.hidden = true, 1500);
   }
 }
 
@@ -891,8 +960,8 @@ const GEMINI_API_KEY = ""; // ← הכנס כאן את המפתח שלך
 
 async function geminiFetch(url, payload) {
   const res = await fetch(`${url}?key=${GEMINI_API_KEY}`, {
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
   });
   if (!res.ok) throw new Error(`Gemini HTTP ${res.status}`);
@@ -901,13 +970,15 @@ async function geminiFetch(url, payload) {
 
 async function handleGeminiGenerate(editorEl) {
   if (!GEMINI_API_KEY) { alert("חסר GEMINI_API_KEY ב-app.js"); return; }
+  if (!editorEl) return;
+
   const t = state.t;
   const errEl = $("#geminiError");
   errEl.hidden = true;
 
   try {
     const payload = {
-      contents: [{ role:"user", parts:[{ text: state.geminiDraftPrompt }]}]
+      contents: [{ role: "user", parts: [{ text: state.geminiDraftPrompt }] }]
     };
     const data = await geminiFetch(
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent",
@@ -915,7 +986,7 @@ async function handleGeminiGenerate(editorEl) {
     );
     const generated = data?.candidates?.[0]?.content?.parts?.[0]?.text;
     if (generated) {
-      const html = generated.replace(/\n/g,"<br/>");
+      const html = generated.replace(/\n/g, "<br/>");
       editorEl.innerHTML = html;
       state.compose.body = html;
     } else {
@@ -936,13 +1007,13 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
-const $$ = (selector, root=document) => Array.from(root.querySelectorAll(selector));
+const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
 function base64ToArrayBuffer(base64) {
   const binaryString = atob(base64);
   const len = binaryString.length;
   const bytes = new Uint8Array(len);
-  for (let i=0;i<len;i++) bytes[i] = binaryString.charCodeAt(i);
+  for (let i = 0; i < len; i++) bytes[i] = binaryString.charCodeAt(i);
   return bytes.buffer;
 }
 
@@ -950,21 +1021,21 @@ function pcmToWav(pcmData, sampleRate) {
   const buffer = new ArrayBuffer(44 + pcmData.length * 2);
   const view = new DataView(buffer);
   let o = 0;
-  view.setUint32(o, 0x52494646, false); o+=4; // RIFF
-  view.setUint32(o, 36 + pcmData.length * 2, true); o+=4;
-  view.setUint32(o, 0x57415645, false); o+=4; // WAVE
-  view.setUint32(o, 0x666d7420, false); o+=4; // fmt
-  view.setUint32(o, 16, true); o+=4;
-  view.setUint16(o, 1, true); o+=2;          // PCM
-  view.setUint16(o, 1, true); o+=2;          // channels
-  view.setUint32(o, sampleRate, true); o+=4;
-  view.setUint32(o, sampleRate*2, true); o+=4; // byte rate
-  view.setUint16(o, 2, true); o+=2;           // block align
-  view.setUint16(o, 16, true); o+=2;          // bits per sample
-  view.setUint32(o, 0x64617461, false); o+=4; // data
-  view.setUint32(o, pcmData.length*2, true); o+=4;
-  for (let i=0;i<pcmData.length;i++,o+=2) view.setInt16(o, pcmData[i], true);
-  return new Blob([view], { type:"audio/wav" });
+  view.setUint32(o, 0x52494646, false); o += 4; // RIFF
+  view.setUint32(o, 36 + pcmData.length * 2, true); o += 4;
+  view.setUint32(o, 0x57415645, false); o += 4; // WAVE
+  view.setUint32(o, 0x666d7420, false); o += 4; // fmt
+  view.setUint32(o, 16, true); o += 4;
+  view.setUint16(o, 1, true); o += 2;          // PCM
+  view.setUint16(o, 1, true); o += 2;          // channels
+  view.setUint32(o, sampleRate, true); o += 4;
+  view.setUint32(o, sampleRate * 2, true); o += 4; // byte rate
+  view.setUint16(o, 2, true); o += 2;           // block align
+  view.setUint16(o, 16, true); o += 2;          // bits per sample
+  view.setUint32(o, 0x64617461, false); o += 4; // data
+  view.setUint32(o, pcmData.length * 2, true); o += 4;
+  for (let i = 0; i < pcmData.length; i++, o += 2) view.setInt16(o, pcmData[i], true);
+  return new Blob([view], { type: "audio/wav" });
 }
 
 // -------------------- AI Outputs Update --------------------
@@ -981,7 +1052,9 @@ function updateAiOutputs() {
 
   if (state.isSuggestingReplies) parts.push(`<div class="muted">${t.suggestingReplies}</div>`);
   if (state.suggestedReplies.length) {
-    const chips = state.suggestedReplies.map((r,i)=>`<button class="btn" data-reply="${escapeHtml(r)}">${escapeHtml(r)}</button>`).join(" ");
+    const chips = state.suggestedReplies
+      .map(r => `<button class="btn" data-reply="${escapeHtml(r)}">${escapeHtml(r)}</button>`)
+      .join(" ");
     parts.push(`<div class="section"><div class="k">${t.suggestRepliesButton}:</div><div class="flex" style="margin-top:6px">${chips}</div></div>`);
   }
 
@@ -990,15 +1063,22 @@ function updateAiOutputs() {
 
   wrap.innerHTML = parts.join("") || "";
 
+  // Remove old listeners to avoid duplicates
+  $$('button[data-reply]', wrap).forEach(btn => {
+    const newBtn = btn.cloneNode(true);
+    btn.replaceWith(newBtn);
+  });
+
   // click suggested replies => open compose
-  $$('button[data-reply]', wrap).forEach(btn=>{
-    btn.addEventListener("click", ()=>{
+  $$('button[data-reply]', wrap).forEach(btn => {
+    btn.addEventListener("click", () => {
       const reply = btn.getAttribute("data-reply") || "";
       const e = state.selectedEmail;
+      if (!e) return;
       state.showCompose = true;
       state.compose = {
-        recipient: (e.sender||"").split("@")[0],
-        subject: `Re: ${e.subject||""}`,
+        recipient: (e.sender || "").split("@")[0],
+        subject: `Re: ${e.subject || ""}`,
         body: escapeHtml(reply)
       };
       renderCompose();
@@ -1016,12 +1096,12 @@ async function handleSummarizeEmail() {
   state.isSummarizing = true;
   updateAiOutputs();
 
-  const prompt = `Summarize the following email in a brief, concise paragraph. Subject: "${e.subject}". Body: "${(e.body||"").replace(/<[^>]*>?/gm,"")}"`;
+  const prompt = `Summarize the following email in a brief, concise paragraph. Subject: "${e.subject}". Body: "${(e.body || "").replace(/<[^>]*>?/gm,"")}"`;
 
   try {
     let summary = "";
-    if (typeof GEMINI_API_KEY !== "undefined") {
-      const payload = { contents:[{ role:"user", parts:[{ text: prompt }]}] };
+    if (GEMINI_API_KEY) {
+      const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
       const data = await geminiFetch(
         "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent",
         payload
@@ -1051,12 +1131,12 @@ async function handleSuggestReplies() {
 
   try {
     let arr = [];
-    if (typeof GEMINI_API_KEY !== "undefined") {
+    if (GEMINI_API_KEY) {
       const payload = {
-        contents:[{ role:"user", parts:[{ text: prompt }]}],
-        generationConfig:{
-          responseMimeType:"application/json",
-          responseSchema:{ type:"ARRAY", items:{ type:"STRING" } }
+        contents: [{ role: "user", parts: [{ text: prompt }] }],
+        generationConfig: {
+          responseMimeType: "application/json",
+          responseSchema: { type: "ARRAY", items: { type: "STRING" } }
         }
       };
       const data = await geminiFetch(
@@ -1094,17 +1174,17 @@ async function handleReadEmail() {
 
   const textToRead = `Subject: ${e.subject}. Body: ${(e.body||"").replace(/<[^>]*>?/gm, "")}`;
   const payload = {
-    contents:[{ parts:[{ text: textToRead }]}],
-    generationConfig:{
-      responseModalities:["AUDIO"],
-      speechConfig:{ voiceConfig:{ prebuiltVoiceConfig:{ voiceName:"Algieba" } } }
+    contents: [{ parts: [{ text: textToRead }] }],
+    generationConfig: {
+      responseModalities: ["AUDIO"],
+      speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Algieba" } } }
     },
-    model:"gemini-2.5-flash-preview-tts"
+    model: "gemini-2.5-flash-preview-tts"
   };
 
   try {
     let audioData, mimeType;
-    if (typeof GEMINI_API_KEY !== "undefined") {
+    if (GEMINI_API_KEY) {
       const data = await geminiFetch(
         "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent",
         payload
@@ -1116,16 +1196,17 @@ async function handleReadEmail() {
 
     if (audioData && mimeType && mimeType.startsWith("audio/")) {
       const rateMatch = mimeType.match(/rate=(\d+)/);
-      const sampleRate = rateMatch ? parseInt(rateMatch[1],10) : 24000;
+      const sampleRate = rateMatch ? parseInt(rateMatch[1], 10) : 24000;
       const pcm = new Int16Array(base64ToArrayBuffer(audioData));
       const wavBlob = pcmToWav(pcm, sampleRate);
       const url = URL.createObjectURL(wavBlob);
       const audio = state.audioEl || new Audio();
+      audio.pause();
       audio.src = url;
       audio.play();
       state.audioEl = audio;
       state.isReading = true;
-      audio.onended = ()=>{ state.isReading = false; updateAiOutputs(); };
+      audio.onended = () => { state.isReading = false; updateAiOutputs(); };
     } else {
       console.error("TTS: no audio data");
     }
@@ -1136,12 +1217,12 @@ async function handleReadEmail() {
     updateAiOutputs();
   }
 }
-    
-// Gemini AI Draft
+
+// -------------------- Gemini AI Draft --------------------
 $("#btnGemini")?.addEventListener("click", async () => {
-  const prompt = $("#geminiPrompt").value.trim();
+  const prompt = $("#geminiPrompt")?.value.trim();
   const geminiError = $("#geminiError");
-  geminiError.hidden = true;
+  if (geminiError) geminiError.hidden = true;
 
   if (!prompt) return;
 
@@ -1149,18 +1230,20 @@ $("#btnGemini")?.addEventListener("click", async () => {
     state.isGeminiLoading = true;
     const draft = await fakeGeminiDraft(prompt); // קריאה ל-API אמיתי
     state.compose.body = draft;
-    $("#richEditor").innerHTML = draft;
+    const editor = $("#richEditor");
+    if (editor) editor.innerHTML = draft;
   } catch(err) {
     console.error(err);
-    geminiError.hidden = false;
+    if (geminiError) geminiError.hidden = false;
   } finally {
     state.isGeminiLoading = false;
   }
 });
 
-// Send Email
+// -------------------- Send Email --------------------
 $("#btnSend")?.addEventListener("click", async () => {
   const composeStatus = $("#composeStatus");
+  if (!composeStatus) return;
   composeStatus.hidden = false;
   composeStatus.textContent = state.t.loginStatusConnecting;
 
@@ -1179,7 +1262,9 @@ $("#btnSend")?.addEventListener("click", async () => {
       body,
       timestamp: serverTimestamp(),
       attachment: state.attachments
-        ? { name: state.attachments.name, size: state.attachments.size }
+        ? Array.isArray(state.attachments)
+          ? state.attachments.map(f => ({ name: f.name, size: f.size }))
+          : { name: state.attachments.name, size: state.attachments.size }
         : null
     });
     composeStatus.textContent = state.t.sendSuccess;
@@ -1190,17 +1275,18 @@ $("#btnSend")?.addEventListener("click", async () => {
     console.error(err);
     composeStatus.textContent = state.t.sendError;
   }
-}); // ✅ כאן נסגר ה־addEventListener
+});
+
 // -------------------- Fake API Helpers --------------------
 async function fakeAISummarize(text) { return "סיכום הדוגמה: " + text.slice(0,100) + "…"; }
 async function fakeAISuggestReplies(text) { return ["תשובה 1","תשובה 2","תשובה 3"]; }
 function fakeTTSUrl(text) { return `https://api.fakeTTS.com/speech?text=${encodeURIComponent(text)}`; }
 async function fakeGeminiDraft(prompt) { return "טיוטת Gemini AI לדוגמה עבור: " + prompt; }
 
-//-------Call Render------------------
+// -------------------- Call Render --------------------
 function render() {
   console.log("Render called");
 }
+
 // -------------------- התחל --------------------
 render();
-  }
