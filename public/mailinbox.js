@@ -254,7 +254,9 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 // -------------------- Listener לדואר --------------------
-let unsubscribeMails = null;
+// -------------------- Listener לדואר --------------------
+// כאן לא עושים let שוב, כי כבר מוגדר למעלה
+unsubscribeMails = null;
 
 function startMailboxListener(userId) {
   const mailRef = collection(db, "mails");
