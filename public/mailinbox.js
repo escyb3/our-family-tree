@@ -725,12 +725,6 @@ if (btnGemini && promptInput) {
   });
 }
 
-// Send button
-const btnSend = document.getElementById("btnSend");
-if (btnSend) {
-  btnSend.addEventListener("click", handleSendEmail);
-}
-
 // -------------------- Contacts View --------------------
 function renderContactsView() {
   const t = state.t;
