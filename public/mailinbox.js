@@ -324,10 +324,13 @@ function fmtDate(tsSeconds, locale) {
   return new Date(tsSeconds * 1000).toLocaleString(locale, { dateStyle:"short", timeStyle:"short" });
 }
 
-function escapeHtml(s = "") {
-  const d = document.createElement("div");
-  d.textContent = s;
-  return d.innerHTML;
+// הגדרה רק אם לא קיים כבר
+if (typeof escapeHtml === "undefined") {
+  function escapeHtml(s = "") {
+    const d = document.createElement("div");
+    d.textContent = s;
+    return d.innerHTML;
+  }
 }
 
 // -------------------- DOM Helpers --------------------
