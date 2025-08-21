@@ -408,10 +408,10 @@ languageToggleBtn.addEventListener("click", () => {
 
 
 // -------------------- Login --------------------
-const loginForm = $("#loginForm");
-const usernameInput = $("#usernameInput");
-const loginStatus = $("#loginStatus");
-const loginBtn = $("#loginBtn");
+const loginForm = document.querySelector("#loginForm");
+const usernameInput = document.querySelector("#usernameInput");
+const loginStatus = document.querySelector("#loginStatus");
+const loginBtn = document.querySelector("#loginBtn");
 
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -446,6 +446,7 @@ loginForm.addEventListener("submit", async (e) => {
     loginBtn.disabled = false;
   }
 });
+
 
 // -------------------- Attach Event Listeners with File Upload --------------------
 function attachListeners() {
