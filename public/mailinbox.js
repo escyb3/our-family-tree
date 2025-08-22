@@ -441,22 +441,21 @@ loginForm.addEventListener("submit", async (e) => {
 
   try {
     const email = `${username}@family.local`;
-    const password = "defaultPassword"; // סיסמת ברירת מחדל לכולם
+    const password = "defaultPassword"; // סיסמה אחידה לכל המשתמשים
 
     let userCredential;
     try {
-      // מנסה להתחבר אם המשתמש כבר קיים
+      // מנסה להתחבר אם המשתמש כבר קיים ב-Firebase Auth
       userCredential = await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
       if (err.code === "auth/user-not-found") {
-        // אם המשתמש לא קיים – צור אותו
+        // משתמש לא קיים – צור משתמש חדש
         userCredential = await createUserWithEmailAndPassword(auth, email, password);
       } else {
         throw err;
       }
     }
 
-    // מזהה המשתמש
     const uid = userCredential.user.uid;
 
     // בדיקה אם המשתמש כבר קיים ב-Firestore
@@ -464,7 +463,7 @@ loginForm.addEventListener("submit", async (e) => {
     const userSnap = await getDoc(userRef);
 
     if (!userSnap.exists()) {
-      // אם זה כניסה ראשונה – צור רשומה ב-Firestore
+      // אם זו הפעם הראשונה – צור רשומה ב-Firestore
       await setDoc(userRef, {
         username: username,
         email: email,
@@ -472,10 +471,10 @@ loginForm.addEventListener("submit", async (e) => {
       });
     }
 
-    // קבלת טוקן
+    // קבלת ID Token
     const idToken = await userCredential.user.getIdToken(true);
 
-    // עדכון state
+    // עדכון state גלובלי
     state.username = username;
     state.emailAddress = email;
     state.userId = uid;
@@ -484,9 +483,10 @@ loginForm.addEventListener("submit", async (e) => {
 
     loginStatus.hidden = true;
 
-    // חיבור ל-Firestore
+    // התחברות ל-Firestore / Realtime Subscriptions
     startRealtimeSubscriptions();
     render();
+
   } catch (err) {
     console.error("Login error:", err);
     loginStatus.textContent = "Login failed: " + err.message;
@@ -494,6 +494,7 @@ loginForm.addEventListener("submit", async (e) => {
     loginBtn.disabled = false;
   }
 });
+
 
 
 
