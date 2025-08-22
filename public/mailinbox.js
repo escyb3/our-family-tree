@@ -1001,10 +1001,12 @@ async function handleGeminiGenerate(editorEl) {
 }
 
 // -------------------- Helpers --------------------
-function escapeHtml(text) {
-  const div = document.createElement("div");
-  div.textContent = text;
-  return div.innerHTML;
+if (typeof window.escapeHtml !== "function") {
+  window.escapeHtml = function (text = "") {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+  };
 }
 
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
@@ -1037,6 +1039,7 @@ function pcmToWav(pcmData, sampleRate) {
   for (let i = 0; i < pcmData.length; i++, o += 2) view.setInt16(o, pcmData[i], true);
   return new Blob([view], { type: "audio/wav" });
 }
+
 
 // -------------------- AI Outputs Update --------------------
 function updateAiOutputs() {
