@@ -430,9 +430,6 @@ const usernameInput = document.querySelector("#usernameInput");
 const loginStatus = document.querySelector("#loginStatus");
 const loginBtn = document.querySelector("#loginBtn");
 
-// Firebase Auth instance
-const auth = getAuth();
-
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const username = usernameInput.value.trim();
