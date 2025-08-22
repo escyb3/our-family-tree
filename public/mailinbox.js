@@ -1026,8 +1026,6 @@ if (typeof window.escapeHtml !== "function") {
   };
 }
 
-const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
-
 function base64ToArrayBuffer(base64) {
   const binaryString = atob(base64);
   const len = binaryString.length;
