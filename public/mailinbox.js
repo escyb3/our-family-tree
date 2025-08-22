@@ -430,6 +430,9 @@ const usernameInput = document.querySelector("#usernameInput");
 const loginStatus = document.querySelector("#loginStatus");
 const loginBtn = document.querySelector("#loginBtn");
 
+// Firebase Auth instance
+const auth = getAuth();
+
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const username = usernameInput.value.trim();
@@ -440,29 +443,43 @@ loginForm.addEventListener("submit", async (e) => {
   loginBtn.disabled = true;
 
   try {
-    // כאן נעשה login אמיתי עם Firebase Custom Token
-    const initialToken = window.__initial_auth_token || null;
-    if (!initialToken) throw new Error("Missing authentication token");
+    // התחברות עם Firebase – אם המשתמש לא קיים, צור אותו
+    let userCredential;
+    try {
+      // מנסה להיכנס עם Email/Password מדומה
+      userCredential = await signInWithEmailAndPassword(auth, `${username}@family.local`, "defaultPassword");
+    } catch (err) {
+      if (err.code === 'auth/user-not-found') {
+        // יוצר משתמש חדש עם שם משתמש בלבד
+        userCredential = await createUserWithEmailAndPassword(auth, `${username}@family.local`, "defaultPassword");
+      } else {
+        throw err;
+      }
+    }
 
-    const cred = await signInWithCustomToken(auth, initialToken);
+    // קבלת ה-ID Token של המשתמש
+    const idToken = await auth.currentUser.getIdToken(true);
 
+    // עדכון state
     state.username = username;
     state.emailAddress = `${username}@family.local`;
-    state.userId = cred.user.uid;
+    state.userId = userCredential.user.uid;
     state.currentView = "mailbox";
+    state.idToken = idToken; // שמירת token לשימוש בקריאות API
 
     loginStatus.hidden = true;
 
-    // לאחר התחברות מוצלחת
-    startRealtimeSubscriptions(); // לדוגמה, חיבור ל-Firestore
+    // התחברות ל-Firestore / subscriptions
+    startRealtimeSubscriptions();
     render();
   } catch (err) {
     console.error("Login error:", err);
-    loginStatus.textContent = "Login failed";
+    loginStatus.textContent = "Login failed: " + err.message;
   } finally {
     loginBtn.disabled = false;
   }
 });
+
 
 
 // -------------------- Attach Event Listeners with File Upload (Safe Version) --------------------
