@@ -7,7 +7,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import {
   getAuth, signInWithCustomToken, onAuthStateChanged,signInWithEmailAndPassword,  createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, where, serverTimestamp,
+import { getFirestore, collection, addDoc, onSnapshot, query, where, serverTimestamp,getDownloadURL,uploadBytes
          doc, setDoc, deleteDoc, getDoc, orderBy } 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -527,6 +527,15 @@ function attachListeners() {
     }
 
     try {
+      // בדיקה אם הנמען קיים ב-Firestore
+      const recipientRef = doc(db, "users", recipient); // recipient = username
+      const recipientSnap = await getDoc(recipientRef);
+
+      if (!recipientSnap.exists()) {
+        alert(`Recipient "${recipient}" does not exist`);
+        return; // ביטול שליחה אם הנמען לא קיים
+      }
+
       const uploadedFiles = [];
 
       // בדיקה שה-storage מוגדר
@@ -536,7 +545,7 @@ function attachListeners() {
         return;
       }
 
-      // אם יש קבצים, העלאה ל-Firebase Storage
+      // העלאה של קבצים אם קיימים
       for (const file of attachments) {
         if (!file) continue;
         const storageRef = ref(
@@ -553,8 +562,8 @@ function attachListeners() {
         });
       }
 
-      // הכנת אובייקט email עם קישורים לקבצים
-      const emailData = {
+      // הכנת אובייקט הודעה
+      const emailDataForSender = {
         sender: state.emailAddress || "unknown@family.local",
         recipient: `${recipient}@family.local`,
         subject: subject || "No Subject",
@@ -563,12 +572,19 @@ function attachListeners() {
         attachments: uploadedFiles.length > 0 ? uploadedFiles : null
       };
 
-      // יצירת מסמך ב-Firestore
-      const userEmailCollection = collection(
-        db,
-        `users/${state.userId || "unknownUser"}/emails`
-      );
-      await addDoc(userEmailCollection, emailData);
+      // עבור הנמען נוסיף read:false
+      const emailDataForRecipient = {
+        ...emailDataForSender,
+        read: false
+      };
+
+      // שמירה אצל השולח
+      const senderEmailCollection = collection(db, `users/${state.userId}/emails`);
+      await addDoc(senderEmailCollection, emailDataForSender);
+
+      // שמירה אצל הנמען עם read:false
+      const recipientEmailCollection = collection(db, `users/${recipient}/emails`);
+      await addDoc(recipientEmailCollection, emailDataForRecipient);
 
       alert("Email sent successfully!");
 
@@ -577,7 +593,7 @@ function attachListeners() {
       state.attachments = [];
       const inputs = composeForm.querySelectorAll("input, textarea");
       inputs.forEach(input => (input.value = ""));
-
+      
     } catch (err) {
       console.error("Failed to send email:", err);
       alert("Failed to send email. Please try again.");
@@ -587,6 +603,28 @@ function attachListeners() {
 
 // לוודא שהפונקציה תרוץ רק אחרי שה־DOM נטען
 document.addEventListener("DOMContentLoaded", attachListeners);
+// -------------------- Mark Email as Read --------------------
+async function markEmailAsRead(emailId) {
+  try {
+    if (!state.userId) return;
+    const emailRef = doc(db, `users/${state.userId}/emails`, emailId);
+    await setDoc(emailRef, { read: true }, { merge: true }); // merge:true משאיר שדות אחרים
+    console.log(`Email ${emailId} marked as read`);
+  } catch (err) {
+    console.error("Failed to mark email as read:", err);
+  }
+}
+
+// -------------------- Example: when opening email --------------------
+function openEmail(emailDoc) {
+  // הצגת תוכן ההודעה ל-UI
+  displayEmailContent(emailDoc.data());
+
+  // עדכון read:true אצל הנמען
+  if (emailDoc.data().recipient === state.emailAddress) {
+    markEmailAsRead(emailDoc.id);
+  }
+}
 
 
 // -------------------- Firestore subscriptions --------------------
