@@ -469,17 +469,28 @@ loginForm.addEventListener("submit", async (e) => {
 function attachListeners() {
   const btnSend = document.getElementById("btnSend");
   const composeForm = document.getElementById("composeForm");
+
   if (!btnSend || !composeForm) {
-    console.warn("btnSend or composeForm not found!");
+    console.warn("attachListeners: btnSend or composeForm not found!");
     return;
   }
 
-  btnSend.addEventListener("click", async () => {
+  // מניעת רישום כפול של מאזינים
+  if (btnSend.dataset.listenerAttached === "true") {
+    console.log("attachListeners: listener already attached to btnSend");
+    return;
+  }
+  btnSend.dataset.listenerAttached = "true";
+
+  btnSend.addEventListener("click", async (e) => {
+    e.preventDefault();
+
     const { recipient, subject, body } = state.compose || {};
     const attachments = state.attachments || [];
 
     if (!recipient || !body) {
-      return alert("Recipient and body are required");
+      alert("Recipient and body are required");
+      return;
     }
 
     try {
@@ -488,7 +499,8 @@ function attachListeners() {
       // בדיקה שה-storage מוגדר
       if (!window.storage) {
         console.error("Firebase Storage not initialized!");
-        return alert("Storage not available");
+        alert("Storage not available");
+        return;
       }
 
       // אם יש קבצים, העלאה ל-Firebase Storage
@@ -539,6 +551,9 @@ function attachListeners() {
     }
   });
 }
+
+// לוודא שהפונקציה תרוץ רק אחרי שה־DOM נטען
+document.addEventListener("DOMContentLoaded", attachListeners);
 
 
 // -------------------- Firestore subscriptions --------------------
