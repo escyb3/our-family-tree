@@ -78,27 +78,7 @@
 
         <button id="btnContacts" class="nav-btn">👥 אנשי קשר</button>
       </aside>
-<main class="main">
-  <div id="mainContent" class="stretch">
-    <!-- טופס קומפוז הודעה -->
-    <form id="composeForm" class="vstack gap" hidden>
-      <label>נמען:</label>
-      <input id="recipientInput" type="text" required />
 
-      <label>נושא:</label>
-      <input id="subjectInput" type="text" />
-
-      <label>גוף ההודעה:</label>
-      <textarea id="bodyInput" required></textarea>
-
-      <button id="btnSend" type="button" class="btn primary">שלח</button>
-    </form>
-  </div>
-
-  <div id="mailContainer">
-    <em>טוען הודעות...</em>
-  </div>
-</main>
       <main class="main">
         <!-- כאן נטען דינמית: רשימת מיילים / תצוגת מייל / קומפוז / אנשי קשר -->
         <div id="mainContent" class="stretch"></div>
@@ -118,6 +98,25 @@
   measurementId: "G-V3CSEQY5CR"
 };
 </script>
+  <hide>
+  <main class="main">
+  <div id="mainContent" class="stretch">
+    <!-- טופס קומפוז הודעה -->
+    <form id="composeForm" class="vstack gap" hidden>
+      <label>נמען:</label>
+      <input id="recipientInput" type="text" required />
+
+      <label>נושא:</label>
+      <input id="subjectInput" type="text" />
+
+      <label>גוף ההודעה:</label>
+      <textarea id="bodyInput" required></textarea>
+
+      <button id="btnSend" type="button" class="btn primary">שלח</button>
+    </form>
+  </div>
+  </main>
+  </hide>
   <!-- אפליקציה (Vanilla JS) -->
   <script type="module" src="./mailinbox.js"></script>
 </body>
