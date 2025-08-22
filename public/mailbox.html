@@ -66,6 +66,27 @@
         </div>
 
         <button id="btnCompose" class="btn primary block">✍️ הודעה חדשה</button>
+<main class="main">
+  <div id="mainContent" class="stretch">
+    <!-- טופס קומפוז הודעה -->
+    <form id="composeForm" class="vstack gap" hidden>
+      <label>נמען:</label>
+      <input id="recipientInput" type="text" required />
+
+      <label>נושא:</label>
+      <input id="subjectInput" type="text" />
+
+      <label>גוף ההודעה:</label>
+      <textarea id="bodyInput" required></textarea>
+
+      <button id="btnSend" type="button" class="btn primary">שלח</button>
+    </form>
+  </div>
+
+  <div id="mailContainer">
+    <em>טוען הודעות...</em>
+  </div>
+</main>
 
         <nav class="nav vstack gap">
           <button class="nav-btn active" data-folder="inbox">📥 דואר נכנס</button>
@@ -83,7 +104,6 @@
         <!-- כאן נטען דינמית: רשימת מיילים / תצוגת מייל / קומפוז / אנשי קשר -->
         <div id="mainContent" class="stretch"></div>
         <div id="mailContainer"></div>
-          <div id="btnSend">שלח</div>
             <em>טוען הודעות...</em>
       </main>
     </section>
