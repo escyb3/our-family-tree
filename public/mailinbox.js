@@ -12,7 +12,6 @@ import { getFirestore, collection, addDoc, onSnapshot, query, where, serverTimes
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // -------------------- שפה / טקסטים --------------------
-// -------------------- שפה / טקסטים --------------------
 const lang = {
   he: {
     appName: 'דוא"ל פנימי',
