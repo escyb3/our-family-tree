@@ -687,6 +687,9 @@ if (bodyInput) bodyInput.addEventListener("input", (e) => state.compose.body = e
 // -------------------- Compose / Send --------------------
 attachListeners(); // ודא שפונקציה זו קיימת
 
+// -------------------- Helpers --------------------
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 // -------------------- Sidebar / Navigation --------------------
 const btnCompose = document.getElementById("btnCompose");
 const btnContacts = document.getElementById("btnContacts");
