@@ -440,33 +440,51 @@ loginForm.addEventListener("submit", async (e) => {
   loginBtn.disabled = true;
 
   try {
-    // התחברות עם Firebase – אם המשתמש לא קיים, צור אותו
+    const email = `${username}@family.local`;
+    const password = "defaultPassword"; // סיסמת ברירת מחדל לכולם
+
     let userCredential;
     try {
-      // מנסה להיכנס עם Email/Password מדומה
-      userCredential = await signInWithEmailAndPassword(auth, `${username}@family.local`, "defaultPassword");
+      // מנסה להתחבר אם המשתמש כבר קיים
+      userCredential = await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
-      if (err.code === 'auth/user-not-found') {
-        // יוצר משתמש חדש עם שם משתמש בלבד
-        userCredential = await createUserWithEmailAndPassword(auth, `${username}@family.local`, "defaultPassword");
+      if (err.code === "auth/user-not-found") {
+        // אם המשתמש לא קיים – צור אותו
+        userCredential = await createUserWithEmailAndPassword(auth, email, password);
       } else {
         throw err;
       }
     }
 
-    // קבלת ה-ID Token של המשתמש
-    const idToken = await auth.currentUser.getIdToken(true);
+    // מזהה המשתמש
+    const uid = userCredential.user.uid;
+
+    // בדיקה אם המשתמש כבר קיים ב-Firestore
+    const userRef = doc(db, "users", uid);
+    const userSnap = await getDoc(userRef);
+
+    if (!userSnap.exists()) {
+      // אם זה כניסה ראשונה – צור רשומה ב-Firestore
+      await setDoc(userRef, {
+        username: username,
+        email: email,
+        createdAt: Date.now()
+      });
+    }
+
+    // קבלת טוקן
+    const idToken = await userCredential.user.getIdToken(true);
 
     // עדכון state
     state.username = username;
-    state.emailAddress = `${username}@family.local`;
-    state.userId = userCredential.user.uid;
+    state.emailAddress = email;
+    state.userId = uid;
     state.currentView = "mailbox";
-    state.idToken = idToken; // שמירת token לשימוש בקריאות API
+    state.idToken = idToken;
 
     loginStatus.hidden = true;
 
-    // התחברות ל-Firestore / subscriptions
+    // חיבור ל-Firestore
     startRealtimeSubscriptions();
     render();
   } catch (err) {
@@ -476,6 +494,7 @@ loginForm.addEventListener("submit", async (e) => {
     loginBtn.disabled = false;
   }
 });
+
 
 
 
