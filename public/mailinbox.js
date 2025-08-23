@@ -432,8 +432,14 @@ const loginBtn = document.querySelector("#loginBtn");
 
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const username = usernameInput.value.trim();
-  if (!username) return;
+  const username = usernameInput.value.trim().toLowerCase();
+
+  // ולידציה לשם משתמש
+  if (!/^[a-z0-9._-]+$/.test(username)) {
+    loginStatus.hidden = false;
+    loginStatus.textContent = "שם משתמש לא חוקי (רק אותיות באנגלית, מספרים, נקודה, מקף או קו תחתי)";
+    return;
+  }
 
   loginStatus.hidden = false;
   loginStatus.textContent = "Connecting...";
@@ -441,15 +447,15 @@ loginForm.addEventListener("submit", async (e) => {
 
   try {
     const email = `${username}@family.local`;
-    const password = "defaultPassword"; // סיסמה אחידה לכל המשתמשים
+    const password = "DefaultPassword123!"; // סיסמה אחידה
 
     let userCredential;
     try {
-      // מנסה להתחבר אם המשתמש כבר קיים ב-Firebase Auth
+      // נסה להתחבר
       userCredential = await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
       if (err.code === "auth/user-not-found") {
-        // משתמש לא קיים – צור משתמש חדש
+        // צור משתמש חדש
         userCredential = await createUserWithEmailAndPassword(auth, email, password);
       } else {
         throw err;
@@ -457,39 +463,35 @@ loginForm.addEventListener("submit", async (e) => {
     }
 
     const uid = userCredential.user.uid;
-
-    // בדיקה אם המשתמש כבר קיים ב-Firestore
     const userRef = doc(db, "users", uid);
     const userSnap = await getDoc(userRef);
 
     if (!userSnap.exists()) {
-      // אם זו הפעם הראשונה – צור רשומה ב-Firestore
       await setDoc(userRef, {
-        username: username,
-        email: email,
-        createdAt: Date.now()
+        username,
+        email,
+        createdAt: new Date().toISOString(),
+        lastLogin: new Date().toISOString()
       });
+    } else {
+      await setDoc(userRef, {
+        lastLogin: new Date().toISOString()
+      }, { merge: true });
     }
 
-    // קבלת ID Token
-    const idToken = await userCredential.user.getIdToken(true);
-
-    // עדכון state גלובלי
     state.username = username;
     state.emailAddress = email;
     state.userId = uid;
+    state.idToken = await userCredential.user.getIdToken(true);
     state.currentView = "mailbox";
-    state.idToken = idToken;
 
     loginStatus.hidden = true;
-
-    // התחברות ל-Firestore / Realtime Subscriptions
     startRealtimeSubscriptions();
     render();
 
   } catch (err) {
     console.error("Login error:", err);
-    loginStatus.textContent = "Login failed: " + err.message;
+    loginStatus.textContent = "Login failed: " + (err.message || err.code);
   } finally {
     loginBtn.disabled = false;
   }
