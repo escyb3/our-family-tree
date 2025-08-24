@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>דרכי יצירת קשר משפחתי</title>
+    <!-- Use Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Inter font from Google Fonts for a modern, clean look */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-8">
+    <!-- Main container for the app -->
+    <div class="bg-white p-8 rounded-3xl shadow-xl max-w-2xl w-full mx-auto text-center">
+        <!-- Language selection dropdown positioned at the top right -->
+        <div class="absolute top-4 right-4">
+            <select id="language-switcher" class="p-2 rounded-md bg-gray-200 text-gray-800 focus:outline-none">
+                <option value="he">עברית</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+        
+        <!-- Main title of the page, now at the top of the content block -->
+        <h1 id="page-title" class="text-4xl md:text-5xl font-bold text-gray-800 mb-2 leading-tight">
+            דרכי יצירת קשר משפחתי
+        </h1>
+        
+        <!-- About section as text instead of a button -->
+        <p id="about-text" class="text-gray-600 mb-8 leading-relaxed">
+            ברוכים הבאים לאתר המשפחתי, המקום שלנו לשמור על קשר. כאן תוכלו למצוא דרכים להתעדכן, לדבר ולשתף רגעים מיוחדים.
+        </p>
+        
+        <!-- Grid layout for the buttons -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Button for the private mailbox -->
+            <a href="mailbox.html" id="mailbox-button" class="flex flex-col items-center justify-center bg-purple-600 text-white p-6 rounded-2xl shadow-lg hover:bg-purple-700 transform hover:scale-105 transition-all duration-300">
+                <!-- Icon for the mailbox -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-2 2a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2h14z" />
+                </svg>
+                <span class="text-lg font-semibold">תיבת מייל פרטית</span>
+            </a>
+
+            <!-- Button for the family chat -->
+            <a href="familychat.html" id="chat-button" class="flex flex-col items-center justify-center bg-blue-600 text-white p-6 rounded-2xl shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300">
+                <!-- Icon for the chat -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8s-9-3.582-9-8 4.03-8 9-8 9 3.582 9 8z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 16a4 4 0 100-8 4 4 0 000 8z" />
+                </svg>
+                <span class="text-lg font-semibold">צאט משפחתי</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Translations object with different languages
+        const translations = {
+            'he': {
+                dir: 'rtl',
+                title: 'דרכי יצירת קשר משפחתי',
+                about: 'ברוכים הבאים לאתר המשפחתי, המקום שלנו לשמור על קשר. כאן תוכלו למצוא דרכים להתעדכן, לדבר ולשתף רגעים מיוחדים.',
+                mailbox: 'תיבת מייל פרטית',
+                chat: 'צאט משפחתי'
+            },
+            'en': {
+                dir: 'ltr',
+                title: 'Family Contact Ways',
+                about: 'Welcome to our family website, our place to stay in touch. Here you can find ways to get updates, chat, and share special moments.',
+                mailbox: 'Private Mailbox',
+                chat: 'Family Chat'
+            }
+        };
+
+        // Get elements from the DOM
+        const langSwitcher = document.getElementById('language-switcher');
+        const pageTitle = document.getElementById('page-title');
+        const aboutText = document.getElementById('about-text');
+        const mailboxButtonText = document.querySelector('#mailbox-button span');
+        const chatButtonText = document.querySelector('#chat-button span');
+        const htmlElement = document.documentElement;
+
+        // Function to update the page language
+        function updateLanguage(lang) {
+            const currentTranslation = translations[lang];
+            
+            // Set direction and language attribute for the entire page
+            htmlElement.setAttribute('lang', lang);
+            htmlElement.setAttribute('dir', currentTranslation.dir);
+
+            // Update the text content of the elements
+            pageTitle.textContent = currentTranslation.title;
+            aboutText.textContent = currentTranslation.about;
+            mailboxButtonText.textContent = currentTranslation.mailbox;
+            chatButtonText.textContent = currentTranslation.chat;
+        }
+
+        // Add event listener to the language switcher
+        langSwitcher.addEventListener('change', (event) => {
+            updateLanguage(event.target.value);
+        });
+
+        // Set the initial language on page load
+        updateLanguage('he');
+    </script>
+</body>
+</html>
