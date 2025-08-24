@@ -33,24 +33,32 @@
     <!-- אזור סטטוס כללי -->
     <div id="globalStatus" class="global-status" hidden></div>
 
-    <!-- View: Login -->
-    <section id="view-login" class="view view--centered">
-      <div class="card card--md">
-        <div class="center-icon">📧</div>
-        <h1 class="title">ברוכים הבאים</h1>
-        <p class="muted">הכנס שם משתמש כדי לנהל את תיבת הדואר המשפחתית שלך.</p>
+ <!-- View: Login -->
+<section id="view-login" class="view view--centered">
+  <div class="card card--md">
+    <div class="center-icon">📧</div>
+    <h1 class="title">ברוכים הבאים</h1>
+    <p class="muted">אנא הכנס שם משתמש וסיסמה כדי לנהל את תיבת הדואר המשפחתית שלך.</p>
 
-        <form id="loginForm" class="vstack gap">
-          <label class="label" for="usernameInput">שם משתמש</label>
-          <div class="input-with-suffix">
-            <input id="usernameInput" type="text" placeholder="לדוגמה: יונתן" required />
-            <span class="suffix">@family.local</span>
-          </div>
-          <button id="loginBtn" class="btn primary">התחבר</button>
-          <div id="loginStatus" class="form-status" hidden></div>
-        </form>
+    <form id="loginForm" class="vstack gap">
+      <!-- Username -->
+      <label class="label" for="usernameInput">שם משתמש</label>
+      <div class="input-with-suffix">
+        <input id="usernameInput" type="text" placeholder="לדוגמה: username" required />
+        <span class="suffix">@family.local</span>
       </div>
-    </section>
+
+      <!-- Password -->
+      <label class="label" for="passwordInput">סיסמה</label>
+      <input id="passwordInput" type="password" placeholder="הקלד סיסמה" required />
+
+      <!-- Submit -->
+      <button id="loginBtn" class="btn primary">התחבר</button>
+      <div id="loginStatus" class="form-status" hidden></div>
+    </form>
+  </div>
+</section>
+
 
     <!-- View: Mailbox (sidebar + main) -->
     <section id="view-mailbox" class="view view--fill" hidden>
