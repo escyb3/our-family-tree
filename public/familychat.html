@@ -350,6 +350,7 @@
 
             // Authentication flow with manual sign in/up
             useEffect(() => {
+                // The onAuthStateChanged listener will handle setting the user once they are authenticated
                 const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
                     if (currentUser) {
                         setUser(currentUser);
@@ -376,16 +377,11 @@
                     setIsAuthReady(true);
                     setLoading(false);
                 });
-                // Initial sign-in with custom token for the playground environment
-                if (initialAuthToken) {
-                    signInWithCustomToken(auth, initialAuthToken).catch(e => {
-                        console.error("Initial custom token sign-in failed, proceeding with other methods or anonymous sign-in.", e);
-                    });
-                } else if (!user) {
-                    signInAnonymously(auth).catch(e => {
-                        console.error("Anonymous sign-in failed:", e);
-                    });
-                }
+                
+                // We will no longer automatically sign in a user anonymously.
+                // The user must now use the login/signup form to authenticate.
+                
+                // Cleanup function for the listener
                 return () => unsubscribe();
             }, []);
         
@@ -612,8 +608,8 @@
                             await deleteDoc(doc(db, `/artifacts/${appId}/public/data/chats/${chatId}/messages`, msgId));
                         }
                     } catch (error) {
-                        console.error("Error deleting message:", error);
-                        setStatusMessage(t.deleteError);
+                    console.error("Error deleting message:", error);
+                    setStatusMessage(t.deleteError);
                     }
                 }
             };
