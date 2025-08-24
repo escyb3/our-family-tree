@@ -436,7 +436,6 @@ loginForm.addEventListener("submit", async (e) => {
   const username = usernameInput.value.trim().toLowerCase();
   const password = passwordInput.value.trim();
 
-  // ולידציה לשם משתמש
   if (!/^[a-z0-9._-]+$/.test(username)) {
     loginStatus.hidden = false;
     loginStatus.textContent =
@@ -455,24 +454,43 @@ loginForm.addEventListener("submit", async (e) => {
   loginBtn.disabled = true;
 
   try {
-    const email = `${username}@family.local`; // כתובת פנימית
-
+    const email = `${username}@family.local`;
     let userCredential;
+
     try {
       // נסה להתחבר
       userCredential = await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
       if (err.code === "auth/user-not-found") {
-        // צור משתמש חדש עם שם משתמש + סיסמה
-        userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        // בדיקה אם שם המשתמש כבר קיים ב־Firestore
+        const q = query(collection(db, "users"), where("username", "==", username));
+        const snap = await getDocs(q);
+        if (!snap.empty) {
+          loginStatus.textContent = "שם המשתמש כבר תפוס";
+          loginBtn.disabled = false;
+          return;
+        }
 
-        // צור רשומת משתמש ב־Firestore
-        await setDoc(doc(db, "users", userCredential.user.uid), {
-          username,
-          email,
-          createdAt: new Date().toISOString(),
-          lastLogin: new Date().toISOString()
-        });
+        // צור משתמש חדש
+        try {
+          userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+          await setDoc(doc(db, "users", userCredential.user.uid), {
+            username,
+            email,
+            createdAt: new Date().toISOString(),
+            lastLogin: new Date().toISOString(),
+          });
+
+          loginStatus.textContent = "החשבון נוצר בהצלחה 🎉";
+        } catch (createErr) {
+          if (createErr.code === "auth/weak-password") {
+            loginStatus.textContent = "הסיסמה חייבת להיות לפחות 6 תווים";
+            loginBtn.disabled = false;
+            return;
+          }
+          throw createErr;
+        }
       } else {
         throw err;
       }
@@ -481,16 +499,12 @@ loginForm.addEventListener("submit", async (e) => {
     const uid = userCredential.user.uid;
     const userRef = doc(db, "users", uid);
 
-    // עדכן זמן כניסה אחרון
     await setDoc(
       userRef,
-      {
-        lastLogin: new Date().toISOString()
-      },
+      { lastLogin: new Date().toISOString() },
       { merge: true }
     );
 
-    // שמירת נתונים ב־state
     state.username = username;
     state.emailAddress = email;
     state.userId = uid;
@@ -498,8 +512,6 @@ loginForm.addEventListener("submit", async (e) => {
     state.currentView = "mailbox";
 
     loginStatus.hidden = true;
-
-    // חיבור להודעות בזמן אמת
     startRealtimeSubscriptions();
     render();
 
@@ -510,12 +522,6 @@ loginForm.addEventListener("submit", async (e) => {
     loginBtn.disabled = false;
   }
 });
-
-
-
-
-
-
 // -------------------- Attach Event Listeners with File Upload (Safe Version) --------------------
 function attachListeners() {
   const btnSend = document.getElementById("btnSend");
