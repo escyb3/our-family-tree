@@ -151,15 +151,6 @@
       <li>📱 תמיכה בעיצוב רספונסיבי לנייד</li>
     </ul>
   </main>
-    <fetch("/api/user")
-  .then(res => {
-    <if (!res.ok) location.href = "/login.html";
-    else return res.json();
-  })
-  .then(user => {
-    <console.log("User is logged in:", user);
-    // עדכון UI בהתאם
-  });
         <section>
             <h2>חדשות ועדכונים</h2>
             <ul>
@@ -177,6 +168,315 @@
   <footer>
     <p>&copy; 2025 אתר המשפחה • נבנה באהבה ע"י המשפחה • <a href="/admin.html">🛠️ ניהול</a></p>
   </footer>
+       <script>
+    const translations = {
+      "he": {
+        "title": "אתר המשפחה - Ben Abou, Elharrar ועוד",
+        "logout-link": "התנתק",
+        "welcome-title": "ברוכים הבאים לאתר המשפחה",
+        "family-names": "Ben Abou • Elharrar • Malca",
+        "search-title": "🔍 חיפוש באתר",
+        "search-placeholder": "הקלד שם או תיאור...",
+        "menu-home": "🏠 עמוד ראשי",
+        "menu-about": "<span>ℹ️</span> עמוד העדכונים (Unavailable currently)",
+        "menu-tree": "<span>🧬</span> עץ המשפחה",
+        "menu-chat": "<span>🧑‍💻</span> צ'אט AI",
+        "menu-contact": "<span>📩 </span> אמצעי תקשורת משפחתיים",
+        "menu-gallery": "<span>🖼️</span> גלריית תמונות",
+        "menu-memorial": "<span>🕯️</span> קיר זיכרון",
+        "menu-timeline": "<span>🗓️</span> ציר זמן",
+        "menu-calendar": "<span>📆</span> לוח שנה",
+        "menu-forum": "<span>👪</span> פורום משפחתי",
+        "menu-biographies": "<span>📖</span> ביוגרפיות",
+        "menu-stats": "<span>📊</span> סטטיסטיקות",
+        "menu-update": "עדכון פרטים",
+        "menu-upload-photo": "העלאת תמונות",
+        "menu-upload-video": "העלאת סרטון",
+        "menu-search-ai": "חיפוש AI",
+        "menu-migration-map": "מפת נדודים",
+        "menu-newsletter": "<span>📰</span> עלון",
+        "menu-login": "<span>🔐</span> כניסה",
+        "menu-logout": "התנתקות",
+        "main-welcome-heading": "🌟 ברוכים הבאים למרכז המשפחתי",
+        "main-welcome-text": "אתר זה נבנה עבור כל המשפחות: Ben Abou, Elharrar, Malca, Ben David, Bromberg, Barenbaum, Fass-Schneck, Weinberger, Leibner, van der Velde, Behr, de Vries, Italiaander, Izaks, Chapon, ועוד – לשיתוף תמונות, הנצחות, עץ משפחה, הודעות ועוד.",
+        "main-welcome-subtext": "ניתן להיכנס לפי צד משפחתי, לעדכן פרטים, לשוחח עם צ'אט AI משפחתי ולחוות יחד היסטוריה מתועדת.",
+        "tree-welcome-title": "ברוכים הבאים לעץ המשפחה שלנו",
+        "feature-tree": "🌳עץ משפחה אינטראקטיבי",
+        "feature-login": "🔐 כניסת משתמשים והרשאות לפי צד משפחתי",
+        "feature-wall": "💬 קיר משפחתי לפוסטים ותגובות",
+        "feature-messages": "📨 מערכת הודעות פנימית",
+        "feature-gallery": "🖼️ תצוגת גלריה למסמכים ותמונות",
+        "feature-memorial": "🕯️ עמודי הנצחה עם נר דיגיטלי",
+        "feature-multilingual": "🌐 תפריט דו-לשוני (עברית/אנגלית)",
+        "feature-search": "🔍 חיפוש חכם",
+        "feature-newsletter": "📧 תמיכה ב-ניוזלטר",
+        "feature-ai": "🤖 צ'אט AI משפחתי עם תמיכה בנתוני משפחה",
+        "feature-responsive": "📱 תמיכה בעיצוב רספונסיבי לנייד",
+        "news-updates-heading": "חדשות ועדכונים",
+        "news-1": "הוספנו יכולת העלאת תמונות לעץ המשפחה.",
+        "news-2": "נפתחה מערכת ההודעות הפנימית לכל המשתמשים.",
+        "news-3": "ניתן להדליק נר דיגיטלי לעילוי נשמת יקיריכם.",
+        "footer-text": "&copy; 2025 אתר המשפחה • נבנה באהבה ע\"י המשפחה • <a href=\"/admin.html\" id=\"admin-link\">🛠️ ניהול</a>",
+        "alt-family-logo": "לוגו משפחתי",
+        "alt-family-photo": "תמונת משפחה",
+        "unavailable-message": "(Unavailable currently)"
+      },
+      "en": {
+        "title": "The Family Website - Ben Abou, Elharrar and more",
+        "logout-link": "Logout",
+        "welcome-title": "Welcome to the Family Website",
+        "family-names": "Ben Abou • Elharrar • Malca",
+        "search-title": "🔍 Search the site",
+        "search-placeholder": "Type a name or description...",
+        "menu-home": "🏠 Home Page",
+        "menu-about": "<span>ℹ️</span> Updates Page (Unavailable currently)",
+        "menu-tree": "<span>🧬</span> Family Tree",
+        "menu-chat": "<span>🧑‍💻</span> AI Chat",
+        "menu-contact": "<span>📩 </span> Family Communications",
+        "menu-gallery": "<span>🖼️</span> Photo Gallery",
+        "menu-memorial": "<span>🕯️</span> Memorial Wall",
+        "menu-timeline": "<span>🗓️</span> Timeline",
+        "menu-calendar": "<span>📆</span> Calendar",
+        "menu-forum": "<span>👪</span> Family Forum",
+        "menu-biographies": "<span>📖</span> Biographies",
+        "menu-stats": "<span>📊</span> Statistics",
+        "menu-update": "Update Details",
+        "menu-upload-photo": "Upload Photos",
+        "menu-upload-video": "Upload Video",
+        "menu-search-ai": "AI Search",
+        "menu-migration-map": "Migration Map",
+        "menu-newsletter": "<span>📰</span> Newsletter",
+        "menu-login": "<span>🔐</span> Login",
+        "menu-logout": "Logout",
+        "main-welcome-heading": "🌟 Welcome to the Family Center",
+        "main-welcome-text": "This website was built for all families: Ben Abou, Elharrar, Malca, Ben David, Bromberg, Barenbaum, Fass-Schneck, Weinberger, Leibner, van der Velde, Behr, de Vries, Italiaander, Izaks, Chapon, and more – to share photos, memorials, family tree, messages, and more.",
+        "main-welcome-subtext": "You can log in by family branch, update details, chat with a family AI, and together experience a documented history.",
+        "tree-welcome-title": "Welcome to Our Family Tree",
+        "feature-tree": "🌳 Interactive Family Tree",
+        "feature-login": "🔐 User Login and Permissions by Family Branch",
+        "feature-wall": "💬 Family Wall for Posts and Comments",
+        "feature-messages": "📨 Internal Messaging System",
+        "feature-gallery": "🖼️ Gallery Display for Documents and Photos",
+        "feature-memorial": "🕯️ Memorial Pages with a Digital Candle",
+        "feature-multilingual": "🌐 Multilingual Menu (Hebrew/English)",
+        "feature-search": "🔍 Smart Search",
+        "feature-newsletter": "📧 Newsletter Support",
+        "feature-ai": "🤖 Family AI Chat with Family Data Support",
+        "feature-responsive": "📱 Responsive Design for Mobile",
+        "news-updates-heading": "News and Updates",
+        "news-1": "We have added the ability to upload photos to the family tree.",
+        "news-2": "The internal messaging system is now open to all users.",
+        "news-3": "You can now light a digital candle in memory of your loved ones.",
+        "footer-text": "&copy; 2025 The Family Website • Built with love by the family • <a href=\"/admin.html\" id=\"admin-link\">🛠️ Admin</a>",
+        "alt-family-logo": "Family logo",
+        "alt-family-photo": "Family photo",
+        "unavailable-message": "(Currently Unavailable)"
+      },
+      "yi": {
+        "title": "די משפּחה וועבזייטל - בן אבּו, עלהרר און מער",
+        "logout-link": "אַרויסגיין",
+        "welcome-title": "ברוכים הבאים צו דער משפּחה וועבזייטל",
+        "family-names": "בן אבּו • עלהרר • מאַלקאַ",
+        "search-title": "🔍 זוכען אויף דער וועבזייטל",
+        "search-placeholder": "שרייבט אַ נאָמען אָדער באַשרייַבונג...",
+        "menu-home": "🏠 הויפּט בלאַט",
+        "menu-about": "<span>ℹ️</span> אַרייַנפיר בלאַט (נישט בנימצא כרגע)",
+        "menu-tree": "<span>🧬</span> משפּחה בוים",
+        "menu-chat": "<span>🧑‍💻</span> אַי-טשאַט",
+        "menu-contact": "<span>📩 </span> משפּחה קאָמוניקאַציעס",
+        "menu-gallery": "<span>🖼️</span> פאָטאָ גאַלעריע",
+        "menu-memorial": "<span>🕯️</span> זכּרון וואַנט",
+        "menu-timeline": "<span>🗓️</span> צייט ליניע",
+        "menu-calendar": "<span>📆</span> לוח",
+        "menu-forum": "<span>👪</span> משפּחה פאָרום",
+        "menu-biographies": "<span>📖</span> ביאָגראַפֿיעס",
+        "menu-stats": "<span>📊</span> סטאַטיסטיקן",
+        "menu-update": "דערהייַנטיקן דעטאַלן",
+        "menu-upload-photo": "הייבן אַרויף פאָטאָס",
+        "menu-upload-video": "הייבן אַרויף ווידעאָ",
+        "menu-search-ai": "זוכען מיט אַי",
+        "menu-migration-map": "מאַפּע פֿון נדודים",
+        "menu-newsletter": "<span>📰</span> נייַעסלעטער",
+        "menu-login": "<span>🔐</span> אַרייַנגאַנג",
+        "menu-logout": "אַרויסגיין",
+        "main-welcome-heading": "🌟 ברוכים הבאים צום משפּחה צענטער",
+        "main-welcome-text": "די דאָזיקע וועבזייטל איז געבויט געוואָרן פֿאַר אַלע משפּחות: בן אבּו, עלהרר, מאַלקאַ, בן דוד, בראָמבערג, באַרענבאַום, פֿאַס-שנעק, ווייַנבערגער, לייבנער, פֿאַן דער וועלדע, בער, דע פֿריס, איטאַליאַנדער, יזאַקס, טשאַפּאָן, און מער – צו טיילן בילדער, זכרונות, משפּחה בוים, מעלדונגען, און מער.",
+        "main-welcome-subtext": "איר קענט אַרייַנקומען דורך משפּחה צווייַג, דערהייַנטיקן דעטאַלן, רעדן מיט אַ משפּחה אַי-טשאַט און צוזאַמען איבערלעבן אַ דאָקומענטירטע געשיכטע.",
+        "tree-welcome-title": "ברוכים הבאים צו אונדזער משפּחה בוים",
+        "feature-tree": "🌳 אינטעראַקטיווער משפּחה בוים",
+        "feature-login": "🔐 באַניצער אַרייַנגאַנג און פּערמיסיעס לויט משפּחה צווייַג",
+        "feature-wall": "💬 משפּחה וואַנט פֿאַר פּאָסטן און קאָמענטאַרן",
+        "feature-messages": "📨 אינערלעכע מעלדונג סיסטעם",
+        "feature-gallery": "🖼️ גאַלעריע פֿאַר דאָקומענטן און בילדער",
+        "feature-memorial": "🕯️ זכּרון זייטן מיט אַ דיגיטאַלע ליכט",
+        "feature-multilingual": "🌐 מער-שפּראַכיקע מעניו (העברעיִש/ענגליש)",
+        "feature-search": "🔍 קלוגע זוכונג",
+        "feature-newsletter": "📧 נייַעסלעטער שטיצע",
+        "feature-ai": "🤖 משפּחה אַי טשאַט מיט שטיצע פֿון משפּחה דאַטן",
+        "feature-responsive": "📱 רעספּאָנסיווע דעזיין פֿאַר מאָביל",
+        "news-updates-heading": "נייַעס און דערהייַנטיקונגען",
+        "news-1": "מיר האָבן צוגעגעבן די מעגלעכקייט צו הייבן אַרויף בילדער צום משפּחה בוים.",
+        "news-2": "די אינערלעכע מעלדונג סיסטעם איז איצט אָפֿן פֿאַר אַלע באַניצער.",
+        "news-3": "איר קענט איצט צינדן אַ דיגיטאַלע ליכט לזכות נשמת אייערע ליב געהאַטע.",
+        "footer-text": "&copy; 2025 די משפּחה וועבזייטל • געבויט מיט ליבשאַפֿט דורך דער משפּחה • <a href=\"/admin.html\" id=\"admin-link\">🛠️ פֿאַרוואַלטונג</a>",
+        "alt-family-logo": "משפּחה לאָגאָ",
+        "alt-family-photo": "משפּחה פאָטאָ",
+        "unavailable-message": "(נישט בנימצא כרגע)"
+      },
+      "fr": {
+        "title": "Le site familial - Ben Abou, Elharrar et plus",
+        "logout-link": "Déconnexion",
+        "welcome-title": "Bienvenue sur le site de la famille",
+        "family-names": "Ben Abou • Elharrar • Malca",
+        "search-title": "🔍 Rechercher sur le site",
+        "search-placeholder": "Tapez un nom ou une description...",
+        "menu-home": "🏠 Page d'accueil",
+        "menu-about": "<span>ℹ️</span> Page d'actualités (Actuellement indisponible)",
+        "menu-tree": "<span>🧬</span> Arbre généalogique",
+        "menu-chat": "<span>🧑‍💻</span> Chat IA",
+        "menu-contact": "<span>📩 </span> Communications familiales",
+        "menu-gallery": "<span>🖼️</span> Galerie de photos",
+        "menu-memorial": "<span>🕯️</span> Mur du souvenir",
+        "menu-timeline": "<span>🗓️</span> Ligne du temps",
+        "menu-calendar": "<span>📆</span> Calendrier",
+        "menu-forum": "<span>👪</span> Forum familial",
+        "menu-biographies": "<span>📖</span> Biographies",
+        "menu-stats": "<span>📊</span> Statistiques",
+        "menu-update": "Mettre à jour les détails",
+        "menu-upload-photo": "Télécharger des photos",
+        "menu-upload-video": "Télécharger une vidéo",
+        "menu-search-ai": "Recherche IA",
+        "menu-migration-map": "Carte de migration",
+        "menu-newsletter": "<span>📰</span> Bulletin d'information",
+        "menu-login": "<span>🔐</span> Connexion",
+        "menu-logout": "Déconnexion",
+        "main-welcome-heading": "🌟 Bienvenue au centre familial",
+        "main-welcome-text": "Ce site web a été construit pour toutes les familles : Ben Abou, Elharrar, Malca, Ben David, Bromberg, Barenbaum, Fass-Schneck, Weinberger, Leibner, van der Velde, Behr, de Vries, Italiaander, Izaks, Chapon, et plus encore – pour partager des photos, des souvenirs, l'arbre généalogique, des messages, et plus encore.",
+        "main-welcome-subtext": "Vous pouvez vous connecter par branche familiale, mettre à jour les détails, discuter avec une IA familiale et découvrir ensemble une histoire documentée.",
+        "tree-welcome-title": "Bienvenue dans notre arbre généalogique",
+        "feature-tree": "🌳 Arbre généalogique interactif",
+        "feature-login": "🔐 Connexion utilisateur et autorisations par branche familiale",
+        "feature-wall": "💬 Mur familial pour les publications et les commentaires",
+        "feature-messages": "📨 Système de messagerie interne",
+        "feature-gallery": "🖼️ Galerie pour les documents et les photos",
+        "feature-memorial": "🕯️ Pages de mémorial avec une bougie numérique",
+        "feature-multilingual": "🌐 Menu multilingue (hébreu/anglais)",
+        "feature-search": "🔍 Recherche intelligente",
+        "feature-newsletter": "📧 Support du bulletin d'information",
+        "feature-ai": "🤖 Chat IA familial avec support des données familiales",
+        "feature-responsive": "📱 Conception réactive pour mobile",
+        "news-updates-heading": "Nouvelles et mises à jour",
+        "news-1": "Nous avons ajouté la possibilité de télécharger des photos sur l'arbre généalogique.",
+        "news-2": "Le système de messagerie interne est maintenant ouvert à tous les utilisateurs.",
+        "news-3": "Vous pouvez maintenant allumer une bougie numérique en mémoire de vos proches.",
+        "footer-text": "&copy; 2025 Le site familial • Construit avec amour par la famille • <a href=\"/admin.html\" id=\"admin-link\">🛠️ Administration</a>",
+        "alt-family-logo": "Logo de la famille",
+        "alt-family-photo": "Photo de la famille",
+        "unavailable-message": "(Actuellement indisponible)"
+      }
+    };
+
+    const langSelector = document.getElementById("langSelector");
+    let currentLang = localStorage.getItem("lang") || "he";
+    
+    // Function to set the page content based on the selected language
+    function setLanguage(lang) {
+      const texts = translations[lang];
+      if (!texts) return;
+
+      document.title = texts["title"];
+      document.getElementById("welcome-title").textContent = texts["welcome-title"];
+      document.getElementById("family-names").textContent = texts["family-names"];
+      document.getElementById("search-title").textContent = texts["search-title"];
+      document.getElementById("search").placeholder = texts["search-placeholder"];
+
+      // Update menu links and other elements
+      document.getElementById("menu-home").innerHTML = texts["menu-home"];
+      document.getElementById("menu-about").innerHTML = texts["menu-about"];
+      document.getElementById("menu-tree").innerHTML = texts["menu-tree"];
+      document.getElementById("menu-chat").innerHTML = texts["menu-chat"];
+      document.getElementById("menu-contact").innerHTML = texts["menu-contact"];
+      document.getElementById("menu-gallery").innerHTML = texts["menu-gallery"];
+      document.getElementById("menu-memorial").innerHTML = texts["menu-memorial"];
+      document.getElementById("menu-timeline").innerHTML = texts["menu-timeline"];
+      document.getElementById("menu-calendar").innerHTML = texts["menu-calendar"];
+      document.getElementById("menu-forum").innerHTML = texts["menu-forum"];
+      document.getElementById("menu-biographies").innerHTML = texts["menu-biographies"];
+      document.getElementById("menu-stats").innerHTML = texts["menu-stats"];
+      document.getElementById("menu-update").innerHTML = texts["menu-update"];
+      document.getElementById("menu-upload-photo").innerHTML = texts["menu-upload-photo"];
+      document.getElementById("menu-upload-video").innerHTML = texts["menu-upload-video"];
+      document.getElementById("menu-search-ai").innerHTML = texts["menu-search-ai"];
+      document.getElementById("menu-migration-map").innerHTML = texts["menu-migration-map"];
+      document.getElementById("menu-newsletter").innerHTML = texts["menu-newsletter"];
+      document.getElementById("menu-login").innerHTML = texts["menu-login"];
+      document.getElementById("menu-logout").innerHTML = texts["menu-logout"];
+
+      // Update main content
+      document.getElementById("main-welcome-heading").textContent = texts["main-welcome-heading"];
+      document.getElementById("main-welcome-text").textContent = texts["main-welcome-text"];
+      document.getElementById("main-welcome-subtext").textContent = texts["main-welcome-subtext"];
+      document.getElementById("tree-welcome-title").textContent = texts["tree-welcome-title"];
+      document.getElementById("feature-tree").textContent = texts["feature-tree"];
+      document.getElementById("feature-login").textContent = texts["feature-login"];
+      document.getElementById("feature-wall").textContent = texts["feature-wall"];
+      document.getElementById("feature-messages").textContent = texts["feature-messages"];
+      document.getElementById("feature-gallery").textContent = texts["feature-gallery"];
+      document.getElementById("feature-memorial").textContent = texts["feature-memorial"];
+      document.getElementById("feature-multilingual").textContent = texts["feature-multilingual"];
+      document.getElementById("feature-search").textContent = texts["feature-search"];
+      document.getElementById("feature-newsletter").textContent = texts["feature-newsletter"];
+      document.getElementById("feature-ai").textContent = texts["feature-ai"];
+      document.getElementById("feature-responsive").textContent = texts["feature-responsive"];
+      
+      // Update news section
+      document.getElementById("news-updates-heading").textContent = texts["news-updates-heading"];
+      document.getElementById("news-1").textContent = texts["news-1"];
+      document.getElementById("news-2").textContent = texts["news-2"];
+      document.getElementById("news-3").textContent = texts["news-3"];
+
+      // Update footer and images
+      document.getElementById("footer-text").innerHTML = texts["footer-text"];
+      document.querySelector('img[alt="לוגו משפחתי"]').setAttribute('alt', texts["alt-family-logo"]);
+      document.querySelector('img[alt="תמונת משפחה"]').setAttribute('alt', texts["alt-family-photo"]);
+      
+      // Set text direction and language attribute
+      const isRtl = lang === "he" || lang === "yi";
+      document.documentElement.setAttribute("dir", isRtl ? "rtl" : "ltr");
+      document.documentElement.lang = lang;
+      
+      // Adjust user profile alignment based on direction
+      const userProfile = document.getElementById("user-profile");
+      userProfile.style.textAlign = isRtl ? "right" : "left";
+
+      // Simulated fetch for user data
+      fetch("/api/user")
+        .then(res => res.json())
+        .then(user => {
+          if (user.username) {
+            document.getElementById("user-profile").innerHTML = `
+              <span style="font-weight:bold;">${user.username}</span>
+              <span style="color:gray;">(${user.role})</span>
+              <a href="/logout" id="logout-link" style="color: white; margin-right:10px;">${texts["logout-link"]}</a>
+            `;
+          }
+        });
+    }
+
+    // Set initial language on page load
+    langSelector.value = currentLang;
+    setLanguage(currentLang);
+
+    // Add event listener for language changes
+    langSelector.addEventListener("change", (event) => {
+      const newLang = event.target.value;
+      localStorage.setItem("lang", newLang);
+      setLanguage(newLang);
+    });
+  </script>
+</body>
+</html>
+
 </body>
 </html>
 
