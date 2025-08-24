@@ -112,7 +112,6 @@
       EN
     </button>
   </div>
-
   <script>
     const toggleBtn = document.getElementById("langToggle");
     let lang = localStorage.getItem("lang") || "he";
@@ -125,10 +124,17 @@
       location.reload();
     });
   </script>
-</body>
-</html>
-
-
+         <div class="top-section">
+    <div class="header-content">
+      <div class="header-left">
+        <select id="langSelector" class="lang-selector">
+          <option value="he">HE</option>
+          <option value="en">EN</option>
+          <option value="yi">YI</option>
+          <option value="fr">FR</option>
+        </select>
+        <h2 id="family-names" style="margin-right: 1rem;">Ben Abou • Elharrar • Malca</h2>
+      </div>
   <main>
     <section>
       <h3>🌟 ברוכים הבאים למרכז המשפחתי</h3>
