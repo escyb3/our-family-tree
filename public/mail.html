@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>דוא"ל פנימי</title>
+    <!-- Use Tailwind CSS for a modern and responsive design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Font Awesome for icons to enhance user experience -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Use a professional and readable font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .section {
+            @apply bg-white p-6 rounded-2xl shadow-xl mb-4;
+        }
+        .btn {
+            @apply px-6 py-3 rounded-xl font-bold transition duration-200 ease-in-out transform hover:scale-105;
+        }
+        .btn.blue {
+            @apply bg-blue-600 text-white hover:bg-blue-700;
+        }
+        .btn.green {
+            @apply bg-green-600 text-white hover:bg-green-700;
+        }
+        .btn.red {
+            @apply bg-red-600 text-white hover:bg-red-700;
+        }
+        .input {
+            @apply w-full border-2 border-gray-300 rounded-xl p-4 focus:outline-none focus:ring-4 focus:ring-blue-500 transition duration-200;
+        }
+        .label {
+            @apply block text-sm font-semibold text-gray-700 mb-1;
+        }
+        .form-status {
+            @apply p-3 mt-4 rounded-xl text-sm text-center font-medium;
+        }
+        .form-status.success {
+            @apply bg-green-100 text-green-700;
+        }
+        .form-status.error {
+            @apply bg-red-100 text-red-700;
+        }
+        .mail-item {
+            @apply bg-gray-50 border border-gray-200 rounded-xl p-4 mb-2 cursor-pointer transition-colors duration-200 hover:bg-gray-100;
+        }
+        .mail-item.unread {
+            @apply bg-blue-50 border-blue-200 font-bold shadow-md;
+        }
+        .nav-btn {
+            @apply flex items-center justify-center space-x-2 py-3 px-4 rounded-xl font-semibold transition duration-200;
+        }
+        .nav-btn.active-folder {
+            @apply bg-blue-700 text-white font-bold shadow-lg;
+        }
+        .popover {
+            @apply fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-60 backdrop-blur-sm;
+        }
+        .popover-content {
+            @apply bg-white p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center transform scale-105 transition-transform duration-300;
+        }
+        #contactsList div {
+            @apply flex justify-between items-center p-3 border-b border-gray-200 last:border-b-0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
+
+    <!-- Global Status Popover -->
+    <div id="statusPopover" class="popover hidden">
+        <div class="popover-content">
+            <p id="popoverMessage" class="text-lg"></p>
+            <button id="closePopover" class="btn blue mt-4 w-full">Close</button>
+        </div>
+    </div>
+
+    <!-- Confirmation Popover -->
+    <div id="confirmPopover" class="popover hidden">
+        <div class="popover-content">
+            <p id="confirmMessage" class="text-lg text-gray-800 mb-6"></p>
+            <div class="flex justify-center gap-4">
+                <button id="confirmYes" class="btn red w-1/2">Confirm</button>
+                <button id="confirmNo" class="btn blue w-1/2">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login View -->
+    <div id="view-login" class="flex-grow flex items-center justify-center p-4 bg-gradient-to-b from-blue-200 to-gray-100">
+        <div class="section max-w-md w-full text-center">
+            <h1 class="text-4xl font-extrabold mb-2 text-blue-600">Family Mail</h1>
+            <p class="mb-8 text-gray-600">Login to manage your family mailbox.</p>
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label for="usernameInput" class="label">Username</label>
+                    <input type="text" id="usernameInput" class="input" placeholder="e.g. Jonathan" required>
+                </div>
+                <div>
+                    <label for="passwordInput" class="label">Password</label>
+                    <input type="password" id="passwordInput" class="input" placeholder="Enter password" required>
+                </div>
+                <div id="loginStatus" class="form-status hidden"></div>
+                <button type="submit" id="loginBtn" class="btn blue w-full">Login <i class="fas fa-sign-in-alt mr-2"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Mailbox View -->
+    <div id="view-mailbox" class="flex-grow hidden">
+        <div class="flex flex-col md:flex-row min-h-screen">
+            <!-- Sidebar -->
+            <aside class="w-full md:w-72 bg-gray-900 text-gray-200 p-6 flex flex-col shadow-lg md:min-h-screen">
+                <div class="text-center mb-8">
+                    <h2 class="text-xl font-bold">Welcome,</h2>
+                    <p id="sidebarUsername" class="text-3xl font-extrabold text-blue-400"></p>
+                    <p class="text-xs mt-4 text-gray-400">Your email address:</p>
+                    <p id="sidebarEmail" class="text-sm font-bold text-blue-300 break-all"></p>
+                    <p class="text-xs mt-2 text-gray-400">User ID:</p>
+                    <p id="sidebarUid" class="text-xs font-mono text-gray-500 break-all"></p>
+                    <div class="mt-4">
+                        <label for="languageSelect" class="text-xs text-gray-400">Language</label>
+                        <select id="languageSelect" class="w-full p-2 mt-1 rounded-md bg-gray-700 text-white border-none">
+                            <option value="he">עברית</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                </div>
+                <nav class="w-full space-y-3 flex-grow">
+                    <button id="btnCompose" class="nav-btn bg-blue-600 w-full hover:bg-blue-700">
+                        <i class="fas fa-plus ml-2"></i>New Message
+                    </button>
+                    <button data-folder="inbox" class="nav-btn text-gray-300 hover:text-white hover:bg-gray-800">
+                        <i class="fas fa-inbox ml-2"></i>Inbox
+                    </button>
+                    <button data-folder="sent" class="nav-btn text-gray-300 hover:text-white hover:bg-gray-800">
+                        <i class="fas fa-paper-plane ml-2"></i>Sent
+                    </button>
+                    <button data-folder="contacts" class="nav-btn text-gray-300 hover:text-white hover:bg-gray-800">
+                        <i class="fas fa-users ml-2"></i>Contacts
+                    </button>
+                </nav>
+                <div class="mt-8 text-center">
+                    <button id="logoutBtn" class="nav-btn bg-gray-700 w-full hover:bg-gray-600 text-gray-300">
+                        <i class="fas fa-sign-out-alt ml-2"></i>Logout
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main id="mainContent" class="flex-grow p-4 md:p-8 overflow-y-auto">
+                <!-- Content will be rendered here dynamically -->
+            </main>
+        </div>
+    </div>
+
+    <script type="module">
+        // -------------------- Imports --------------------
+        // We use the latest Firebase version for stability and new features.
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, collection, addDoc, onSnapshot, query, where, serverTimestamp, getDocs, setDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        // -------------------- Language / Texts --------------------
+        const lang = {
+            he: {
+                direction: "rtl",
+                appName: 'דוא"ל פנימי',
+                loginWelcome: "ברוכים הבאים",
+                loginMessage: "הכנס שם משתמש כדי לנהל את תיבת הדואר המשפחתית שלך.",
+                usernameLabel: "שם משתמש",
+                usernamePlaceholder: "לדוגמה: יונתן",
+                passwordLabel: "סיסמה",
+                loginButton: "התחבר",
+                loginStatusConnecting: "מתחבר...",
+                loginError: "שגיאה בהתחברות. אנא נסה שוב.",
+                sidebarWelcome: "ברוך הבא,",
+                yourEmail: "כתובת המייל שלך:",
+                userId: "מזהה משתמש:",
+                languageLabel: "שפה",
+                newEmailButton: "הודעה חדשה",
+                inboxFolder: "דואר נכנס",
+                sentFolder: "נשלח",
+                contacts: "אנשי קשר",
+                logout: "התנתק",
+                searchPlaceholder: "חיפוש מיילים...",
+                noEmailsFound: "לא נמצאו הודעות תואמות.",
+                emailSubjectPlaceholder: "(ללא נושא)",
+                composeTitle: "אימייל חדש",
+                recipientLabel: "אל",
+                composeBack: "חזרה לתיבת הדואר",
+                subjectLabel: "נושא",
+                bodyLabel: "הודעה",
+                imageLabel: "הוסף תמונה (עד 1MB)",
+                imageTooBig: "התמונה גדולה מדי (מקסימום 1MB).",
+                sendButton: "שלח",
+                sendSuccess: "ההודעה נשלחה בהצלחה!",
+                sendError: "שגיאה בשליחת ההודעה. אנא נסה שוב.",
+                emailFrom: "מאת:",
+                emailTo: "אל:",
+                emailReply: "השב",
+                emailBack: "חזרה",
+                emailDelete: "מחק",
+                deleteConfirm: "האם אתה בטוח שברצונך למחוק הודעה זו?",
+                loading: "טוען...",
+                noMessagesInFolder: "אין הודעות בתיקיה זו.",
+                contactsTitle: "אנשי קשר",
+                newContactButton: "הוסף איש קשר",
+                addContactTitle: "הוספת איש קשר",
+                contactNameLabel: "שם",
+                contactNamePlaceholder: "שם מלא או כינוי",
+                contactUsernameLabel: "שם משתמש",
+                addContactButton: "הוסף",
+                contactAdded: "איש קשר נוסף בהצלחה!",
+                noContacts: "לא נמצאו אנשי קשר.",
+                selectContact: "בחר איש קשר",
+                contactUsernamePlaceholder: "שם משתמש בלבד",
+                deleteContactConfirm: "האם אתה בטוח שברצונך למחוק איש קשר זה?",
+                contactsBack: "חזרה לדואר",
+                confirm: "אישור",
+                cancel: "ביטול",
+                close: "סגור"
+            },
+            en: {
+                direction: "ltr",
+                appName: 'Family Mail',
+                loginWelcome: "Welcome",
+                loginMessage: "Enter a username to manage your family mailbox.",
+                usernameLabel: "Username",
+                usernamePlaceholder: "e.g. Jonathan",
+                passwordLabel: "Password",
+                loginButton: "Login",
+                loginStatusConnecting: "Connecting...",
+                loginError: "Login failed. Please try again.",
+                sidebarWelcome: "Welcome,",
+                yourEmail: "Your email address:",
+                userId: "User ID:",
+                languageLabel: "Language",
+                newEmailButton: "New Message",
+                inboxFolder: "Inbox",
+                sentFolder: "Sent",
+                contacts: "Contacts",
+                logout: "Logout",
+                searchPlaceholder: "Search emails...",
+                noEmailsFound: "No matching emails found.",
+                emailSubjectPlaceholder: "(No Subject)",
+                composeTitle: "New Email",
+                recipientLabel: "To",
+                composeBack: "Back to Mailbox",
+                subjectLabel: "Subject",
+                bodyLabel: "Message",
+                imageLabel: "Add an image (max 1MB)",
+                imageTooBig: "Image is too big (max 1MB).",
+                sendButton: "Send",
+                sendSuccess: "Message sent successfully!",
+                sendError: "Failed to send message. Please try again.",
+                emailFrom: "From:",
+                emailTo: "To:",
+                emailReply: "Reply",
+                emailBack: "Back",
+                emailDelete: "Delete",
+                deleteConfirm: "Are you sure you want to delete this message?",
+                loading: "Loading...",
+                noMessagesInFolder: "No messages in this folder.",
+                contactsTitle: "Contacts",
+                newContactButton: "Add Contact",
+                addContactTitle: "Add Contact",
+                contactNameLabel: "Name",
+                contactNamePlaceholder: "Full Name or Nickname",
+                contactUsernameLabel: "Username",
+                addContactButton: "Add",
+                contactAdded: "Contact added successfully!",
+                noContacts: "No contacts found.",
+                selectContact: "Select Contact",
+                contactUsernamePlaceholder: "Username only",
+                deleteContactConfirm: "Are you sure you want to delete this contact?",
+                contactsBack: "Back to Mail",
+                confirm: "Confirm",
+                cancel: "Cancel",
+                close: "Close"
+            }
+        };
+
+        // -------------------- Global State --------------------
+        const state = {
+            language: "he",
+            t: lang["he"],
+            username: "",
+            emailAddress: "",
+            userId: null,
+            isAuthReady: false,
+            currentView: "login",
+            currentFolder: "inbox",
+            selectedEmail: null,
+            inboxEmails: [],
+            sentEmails: [],
+            searchQuery: "",
+            compose: { recipient: "", subject: "", body: "", imageFile: null, imageBase64: null, imageType: null },
+            contacts: [],
+        };
+        
+        // -------------------- Firebase Init --------------------
+        let app, db, auth;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        if (Object.keys(firebaseConfig).length > 0) {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+            console.log("Firebase initialized.");
+        } else {
+            console.error("Firebase config is missing!");
+        }
+
+        // -------------------- Utility Functions --------------------
+        const $ = (sel, root = document) => root.querySelector(sel);
+        const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+        /** Displays a custom modal message. */
+        function showMessage(msg, type = 'info') {
+            const popover = $('#statusPopover');
+            const messageEl = $('#popoverMessage');
+            if (popover && messageEl) {
+                messageEl.textContent = msg;
+                messageEl.className = `text-lg ${type === 'success' ? 'text-green-600' : type === 'error' ? 'text-red-600' : 'text-gray-800'}`;
+                $('#closePopover').textContent = state.t.close;
+                popover.classList.remove('hidden');
+            }
+        }
+
+        /** Handles closing the custom modal. */
+        function closeMessage() {
+            const popover = $('#statusPopover');
+            if (popover) {
+                 popover.classList.add('hidden');
+            }
+        }
+
+        /** Displays a custom confirmation dialog. */
+        function showConfirm(msg) {
+            return new Promise((resolve) => {
+                const popover = $('#confirmPopover');
+                const messageEl = $('#confirmMessage');
+                const btnYes = $('#confirmYes');
+                const btnNo = $('#confirmNo');
+                
+                if (popover && messageEl && btnYes && btnNo) {
+                    messageEl.textContent = msg;
+                    btnYes.textContent = state.t.confirm;
+                    btnNo.textContent = state.t.cancel;
+                    popover.classList.remove('hidden');
+
+                    const handleYes = () => {
+                        popover.classList.add('hidden');
+                        btnYes.removeEventListener('click', handleYes);
+                        btnNo.removeEventListener('click', handleNo);
+                        resolve(true);
+                    };
+                    const handleNo = () => {
+                        popover.classList.add('hidden');
+                        btnYes.removeEventListener('click', handleYes);
+                        btnNo.removeEventListener('click', handleNo);
+                        resolve(false);
+                    };
+
+                    btnYes.addEventListener('click', handleYes);
+                    btnNo.addEventListener('click', handleNo);
+                } else {
+                    console.error("Confirmation popover elements not found.");
+                    resolve(false);
+                }
+            });
+        }
+
+        /** Escapes HTML to prevent XSS attacks. */
+        function escapeHtml(s = "") {
+            const d = document.createElement("div");
+            d.textContent = s;
+            return d.innerHTML;
+        }
+
+        /** Formats a timestamp into a readable date string. */
+        function fmtDate(tsSeconds, locale) {
+            if (!tsSeconds) return "";
+            return new Date(tsSeconds * 1000).toLocaleString(locale, { dateStyle: "short", timeStyle: "short" });
+        }
+        
+        /** Ensures the public user document exists for the given user. */
+        async function ensurePublicUserDoc(user) {
+            const userDocRef = doc(db, `artifacts/${appId}/public/data/users`, user.uid);
+            const userSnap = await getDoc(userDocRef);
+            if (!userSnap.exists()) {
+                // Use email as username if available, otherwise use uid
+                const username = user.email ? user.email.split('@')[0] : user.uid;
+                await setDoc(userDocRef, {
+                    username: username,
+                    email: user.email || null,
+                    createdAt: serverTimestamp(),
+                    lastLogin: serverTimestamp(),
+                });
+                console.log("New public user document created.");
+                return { username: username, email: user.email };
+            }
+            // Update last login timestamp
+            await setDoc(userDocRef, { lastLogin: serverTimestamp() }, { merge: true });
+            return userSnap.data();
+        }
+
+        // -------------------- Rendering --------------------
+        function render() {
+            const t = state.t;
+            document.body.dir = t.direction;
+            
+            // Render static elements based on language
+            const languageSelect = $('#languageSelect');
+            if (languageSelect) {
+                languageSelect.value = state.language;
+            }
+            const titleEl = $('title');
+            if (titleEl) {
+                titleEl.textContent = t.appName;
+            }
+            
+            // Login view
+            const loginH1 = $('#view-login h1');
+            const loginP = $('#view-login p');
+            const usernameLabel = $('#loginForm label[for="usernameInput"]');
+            const passwordLabel = $('#loginForm label[for="passwordInput"]');
+            const usernameInput = $('#usernameInput');
+            const loginBtn = $('#loginBtn');
+            if (loginH1) loginH1.textContent = t.appName;
+            if (loginP) loginP.textContent = t.loginMessage;
+            if (usernameLabel) usernameLabel.textContent = t.usernameLabel;
+            if (usernameInput) usernameInput.placeholder = t.usernamePlaceholder;
+            if (passwordLabel) passwordLabel.textContent = t.passwordLabel;
+            if (loginBtn) loginBtn.innerHTML = `${t.loginButton} <i class="fas fa-sign-in-alt ${t.direction === 'rtl' ? 'mr-2' : 'ml-2'}"></i>`;
+
+            // Main mailbox view
+            const sidebarUid = $('#sidebarUid');
+            const sidebarUsername = $('#sidebarUsername');
+            const sidebarEmail = $('#sidebarEmail');
+            const btnCompose = $('#btnCompose');
+            const inboxBtn = $$('[data-folder="inbox"]')[0];
+            const sentBtn = $$('[data-folder="sent"]')[0];
+            const contactsBtn = $$('[data-folder="contacts"]')[0];
+            const logoutBtn = $('#logoutBtn');
+
+            if (sidebarUid) sidebarUid.textContent = state.userId || "";
+            if (state.userId) {
+                if (sidebarUsername) sidebarUsername.textContent = state.username || "";
+                if (sidebarEmail) sidebarEmail.textContent = state.emailAddress || "";
+                if ($('#sidebarWelcome')) $('#sidebarWelcome').textContent = t.sidebarWelcome;
+                if ($('#sidebarEmailLabel')) $('#sidebarEmailLabel').textContent = t.yourEmail;
+                if ($('#sidebarUidLabel')) $('#sidebarUidLabel').textContent = t.userId;
+                
+                if (btnCompose) btnCompose.innerHTML = `<i class="fas fa-plus ${t.direction === 'rtl' ? 'ml-2' : 'mr-2'}"></i>${t.newEmailButton}`;
+                if (inboxBtn) inboxBtn.innerHTML = `<i class="fas fa-inbox ${t.direction === 'rtl' ? 'ml-2' : 'mr-2'}"></i>${t.inboxFolder}`;
+                if (sentBtn) sentBtn.innerHTML = `<i class="fas fa-paper-plane ${t.direction === 'rtl' ? 'ml-2' : 'mr-2'}"></i>${t.sentFolder}`;
+                if (contactsBtn) contactsBtn.innerHTML = `<i class="fas fa-users ${t.direction === 'rtl' ? 'ml-2' : 'mr-2'}"></i>${t.contacts}`;
+                if (logoutBtn) logoutBtn.innerHTML = `<i class="fas fa-sign-out-alt ${t.direction === 'rtl' ? 'ml-2' : 'mr-2'}"></i>${t.logout}`;
+            }
+
+            const viewLogin = $("#view-login");
+            const viewMailbox = $("#view-mailbox");
+            if (viewLogin && viewMailbox) {
+                 if (state.currentView === "login") {
+                     viewLogin.classList.remove('hidden');
+                     viewMailbox.classList.add('hidden');
+                 } else {
+                     viewLogin.classList.add('hidden');
+                     viewMailbox.classList.remove('hidden');
+                     
+                     $$(".nav-btn").forEach(btn => {
+                         const f = btn.getAttribute("data-folder");
+                         const isContacts = btn.textContent.includes(state.t.contacts);
+                         btn.classList.toggle("active-folder", (state.currentFolder === f) || (isContacts && state.currentFolder === 'contacts'));
+                     });
+                     renderMain();
+                 }
+            }
+        }
+        
+        // Renders the main content area based on the current folder/view.
+        function renderMain() {
+            const mainContent = $("#mainContent");
+            if (!mainContent) return;
+            if (state.currentView !== "mailbox") return;
+            if (state.selectedEmail) {
+                renderEmailView();
+                return;
+            }
+            if (state.showCompose) {
+                renderCompose();
+                return;
+            }
+            if (state.currentFolder === "contacts") {
+                renderContactsView();
+                return;
+            }
+
+            // Render email list based on current folder
+            let emailsToShow = [];
+            let noMessagesText = state.t.noMessagesInFolder;
+            switch (state.currentFolder) {
+                case "inbox":
+                    emailsToShow = state.inboxEmails;
+                    break;
+                case "sent":
+                    emailsToShow = state.sentEmails;
+                    break;
+                default:
+                    emailsToShow = [];
+            }
+            
+            // Sort emails by timestamp (newest first)
+            emailsToShow.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+
+            // Apply search filter if query exists
+            if (state.searchQuery) {
+                const query = state.searchQuery.toLowerCase();
+                emailsToShow = emailsToShow.filter(email => {
+                    return (
+                        (email.sender || "").toLowerCase().includes(query) ||
+                        (email.recipient || "").toLowerCase().includes(query) ||
+                        (email.subject || "").toLowerCase().includes(query) ||
+                        (email.body || "").toLowerCase().includes(query)
+                    );
+                });
+            }
+
+            let html = `
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-6">
+                    <h2 class="text-3xl font-bold mb-4 sm:mb-0">${state.t[state.currentFolder + "Folder"]}</h2>
+                    <input id="searchBar" type="text" value="${escapeHtml(state.searchQuery)}" class="input w-full sm:w-1/3" placeholder="${state.t.searchPlaceholder}">
+                </div>
+                <div id="emailList">
+            `;
+            if (emailsToShow.length === 0) {
+                html += `<div class="bg-white p-6 rounded-xl shadow-xl text-center text-gray-500">${state.searchQuery ? state.t.noEmailsFound : noMessagesText}</div>`;
+            } else {
+                emailsToShow.forEach(email => {
+                    const fromOrTo = state.currentFolder === 'sent' ? `${state.t.emailTo} ${escapeHtml(email.recipient)}` : `${state.t.emailFrom} ${escapeHtml(email.sender)}`;
+                    const unreadClass = state.currentFolder === 'inbox' && !email.read ? 'unread' : '';
+                    const imageIcon = email.image ? `<i class="fas fa-paperclip text-gray-400 ml-2"></i>` : '';
+                    html += `
+                        <div class="mail-item ${unreadClass}" data-email-id="${email.id}">
+                            <div class="flex justify-between items-center mb-1">
+                                <h3 class="font-bold text-lg overflow-hidden whitespace-nowrap overflow-ellipsis flex items-center">
+                                    ${imageIcon}
+                                    <span>${escapeHtml(email.subject) || state.t.emailSubjectPlaceholder}</span>
+                                </h3>
+                                <span class="text-xs text-gray-400">${fmtDate(email.timestamp?.seconds, state.language)}</span>
+                            </div>
+                            <div class="text-sm text-gray-600 mb-2">${fromOrTo}</div>
+                            <p class="text-gray-500 text-sm overflow-hidden whitespace-nowrap overflow-ellipsis">${escapeHtml(email.body)}</p>
+                        </div>
+                    `;
+                });
+            }
+            html += `</div>`;
+            mainContent.innerHTML = html;
+            
+            // Attach listeners to email items
+            $$('.mail-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const emailId = item.dataset.emailId;
+                    const selectedEmail = emailsToShow.find(e => e.id === emailId);
+                    if (selectedEmail) {
+                        state.selectedEmail = selectedEmail;
+                        renderEmailView();
+                    }
+                });
+            });
+
+            const searchBar = $('#searchBar');
+            if (searchBar) {
+                searchBar.addEventListener('input', (e) => {
+                    state.searchQuery = e.target.value;
+                    renderMain();
+                });
+            }
+        }
+
+        // -------------------- Render Email View --------------------
+        function renderEmailView() {
+            const email = state.selectedEmail;
+            const mainContent = $("#mainContent");
+            if (!email || !mainContent) {
+                state.selectedEmail = null;
+                renderMain();
+                return;
+            }
+
+            // Mark as read if it's an inbox message
+            if (state.currentFolder === 'inbox' && !email.read) {
+                markEmailAsRead(email.id);
+            }
+
+            const fromOrTo = state.currentFolder === 'sent' ? state.t.emailTo : state.t.emailFrom;
+            const fromOrToEmail = state.currentFolder === 'sent' ? email.recipient : email.sender;
+            
+            const imageHtml = email.image && email.image.data
+                ? `<div class="mt-6 mb-4 max-w-full overflow-hidden rounded-xl shadow-lg">
+                       <img src="data:${email.image.type};base64,${email.image.data}" class="w-full h-auto object-cover" alt="Attached Image">
+                   </div>`
+                : '';
+
+            mainContent.innerHTML = `
+                <div class="section">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold">${escapeHtml(email.subject) || state.t.emailSubjectPlaceholder}</h2>
+                        <div class="flex space-x-2">
+                            <button id="btnReply" class="btn blue text-sm"><i class="fas fa-reply ${state.t.direction === 'rtl' ? 'ml-2' : 'mr-2'}"></i>${state.t.emailReply}</button>
+                            ${state.currentFolder === 'inbox' ? 
+                                `<button id="btnDelete" class="btn red text-sm"><i class="fas fa-trash-alt ${state.t.direction === 'rtl' ? 'ml-2' : 'mr-2'}"></i>${state.t.emailDelete}</button>` : ''
+                            }
+                            <button id="btnBack" class="btn blue text-sm"><i class="fas fa-arrow-right ${state.t.direction === 'rtl' ? 'ml-2' : 'mr-2'}"></i>${state.t.emailBack}</button>
+                        </div>
+                    </div>
+                    <div class="mb-6 text-sm text-gray-600">
+                        <p>${fromOrTo} <span class="font-bold">${escapeHtml(fromOrToEmail)}</span></p>
+                    </div>
+                    ${imageHtml}
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                        <p>${escapeHtml(email.body)}</p>
+                    </div>
+                </div>
+            `;
+            
+            // Attach listener for the back button
+            const btnBack = $("#btnBack");
+            if (btnBack) {
+                btnBack.addEventListener('click', () => {
+                    state.selectedEmail = null;
+                    renderMain();
+                });
+            }
+
+            // Attach listener for the reply button
+            const btnReply = $("#btnReply");
+            if (btnReply) {
+                btnReply.addEventListener('click', () => {
+                    state.compose = {
+                        recipient: email.sender ? email.sender.split('@')[0] : "",
+                        subject: `Re: ${email.subject}`,
+                        body: `\n\n--- On ${fmtDate(email.timestamp?.seconds, state.language)} ${email.sender || ""} wrote: ---\n> ${email.body.split('\n').join('\n> ')}\n\n`,
+                        imageFile: null,
+                        imageBase64: null,
+                        imageType: null
+                    };
+                    state.showCompose = true;
+                    state.selectedEmail = null;
+                    renderCompose();
+                });
+            }
+
+            // Attach listener for the delete button
+            const btnDelete = $("#btnDelete");
+            if (btnDelete) {
+                btnDelete.addEventListener('click', async () => {
+                    const confirmed = await showConfirm(state.t.deleteConfirm);
+                    if (confirmed) {
+                        handleDeleteEmail(email.id);
+                    }
+                });
+            }
+        }
+
+        // -------------------- Render Compose View --------------------
+        function renderCompose() {
+            const mainContent = $("#mainContent");
+            if (!mainContent) return;
+            const t = state.t;
+
+            const imagePreviewHtml = state.compose.imageBase64
+                ? `<div class="mt-4">
+                       <img id="imagePreview" src="data:${state.compose.imageType};base64,${state.compose.imageBase64}" class="rounded-xl max-w-xs max-h-48 object-contain">
+                   </div>`
+                : `<div id="imagePreview" class="hidden"></div>`;
+
+            mainContent.innerHTML = `
+                <div class="section">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-2xl font-bold">${t.composeTitle}</h2>
+                        <button id="btnBackMailbox" class="btn blue">${t.composeBack} <i class="fas fa-arrow-right ${t.direction === 'rtl' ? 'mr-2' : 'ml-2'}"></i></button>
+                    </div>
+                    <form id="composeForm" class="space-y-4">
+                        <div>
+                            <label for="recipientInput" class="label">${t.recipientLabel}</label>
+                            <input type="text" id="recipientInput" class="input" placeholder="${t.contactUsernamePlaceholder}" value="${escapeHtml(state.compose.recipient)}" required>
+                        </div>
+                        <div>
+                            <label for="subjectInput" class="label">${t.subjectLabel}</label>
+                            <input type="text" id="subjectInput" class="input" placeholder="${t.emailSubjectPlaceholder}" value="${escapeHtml(state.compose.subject)}">
+                        </div>
+                        <div>
+                            <label for="bodyInput" class="label">${t.bodyLabel}</label>
+                            <textarea id="bodyInput" class="input h-32" placeholder="${t.bodyLabel}">${escapeHtml(state.compose.body)}</textarea>
+                        </div>
+                        <div>
+                            <label for="imageInput" class="label">${t.imageLabel}</label>
+                            <input type="file" id="imageInput" accept="image/jpeg, image/png, image/gif" class="input p-2 cursor-pointer">
+                            ${imagePreviewHtml}
+                        </div>
+                        <div class="flex justify-end gap-2 mt-6">
+                            <button type="submit" id="btnSend" class="btn blue flex items-center">
+                                <span id="sendBtnText">${t.sendButton}</span>
+                                <i class="fas fa-paper-plane ${t.direction === 'rtl' ? 'ml-2' : 'mr-2'}"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+
+            // Attach listeners to the dynamically created elements
+            const btnBackMailbox = $("#btnBackMailbox");
+            if (btnBackMailbox) {
+                btnBackMailbox.addEventListener('click', () => {
+                    state.showCompose = false;
+                    renderMain();
+                });
+            }
+            const composeForm = $("#composeForm");
+            if (composeForm) {
+                composeForm.addEventListener('submit', handleSendEmail);
+            }
+            const recipientInput = $("#recipientInput");
+            if (recipientInput) {
+                recipientInput.addEventListener('input', (e) => state.compose.recipient = e.target.value);
+            }
+            const subjectInput = $("#subjectInput");
+            if (subjectInput) {
+                subjectInput.addEventListener('input', (e) => state.compose.subject = e.target.value);
+            }
+            const bodyInput = $("#bodyInput");
+            if (bodyInput) {
+                bodyInput.addEventListener('input', (e) => state.compose.body = e.target.value);
+            }
+            const imageInput = $("#imageInput");
+            if (imageInput) {
+                imageInput.addEventListener("change", handleImageSelect);
+            }
+        }
+        
+        // -------------------- Image Handling --------------------
+        function handleImageSelect(event) {
+            const file = event.target.files[0];
+            if (!file) {
+                state.compose.imageFile = null;
+                state.compose.imageBase64 = null;
+                return;
+            }
+
+            // Limit file size to 1MB
+            if (file.size > 1024 * 1024) {
+                showMessage(state.t.imageTooBig, 'error');
+                event.target.value = ''; // Clear file input
+                state.compose.imageFile = null;
+                state.compose.imageBase64 = null;
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64String = reader.result.split(',')[1];
+                state.compose.imageBase64 = base64String;
+                state.compose.imageType = file.type;
+                const imagePreview = $('#imagePreview');
+                if (imagePreview) {
+                    imagePreview.src = reader.result;
+                    imagePreview.classList.remove('hidden');
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+
+        // -------------------- Render Contacts View --------------------
+        function renderContactsView() {
+            const t = state.t;
+            const mainContent = $("#mainContent");
+            if (!mainContent) return;
+            mainContent.innerHTML = `
+                <div class="section">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-2xl font-bold">${t.contactsTitle}</h2>
+                        <button id="btnBackMail" class="btn blue">${t.contactsBack} <i class="fas fa-arrow-right ${t.direction === 'rtl' ? 'mr-2' : 'ml-2'}"></i></button>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="text-lg font-semibold mb-2">${t.addContactTitle}</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="label">${t.contactNameLabel}</label>
+                                <input id="contactName" class="input" placeholder="${t.contactNamePlaceholder}" />
+                            </div>
+                            <div>
+                                <label class="label">${t.contactUsernameLabel}</label>
+                                <div class="flex items-center space-x-2">
+                                    <input id="contactUsername" class="input flex-grow" placeholder="${t.contactUsernamePlaceholder}" />
+                                    <span class="text-gray-500">@family.local</span>
+                                </div>
+                            </div>
+                            <div class="text-left">
+                                <button id="btnAddContact" class="btn green">${t.addContactButton} <i class="fas fa-user-plus ${t.direction === 'rtl' ? 'ml-2' : 'mr-2'}"></i></button>
+                            </div>
+                            <div id="contactStatus" class="form-status hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="section mt-4">
+                        <h3 class="text-lg font-semibold mb-2">${t.contactsTitle}</h3>
+                        <div id="contactsList" class="divide-y divide-gray-200"></div>
+                    </div>
+                </div>
+            `;
+
+            const btnBackMail = $("#btnBackMail");
+            if (btnBackMail) {
+                btnBackMail.addEventListener("click", () => {
+                    state.currentFolder = "inbox";
+                    renderMain();
+                });
+            }
+
+            const btnAddContact = $("#btnAddContact");
+            if (btnAddContact) {
+                btnAddContact.addEventListener("click", handleAddContact);
+            }
+            
+            const list = $("#contactsList");
+            if (!list) return;
+            
+            if (!state.contacts || !state.contacts.length) {
+                list.innerHTML = `<div class="p-5 text-center text-gray-500">${t.noContacts}</div>`;
+            } else {
+                state.contacts.forEach(c => {
+                    const row = document.createElement("div");
+                    row.className = "flex justify-between items-center py-2";
+                    row.innerHTML = `
+                        <div>
+                            <div class="font-bold">${escapeHtml(c.name || "")}</div>
+                            <div class="text-sm text-gray-500">${escapeHtml(c.username || "")}@family.local</div>
+                        </div>
+                        <button class="btn red text-sm" data-id="${c.id}"><i class="fas fa-trash-alt"></i></button>
+                    `;
+                    const btnDelete = row.querySelector("button");
+                    if (btnDelete) {
+                        btnDelete.addEventListener("click", async () => {
+                            const confirmed = await showConfirm(t.deleteContactConfirm);
+                            if (confirmed) {
+                                try {
+                                    await deleteDoc(doc(db, `artifacts/${appId}/users/${state.userId}/contacts`, c.id));
+                                    state.contacts = state.contacts.filter(contact => contact.id !== c.id);
+                                    renderContactsView();
+                                } catch (e) {
+                                    console.error("Delete contact error:", e);
+                                    showMessage("Failed to delete contact. Please try again.", 'error');
+                                }
+                            }
+                        });
+                    }
+                    list.appendChild(row);
+                });
+            }
+        }
+
+        // -------------------- Event Handlers --------------------
+        function setLanguage(newLang) {
+            if (lang[newLang]) {
+                state.language = newLang;
+                state.t = lang[newLang];
+                render();
+            }
+        }
+        
+        // Handle login form submission
+        const loginForm = document.querySelector("#loginForm");
+        if (loginForm) {
+             loginForm.addEventListener("submit", async (e) => {
+                 e.preventDefault();
+                 const usernameInput = $("#usernameInput");
+                 const passwordInput = $("#passwordInput");
+                 const loginStatus = $("#loginStatus");
+                 const loginBtn = $("#loginBtn");
+
+                 const username = usernameInput.value.trim().toLowerCase();
+                 const password = passwordInput.value.trim();
+                 const email = `${username}@family.local`;
+
+                 if (loginBtn) loginBtn.disabled = true;
+                 if (loginStatus) {
+                     loginStatus.classList.remove('hidden');
+                     loginStatus.classList.remove('error', 'success');
+                     loginStatus.textContent = state.t.loginStatusConnecting;
+                 }
+            
+                 try {
+                     const userQuery = query(collection(db, `artifacts/${appId}/public/data/users`), where("username", "==", username));
+                     const userSnapshot = await getDocs(userQuery);
+
+                     let userCredential;
+                     if (!userSnapshot.empty) {
+                         userCredential = await signInWithEmailAndPassword(auth, email, password);
+                     } else {
+                         try {
+                             userCredential = await signInWithEmailAndPassword(auth, email, password);
+                             await ensurePublicUserDoc(userCredential.user);
+                         } catch (err) {
+                             if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
+                                  userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                                  await setDoc(doc(db, `artifacts/${appId}/public/data/users`, userCredential.user.uid), {
+                                      username,
+                                      email,
+                                      createdAt: serverTimestamp(),
+                                      lastLogin: serverTimestamp(),
+                                  });
+                                  if (loginStatus) {
+                                      loginStatus.textContent = "Account created successfully 🎉";
+                                      loginStatus.classList.add('success');
+                                  }
+                              } else {
+                                  throw err;
+                              }
+                         }
+                     }
+                
+                     const uid = userCredential.user.uid;
+                     state.username = username;
+                     state.emailAddress = email;
+                     state.userId = uid;
+                     state.currentView = "mailbox";
+                     startRealtimeSubscriptions();
+                     render();
+                 } catch (err) {
+                     console.error("Login error:", err);
+                     if (loginStatus) {
+                         loginStatus.textContent = "Login error: " + (err.message || err.code);
+                         loginStatus.classList.add('error');
+                     }
+                 } finally {
+                     if (loginBtn) loginBtn.disabled = false;
+                 }
+             });
+        }
+        
+        // Handle logout
+        function handleLogout() {
+            signOut(auth).then(() => {
+                console.log("User signed out.");
+                stopRealtimeSubscriptions();
+                state.userId = null;
+                state.username = "";
+                state.emailAddress = "";
+                state.currentView = "login";
+                state.currentFolder = "inbox";
+                state.selectedEmail = null;
+                render();
+            }).catch(error => {
+                console.error("Logout error:", error);
+                showMessage("Logout failed.", 'error');
+            });
+        }
+
+
+        // Handle send email
+        async function handleSendEmail(e) {
+            e.preventDefault();
+            const btnSend = $("#btnSend");
+            if (btnSend) btnSend.disabled = true;
+
+            const recipient = state.compose.recipient.toLowerCase();
+            const subject = state.compose.subject;
+            const body = state.compose.body;
+            const image = state.compose.imageBase64 ? { data: state.compose.imageBase64, type: state.compose.imageType } : null;
+
+            if (!recipient || (!body && !image)) {
+                showMessage("Recipient and message/image are required.", 'error');
+                if (btnSend) btnSend.disabled = false;
+                return;
+            }
+
+            try {
+                const userQuery = query(collection(db, `artifacts/${appId}/public/data/users`), where("username", "==", recipient));
+                const userSnapshot = await getDocs(userQuery);
+
+                if (userSnapshot.empty) {
+                    showMessage(`Recipient "${recipient}" does not exist.`, 'error');
+                    if (btnSend) btnSend.disabled = false;
+                    return;
+                }
+                const recipientUid = userSnapshot.docs[0].id;
+                const recipientEmail = userSnapshot.docs[0].data().email;
+                
+                const newDocData = {
+                    sender: state.emailAddress,
+                    senderId: state.userId,
+                    recipient: recipientEmail,
+                    recipientId: recipientUid,
+                    subject: subject || "No Subject",
+                    body,
+                    timestamp: serverTimestamp(),
+                    read: false,
+                };
+                if (image) {
+                    newDocData.image = image;
+                }
+
+                await addDoc(collection(db, `artifacts/${appId}/public/data/emails`), newDocData);
+
+                showMessage(state.t.sendSuccess, 'success');
+                state.compose = { recipient: "", subject: "", body: "", imageFile: null, imageBase64: null, imageType: null };
+                state.showCompose = false;
+                renderMain();
+
+            } catch (err) {
+                console.error("Failed to send email:", err);
+                showMessage(state.t.sendError, 'error');
+            } finally {
+                if (btnSend) btnSend.disabled = false;
+            }
+        }
+
+        /** Handles deleting an email from the inbox. */
+        async function handleDeleteEmail(emailId) {
+            try {
+                if (!state.userId) return;
+                const emailRef = doc(db, `artifacts/${appId}/public/data/emails`, emailId);
+                await deleteDoc(emailRef);
+                console.log(`Email ${emailId} deleted.`);
+                state.selectedEmail = null;
+                renderMain();
+            } catch (err) {
+                console.error("Failed to delete email:", err);
+                showMessage(state.t.sendError, 'error');
+            }
+        }
+        
+        // Handle add contact
+        async function handleAddContact() {
+            const t = state.t;
+            const nameInput = $('#contactName');
+            const usernameInput = $('#contactUsername');
+            const statusDiv = $('#contactStatus');
+            const name = nameInput.value.trim();
+            const username = usernameInput.value.trim().toLowerCase();
+
+            if (!name || !username) {
+                if (statusDiv) {
+                    statusDiv.textContent = 'Contact name and username are required.';
+                    statusDiv.classList.add('error');
+                    statusDiv.classList.remove('hidden');
+                }
+                return;
+            }
+
+            try {
+                const existingContact = state.contacts.find(c => c.username === username);
+                if (existingContact) {
+                    if (statusDiv) {
+                        statusDiv.textContent = 'A contact with this username already exists.';
+                        statusDiv.classList.add('error');
+                        statusDiv.classList.remove('hidden');
+                    }
+                    return;
+                }
+
+                const userQuery = query(collection(db, `artifacts/${appId}/public/data/users`), where("username", "==", username));
+                const userSnapshot = await getDocs(userQuery);
+                
+                if (userSnapshot.empty) {
+                    if (statusDiv) {
+                        statusDiv.textContent = 'Username does not exist in the system.';
+                        statusDiv.classList.add('error');
+                        statusDiv.classList.remove('hidden');
+                    }
+                    return;
+                }
+
+                const contactsCol = collection(db, `artifacts/${appId}/users/${state.userId}/contacts`);
+                await addDoc(contactsCol, {
+                    name,
+                    username,
+                    createdAt: serverTimestamp()
+                });
+
+                if (nameInput) nameInput.value = '';
+                if (usernameInput) usernameInput.value = '';
+                if (statusDiv) {
+                    statusDiv.textContent = t.contactAdded;
+                    statusDiv.classList.add('success');
+                    statusDiv.classList.remove('hidden');
+                }
+            } catch (e) {
+                console.error("Add contact error:", e);
+                if (statusDiv) {
+                     statusDiv.textContent = 'Error adding contact.';
+                     statusDiv.classList.add('error');
+                     statusDiv.classList.remove('hidden');
+                }
+            }
+        }
+
+        // -------------------- Firestore subscriptions --------------------
+        let unsubscribeInbox = null;
+        let unsubscribeSent = null;
+        let unsubscribeContacts = null;
+
+        function startRealtimeSubscriptions() {
+            stopRealtimeSubscriptions();
+            if (!state.userId) return;
+
+            const inboxQ = query(
+                collection(db, `artifacts/${appId}/public/data/emails`),
+                where("recipientId", "==", state.userId)
+            );
+            unsubscribeInbox = onSnapshot(inboxQ, (snap) => {
+                state.inboxEmails = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                // Sort in memory to avoid index requirement
+                state.inboxEmails.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+                if (state.currentView === "mailbox" && state.currentFolder === "inbox" && !state.selectedEmail) renderMain();
+            }, (error) => {
+                console.error("Error listening to inbox:", error);
+            });
+
+            const sentQ = query(
+                collection(db, `artifacts/${appId}/public/data/emails`),
+                where("senderId", "==", state.userId)
+            );
+            unsubscribeSent = onSnapshot(sentQ, (snap) => {
+                state.sentEmails = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                // Sort in memory to avoid index requirement
+                state.sentEmails.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+                if (state.currentView === "mailbox" && state.currentFolder === "sent" && !state.selectedEmail) renderMain();
+            }, (error) => {
+                console.error("Error listening to sent folder:", error);
+            });
+
+            const contactsCol = collection(db, `artifacts/${appId}/users/${state.userId}/contacts`);
+            unsubscribeContacts = onSnapshot(contactsCol, (snap) => {
+                state.contacts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                if (state.currentView === "mailbox" && state.currentFolder === "contacts") renderContactsView();
+            }, (error) => {
+                console.error("Error listening to contacts:", error);
+            });
+        }
+
+        function stopRealtimeSubscriptions() {
+            if (unsubscribeInbox) { unsubscribeInbox(); unsubscribeInbox = null; }
+            if (unsubscribeSent) { unsubscribeSent(); unsubscribeSent = null; }
+            if (unsubscribeContacts) { unsubscribeContacts(); unsubscribeContacts = null; }
+        }
+        
+        async function markEmailAsRead(emailId) {
+            try {
+                if (!state.userId) return;
+                const emailRef = doc(db, `artifacts/${appId}/public/data/emails`, emailId);
+                await setDoc(emailRef, { read: true }, { merge: true });
+                console.log(`Email ${emailId} marked as read`);
+            } catch (err) {
+                console.error("Failed to mark email as read:", err);
+            }
+        }
+
+        // -------------------- Auth Listener --------------------
+        onAuthStateChanged(auth, async (user) => {
+            state.isAuthReady = true;
+            if (user) {
+                const userData = await ensurePublicUserDoc(user);
+                state.username = userData.username;
+                state.emailAddress = userData.email || null;
+                state.userId = user.uid;
+                state.currentView = "mailbox";
+                startRealtimeSubscriptions();
+            } else {
+                state.userId = null;
+                state.currentView = "login";
+            }
+            render();
+        });
+
+        // -------------------- Navigation Event Listeners --------------------
+        document.addEventListener("DOMContentLoaded", () => {
+            const btnCompose = $("#btnCompose");
+            const logoutBtn = $('#logoutBtn');
+            const closePopoverBtn = $('#closePopover');
+            const languageSelect = $('#languageSelect');
+            
+            $$(".nav-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const folder = btn.getAttribute("data-folder");
+                    if (folder) {
+                        state.currentFolder = folder;
+                        state.selectedEmail = null;
+                        state.showCompose = false;
+                        state.searchQuery = "";
+                        renderMain();
+                    }
+                });
+            });
+
+            if (btnCompose) {
+                btnCompose.addEventListener("click", () => {
+                    state.showCompose = true;
+                    state.selectedEmail = null;
+                    state.compose = { recipient: "", subject: "", body: "", imageFile: null, imageBase64: null, imageType: null };
+                    renderCompose();
+                });
+            }
+
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", handleLogout);
+            }
+            if (closePopoverBtn) {
+                closePopoverBtn.addEventListener('click', closeMessage);
+            }
+            if (languageSelect) {
+                languageSelect.addEventListener('change', (e) => setLanguage(e.target.value));
+            }
+
+            // ---- שינוי: הסרנו את הכניסה האנונימית. כעת האפליקציה תתחבר רק אם יש טוקן מותאם אישית.
+            // ---- Change: We have removed the anonymous sign-in. The app will now only connect if a custom token exists.
+            const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+            if (initialAuthToken) {
+                signInWithCustomToken(auth, initialAuthToken).catch(error => {
+                    console.error("Custom token sign-in failed:", error);
+                    showMessage("Automatic login failed.", 'error');
+                });
+            }
+            
+            render();
+        });
+
+    </script>
+</body>
+</html>
