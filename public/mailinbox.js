@@ -427,17 +427,26 @@ languageToggleBtn.addEventListener("click", () => {
 // -------------------- Login --------------------
 const loginForm = document.querySelector("#loginForm");
 const usernameInput = document.querySelector("#usernameInput");
+const passwordInput = document.querySelector("#passwordInput"); // שדה חדש בטופס
 const loginStatus = document.querySelector("#loginStatus");
 const loginBtn = document.querySelector("#loginBtn");
 
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const username = usernameInput.value.trim().toLowerCase();
+  const password = passwordInput.value.trim();
 
   // ולידציה לשם משתמש
   if (!/^[a-z0-9._-]+$/.test(username)) {
     loginStatus.hidden = false;
-    loginStatus.textContent = "שם משתמש לא חוקי (רק אותיות באנגלית, מספרים, נקודה, מקף או קו תחתי)";
+    loginStatus.textContent =
+      "שם משתמש לא חוקי (רק אותיות באנגלית, מספרים, נקודה, מקף או קו תחתי)";
+    return;
+  }
+
+  if (!password) {
+    loginStatus.hidden = false;
+    loginStatus.textContent = "יש להזין סיסמה";
     return;
   }
 
@@ -446,8 +455,7 @@ loginForm.addEventListener("submit", async (e) => {
   loginBtn.disabled = true;
 
   try {
-    const email = `${username}@family.local`;
-    const password = "DefaultPassword123!"; // סיסמה אחידה
+    const email = `${username}@family.local`; // כתובת פנימית
 
     let userCredential;
     try {
@@ -455,8 +463,16 @@ loginForm.addEventListener("submit", async (e) => {
       userCredential = await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
       if (err.code === "auth/user-not-found") {
-        // צור משתמש חדש
+        // צור משתמש חדש עם שם משתמש + סיסמה
         userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+        // צור רשומת משתמש ב־Firestore
+        await setDoc(doc(db, "users", userCredential.user.uid), {
+          username,
+          email,
+          createdAt: new Date().toISOString(),
+          lastLogin: new Date().toISOString()
+        });
       } else {
         throw err;
       }
@@ -464,21 +480,17 @@ loginForm.addEventListener("submit", async (e) => {
 
     const uid = userCredential.user.uid;
     const userRef = doc(db, "users", uid);
-    const userSnap = await getDoc(userRef);
 
-    if (!userSnap.exists()) {
-      await setDoc(userRef, {
-        username,
-        email,
-        createdAt: new Date().toISOString(),
+    // עדכן זמן כניסה אחרון
+    await setDoc(
+      userRef,
+      {
         lastLogin: new Date().toISOString()
-      });
-    } else {
-      await setDoc(userRef, {
-        lastLogin: new Date().toISOString()
-      }, { merge: true });
-    }
+      },
+      { merge: true }
+    );
 
+    // שמירת נתונים ב־state
     state.username = username;
     state.emailAddress = email;
     state.userId = uid;
@@ -486,6 +498,8 @@ loginForm.addEventListener("submit", async (e) => {
     state.currentView = "mailbox";
 
     loginStatus.hidden = true;
+
+    // חיבור להודעות בזמן אמת
     startRealtimeSubscriptions();
     render();
 
@@ -496,6 +510,7 @@ loginForm.addEventListener("submit", async (e) => {
     loginBtn.disabled = false;
   }
 });
+
 
 
 
