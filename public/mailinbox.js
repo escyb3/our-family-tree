@@ -461,7 +461,8 @@ loginForm.addEventListener("submit", async (e) => {
       // נסה להתחבר
       userCredential = await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
-      if (err.code === "auth/user-not-found") {
+      // אם המשתמש לא נמצא או credentials לא תקינים – צור משתמש חדש
+      if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
         // בדיקה אם שם המשתמש כבר קיים ב־Firestore
         const q = query(collection(db, "users"), where("username", "==", username));
         const snap = await getDocs(q);
@@ -522,6 +523,7 @@ loginForm.addEventListener("submit", async (e) => {
     loginBtn.disabled = false;
   }
 });
+
 // -------------------- Attach Event Listeners with File Upload (Safe Version) --------------------
 function attachListeners() {
   const btnSend = document.getElementById("btnSend");
