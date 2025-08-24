@@ -1331,7 +1331,8 @@ app.post("/api/gemini", async (req, res) => {
 // הפעלת השרת
 // =========================
 const PORT = process.env.PORT || 3000;
-
+console.log ('The Server Is Ready To Receive Requests')
+console.log ('השרת רץ על פורט 300')
 app.listen(PORT, () => {
   console.log(`שרת המרכז המשפחתי פעיל בכתובת http://localhost:${PORT}`);
 });
