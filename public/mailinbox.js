@@ -427,7 +427,7 @@ languageToggleBtn.addEventListener("click", () => {
 // -------------------- Login --------------------
 const loginForm = document.querySelector("#loginForm");
 const usernameInput = document.querySelector("#usernameInput");
-const passwordInput = document.querySelector("#passwordInput"); // שדה חדש בטופס
+const passwordInput = document.querySelector("#passwordInput");
 const loginStatus = document.querySelector("#loginStatus");
 const loginBtn = document.querySelector("#loginBtn");
 
@@ -436,10 +436,10 @@ loginForm.addEventListener("submit", async (e) => {
   const username = usernameInput.value.trim().toLowerCase();
   const password = passwordInput.value.trim();
 
+  // ולידציה לשם משתמש
   if (!/^[a-z0-9._-]+$/.test(username)) {
     loginStatus.hidden = false;
-    loginStatus.textContent =
-      "שם משתמש לא חוקי (רק אותיות באנגלית, מספרים, נקודה, מקף או קו תחתי)";
+    loginStatus.textContent = "שם משתמש לא חוקי (רק אותיות באנגלית, מספרים, נקודה, מקף או קו תחתי)";
     return;
   }
 
@@ -473,25 +473,15 @@ loginForm.addEventListener("submit", async (e) => {
         }
 
         // צור משתמש חדש
-        try {
-          userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        await setDoc(doc(db, "users", userCredential.user.uid), {
+          username,
+          email,
+          createdAt: new Date().toISOString(),
+          lastLogin: new Date().toISOString(),
+        });
 
-          await setDoc(doc(db, "users", userCredential.user.uid), {
-            username,
-            email,
-            createdAt: new Date().toISOString(),
-            lastLogin: new Date().toISOString(),
-          });
-
-          loginStatus.textContent = "החשבון נוצר בהצלחה 🎉";
-        } catch (createErr) {
-          if (createErr.code === "auth/weak-password") {
-            loginStatus.textContent = "הסיסמה חייבת להיות לפחות 6 תווים";
-            loginBtn.disabled = false;
-            return;
-          }
-          throw createErr;
-        }
+        loginStatus.textContent = "החשבון נוצר בהצלחה 🎉";
       } else {
         throw err;
       }
@@ -500,12 +490,10 @@ loginForm.addEventListener("submit", async (e) => {
     const uid = userCredential.user.uid;
     const userRef = doc(db, "users", uid);
 
-    await setDoc(
-      userRef,
-      { lastLogin: new Date().toISOString() },
-      { merge: true }
-    );
+    // עדכון זמן כניסה אחרון
+    await setDoc(userRef, { lastLogin: new Date().toISOString() }, { merge: true });
 
+    // שמירת מידע ב‑state
     state.username = username;
     state.emailAddress = email;
     state.userId = uid;
@@ -523,7 +511,6 @@ loginForm.addEventListener("submit", async (e) => {
     loginBtn.disabled = false;
   }
 });
-
 // -------------------- Attach Event Listeners with File Upload (Safe Version) --------------------
 function attachListeners() {
   const btnSend = document.getElementById("btnSend");
