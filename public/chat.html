@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>צ'אט גנאולוגי חכם</title>
-    <!-- Load Tailwind CSS from CDN -->
+    <!-- טעינת Tailwind CSS מה-CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -17,7 +17,7 @@
             },
         };
     </script>
-    <!-- Custom CSS for scrollbars and general styling -->
+    <!-- CSS מותאם אישית עבור גלילה ועיצוב כללי -->
     <style>
         body { font-family: 'Inter', sans-serif; }
         #chat-box::-webkit-scrollbar { width: 8px; }
@@ -70,6 +70,7 @@
             <button class="tab-button w-full py-3 px-4 rounded-lg text-right font-semibold text-gray-700 hover:bg-slate-100 transition-colors" data-tab="story-tab" data-i18n="storyGen">✨ יצירת סיפור</button>
             <button class="tab-button w-full py-3 px-4 rounded-lg text-right font-semibold text-gray-700 hover:bg-slate-100 transition-colors" data-tab="quiz-tab" data-i18n="quizGen">🎲 יצירת חידון</button>
             <button class="tab-button w-full py-3 px-4 rounded-lg text-right font-semibold text-gray-700 hover:bg-slate-100 transition-colors" data-tab="biography-tab" data-i18n="biographyGen">📜 יצירת ביוגרפיה</button>
+            <button class="tab-button w-full py-3 px-4 rounded-lg text-right font-semibold text-gray-700 hover:bg-slate-100 transition-colors" data-tab="historical-tab" data-i18n="historicalGen">🧭 הקשר היסטורי</button>
         </div>
 
         <!-- Tab Content -->
@@ -139,12 +140,15 @@
 
             <!-- Story Generation Tab -->
             <div id="story-tab" class="tab-content">
-                <h2 class="text-lg font-bold text-gray-700 mb-2" data-i18n="storyGen">✨ יצירת סיפורים</h2>
+                <h2 class="text-lg font-bold text-gray-700 mb-2" data-i18n="storyGen">✨ יצירת סיפור</h2>
                 <form id="story-form" class="flex gap-2 mb-4 p-4 bg-slate-50 rounded-lg border border-slate-200">
                     <input type="text" id="story-name" class="flex-grow p-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="שם האדם לסיפור" required />
                     <button type="submit" class="bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors" data-i18n="storyBtn">יצירת סיפור</button>
                 </form>
-                <div id="story-result" class="p-4 bg-slate-50 rounded-lg border border-slate-200 min-h-[50px] mb-4"></div>
+                <div id="story-result-container" class="p-4 bg-slate-50 rounded-lg border border-slate-200 min-h-[50px] mb-4">
+                    <div id="story-result" class="mb-2"></div>
+                    <button id="story-audio-btn" class="hidden bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors w-full" data-i18n="readAloudBtn">🔊 הקרא לי</button>
+                </div>
             </div>
 
             <!-- Quiz Generation Tab -->
@@ -154,14 +158,27 @@
                 <div id="quiz-result" class="p-4 bg-slate-50 rounded-lg border border-slate-200 min-h-[50px] mt-4"></div>
             </div>
 
-            <!-- NEW: Biography Generation Tab -->
+            <!-- Biography Generation Tab -->
             <div id="biography-tab" class="tab-content">
                 <h2 class="text-lg font-bold text-gray-700 mb-2" data-i18n="biographyGen">📜 יצירת ביוגרפיה</h2>
                 <form id="biography-form" class="flex gap-2 mb-4 p-4 bg-slate-50 rounded-lg border border-slate-200">
                     <input type="text" id="biography-name" class="flex-grow p-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="שם האדם לביוגרפיה" required />
                     <button type="submit" class="bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors" data-i18n="biographyBtn">יצירת ביוגרפיה</button>
                 </form>
-                <div id="biography-result" class="p-4 bg-slate-50 rounded-lg border border-slate-200 min-h-[50px] mb-4"></div>
+                <div id="biography-result-container" class="p-4 bg-slate-50 rounded-lg border border-slate-200 min-h-[50px] mb-4">
+                    <div id="biography-result" class="mb-2"></div>
+                    <button id="biography-audio-btn" class="hidden bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors w-full" data-i18n="readAloudBtn">🔊 הקרא לי</button>
+                </div>
+            </div>
+
+            <!-- NEW: Historical Context Tab -->
+            <div id="historical-tab" class="tab-content">
+                <h2 class="text-lg font-bold text-gray-700 mb-2" data-i18n="historicalGen">🧭 הקשר היסטורי</h2>
+                <form id="historical-form" class="flex gap-2 mb-4 p-4 bg-slate-50 rounded-lg border border-slate-200">
+                    <input type="text" id="historical-name" class="flex-grow p-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="שם האדם" required />
+                    <button type="submit" class="bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors" data-i18n="historicalBtn">קבל הקשר היסטורי</button>
+                </form>
+                <div id="historical-result" class="p-4 bg-slate-50 rounded-lg border border-slate-200 min-h-[50px] mb-4"></div>
             </div>
 
         </div>
@@ -177,7 +194,19 @@
         let db;
         let auth;
         let userId;
-        let familyTreeData = []; // Dynamic array populated from Firestore
+        let familyTreeData = [];
+        let audioPlayer = null;
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD7f9DqeBe-3BQ8-GzS0S2wgGEPfsA82L0",
+            authDomain: "aichat-app-bf26f.firebaseapp.com",
+            projectId: "aichat-app-bf26f",
+            storageBucket: "aichat-app-bf26f.firebasestorage.app",
+            messagingSenderId: "1067740756856",
+            appId: "1:1067740756856:web:53d985cfcb4c723e23268d",
+            measurementId: "G-QKCJEVFKYF"
+        };
+
 
         // Translation texts
         const translations = {
@@ -192,13 +221,14 @@
                 storyGen: "✨ יצירת סיפור",
                 quizGen: "🎲 יצירת חידון",
                 biographyGen: "📜 יצירת ביוגרפיה",
+                historicalGen: "🧭 הקשר היסטורי",
                 addBtn: "הוסף",
                 sendBtn: "שלח",
                 checkRelation: "בדוק קשר",
                 analyzeFile: "נתח קובץ",
                 firstName: "שם ראשון",
                 secondName: "שם שני",
-                askFamily: "שאל שאלה על אילן היוחסין...",
+                askFamily: "שאל על אילן היוחסין...",
                 chatPlaceholder: "שאל שאלה על אילן היוחסין",
                 name: "שם",
                 complete: "השלם",
@@ -208,6 +238,8 @@
                 storyBtn: "יצירת סיפור",
                 quizBtn: "יצירת חידון",
                 biographyBtn: "יצירת ביוגרפיה",
+                historicalBtn: "קבל הקשר היסטורי",
+                readAloudBtn: "🔊 הקרא לי",
                 loading: "טוען...",
                 error: "אירעה שגיאה. נסה שוב.",
                 noInfo: "אין מידע זמין בנושא באילן היוחסין.",
@@ -220,6 +252,7 @@
                 storyResult: "תוצאת יצירת סיפור:",
                 quizResult: "שאלות החידון:",
                 biographyResult: "תוצאת יצירת ביוגרפיה:",
+                historicalResult: "סיכום היסטורי:",
             },
             en: {
                 title: "🧠 Smart Genealogy Chatbot",
@@ -232,6 +265,7 @@
                 storyGen: "✨ Story Generation",
                 quizGen: "🎲 Quiz Generation",
                 biographyGen: "📜 Biography Generation",
+                historicalGen: "🧭 Historical Context",
                 addBtn: "Add",
                 sendBtn: "Send",
                 checkRelation: "Check Relation",
@@ -248,6 +282,8 @@
                 storyBtn: "Generate Story",
                 quizBtn: "Generate Quiz",
                 biographyBtn: "Generate Biography",
+                historicalBtn: "Get Historical Context",
+                readAloudBtn: "🔊 Read Aloud",
                 loading: "Loading...",
                 error: "An error occurred. Please try again.",
                 noInfo: "No information available on this topic in the family tree.",
@@ -260,6 +296,7 @@
                 storyResult: "Story Generation Result:",
                 quizResult: "Quiz Questions:",
                 biographyResult: "Biography Generation Result:",
+                historicalResult: "Historical Summary:",
             }
         };
 
@@ -312,7 +349,7 @@
          * @returns {Promise<string>} The AI's response text.
          */
         async function callGeminiAPI(prompt, base64Image = null, responseMimeType = null) {
-            const apiKey = "";
+            const apiKey = ""; // API key is provided at runtime
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
             const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
 
@@ -361,6 +398,83 @@
                 }
             }
             return translations[currentLang].error;
+        }
+
+        /**
+         * Function to call the Gemini TTS API
+         * @param {string} text - The text to convert to speech.
+         * @returns {Promise<AudioBuffer>} The audio data as an AudioBuffer.
+         */
+        async function callGeminiTtsAPI(text) {
+            const payload = {
+                contents: [{
+                    parts: [{ text: text }]
+                }],
+                generationConfig: {
+                    responseModalities: ["AUDIO"],
+                    speechConfig: {
+                        voiceConfig: {
+                            prebuiltVoiceConfig: { voiceName: "Kore" }
+                        }
+                    }
+                },
+                model: "gemini-2.5-flash-preview-tts"
+            };
+
+            const apiKey = ""; // API key is provided at runtime
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) {
+                    throw new Error(`TTS API call failed with status: ${response.status}`);
+                }
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.[0];
+                const audioData = part?.inlineData?.data;
+                const mimeType = part?.inlineData?.mimeType;
+
+                if (audioData && mimeType && mimeType.startsWith("audio/")) {
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const sampleRate = parseInt(mimeType.match(/rate=(\d+)/)[1], 10);
+                    const pcmData = base64ToArrayBuffer(audioData);
+                    const pcm16 = new Int16Array(pcmData);
+
+                    // Create a new AudioBuffer with the same properties
+                    const audioBuffer = audioContext.createBuffer(1, pcm16.length, sampleRate);
+                    const nowBuffering = audioBuffer.getChannelData(0);
+                    for (let i = 0; i < pcm16.length; i++) {
+                        // Normalize 16-bit PCM to float32 range [-1, 1]
+                        nowBuffering[i] = pcm16[i] / 32768;
+                    }
+
+                    return audioBuffer;
+                } else {
+                    throw new Error("Invalid TTS API response structure.");
+                }
+            } catch (error) {
+                console.error("TTS API error:", error);
+                throw error;
+            }
+        }
+
+        /**
+         * Helper function to convert base64 to ArrayBuffer
+         * @param {string} base64 - Base64 encoded string.
+         * @returns {ArrayBuffer} ArrayBuffer containing decoded data.
+         */
+        function base64ToArrayBuffer(base64) {
+            const binaryString = window.atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
         }
 
         // Function to load initial data into the database if it's empty
@@ -420,7 +534,6 @@
             
             // Initialize Firebase and authenticate
             try {
-                const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
                 const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
@@ -608,6 +721,8 @@
         document.getElementById("story-form").addEventListener("submit", async (e) => {
             e.preventDefault();
             const name = document.getElementById("story-name").value.trim();
+            const resultDiv = document.getElementById("story-result");
+            const audioBtn = document.getElementById("story-audio-btn");
             setLoadingState("story-result");
             
             const familyTreeContext = prepareFamilyTreeContext();
@@ -616,9 +731,11 @@
             
             try {
                 const answer = await callGeminiAPI(prompt);
-                displayResult("story-result", "storyResult", answer);
+                resultDiv.innerHTML = `<h3 class="text-blue-800 font-bold">${translations[currentLang].storyResult}</h3><p>${answer}</p>`;
+                audioBtn.classList.remove('hidden');
             } catch (error) {
                 displayError("story-result", "error");
+                audioBtn.classList.add('hidden');
             }
         });
 
@@ -651,10 +768,12 @@
             }
         });
 
-        // NEW: Biography Generation form
+        // Biography Generation form
         document.getElementById("biography-form").addEventListener("submit", async (e) => {
             e.preventDefault();
             const name = document.getElementById("biography-name").value.trim();
+            const resultDiv = document.getElementById("biography-result");
+            const audioBtn = document.getElementById("biography-audio-btn");
             setLoadingState("biography-result");
             
             const familyTreeContext = prepareFamilyTreeContext();
@@ -663,9 +782,103 @@
             
             try {
                 const answer = await callGeminiAPI(prompt);
-                displayResult("biography-result", "biographyResult", answer);
+                resultDiv.innerHTML = `<h3 class="text-blue-800 font-bold">${translations[currentLang].biographyResult}</h3><p>${answer}</p>`;
+                audioBtn.classList.remove('hidden');
             } catch (error) {
                 displayError("biography-result", "error");
+                audioBtn.classList.add('hidden');
+            }
+        });
+
+        // NEW: Historical Context form
+        document.getElementById("historical-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const name = document.getElementById("historical-name").value.trim();
+            setLoadingState("historical-result");
+
+            const person = familyTreeData.find(p => p.name.includes(name));
+            if (!person || !person.details.includes('תאריך לידה')) {
+                displayError("historical-result", "noInfo");
+                return;
+            }
+
+            const birthYearMatch = person.details.match(/תאריך לידה: (\d{4})/);
+            const birthYear = birthYearMatch ? birthYear[1] : null;
+
+            if (!birthYear) {
+                displayError("historical-result", "noInfo");
+                return;
+            }
+
+            const prompt = `מהם האירועים ההיסטוריים והתרבותיים המרכזיים שהתרחשו בעולם בשנה ${birthYear}? ספק סיכום תמציתי.`;
+            
+            try {
+                const answer = await callGeminiAPI(prompt);
+                displayResult("historical-result", "historicalResult", answer);
+            } catch (error) {
+                displayError("historical-result", "error");
+            }
+        });
+
+        // Audio playback logic for stories and biographies
+        async function playAudio(sourceElementId) {
+            const textElement = document.getElementById(sourceElementId);
+            const text = textElement.textContent.trim();
+            if (!text) return;
+
+            // Stop any currently playing audio
+            if (audioPlayer) {
+                audioPlayer.stop();
+                audioPlayer = null;
+            }
+
+            try {
+                // Get the button element that triggered this
+                const button = document.getElementById(sourceElementId.replace('-result', '-audio-btn'));
+                button.textContent = "טוען...";
+                button.disabled = true;
+
+                const audioBuffer = await callGeminiTtsAPI(text);
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                audioPlayer = audioContext.createBufferSource();
+                audioPlayer.buffer = audioBuffer;
+                audioPlayer.connect(audioContext.destination);
+                audioPlayer.start(0);
+
+                // Update button state while playing
+                button.textContent = "🔊 הפסק";
+                button.disabled = false;
+                audioPlayer.onended = () => {
+                    button.textContent = "🔊 הקרא לי";
+                    audioPlayer = null;
+                };
+
+            } catch (e) {
+                console.error("Audio playback error:", e);
+                const button = document.getElementById(sourceElementId.replace('-result', '-audio-btn'));
+                button.textContent = "שגיאה בהקראה";
+                button.disabled = false;
+            }
+        }
+
+        document.getElementById("story-audio-btn").addEventListener("click", () => {
+            if (audioPlayer) {
+                audioPlayer.stop();
+                audioPlayer = null;
+                document.getElementById("story-audio-btn").textContent = "🔊 הקרא לי";
+            } else {
+                playAudio("story-result");
+            }
+        });
+
+        document.getElementById("biography-audio-btn").addEventListener("click", () => {
+            if (audioPlayer) {
+                audioPlayer.stop();
+                audioPlayer = null;
+                document.getElementById("biography-audio-btn").textContent = "🔊 הקרא לי";
+            } else {
+                playAudio("biography-result");
             }
         });
     </script>
