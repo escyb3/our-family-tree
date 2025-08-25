@@ -3,159 +3,127 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>אתר המשפחה - Ben Abou, Bromberg ועוד</title>
-    <link rel="stylesheet" href="/style.css" />
+    <title>אתר המשפחה - Ben Abou, Elharrar ועוד</title>
+    <!-- טעינת Tailwind CSS וגופן Inter לטקסט מודרני ונקי -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS קיימים */
         body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: #f2f6fc;
-            margin: 0;
-            padding: 0;
+            font-family: 'Inter', sans-serif;
         }
-        header {
-            background-color: #0057a3;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-        .menu-bar {
-            background: #e9f1fb;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 10px;
-            gap: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid #ccc;
-        }
-        .menu-bar a {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background-color: white;
-            color: #003366;
-            text-decoration: none;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            transition: background 0.3s;
-        }
-        .menu-bar a:hover {
-            background-color: #dceeff;
-        }
-        .content {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 1rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        #langSelector {
-            padding: 0.5rem;
-            border-radius: 6px;
-            background: #0057a3;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
+        .hero-bg {
+            background: linear-gradient(to bottom right, #0057a3, #003366);
         }
     </style>
 </head>
-<body>
-    <header>
-        <div id="user-profile" style="text-align:left; padding:0.5rem;"></div>
-        <select id="langSelector">
-            <option value="he">עברית</option>
-            <option value="en">English</option>
-            <option value="fr">Français</option>
-            <option value="yi">יידיש</option>
-        </select>
-        <img src="/assets/logo.png" alt="לוגו משפחתי" class="logo" />
-        <h1 id="welcomeTitle">ברוכים הבאים לאתר המשפחה</h1>
-        <h2 id="welcomeSubtitle">Ben Abou • Elharrar • Malca • ועוד</h2>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Hero Section with Gradient -->
+    <header class="hero-bg text-white p-6 text-center font-bold rounded-b-3xl shadow-lg relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full bg-blue-800 opacity-20"></div>
+        <div class="relative z-10">
+            <div class="absolute top-4 right-4 flex items-center space-x-2 z-20">
+                <select id="langSelector" class="p-2 rounded-lg bg-blue-700/50 text-white cursor-pointer font-semibold backdrop-blur-sm transition-colors hover:bg-blue-600/70">
+                    <option value="he">עברית</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="yi">יידיש</option>
+                </select>
+            </div>
+            <img src="/assets/logo.png" alt="לוגו משפחתי" class="logo mx-auto mb-4 w-24 h-24" />
+            <h1 id="welcomeTitle" class="text-3xl md:text-5xl drop-shadow-lg animate-fade-in-down">ברוכים הבאים לאתר המשפחה</h1>
+            <h2 id="welcomeSubtitle" class="text-lg md:text-xl mt-2 drop-shadow-md animate-fade-in-up">Ben Abou • Elharrar • Malca • ועוד</h2>
+        </div>
     </header>
 
-    <section class="content">
-        <h1 id="search-title">🔍 חיפוש באתר</h1>
-        <div class="search-wrapper" style="position:relative; max-width:400px;">
-            <input type="text" id="search-input" placeholder="הקלד שם או תיאור..." autocomplete="off" />
-            <span class="search-icon" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:1.2rem;">🔍</span>
-            <ul id="results" class="search-results" style="position:absolute; top:110%; right:0; left:0; background:white; border:1px solid #ccc; border-radius:6px; max-height:200px; overflow-y:auto; display:none; z-index:100;"></ul>
+    <section class="max-w-6xl mx-auto -mt-6 p-6 md:p-8 bg-white rounded-3xl shadow-xl relative z-20">
+        <div class="flex flex-col md:flex-row items-center justify-between mb-4">
+            <h1 id="search-title" class="text-2xl font-bold mb-4 md:mb-0">🔍 חיפוש באתר</h1>
+            <div id="user-profile" class="text-sm font-medium"></div>
+        </div>
+        <div class="search-wrapper relative max-w-xl mx-auto">
+            <input type="text" id="search-input" placeholder="הקלד שם או תיאור..." autocomplete="off" class="w-full p-3 pl-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" />
+            <span class="search-icon absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
+            <ul id="results" class="search-results absolute top-full right-0 left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto z-10 hidden"></ul>
         </div>
     </section>
 
-    <nav class="menu-bar">
-        <a id="menuHome" href="/">🏠 עמוד ראשי</a>
-        <a id="menuUpdates" href="about.html"><span>ℹ️</span> עמוד העדכונים</a>
-        <a id="menuTree" href="/tree.html"><span>🧬</span> עץ המשפחה</a>
-        <a id="menuChat" href="/chat.html"><span>🧑‍💻</span> צ'אט AI</a>
-        <a id="menuContact" href="/contact-ways.html"><span>📩</span> אמצעי תקשורת משפחתיים</a>
-        <a id="menuGallery" href="/gallery.html"><span>🖼️</span> גלריית תמונות</a>
-        <a id="menuMemorial" href="/memorial.html"><span>🕯️</span> קיר זיכרון</a>
-        <a id="menuTimeline" href="/timeline.html"><span>🗓️</span> ציר זמן</a>
-        <a id="menuCalendar" href="/calendar.html"><span>📆</span> לוח שנה</a>
-        <a id="menuForum" href="/forum.html"><span>👪</span> פורום משפחתי</a>
-        <a id="menuBio" href="/biographies.html"><span>📖</span> ביוגרפיות</a>
-        <a id="menuStats" href="/family-stats.html"><span>📊</span> סטטיסטיקות</a>
-        <a id="menuUpdate" href="/update-request.html">עדכון פרטים</a>
-        <a id="menuUploadPhoto" href="/upload-photo.html">העלאת תמונות</a>
-        <a id="menuUploadVideo" href="/upload-video.html">העלאת סרטון</a>
-        <a id="menuSearchAI" href="/search-ai.html">חיפוש AI</a>
-        <a id="menuMigration" href="/migration-map.html">מפת נדודים</a>
-        <a id="menuNewsletter" href="/newsletter.html"><span>📰</span> עלון</a>
-        <a id="menuLogin" href="/login.html"><span>🔐</span> כניסת משתמשים</a>
-        <a id="menuLogout" href="/logout">התנתקות</a>
+    <!-- Sticky Navigation Bar with backdrop-blur effect -->
+    <nav class="menu-bar bg-white/80 backdrop-blur-md sticky top-0 z-50 flex flex-wrap justify-center p-2 md:p-4 gap-2 md:gap-4 shadow-lg rounded-b-2xl transition-all duration-300">
+        <a id="menuHome" href="/" class="menu-item">🏠 עמוד ראשי</a>
+        <a id="menuUpdates" href="about.html" class="menu-item"><span>ℹ️</span> עמוד העדכונים</a>
+        <a id="menuTree" href="/tree.html" class="menu-item"><span>🧬</span> עץ המשפחה</a>
+        <a id="menuChat" href="/chat.html" class="menu-item"><span>🧑‍💻</span> צ'אט AI</a>
+        <a id="menuContact" href="/contact-ways.html" class="menu-item"><span>📩</span> אמצעי תקשורת משפחתיים</a>
+        <a id="menuGallery" href="/gallery.html" class="menu-item"><span>🖼️</span> גלריית תמונות</a>
+        <a id="menuMemorial" href="/memorial.html" class="menu-item"><span>🕯️</span> קיר זיכרון</a>
+        <a id="menuTimeline" href="/timeline.html" class="menu-item"><span>🗓️</span> ציר זמן</a>
+        <a id="menuCalendar" href="/calendar.html" class="menu-item"><span>📆</span> לוח שנה</a>
+        <a id="menuForum" href="/forum.html" class="menu-item"><span>👪</span> פורום משפחתי</a>
+        <a id="menuBio" href="/biographies.html" class="menu-item"><span>📖</span> ביוגרפיות</a>
+        <a id="menuStats" href="/family-stats.html" class="menu-item"><span>📊</span> סטטיסטיקות</a>
+        <a id="menuUpdate" href="/update-request.html" class="menu-item">עדכון פרטים</a>
+        <a id="menuUploadPhoto" href="/upload-photo.html" class="menu-item">העלאת תמונות</a>
+        <a id="menuUploadVideo" href="/upload-video.html" class="menu-item">העלאת סרטון</a>
+        <a id="menuSearchAI" href="/search-ai.html" class="menu-item">חיפוש AI</a>
+        <a id="menuMigration" href="/migration-map.html" class="menu-item">מפת נדודים</a>
+        <a id="menuNewsletter" href="/newsletter.html" class="menu-item"><span>📰</span> עלון</a>
+        <a id="menuLogin" href="/login.html" class="menu-item bg-blue-500 text-white hover:bg-blue-600 hover:scale-105"><span>🔐</span> כניסת משתמשים</a>
+        <a id="menuLogout" href="/logout" class="menu-item bg-red-500 text-white hover:bg-red-600 hover:scale-105">התנתקות</a>
     </nav>
-
-    <main class="content">
-        <section>
-            <h3 id="sectionWelcome">🌟 ברוכים הבאים למרכז המשפחתי</h3>
-            <p id="intro1">אתר זה נבנה עבור כל המשפחות: Ben Abou, Elharrar, Malca, Ben David, Bromberg, Barenbaum, Fass-Schneck, Weinberger, Leibner, van der Velde, Behr, de Vries, Italiaander, Izaks, Chapon, ועוד – לשיתוף תמונות, הנצחות, עץ משפחה, הודעות ועוד.</p>
-            <p id="intro2">ניתן להיכנס לפי צד משפחתי, לעדכן פרטים, לשוחח עם צ׳אט AI משפחתי ולחוות יחד היסטוריה מתועדת.</p>
+    <main class="max-w-6xl mx-auto mt-8 p-6 md:p-8 bg-white rounded-3xl shadow-xl">
+        <section class="mb-8 p-6 bg-blue-50 rounded-2xl shadow-inner">
+            <h3 id="sectionWelcome" class="text-xl md:text-2xl font-bold mb-4 text-blue-900">🌟 ברוכים הבאים למרכז המשפחתי</h3>
+            <p id="intro1" class="text-base md:text-lg text-gray-700 leading-relaxed mb-4">אתר זה נבנה עבור כל המשפחות: Ben Abou, Elharrar, Malca, Ben David, Bromberg, Barenbaum, Fass-Schneck, Weinberger, Leibner, van der Velde, Behr, de Vries, Italiaander, Izaks, Chapon, ועוד – לשיתוף תמונות, הנצחות, עץ משפחה, הודעות ועוד.</p>
+            <p id="intro2" class="text-base md:text-lg text-gray-700 leading-relaxed">ניתן להיכנס לפי צד משפחתי, לעדכן פרטים, לשוחח עם צ׳אט AI משפחתי ולחוות יחד היסטוריה מתועדת.</p>
         </section>
 
-        <section>
-            <h1 id="sectionTree">ברוכים הבאים לעץ המשפחה שלנו</h1>
-            <ul class="features" id="featuresList">
-                <li>🌳 עץ משפחה אינטראקטיבי</li>
-                <li>� כניסת משתמשים והרשאות לפי צד משפחתי</li>
-                <li>💬 קיר משפחתי לפוסטים ותגובות</li>
-                <li>📨 מערכת הודעות פנימית</li>
-                <li>🖼️ תצוגת גלריה למסמכים ותמונות</li>
-                <li>🕯️ עמודי הנצחה עם נר דיגיטלי</li>
-                <li>🌐 תפריט דו-לשוני (עברית/אנגלית)</li>
-                <li>🔍 חיפוש חכם</li>
-                <li>📧 תמיכה בניוזלטר</li>
-                <li>🤖 צ’אט AI משפחתי עם תמיכה בנתוני משפחה</li>
-                <li>📱 תמיכה בעיצוב רספונסיבי לנייד</li>
+        <section class="mb-8">
+            <h1 id="sectionTree" class="text-2xl md:text-3xl font-bold mb-4 text-blue-900">ברוכים הבאים לעץ המשפחה שלנו</h1>
+            <ul class="features grid grid-cols-1 md:grid-cols-2 gap-4" id="featuresList">
+                <li class="feature-item">🌳 עץ משפחה אינטראקטיבי</li>
+                <li class="feature-item">🔐 כניסת משתמשים והרשאות לפי צד משפחתי</li>
+                <li class="feature-item">💬 קיר משפחתי לפוסטים ותגובות</li>
+                <li class="feature-item">📨 מערכת הודעות פנימית</li>
+                <li class="feature-item">🖼️ תצוגת גלריה למסמכים ותמונות</li>
+                <li class="feature-item">🕯️ עמודי הנצחה עם נר דיגיטלי</li>
+                <li class="feature-item">🌐 תפריט דו-לשוני (עברית/אנגלית)</li>
+                <li class="feature-item">🔍 חיפוש חכם</li>
+                <li class="feature-item">� תמיכה בניוזלטר</li>
+                <li class="feature-item">🤖 צ’אט AI משפחתי עם תמיכה בנתוני משפחה</li>
+                <li class="feature-item">📱 תמיכה בעיצוב רספונסיבי לנייד</li>
             </ul>
         </section>
 
-        <section>
-            <h2 id="newsTitle">חדשות ועדכונים</h2>
-            <ul id="newsList">
-                <li>הוספנו יכולת העלאת תמונות לעץ המשפחה.</li>
-                <li>נפתחה מערכת ההודעות הפנימית לכל המשתמשים.</li>
-                <li>ניתן להדליק נר דיגיטלי לעילוי נשמת יקיריכם.</li>
+        <section class="mb-8 p-6 bg-gray-50 rounded-2xl shadow-inner">
+            <h2 id="newsTitle" class="text-xl md:text-2xl font-bold mb-4 text-blue-900">חדשות ועדכונים</h2>
+            <ul id="newsList" class="list-disc list-inside space-y-3">
+                <li class="text-gray-700 transition-transform duration-300 hover:translate-x-2">הוספנו יכולת העלאת תמונות לעץ המשפחה.</li>
+                <li class="text-gray-700 transition-transform duration-300 hover:translate-x-2">נפתחה מערכת ההודעות הפנימית לכל המשתמשים.</li>
+                <li class="text-gray-700 transition-transform duration-300 hover:translate-x-2">ניתן להדליק נר דיגיטלי לעילוי נשמת יקיריכם.</li>
             </ul>
         </section>
 
         <section class="hero-image">
-            <img src="/asset/family-hero.png" alt="תמונת משפחה" />
+            <img src="/asset/family-hero.png" alt="תמונת משפחה" class="w-full h-auto rounded-3xl shadow-xl transition-transform duration-500 hover:scale-[1.01]" />
         </section>
     </main>
 
-    <footer>
-        <p id="footerText">&copy; 2025 אתר המשפחה • נבנה באהבה ע"י המשפחה •
-            <a id="adminLink" href="/admin.html">🛠️ ניהול</a>
+    <footer class="bg-gray-900 text-white text-center p-6 rounded-t-3xl shadow-inner mt-8">
+        <p id="footerText" class="text-sm md:text-base opacity-90">&copy; 2025 אתר המשפחה • נבנה באהבה ע"י המשפחה •
+            <a id="adminLink" href="/admin.html" class="text-blue-300 hover:underline transition-colors">🛠️ ניהול</a>
         </p>
     </footer>
+
+    <style>
+        .menu-item {
+            @apply flex items-center gap-1 bg-blue-50 text-blue-900 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-105 shadow-md;
+        }
+        .feature-item {
+            @apply p-4 bg-gray-100 rounded-lg shadow-sm transition-all duration-300 hover:bg-blue-50 hover:shadow-md;
+        }
+    </style>
 
     <script>
         const translations = {
@@ -343,12 +311,12 @@
                 // עדכון רשימות
                 const featuresList = document.getElementById("featuresList");
                 if (featuresList) {
-                    featuresList.innerHTML = texts.features.map(item => `<li>${item}</li>`).join('');
+                    featuresList.innerHTML = texts.features.map(item => `<li class="feature-item">${item}</li>`).join('');
                 }
 
                 const newsList = document.getElementById("newsList");
                 if (newsList) {
-                    newsList.innerHTML = texts.news.map(item => `<li>${item}</li>`).join('');
+                    newsList.innerHTML = texts.news.map(item => `<li class="text-gray-700 transition-transform duration-300 hover:translate-x-2">${item}</li>`).join('');
                 }
 
                 // עדכון תפריט הניווט
@@ -367,18 +335,17 @@
                 isLoggedIn = isUserLoggedIn;
                 const userProfile = document.getElementById("user-profile");
                 if (isLoggedIn) {
-                    // כאן ניתן לקרוא את שם המשתמש ותפקידו מה-API אם צריך
                     userProfile.innerHTML = `
-                        <span style="font-weight:bold;">${texts.loggedInUser}</span>
-                        <span style="color:gray;">(${texts.loggedInRole})</span>
-                        <a href="/logout" style="margin-right:10px; color: red;">${texts.menus[texts.menus.length - 1]}</a>
+                        <span class="font-bold">${texts.loggedInUser}</span>
+                        <span class="text-gray-600">(${texts.loggedInRole})</span>
+                        <a href="/logout" class="ml-2 text-red-500 hover:underline transition-colors">${texts.menus[texts.menus.length - 1]}</a>
                     `;
                     if (menuBar) menuBar.style.display = "flex";
                 } else {
                     userProfile.innerHTML = `
-                        <a href="/login.html" style="margin-right:10px; color: white;">${texts.menus[texts.menus.length - 2]}</a>
+                        <a href="/login.html" class="font-bold text-blue-900 hover:underline transition-colors">${texts.menus[texts.menus.length - 2]}</a>
                     `;
-                    if (menuBar) menuBar.style.display = "none";
+                    if (menuBar) menuBar.style.display = "flex";
                 }
             };
 
@@ -386,7 +353,7 @@
             fetch("/api/user")
                 .then(res => res.ok ? res.json() : Promise.reject("User not logged in"))
                 .then(user => {
-                    isLoggedIn = !!user.username; // הגדרת סטטוס התחברות
+                    isLoggedIn = !!user.username;
                     updateContent(currentLang);
                 })
                 .catch(error => {
@@ -408,4 +375,3 @@
     </script>
 </body>
 </html>
-
