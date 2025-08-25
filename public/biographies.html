@@ -98,7 +98,15 @@
         import { getFirestore, collection, onSnapshot, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Firebase & App Configuration
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const firebaseConfig = {
+  apiKey: "AIzaSyCtuHXHaCTxq0dlproe2uNpFBLAl67TV4w",
+  authDomain: "biographies-2d14f.firebaseapp.com",
+  projectId: "biographies-2d14f",
+  storageBucket: "biographies-2d14f.firebasestorage.app",
+  messagingSenderId: "41649465003",
+  appId: "1:41649465003:web:1332e8deef4c57841bb9ee",
+  measurementId: "G-M93EF13YE3"
+};
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const BIOGRAPHIES_COLLECTION_PATH = `/artifacts/${appId}/public/data/biographies`;
