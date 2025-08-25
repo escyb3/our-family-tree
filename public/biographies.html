@@ -1,16 +1,709 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>ביוגרפיות משפחתיות</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ביוגרפיות משפחתיות</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN for icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
 </head>
-<body>
-  <h1>📖 ביוגרפיות</h1>
-  <article>
-    <h2>פרנק ון דר ולדה</h2>
-    <p>.</p>
-  </article>
-  <p><a href="index.html">חזרה לעמוד הבית</a></p>
+<body class="bg-slate-100 text-gray-900">
+
+    <div id="app" class="min-h-screen p-4 sm:p-8 flex flex-col items-center">
+        <!-- Header -->
+        <header class="text-center mb-12 w-full max-w-5xl">
+            <div class="flex justify-between items-center w-full">
+                <div class="w-1/3"></div>
+                <div class="flex-grow text-center">
+                    <h1 class="text-4xl sm:text-5xl font-extrabold text-blue-950 drop-shadow-md">
+                        📖 ביוגרפיות משפחתיות
+                    </h1>
+                    <p class="mt-2 text-lg text-gray-600">
+                        שומרים על הזיכרונות של הדורות הקודמים
+                    </p>
+                </div>
+                <div class="w-1/3 flex justify-end">
+                    <button id="language-toggle" class="flex items-center justify-center p-2 rounded-full bg-white text-gray-800 shadow-md hover:bg-gray-200 transition-colors" title="Toggle Language">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe w-5 h-5"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content & Form Toggle Button -->
+        <div id="main-content" class="w-full max-w-2xl text-center">
+            <button id="add-biography-btn" class="bg-emerald-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-emerald-700 transition duration-300 transform hover:scale-105 mb-8 flex items-center justify-center mx-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-circle ml-2 w-5 h-5"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+                הוסף ביוגרפיה חדשה
+            </button>
+        </div>
+
+        <!-- Add Biography Form (initially hidden) -->
+        <div id="biography-form" class="hidden w-full max-w-3xl bg-white rounded-3xl shadow-2xl border-t-8 border-emerald-600 mb-12 p-6 sm:p-10 transition-all duration-500 ease-in-out">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">הוספת סיפור חיים חדש</h2>
+            <form id="bio-form" class="space-y-6">
+                <div>
+                    <label for="name" class="block text-sm font-semibold text-gray-700">שם מלא</label>
+                    <input type="text" id="name" name="name" required class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-3 text-right">
+                </div>
+                <div>
+                    <label for="text" class="block text-sm font-semibold text-gray-700">סיפור חיים</label>
+                    <textarea id="text" name="text" rows="6" required class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-3 text-right"></textarea>
+                </div>
+                <div>
+                    <label for="image" class="block text-sm font-semibold text-gray-700">כתובת תמונה (אופציונלי)</label>
+                    <input type="url" id="image" name="image" class="mt-1 block w-full rounded-xl border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 p-3 text-right">
+                </div>
+                <div class="flex justify-end space-x-2 rtl:space-x-reverse pt-4">
+                    <button type="submit" id="save-btn" class="bg-emerald-600 text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-emerald-700 transition-colors flex items-center justify-center disabled:bg-emerald-400 disabled:cursor-not-allowed">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save ml-2 w-5 h-5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v4h6"/></svg>
+                        שמור סיפור
+                    </button>
+                    <button type="button" id="cancel-btn" class="bg-gray-200 text-gray-800 font-bold py-3 px-8 rounded-full shadow-md hover:bg-gray-300 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x ml-2 w-5 h-5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                        ביטול
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Biography Gallery -->
+        <main id="biography-gallery" class="w-full max-w-5xl space-y-8"></main>
+
+        <!-- Back Button -->
+        <div class="mt-12 text-center">
+            <a href="index.html" class="inline-block bg-blue-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left ml-2 w-5 h-5"><path d="m15 18-6-6 6-6"/></svg>
+                חזרה לעמוד הבית
+            </a>
+        </div>
+
+        <!-- Message Box -->
+        <div id="message-box-container" class="mt-4 hidden w-full max-w-2xl"></div>
+    </div>
+
+    <!-- Firebase JS SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase & App Configuration
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const BIOGRAPHIES_COLLECTION_PATH = `/artifacts/${appId}/public/data/biographies`;
+
+        // UI Element Selectors
+        const appContainer = document.getElementById('app');
+        const addBiographyBtn = document.getElementById('add-biography-btn');
+        const biographyForm = document.getElementById('biography-form');
+        const bioForm = document.getElementById('bio-form');
+        const saveBtn = document.getElementById('save-btn');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const biographyGallery = document.getElementById('biography-gallery');
+        const messageBoxContainer = document.getElementById('message-box-container');
+        const languageToggleBtn = document.getElementById('language-toggle');
+
+        // State Variables
+        let db;
+        let auth;
+        let userId = null;
+        let language = 'he';
+        let isPlayingAudio = false;
+
+        // Translations for Hebrew and English
+        const translations = {
+            he: {
+                appTitle: "📖 ביוגרפיות משפחתיות",
+                appSubtitle: "שומרים על הזיכרונות של הדורות הקודמים",
+                addBiographyButton: "הוסף ביוגרפיה חדשה",
+                formTitle: "הוספת סיפור חיים חדש",
+                nameLabel: "שם מלא",
+                textLabel: "סיפור חיים",
+                imageLabel: "כתובת תמונה (אופציונלי)",
+                saveButton: "שמור סיפור",
+                savingButton: "שומר...",
+                cancelButton: "ביטול",
+                backButton: "חזרה לעמוד הבית",
+                loading: "טוען ביוגרפיות...",
+                noBios: "אין ביוגרפיות להצגה כרגע. אנא הוסף סיפור ראשון.",
+                error: "אירעה שגיאה בטעינת הנתונים. אנא ודא שהאפליקציה שלך מוגדרת כהלכה ב-Firebase.",
+                authError: "שגיאת אימות. ודא ששירותי האימות מופעלים בפרויקט Firebase.",
+                geminiButtons: {
+                    summarize: "תקציר ✨",
+                    questions: "שאלות ראיון ✨",
+                    events: "רשימת אירועים ✨",
+                    bulletPoints: "נקודות מרכזיות ✨",
+                    audio: "הקראה קולית 🔊",
+                    stopAudio: "הפסק 🔇",
+                    history: "הקשר היסטורי 📜",
+                    trivia: "שאלות טריוויה 🧠",
+                    loading: "טוען...",
+                    error: "אירעה שגיאה: לא ניתן היה ליצור תוכן. ייתכן שהטקסט קצר מדי או שיש בעיה ב-API."
+                },
+                placeholders: {
+                    image: "תמונה חסרה",
+                    person: "אדם"
+                },
+                prompts: {
+                    summarize: (name, text) => `תקצר את הביוגרפיה הבאה, המתארת אדם בשם ${name}, לפסקה קצרה ותמציתית בעברית: "${text}".`,
+                    questions: (name, text) => `צור חמש שאלות ראיון מפורטות ומעמיקות עבור ביוגרפיה על אדם בשם ${name}, המבוססת על סיפור החיים הבא: "${text}". השאלות צריכות להיות בעברית ולהתחיל בפסקה קצרה המציגה את האדם.`,
+                    events: (name, text) => `צור רשימה של אירועים מרכזיים מחייו של ${name} על בסיס הביוגרפיה הבאה, והצג אותם בנקודות: "${text}". כל נקודה צריכה להתחיל עם שנה או תקופה.`,
+                    bulletPoints: (name, text) => `תקצר את הביוגרפיה הבאה, המתארת את ${name}, לכמה נקודות מרכזיות בעברית: "${text}". כל נקודה צריכה להתחיל בנקודה (בולט).`,
+                    history: (name, text) => `על בסיס סיפור חייו של ${name}: "${text}", צור פיסקה קצרה (3-4 משפטים) בעברית שמתארת אירועים היסטוריים מרכזיים שאולי השפיעו על חייו בתקופה זו. התמקד בהקשרים רלוונטיים ולא בפרטים שוליים.`,
+                    trivia: (name, text) => `צור 3 שאלות טריוויה (בפורמט JSON) על בסיס הביוגרפיה של ${name}: "${text}". כל שאלה צריכה לכלול: שדה 'שאלה', 4 אפשרויות בתור מערך 'אפשרויות', ואת התשובה הנכונה בתור שדה 'תשובה נכונה'. על התוכן להיות בעברית.`
+                }
+            },
+            en: {
+                appTitle: "📖 Family Biographies",
+                appSubtitle: "Preserving the memories of past generations",
+                addBiographyButton: "Add New Biography",
+                formTitle: "Add a New Life Story",
+                nameLabel: "Full Name",
+                textLabel: "Life Story",
+                imageLabel: "Image URL (optional)",
+                saveButton: "Save Story",
+                savingButton: "Saving...",
+                cancelButton: "Cancel",
+                backButton: "Back to Home",
+                loading: "Loading biographies...",
+                noBios: "No biographies to display yet. Please add the first story.",
+                error: "An error occurred while loading data. Please ensure your app is configured correctly in Firebase.",
+                authError: "Authentication error. Please ensure authentication services are enabled in your Firebase project.",
+                geminiButtons: {
+                    summarize: "Summarize ✨",
+                    questions: "Interview Questions ✨",
+                    events: "Key Events ✨",
+                    bulletPoints: "Key Points ✨",
+                    audio: "Read Aloud 🔊",
+                    stopAudio: "Stop 🔇",
+                    history: "Historical Context 📜",
+                    trivia: "Trivia Questions 🧠",
+                    loading: "Loading...",
+                    error: "An error occurred: Content could not be generated. The text might be too short or there's an API issue."
+                },
+                placeholders: {
+                    image: "Image Missing",
+                    person: "Person"
+                },
+                prompts: {
+                    summarize: (name, text) => `Summarize the following biography, describing a person named ${name}, into a concise paragraph in English: "${text}".`,
+                    questions: (name, text) => `Create five detailed and insightful interview questions for a biography about a person named ${name}, based on the following life story: "${text}". The questions should be in English and start with a short paragraph introducing the person.`,
+                    events: (name, text) => `Create a list of key events from ${name}'s life based on the following biography, and present them as bullet points: "${text}". Each point should start with a year or period.`,
+                    bulletPoints: (name, text) => `Summarize the following biography, describing ${name}, into several key bullet points in English: "${text}". Each point should start with a bullet.`,
+                    history: (name, text) => `Based on the life story of ${name}: "${text}", create a short paragraph (3-4 sentences) in English that describes key historical events that might have influenced their life during this period. Focus on relevant contexts, not minor details.`,
+                    trivia: (name, text) => `Create 3 multiple-choice trivia questions (in JSON format) based on the biography of ${name}: "${text}". Each question should include: a 'question' field, 4 'options' in an array, and the 'correct_answer' field. The content should be in English.`
+                }
+            }
+        };
+
+        // Utility function to display messages
+        function showMessage(message, type) {
+            let bgColor = 'bg-blue-100 border-blue-400';
+            let textColor = 'text-blue-700';
+
+            if (type === 'error') {
+                bgColor = 'bg-red-100 border-red-400';
+                textColor = 'text-red-700';
+            } else if (type === 'loading') {
+                bgColor = 'bg-gray-100 border-gray-400';
+                textColor = 'text-gray-700';
+            }
+
+            const messageBoxHTML = `<div class="mt-4 p-4 rounded-lg border ${bgColor} ${textColor} text-sm text-center">${message}</div>`;
+            messageBoxContainer.innerHTML = messageBoxHTML;
+            messageBoxContainer.classList.remove('hidden');
+        }
+
+        // --- Audio Generation Utilities (TTS) ---
+        // Converts base64 to ArrayBuffer
+        function base64ToArrayBuffer(base64) {
+            const binaryString = window.atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        // Converts PCM to WAV format
+        function pcmToWav(pcm16, sampleRate) {
+            const dataLength = pcm16.length * 2;
+            const buffer = new ArrayBuffer(44 + dataLength);
+            const view = new DataView(buffer);
+            let offset = 0;
+
+            function writeString(str) {
+                for (let i = 0; i < str.length; i++) {
+                    view.setUint8(offset++, str.charCodeAt(i));
+                }
+            }
+
+            // RIFF chunk
+            writeString('RIFF');
+            view.setUint32(offset, 36 + dataLength, true); offset += 4;
+            writeString('WAVE');
+
+            // fmt chunk
+            writeString('fmt ');
+            view.setUint32(offset, 16, true); offset += 4;
+            view.setUint16(offset, 1, true); offset += 2; // AudioFormat: 1 for PCM
+            view.setUint16(offset, 1, true); offset += 2; // NumChannels: 1
+            view.setUint32(offset, sampleRate, true); offset += 4; // SampleRate
+            view.setUint32(offset, sampleRate * 2, true); offset += 4; // ByteRate
+            view.setUint16(offset, 2, true); offset += 2; // BlockAlign
+            view.setUint16(offset, 16, true); offset += 2; // BitsPerSample
+
+            // data chunk
+            writeString('data');
+            view.setUint32(offset, dataLength, true); offset += 4;
+
+            // Write PCM data
+            for (let i = 0; i < pcm16.length; i++) {
+                view.setInt16(offset, pcm16[i], true);
+                offset += 2;
+            }
+
+            return new Blob([view], { type: 'audio/wav' });
+        }
+
+        // Function to create a biography card
+        function createBiographyCard(bio) {
+            const t = translations[language];
+            const imageUrl = bio.image || `https://placehold.co/150x150/d1d5db/374151?text=${t.placeholders.person}`;
+
+            const card = document.createElement('section');
+            card.classList.add('bg-white', 'p-6', 'sm:p-8', 'rounded-2xl', 'shadow-xl', 'hover:shadow-2xl', 'transition-shadow', 'duration-300', 'border-t-4', 'border-blue-600', 'flex', 'flex-col', 'md:flex-row', 'items-center', 'md:items-start', 'gap-8');
+            card.innerHTML = `
+                <div class="w-32 h-32 flex-shrink-0">
+                    <img src="${imageUrl}" alt="Portrait of ${bio.name}" class="w-full h-full object-cover rounded-full shadow-lg border-4 border-white" onerror="this.onerror=null;this.src='https://placehold.co/150x150/d1d5db/374151?text=${t.placeholders.image}'" />
+                </div>
+                <div class="flex-grow text-center md:text-${language === 'he' ? 'right' : 'left'}">
+                    <h2 class="text-3xl font-bold text-blue-900 mb-2">${bio.name}</h2>
+                    <p class="text-gray-700 leading-relaxed whitespace-pre-wrap">${bio.text}</p>
+                    <div class="mt-6 flex flex-wrap justify-center md:justify-${language === 'he' ? 'end' : 'start'} gap-2">
+                        <button class="gemini-btn bg-sky-500 text-white hover:bg-sky-600 font-semibold py-2 px-4 rounded-full shadow-md transition-colors" data-action="summarize">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles ml-2 w-4 h-4"><path d="M9.9 10.8c.4 1 .7 2.1.8 3.2L11 18"/><path d="M12 21a9 9 0 0 0 9-9c0-.4-.1-.8-.2-1.2"/><path d="M3 13.5C4 16 5 18 6.4 20"/><path d="M17.6 3.4c-.6 1-.9 2.1-1.3 3.1l-2 5.1c-1.4 3.7-4.4 6.8-8.2 8.3a2 2 0 0 1-2.6-2.6c1.5-3.8 4.6-6.8 8.3-8.2l5.1-2c1.1-.4 2.1-.8 3.1-1.3z"/><path d="M15.5 13.5c1.4.6 3 1 4.5 1.2a2 2 0 0 0 2-2c-.2-1.5-.6-3-1.2-4.5"/><path d="M15 12a3 3 0 1 0 3 3"/></svg>
+                            ${t.geminiButtons.summarize}
+                        </button>
+                        <button class="gemini-btn bg-fuchsia-600 text-white hover:bg-fuchsia-700 font-semibold py-2 px-4 rounded-full shadow-md transition-colors" data-action="questions">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text ml-2 w-4 h-4"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L15.5 2z"/><path d="M15 2v5.5H20"/><path d="M12 11H8"/><path d="M12 15H8"/><path d="M14 19H8"/></svg>
+                            ${t.geminiButtons.questions}
+                        </button>
+                        <button class="gemini-btn bg-indigo-600 text-white hover:bg-indigo-700 font-semibold py-2 px-4 rounded-full shadow-md transition-colors" data-action="events">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list ml-2 w-4 h-4"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+                            ${t.geminiButtons.events}
+                        </button>
+                        <button class="gemini-btn bg-orange-500 text-white hover:bg-orange-600 font-semibold py-2 px-4 rounded-full shadow-md transition-colors" data-action="bulletPoints">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user ml-2 w-4 h-4"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            ${t.geminiButtons.bulletPoints}
+                        </button>
+                        <button class="gemini-btn bg-amber-500 text-white hover:bg-amber-600 font-semibold py-2 px-4 rounded-full shadow-md transition-colors" data-action="audio">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2 ml-2 w-4 h-4"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                            ${t.geminiButtons.audio}
+                        </button>
+                        <button class="gemini-btn bg-cyan-600 text-white hover:bg-cyan-700 font-semibold py-2 px-4 rounded-full shadow-md transition-colors" data-action="history">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-landmark ml-2 w-4 h-4"><line x1="18" x2="6" y1="22" y2="22"/><path d="M18 10a4 4 0 0 0 0-8H6a4 4 0 0 0 0 8"/><path d="M10 22v-8l1.3-.9c.4-.2.8-.3 1.2-.1L14 14v8"/><path d="M8 6h.01"/><path d="M16 6h.01"/><line x1="12" x2="12" y1="12" y2="22"/></svg>
+                            ${t.geminiButtons.history}
+                        </button>
+                        <button class="gemini-btn bg-purple-600 text-white hover:bg-purple-700 font-semibold py-2 px-4 rounded-full shadow-md transition-colors" data-action="trivia">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain ml-2 w-4 h-4"><path d="M12 2a2 2 0 0 0-2 2v2"/><path d="M18 8a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-4"/><path d="M6 14a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h4"/><path d="M12 2v20"/><path d="M20 12h-8"/><path d="M12 12H4"/><path d="M12 14v-4"/></svg>
+                            ${t.geminiButtons.trivia}
+                        </button>
+                    </div>
+                    <div class="generated-content-container mt-4 text-gray-700 text-sm italic border-t border-gray-200 pt-4 hidden"></div>
+                </div>
+            `;
+            
+            // Add event listeners to the new Gemini buttons
+            card.querySelectorAll('.gemini-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const action = button.getAttribute('data-action');
+                    const generatedContentRef = card.querySelector('.generated-content-container');
+                    
+                    if (action === 'audio') {
+                        handleAudioAction(bio, button, generatedContentRef);
+                    } else if (action === 'trivia') {
+                        handleTriviaAction(bio, generatedContentRef);
+                    } else {
+                        const prompt = t.prompts[action](bio.name, bio.text);
+                        handleGeminiAction(prompt, generatedContentRef);
+                    }
+                });
+            });
+
+            return card;
+        }
+
+        // Function to render all biographies
+        function renderBiographies(bios) {
+            biographyGallery.innerHTML = '';
+            if (bios.length === 0) {
+                biographyGallery.innerHTML = `<p class="text-center text-gray-500 mt-8 text-lg">${translations[language].noBios}</p>`;
+            } else {
+                bios.forEach(bio => {
+                    const card = createBiographyCard(bio);
+                    biographyGallery.appendChild(card);
+                });
+            }
+        }
+
+        // Function to handle Gemini API text-to-text call
+        async function handleGeminiAction(prompt, container) {
+            const t = translations[language];
+            container.classList.remove('hidden');
+            container.innerHTML = `<p class="text-center text-gray-500 flex items-center justify-center">
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                ${t.geminiButtons.loading}
+            </p>`;
+
+            const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+            const payload = { contents: chatHistory };
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    const formattedText = text.replace(/\*\s/g, '• ').replace(/\n/g, '<br>');
+                    container.innerHTML = `<div class="p-4 bg-slate-50 rounded-lg text-sm leading-relaxed whitespace-pre-wrap">${formattedText}</div>`;
+                } else {
+                    container.innerHTML = `<p class="text-center text-red-500">${t.geminiButtons.error}</p>`;
+                }
+            } catch (e) {
+                console.error("API Error:", e);
+                container.innerHTML = `<p class="text-center text-red-500">${t.geminiButtons.error}</p>`;
+            }
+        }
+
+        // Function to handle Gemini API TTS call
+        let currentAudio = null;
+        async function handleAudioAction(bio, button, container) {
+            const t = translations[language];
+
+            // Stop any currently playing audio
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio = null;
+                isPlayingAudio = false;
+                button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2 ml-2 w-4 h-4"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>${t.geminiButtons.audio}`;
+                return;
+            }
+
+            container.classList.remove('hidden');
+            container.innerHTML = `<p class="text-center text-gray-500 flex items-center justify-center">
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                ${t.geminiButtons.loading}
+            </p>`;
+
+            const prompt = `Say in a calm, informative voice the following biography about ${bio.name}: ${bio.text}`;
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: {
+                    responseModality: 'AUDIO',
+                    speechConfig: {
+                        voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Kore' } }
+                    }
+                },
+                model: 'gemini-2.5-flash-preview-tts'
+            };
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                const audioData = result?.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+                const mimeType = result?.candidates?.[0]?.content?.parts?.[0]?.inlineData?.mimeType;
+                
+                if (audioData && mimeType && mimeType.startsWith("audio/")) {
+                    const sampleRate = parseInt(mimeType.match(/rate=(\d+)/)[1], 10);
+                    const pcmData = base64ToArrayBuffer(audioData);
+                    const pcm16 = new Int16Array(pcmData);
+                    const wavBlob = pcmToWav(pcm16, sampleRate);
+                    const audioUrl = URL.createObjectURL(wavBlob);
+                    
+                    currentAudio = new Audio(audioUrl);
+                    currentAudio.play();
+                    isPlayingAudio = true;
+                    button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-x ml-2 w-4 h-4"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/></svg>${t.geminiButtons.stopAudio}`;
+
+                    currentAudio.onended = () => {
+                        currentAudio = null;
+                        isPlayingAudio = false;
+                        button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2 ml-2 w-4 h-4"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>${t.geminiButtons.audio}`;
+                    };
+                    
+                    container.innerHTML = `<div class="p-4 bg-slate-50 rounded-lg text-sm text-center">הקראה מתבצעת כעת...</div>`;
+
+                } else {
+                    container.innerHTML = `<p class="text-center text-red-500">${t.geminiButtons.error}</p>`;
+                }
+            } catch (e) {
+                console.error("API Error:", e);
+                container.innerHTML = `<p class="text-center text-red-500">${t.geminiButtons.error}</p>`;
+            }
+        }
+
+        // Function to handle Gemini API structured (JSON) response for Trivia
+        async function handleTriviaAction(bio, container) {
+            const t = translations[language];
+            container.classList.remove('hidden');
+            container.innerHTML = `<p class="text-center text-gray-500 flex items-center justify-center">
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                ${t.geminiButtons.loading}
+            </p>`;
+
+            const chatHistory = [{ role: "user", parts: [{ text: t.prompts.trivia(bio.name, bio.text) }] }];
+            const payload = {
+                contents: chatHistory,
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "ARRAY",
+                        items: {
+                            type: "OBJECT",
+                            properties: {
+                                "question": { "type": "STRING" },
+                                "options": { "type": "ARRAY", "items": { "type": "STRING" } },
+                                "correct_answer": { "type": "STRING" }
+                            }
+                        }
+                    }
+                }
+            };
+
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts.length > 0) {
+                    const jsonString = result.candidates[0].content.parts[0].text;
+                    const triviaQuestions = JSON.parse(jsonString);
+
+                    let triviaHTML = '<div class="space-y-6">';
+                    triviaQuestions.forEach((q, qIndex) => {
+                        triviaHTML += `
+                            <div class="p-4 bg-slate-50 rounded-lg shadow-inner">
+                                <h4 class="font-bold text-gray-800 mb-2">${qIndex + 1}. ${q.question}</h4>
+                                <div class="space-y-2">`;
+                        q.options.forEach(option => {
+                            triviaHTML += `<button class="trivia-option w-full text-${language === 'he' ? 'right' : 'left'} px-4 py-2 rounded-md transition-colors hover:bg-gray-200" data-answer="${option}" data-correct="${option === q.correct_answer}">${option}</button>`;
+                        });
+                        triviaHTML += `</div></div>`;
+                    });
+                    triviaHTML += `</div>`;
+                    container.innerHTML = triviaHTML;
+
+                    // Add event listeners for trivia answers
+                    container.querySelectorAll('.trivia-option').forEach(button => {
+                        button.addEventListener('click', (e) => {
+                            const isCorrect = e.target.getAttribute('data-correct') === 'true';
+                            // Disable all buttons for this question
+                            e.target.closest('.space-y-2').querySelectorAll('.trivia-option').forEach(btn => btn.disabled = true);
+                            
+                            if (isCorrect) {
+                                e.target.classList.remove('hover:bg-gray-200');
+                                e.target.classList.add('bg-green-100', 'text-green-800', 'font-semibold');
+                            } else {
+                                e.target.classList.remove('hover:bg-gray-200');
+                                e.target.classList.add('bg-red-100', 'text-red-800', 'font-semibold');
+                                // Highlight the correct answer
+                                const correctButton = e.target.closest('.space-y-2').querySelector(`[data-correct="true"]`);
+                                if (correctButton) {
+                                    correctButton.classList.remove('hover:bg-gray-200');
+                                    correctButton.classList.add('bg-green-100', 'text-green-800', 'font-semibold');
+                                }
+                            }
+                        });
+                    });
+
+                } else {
+                    container.innerHTML = `<p class="text-center text-red-500">${t.geminiButtons.error}</p>`;
+                }
+            } catch (e) {
+                console.error("API Error:", e);
+                container.innerHTML = `<p class="text-center text-red-500">${t.geminiButtons.error}</p>`;
+            }
+        }
+
+        // Function to update UI based on language
+        function updateUI() {
+            const t = translations[language];
+            document.documentElement.lang = language;
+            document.documentElement.dir = language === 'he' ? 'rtl' : 'ltr';
+
+            // Update main titles
+            document.querySelector('h1').textContent = t.appTitle;
+            document.querySelector('p.text-lg').textContent = t.appSubtitle;
+            
+            // Update buttons and labels
+            addBiographyBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus-circle ${language === 'he' ? 'ml-2' : 'mr-2'} w-5 h-5"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>${t.addBiographyButton}`;
+            biographyForm.querySelector('h2').textContent = t.formTitle;
+            document.querySelector('label[for="name"]').textContent = t.nameLabel;
+            document.querySelector('label[for="text"]').textContent = t.textLabel;
+            document.querySelector('label[for="image"]').textContent = t.imageLabel;
+            saveBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-save ${language === 'he' ? 'ml-2' : 'mr-2'} w-5 h-5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v4h6"/></svg>${t.saveButton}`;
+            cancelBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x ${language === 'he' ? 'ml-2' : 'mr-2'} w-5 h-5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>${t.cancelButton}`;
+            document.querySelector('a.bg-blue-600').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left ${language === 'he' ? 'ml-2' : 'mr-2'} w-5 h-5"><path d="m15 18-6-6 6-6"/></svg>${t.backButton}`;
+
+            // Update form input text direction
+            document.getElementById('name').classList.toggle('text-right', language === 'he');
+            document.getElementById('name').classList.toggle('text-left', language !== 'he');
+            document.getElementById('text').classList.toggle('text-right', language === 'he');
+            document.getElementById('text').classList.toggle('text-left', language !== 'he');
+            document.getElementById('image').classList.toggle('text-right', language === 'he');
+            document.getElementById('image').classList.toggle('text-left', language !== 'he');
+            
+            // Update button container flex direction
+            const buttonContainer = document.querySelector('.flex.justify-end.space-x-2');
+            if (language === 'he') {
+                buttonContainer.classList.add('rtl:space-x-reverse');
+            } else {
+                buttonContainer.classList.remove('rtl:space-x-reverse');
+            }
+
+            // Re-render biographies to apply new language
+            // This is a simple approach, a more robust one would involve storing the bios and re-rendering
+        }
+
+        // Main App Logic on Window Load
+        window.onload = function() {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+
+            // Authenticate with Firebase
+            async function authenticate() {
+                try {
+                    if (initialAuthToken) {
+                        await signInWithCustomToken(auth, initialAuthToken);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (e) {
+                    console.error("Firebase Auth Error:", e);
+                    showMessage(translations[language].authError, 'error');
+                }
+            }
+
+            // Auth state change listener
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    userId = user.uid;
+                    listenForBiographies();
+                } else {
+                    userId = null;
+                }
+            });
+
+            // Listen for real-time data updates
+            function listenForBiographies() {
+                const biosQuery = query(collection(db, BIOGRAPHIES_COLLECTION_PATH), orderBy("createdAt", "desc"));
+                showMessage(translations[language].loading, 'loading');
+
+                onSnapshot(biosQuery, 
+                    (snapshot) => {
+                        messageBoxContainer.classList.add('hidden');
+                        const biosList = snapshot.docs.map(doc => ({
+                            id: doc.id,
+                            ...doc.data()
+                        }));
+                        renderBiographies(biosList);
+                    },
+                    (e) => {
+                        console.error("Firestore Read Error:", e);
+                        showMessage(translations[language].error, 'error');
+                    }
+                );
+            }
+
+            authenticate();
+
+            // Event Listeners
+            addBiographyBtn.addEventListener('click', () => {
+                document.getElementById('main-content').classList.add('hidden');
+                biographyForm.classList.remove('hidden');
+            });
+
+            cancelBtn.addEventListener('click', () => {
+                biographyForm.classList.add('hidden');
+                document.getElementById('main-content').classList.remove('hidden');
+                bioForm.reset();
+            });
+
+            bioForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                saveBtn.disabled = true;
+                const savingText = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>${translations[language].savingButton}`;
+                saveBtn.innerHTML = savingText;
+
+                try {
+                    const formData = new FormData(e.target);
+                    const docData = {
+                        name: formData.get('name'),
+                        text: formData.get('text'),
+                        image: formData.get('image'),
+                        createdAt: new Date(),
+                        userId: userId
+                    };
+                    await addDoc(collection(db, BIOGRAPHIES_COLLECTION_PATH), docData);
+                    bioForm.reset();
+                    biographyForm.classList.add('hidden');
+                    document.getElementById('main-content').classList.remove('hidden');
+                } catch (error) {
+                    console.error("Error adding document: ", error);
+                    showMessage(translations[language].error, 'error');
+                } finally {
+                    saveBtn.disabled = false;
+                    updateUI(); // To reset button text
+                }
+            });
+
+            languageToggleBtn.addEventListener('click', () => {
+                language = language === 'he' ? 'en' : 'he';
+                updateUI();
+                listenForBiographies(); // Reload data to get correct button labels
+            });
+        };
+    </script>
 </body>
 </html>
