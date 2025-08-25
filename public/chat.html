@@ -197,16 +197,8 @@
         let familyTreeData = [];
         let audioPlayer = null;
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyD7f9DqeBe-3BQ8-GzS0S2wgGEPfsA82L0",
-            authDomain: "aichat-app-bf26f.firebaseapp.com",
-            projectId: "aichat-app-bf26f",
-            storageBucket: "aichat-app-bf26f.firebasestorage.app",
-            messagingSenderId: "1067740756856",
-            appId: "1:1067740756856:web:53d985cfcb4c723e23268d",
-            measurementId: "G-QKCJEVFKYF"
-        };
-
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
         // Translation texts
         const translations = {
@@ -493,7 +485,7 @@
                 { name: "שושנה כהן", details: "תאריך לידה: 1953, מקום לידה: תל אביב." },
             ];
 
-            const treeRef = collection(db, `/artifacts/${userId}/family_tree`);
+            const treeRef = collection(db, `/artifacts/${appId}/users/${userId}/family_tree`);
             const snapshot = await getDocs(treeRef);
             if (snapshot.empty) {
                 for (const person of treeData) {
@@ -505,7 +497,7 @@
         // Function to add a new person to the database
         async function addPersonToDB(name, details) {
             if (!db || !userId) return;
-            const treeRef = collection(db, `/artifacts/${userId}/family_tree`);
+            const treeRef = collection(db, `/artifacts/${appId}/users/${userId}/family_tree`);
             try {
                 await addDoc(treeRef, { name: name, details: details });
                 document.getElementById("new-person-name").value = "";
@@ -534,7 +526,6 @@
             
             // Initialize Firebase and authenticate
             try {
-                const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
@@ -556,7 +547,7 @@
                 await loadInitialData();
 
                 // Listen for real-time changes to the family tree
-                const treeRef = collection(db, `/artifacts/${userId}/family_tree`);
+                const treeRef = collection(db, `/artifacts/${appId}/users/${userId}/family_tree`);
                 onSnapshot(treeRef, (snapshot) => {
                     const treeList = [];
                     snapshot.forEach(doc => {
