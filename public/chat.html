@@ -197,7 +197,14 @@
     let familyTreeData = [];
     let audioPlayer = null;
 
-    const firebaseConfig = JSON.parse(__firebase_config);
+    // Check if the global variable exists before parsing it.
+    let firebaseConfig = null;
+    if (typeof __firebase_config !== 'undefined') {
+        firebaseConfig = JSON.parse(__firebase_config);
+    } else {
+        console.error("Firebase config is not defined. The app will not function correctly.");
+    }
+    
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
     // This is how the firebaseConfig object should look.
@@ -216,6 +223,12 @@
     // Initialize Firebase
     async function initFirebase() {
         try {
+            // Only initialize if firebaseConfig is available
+            if (!firebaseConfig) {
+                console.error("Initialization failed: Firebase config is missing.");
+                return;
+            }
+
             const app = initializeApp(firebaseConfig);
             auth = getAuth(app);
             db = getFirestore(app);
