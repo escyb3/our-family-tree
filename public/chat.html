@@ -184,29 +184,59 @@
         </div>
     </div>
 
-    <script type="module">
-        // Import Firebase libraries
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDocs, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, collection, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+<script type="module">
+    // Import Firebase libraries
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, getDocs, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, collection, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Global variables
-        let db;
-        let auth;
-        let userId;
-        let familyTreeData = [];
-        let audioPlayer = null;
+    // Global variables
+    let db;
+    let auth;
+    let userId;
+    let familyTreeData = [];
+    let audioPlayer = null;
 
-        const firebaseConfig = JSON.parse(__firebase_config);
-  apiKey: "AIzaSyD7f9DqeBe-3BQ8-GzS0S2wgGEPfsA82L0",
-  authDomain "aichat-app-bf26f.firebaseapp.com",
-  projectId: "aichat-app-bf26f",
-  storageBucket: "aichat-app-bf26f.firebasestorage.app",
-  messagingSenderId: "1067740756856",
-  appId: "1:1067740756856:web:53d985cfcb4c723e23268d",
-  measurementId: "G-QKCJEVFKYF"
-};
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+    const firebaseConfig = JSON.parse(__firebase_config);
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+    // This is how the firebaseConfig object should look.
+    /*
+    const firebaseConfig = {
+        apiKey: "AIzaSyD7f9DqeBe-3BQ8-GzS0S2wgGEPfsA82L0",
+        authDomain: "aichat-app-bf26f.firebaseapp.com",
+        projectId: "aichat-app-bf26f",
+        storageBucket: "aichat-app-bf26f.firebasestorage.app",
+        messagingSenderId: "1067740756856",
+        appId: "1:1067740756856:web:53d985cfcb4c723e23268d",
+        measurementId: "G-QKCJEVFKYF"
+    };
+    */
+
+    // Initialize Firebase
+    async function initFirebase() {
+        try {
+            const app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+            
+            // Sign in anonymously if no custom token is available
+            if (typeof __initial_auth_token !== 'undefined') {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
+            }
+
+            userId = auth.currentUser?.uid || crypto.randomUUID();
+            console.log("Firebase initialized. User ID:", userId);
+
+            // You can add more code here to start fetching data after initialization
+        } catch (error) {
+            console.error("Error initializing Firebase:", error);
+        }
+    }
+
+    initFirebase();
 
         // Translation texts
         const translations = {
