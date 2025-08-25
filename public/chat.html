@@ -200,7 +200,11 @@
     // Check if the global variable exists before parsing it.
     let firebaseConfig = null;
     if (typeof __firebase_config !== 'undefined') {
-        firebaseConfig = JSON.parse(__firebase_config);
+        try {
+            firebaseConfig = JSON.parse(__firebase_config);
+        } catch (e) {
+            console.error("Error parsing Firebase config:", e);
+        }
     } else {
         console.error("Firebase config is not defined. The app will not function correctly.");
     }
@@ -224,8 +228,8 @@
     async function initFirebase() {
         try {
             // Only initialize if firebaseConfig is available
-            if (!firebaseConfig) {
-                console.error("Initialization failed: Firebase config is missing.");
+            if (!firebaseConfig || !Object.keys(firebaseConfig).length) {
+                console.error("Initialization failed: Firebase config is missing or empty.");
                 return;
             }
 
@@ -234,7 +238,7 @@
             db = getFirestore(app);
             
             // Sign in anonymously if no custom token is available
-            if (typeof __initial_auth_token !== 'undefined') {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                 await signInWithCustomToken(auth, __initial_auth_token);
             } else {
                 await signInAnonymously(auth);
