@@ -112,12 +112,6 @@
     </ul>
   </nav>
   </header>
-               <select id="langSelector" class="lang-selector">
-          <option value="he">HE</option>
-          <option value="en">EN</option>
-          <option value="yi">YI</option>
-          <option value="fr">FR</option>
-        </select>
   <main>
     <section>
       <h3>🌟 ברוכים הבאים למרכז המשפחתי</h3>
@@ -155,7 +149,7 @@
     <p>&copy; 2025 אתר המשפחה • נבנה באהבה ע"י המשפחה • <a href="/admin.html">🛠️ ניהול</a></p>
   </footer>
   </main>
-         <script>
+           <script>
         document.addEventListener("DOMContentLoaded", () => {
             const translations = {
                 "he": {
@@ -189,7 +183,7 @@
                     "main-welcome-subtext": "ניתן להיכנס לפי צד משפחתי, לעדכן פרטים, לשוחח עם צ'אט AI משפחתי ולחוות יחד היסטוריה מתועדת.",
                     "tree-welcome-title": "ברוכים הבאים לעץ המשפחה שלנו",
                     "feature-tree": "🌳עץ משפחה אינטראקטיבי",
-                    "feature-login": "🔐 כניסת משתמשים והרשאות לפי צד משפחתי",
+                    "feature-login": "� כניסת משתמשים והרשאות לפי צד משפחתי",
                     "feature-wall": "💬 קיר משפחתי לפוסטים ותגובות",
                     "feature-messages": "📨 מערכת הודעות פנימית",
                     "feature-gallery": "🖼️ תצוגת גלריה למסמכים ותמונות",
@@ -295,7 +289,7 @@
                     "feature-gallery": "🖼️ גאַלעריע פֿאַר דאָקומענטן און בילדער",
                     "feature-memorial": "🕯️ זכּרון זייטן מיט אַ דיגיטאַלע ליכט",
                     "feature-multilingual": "🌐 מער-שפּראַכיקע מעניו (העברעיִש/ענגליש)",
-                    "feature-search": "� קלוגע זוכונג",
+                    "feature-search": " קלוגע זוכונג",
                     "feature-newsletter": "📧 נייַעסלעטער שטיצע",
                     "feature-ai": "🤖 משפּחה אַי טשאַט מיט שטיצע פֿון משפּחה דאַטן",
                     "feature-responsive": "📱 רעספּאָנסיווע דעזיין פֿאַר מאָביל",
@@ -359,11 +353,11 @@
                     "unavailable-message": "(Actuellement indisponible)"
                 }
             };
-
+        
             const langSelector = document.getElementById("langSelector");
             let currentLang = localStorage.getItem("lang") || "he";
             let isLoggedIn = false;
-
+        
             // מפה של ID של אלמנטים למפתח התרגום שלהם. זה הופך את הקוד ליעיל וקל יותר לניהול.
             const textElementsMap = {
                 "title": (text) => document.title = text,
@@ -391,8 +385,8 @@
                 "news-2": (text) => document.getElementById("news-2").textContent = text,
                 "news-3": (text) => document.getElementById("news-3").textContent = text,
                 "footer-text": (text) => document.getElementById("footer-text").innerHTML = text,
-                "alt-family-logo": (text) => document.querySelector('img[alt="לוגו משפחתי"]').setAttribute('alt', text),
-                "alt-family-photo": (text) => document.querySelector('img[alt="תמונת משפחה"]').setAttribute('alt', text)
+                "alt-family-logo": (text) => document.getElementById("family-logo").setAttribute('alt', text),
+                "alt-family-photo": (text) => document.getElementById("family-photo").setAttribute('alt', text)
             };
             
             // מפה של ID של אלמנטים למפתח תרגום שלהם שדורשים innerHTML בגלל תגי span
@@ -416,12 +410,12 @@
                 "menu-migration-map": "menu-migration-map",
                 "menu-newsletter": "menu-newsletter"
             };
-
+        
             // פונקציה לעדכון כל הטקסטים והתכונות בהתאם לשפה
             function setLanguage(lang) {
                 const texts = translations[lang];
                 if (!texts) return;
-
+        
                 // עדכון אלמנטים המשתמשים ב-textContent
                 for (const id in textElementsMap) {
                     if (texts[id]) {
@@ -436,7 +430,7 @@
                         document.getElementById(id).innerHTML = texts[key];
                     }
                 }
-
+        
                 // עדכון כיווניות השפה
                 const isRtl = lang === "he" || lang === "yi";
                 document.documentElement.setAttribute("dir", isRtl ? "rtl" : "ltr");
@@ -472,11 +466,11 @@
                         userProfile.innerHTML = `
                             <span class="font-bold">${user.username}</span>
                             <span class="text-gray-300">(${user.role})</span>
-                            <a href="/logout" id="login-logout-link" class="text-white hover:underline transition mr-2">התנתק</a>
+                            <a href="/logout" id="login-logout-link" class="text-white hover:underline transition mr-2">${currentTexts["logout-link"]}</a>
                         `;
                     } else {
                         userProfile.innerHTML = `
-                            <a href="/login.html" id="login-logout-link" class="text-white hover:underline transition mr-2">כניסה</a>
+                            <a href="/login.html" id="login-logout-link" class="text-white hover:underline transition mr-2">${currentTexts["login-link"]}</a>
                         `;
                     }
                     // הצגה או הסתרת התפריט בהתאם לסטטוס ההתחברות
@@ -489,12 +483,12 @@
                     isLoggedIn = false;
                     const currentTexts = translations[currentLang];
                     userProfile.innerHTML = `
-                        <a href="/login.html" id="login-logout-link" class="text-white hover:underline transition mr-2">כניסה</a>
+                        <a href="/login.html" id="login-logout-link" class="text-white hover:underline transition mr-2">${currentTexts["login-link"]}</a>
                     `;
                     menuBar.style.display = "none";
                     setLanguage(currentLang);
                 });
-
+        
             // הוספת האזנה לאירוע שינוי שפה
             langSelector.addEventListener("change", (event) => {
                 const newLang = event.target.value;
