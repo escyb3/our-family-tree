@@ -208,21 +208,16 @@
     } else {
         console.error("Firebase config is not defined. The app will not function correctly.");
     }
-    
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-
-    // This is how the firebaseConfig object should look.
-    /*
     const firebaseConfig = {
-        apiKey: "AIzaSyD7f9DqeBe-3BQ8-GzS0S2wgGEPfsA82L0",
-        authDomain: "aichat-app-bf26f.firebaseapp.com",
-        projectId: "aichat-app-bf26f",
-        storageBucket: "aichat-app-bf26f.firebasestorage.app",
-        messagingSenderId: "1067740756856",
-        appId: "1:1067740756856:web:53d985cfcb4c723e23268d",
-        measurementId: "G-QKCJEVFKYF"
-    };
-    */
+  apiKey: "AIzaSyD7f9DqeBe-3BQ8-GzS0S2wgGEPfsA82L0",
+  authDomain: "aichat-app-bf26f.firebaseapp.com",
+  projectId: "aichat-app-bf26f",
+  storageBucket: "aichat-app-bf26f.firebasestorage.app",
+  messagingSenderId: "1067740756856",
+  appId: "1:1067740756856:web:53d985cfcb4c723e23268d",
+  measurementId: "G-QKCJEVFKYF"
+};
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
     // Initialize Firebase
     async function initFirebase() {
