@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, getIdTokenResult } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 // קונפיג Firebase
 const firebaseConfig = {
@@ -16,7 +16,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// התחברות מהטופס
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");
   const statusEl = document.getElementById("status");
@@ -27,26 +26,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = document.getElementById("password").value;
 
     try {
+      // התחברות ב-Firebase (בדיקת סיסמה)
       const userCred = await signInWithEmailAndPassword(auth, email, password);
-      const token = await getIdTokenResult(userCred.user);
+      const idToken = await userCred.user.getIdToken();
 
-      // claims שהגדרת בצד השרת (role + familySide)
-      const { role, familySide } = token.claims;
+      // שולח ID Token לשרת
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken })
+      });
 
-      statusEl.textContent = `✅ ברוך הבא ${email}, צד: ${familySide}, תפקיד: ${role}`;
+      const data = await res.json();
 
-      // דוגמת הפניה לעץ מתאים
-      if (familySide === "Ben Abou") {
-        window.location.href = "/ben_abou.html";
-      } else if (familySide === "Elharrar") {
-        window.location.href = "/elharrar.html";
+      if (data.success) {
+        statusEl.textContent = `✅ ברוך הבא ${data.user.email}, צד: ${data.user.side}, תפקיד: ${data.user.role}`;
+
+        // הפניה בהתאם לצד המשפחתי
+        if (data.user.side === "Ben Abou") window.location.href = "/ben_abou.html";
+        else if (data.user.side === "Elharrar") window.location.href = "/elharrar.html";
+        else window.location.href = "/index.html";
+
       } else {
-        window.location.href = "/index.html";
+        statusEl.textContent = "❌ " + (data.message || "שגיאה בהתחברות");
       }
 
     } catch (err) {
+      console.error(err);
       statusEl.textContent = "❌ שגיאת התחברות: " + err.message;
     }
   });
 });
-
