@@ -18,6 +18,8 @@ const fetch = require("node-fetch");
 const crypto = require("crypto");
 const cors = require("cors");
 const app = express();
+const auth = admin.auth();
+const firestore = admin.firestore();
 
 const admin = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
