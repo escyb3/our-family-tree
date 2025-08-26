@@ -870,19 +870,6 @@ app.get("/api/message/:id", (req, res) => {
   res.json(msg);
 });
 
-// -------------------- Auth middleware --------------------
-function auth(role) {
-  return (req, res, next) => {
-    const user = req.session.user;
-    if (!user) {
-      return res.status(401).json({ error: "Unauthorized" });
-    }
-    if (role && user.role !== role) {
-      return res.status(403).json({ error: "Forbidden" });
-    }
-    next();
-  };
-}
 // 👥 ניהול משתמשים (admin)
 app.get("/admin-users", auth("admin"), (req, res) => {
   res.json(users);
