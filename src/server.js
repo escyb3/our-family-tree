@@ -685,53 +685,52 @@ app.use((req, res, next) => {
 
 // תהליך התחברות POST
 app.post("/api/login", async (req, res) => {
-  const usersPath = path.join(__dirname, "data", "users.json");
+  const { username, password } = req.body;
 
-  // יצירת קובץ משתמשים אם לא קיים
-  if (!fs.existsSync(usersPath)) {
-    const adminUser = {
-      username: "admin",
-      password: bcrypt.hashSync("family2025", 10),
-      role: "admin",
-      side: "all"
-    };
-    const initialUsers = [adminUser];
-    fs.writeFileSync(usersPath, JSON.stringify(initialUsers, null, 2));
-    console.log("✅ נוצר קובץ users.json עם משתמש admin ברירת מחדל");
-  }
-   try {
-    const usersRaw = fs.readFileSync(usersPath, "utf8");
-    const users = JSON.parse(usersRaw);
+  try {
+    // שלב 1: אימות המשתמש באמצעות Supabase Auth
+    // Supabase משתמשת ב-email, לכן אנו משתמשים בשדה username כ-email
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      email: username,
+      password: password
+    });
 
-    const user = users.find(u => u.username === req.body.username);
-    if (!user) {
-      return res.status(401).json({ success: false, message: "שם משתמש שגוי" });
+    // בדיקת שגיאות אימות (שם משתמש או סיסמה שגויים)
+    if (authError) {
+      console.error("❌ שגיאה בהתחברות:", authError.message);
+      return res.status(401).json({ success: false, message: "שם משתמש או סיסמה שגויים" });
     }
 
-    const match = await bcrypt.compare(req.body.password, user.password);
-    if (!match) {
-      return res.status(401).json({ success: false, message: "סיסמה שגויה" });
+    // שלב 2: אם האימות הצליח, שלוף את פרטי המשתמש מהטבלה user_profiles
+    const user = authData.user;
+    const { data: profileData, error: profileError } = await supabase
+      .from('user_profiles')
+      .select('role, side')
+      .eq('id', user.id)
+      .single(); // מחזיר רק רשומה אחת
+
+    // בדיקת שגיאות בשליפת הפרופיל
+    if (profileError) {
+      console.error("❌ שגיאה בשליפת פרופיל המשתמש:", profileError.message);
+      // ייתכן שהמשתמש קיים אך אין לו פרופיל. יש לשקול איך לטפל במקרה כזה.
+      return res.status(500).json({ success: false, message: "שגיאה בשרת" });
     }
 
+    // שלב 3: שמירת פרטי המשתמש בסשן
     req.session.user = {
-      username: user.username,
-      role: user.role,
-      side: user.side
+      id: user.id,
+      email: user.email,
+      role: profileData.role,
+      side: profileData.side
     };
 
-    console.log("✅ התחברות הצליחה:", user.username);
+    console.log("✅ התחברות הצליחה:", user.email, "עם תפקיד:", profileData.role);
     res.json({ success: true, user: req.session.user });
 
   } catch (err) {
-    console.error("❌ שגיאה בתהליך התחברות:", err);
+    console.error("❌ שגיאה כללית בתהליך ההתחברות:", err);
     res.status(500).json({ success: false, message: "שגיאה בשרת" });
   }
-});
-
-app.get("/api/users", (req, res) => {
-  fs.readFile(usersPath, "utf8", (err, data) => {
-    // ...
-  });
 });
 // טוען את האירועים מהקובץ
 function loadEvents() {
