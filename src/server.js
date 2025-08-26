@@ -18,16 +18,17 @@ const fetch = require("node-fetch");
 const crypto = require("crypto");
 const cors = require("cors");
 const app = express();
-const firestore = admin.firestore();
 
-const admin = require("firebase-admin");
-const serviceAccount = require("./serviceAccountKey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   storageBucket: "our-family-tree-5c3cc.appspot.com" // שים לב שהסיומת כאן appspot.com
 });
 const auth = admin.auth();
+const firestore = admin.firestore();
+const admin = require("firebase-admin");
+const serviceAccount = require("./serviceAccountKey.json");
+
 // גישה למסד נתונים Firestore
 const db = admin.firestore();
 // גישה ל־Storage
