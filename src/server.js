@@ -709,11 +709,10 @@ app.post("/api/login", async (req, res) => {
       .eq('id', user.id)
       .single(); // מחזיר רק רשומה אחת
 
-    // בדיקת שגיאות בשליפת הפרופיל
-    if (profileError) {
-      console.error("❌ שגיאה בשליפת פרופיל המשתמש:", profileError.message);
-      // ייתכן שהמשתמש קיים אך אין לו פרופיל. יש לשקול איך לטפל במקרה כזה.
-      return res.status(500).json({ success: false, message: "שגיאה בשרת" });
+    // בדיקה נוספת למקרה שהפרופיל לא נמצא, כדי למנוע קריסת שרת
+    if (profileError || !profileData) {
+      console.error("❌ לא נמצא פרופיל משתמש עבור ID:", user.id);
+      return res.status(401).json({ success: false, message: "פרופיל משתמש לא נמצא." });
     }
 
     // שלב 3: שמירת פרטי המשתמש בסשן
