@@ -17,8 +17,21 @@ const ai = require("./ai");
 const fetch = require("node-fetch");
 const crypto = require("crypto");
 const cors = require("cors");
-
 const app = express();
+
+const admin = require("firebase-admin");
+const serviceAccount = require("./serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  storageBucket: "our-family-tree-5c3cc.appspot.com" // שים לב שהסיומת כאן appspot.com
+});
+// גישה למסד נתונים Firestore
+const db = admin.firestore();
+// גישה ל־Storage
+const bucket = admin.storage().bucket();
+
+
 
 // חיבור לתרגום של גוגל (משתמש במפתח מתוך .env)
 const translate = new Translate({ key: process.env.GOOGLE_API_KEY });
