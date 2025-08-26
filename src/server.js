@@ -45,17 +45,6 @@ const SUPABASE_KEY = process.env.SUPABASE_KEY || 'sb_secret_G--k9nK5CAvcdNN4_uIB
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // =========================
-// Helper functions
-// =========================
-function auth(role) {
-  return (req, res, next) => {
-    if (!req.session.user) return res.status(401).json({ error: 'Unauthorized' });
-    if (role && req.session.user.role !== role) return res.status(403).json({ error: 'Forbidden' });
-    next();
-  };
-}
-
-// =========================
 // Supabase Table Setup (optional)
 // =========================
 async function initTables() {
