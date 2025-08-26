@@ -691,55 +691,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
-// תהליך התחברות POST
-app.post("/api/login", async (req, res) => {
-  const { username, password } = req.body;
-
-  try {
-    // שלב 1: אימות המשתמש באמצעות Supabase Auth
-    // Supabase משתמשת ב-email, לכן אנו משתמשים בשדה username כ-email
-    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-      email: username,
-      password: password
-    });
-
-    // בדיקת שגיאות אימות (שם משתמש או סיסמה שגויים)
-    if (authError) {
-      console.error("❌ שגיאה בהתחברות:", authError.message);
-      return res.status(401).json({ success: false, message: "שם משתמש או סיסמה שגויים" });
-    }
-
-    // שלב 2: אם האימות הצליח, שלוף את פרטי המשתמש מהטבלה user_profiles
-    const user = authData.user;
-    const { data: profileData, error: profileError } = await supabase
-      .from('user_profiles')
-      .select('role, side')
-      .eq('id', user.id)
-      .single(); // מחזיר רק רשומה אחת
-
-    // בדיקה נוספת למקרה שהפרופיל לא נמצא, כדי למנוע קריסת שרת
-    if (profileError || !profileData) {
-      console.error("❌ לא נמצא פרופיל משתמש עבור ID:", user.id);
-      return res.status(401).json({ success: false, message: "פרופיל משתמש לא נמצא." });
-    }
-
-    // שלב 3: שמירת פרטי המשתמש בסשן
-    req.session.user = {
-      id: user.id,
-      email: user.email,
-      role: profileData.role,
-      side: profileData.side
-    };
-
-    console.log("✅ התחברות הצליחה:", user.email, "עם תפקיד:", profileData.role);
-    res.json({ success: true, user: req.session.user });
-
-  } catch (err) {
-    console.error("❌ שגיאה כללית בתהליך ההתחברות:", err);
-    res.status(500).json({ success: false, message: "שגיאה בשרת" });
-  }
-});
 // טוען את האירועים מהקובץ
 function loadEvents() {
   if (!fs.existsSync(eventsPath)) return [];
