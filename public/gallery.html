@@ -1,112 +1,1022 @@
 <!DOCTYPE html>
-<html lang="en" dir="rtl">
+<html lang="he">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>גלריית תמונות משפחתית</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    #modal {
-      display: none;
-    }
-  </style>
-  <script>
-    let allImages = [];
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>גלריית תמונות משפחתית</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp, deleteDoc, doc, updateDoc, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+        window.firebase = { initializeApp, getAuth, signInWithCustomToken, signInAnonymously, getFirestore, collection, onSnapshot, addDoc, serverTimestamp, deleteDoc, doc, updateDoc, query, orderBy, getDocs, getStorage, ref, uploadBytes, getDownloadURL, deleteObject };
+    </script>
 
-    async function loadGallery(filter = "", sortBy = "name") {
-      if (!allImages.length) {
-        const response = await fetch('/gallery.json');
-        allImages = await response.json();
-      }
-
-      const container = document.getElementById('gallery');
-      container.innerHTML = "";
-
-      let filtered = allImages.filter(img =>
-        img.name.toLowerCase().includes(filter.toLowerCase()) ||
-        img.family.toLowerCase().includes(filter.toLowerCase())
-      );
-
-      if (sortBy === 'family') {
-        filtered.sort((a, b) => a.family.localeCompare(b.family));
-      } else if (sortBy === 'name') {
-        filtered.sort((a, b) => a.name.localeCompare(b.name));
-      }
-
-      filtered.forEach(img => {
-        const div = document.createElement('div');
-        div.className = 'relative group cursor-pointer';
-
-        const image = document.createElement('img');
-        image.src = img.path;
-        image.alt = img.name;
-        image.className = 'rounded-lg shadow hover:scale-105 transition w-full';
-        image.onclick = () => openModal(img);
-
-        const caption = document.createElement('div');
-        caption.className = 'absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-sm p-2 opacity-0 group-hover:opacity-100 transition';
-        caption.innerText = img.name + (img.family ? ` – ${img.family}` : '');
-
-        div.appendChild(image);
-        div.appendChild(caption);
-        container.appendChild(div);
-      });
-    }
-
-    function openModal(img) {
-      const modal = document.getElementById('modal');
-      const modalImg = document.getElementById('modalImg');
-      const modalCaption = document.getElementById('modalCaption');
-      modalImg.src = img.path;
-      modalCaption.innerText = img.name + (img.family ? ` – ${img.family}` : '');
-      modal.style.display = 'flex';
-    }
-
-    function closeModal() {
-      document.getElementById('modal').style.display = 'none';
-    }
-
-    function changeDirection() {
-      const html = document.documentElement;
-      html.dir = html.dir === 'rtl' ? 'ltr' : 'rtl';
-    }
-
-    function updateSort(select) {
-      const sortBy = select.value;
-      const filterInput = document.getElementById('searchInput').value;
-      loadGallery(filterInput, sortBy);
-    }
-
-    window.onload = () => loadGallery();
-  </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Heebo', sans-serif;
+            direction: rtl;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
-<body class="bg-gray-50 min-h-screen py-10 px-6">
-  <div class="max-w-6xl mx-auto">
-    <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-      <h1 class="text-4xl font-bold text-blue-800">📷 גלריית תמונות משפחתית</h1>
-      <div class="flex flex-wrap gap-2 items-center">
-        <input id="searchInput" type="text" placeholder="🔍 חפש תמונה..." class="border rounded p-2 text-sm" oninput="loadGallery(this.value, document.getElementById('sortSelect').value)" />
-        <select id="sortSelect" onchange="updateSort(this)" class="border rounded p-2 text-sm">
-          <option value="name">מיין לפי שם</option>
-          <option value="family">מיין לפי משפחה</option>
-        </select>
-        <button onclick="changeDirection()" class="bg-gray-300 px-3 py-2 rounded text-sm">החלף כיוון</button>
-        <a href="/upload-photo.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">העלה תמונה</a>
-      </div>
-    </div>
+<body>
 
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4" id="gallery">
-      <!-- תמונות ייטענו כאן דינמית -->
-    </div>
-  </div>
+<div id="root"></div>
 
-  <!-- Modal -->
-  <div id="modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50" onclick="closeModal()">
-    <div class="max-w-3xl mx-auto relative">
-      <img id="modalImg" src="" alt="" class="rounded shadow-xl max-h-[80vh] mx-auto" />
-      <div id="modalCaption" class="text-white text-center mt-4 text-lg"></div>
-      <button onclick="closeModal()" class="absolute top-0 right-0 m-4 text-white text-2xl">&times;</button>
-    </div>
-  </div>
+<script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    // Manually define Lucide icons as React components to avoid 'LucideReact is not defined' error
+    // This is a robust way to include icons without relying on complex external imports in a Babel Standalone environment.
+    const UploadCloud = ({ className }) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242M12 12v9M8 17l4 4 4-4"/>
+        </svg>
+    );
+
+    const X = ({ className }) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+            <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+    );
+
+    const Pencil = ({ className }) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+            <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+        </svg>
+    );
+
+    const Search = ({ className }) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+        </svg>
+    );
+
+    const Trash2 = ({ className }) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+            <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/>
+        </svg>
+    );
+
+    const Globe = ({ className }) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 2a14.5 14.5 0 0 0 0 20M2 12h20"/>
+        </svg>
+    );
+    
+    const User = ({ className }) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2M12 7a4 4 0 1 0 0 8a4 4 0 0 0 0-8z"/>
+        </svg>
+    );
+
+    const Grid = ({ className }) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+        </svg>
+    );
+
+    const History = ({ className }) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+            <path d="M3 12a9 9 0 1 0 9-9h-1"/>
+            <path d="M12 7v5l4 2"/>
+        </svg>
+    );
+
+    const LanguageSquare = ({ className }) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+            <rect width="18" height="18" x="3" y="3" rx="2"/>
+            <path d="m14 14-3.5-3.5a2 2 0 0 0-3 0c-.86.86-.86 2.232-.007 3.125m10.5-.125L12 11"/>
+            <path d="M8 12h5"/>
+        </svg>
+    );
+
+    const Wand2 = ({ className }) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+            <path d="m21.5 2-6.4 6.4"/>
+            <path d="m3 21.5 6.4-6.4"/>
+            <path d="M15.5 15.5 19 19l2.5-2.5L17.5 13"/>
+            <path d="M11 11 8.5 8.5l-2.5 2.5L8.5 13"/>
+            <path d="M15 5l2-2"/>
+            <path d="M12 11l-2 2"/>
+            <path d="M19 12l2-2"/>
+            <path d="M5 15l2-2"/>
+        </svg>
+    );
+
+    const Check = ({ className }) => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+            <path d="M20 6L9 17L4 12"/>
+        </svg>
+    );
+    
+
+    // Firebase configuration and initialization
+    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+        apiKey: "AIzaSyB99bQpokjpcuXilwu3usXoOFLmegkVnb4",
+        authDomain: "family-gallery-d707d.firebaseapp.com",
+        projectId: "family-gallery-d707d",
+        storageBucket: "family-gallery-d707d.firebasestorage.app",
+        messagingSenderId: "227810040631",
+        appId: "1:227810040631:web:6bc0dc9a983fac04e4d8b2",
+        measurementId: "G-84CYX5S1F3"
+    };
+    
+    // Check for global variables from the environment
+    const appId = typeof __app_id !== 'undefined' ? __app_id : firebaseConfig.appId;
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+    const GEMINI_API_KEY = "AIzaSyDEDWC_kgOcky3pBPQJ4kYY_b9lOqxz97M";
+
+    // Language strings for both Hebrew and English
+    const strings = {
+        he: {
+            title: 'גלריית תמונות משפחתית 📸',
+            userIdLabel: 'מזהה משתמש',
+            uploadTitle: 'העלה תמונה חדשה',
+            namePlaceholder: 'שם האדם (חובה)',
+            familyPlaceholder: 'שם משפחה (אופציונלי)',
+            albumPlaceholder: 'שם האלבום (אופציונלי)',
+            filePlaceholder: 'בחר קובץ',
+            uploadButton: 'העלה תמונה',
+            uploadingButton: 'מעלה...',
+            searchPlaceholder: 'חפש לפי שם או שם משפחה...',
+            myGallery: 'הגלריה שלי',
+            publicGallery: 'גלריה ציבורית',
+            viewAs: 'צפה כ:',
+            allFamilies: 'כל המשפחות',
+            allPhotos: 'כל התמונות',
+            loading: 'טוען תמונות...',
+            noPhotos: 'אין עדיין תמונות בגלריה. העלה את התמונה הראשונה שלך!',
+            noMatchingPhotos: 'אין תמונות תואמות.',
+            uploadedAt: 'הועלה בתאריך',
+            photoModalTitle: 'פרטי תמונה',
+            editDetails: 'עריכת פרטים',
+            saveChanges: 'שמור שינויים',
+            deletePhoto: 'מחיקת תמונה',
+            deleteConfirm: 'האם אתה בטוח שברצונך למחוק תמונה זו? פעולה זו אינה הפיכה.',
+            cancel: 'בטל',
+            delete: 'מחק',
+            share: 'שתף לציבורי',
+            error: 'אירעה שגיאה',
+            uploadSuccess: 'התמונה הועלתה בהצלחה!',
+            deleteSuccess: 'התמונה נמחקה בהצלחה!',
+            updateSuccess: 'הפרטים עודכנו בהצלחה!',
+            shareSuccess: 'התמונה שותפה בהצלחה לגלריה הציבורית!',
+            album: 'אלבום',
+            requiredFields: 'נא למלא את שם האדם ולבחור תמונה.',
+            unknownDate: 'תאריך לא ידוע',
+            familyFilter: 'סנן לפי משפחה:',
+            storyTellerButton: '✨ צור סיפור תמונות ✨',
+            storyTellerMode: 'מצב סיפור תמונות',
+            selectPhotos: 'בחר עד 3 תמונות',
+            generateStory: 'צור סיפור',
+            generatingStory: 'יוצר סיפור...',
+            closeStoryMode: 'סגור מצב סיפור',
+            storyModalTitle: 'הסיפור שלך',
+            storyPlaceholder: 'הסיפור יופיע כאן',
+            selectPhoto: 'בחר תמונה',
+            photoSelected: 'תמונה נבחרה',
+        },
+        en: {
+            title: 'Family Photo Gallery �',
+            userIdLabel: 'User ID',
+            uploadTitle: 'Upload a New Photo',
+            namePlaceholder: 'Person\'s Name (Required)',
+            familyPlaceholder: 'Family Name (Optional)',
+            albumPlaceholder: 'Album Name (Optional)',
+            filePlaceholder: 'Choose File',
+            uploadButton: 'Upload Photo',
+            uploadingButton: 'Uploading...',
+            searchPlaceholder: 'Search by name or family name...',
+            myGallery: 'My Gallery',
+            publicGallery: 'Public Gallery',
+            viewAs: 'View as:',
+            allFamilies: 'All Families',
+            allPhotos: 'All Photos',
+            loading: 'Loading photos...',
+            noPhotos: 'There are no photos in the gallery yet. Upload your first photo!',
+            noMatchingPhotos: 'No matching photos found.',
+            uploadedAt: 'Uploaded on',
+            photoModalTitle: 'Photo Details',
+            editDetails: 'Edit Details',
+            saveChanges: 'Save Changes',
+            deletePhoto: 'Delete Photo',
+            deleteConfirm: 'Are you sure you want to delete this photo? This action is irreversible.',
+            cancel: 'Cancel',
+            delete: 'Delete',
+            share: 'Share to Public',
+            error: 'An error occurred',
+            uploadSuccess: 'Photo uploaded successfully!',
+            deleteSuccess: 'Photo deleted successfully!',
+            updateSuccess: 'Details updated successfully!',
+            shareSuccess: 'Photo shared to the public gallery successfully!',
+            album: 'Album',
+            requiredFields: 'Please fill in the person\'s name and choose a photo.',
+            unknownDate: 'Unknown date',
+            familyFilter: 'Filter by family:',
+            storyTellerButton: '✨ Create Photo Story ✨',
+            storyTellerMode: 'Photo Story Mode',
+            selectPhotos: 'Select up to 3 photos',
+            generateStory: 'Generate Story',
+            generatingStory: 'Generating story...',
+            closeStoryMode: 'Close Story Mode',
+            storyModalTitle: 'Your Story',
+            storyPlaceholder: 'The story will appear here',
+            selectPhoto: 'Select photo',
+            photoSelected: 'Photo selected',
+        },
+    };
+
+    // List of family names provided by the user
+    const familyNames = [
+        'Ben Abou', 'Elharrar', 'Malka', 'Ben David', 'Bromberg', 'Barenbaum', 'Fass-Schneck',
+        'Weinberger', 'Leibner', 'van der Velde', 'Behr', 'de Vries', 'Italiaander', 'Izaks',
+        'Chapon', 'Elook', 'Groenstad'
+    ];
+
+    // Function to format the date
+    const formatDate = (timestamp, lang) => {
+        if (!timestamp) return lang === 'he' ? 'תאריך לא ידוע' : 'Unknown date';
+        const date = timestamp.toDate();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString(lang === 'he' ? 'he-IL' : 'en-US', options);
+    };
+
+    // Helper function to convert image to base64
+    const toBase64 = async (url) => {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
+    };
+
+    // Main App component
+    const App = () => {
+        // State variables
+        const [db, setDb] = useState(null);
+        const [auth, setAuth] = useState(null);
+        const [userId, setUserId] = useState(null);
+        const [photos, setPhotos] = useState([]);
+        const [loading, setLoading] = useState(true);
+        const [uploading, setUploading] = useState(false);
+        const [modalOpen, setModalOpen] = useState(false);
+        const [selectedPhoto, setSelectedPhoto] = useState(null);
+        const [isAuthReady, setIsAuthReady] = useState(false);
+        const [error, setError] = useState('');
+        const [searchTerm, setSearchTerm] = useState('');
+        const [showDeleteModal, setShowDeleteModal] = useState(false);
+        const [photoToDelete, setPhotoToDelete] = useState(null);
+        const [editingPhoto, setEditingPhoto] = useState(null);
+        const [editName, setEditName] = useState('');
+        const [editFamily, setEditFamily] = useState('');
+        const [isPublicView, setIsPublicView] = useState(false);
+        const [albums, setAlbums] = useState([]);
+        const [selectedAlbum, setSelectedAlbum] = useState('כל התמונות');
+        const [newAlbumName, setNewAlbumName] = useState('');
+        const [isTimelineView, setIsTimelineView] = useState(false);
+        const [selectedFamily, setSelectedFamily] = useState('כל המשפחות');
+        const [language, setLanguage] = useState('he');
+        const [storyMode, setStoryMode] = useState(false);
+        const [selectedStoryPhotos, setSelectedStoryPhotos] = useState([]);
+        const [storyText, setStoryText] = useState('');
+        const [isGeneratingStory, setIsGeneratingStory] = useState(false);
+        const [showStoryModal, setShowStoryModal] = useState(false);
+
+
+        const t = strings[language];
+
+        // Refs for form inputs
+        const nameRef = useRef();
+        const familyRef = useRef();
+        const fileRef = useRef();
+
+        // Custom message state for alerts
+        const [message, setMessage] = useState(null);
+        const showMessage = (msg) => {
+            setMessage(msg);
+            setTimeout(() => setMessage(null), 3000);
+        };
+
+        // Initialize Firebase and set up authentication
+        useEffect(() => {
+            const initFirebase = async () => {
+                try {
+                    const app = firebase.initializeApp(firebaseConfig);
+                    const authInstance = firebase.getAuth(app);
+                    const dbInstance = firebase.getFirestore(app);
+                    
+                    // Corrected logic to handle authentication gracefully
+                    if (initialAuthToken) {
+                        try {
+                            await firebase.signInWithCustomToken(authInstance, initialAuthToken);
+                        } catch (e) {
+                            console.error("Custom token sign-in failed, falling back to anonymous:", e);
+                            await firebase.signInAnonymously(authInstance);
+                        }
+                    } else {
+                        await firebase.signInAnonymously(authInstance);
+                    }
+
+                    setAuth(authInstance);
+                    setDb(dbInstance);
+                    setUserId(authInstance.currentUser?.uid || 'anonymous');
+                    setIsAuthReady(true);
+                } catch (e) {
+                    console.error("Error initializing Firebase:", e);
+                    setError(t.error);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            initFirebase();
+        }, []);
+
+        // Fetch photos from Firestore once auth is ready
+        useEffect(() => {
+            if (!isAuthReady || !db || !userId) return;
+
+            // Determine which collection to query based on view mode
+            const path = isPublicView
+                ? `/artifacts/${appId}/public/data/family_gallery`
+                : `/artifacts/${appId}/users/${userId}/family_gallery`;
+
+            const photosCollectionRef = firebase.collection(db, path);
+            const q = firebase.query(photosCollectionRef, firebase.orderBy('createdAt', 'desc'));
+
+            const unsubscribe = firebase.onSnapshot(q, (snapshot) => {
+                const fetchedPhotos = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                setPhotos(fetchedPhotos);
+                setLoading(false);
+
+                // Update albums list
+                const uniqueAlbums = ['כל התמונות', ...new Set(fetchedPhotos.map(p => p.album).filter(Boolean))];
+                setAlbums(uniqueAlbums);
+            }, (e) => {
+                console.error("Error fetching photos:", e);
+                setError(t.error);
+                setLoading(false);
+            });
+
+            // Cleanup listener on unmount
+            return () => unsubscribe();
+        }, [isAuthReady, db, userId, isPublicView, language]);
+
+        // Handle photo upload
+        const handleUpload = async (e) => {
+            e.preventDefault();
+            const file = fileRef.current.files[0];
+            const name = nameRef.current.value;
+            const family = familyRef.current.value;
+
+            if (!file || !name) {
+                showMessage(t.requiredFields);
+                return;
+            }
+
+            setUploading(true);
+            try {
+                const storage = firebase.getStorage();
+                const storageRef = firebase.ref(storage, `family_photos/${userId}/${Date.now()}_${file.name}`);
+                await firebase.uploadBytes(storageRef, file);
+                const downloadURL = await firebase.getDownloadURL(storageRef);
+
+                const photosCollectionRef = firebase.collection(db, `/artifacts/${appId}/users/${userId}/family_gallery`);
+                await firebase.addDoc(photosCollectionRef, {
+                    name,
+                    family,
+                    path: downloadURL,
+                    storagePath: storageRef.fullPath, // Store the storage path for easy deletion
+                    createdAt: firebase.serverTimestamp(),
+                    album: newAlbumName || null,
+                });
+
+                showMessage(t.uploadSuccess);
+                nameRef.current.value = '';
+                familyRef.current.value = '';
+                fileRef.current.value = '';
+                setNewAlbumName('');
+            } catch (e) {
+                console.error("Error uploading photo:", e);
+                setError(t.error);
+            } finally {
+                setUploading(false);
+            }
+        };
+
+        // Function to delete a photo after confirmation
+        const confirmDelete = async () => {
+            if (!photoToDelete) return;
+
+            try {
+                const storage = firebase.getStorage();
+                const imageRef = firebase.ref(storage, photoToDelete.storagePath);
+                await firebase.deleteObject(imageRef);
+
+                const docRef = firebase.doc(db, `/artifacts/${appId}/users/${userId}/family_gallery`, photoToDelete.id);
+                await firebase.deleteDoc(docRef);
+
+                showMessage(t.deleteSuccess);
+            } catch (e) {
+                console.error("Error deleting photo:", e);
+                setError(t.error);
+            } finally {
+                setShowDeleteModal(false);
+                setPhotoToDelete(null);
+            }
+        };
+
+        // Function to update a photo's details
+        const handleUpdate = async () => {
+            if (!editingPhoto) return;
+            try {
+                const docRef = firebase.doc(db, `/artifacts/${appId}/users/${userId}/family_gallery`, editingPhoto.id);
+                await firebase.updateDoc(docRef, {
+                    name: editName,
+                    family: editFamily,
+                });
+                showMessage(t.updateSuccess);
+                setEditingPhoto(null);
+                closeModal();
+            } catch (e) {
+                console.error("Error updating photo:", e);
+                setError(t.error);
+            }
+        };
+
+        // Function to share a photo to the public gallery
+        const handleShare = async (photo) => {
+            try {
+                const publicCollectionRef = firebase.collection(db, `/artifacts/${appId}/public/data/family_gallery`);
+                await firebase.addDoc(publicCollectionRef, {
+                    name: photo.name,
+                    family: photo.family,
+                    path: photo.path,
+                    createdAt: firebase.serverTimestamp(),
+                    originalPhotoId: photo.id, // Reference to the original document
+                    originalUserId: userId, // Reference to the original user
+                });
+                showMessage(t.shareSuccess);
+            } catch (e) {
+                console.error("Error sharing photo:", e);
+                setError(t.error);
+            }
+        };
+
+        // Open modal to view a larger image
+        const openModal = (photo) => {
+            setSelectedPhoto(photo);
+            setModalOpen(true);
+        };
+
+        // Close the modal and reset editing state
+        const closeModal = () => {
+            setModalOpen(false);
+            setSelectedPhoto(null);
+            setEditingPhoto(null);
+        };
+
+        // Handle selecting photos for the story teller
+        const handleStoryPhotoSelect = (photo) => {
+            if (selectedStoryPhotos.find(p => p.id === photo.id)) {
+                setSelectedStoryPhotos(selectedStoryPhotos.filter(p => p.id !== photo.id));
+            } else if (selectedStoryPhotos.length < 3) {
+                setSelectedStoryPhotos([...selectedStoryPhotos, photo]);
+            }
+        };
+
+        // Function to generate a story using the Gemini API
+        const generateStory = async () => {
+            if (selectedStoryPhotos.length === 0) return;
+
+            setIsGeneratingStory(true);
+            setStoryText(t.generatingStory);
+            setShowStoryModal(true);
+
+            try {
+                const parts = [];
+                // Add a text prompt in both English and Hebrew
+                const promptEn = "Write a short, heartwarming story for a family photo album based on the following images. Make it creative and emotionally resonant.";
+                const promptHe = "כתוב סיפור קצר ומרגש לאלבום תמונות משפחתי המבוסס על התמונות הבאות. הפוך אותו ליצירתי ומלא רגש. הסיפור צריך להיות בעברית.";
+                
+                parts.push({ text: `${promptEn}\n${promptHe}` });
+
+                // Convert selected images to base64 and add to parts
+                for (const photo of selectedStoryPhotos) {
+                    const base64Data = await toBase64(photo.path);
+                    parts.push({
+                        inlineData: {
+                            mimeType: "image/jpeg", // Assuming all images are JPEG for simplicity
+                            data: base64Data
+                        }
+                    });
+                }
+
+                // API call to Gemini
+                const chatHistory = [{ role: "user", parts }];
+                const payload = { contents: chatHistory };
+                const apiKey = GEMINI_API_KEY;
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API call failed with status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text || "No story could be generated.";
+                setStoryText(text);
+
+            } catch (e) {
+                console.error("Error generating story:", e);
+                setStoryText(t.error);
+            } finally {
+                setIsGeneratingStory(false);
+            }
+        };
+
+        // Filter photos based on search term, album, and family name
+        const filteredPhotos = photos.filter(photo =>
+            (photo.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            photo.family?.toLowerCase().includes(searchTerm.toLowerCase())) &&
+            (selectedAlbum === 'כל התמונות' || photo.album === selectedAlbum) &&
+            (selectedFamily === 'כל המשפחות' || photo.family?.toLowerCase() === selectedFamily.toLowerCase())
+        );
+
+        // Group photos for timeline view
+        const groupedPhotos = filteredPhotos.reduce((groups, photo) => {
+            const date = photo.createdAt ? formatDate(photo.createdAt, language) : t.unknownDate;
+            if (!groups[date]) {
+                groups[date] = [];
+            }
+            groups[date].push(photo);
+            return groups;
+        }, {});
+
+        const timelineDates = Object.keys(groupedPhotos).sort((a, b) => new Date(b) - new Date(a));
+
+        return (
+            <div dir={language === 'he' ? 'rtl' : 'ltr'} className="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-4 sm:p-10 flex flex-col items-center">
+                {/* Custom Message Modal */}
+                {message && (
+                    <div className="fixed top-4 right-4 bg-blue-600 text-white py-3 px-6 rounded-full shadow-lg z-50 transition-transform duration-300 transform animate-fade-in-up">
+                        {message}
+                    </div>
+                )}
+
+                <div className="max-w-6xl mx-auto w-full">
+                    {/* Header */}
+                    <header className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
+                        <div className="flex items-center gap-2">
+                            <h1 className="text-3xl sm:text-4xl font-bold text-blue-800 drop-shadow-sm">{t.title}</h1>
+                            {userId && (
+                                <span className="bg-blue-200 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full drop-shadow-sm">
+                                    {t.userIdLabel}: {userId.substring(0, 8)}...
+                                </span>
+                            )}
+                        </div>
+                    </header>
+
+                    {/* Language Switch */}
+                    <div className="flex justify-end mb-4">
+                        <button
+                            onClick={() => setLanguage(language === 'he' ? 'en' : 'he')}
+                            className="p-2 rounded-full bg-gray-200 text-gray-800 hover:bg-gray-300 transition-colors drop-shadow-sm flex items-center gap-1"
+                        >
+                            <LanguageSquare className="h-5 w-5" />
+                            <span>{language === 'he' ? 'EN' : 'עב'}</span>
+                        </button>
+                    </div>
+
+                    {/* Upload Form & Search Bar */}
+                    <div className="bg-white rounded-xl shadow-2xl p-6 mb-8 w-full border border-blue-200">
+                        <h2 className="text-2xl font-semibold text-gray-800 mb-4">{t.uploadTitle}</h2>
+                        <form onSubmit={handleUpload} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                            <input
+                                type="text"
+                                ref={nameRef}
+                                placeholder={t.namePlaceholder}
+                                className="w-full p-3 rounded-xl border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                            />
+                            <input
+                                type="text"
+                                ref={familyRef}
+                                placeholder={t.familyPlaceholder}
+                                className="w-full p-3 rounded-xl border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                            />
+                            <input
+                                type="text"
+                                value={newAlbumName}
+                                onChange={(e) => setNewAlbumName(e.target.value)}
+                                placeholder={t.albumPlaceholder}
+                                className="w-full p-3 rounded-xl border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                            />
+                            <input
+                                type="file"
+                                ref={fileRef}
+                                accept="image/*"
+                                className="w-full p-3 text-sm text-gray-500 bg-gray-100 rounded-xl cursor-pointer file:border-0 file:bg-blue-500 file:text-white file:rounded-xl file:py-2 file:px-4 file:mr-4 file:transition-colors file:hover:bg-blue-600"
+                            />
+                            <button
+                                type="submit"
+                                disabled={uploading}
+                                className={`col-span-1 sm:col-span-2 lg:col-span-4 w-full px-6 py-3 rounded-xl font-semibold transition-colors drop-shadow-md flex items-center justify-center gap-2
+                                ${uploading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+                            >
+                                <UploadCloud className="w-5 h-5" />
+                                {uploading ? t.uploadingButton : t.uploadButton}
+                            </button>
+                        </form>
+                        <div className="relative mt-6">
+                            <input
+                                type="text"
+                                placeholder={t.searchPlaceholder}
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="w-full p-3 pl-12 rounded-xl border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                            />
+                            <Search className="absolute top-1/2 -translate-y-1/2 right-4 w-6 h-6 text-gray-400" />
+                        </div>
+                    </div>
+
+                    {/* Gallery Controls */}
+                    <div className="flex flex-wrap justify-between items-center gap-4 mb-4">
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => setIsPublicView(false)}
+                                className={`p-3 rounded-full transition-colors drop-shadow-md flex items-center gap-2
+                                    ${!isPublicView ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}
+                            >
+                                <User className="h-5 w-5" />
+                                <span className="hidden sm:inline">{t.myGallery}</span>
+                            </button>
+                            <button
+                                onClick={() => setIsPublicView(true)}
+                                className={`p-3 rounded-full transition-colors drop-shadow-md flex items-center gap-2
+                                    ${isPublicView ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}
+                            >
+                                <Globe className="h-5 w-5" />
+                                <span className="hidden sm:inline">{t.publicGallery}</span>
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setStoryMode(!storyMode);
+                                    setSelectedStoryPhotos([]);
+                                    setStoryText('');
+                                    setShowStoryModal(false);
+                                }}
+                                className={`p-3 rounded-full transition-colors drop-shadow-md flex items-center gap-2
+                                    ${storyMode ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+                            >
+                                <Wand2 className="h-5 w-5" />
+                                <span className="hidden sm:inline">{storyMode ? t.closeStoryMode : t.storyTellerButton}</span>
+                            </button>
+                        </div>
+                        
+                        <div className="flex gap-2 items-center">
+                            <span className="text-gray-600">{t.viewAs}</span>
+                            <button
+                                onClick={() => setIsTimelineView(false)}
+                                className={`p-3 rounded-full transition-colors drop-shadow-md
+                                    ${!isTimelineView ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}
+                            >
+                                <Grid className="h-5 w-5" />
+                            </button>
+                            <button
+                                onClick={() => setIsTimelineView(true)}
+                                className={`p-3 rounded-full transition-colors drop-shadow-md
+                                    ${isTimelineView ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}
+                            >
+                                <History className="h-5 w-5" />
+                            </button>
+                        </div>
+
+                        <select
+                            value={selectedAlbum}
+                            onChange={(e) => setSelectedAlbum(e.target.value)}
+                            className="p-3 rounded-xl border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all w-full sm:w-auto"
+                        >
+                            {albums.map((album) => (
+                                <option key={album} value={album}>
+                                    {album === 'כל התמונות' ? t.allPhotos : `${t.album}: ${album}`}
+                                </option>
+                            ))}
+                        </select>
+
+                        <select
+                            value={selectedFamily}
+                            onChange={(e) => setSelectedFamily(e.target.value)}
+                            className="p-3 rounded-xl border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all w-full sm:w-auto"
+                        >
+                            <option value="כל המשפחות">{t.allFamilies}</option>
+                            {familyNames.map((familyName) => (
+                                <option key={familyName} value={familyName}>{familyName}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* Story Teller Mode UI */}
+                    {storyMode && (
+                        <div className="bg-white rounded-xl shadow-2xl p-6 mb-8 w-full border border-blue-200">
+                            <h2 className="text-2xl font-semibold text-gray-800 mb-4">{t.storyTellerMode}</h2>
+                            <p className="text-gray-600 mb-4">{t.selectPhotos}</p>
+                            <div className="flex flex-wrap gap-4 mb-4">
+                                {selectedStoryPhotos.map(photo => (
+                                    <div key={photo.id} className="relative w-24 h-24 rounded-lg overflow-hidden border-2 border-blue-500">
+                                        <img src={photo.path} alt={photo.name} className="w-full h-full object-cover"/>
+                                        <button 
+                                            onClick={() => handleStoryPhotoSelect(photo)}
+                                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
+                                        >
+                                            <X className="w-4 h-4" />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                            <button
+                                onClick={generateStory}
+                                disabled={selectedStoryPhotos.length === 0 || isGeneratingStory}
+                                className={`w-full px-6 py-3 rounded-xl font-semibold transition-colors drop-shadow-md flex items-center justify-center gap-2
+                                    ${selectedStoryPhotos.length === 0 || isGeneratingStory ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 text-white hover:bg-green-700'}`}
+                            >
+                                <Wand2 className="w-5 h-5" />
+                                {isGeneratingStory ? t.generatingStory : t.generateStory}
+                            </button>
+                        </div>
+                    )}
+
+
+                    {/* Gallery Display */}
+                    <div className="w-full">
+                        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                            {isPublicView ? t.publicGallery : t.myGallery}
+                        </h2>
+                        {loading && <p className="text-center text-gray-500">{t.loading}</p>}
+                        {error && <p className="text-center text-red-500">{t.error}</p>}
+                        {!loading && photos.length === 0 && (
+                            <p className="text-center text-gray-500">
+                                {t.noPhotos}
+                            </p>
+                        )}
+                        {isTimelineView ? (
+                            // Timeline View
+                            Object.keys(groupedPhotos).length > 0 ? (
+                                timelineDates.map(date => (
+                                    <div key={date} className="mb-8">
+                                        <h3 className="text-xl font-bold text-gray-700 mb-4 border-b pb-2">{date}</h3>
+                                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                                            {groupedPhotos[date].map((photo) => {
+                                                const isSelected = selectedStoryPhotos.find(p => p.id === photo.id);
+                                                return (
+                                                    <div
+                                                        key={photo.id}
+                                                        className={`relative group bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-300 cursor-pointer ${isSelected ? 'border-4 border-blue-500' : ''}`}
+                                                        onClick={() => storyMode ? handleStoryPhotoSelect(photo) : openModal(photo)}
+                                                    >
+                                                        <img
+                                                            src={photo.path}
+                                                            alt={photo.name}
+                                                            className="w-full h-48 sm:h-64 object-cover"
+                                                        />
+                                                        <div className="p-4 flex flex-col items-center">
+                                                            <p className="font-bold text-gray-800 truncate">{photo.name}</p>
+                                                            <p className="text-sm text-gray-500 truncate">{photo.family}</p>
+                                                        </div>
+                                                        {storyMode && (
+                                                            <div className="absolute top-2 right-2 p-2 rounded-full bg-white bg-opacity-75">
+                                                                {isSelected ? <Check className="w-5 h-5 text-green-600" /> : <div className="w-5 h-5"></div>}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="text-center text-gray-500">{t.noMatchingPhotos}</p>
+                            )
+                        ) : (
+                            // Grid View
+                            filteredPhotos.length > 0 ? (
+                                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                                    {filteredPhotos.map((photo) => {
+                                        const isSelected = selectedStoryPhotos.find(p => p.id === photo.id);
+                                        return (
+                                            <div
+                                                key={photo.id}
+                                                className={`relative group bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-300 cursor-pointer ${isSelected ? 'border-4 border-blue-500' : ''}`}
+                                            >
+                                                <img
+                                                    src={photo.path}
+                                                    alt={photo.name}
+                                                    className="w-full h-48 sm:h-64 object-cover"
+                                                    onClick={() => storyMode ? handleStoryPhotoSelect(photo) : openModal(photo)}
+                                                />
+                                                <div className="p-4 flex items-center justify-between">
+                                                    <div onClick={() => storyMode ? handleStoryPhotoSelect(photo) : openModal(photo)}>
+                                                        <p className="font-bold text-gray-800 truncate">{photo.name}</p>
+                                                        <p className="text-sm text-gray-500 truncate">{photo.family}</p>
+                                                    </div>
+                                                    <div className="flex gap-2">
+                                                        {!isPublicView && !storyMode && (
+                                                            <>
+                                                                <button
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        setEditingPhoto(photo);
+                                                                        setEditName(photo.name);
+                                                                        setEditFamily(photo.family);
+                                                                        setModalOpen(true);
+                                                                    }}
+                                                                    className="p-2 text-blue-500 hover:text-blue-700 transition"
+                                                                    title={t.editDetails}
+                                                                >
+                                                                    <Pencil className="h-5 w-5" />
+                                                                </button>
+                                                                <button
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        setPhotoToDelete(photo);
+                                                                        setShowDeleteModal(true);
+                                                                    }}
+                                                                    className="p-2 text-red-500 hover:text-red-700 transition"
+                                                                    title={t.delete}
+                                                                >
+                                                                    <Trash2 className="h-5 w-5" />
+                                                                </button>
+                                                                <button
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        handleShare(photo);
+                                                                    }}
+                                                                    className="p-2 text-green-500 hover:text-green-700 transition"
+                                                                    title={t.share}
+                                                                >
+                                                                    <Globe className="h-5 w-5" />
+                                                                </button>
+                                                            </>
+                                                        )}
+                                                        {storyMode && (
+                                                            <div className="p-2 rounded-full">
+                                                                {isSelected ? <Check className="w-5 h-5 text-green-600" /> : <div className="w-5 h-5"></div>}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            ) : (
+                                <p className="text-center text-gray-500">{t.noMatchingPhotos}</p>
+                            )
+                        )}
+                    </div>
+
+                    {/* Modal for viewing larger image/editing */}
+                    {modalOpen && selectedPhoto && (
+                        <div
+                            className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4 animate-fade-in"
+                            onClick={closeModal}
+                        >
+                            <div className="relative max-w-5xl max-h-[90vh] mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+                                <button
+                                    onClick={closeModal}
+                                    className="absolute top-4 right-4 text-white text-4xl p-2 rounded-full bg-black bg-opacity-50 hover:bg-opacity-70 transition z-10"
+                                >
+                                    <X className="h-8 w-8" />
+                                </button>
+                                <img
+                                    src={selectedPhoto.path}
+                                    alt={selectedPhoto.name}
+                                    className="w-full h-full object-contain max-h-[85vh] mx-auto rounded-t-2xl"
+                                />
+                                <div className="p-4 bg-gray-100 rounded-b-2xl flex flex-col items-center">
+                                    <p className="text-xl font-bold text-gray-800">{selectedPhoto.name}</p>
+                                    <p className="text-md text-gray-600">{selectedPhoto.family}</p>
+                                    {selectedPhoto.album && (
+                                        <p className="text-sm text-gray-500 mt-1">{t.album}: {selectedPhoto.album}</p>
+                                    )}
+                                    {selectedPhoto.createdAt && (
+                                        <p className="text-xs text-gray-400 mt-2">{t.uploadedAt}: {formatDate(selectedPhoto.createdAt, language)}</p>
+                                    )}
+                                </div>
+                                {editingPhoto && (
+                                    <div className="p-4 bg-white border-t border-gray-200">
+                                        <h3 className="text-lg font-semibold mb-2">{t.editDetails}</h3>
+                                        <div className="flex flex-col gap-4">
+                                            <input
+                                                type="text"
+                                                value={editName}
+                                                onChange={(e) => setEditName(e.target.value)}
+                                                placeholder={t.namePlaceholder}
+                                                className="p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            />
+                                            <input
+                                                type="text"
+                                                value={editFamily}
+                                                onChange={(e) => setEditFamily(e.target.value)}
+                                                placeholder={t.familyPlaceholder}
+                                                className="p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            />
+                                            <button
+                                                onClick={handleUpdate}
+                                                className="bg-green-600 text-white p-2 rounded-lg font-semibold hover:bg-green-700 transition"
+                                            >
+                                                {t.saveChanges}
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                    {/* Delete confirmation modal */}
+                    {showDeleteModal && (
+                        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
+                            <div className="bg-white p-6 rounded-lg shadow-xl text-center max-w-sm w-full">
+                                <h3 className="text-lg font-bold text-gray-800 mb-4">{t.deletePhoto}</h3>
+                                <p className="text-gray-600 mb-6">{t.deleteConfirm}</p>
+                                <div className="flex justify-center gap-4">
+                                    <button
+                                        onClick={() => setShowDeleteModal(false)}
+                                        className="px-6 py-2 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
+                                    >
+                                        {t.cancel}
+                                    </button>
+                                    <button
+                                        onClick={confirmDelete}
+                                        className="px-6 py-2 rounded-full bg-red-600 text-white font-semibold hover:bg-red-700 transition"
+                                    >
+                                        {t.delete}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    {/* Story modal */}
+                    {showStoryModal && (
+                        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4 animate-fade-in">
+                            <div className="relative bg-white p-8 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+                                <button
+                                    onClick={() => setShowStoryModal(false)}
+                                    className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 transition"
+                                >
+                                    <X className="h-6 w-6" />
+                                </button>
+                                <h3 className="text-2xl font-bold text-gray-800 mb-4">{t.storyModalTitle}</h3>
+                                <div className="prose max-w-none text-gray-700 whitespace-pre-wrap leading-relaxed">
+                                    {storyText}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+        );
+    };
+
+    // Render the App component
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(React.createElement(App));
+</script>
+
 </body>
 </html>
