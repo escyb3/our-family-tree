@@ -20,7 +20,7 @@ const cors = require("cors");
 const app = express();
 
 
-admin.initializeApp({
+initializeApp({
   credential: admin.credential.cert(serviceAccount),
   storageBucket: "our-family-tree-5c3cc.appspot.com" // שים לב שהסיומת כאן appspot.com
 });
