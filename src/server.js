@@ -52,17 +52,28 @@ async function initTables() {
   }
 }
 
-
+// ✅ מחזיר את המשתמש המחובר
 // ✅ מחזיר את המשתמש המחובר
 app.get('/api/user', async (req, res) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1]; // Bearer <token>
-    if (!token) return res.status(401).json({ error: 'לא מחובר' });
+    const { data: { user }, error } = await supabase.auth.getUser(req.session.user.access_token);
+    if (error || !user) {
+      // אם המשתמש לא מחובר או אסימון הגישה פג, נחזיר שגיאת 401
+      return res.status(401).json({ error: 'לא מחובר' });
+    }
+    // שלוף את פרטי הפרופיל מטבלת user_profiles
+    const { data: profileData, error: profileError } = await supabase
+      .from('user_profiles')
+      .select('role, side')
+      .eq('id', user.id)
+      .single();
 
-    const { data: { user }, error } = await supabase.auth.getUser(token);
-    if (error || !user) return res.status(401).json({ error: 'לא מחובר' });
+    if (profileError || !profileData) {
+      console.error("❌ לא נמצא פרופיל משתמש עבור ID:", user.id);
+      return res.status(401).json({ error: 'פרופיל משתמש לא נמצא.' });
+    }
 
-    res.json({ user });
+    res.json({ user, profile: profileData });
   } catch (err) {
     console.error("Error in /api/user:", err);
     res.status(500).json({ error: 'שגיאת שרת' });
@@ -70,14 +81,26 @@ app.get('/api/user', async (req, res) => {
 });
 
 // ✅ התנתקות
-app.post('/api/logout', (req, res) => {
-  req.session.destroy(err => {
-    if (err) {
+app.post('/api/logout', async (req, res) => {
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("❌ שגיאה בהתנתקות:", error.message);
       return res.status(500).json({ error: 'שגיאה בעת התנתקות' });
     }
-    res.json({ message: 'התנתקת בהצלחה' });
-  });
-  }); 
+    req.session.destroy(err => {
+      if (err) {
+        return res.status(500).json({ error: 'שגיאה בעת התנתקות' });
+      }
+      res.json({ message: 'התנתקת בהצלחה' });
+    });
+  } catch (err) {
+    console.error("Error in /api/logout:", err);
+    res.status(500).json({ error: 'שגיאה כללית' });
+  }
+});
+
+// פונקציית Middleware לבדיקת התחברות
 function requireLogin(req, res, next) {
   if (!req.session.user) {
     return res.status(401).json({ message: "צריך להתחבר כדי לגשת" });
@@ -91,77 +114,63 @@ app.get("/api/messages", requireLogin, async (req, res) => {
   const { data, error } = await supabase
     .from("messages")
     .select("*")
-    .eq("toUser", req.session.user.username);
+    .eq("toUser", req.session.user.email); // שימוש ב-email במקום ב-username
 
-  if (error) return res.status(500).json({ message: "שגיאה בבסיס נתונים" });
+  if (error) {
+    console.error("❌ שגיאה בבסיס נתונים:", error.message);
+    return res.status(500).json({ message: "שגיאה בבסיס נתונים" });
+  }
   res.json({ messages: data });
 });
+
 // =========================
 // Auth & Session
 // =========================
-app.post('/login', async (req, res) => {
+app.post('/api/login', async (req, res) => {
   const { username, password } = req.body;
-  const { data: users, error } = await supabase
-    .from('users')
-    .select('*')
-    .eq('username', username)
-    .limit(1);
 
-  if (error || users.length === 0) return res.status(401).json({ error: 'Invalid username or password' });
-
-  const user = users[0];
-  const match = await bcrypt.compare(password, user.password);
-  if (!match) return res.status(401).json({ error: 'Invalid username or password' });
-
-  req.session.user = {
-    id: user.id,
-    username: user.username,
-    role: user.role,
-    email: user.email,
-  };
-
-  res.json({ message: 'Logged in', user: req.session.user });
-});
-
-app.post('/logout', (req, res) => {
-  req.session.destroy();
-  res.json({ message: 'Logged out' });
-});
-// בדיקה ויצירת משתמש מנהל ראשוני אם הטבלה ריקה
-async function ensureAdminUser() {
   try {
-    const { data, error } = await supabase
-      .from('site_users')
-      .select('*')
-      .limit(1);
+    // שלב 1: אימות המשתמש באמצעות Supabase Auth
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      email: username,
+      password: password
+    });
 
-    if (error) {
-      console.error("Error checking site_users:", error.message);
-      return;
+    if (authError) {
+      console.error("❌ שגיאה בהתחברות:", authError.message);
+      return res.status(401).json({ success: false, message: "שם משתמש או סיסמה שגויים" });
     }
 
-    if (data.length === 0) {
-      const { error: insertError } = await supabase
-        .from('site_users')
-        .insert([
-          { username: 'admin1', password: 'familyadmin123', role: 'admin', side: 'all' }
-        ]);
+    const user = authData.user;
+    
+    // שלב 2: אם האימות הצליח, שלוף את פרטי המשתמש מהטבלה user_profiles
+    const { data: profileData, error: profileError } = await supabase
+      .from('user_profiles')
+      .select('role, side')
+      .eq('id', user.id)
+      .single();
 
-      if (insertError) {
-        console.error("Error creating admin user:", insertError.message);
-      } else {
-        console.log("Admin user created: username=admin1, password=familyadmin123");
-      }
-    } else {
-      console.log("Users already exist, skipping admin creation.");
+    if (profileError || !profileData) {
+      console.error("❌ לא נמצא פרופיל משתמש עבור ID:", user.id);
+      return res.status(401).json({ success: false, message: "פרופיל משתמש לא נמצא." });
     }
+
+    // שלב 3: שמירת פרטי המשתמש בסשן
+    req.session.user = {
+      id: user.id,
+      email: user.email,
+      role: profileData.role,
+      side: profileData.side
+    };
+
+    console.log("✅ התחברות הצליחה:", user.email, "עם תפקיד:", profileData.role);
+    res.json({ success: true, user: req.session.user });
+
   } catch (err) {
-    console.error("ensureAdminUser failed:", err);
+    console.error("❌ שגיאה כללית בתהליך ההתחברות:", err);
+    res.status(500).json({ success: false, message: "שגיאה בשרת" });
   }
-}
-
-// קריאה לפונקציה בעת עליית השרת
-ensureAdminUser();
+});
 
 // =========================
 // Admin: Users Management
