@@ -18,7 +18,6 @@ const fetch = require("node-fetch");
 const crypto = require("crypto");
 const cors = require("cors");
 const app = express();
-const auth = admin.auth();
 const firestore = admin.firestore();
 
 const admin = require("firebase-admin");
@@ -28,6 +27,7 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   storageBucket: "our-family-tree-5c3cc.appspot.com" // שים לב שהסיומת כאן appspot.com
 });
+const auth = admin.auth();
 // גישה למסד נתונים Firestore
 const db = admin.firestore();
 // גישה ל־Storage
@@ -58,72 +58,64 @@ async function initTables() {
 
 // ✅ מחזיר את המשתמש המחובר
 app.get('/api/user', async (req, res) => {
-    // נניח שאתה שומר את המזהה (UID) של המשתמש בסשן
-    const uid = req.session.user?.uid;
+  const uid = req.session.user?.uid;
+  if (!uid) return res.status(401).json({ error: 'לא מחובר' });
 
-    if (!uid) {
-        // אם המזהה לא קיים בסשן, המשתמש לא מחובר
-        return res.status(401).json({ error: 'לא מחובר' });
+  try {
+    // אם כבר שמרנו פרופיל בסשן – נחסוך פניות מיותרות
+    if (req.session.user.profile) {
+      return res.json({
+        user: { uid, email: req.session.user.email },
+        profile: req.session.user.profile
+      });
     }
 
-    try {
-        // שלב 1: שלוף את נתוני המשתמש מ-Firebase Auth
-        const userRecord = await admin.auth().getUser(uid);
+    // שלב 1: נתוני משתמש מ-Auth
+    const userRecord = await admin.auth().getUser(uid);
 
-        // שלב 2: אם האימות הצליח, שלוף את פרטי הפרופיל מטבלת user_profiles ב-Firestore
-        // כאן אתה מניח שיש לך אוסף user_profiles ב-Firestore
-        const userProfileRef = admin.firestore().collection('user_profiles').doc(uid);
-        const profileDoc = await userProfileRef.get();
+    // שלב 2: פרופיל מ-Firestore
+    const doc = await admin.firestore().collection('user_profiles').doc(uid).get();
+    if (!doc.exists) return res.status(401).json({ error: 'פרופיל משתמש לא נמצא.' });
 
-        if (!profileDoc.exists) {
-            console.error("❌ לא נמצא פרופיל משתמש עבור UID:", uid);
-            return res.status(401).json({ error: 'פרופיל משתמש לא נמצא.' });
-        }
+    const profileData = doc.data();
 
-        const profileData = profileDoc.data();
+    // נשמור בסשן להבא
+    req.session.user.email = userRecord.email;
+    req.session.user.profile = profileData;
 
-        // החזר את נתוני המשתמש והפרופיל
-        res.json({
-            user: {
-                uid: userRecord.uid,
-                email: userRecord.email,
-                // ניתן להוסיף כאן שדות נוספים מ-userRecord
-            },
-            profile: profileData
-        });
-
-    } catch (err) {
-        console.error("Error in /api/user:", err);
-        // שגיאות יכולות להיות בגלל UID לא תקין או בעיות אחרות
-        res.status(500).json({ error: 'שגיאת שרת' });
-    }
+    res.json({
+      user: { uid: userRecord.uid, email: userRecord.email },
+      profile: profileData
+    });
+  } catch (err) {
+    console.error('Error in /api/user:', err);
+    res.status(500).json({ error: 'שגיאת שרת' });
+  }
 });
 
 // ✅ התנתקות
 app.post('/api/logout', (req, res) => {
-    try {
-        // ב-Firebase Admin SDK אין פונקציית התנתקות ישירה,
-        // מכיוון שההתנתקות מתבצעת בדרך כלל בצד הלקוח.
-        // בשרת, אנו פשוט משמידים את הסשן המקומי.
-        req.session.destroy(err => {
-            if (err) {
-                return res.status(500).json({ error: 'שגיאה בעת התנתקות' });
-            }
-            res.json({ message: 'התנתקת בהצלחה' });
-        });
-    } catch (err) {
-        console.error("Error in /api/logout:", err);
-        res.status(500).json({ error: 'שגיאה כללית' });
-    }
+  try {
+    req.session.destroy(err => {
+      if (err) return res.status(500).json({ error: 'שגיאה בעת התנתקות' });
+      // ננקה גם את קוקי הסשן (שם ברירת מחדל: connect.sid)
+      res.clearCookie('connect.sid');
+      res.json({ message: 'התנתקת בהצלחה' });
+    });
+  } catch (err) {
+    console.error('Error in /api/logout:', err);
+    res.status(500).json({ error: 'שגיאה כללית' });
+  }
 });
 
-// פונקציית Middleware לבדיקת התחברות
+// ✅ Middleware לבדיקת התחברות
 function requireLogin(req, res, next) {
-    if (!req.session.user) {
-        return res.status(401).json({ message: "צריך להתחבר כדי לגשת" });
-    }
-    next();
+  if (!req.session.user?.uid) {
+    return res.status(401).json({ message: 'צריך להתחבר כדי לגשת' });
+  }
+  next();
 }
+
 
 // דוגמה: קריאה ל־messages
 app.get("/api/messages", requireLogin, async (req, res) => {
@@ -142,50 +134,43 @@ app.get("/api/messages", requireLogin, async (req, res) => {
 });
 
 // =========================
-// Auth & Session
+// Auth & Session (בטוח)
 // =========================
 app.post('/api/login', async (req, res) => {
-    const { username, password } = req.body;
+  const { idToken } = req.body; // עכשיו מקבלים ID Token מהלקוח
 
-    try {
-        // Firebase Admin SDK אינו מספק אימות סיסמאות בצד השרת.
-        // לשם כך, יש צורך להשתמש ב-client-side SDK או לטפל במנגנון זה בדרך אחרת
-        // כמו שימוש ב-custom tokens שנוצרים לאחר התחברות בצד הלקוח.
-        // בדוגמה זו, אנו נתחבר על ידי שימוש ב-email.
-        
-        // שלב 1: שלוף את נתוני המשתמש מ-Firebase Auth באמצעות כתובת המייל
-        const userRecord = await admin.auth().getUserByEmail(username);
+  if (!idToken) {
+    return res.status(400).json({ success: false, message: "Missing ID Token" });
+  }
 
-        // שלב 2: יצירת Custom Token עבור המשתמש
-        // אסימון זה יוכל לשמש להתחברות בצד הלקוח
-        const customToken = await admin.auth().createCustomToken(userRecord.uid);
-        
-        // שלב 3: אם האימות הצליח, שלוף את פרטי המשתמש מהטבלה user_profiles
-        const userProfileRef = admin.firestore().collection('user_profiles').doc(userRecord.uid);
-        const profileDoc = await userProfileRef.get();
-        
-        if (!profileDoc.exists) {
-            console.error("❌ לא נמצא פרופיל משתמש עבור ID:", userRecord.uid);
-            return res.status(401).json({ success: false, message: "פרופיל משתמש לא נמצא." });
-        }
-        
-        const profileData = profileDoc.data();
+  try {
+    // אימות ה-ID Token באמצעות Firebase Admin
+    const decoded = await admin.auth().verifyIdToken(idToken);
+    const uid = decoded.uid;
 
-        // שלב 4: שמירת פרטי המשתמש בסשן
-        req.session.user = {
-            id: userRecord.uid,
-            email: userRecord.email,
-            role: profileData.role,
-            side: profileData.side
-        };
-        
-        console.log("✅ התחברות הצליחה:", userRecord.email, "עם תפקיד:", profileData.role);
-        res.json({ success: true, user: req.session.user, customToken });
-
-    } catch (err) {
-        console.error("❌ שגיאה כללית בתהליך ההתחברות:", err);
-        res.status(500).json({ success: false, message: "שגיאה בשרת" });
+    // שליפת פרופיל המשתמש מ-Firestore
+    const profileDoc = await admin.firestore().collection('user_profiles').doc(uid).get();
+    if (!profileDoc.exists) {
+      return res.status(401).json({ success: false, message: "פרופיל משתמש לא נמצא" });
     }
+
+    const profileData = profileDoc.data();
+
+    // שמירה בסשן
+    req.session.user = {
+      uid,
+      email: decoded.email,
+      role: profileData.role,
+      side: profileData.side
+    };
+
+    console.log(`✅ התחברות הצליחה: ${decoded.email}, תפקיד: ${profileData.role}`);
+    res.json({ success: true, user: req.session.user });
+
+  } catch (err) {
+    console.error("❌ שגיאה בתהליך ההתחברות:", err);
+    res.status(401).json({ success: false, message: "אימות נכשל" });
+  }
 });
 
 
