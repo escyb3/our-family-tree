@@ -197,27 +197,37 @@
     let familyTreeData = [];
     let audioPlayer = null;
 
-    // Check if the global variable exists before parsing it.
-    let firebaseConfig = null;
-    if (typeof __firebase_config !== 'undefined') {
-        try {
-            firebaseConfig = JSON.parse(__firebase_config);
-        } catch (e) {
-            console.error("Error parsing Firebase config:", e);
-        }
-    } else {
-        console.error("Firebase config is not defined. The app will not function correctly.");
+  // A single, unified declaration using 'let' so it can be reassigned
+let firebaseConfig = null;
+const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+// Check if the global variable exists before parsing it.
+if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+    try {
+        firebaseConfig = JSON.parse(__firebase_config);
+        console.log("Using global Firebase config.");
+    } catch (e) {
+        console.error("Error parsing Firebase config from global variable:", e);
     }
-    const firebaseConfig = {
-  apiKey: "AIzaSyD7f9DqeBe-3BQ8-GzS0S2wgGEPfsA82L0",
-  authDomain: "aichat-app-bf26f.firebaseapp.com",
-  projectId: "aichat-app-bf26f",
-  storageBucket: "aichat-app-bf26f.firebasestorage.app",
-  messagingSenderId: "1067740756856",
-  appId: "1:1067740756856:web:53d985cfcb4c723e23268d",
-  measurementId: "G-QKCJEVFKYF"
-};
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+}
+
+// If the global config wasn't found or was invalid, use a static fallback.
+if (!firebaseConfig) {
+    console.warn("Global Firebase config not found or invalid. Using static fallback.");
+    firebaseConfig = {
+        apiKey: "AIzaSyD7f9DqeBe-3BQ8-GzS0S2wgGEPfsA82L0",
+        authDomain: "aichat-app-bf26f.firebaseapp.com",
+        projectId: "aichat-app-bf26f",
+        storageBucket: "aichat-app-bf26f.firebasestorage.app",
+        messagingSenderId: "1067740756856",
+        appId: "1:1067740756856:web:53d985cfcb4c723e23268d",
+        measurementId: "G-QKCJEVFKYF"
+    };
+}
+
+// Now you can use the firebaseConfig and appId variables safely.
+// For example:
+// initializeApp(firebaseConfig);
 
     // Initialize Firebase
     async function initFirebase() {
