@@ -184,26 +184,6 @@ app.post('/create-user', auth('admin'), async (req, res) => {
   res.json({ message: 'User created', user: data[0] });
 });
 
-// =========================
-// Example: Get current user
-// =========================
-app.get('/me', (req, res) => {
-  if (!req.session.user) return res.status(401).json({ error: 'Unauthorized' });
-  res.json(req.session.user);
-});
-// Example: Firebase Connections://
-const firebaseConfig = {
-  apiKey: "AIzaSyAID_kPGA6Khczh0lIgd7E13LJS76JJ9nI",
-  authDomain: "mailbox-e0ce2.firebaseapp.com",
-  projectId: "mailbox-e0ce2",
-  storageBucket: "mailbox-e0ce2.firebasestorage.app",
-  messagingSenderId: "199399854104",
-  appId: "1:199399854104:web:6aec488e6aeee0dec3736d",
-  measurementId: "G-V3CSEQY5CR"
-};
-
-
-
 // -------------------------
 // הגדרות אפליקציה
 // -------------------------
