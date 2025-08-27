@@ -1,7 +1,13 @@
+// login.js
+// -------------------------
+// Firebase Login (ES Module)
+// -------------------------
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+// -------------------------
 // קונפיג Firebase
+// -------------------------
 const firebaseConfig = {
   apiKey: "AIzaSyBtkY1qKbZNFRaMd5fqNtqyf0d7wND5wHI",
   authDomain: "our-family-tree-5c3cc.firebaseapp.com",
@@ -12,25 +18,32 @@ const firebaseConfig = {
   measurementId: "G-99LGBPSR3F"
 };
 
-// אתחול
+// -------------------------
+// אתחול Firebase
+// -------------------------
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// -------------------------
+// התחברות מהטופס
+// -------------------------
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");
   const statusEl = document.getElementById("status");
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
 
     try {
-      // התחברות ב-Firebase (בדיקת סיסמה)
+      // התחברות ב-Firebase
       const userCred = await signInWithEmailAndPassword(auth, email, password);
+
+      // קבלת ID Token כדי לשלוח לשרת
       const idToken = await userCred.user.getIdToken();
 
-      // שולח ID Token לשרת
       const res = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -42,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.success) {
         statusEl.textContent = `✅ ברוך הבא ${data.user.email}, צד: ${data.user.side}, תפקיד: ${data.user.role}`;
 
-        // הפניה בהתאם לצד המשפחתי
+        // הפניה לפי צד משפחתי
         if (data.user.side === "Ben Abou") window.location.href = "/ben_abou.html";
         else if (data.user.side === "Elharrar") window.location.href = "/elharrar.html";
         else window.location.href = "/index.html";
@@ -57,3 +70,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
