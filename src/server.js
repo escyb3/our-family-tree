@@ -24,17 +24,26 @@ const app = express();
 // Firebase Admin SDK
 // -------------------------
 const admin = require("firebase-admin");
-const serviceAccount = require("./serviceAccountKey.json");
+
+let serviceAccount;
+
+if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+  // Production (Render) – לוקחים מה־Environment Variable
+  serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+} else {
+  // Development (מקומי) – לוקחים מהקובץ
+  serviceAccount = require("./serviceAccountKey.json");
+}
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   storageBucket: "our-family-tree-5c3cc.appspot.com" // שים לב לסיומת appspot.com
 });
 
-const auth = admin.auth();         // גישה ל-Firebase Auth
-const firestore = admin.firestore(); // גישה ל-Firestore
+const auth = admin.auth();            // גישה ל-Firebase Auth
+const firestore = admin.firestore();  // גישה ל-Firestore
 const bucket = admin.storage().bucket(); // גישה ל-Storage
-const db = firestore; // אם אתה רוצה להשתמש גם כ־db
+const db = firestore;                 // אם אתה רוצה להשתמש גם כ־db
 
 
 
