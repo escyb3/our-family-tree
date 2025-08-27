@@ -69,13 +69,19 @@ async function initTables() {
   }
 }
 
+// =========================
 // ✅ מחזיר את המשתמש המחובר
+// =========================
 app.get('/api/user', async (req, res) => {
-  const uid = req.session.user?.uid;
-  if (!uid) return res.status(401).json({ error: 'לא מחובר' });
-
   try {
-    // אם כבר שמרנו פרופיל בסשן – נחסוך פניות מיותרות
+    // בדיקה בסיסית אם ה-session והמשתמש קיימים
+    if (!req.session || !req.session.user || !req.session.user.uid) {
+      return res.status(401).json({ error: 'לא מחובר' });
+    }
+
+    const uid = req.session.user.uid;
+
+    // אם כבר שמרנו פרופיל ב-session, נחסוך פנייה נוספת
     if (req.session.user.profile) {
       return res.json({
         user: { uid, email: req.session.user.email },
@@ -83,28 +89,38 @@ app.get('/api/user', async (req, res) => {
       });
     }
 
-    // שלב 1: נתוני משתמש מ-Auth
+    // שלב 1: שלוף נתוני משתמש מ-Firebase Auth
     const userRecord = await admin.auth().getUser(uid);
 
-    // שלב 2: פרופיל מ-Firestore
+    // שלב 2: שלוף פרופיל מ-Firestore
     const doc = await admin.firestore().collection('user_profiles').doc(uid).get();
-    if (!doc.exists) return res.status(401).json({ error: 'פרופיל משתמש לא נמצא.' });
+    if (!doc.exists) {
+      return res.status(401).json({ error: 'פרופיל משתמש לא נמצא.' });
+    }
 
     const profileData = doc.data();
 
-    // נשמור בסשן להבא
+    // שמירה ב-session
     req.session.user.email = userRecord.email;
     req.session.user.profile = profileData;
 
+    // שמירה סינכרונית של session
+    req.session.save(err => {
+      if (err) console.error("Error saving session:", err);
+    });
+
+    // החזרת המידע ללקוח
     res.json({
       user: { uid: userRecord.uid, email: userRecord.email },
       profile: profileData
     });
+
   } catch (err) {
     console.error('Error in /api/user:', err);
     res.status(500).json({ error: 'שגיאת שרת' });
   }
 });
+
 
 // ✅ התנתקות
 app.post('/api/logout', (req, res) => {
