@@ -187,16 +187,34 @@ app.post('/api/login', async (req, res) => {
 });
 
 
+// middleware לבדיקה אם המשתמש מחובר
+function requireLogin(req, res, next) {
+  if (!req.session.user) {
+    return res.status(401).json({ message: "צריך להתחבר כדי לגשת" });
+  }
+  next();
+}
+
+// middleware לבדיקה אם המשתמש הוא אדמין
+function requireAdmin(req, res, next) {
+  requireLogin(req, res, () => {
+    if (req.session.user.role !== 'admin') {
+      return res.status(403).json({ message: "אין לך הרשאה" });
+    }
+    next();
+  });
+}
+
 // =========================
 // Admin: Users Management
 // =========================
-app.get('/admin-users', auth('admin'), async (req, res) => {
+app.get('/admin-users', requireAdmin, async (req, res) => {
   const { data, error } = await supabase.from('users').select('*');
   if (error) return res.status(500).json({ error });
   res.json(data);
 });
 
-app.post('/create-user', auth('admin'), async (req, res) => {
+app.post('/create-user', requireAdmin, async (req, res) => {
   const { username, password, email, role } = req.body;
   const hash = await bcrypt.hash(password, 10);
 
