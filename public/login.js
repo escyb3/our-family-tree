@@ -25,7 +25,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 // -------------------------
-// התחברות מהטופס
+// התחברות מהטופס – גרסה מתוקנת
 // -------------------------
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");
@@ -36,6 +36,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
+
+    // בדיקה אם השדות מלאים
+    if (!email || !password) {
+      statusEl.textContent = "❌ אנא מלא את כל השדות";
+      return;
+    }
+
+    console.log("Login attempt:", { email, password });
 
     try {
       // התחברות ב-Firebase
@@ -50,24 +58,61 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({ idToken })
       });
 
+      if (!res.ok) {
+        throw new Error(`Server returned ${res.status}`);
+      }
+
       const data = await res.json();
 
       if (data.success) {
         statusEl.textContent = `✅ ברוך הבא ${data.user.email}, צד: ${data.user.side}, תפקיד: ${data.user.role}`;
 
         // הפניה לפי צד משפחתי
-        if (data.user.side === "Ben Abou") window.location.href = "/ben_abou.html";
-        else if (data.user.side === "Elharrar") window.location.href = "/elharrar.html";
-        else window.location.href = "/index.html";
+        switch (data.user.side) {
+          case "Ben Abou":
+            window.location.href = "/ben_abou.html";
+            break;
+          case "Elharrar":
+            window.location.href = "/elharrar.html";
+            break;
+          default:
+            window.location.href = "/index.html";
+        }
 
       } else {
         statusEl.textContent = "❌ " + (data.message || "שגיאה בהתחברות");
       }
 
     } catch (err) {
-      console.error(err);
-      statusEl.textContent = "❌ שגיאת התחברות: " + err.message;
+      console.error("Login error:", err);
+
+      // הצגת הודעות שגיאה מותאמות
+      let msg = "";
+      if (err.code) {
+        switch (err.code) {
+          case "auth/invalid-email":
+            msg = "כתובת אימייל לא תקינה";
+            break;
+          case "auth/user-disabled":
+            msg = "המשתמש מושבת";
+            break;
+          case "auth/user-not-found":
+            msg = "המשתמש לא נמצא";
+            break;
+          case "auth/wrong-password":
+            msg = "סיסמה שגויה";
+            break;
+          case "auth/invalid-credential":
+            msg = "אימות נכשל – בדוק אימייל/סיסמה";
+            break;
+          default:
+            msg = err.message;
+        }
+      } else {
+        msg = err.message;
+      }
+
+      statusEl.textContent = "❌ שגיאת התחברות: " + msg;
     }
   });
 });
-
