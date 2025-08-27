@@ -886,58 +886,6 @@ app.get("/api/message/:id", (req, res) => {
   res.json(msg);
 });
 
-// 👥 ניהול משתמשים (admin)
-app.get("/admin-users", auth("admin"), (req, res) => {
-  res.json(users);
-});
-app.post("/create-user", auth("admin"), (req, res) => {
-  const { username, password, email, side, role } = req.body;
-  const hash = bcrypt.hashSync(password, 10);
-  users.push({ username, password: hash, email, side, role });
-  saveUsers();
-  res.redirect("/admin-dashboard.html");
-});
-
-app.post("/update-user", auth("admin"), (req, res) => {
-  const { username, role, side } = req.body;
-  const user = users.find(u => u.username === username);
-  if (!user) return res.status(404).send("משתמש לא נמצא");
-  user.role = role;
-  user.side = side;
-  saveUsers();
-  res.send("עודכן בהצלחה");
-});
-
-app.post("/delete-user", auth("admin"), (req, res) => {
-  users = users.filter(u => u.username !== req.body.username);
-  saveUsers();
-  res.send("המשתמש נמחק");
-});
-
-app.post("/api/add-user", (req, res) => {
-  if (!req.session.user || req.session.user.role !== "admin") {
-    return res.status(403).json({ error: "גישה אסורה" });
-  }
-
-  const usersPath = path.join(__dirname, "data", "users.json");
-  const { username, password, role, side } = req.body;
-
-  if (!username || !password) {
-    return res.status(400).json({ error: "חובה למלא שם משתמש וסיסמה" });
-  }
-
-  const users = JSON.parse(fs.readFileSync(usersPath));
-  if (users.find(u => u.username === username)) {
-    return res.status(400).json({ error: "שם משתמש כבר קיים" });
-  }
-
-  const hashed = bcrypt.hashSync(password, 10);
-  users.push({ username, password: hashed, role, side });
-  fs.writeFileSync(usersPath, JSON.stringify(users, null, 2));
-
-  res.json({ success: true });
-});
-
 app.use((req, res, next) => {
   const protectedPages = ["/mailbox.html", "/calendar.html", "/dashboard.html"];
   if (protectedPages.includes(req.path) && !req.session.user) {
