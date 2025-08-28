@@ -77,7 +77,9 @@ app.post('/api/login', async (req, res) => {
         fullName: decoded.name || decoded.email,  // שם מלא אם קיים, אחרת המייל
         role: 'user',
         side: 'Unknown',
-        createdAt: admin.firestore.FieldValue.serverTimestamp()
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        // הוספת קישור לצד המשפחתי, אם קיים
+        familySideLink: null
       };
 
       await userRef.set(newProfile);
@@ -90,12 +92,15 @@ app.post('/api/login', async (req, res) => {
     req.session.user = {
       uid,
       email: decoded.email,
-      fullName: profileData.fullName || decoded.email,
+      // התאמה לשמות המאפיינים בקוד הלקוח
+      username: profileData.fullName || decoded.email,
       role: profileData.role,
-      side: profileData.side
+      familySide: profileData.side,
+      // הוספת קישור לצד המשפחתי, אם קיים
+      familySideLink: profileData.familySideLink || null
     };
 
-    console.log(`✅ התחברות הצליחה: ${decoded.email}, שם: ${req.session.user.fullName}, תפקיד: ${profileData.role}, צד: ${profileData.side}`);
+    console.log(`✅ התחברות הצליחה: ${decoded.email}, שם: ${req.session.user.username}, תפקיד: ${profileData.role}, צד: ${profileData.familySide}`);
     res.json({ success: true, user: req.session.user });
 
   } catch (err) {
@@ -150,8 +155,11 @@ app.get('/api/user', async (req, res) => {
           uid,
           email: req.session.user.email,
           role: req.session.user.role,
-          side: req.session.user.side,
-          name: req.session.user.name
+          // התאמה לשם המאפיין בקוד הלקוח
+          familySide: req.session.user.side,
+          username: req.session.user.name,
+          // הוספת קישור לצד המשפחתי, אם קיים
+          familySideLink: req.session.user.familySideLink 
         },
         profile: req.session.user.profile
       });
@@ -170,6 +178,8 @@ app.get('/api/user', async (req, res) => {
 
     // שמירה בסשן
     req.session.user.profile = profileData;
+    // שמירה של הקישור לצד המשפחתי, אם קיים
+    req.session.user.familySideLink = profileData.familySideLink || null; 
     req.session.save(err => {
       if (err) console.error("Error saving session:", err);
     });
@@ -180,8 +190,11 @@ app.get('/api/user', async (req, res) => {
         uid,
         email: userRecord.email,
         role: profileData.role,
-        side: profileData.side,
-        name: profileData.name || userRecord.displayName || userRecord.email
+        // התאמה לשם המאפיין בקוד הלקוח
+        familySide: profileData.side, 
+        username: profileData.name || userRecord.displayName || userRecord.email,
+        // הוספת הקישור לצד המשפחתי, אם קיים
+        familySideLink: profileData.familySideLink || null
       },
       profile: profileData
     });
