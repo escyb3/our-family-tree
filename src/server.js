@@ -59,46 +59,43 @@ const firestore = admin.firestore();
 // -------------------------
 app.post('/api/login', async (req, res) => {
   const { idToken } = req.body;
-  if (!idToken) {
-    return res.status(400).json({ success: false, message: "Missing ID Token" });
-  }
+  if (!idToken) return res.status(400).json({ success: false, message: "Missing ID Token" });
 
   try {
     // אימות ה-ID Token
     const decoded = await admin.auth().verifyIdToken(idToken);
     const uid = decoded.uid;
 
-    const profileRef = firestore.collection('user_profiles').doc(uid);
-    let profileDoc = await profileRef.get();
-    let profileData;
+    const userRef = firestore.collection('user_profiles').doc(uid);
+    let profileDoc = await userRef.get();
 
+    // אם אין פרופיל – ניצור אוטומטית
     if (!profileDoc.exists) {
       console.log(`❌ פרופיל לא נמצא עבור UID ${uid} – ניצור אוטומטית`);
 
-      // שליפת פרטי משתמש מ-Firebase Auth כדי למלא שם מלא אם קיים
-      const userRecord = await admin.auth().getUser(uid);
-
-      profileData = {
-        role: "user",                                // ברירת מחדל: משתמש רגיל
-        side: "Unknown",                             // צד משפחתי לא ידוע
-        name: userRecord.displayName || decoded.email // שם מלא אם קיים, אחרת אימייל
+      const newProfile = {
+        fullName: decoded.name || decoded.email,  // שם מלא אם קיים, אחרת המייל
+        role: 'user',
+        side: 'Unknown',
+        createdAt: admin.firestore.FieldValue.serverTimestamp()
       };
 
-      await profileRef.set(profileData);
-    } else {
-      profileData = profileDoc.data();
+      await userRef.set(newProfile);
+      profileDoc = await userRef.get();
     }
+
+    const profileData = profileDoc.data();
 
     // שמירה בסשן
     req.session.user = {
       uid,
       email: decoded.email,
+      fullName: profileData.fullName || decoded.email,
       role: profileData.role,
-      side: profileData.side,
-      name: profileData.name
+      side: profileData.side
     };
 
-    console.log(`✅ התחברות הצליחה: ${decoded.email}, שם: ${profileData.name}, תפקיד: ${profileData.role}, צד: ${profileData.side}`);
+    console.log(`✅ התחברות הצליחה: ${decoded.email}, שם: ${req.session.user.fullName}, תפקיד: ${profileData.role}, צד: ${profileData.side}`);
     res.json({ success: true, user: req.session.user });
 
   } catch (err) {
@@ -106,6 +103,7 @@ app.post('/api/login', async (req, res) => {
     res.status(401).json({ success: false, message: "אימות נכשל" });
   }
 });
+
 
 // -------------------------
 // Auth route: /api/logout
