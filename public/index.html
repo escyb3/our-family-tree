@@ -16,6 +16,9 @@
         .hero-bg {
             background: linear-gradient(to bottom right, #0057a3, #003366);
         }
+        .menu-item.hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -73,10 +76,9 @@
         <a id="menuMigration" href="/migration-map.html" class="menu-item">מפת נדודים</a>
         <a id="menuNewsletter" href="/newsletter.html" class="menu-item"><span>📰</span> עלון</a>
         <a id="menuLogin" href="/login.html" class="menu-item bg-blue-500 text-white hover:bg-blue-600 hover:scale-105"><span>🔐</span> כניסת משתמשים</a>
-        <a id="menuLogout" href="/logout" class="menu-item bg-red-500 text-white hover:bg-red-600 hover:scale-105">התנתקות</a>
+        <a id="menuLogout" href="/logout" class="menu-item bg-red-500 text-white hover:bg-red-600 hover:scale-105 hidden">התנתקות</a>
     </nav>
-    
-    <!-- Smartsupp Live Chat script -->
+        <!-- Smartsupp Live Chat script -->
     <script type="text/javascript">
       var _smartsupp = _smartsupp || {};
       _smartsupp.key = '4e98680f7ecad4875adb0857bb7e6c38b22e49b4';
@@ -92,7 +94,7 @@
             // אורח
             _smartsupp.name = 'Guest';
           }
-      
+
           if (!window.smartsupp) {
             (function(d) {
               var s,c,o=smartsupp=function(){ o._.push(arguments)}; o._=[];
@@ -131,7 +133,7 @@
             <p id="intro1" class="text-base md:text-lg text-gray-700 leading-relaxed mb-4">אתר זה נבנה עבור כל המשפחות: Ben Abou, Elharrar, Malca, Ben David, Bromberg, Barenbaum, Fass-Schneck, Weinberger, Leibner, van der Velde, Behr, de Vries, Italiaander, Izaks, Chapon, ועוד – לשיתוף תמונות, הנצחות, עץ משפחה, הודעות ועוד.</p>
             <p id="intro2" class="text-base md:text-lg text-gray-700 leading-relaxed">ניתן להיכנס לפי צד משפחתי, לעדכן פרטים, לשוחח עם צ׳אט AI משפחתי ולחוות יחד היסטוריה מתועדת.</p>
         </section>
-        
+
         <section class="mb-8">
             <h1 id="sectionTree" class="text-2xl md:text-3xl font-bold mb-4 text-blue-900">ברוכים הבאים לעץ המשפחה שלנו</h1>
             <ul class="features grid grid-cols-1 md:grid-cols-2 gap-4" id="featuresList">
@@ -143,12 +145,12 @@
                 <li class="feature-item">🕯️ עמודי הנצחה עם נר דיגיטלי</li>
                 <li class="feature-item">🌐 תפריט דו-לשוני (עברית/אנגלית)</li>
                 <li class="feature-item">🔍 חיפוש חכם</li>
-                <li class="feature-item">📧 תמיכה בניוזלטר</li>
+                <li class="feature-item">� תמיכה בניוזלטר</li>
                 <li class="feature-item">🤖 צ’אט AI משפחתי עם תמיכה בנתוני משפחה</li>
                 <li class="feature-item">📱 תמיכה בעיצוב רספונסיבי לנייד</li>
             </ul>
         </section>
-        
+
         <section class="mb-8 p-6 bg-gray-50 rounded-2xl shadow-inner">
             <h2 id="newsTitle" class="text-xl md:text-2xl font-bold mb-4 text-blue-900">חדשות ועדכונים</h2>
             <ul id="newsList" class="list-disc list-inside space-y-3">
@@ -330,18 +332,14 @@
             }
         };
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const langSelector = document.getElementById("langSelector");
-            const userProfileDiv = document.getElementById("user-profile");
-            const userProfileDetailsDiv = document.getElementById("user-profile-details");
-            const menuBar = document.querySelector(".menu-bar");
+        const updateContent = (lang, isLoggedIn, user) => {
+            const texts = translations[lang];
+            if (!texts) return;
 
-            let currentLang = localStorage.getItem("lang") || "he";
-            let isLoggedIn = false;
-            let currentUser = null;
-
-            // עדכון השפה הראשונית של ה-select
-            langSelector.value = currentLang;
+            // עדכון HTML, dir ו-title
+            document.documentElement.lang = lang;
+            document.documentElement.setAttribute("dir", (lang === "he" || lang === "yi") ? "rtl" : "ltr");
+            document.title = texts.title;
 
             const textElementsMap = {
                 "welcomeTitle": "welcomeTitle",
@@ -357,62 +355,62 @@
                 "adminLink": "adminLink"
             };
 
-            const updateContent = (lang) => {
-                const texts = translations[lang];
-                if (!texts) return;
-
-                // עדכון HTML, dir ו-title
-                document.documentElement.lang = lang;
-                document.documentElement.setAttribute("dir", (lang === "he" || lang === "yi") ? "rtl" : "ltr");
-                document.title = texts.title;
-
-                // עדכון אלמנטים לפי ID
-                for (const id in textElementsMap) {
-                    const key = textElementsMap[id];
-                    const element = document.getElementById(id);
-                    if (element) {
-                        if (element.tagName === "INPUT") {
-                            element.placeholder = texts.searchPlaceholder;
-                        } else {
-                            element.textContent = texts[key];
-                        }
+            // עדכון אלמנטים לפי ID
+            for (const id in textElementsMap) {
+                const key = textElementsMap[id];
+                const element = document.getElementById(id);
+                if (element) {
+                    if (element.tagName === "INPUT") {
+                        element.placeholder = texts.searchPlaceholder;
+                    } else {
+                        element.textContent = texts[key];
                     }
                 }
+            }
 
-                // עדכון רשימות
-                const featuresList = document.getElementById("featuresList");
-                if (featuresList) {
-                    featuresList.innerHTML = texts.features.map(item => `<li class="feature-item">${item}</li>`).join('');
-                }
+            // עדכון רשימות
+            const featuresList = document.getElementById("featuresList");
+            if (featuresList) {
+                featuresList.innerHTML = texts.features.map(item => `<li class="feature-item">${item}</li>`).join('');
+            }
+            const newsList = document.getElementById("newsList");
+            if (newsList) {
+                newsList.innerHTML = texts.news.map(item => `<li class="text-gray-700 transition-transform duration-300 hover:translate-x-2">${item}</li>`).join('');
+            }
 
-                const newsList = document.getElementById("newsList");
-                if (newsList) {
-                    newsList.innerHTML = texts.news.map(item => `<li class="text-gray-700 transition-transform duration-300 hover:translate-x-2">${item}</li>`).join('');
-                }
-
-                // עדכון תפריט הניווט
-                const menuItems = document.querySelectorAll('.menu-bar a');
-                menuItems.forEach((link, index) => {
-                    if (texts.menus[index]) {
-                        link.innerHTML = texts.menus[index];
+            // עדכון תפריט הניווט
+            const menuLogin = document.getElementById('menuLogin');
+            const menuLogout = document.getElementById('menuLogout');
+            const menuItems = document.querySelectorAll('.menu-bar a');
+            menuItems.forEach((link, index) => {
+                const linkId = link.id;
+                if (linkId === 'menuLogin') {
+                    if (isLoggedIn) {
+                        link.classList.add('hidden');
+                    } else {
+                        link.classList.remove('hidden');
                     }
-                });
+                    link.innerHTML = texts.menus[texts.menus.length - 2];
+                } else if (linkId === 'menuLogout') {
+                    if (isLoggedIn) {
+                        link.classList.remove('hidden');
+                    } else {
+                        link.classList.add('hidden');
+                    }
+                    link.innerHTML = texts.menus[texts.menus.length - 1];
+                } else if (texts.menus[index]) {
+                    link.innerHTML = texts.menus[index];
+                }
+            });
 
-                // עדכון פרטי משתמש
-                updateUserProfileDetails(currentUser, texts);
-            };
-
-            const updateUserProfileDetails = (user, texts) => {
-                const profileDiv = document.getElementById('user-profile-details');
-                if (!profileDiv) return;
-
-                if (user && user.username) {
-                    // משתמש מחובר
+            // עדכון פרטי משתמש
+            const profileDiv = document.getElementById('user-profile-details');
+            if (profileDiv) {
+                if (isLoggedIn) {
                     let familySideHTML = user.familySide || "";
                     if (user.familySideLink) {
                         familySideHTML = `<a href="${user.familySideLink}" target="_blank" class="text-blue-500 hover:underline transition-colors">${user.familySide}</a>`;
                     }
-
                     profileDiv.innerHTML = `
                         <div class="flex items-center space-x-2 rtl:space-x-reverse">
                             <span class="font-bold text-sm text-gray-800">${texts.loggedInAs}</span>
@@ -428,35 +426,64 @@
                         </div>
                     `;
                 } else {
-                    // משתמש אורח
                     profileDiv.innerHTML = `<a href="/login.html" class="font-bold text-blue-900 hover:underline transition-colors">${texts.menus[texts.menus.length - 2]}</a>`;
                 }
-            };
+            }
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const langSelector = document.getElementById("langSelector");
+            const logoutButton = document.getElementById('menuLogout');
+            let currentLang = localStorage.getItem("lang") || "he";
             
+            // עדכון השפה הראשונית של ה-select
+            langSelector.value = currentLang;
+
+            // לוגיקה להתנתקות
+            if (logoutButton) {
+                logoutButton.addEventListener('click', async (event) => {
+                    event.preventDefault();
+                    try {
+                        const response = await fetch('/api/logout', {
+                            method: 'POST'
+                        });
+                        if (response.ok) {
+                            window.location.href = '/'; // ניווט לעמוד הראשי לאחר התנתקות
+                        } else {
+                            alert('שגיאה בהתנתקות.');
+                        }
+                    } catch (error) {
+                        console.error('Logout failed:', error);
+                        alert('שגיאה בהתנתקות.');
+                    }
+                });
+            }
+
             // סימולציה של קריאה לשרת
             fetch("/api/user")
                 .then(res => res.ok ? res.json() : Promise.reject("User not logged in"))
-                .then(user => {
-                    currentUser = user;
-                    isLoggedIn = !!user.username;
-                    updateContent(currentLang);
+                .then(data => {
+                    updateContent(currentLang, true, data.user);
                 })
                 .catch(error => {
                     console.error("Error fetching user data:", error);
-                    currentUser = null;
-                    isLoggedIn = false;
-                    updateContent(currentLang);
+                    updateContent(currentLang, false, null);
                 });
 
             // האזנה לשינוי שפה
             langSelector.addEventListener("change", (event) => {
                 currentLang = event.target.value;
                 localStorage.setItem("lang", currentLang);
-                updateContent(currentLang);
+                fetch("/api/user")
+                    .then(res => res.ok ? res.json() : Promise.reject("User not logged in"))
+                    .then(data => {
+                        updateContent(currentLang, true, data.user);
+                    })
+                    .catch(error => {
+                        updateContent(currentLang, false, null);
+                    });
             });
 
-            // הפעלת הפונקציה הראשונית
-            updateContent(currentLang);
         });
     </script>
 </body>
