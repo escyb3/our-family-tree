@@ -55,60 +55,55 @@ admin.initializeApp({
 const firestore = admin.firestore();
 
 // -------------------------
-// Auth routes
+// Auth route: /api/login
 // -------------------------
 app.post('/api/login', async (req, res) => {
   const { idToken } = req.body;
-  if (!idToken) return res.status(400).json({ success: false, message: "Missing ID Token" });
+  if (!idToken) {
+    return res.status(400).json({ success: false, message: "Missing ID Token" });
+  }
 
   try {
+    // אימות ה-ID Token
     const decoded = await admin.auth().verifyIdToken(idToken);
     const uid = decoded.uid;
 
-    const profileDoc = await firestore.collection('user_profiles').doc(uid).get();
-    if (!profileDoc.exists) return res.status(401).json({ success: false, message: "פרופיל משתמש לא נמצא" });
+    const profileRef = firestore.collection('user_profiles').doc(uid);
+    let profileDoc = await profileRef.get();
+    let profileData;
 
-    const profileData = profileDoc.data();
+    if (!profileDoc.exists) {
+      console.log(`❌ פרופיל לא נמצא עבור UID ${uid} – ניצור אוטומטית`);
 
+      // שליפת פרטי משתמש מ-Firebase Auth כדי למלא שם מלא אם קיים
+      const userRecord = await admin.auth().getUser(uid);
+
+      profileData = {
+        role: "user",                                // ברירת מחדל: משתמש רגיל
+        side: "Unknown",                             // צד משפחתי לא ידוע
+        name: userRecord.displayName || decoded.email // שם מלא אם קיים, אחרת אימייל
+      };
+
+      await profileRef.set(profileData);
+    } else {
+      profileData = profileDoc.data();
+    }
+
+    // שמירה בסשן
     req.session.user = {
       uid,
       email: decoded.email,
       role: profileData.role,
-      side: profileData.side
+      side: profileData.side,
+      name: profileData.name
     };
 
-    console.log(`✅ התחברות הצליחה: ${decoded.email}, תפקיד: ${profileData.role}`);
+    console.log(`✅ התחברות הצליחה: ${decoded.email}, שם: ${profileData.name}, תפקיד: ${profileData.role}, צד: ${profileData.side}`);
     res.json({ success: true, user: req.session.user });
 
   } catch (err) {
     console.error("❌ Firebase token verify error:", err);
     res.status(401).json({ success: false, message: "אימות נכשל" });
-  }
-});
-
-app.get('/api/user', async (req, res) => {
-  try {
-    if (!req.session.user?.uid) return res.status(401).json({ error: 'לא מחובר' });
-
-    const uid = req.session.user.uid;
-
-    if (req.session.user.profile) {
-      return res.json({ user: { uid, email: req.session.user.email }, profile: req.session.user.profile });
-    }
-
-    const userRecord = await admin.auth().getUser(uid);
-    const doc = await firestore.collection('user_profiles').doc(uid).get();
-    if (!doc.exists) return res.status(401).json({ error: 'פרופיל משתמש לא נמצא.' });
-
-    const profileData = doc.data();
-    req.session.user.profile = profileData;
-    req.session.save(() => {});
-
-    res.json({ user: { uid, email: userRecord.email }, profile: profileData });
-
-  } catch (err) {
-    console.error('Error in /api/user:', err);
-    res.status(500).json({ error: 'שגיאת שרת' });
   }
 });
 
