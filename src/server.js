@@ -107,13 +107,93 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// -------------------------
+// Auth route: /api/logout
+// -------------------------
 app.post('/api/logout', (req, res) => {
-  req.session.destroy(err => {
-    if (err) return res.status(500).json({ error: 'שגיאה בעת התנתקות' });
-    res.clearCookie('connect.sid');
-    res.json({ message: 'התנתקת בהצלחה' });
-  });
+  try {
+    if (!req.session.user) {
+      return res.status(400).json({ success: false, message: "משתמש כבר מנותק" });
+    }
+
+    req.session.destroy(err => {
+      if (err) {
+        console.error("Error destroying session:", err);
+        return res.status(500).json({ success: false, message: "שגיאה בעת התנתקות" });
+      }
+
+      // ננקה את קוקי הסשן (ברירת מחדל: connect.sid)
+      res.clearCookie('connect.sid', { path: '/' });
+      res.json({ success: true, message: "התנתקת בהצלחה" });
+    });
+    
+  } catch (err) {
+    console.error('Error in /api/logout:', err);
+    res.status(500).json({ success: false, message: "שגיאה כללית" });
+  }
 });
+
+// -------------------------
+// Auth route: /api/user
+// -------------------------
+app.get('/api/user', async (req, res) => {
+  try {
+    // בדיקה אם המשתמש מחובר
+    if (!req.session.user?.uid) {
+      return res.status(401).json({ error: 'לא מחובר' });
+    }
+
+    const uid = req.session.user.uid;
+
+    // אם כבר יש פרופיל בסשן, נחזיר אותו
+    if (req.session.user.profile) {
+      return res.json({
+        user: {
+          uid,
+          email: req.session.user.email,
+          role: req.session.user.role,
+          side: req.session.user.side,
+          name: req.session.user.name
+        },
+        profile: req.session.user.profile
+      });
+    }
+
+    // שליפה מ-Firebase Auth
+    const userRecord = await admin.auth().getUser(uid);
+
+    // שליפה מ-Firestore
+    const profileDoc = await firestore.collection('user_profiles').doc(uid).get();
+    if (!profileDoc.exists) {
+      return res.status(401).json({ error: 'פרופיל משתמש לא נמצא.' });
+    }
+
+    const profileData = profileDoc.data();
+
+    // שמירה בסשן
+    req.session.user.profile = profileData;
+    req.session.save(err => {
+      if (err) console.error("Error saving session:", err);
+    });
+
+    // החזרת המידע ללקוח
+    res.json({
+      user: {
+        uid,
+        email: userRecord.email,
+        role: profileData.role,
+        side: profileData.side,
+        name: profileData.name || userRecord.displayName || userRecord.email
+      },
+      profile: profileData
+    });
+
+  } catch (err) {
+    console.error('Error in /api/user:', err);
+    res.status(500).json({ error: 'שגיאת שרת' });
+  }
+});
+
 
 // -------------------------
 // Middleware
