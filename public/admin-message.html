@@ -67,31 +67,48 @@
     <button type="submit">שלח לכל המשתמשים</button>
     <div class="success" id="successMsg" style="display: none;">✅ נשלח בהצלחה!</div>
   </form>
+<div id="adminPanel">
+  <h3>עדכון פרופיל משתמש</h3>
+  <input type="text" id="updateUID" placeholder="UID של המשתמש" />
+  <input type="text" id="updateFullName" placeholder="שם מלא (optional)" />
+  <input type="text" id="updateSide" placeholder="צד משפחתי (optional)" />
+  <input type="text" id="updateRole" placeholder="תפקיד (user/admin) (optional)" />
+  <button id="btnUpdateProfile">עדכן פרופיל</button>
+  <div id="updateStatus"></div>
+</div>
 
-  <script>
-    const form = document.getElementById("admin-message-form");
-    const success = document.getElementById("successMsg");
+<script>
+document.getElementById("btnUpdateProfile").addEventListener("click", async () => {
+  const uid = document.getElementById("updateUID").value.trim();
+  const fullName = document.getElementById("updateFullName").value.trim();
+  const side = document.getElementById("updateSide").value.trim();
+  const role = document.getElementById("updateRole").value.trim();
+  const statusEl = document.getElementById("updateStatus");
 
-    form.onsubmit = async (e) => {
-      e.preventDefault();
+  if (!uid) {
+    statusEl.textContent = "❌ אנא הכנס UID";
+    return;
+  }
 
-      const res = await fetch("/send-admin-message", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          subject: form.subject.value,
-          body: form.body.value,
-          type: form.messageType.value
-        })
-      });
+  try {
+    const res = await fetch("/api/user/update", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ uid, fullName, side, role })
+    });
 
-      if (res.ok) {
-        success.style.display = "block";
-        form.reset();
-      } else {
-        alert("שגיאה בשליחה");
-      }
-    };
-  </script>
+    const data = await res.json();
+    if (data.success) {
+      statusEl.textContent = "✅ " + data.message;
+    } else {
+      statusEl.textContent = "❌ " + (data.message || "שגיאה");
+    }
+  } catch (err) {
+    console.error(err);
+    statusEl.textContent = "❌ שגיאת רשת";
+  }
+});
+</script>
+
 </body>
 </html>
