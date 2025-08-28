@@ -40,7 +40,10 @@
     <section class="max-w-6xl mx-auto -mt-6 p-6 md:p-8 bg-white rounded-3xl shadow-xl relative z-20">
         <div class="flex flex-col md:flex-row items-center justify-between mb-4">
             <h1 id="search-title" class="text-2xl font-bold mb-4 md:mb-0">🔍 חיפוש באתר</h1>
-            <div id="user-profile" class="text-sm font-medium"></div>
+            <!-- Container for user profile details -->
+            <div id="user-profile" class="text-sm font-medium">
+                <div id="user-profile-details"></div>
+            </div>
         </div>
         <div class="search-wrapper relative max-w-xl mx-auto">
             <input type="text" id="search-input" placeholder="הקלד שם או תיאור..." autocomplete="off" class="w-full p-3 pl-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" />
@@ -72,57 +75,55 @@
         <a id="menuLogin" href="/login.html" class="menu-item bg-blue-500 text-white hover:bg-blue-600 hover:scale-105"><span>🔐</span> כניסת משתמשים</a>
         <a id="menuLogout" href="/logout" class="menu-item bg-red-500 text-white hover:bg-red-600 hover:scale-105">התנתקות</a>
     </nav>
-<!-- Smartsupp Live Chat script -->
-<script type="text/javascript">
-  var _smartsupp = _smartsupp || {};
-  _smartsupp.key = '4e98680f7ecad4875adb0857bb7e6c38b22e49b4';
+    
+    <!-- Smartsupp Live Chat script -->
+    <script type="text/javascript">
+      var _smartsupp = _smartsupp || {};
+      _smartsupp.key = '4e98680f7ecad4875adb0857bb7e6c38b22e49b4';
 
-  // פונקציה לאתחול עם משתמש מחובר או אורח
-  async function initSmartsupp(user) {
-    try {
-      if (user && user.email) {
-        // משתמש מחובר – אפשר לשלוח info ל-Smartsupp
-        _smartsupp.name = user.email;
-        _smartsupp.email = user.email;
-      } else {
-        // אורח
-        _smartsupp.name = 'Guest';
+      // פונקציה לאתחול עם משתמש מחובר או אורח
+      async function initSmartsupp(user) {
+        try {
+          if (user && user.email) {
+            // משתמש מחובר – אפשר לשלוח info ל-Smartsupp
+            _smartsupp.name = user.email;
+            _smartsupp.email = user.email;
+          } else {
+            // אורח
+            _smartsupp.name = 'Guest';
+          }
+      
+          if (!window.smartsupp) {
+            (function(d) {
+              var s,c,o=smartsupp=function(){ o._.push(arguments)}; o._=[];
+              s=d.getElementsByTagName('script')[0];
+              c=d.createElement('script'); c.type='text/javascript'; c.charset='utf-8'; c.async=true;
+              c.src='https://www.smartsuppchat.com/loader.js?';
+              s.parentNode.insertBefore(c,s);
+            })(document);
+          }
+        } catch (err) {
+          console.error("Smartsupp init error:", err);
+        }
       }
 
-      if (!window.smartsupp) {
-        (function(d) {
-          var s,c,o=smartsupp=function(){ o._.push(arguments)}; o._=[];
-          s=d.getElementsByTagName('script')[0];
-          c=d.createElement('script'); c.type='text/javascript'; c.charset='utf-8'; c.async=true;
-          c.src='https://www.smartsuppchat.com/loader.js?';
-          s.parentNode.insertBefore(c,s);
-        })(document);
-      }
-
-    } catch (err) {
-      console.error("Smartsupp init error:", err);
-    }
-  }
-
-  // שליפת המשתמש המחובר מהשרת (API שלנו)
-  fetch("/api/user")
-    .then(res => {
-      if (!res.ok) throw new Error("לא מחובר");
-      return res.json();
-    })
-    .then(data => {
-      initSmartsupp(data.user); // משתמש מחובר
-    })
-    .catch(err => {
-      console.warn("Smartsupp: משתמש לא מחובר, הצ'אט יפעל כאורח.", err);
-      initSmartsupp(null); // אורח
-    });
-</script>
-<noscript>
-  Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a>
-</noscript>
-
-
+      // שליפת המשתמש המחובר מהשרת (API שלנו)
+      fetch("/api/user")
+        .then(res => {
+          if (!res.ok) throw new Error("לא מחובר");
+          return res.json();
+        })
+        .then(data => {
+          initSmartsupp(data.user); // משתמש מחובר
+        })
+        .catch(err => {
+          console.warn("Smartsupp: משתמש לא מחובר, הצ'אט יפעל כאורח.", err);
+          initSmartsupp(null); // אורח
+        });
+    </script>
+    <noscript>
+      Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a>
+    </noscript>
 
     <main class="max-w-6xl mx-auto mt-8 p-6 md:p-8 bg-white rounded-3xl shadow-xl">
         <section class="mb-8 p-6 bg-blue-50 rounded-2xl shadow-inner">
@@ -130,7 +131,7 @@
             <p id="intro1" class="text-base md:text-lg text-gray-700 leading-relaxed mb-4">אתר זה נבנה עבור כל המשפחות: Ben Abou, Elharrar, Malca, Ben David, Bromberg, Barenbaum, Fass-Schneck, Weinberger, Leibner, van der Velde, Behr, de Vries, Italiaander, Izaks, Chapon, ועוד – לשיתוף תמונות, הנצחות, עץ משפחה, הודעות ועוד.</p>
             <p id="intro2" class="text-base md:text-lg text-gray-700 leading-relaxed">ניתן להיכנס לפי צד משפחתי, לעדכן פרטים, לשוחח עם צ׳אט AI משפחתי ולחוות יחד היסטוריה מתועדת.</p>
         </section>
-
+        
         <section class="mb-8">
             <h1 id="sectionTree" class="text-2xl md:text-3xl font-bold mb-4 text-blue-900">ברוכים הבאים לעץ המשפחה שלנו</h1>
             <ul class="features grid grid-cols-1 md:grid-cols-2 gap-4" id="featuresList">
@@ -142,12 +143,12 @@
                 <li class="feature-item">🕯️ עמודי הנצחה עם נר דיגיטלי</li>
                 <li class="feature-item">🌐 תפריט דו-לשוני (עברית/אנגלית)</li>
                 <li class="feature-item">🔍 חיפוש חכם</li>
-                <li class="feature-item">� תמיכה בניוזלטר</li>
+                <li class="feature-item">📧 תמיכה בניוזלטר</li>
                 <li class="feature-item">🤖 צ’אט AI משפחתי עם תמיכה בנתוני משפחה</li>
                 <li class="feature-item">📱 תמיכה בעיצוב רספונסיבי לנייד</li>
             </ul>
         </section>
-
+        
         <section class="mb-8 p-6 bg-gray-50 rounded-2xl shadow-inner">
             <h2 id="newsTitle" class="text-xl md:text-2xl font-bold mb-4 text-blue-900">חדשות ועדכונים</h2>
             <ul id="newsList" class="list-disc list-inside space-y-3">
@@ -210,7 +211,11 @@
                 ],
                 footerText: "© 2025 אתר המשפחה • נבנה באהבה ע\"י המשפחה •",
                 adminLink: "🛠️ ניהול",
-                menus: ["🏠 עמוד ראשי", "ℹ️ עמוד העדכונים", "🧬 עץ המשפחה", "🧑‍💻 צ'אט AI", "📩 אמצעי תקשורת משפחתיים", "🖼️ גלריית תמונות", "🕯️ קיר זיכרון", "🗓️ ציר זמן", "📆 לוח שנה", "👪 פורום משפחתי", "📖 ביוגרפיות", "📊 סטטיסטיקות", "עדכון פרטים", "העלאת תמונות", "העלאת סרטון", "חיפוש AI", "מפת נדודים", "📰 עלון", "🔐 כניסת משתמשים", "התנתקות"]
+                menus: ["🏠 עמוד ראשי", "ℹ️ עמוד העדכונים", "🧬 עץ המשפחה", "🧑‍💻 צ'אט AI", "📩 אמצעי תקשורת משפחתיים", "🖼️ גלריית תמונות", "🕯️ קיר זיכרון", "🗓️ ציר זמן", "📆 לוח שנה", "👪 פורום משפחתי", "📖 ביוגרפיות", "📊 סטטיסטיקות", "עדכון פרטים", "העלאת תמונות", "העלאת סרטון", "חיפוש AI", "מפת נדודים", "📰 עלון", "🔐 כניסת משתמשים", "התנתקות"],
+                loggedInAs: "מחובר כ:",
+                role: "תפקיד:",
+                familySide: "צד משפחתי:",
+                guest: "אורח"
             },
             en: {
                 title: "Family Website - Ben Abou, Elharrar & more",
@@ -243,7 +248,11 @@
                 ],
                 footerText: "© 2025 Family Website • Built with love by the family •",
                 adminLink: "🛠️ Admin",
-                menus: ["🏠 Home", "ℹ️ Updates", "🧬 Family Tree", "🧑‍💻 AI Chat", "📩 Family Contacts", "🖼️ Gallery", "🕯️ Memorial Wall", "🗓️ Timeline", "📆 Calendar", "👪 Family Forum", "📖 Biographies", "📊 Statistics", "Update Details", "Upload Photo", "Upload Video", "AI Search", "Migration Map", "📰 Newsletter", "🔐 Login", "Logout"]
+                menus: ["🏠 Home", "ℹ️ Updates", "🧬 Family Tree", "🧑‍💻 AI Chat", "📩 Family Contacts", "🖼️ Gallery", "🕯️ Memorial Wall", "🗓️ Timeline", "📆 Calendar", "👪 Family Forum", "📖 Biographies", "📊 Statistics", "Update Details", "Upload Photo", "Upload Video", "AI Search", "Migration Map", "📰 Newsletter", "🔐 Login", "Logout"],
+                loggedInAs: "Logged in as:",
+                role: "Role:",
+                familySide: "Family Side:",
+                guest: "Guest"
             },
             fr: {
                 title: "Site de la Famille - Ben Abou, Elharrar et plus",
@@ -276,7 +285,11 @@
                 ],
                 footerText: "© 2025 Site de la famille • Construit avec amour par la famille •",
                 adminLink: "🛠️ Admin",
-                menus: ["🏠 Accueil", "ℹ️ Mises à jour", "🧬 Arbre généalogique", "🧑‍💻 Chat IA", "📩 Contacts familiaux", "🖼️ Galerie", "🕯️ Mur commémoratif", "🗓️ Chronologie", "📆 Calendrier", "👪 Forum familial", "📖 Biographies", "📊 Statistiques", "Mettre à jour", "Téléverser photo", "Téléverser vidéo", "Recherche IA", "Carte migrations", "📰 Bulletin", "🔐 Connexion", "Déconnexion"]
+                menus: ["🏠 Accueil", "ℹ️ Mises à jour", "🧬 Arbre généalogique", "🧑‍💻 Chat IA", "📩 Contacts familiaux", "🖼️ Galerie", "🕯️ Mur commémoratif", "🗓️ Chronologie", "📆 Calendrier", "👪 Forum familial", "📖 Biographies", "📊 Statistiques", "Mettre à jour", "Téléverser photo", "Téléverser vidéo", "Recherche IA", "Carte migrations", "📰 Bulletin", "🔐 Connexion", "Déconnexion"],
+                loggedInAs: "Connecté en tant que:",
+                role: "Rôle:",
+                familySide: "Côté de la famille:",
+                guest: "Invité"
             },
             yi: {
                 title: "פאמיליע וועבזייט - בן אבו, אלהרר און מער",
@@ -309,17 +322,23 @@
                 ],
                 footerText: "© 2025 פאמיליע וועבזייט • געבויט מיט ליבע דורך די פאמיליע •",
                 adminLink: "🛠️ אדמין",
-                menus: ["🏠 הויפּט בלאַט", "ℹ️ דערהייבונגען", "🧬 פאמיליע בוים", "🧑‍💻 אינטעליגענט טשאַט", "📩 פאמיליע קאנטאקטן", "🖼️ גאלעריע", "🕯️ אנדענק וואנט", "🗓️ צייט-ליניע", "📆 קאלענדאר", "👪 פאמיליע פארום", "📖 ביאגראפיעס", "📊 סטאטיסטיק", "דערהייבן דעטאלן", "הייבן בילד", "הייבן ווידעא", "אינטעליגענט זוך", "מאַפּע פון וואַנדערונגען", "📰 נייַבלאַט", "🔐 איינזיין", "אויסלאגן"]
+                menus: ["🏠 הויפּט בלאַט", "ℹ️ דערהייבונגען", "🧬 פאמיליע בוים", "🧑‍💻 אינטעליגענט טשאַט", "📩 פאמיליע קאנטאקטן", "🖼️ גאלעריע", "🕯️ אנדענק וואנט", "🗓️ צייט-ליניע", "📆 קאלענדאר", "👪 פאמיליע פארום", "📖 ביאגראפיעס", "📊 סטאטיסטיק", "דערהייבן דעטאלן", "הייבן בילד", "הייבן ווידעא", "אינטעליגענט זוך", "מאַפּע פון וואַנדערונגען", "📰 נייַבלאַט", "🔐 איינזיין", "אויסלאגן"],
+                loggedInAs: "אריינגעזען ווי:",
+                role: "ראָלע:",
+                familySide: "פאמיליע זייט:",
+                guest: "גאַסט"
             }
         };
 
         document.addEventListener("DOMContentLoaded", () => {
             const langSelector = document.getElementById("langSelector");
             const userProfileDiv = document.getElementById("user-profile");
+            const userProfileDetailsDiv = document.getElementById("user-profile-details");
             const menuBar = document.querySelector(".menu-bar");
 
             let currentLang = localStorage.getItem("lang") || "he";
             let isLoggedIn = false;
+            let currentUser = null;
 
             // עדכון השפה הראשונית של ה-select
             langSelector.value = currentLang;
@@ -379,37 +398,52 @@
                     }
                 });
 
-                // עדכון פרופיל משתמש
-                updateUserProfile(isLoggedIn, texts);
+                // עדכון פרטי משתמש
+                updateUserProfileDetails(currentUser, texts);
             };
 
-            const updateUserProfile = (isUserLoggedIn, texts) => {
-                isLoggedIn = isUserLoggedIn;
-                const userProfile = document.getElementById("user-profile");
-                if (isLoggedIn) {
-                    userProfile.innerHTML = `
-                        <span class="font-bold">${texts.loggedInUser}</span>
-                        <span class="text-gray-600">(${texts.loggedInRole})</span>
-                        <a href="/logout" class="ml-2 text-red-500 hover:underline transition-colors">${texts.menus[texts.menus.length - 1]}</a>
+            const updateUserProfileDetails = (user, texts) => {
+                const profileDiv = document.getElementById('user-profile-details');
+                if (!profileDiv) return;
+
+                if (user && user.username) {
+                    // משתמש מחובר
+                    let familySideHTML = user.familySide || "";
+                    if (user.familySideLink) {
+                        familySideHTML = `<a href="${user.familySideLink}" target="_blank" class="text-blue-500 hover:underline transition-colors">${user.familySide}</a>`;
+                    }
+
+                    profileDiv.innerHTML = `
+                        <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                            <span class="font-bold text-sm text-gray-800">${texts.loggedInAs}</span>
+                            <span class="text-sm font-semibold text-blue-800">${user.username}</span>
+                        </div>
+                        <div class="flex items-center space-x-2 rtl:space-x-reverse mt-1">
+                            <span class="font-bold text-sm text-gray-800">${texts.role}</span>
+                            <span class="text-sm font-medium text-gray-600">${user.role}</span>
+                        </div>
+                        <div class="flex items-center space-x-2 rtl:space-x-reverse mt-1">
+                            <span class="font-bold text-sm text-gray-800">${texts.familySide}</span>
+                            <span class="text-sm font-medium text-gray-600">${familySideHTML}</span>
+                        </div>
                     `;
-                    if (menuBar) menuBar.style.display = "flex";
                 } else {
-                    userProfile.innerHTML = `
-                        <a href="/login.html" class="font-bold text-blue-900 hover:underline transition-colors">${texts.menus[texts.menus.length - 2]}</a>
-                    `;
-                    if (menuBar) menuBar.style.display = "flex";
+                    // משתמש אורח
+                    profileDiv.innerHTML = `<a href="/login.html" class="font-bold text-blue-900 hover:underline transition-colors">${texts.menus[texts.menus.length - 2]}</a>`;
                 }
             };
-
+            
             // סימולציה של קריאה לשרת
             fetch("/api/user")
                 .then(res => res.ok ? res.json() : Promise.reject("User not logged in"))
                 .then(user => {
+                    currentUser = user;
                     isLoggedIn = !!user.username;
                     updateContent(currentLang);
                 })
                 .catch(error => {
                     console.error("Error fetching user data:", error);
+                    currentUser = null;
                     isLoggedIn = false;
                     updateContent(currentLang);
                 });
