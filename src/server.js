@@ -17,9 +17,22 @@ const ai = require("./ai");
 const fetch = require("node-fetch");
 const crypto = require("crypto");
 const cors = require("cors");
-
 const app = express();
 
+// חיבור לתרגום של גוגל (משתמש במפתח מתוך .env)
+const translate = new Translate({ key: process.env.GOOGLE_API_KEY });
+
+// כדי ש-req.body יעבוד עם JSON
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Session middleware
+app.use(session({
+  secret: process.env.SESSION_SECRET || "supersecret",
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false } // ברנדר בלי HTTPS לוקאלי - secure=false
+}));
 // -------------------------
 // Firebase Admin SDK
 // -------------------------
@@ -46,29 +59,64 @@ const bucket = admin.storage().bucket(); // גישה ל-Storage
 const db = firestore;                 // אם אתה רוצה להשתמש גם כ־db
 
 
-
-
-// חיבור לתרגום של גוגל (משתמש במפתח מתוך .env)
-const translate = new Translate({ key: process.env.GOOGLE_API_KEY });
-
-// -------------------- Supabase --------------------
-const { createClient } = require('@supabase/supabase-js');
-const SUPABASE_URL = process.env.SUPABASE_URL || 'https://iyyxtqcdbsvpvhwrmxgv.supabase.co';
-const SUPABASE_KEY = process.env.SUPABASE_KEY || 'sb_secret_G--k9nK5CAvcdNN4_uIB2w_PmgApJaK'
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-
 // =========================
-// Supabase Table Setup (optional)
+// Auth & Session (בטוח)
 // =========================
-async function initTables() {
-  try {
-    // אם הטבלה כבר קיימת אפשר לדלג
-    console.log("Supabase client ready. בדוק את הטבלאות דרך UI או SQL Editor.");
-  } catch (err) {
-    console.error("DB init error:", err);
+app.post('/api/login', async (req, res) => {
+  const { idToken } = req.body; // עכשיו מקבלים ID Token מהלקוח
+
+  if (!idToken) {
+    return res.status(400).json({ success: false, message: "Missing ID Token" });
   }
+
+  try {
+    // אימות ה-ID Token באמצעות Firebase Admin
+    const decoded = await admin.auth().verifyIdToken(idToken);
+    const uid = decoded.uid;
+
+    // שליפת פרופיל המשתמש מ-Firestore
+    const profileDoc = await admin.firestore().collection('user_profiles').doc(uid).get();
+    if (!profileDoc.exists) {
+      return res.status(401).json({ success: false, message: "פרופיל משתמש לא נמצא" });
+    }
+
+    const profileData = profileDoc.data();
+
+    // שמירה בסשן
+    req.session.user = {
+      uid,
+      email: decoded.email,
+      role: profileData.role,
+      side: profileData.side
+    };
+
+    console.log(`✅ התחברות הצליחה: ${decoded.email}, תפקיד: ${profileData.role}`);
+    res.json({ success: true, user: req.session.user });
+
+  } catch (err) {
+    console.error("❌ שגיאה בתהליך ההתחברות:", err);
+    res.status(401).json({ success: false, message: "אימות נכשל" });
+  }
+});
+
+
+// middleware לבדיקה אם המשתמש מחובר
+function requireLogin(req, res, next) {
+  if (!req.session.user) {
+    return res.status(401).json({ message: "צריך להתחבר כדי לגשת" });
+  }
+  next();
 }
 
+// middleware לבדיקה אם המשתמש הוא אדמין
+function requireAdmin(req, res, next) {
+  requireLogin(req, res, () => {
+    if (req.session.user.role !== 'admin') {
+      return res.status(403).json({ message: "אין לך הרשאה" });
+    }
+    next();
+  });
+}
 // =========================
 // ✅ מחזיר את המשתמש המחובר
 // =========================
@@ -162,64 +210,6 @@ app.get("/api/messages", requireLogin, async (req, res) => {
     res.json({ messages });
 });
 
-// =========================
-// Auth & Session (בטוח)
-// =========================
-app.post('/api/login', async (req, res) => {
-  const { idToken } = req.body; // עכשיו מקבלים ID Token מהלקוח
-
-  if (!idToken) {
-    return res.status(400).json({ success: false, message: "Missing ID Token" });
-  }
-
-  try {
-    // אימות ה-ID Token באמצעות Firebase Admin
-    const decoded = await admin.auth().verifyIdToken(idToken);
-    const uid = decoded.uid;
-
-    // שליפת פרופיל המשתמש מ-Firestore
-    const profileDoc = await admin.firestore().collection('user_profiles').doc(uid).get();
-    if (!profileDoc.exists) {
-      return res.status(401).json({ success: false, message: "פרופיל משתמש לא נמצא" });
-    }
-
-    const profileData = profileDoc.data();
-
-    // שמירה בסשן
-    req.session.user = {
-      uid,
-      email: decoded.email,
-      role: profileData.role,
-      side: profileData.side
-    };
-
-    console.log(`✅ התחברות הצליחה: ${decoded.email}, תפקיד: ${profileData.role}`);
-    res.json({ success: true, user: req.session.user });
-
-  } catch (err) {
-    console.error("❌ שגיאה בתהליך ההתחברות:", err);
-    res.status(401).json({ success: false, message: "אימות נכשל" });
-  }
-});
-
-
-// middleware לבדיקה אם המשתמש מחובר
-function requireLogin(req, res, next) {
-  if (!req.session.user) {
-    return res.status(401).json({ message: "צריך להתחבר כדי לגשת" });
-  }
-  next();
-}
-
-// middleware לבדיקה אם המשתמש הוא אדמין
-function requireAdmin(req, res, next) {
-  requireLogin(req, res, () => {
-    if (req.session.user.role !== 'admin') {
-      return res.status(403).json({ message: "אין לך הרשאה" });
-    }
-    next();
-  });
-}
 
 // =========================
 // Admin: Users Management
