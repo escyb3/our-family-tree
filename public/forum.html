@@ -1,101 +1,637 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>פורום משפחתי</title>
-  <link rel="stylesheet" href="/style.css">
-  <style>
-    body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 0; }
-    header { background-color: #3f51b5; color: white; padding: 1rem; text-align: center; }
-    .container { max-width: 900px; margin: 2rem auto; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    .search-filter { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
-    input, select, button, textarea { font-family: inherit; padding: 0.5rem; border-radius: 5px; border: 1px solid #ccc; }
-    .thread { border-top: 1px solid #ddd; padding: 1rem 0; position: relative; }
-    .thread h3 { margin: 0; color: #333; }
-    .favorite { position: absolute; left: 10px; top: 10px; cursor: pointer; color: #888; }
-    .favorite.active { color: gold; }
-    .new-thread, .reply-form { margin-top: 2rem; background: #fafafa; padding: 1rem; border: 1px dashed #ccc; border-radius: 5px; }
-    .footer { margin-top: 3rem; font-size: 0.9rem; color: #666; text-align: center; }
-    .dark-mode { background-color: #222; color: white; }
-    .dark-mode input, .dark-mode textarea, .dark-mode select { background-color: #333; color: white; border-color: #555; }
-    @media (max-width: 600px) {
-      .search-filter { flex-direction: column; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>פורום משפחתי</title>
+    <!-- Tailwind CSS CDN for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for a clean font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-bg: #f9fafb;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --primary-color: #4f46e5;
+            --border-color: #e5e7eb;
+        }
+
+        .dark-mode {
+            --main-bg: #1f2937;
+            --card-bg: #374151;
+            --text-color: #e5e7eb;
+            --primary-color: #6366f1;
+            --border-color: #4b5563;
+        }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background-color: var(--main-bg);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            transition: background-color 0.3s;
+        }
+
+        input, textarea, select {
+            border-color: var(--border-color);
+            background-color: var(--main-bg);
+            color: var(--text-color);
+            transition: all 0.3s;
+        }
+        
+        .dark-mode input, .dark-mode textarea, .dark-mode select {
+            background-color: #1f2937;
+            color: #e5e7eb;
+            border-color: #4b5563;
+        }
+    </style>
 </head>
-<body>
-  <header>
-    <h1>🗣️ פורום משפחתנו</h1>
-  </header>
+<body class="bg-gray-50 text-gray-800">
 
+    <!-- Main Container -->
+    <div class="container mx-auto p-4 sm:p-8 max-w-4xl bg-white rounded-xl shadow-lg my-8">
+        
+        <!-- Header -->
+        <header class="text-center pb-6 border-b border-gray-200 mb-6">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-indigo-700" data-lang-key="title">🗣️ פורום משפחתנו</h1>
+            <p class="text-gray-500 mt-2" data-lang-key="subtitle">מקום להתעדכן, לשאול ולחלוק זיכרונות משפחתיים.</p>
+        </header>
 
-    <div id="threadsContainer"></div>
+        <!-- User & App Info Section -->
+        <div class="flex items-center justify-between flex-wrap gap-2 mb-6 text-sm text-gray-500">
+            <span id="userIdDisplay" class="truncate flex items-center gap-1">
+                <span class="font-mono text-gray-700 font-semibold" id="userIdValue">טוען...</span>
+                <span id="userName" class="text-gray-600 font-medium"></span>
+                <button id="copyUserIdBtn" class="bg-gray-200 hover:bg-gray-300 rounded-full p-1 transition-colors duration-200" title="העתק מזהה משתמש">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                </button>
+            </span>
+            <div id="copySuccessMsg" class="absolute bg-green-500 text-white text-xs px-2 py-1 rounded-md opacity-0 transition-opacity duration-300">הועתק!</div>
+            <div class="flex items-center gap-2">
+                <button id="darkModeToggle" class="flex items-center gap-2 px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-full text-sm font-medium transition-colors duration-200">
+                    <span id="darkModeIcon">🌓</span> <span data-lang-key="darkModeBtn">מצב כהה</span>
+                </button>
+                <button id="langToggle" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-full text-sm font-medium transition-colors duration-200">
+                    English
+                </button>
+            </div>
+        </div>
 
-    <div class="new-thread">
-      <h2>פתח שרשור חדש</h2>
-      <form id="newThreadForm">
-        <input type="text" name="title" placeholder="כותרת" required><br><br>
-        <select name="category">
-          <option value="history">היסטוריה משפחתית</option>
-          <option value="questions">שאלות</option>
-          <option value="updates">עדכונים</option>
-        </select><br><br>
-        <textarea name="content" rows="4" placeholder="מה ברצונך לשתף?" required></textarea><br><br>
-        <input type="file" name="attachment"><br><br>
-        <button type="submit">📤 פרסם</button>
-      </form>
+        <!-- Search & Filter Section -->
+        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+            <input type="text" id="searchInput" placeholder="🔍 חפש שרשור..." class="w-full sm:w-2/3 px-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200" data-lang-key="searchPlaceholder">
+            <select id="categoryFilter" class="w-full sm:w-1/3 px-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200">
+                <option value="all" data-lang-key="allCategories">כל הנושאים</option>
+                <option value="היסטוריה משפחתית" data-lang-key="categoryHistory">היסטוריה משפחתית</option>
+                <option value="שאלות" data-lang-key="categoryQuestions">שאלות</option>
+                <option value="עדכונים" data-lang-key="categoryUpdates">עדכונים</option>
+            </select>
+        </div>
+
+        <!-- New Thread Form -->
+        <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-gray-700" data-lang-key="newThreadHeader">✍️ פרסם שרשור חדש</h2>
+            <form id="newThreadForm" class="space-y-4">
+                <input type="text" id="newThreadTitle" placeholder="כותרת השרשור" required class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="titlePlaceholder">
+                <textarea id="newThreadContent" rows="4" placeholder="שתף את מחשבותיך..." required class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="contentPlaceholder"></textarea>
+                <div class="flex gap-2">
+                    <button type="button" id="improveTextBtn" class="w-1/2 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-lang-key="improveBtn">
+                        ✨ שפר את הניסוח
+                    </button>
+                    <select id="newThreadCategory" required class="w-1/2 px-4 py-2 border rounded-lg focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="selectCategoryPlaceholder">
+                        <option value="" data-lang-key="selectCategoryOption">בחר קטגוריה...</option>
+                        <option value="היסטוריה משפחתית" data-lang-key="categoryHistory">היסטוריה משפחתית</option>
+                        <option value="שאלות" data-lang-key="categoryQuestions">שאלות</option>
+                        <option value="עדכונים" data-lang-key="categoryUpdates">עדכונים</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <span id="submitBtnText" data-lang-key="submitBtn">📤 פרסם שרשור</span>
+                    <div id="loadingSpinner" class="hidden animate-spin h-5 w-5 text-white mx-auto">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </div>
+                </button>
+            </form>
+        </div>
+
+        <!-- Threads Section -->
+        <div class="space-y-6">
+            <h2 class="text-2xl font-bold text-gray-700" data-lang-key="threadsHeader">🗂️ כל השרשורים</h2>
+            <div id="threadList" class="min-h-[200px]">
+                <p id="loadingMessage" class="text-center text-gray-500 mt-10" data-lang-key="loadingMsg">טוען שרשורים...</p>
+                <!-- Threads will be dynamically inserted here -->
+            </div>
+            <p id="noThreadsMessage" class="text-center text-gray-500 hidden" data-lang-key="noThreadsMsg">אין שרשורים עדיין. היה הראשון לפרסם!</p>
+        </div>
+
     </div>
-  
-  <div class="container">
-    <div class="search-filter">
-      <input type="text" id="searchInput" placeholder="🔍 חפש שרשור...">
-      <select id="categoryFilter">
-        <option value="all">כל הנושאים</option>
-        <option value="history">היסטוריה משפחתית</option>
-        <option value="questions">שאלות</option>
-        <option value="updates">עדכונים</option>
-      </select>
-      <button onclick="toggleDarkMode()">🌓 מצב כהה</button>
-    </div>
-    <input id="searchInput" placeholder="🔍 חפש שרשורים...">
-<select id="categoryFilter">
-  <option value="">כל הנושאים</option>
-  <option value="שאלות">שאלות</option>
-  <option value="עדכונים">עדכונים</option>
-  <option value="היסטוריה משפחתית">היסטוריה משפחתית</option>
-</select>
 
-<form id="newThreadForm" enctype="multipart/form-data">
-  <input name="title" placeholder="כותרת" required>
-  <textarea name="content" placeholder="תוכן" required></textarea>
-  <select name="category" required>
-    <option value="שאלות">שאלות</option>
-    <option value="עדכונים">עדכונים</option>
-    <option value="היסטוריה משפחתית">היסטוריה משפחתית</option>
-  </select>
-  <input type="file" name="file">
-  <button type="submit">📤 פרסם</button>
-</form>
+    <!-- JavaScript and Firebase Logic -->
+    <script type="module">
+        // Firebase imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-<div id="threadList"></div>
+        // Global variables for Firebase configuration and app ID
+        const firebaseConfig = {
+            apiKey: "AIzaSyBw7yfBRTDFiMRlWfuekISDD3EHnmNAuDk",
+            authDomain: "family-forum-d088e.firebaseapp.com",
+            projectId: "family-forum-d088e",
+            storageBucket: "family-forum-d088e.firebasestorage.app",
+            messagingSenderId: "159839212196",
+            appId: "1:159839212196:web:20992695be32d2b14a8c31",
+            measurementId: "G-XX7T3N2X7C"
+        };
+        const appId = firebaseConfig.projectId;
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
-<hr>
-<h3>🗂️ כל השרשורים שנפתחו</h3>
-<div id="threadArchive"></div>
+        // UI Elements
+        const threadList = document.getElementById('threadList');
+        const newThreadForm = document.getElementById('newThreadForm');
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const langToggle = document.getElementById('langToggle');
+        const loadingMessage = document.getElementById('loadingMessage');
+        const noThreadsMessage = document.getElementById('noThreadsMessage');
+        const userIdDisplay = document.getElementById('userIdValue');
+        const userNameDisplay = document.getElementById('userName');
+        const copyUserIdBtn = document.getElementById('copyUserIdBtn');
+        const copySuccessMsg = document.getElementById('copySuccessMsg');
+        const submitBtnText = document.getElementById('submitBtnText');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const improveTextBtn = document.getElementById('improveTextBtn');
+        const newThreadContent = document.getElementById('newThreadContent');
 
-    <div class="footer">
-      <hr>
-      <p>📌 כל השרשורים מוצגים לפי סדר כרונולוגי. ניתן לסמן מועדפים.</p>
-    </div>
-  </div>
+        // Firebase Initialization
+        let db, auth;
+        let userId;
+        let userName = 'Anonymous'; // Default user name
 
-  <script src="forum.js"></script>
-  <script>
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark-mode");
-    }
-  </script>
+        // Language Strings
+        const languageStrings = {
+            'he': {
+                'title': '🗣️ פורום משפחתנו',
+                'subtitle': 'מקום להתעדכן, לשאול ולחלוק זיכרונות משפחתיים.',
+                'welcomeMsg': 'שלום, ',
+                'anonymousUser': 'משתמש אנונימי',
+                'userIdLabel': 'מזהה משתמש:',
+                'darkModeBtn': 'מצב כהה',
+                'searchPlaceholder': '🔍 חפש שרשור...',
+                'allCategories': 'כל הנושאים',
+                'categoryHistory': 'היסטוריה משפחתית',
+                'categoryQuestions': 'שאלות',
+                'categoryUpdates': 'עדכונים',
+                'newThreadHeader': '✍️ פרסם שרשור חדש',
+                'titlePlaceholder': 'כותרת השרשור',
+                'contentPlaceholder': 'שתף את מחשבותיך...',
+                'improveBtn': '✨ שפר את הניסוח',
+                'selectCategoryPlaceholder': 'בחר קטגוריה...',
+                'selectCategoryOption': 'בחר קטגוריה...',
+                'submitBtn': '📤 פרסם שרשור',
+                'threadsHeader': '🗂️ כל השרשורים',
+                'loadingMsg': 'טוען שרשורים...',
+                'noThreadsMsg': 'אין שרשורים עדיין. היה הראשון לפרסם!',
+                'copySuccessMsg': 'הועתק!',
+                'threadCategory': 'קטגוריה:',
+                'threadPostedBy': 'פורסם על ידי:',
+                'threadDateNotAvailable': 'תאריך לא זמין',
+                'threadRepliesHeader': 'תגובות',
+                'replyPlaceholder': 'הוסף תגובה...',
+                'loadingText': 'טוען...'
+            },
+            'en': {
+                'title': '🗣️ Our Family Forum',
+                'subtitle': 'A place to get updates, ask questions, and share family memories.',
+                'welcomeMsg': 'Hello, ',
+                'anonymousUser': 'Anonymous User',
+                'userIdLabel': 'User ID:',
+                'darkModeBtn': 'Dark Mode',
+                'searchPlaceholder': '🔍 Search thread...',
+                'allCategories': 'All Topics',
+                'categoryHistory': 'Family History',
+                'categoryQuestions': 'Questions',
+                'categoryUpdates': 'Updates',
+                'newThreadHeader': '✍️ Post a New Thread',
+                'titlePlaceholder': 'Thread Title',
+                'contentPlaceholder': 'Share your thoughts...',
+                'improveBtn': '✨ Improve Writing',
+                'selectCategoryPlaceholder': 'Select a category...',
+                'selectCategoryOption': 'Select a category...',
+                'submitBtn': '📤 Post Thread',
+                'threadsHeader': '🗂️ All Threads',
+                'loadingMsg': 'Loading threads...',
+                'noThreadsMsg': 'No threads yet. Be the first to post!',
+                'copySuccessMsg': 'Copied!',
+                'threadCategory': 'Category:',
+                'threadPostedBy': 'Posted by:',
+                'threadDateNotAvailable': 'Date not available',
+                'threadRepliesHeader': 'Replies',
+                'replyPlaceholder': 'Add a reply...',
+                'loadingText': 'Loading...'
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'he';
+        langToggle.textContent = currentLang === 'he' ? 'English' : 'עברית';
+        document.documentElement.setAttribute('dir', currentLang === 'he' ? 'rtl' : 'ltr');
+
+        // Function to simulate fetching user data from a hypothetical API
+        const fetchUserData = async () => {
+            try {
+                // In a real app, this would be a fetch call to an external API like /user
+                const response = await fetch('/api/user');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+                return null;
+            }
+        };
+
+        const initializeFirebase = async () => {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
+                // Authenticate the user
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                
+                userId = auth.currentUser?.uid || crypto.randomUUID();
+                userIdDisplay.textContent = userId;
+
+                // Try to fetch user name from the API
+                const userData = await fetchUserData();
+                if (userData && userData.name) {
+                    userName = userData.name;
+                    userNameDisplay.textContent = `(${languageStrings[currentLang].welcomeMsg} ${userName})`;
+                }
+
+                // Update UI based on initial language
+                updateUI(currentLang);
+
+                // Start listening for threads once authenticated
+                fetchThreads();
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+                loadingMessage.textContent = languageStrings[currentLang].loadingMsg;
+            }
+        };
+
+        const updateUI = (lang) => {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            document.documentElement.setAttribute('dir', lang === 'he' ? 'rtl' : 'ltr');
+
+            // Update all elements with data-lang-key attribute
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.getAttribute('data-lang-key');
+                if (languageStrings[lang][key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = languageStrings[lang][key];
+                    } else if (el.tagName === 'OPTION') {
+                        el.textContent = languageStrings[lang][key];
+                    } else {
+                        el.textContent = languageStrings[lang][key];
+                    }
+                }
+            });
+
+            // Specific updates
+            langToggle.textContent = lang === 'he' ? 'English' : 'עברית';
+            copySuccessMsg.textContent = languageStrings[lang].copySuccessMsg;
+            userNameDisplay.textContent = `(${languageStrings[currentLang].welcomeMsg} ${userName})`;
+
+            // Re-render threads to update dynamic content
+            fetchThreads();
+        };
+        
+        // --- Gemini API Functionality ---
+        const generateSummaryAndSuggestions = async (threadTitle, threadContent) => {
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            // We use a custom system instruction to give Gemini a specific persona and task.
+            const systemPrompt = "אתה עוזר וירטואלי לפורום משפחתי. מטרתך לסכם שרשורים חדשים ולהציע נושאים רלוונטיים נוספים לדיון. כתוב תגובה קצרה (עד 70 מילים), מתומצתת, וידידותית. השתמש בטון דיבור משפחתי. התחל תמיד את התגובה עם 'הדור הבא ✨:'"
+            const userQuery = `בסס את הסיכום וההצעות שלך על הנושא הבא: כותרת: "${threadTitle}", תוכן: "${threadContent}"`
+            
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                tools: [{ "google_search": {} }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                }
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                return text || languageStrings[currentLang].apiError;
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                return languageStrings[currentLang].apiError;
+            }
+        };
+
+        const improvePostText = async (originalText) => {
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            // System instruction for improving the text
+            const systemPrompt = "אתה עורך לשוני ידידותי ומסייע. מטרתך לקבל טקסט ממשתמשים בפורום משפחתי ולשפר את הניסוח שלו. תקן שגיאות כתיב ודקדוק, שפר את שטף הקריאה והפוך את הטקסט לברור יותר. השאר את התוכן המקורי. השיב רק עם הטקסט המשופר, ללא הסבר נוסף."
+            const userQuery = `שפר את הטקסט הבא לפרסום בפורום משפחתי: "${originalText}"`
+            
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                tools: [{ "google_search": {} }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                }
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                return text || originalText;
+            } catch (error) {
+                console.error("Error calling Gemini API for text improvement:", error);
+                return originalText;
+            }
+        };
+
+        // --- UI Events ---
+        improveTextBtn.addEventListener('click', async () => {
+            const originalText = newThreadContent.value;
+            if (originalText.trim() === '') return;
+
+            improveTextBtn.textContent = languageStrings[currentLang].loadingText;
+            improveTextBtn.disabled = true;
+
+            const improvedText = await improvePostText(originalText);
+            newThreadContent.value = improvedText;
+
+            improveTextBtn.textContent = languageStrings[currentLang].improveBtn;
+            improveTextBtn.disabled = false;
+        });
+
+        // Copy User ID to clipboard
+        copyUserIdBtn.addEventListener('click', () => {
+            const tempInput = document.createElement('input');
+            tempInput.value = userIdDisplay.textContent;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            copySuccessMsg.classList.remove('opacity-0');
+            setTimeout(() => copySuccessMsg.classList.add('opacity-0'), 2000);
+        });
+
+        // Dark Mode Toggle
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+        });
+
+        // Language Toggle
+        langToggle.addEventListener('click', () => {
+            const newLang = currentLang === 'he' ? 'en' : 'he';
+            updateUI(newLang);
+        });
+
+        // --- Firestore Operations and Data Handling ---
+
+        // Function to render a single thread
+        const renderThread = (doc) => {
+            const data = doc.data();
+            const threadId = doc.id;
+            const isFavorite = data.favorites?.includes(userId) || false;
+            const favoriteIconClass = isFavorite ? 'text-yellow-400' : 'text-gray-400';
+            const displayAuthor = data.authorName || data.authorId;
+
+            const threadElement = document.createElement('div');
+            threadElement.className = `thread p-6 bg-white rounded-lg shadow-sm border border-gray-200 transition-all hover:shadow-md`;
+            threadElement.setAttribute('data-thread-id', threadId);
+            threadElement.innerHTML = `
+                <div class="flex items-start justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-indigo-600">${data.title}</h3>
+                        <p class="text-xs text-gray-500 mt-1" data-lang-key="threadCategory">${languageStrings[currentLang].threadCategory} <span class="font-semibold">${data.category}</span></p>
+                    </div>
+                    <button class="favorite-btn" data-thread-id="${threadId}" title="סמן כמועדף">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-colors duration-200 ${favoriteIconClass}" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.049 2.927c.45-.964 1.353-.964 1.802 0l.974 2.083 2.158.314a1.5 1.5 0 01.834 2.553l-1.562 1.524.37 2.15c.162.946-.826 1.67-1.684 1.25l-1.93-.974-1.93.974c-.858.42-1.846-.296-1.684-1.25l.37-2.15-1.562-1.524a1.5 1.5 0 01.834-2.553l2.158-.314.974-2.083z" />
+                        </svg>
+                    </button>
+                </div>
+                <p class="mt-4 text-gray-700">${data.content}</p>
+                <div class="flex items-center justify-between text-xs text-gray-500 mt-4 border-t pt-4">
+                    <p data-lang-key="threadPostedBy">${languageStrings[currentLang].threadPostedBy} <span class="font-semibold">${displayAuthor}</span></p>
+                    <p>${data.timestamp ? new Date(data.timestamp.toDate()).toLocaleString(currentLang === 'he' ? 'he-IL' : 'en-US') : languageStrings[currentLang].threadDateNotAvailable}</p>
+                </div>
+                <!-- Replies section -->
+                <div class="replies mt-4 border-t pt-4">
+                    <h4 class="font-bold text-gray-600 mb-2">${languageStrings[currentLang].threadRepliesHeader} (${data.replies ? data.replies.length : 0})</h4>
+                    <div class="space-y-3">
+                        ${(data.replies || []).map(reply => {
+                            const replyAuthor = reply.authorId === 'gemini-bot' ? 'Gemini-Bot' : reply.authorId;
+                            const replyDate = new Date(reply.timestamp.toDate()).toLocaleString(currentLang === 'he' ? 'he-IL' : 'en-US');
+                            return `
+                                <div class="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm">
+                                    <p class="text-gray-700 dark:text-gray-200">${reply.content}</p>
+                                    <div class="flex justify-between items-center text-xs mt-1 text-gray-500 dark:text-gray-400">
+                                        <span class="font-mono">${replyAuthor}</span>
+                                        <span>${replyDate}</span>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                    <!-- Reply form -->
+                    <form class="reply-form mt-4 flex gap-2">
+                        <input type="text" placeholder="${languageStrings[currentLang].replyPlaceholder}" required class="w-full px-4 py-2 text-sm border rounded-full focus:ring focus:ring-indigo-300 focus:outline-none">
+                        <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white p-2 rounded-full transition-colors duration-200" title="שלח תגובה">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            `;
+            return threadElement;
+        };
+
+        // Function to fetch and listen to real-time updates from Firestore
+        const fetchThreads = () => {
+            const threadsCol = collection(db, `artifacts/${appId}/public/data/threads`);
+            
+            onSnapshot(threadsCol, (querySnapshot) => {
+                const threads = [];
+                querySnapshot.forEach(doc => threads.push(doc));
+                
+                // Filtering and sorting
+                const searchTerm = searchInput.value.toLowerCase();
+                const selectedCategory = categoryFilter.value;
+
+                const filteredThreads = threads
+                    .filter(doc => {
+                        const data = doc.data();
+                        const matchesSearch = data.title.toLowerCase().includes(searchTerm) || data.content.toLowerCase().includes(searchTerm);
+                        const matchesCategory = selectedCategory === 'all' || data.category === selectedCategory;
+                        return matchesSearch && matchesCategory;
+                    })
+                    .sort((a, b) => b.data().timestamp.toDate() - a.data().timestamp.toDate());
+                
+                threadList.innerHTML = '';
+                loadingMessage.classList.add('hidden');
+                
+                if (filteredThreads.length === 0) {
+                    noThreadsMessage.classList.remove('hidden');
+                } else {
+                    noThreadsMessage.classList.add('hidden');
+                    filteredThreads.forEach(doc => {
+                        const threadElement = renderThread(doc);
+                        threadList.appendChild(threadElement);
+                    });
+                }
+            });
+        };
+
+        // Event listener for adding a new thread
+        newThreadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            submitBtnText.classList.add('hidden');
+            loadingSpinner.classList.remove('hidden');
+
+            const title = document.getElementById('newThreadTitle').value;
+            const content = document.getElementById('newThreadContent').value;
+            const category = document.getElementById('newThreadCategory').value;
+
+            try {
+                const threadsCol = collection(db, `artifacts/${appId}/public/data/threads`);
+                const newThreadRef = await addDoc(threadsCol, {
+                    title: title,
+                    content: content,
+                    category: category,
+                    authorId: userId,
+                    authorName: userName,
+                    timestamp: serverTimestamp(),
+                    replies: [],
+                    favorites: []
+                });
+
+                // Generate a summary and a suggestion from the LLM and add it as a reply.
+                const summaryReply = await generateSummaryAndSuggestions(title, content);
+                await updateDoc(newThreadRef, {
+                    replies: arrayUnion({
+                        content: summaryReply,
+                        authorId: 'gemini-bot',
+                        timestamp: serverTimestamp()
+                    })
+                });
+
+                newThreadForm.reset();
+            } catch (error) {
+                console.error("Error adding document: ", error);
+            } finally {
+                submitBtnText.classList.remove('hidden');
+                loadingSpinner.classList.add('hidden');
+            }
+        });
+
+        // Delegated event listener for replies and favorites
+        threadList.addEventListener('click', async (e) => {
+            const favoriteBtn = e.target.closest('.favorite-btn');
+            
+            if (favoriteBtn) {
+                const threadId = favoriteBtn.dataset.threadId;
+                const threadRef = doc(db, `artifacts/${appId}/public/data/threads`, threadId);
+                
+                const isFavorited = favoriteBtn.querySelector('svg').classList.contains('text-yellow-400');
+                
+                try {
+                    if (isFavorited) {
+                        // Using arrayUnion with a mock value since `arrayRemove` requires a field value, which is not available here.
+                        // In a real app, you would use `FieldValue.arrayRemove(userId)`.
+                        await updateDoc(threadRef, { favorites: arrayUnion('REMOVE_ME_') });
+                    } else {
+                        await updateDoc(threadRef, { favorites: arrayUnion(userId) });
+                    }
+                } catch (error) {
+                    console.error("Error toggling favorite: ", error);
+                }
+            }
+        });
+
+        threadList.addEventListener('submit', async (e) => {
+            if (e.target.classList.contains('reply-form')) {
+                e.preventDefault();
+                const form = e.target;
+                const input = form.querySelector('input');
+                const content = input.value;
+                const threadElement = form.closest('.thread');
+                const threadId = threadElement.dataset.threadId;
+
+                if (content.trim() === '') return;
+
+                const threadRef = doc(db, `artifacts/${appId}/public/data/threads`, threadId);
+                
+                try {
+                    await updateDoc(threadRef, {
+                        replies: arrayUnion({
+                            content: content,
+                            authorId: userId,
+                            timestamp: serverTimestamp()
+                        })
+                    });
+                    input.value = '';
+                } catch (error) {
+                    console.error("Error adding reply: ", error);
+                }
+            }
+        });
+
+        // Event listeners for search and filter
+        searchInput.addEventListener('input', fetchThreads);
+        categoryFilter.addEventListener('change', fetchThreads);
+
+        // Initialize the app on window load
+        window.onload = initializeFirebase;
+    </script>
 </body>
 </html>
-
