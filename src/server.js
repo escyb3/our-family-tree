@@ -168,6 +168,22 @@ app.get('/api/user', async (req, res) => {
     res.status(500).json({ error: 'שגיאת שרת' });
   }
 });
+try {
+  const decoded = await admin.auth().verifyIdToken(idToken);
+  console.log("✅ ID Token verified:", decoded);
+
+  const uid = decoded.uid;
+  const profileDoc = await admin.firestore().collection('user_profiles').doc(uid).get();
+
+  if (!profileDoc.exists) {
+    console.error("❌ No profile found for UID:", uid);
+    return res.status(401).json({ success: false, message: "פרופיל משתמש לא נמצא" });
+  }
+} catch (err) {
+  console.error("❌ Firebase token verify error:", err);
+  return res.status(401).json({ success: false, message: "אימות נכשל" });
+}
+
 
 
 // ✅ התנתקות
