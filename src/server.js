@@ -22,67 +22,54 @@ const app = express();
 // חיבור לתרגום של גוגל (משתמש במפתח מתוך .env)
 const translate = new Translate({ key: process.env.GOOGLE_API_KEY });
 
-// כדי ש-req.body יעבוד עם JSON
+// -------------------------
+// Middleware
+// -------------------------
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Session middleware
 app.use(session({
   secret: process.env.SESSION_SECRET || "supersecret",
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false } // ברנדר בלי HTTPS לוקאלי - secure=false
+  cookie: { secure: false } // local dev
 }));
+
 // -------------------------
-// Firebase Admin SDK
+// Firebase Admin
 // -------------------------
 const admin = require("firebase-admin");
-
 let serviceAccount;
 
 if (process.env.FIREBASE_SERVICE_ACCOUNT) {
-  // Production (Render) – לוקחים מה־Environment Variable
   serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 } else {
-  // Development (מקומי) – לוקחים מהקובץ
   serviceAccount = require("./serviceAccountKey.json");
 }
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  storageBucket: "our-family-tree-5c3cc.appspot.com" // שים לב לסיומת appspot.com
+  storageBucket: "our-family-tree-5c3cc.appspot.com"
 });
 
-const auth = admin.auth();            // גישה ל-Firebase Auth
-const firestore = admin.firestore();  // גישה ל-Firestore
-const bucket = admin.storage().bucket(); // גישה ל-Storage
-const db = firestore;                 // אם אתה רוצה להשתמש גם כ־db
+const firestore = admin.firestore();
 
-
-// =========================
-// Auth & Session (בטוח)
-// =========================
+// -------------------------
+// Auth routes
+// -------------------------
 app.post('/api/login', async (req, res) => {
-  const { idToken } = req.body; // עכשיו מקבלים ID Token מהלקוח
-
-  if (!idToken) {
-    return res.status(400).json({ success: false, message: "Missing ID Token" });
-  }
+  const { idToken } = req.body;
+  if (!idToken) return res.status(400).json({ success: false, message: "Missing ID Token" });
 
   try {
-    // אימות ה-ID Token באמצעות Firebase Admin
     const decoded = await admin.auth().verifyIdToken(idToken);
     const uid = decoded.uid;
 
-    // שליפת פרופיל המשתמש מ-Firestore
-    const profileDoc = await admin.firestore().collection('user_profiles').doc(uid).get();
-    if (!profileDoc.exists) {
-      return res.status(401).json({ success: false, message: "פרופיל משתמש לא נמצא" });
-    }
+    const profileDoc = await firestore.collection('user_profiles').doc(uid).get();
+    if (!profileDoc.exists) return res.status(401).json({ success: false, message: "פרופיל משתמש לא נמצא" });
 
     const profileData = profileDoc.data();
 
-    // שמירה בסשן
     req.session.user = {
       uid,
       email: decoded.email,
@@ -94,80 +81,59 @@ app.post('/api/login', async (req, res) => {
     res.json({ success: true, user: req.session.user });
 
   } catch (err) {
-    console.error("❌ שגיאה בתהליך ההתחברות:", err);
+    console.error("❌ Firebase token verify error:", err);
     res.status(401).json({ success: false, message: "אימות נכשל" });
   }
 });
 
-
-// middleware לבדיקה אם המשתמש מחובר
-function requireLogin(req, res, next) {
-  if (!req.session.user) {
-    return res.status(401).json({ message: "צריך להתחבר כדי לגשת" });
-  }
-  next();
-}
-
-// middleware לבדיקה אם המשתמש הוא אדמין
-function requireAdmin(req, res, next) {
-  requireLogin(req, res, () => {
-    if (req.session.user.role !== 'admin') {
-      return res.status(403).json({ message: "אין לך הרשאה" });
-    }
-    next();
-  });
-}
-// =========================
-// ✅ מחזיר את המשתמש המחובר
-// =========================
 app.get('/api/user', async (req, res) => {
   try {
-    // בדיקה בסיסית אם ה-session והמשתמש קיימים
-    if (!req.session || !req.session.user || !req.session.user.uid) {
-      return res.status(401).json({ error: 'לא מחובר' });
-    }
+    if (!req.session.user?.uid) return res.status(401).json({ error: 'לא מחובר' });
 
     const uid = req.session.user.uid;
 
-    // אם כבר שמרנו פרופיל ב-session, נחסוך פנייה נוספת
     if (req.session.user.profile) {
-      return res.json({
-        user: { uid, email: req.session.user.email },
-        profile: req.session.user.profile
-      });
+      return res.json({ user: { uid, email: req.session.user.email }, profile: req.session.user.profile });
     }
 
-    // שלב 1: שלוף נתוני משתמש מ-Firebase Auth
     const userRecord = await admin.auth().getUser(uid);
-
-    // שלב 2: שלוף פרופיל מ-Firestore
-    const doc = await admin.firestore().collection('user_profiles').doc(uid).get();
-    if (!doc.exists) {
-      return res.status(401).json({ error: 'פרופיל משתמש לא נמצא.' });
-    }
+    const doc = await firestore.collection('user_profiles').doc(uid).get();
+    if (!doc.exists) return res.status(401).json({ error: 'פרופיל משתמש לא נמצא.' });
 
     const profileData = doc.data();
-
-    // שמירה ב-session
-    req.session.user.email = userRecord.email;
     req.session.user.profile = profileData;
+    req.session.save(() => {});
 
-    // שמירה סינכרונית של session
-    req.session.save(err => {
-      if (err) console.error("Error saving session:", err);
-    });
-
-    // החזרת המידע ללקוח
-    res.json({
-      user: { uid: userRecord.uid, email: userRecord.email },
-      profile: profileData
-    });
+    res.json({ user: { uid, email: userRecord.email }, profile: profileData });
 
   } catch (err) {
     console.error('Error in /api/user:', err);
     res.status(500).json({ error: 'שגיאת שרת' });
   }
 });
+
+app.post('/api/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) return res.status(500).json({ error: 'שגיאה בעת התנתקות' });
+    res.clearCookie('connect.sid');
+    res.json({ message: 'התנתקת בהצלחה' });
+  });
+});
+
+// -------------------------
+// Middleware
+// -------------------------
+function requireLogin(req, res, next) {
+  if (!req.session.user?.uid) return res.status(401).json({ message: 'צריך להתחבר כדי לגשת' });
+  next();
+}
+
+function requireAdmin(req, res, next) {
+  requireLogin(req, res, () => {
+    if (req.session.user.role !== 'admin') return res.status(403).json({ message: "אין לך הרשאה" });
+    next();
+  });
+}
 try {
   const decoded = await admin.auth().verifyIdToken(idToken);
   console.log("✅ ID Token verified:", decoded);
@@ -183,6 +149,7 @@ try {
   console.error("❌ Firebase token verify error:", err);
   return res.status(401).json({ success: false, message: "אימות נכשל" });
 }
+
 
 
 
