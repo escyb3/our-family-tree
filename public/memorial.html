@@ -430,7 +430,7 @@
             let chatHistory = [];
             chatHistory.push({ role: "user", parts: [{ text: prompt }] });
             const payload = { contents: chatHistory };
-            const apiKey = "" 
+            const apiKey = "AIzaSyDKf1swODPkqYKl8iT97sF4y7Id54Q8PvU" 
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
             let response;
             for (let i = 0; i < 3; i++) {
