@@ -89,6 +89,17 @@
                 </button>
             </div>
         </div>
+        
+        <!-- User Name Section -->
+        <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 mb-8 flex flex-col sm:flex-row items-center gap-4">
+            <h2 class="text-2xl font-bold text-gray-700 mb-2 sm:mb-0" data-lang-key="userNameSection">👤 שם המשתמש שלך</h2>
+            <div class="flex flex-grow gap-2 w-full">
+                <input type="text" id="userNameInput" placeholder="הכנס את שמך" class="flex-grow px-4 py-2 border rounded-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200" data-lang-key="userNamePlaceholder">
+                <button id="saveUserNameBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-lang-key="saveBtn">
+                    שמור
+                </button>
+            </div>
+        </div>
 
         <!-- Search & Filter Section -->
         <div class="flex flex-col sm:flex-row gap-4 mb-8">
@@ -146,8 +157,8 @@
     <script type="module">
         // Firebase imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, doc, updateDoc, arrayUnion, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Global variables for Firebase configuration and app ID
         const firebaseConfig = {
@@ -179,6 +190,8 @@
         const loadingSpinner = document.getElementById('loadingSpinner');
         const improveTextBtn = document.getElementById('improveTextBtn');
         const newThreadContent = document.getElementById('newThreadContent');
+        const userNameInput = document.getElementById('userNameInput');
+        const saveUserNameBtn = document.getElementById('saveUserNameBtn');
 
         // Firebase Initialization
         let db, auth;
@@ -199,6 +212,9 @@
                 'categoryHistory': 'היסטוריה משפחתית',
                 'categoryQuestions': 'שאלות',
                 'categoryUpdates': 'עדכונים',
+                'userNameSection': '👤 שם המשתמש שלך',
+                'userNamePlaceholder': 'הכנס את שמך',
+                'saveBtn': 'שמור',
                 'newThreadHeader': '✍️ פרסם שרשור חדש',
                 'titlePlaceholder': 'כותרת השרשור',
                 'contentPlaceholder': 'שתף את מחשבותיך...',
@@ -215,7 +231,8 @@
                 'threadDateNotAvailable': 'תאריך לא זמין',
                 'threadRepliesHeader': 'תגובות',
                 'replyPlaceholder': 'הוסף תגובה...',
-                'loadingText': 'טוען...'
+                'loadingText': 'טוען...',
+                'nameSaveSuccess': 'השם נשמר בהצלחה!'
             },
             'en': {
                 'title': '🗣️ Our Family Forum',
@@ -229,6 +246,9 @@
                 'categoryHistory': 'Family History',
                 'categoryQuestions': 'Questions',
                 'categoryUpdates': 'Updates',
+                'userNameSection': '👤 Your User Name',
+                'userNamePlaceholder': 'Enter your name',
+                'saveBtn': 'Save',
                 'newThreadHeader': '✍️ Post a New Thread',
                 'titlePlaceholder': 'Thread Title',
                 'contentPlaceholder': 'Share your thoughts...',
@@ -245,7 +265,8 @@
                 'threadDateNotAvailable': 'Date not available',
                 'threadRepliesHeader': 'Replies',
                 'replyPlaceholder': 'Add a reply...',
-                'loadingText': 'Loading...'
+                'loadingText': 'Loading...',
+                'nameSaveSuccess': 'Name saved successfully!'
             }
         };
 
@@ -253,50 +274,46 @@
         langToggle.textContent = currentLang === 'he' ? 'English' : 'עברית';
         document.documentElement.setAttribute('dir', currentLang === 'he' ? 'rtl' : 'ltr');
 
-        // Function to simulate fetching user data from a hypothetical API
-        const fetchUserData = async () => {
-            try {
-                // In a real app, this would be a fetch call to an external API like /user
-                const response = await fetch('/api/user');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                return data;
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-                return null;
-            }
-        };
-
         const initializeFirebase = async () => {
             try {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
                 
-                // Authenticate the user
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-                
-                userId = auth.currentUser?.uid || crypto.randomUUID();
-                userIdDisplay.textContent = userId;
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        userId = user.uid;
+                    } else {
+                        // Sign in anonymously if no user is found
+                        if (initialAuthToken) {
+                            await signInWithCustomToken(auth, initialAuthToken);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                        userId = auth.currentUser?.uid || crypto.randomUUID();
+                    }
 
-                // Try to fetch user name from the API
-                const userData = await fetchUserData();
-                if (userData && userData.name) {
-                    userName = userData.name;
-                    userNameDisplay.textContent = `(${languageStrings[currentLang].welcomeMsg} ${userName})`;
-                }
+                    userIdDisplay.textContent = userId;
+                    
+                    // Fetch user name from Firestore
+                    const userDocRef = doc(db, `artifacts/${appId}/public/data/users`, userId);
+                    const userDocSnap = await getDoc(userDocRef);
+                    
+                    if (userDocSnap.exists() && userDocSnap.data().name) {
+                        userName = userDocSnap.data().name;
+                        userNameDisplay.textContent = `(${languageStrings[currentLang].welcomeMsg} ${userName})`;
+                        userNameInput.value = userName;
+                    } else {
+                         userName = languageStrings[currentLang].anonymousUser;
+                         userNameDisplay.textContent = `(${languageStrings[currentLang].welcomeMsg} ${userName})`;
+                    }
 
-                // Update UI based on initial language
-                updateUI(currentLang);
+                    // Update UI based on initial language
+                    updateUI(currentLang);
 
-                // Start listening for threads once authenticated
-                fetchThreads();
+                    // Start listening for threads once authenticated
+                    fetchThreads();
+                });
             } catch (error) {
                 console.error("Error initializing Firebase:", error);
                 loadingMessage.textContent = languageStrings[currentLang].loadingMsg;
@@ -356,10 +373,10 @@
                 });
                 const result = await response.json();
                 const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
-                return text || languageStrings[currentLang].apiError;
+                return text || 'שגיאה בקריאה ל-API של ג׳מיני.';
             } catch (error) {
                 console.error("Error calling Gemini API:", error);
-                return languageStrings[currentLang].apiError;
+                return 'שגיאה בקריאה ל-API של ג׳מיני.';
             }
         };
 
@@ -407,6 +424,22 @@
 
             improveTextBtn.textContent = languageStrings[currentLang].improveBtn;
             improveTextBtn.disabled = false;
+        });
+
+        // Save User Name
+        saveUserNameBtn.addEventListener('click', async () => {
+            const newName = userNameInput.value.trim();
+            if (newName === '') return;
+
+            try {
+                const userDocRef = doc(db, `artifacts/${appId}/public/data/users`, userId);
+                await setDoc(userDocRef, { name: newName });
+                userName = newName;
+                userNameDisplay.textContent = `(${languageStrings[currentLang].welcomeMsg} ${userName})`;
+                console.log('User name saved successfully!');
+            } catch (error) {
+                console.error("Error saving user name: ", error);
+            }
         });
 
         // Copy User ID to clipboard
@@ -468,7 +501,7 @@
                     <h4 class="font-bold text-gray-600 mb-2">${languageStrings[currentLang].threadRepliesHeader} (${data.replies ? data.replies.length : 0})</h4>
                     <div class="space-y-3">
                         ${(data.replies || []).map(reply => {
-                            const replyAuthor = reply.authorId === 'gemini-bot' ? 'Gemini-Bot' : reply.authorId;
+                            const replyAuthor = reply.authorId === 'gemini-bot' ? 'Gemini-Bot' : (reply.authorName || reply.authorId);
                             const replyDate = new Date(reply.timestamp.toDate()).toLocaleString(currentLang === 'he' ? 'he-IL' : 'en-US');
                             return `
                                 <div class="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm">
@@ -616,6 +649,7 @@
                         replies: arrayUnion({
                             content: content,
                             authorId: userId,
+                            authorName: userName,
                             timestamp: serverTimestamp()
                         })
                     });
