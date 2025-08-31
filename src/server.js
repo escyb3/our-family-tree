@@ -18,6 +18,8 @@ const fetch = require("node-fetch");
 const crypto = require("crypto");
 const cors = require("cors");
 const app = express();
+const jwt = require("jsonwebtoken");
+const SECRET = process.env.JWT_SECRET || "secretKey";
 
 // חיבור לתרגום של גוגל (משתמש במפתח מתוך .env)
 const translate = new Translate({ key: process.env.GOOGLE_API_KEY });
