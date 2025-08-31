@@ -7,82 +7,120 @@
   <script src="https://cdn.jsdelivr.net/npm/familytreejs@latest/familytree.min.js"></script>
   <style>
     html, body { margin: 0; padding: 0; height: 100%; }
-    #tree { width: 100%; height: 100vh; direction: ltr; }
+    #controls { padding: 10px; background: #f9f9f9; }
+    #tree { width: 100%; height: calc(100vh - 50px); direction: ltr; }
+    input[type="text"] { padding: 5px; width: 200px; }
+    /* צבעים לפי צד משפחתי */
+    .benAbou .node { background-color: #ffcccc !important; }
+    .elharrar .node { background-color: #ccffcc !important; }
   </style>
 </head>
 <body>
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-  // הגדרות Firebase שלך
-  const firebaseConfig = {
-    apiKey: "API_KEY",
-    authDomain: "PROJECT_ID.firebaseapp.com",
-    projectId: "PROJECT_ID",
-  };
+<div id="controls">
+  <input type="text" id="searchInput" placeholder="חפש שם...">
+</div>
+<div id="tree"></div>
 
-  // אתחול
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-  // פונקציה לטעינת העץ
-  async function loadFamilyTree(user) {
-    try {
-      // קבלת ID Token מהמשתמש
-      const token = await user.getIdToken();
+const app = initializeApp({});
+const auth = getAuth(app);
 
-      // בקשה לשרת
-      const res = await fetch("/api/tree", {
-        headers: { "Authorization": `Bearer ${token}` },
-      });
+let chart = null;
 
-      if (!res.ok) {
-        throw new Error("בעיה בהרשאות: " + res.status);
-      }
+async function loadFamilyTree(user) {
+  try {
+    const token = await user.getIdToken(true);
+    console.log("ID Token שנשלח לשרת:", token);
 
-      const data = await res.json();
-      console.log("קבצים מורשים:", data.files);
+    const res = await fetch("/api/tree", {
+      headers: { "Authorization": `Bearer ${token}` },
+    });
 
-      const container = document.getElementById("tree-container");
-      container.innerHTML = ""; // איפוס
+    if (!res.ok) throw new Error("בעיה בהרשאות: " + res.status);
 
-      if (data.files && data.files.length > 0) {
-        for (const file of data.files) {
-          // טוען את ה־JSON של העץ
-          const treeData = await fetch(`/trees/${file}`).then(r => r.json());
+    const data = await res.json();
+    console.log("קבצים מורשים:", data.files);
 
-          // הצגה – אפשר להחליף בפונקציית renderTree שלך
-          const treeDiv = document.createElement("pre");
-          treeDiv.textContent = `עץ: ${file}\n` + JSON.stringify(treeData, null, 2);
-          container.appendChild(treeDiv);
+    if (!data.files || data.files.length === 0) {
+      document.getElementById("tree").innerHTML = "<p>לא הוגדר צד משפחתי למשתמש.</p>";
+      return;
+    }
 
-          // אם יש לך פונקציה אמיתית שמציירת עץ:
-          // renderTree(treeData);
-        }
+    // נטען רק הקובץ הראשון לפי צד המשתמש
+    const file = data.files[0];
+    const treeData = await fetch(`/trees/${file}`).then(r => r.json());
+
+    // יצירת גרף FamilyTreeJS
+    chart = new FamilyTree(document.getElementById("tree"), {
+      template: "hugo",
+      enableSearch: false,
+      nodeBinding: {
+        field_0: "name",
+        field_1: "details",
+        img_0: "photo"
+      },
+      nodes: treeData.nodes || []
+    });
+
+    // Tooltip בעת מעבר עכבר
+    chart.on('mouseover', function(sender, node){
+      node.nodeContent = `${node.name}\n${node.details || ''}`;
+    });
+
+    // חלון מידע בלחיצה
+    chart.on('click', function(sender, node){
+      let info = `שם: ${node.name}\nפרטים: ${node.details || 'ללא פרטים'}\nID: ${node.id}`;
+      if(node.photo){
+        const imgWin = window.open('', '_blank');
+        imgWin.document.write(`<h3>${node.name}</h3><img src="${node.photo}" style="max-width:100%"><p>${node.details || ''}</p>`);
       } else {
-        container.innerHTML = "<p>לא הוגדר צד משפחתי למשתמש.</p>";
+        alert(info);
       }
-    } catch (err) {
-      console.error("שגיאה בטעינת עץ:", err);
-      document.getElementById("tree-container").innerHTML = 
-        "<p>שגיאה בטעינת העץ</p>";
-    }
-  }
+    });
 
-  // נעקוב אחרי מצב ההתחברות
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log("משתמש מחובר:", user.email);
-      loadFamilyTree(user);
-    } else {
-      console.log("אין משתמש מחובר");
-      document.getElementById("tree-container").innerHTML = 
-        "<p>אנא התחבר כדי לראות את העץ</p>";
-    }
-  });
+    // צבעים לפי צד משפחתי
+    chart.nodes.forEach(n => {
+      if(n.side === 'Ben Abou') n.tags = ['benAbou'];
+      if(n.side === 'Elharrar') n.tags = ['elharrar'];
+      if(n.side === 'Malka' ) n.tags = [ 'malka' ];
+    });
+
+    // זום ומרכז
+    chart.zoom(0.8);
+    chart.center();
+
+    // חיפוש שמות
+    const searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener("input", () => {
+      const term = searchInput.value.toLowerCase();
+      chart.search(term);
+    });
+
+    console.log("עץ משפחתי מוצג בהצלחה");
+
+  } catch (err) {
+    console.error("שגיאה בטעינת עץ:", err);
+    document.getElementById("tree").innerHTML =
+      "<p>שגיאה בטעינת העץ או המשתמש לא מחובר</p>";
+  }
+}
+
+onAuthStateChanged(auth, async (user) => {
+  const container = document.getElementById("tree");
+  if (user) {
+    console.log("משתמש מחובר:", user.email);
+    container.innerHTML = "<p>טוען עץ משפחתי...</p>";
+    await loadFamilyTree(user);
+  } else {
+    console.log("אין משתמש מחובר");
+    container.innerHTML = "<p>אנא התחבר כדי לראות את העץ</p>";
+  }
+});
 </script>
-<div id="tree-container"></div>
-  <div id="tree"></div>
+
 </body>
 </html>
