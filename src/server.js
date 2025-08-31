@@ -263,6 +263,23 @@ app.get("/api/messages", requireLogin, async (req, res) => {
     res.json({ messages });
 });
 
+// Middleware לאימות Firebase ID Token
+async function authenticate(req, res, next) {
+  try {
+    const idToken = req.headers.authorization?.split("Bearer ")[1];
+    if (!idToken) {
+      return res.status(401).json({ error: "חסר טוקן" });
+    }
+
+    const decoded = await admin.auth().verifyIdToken(idToken);
+    req.user = decoded; // לשימוש בהמשך
+    next();
+  } catch (err) {
+    console.error("שגיאת אימות:", err);
+    res.status(401).json({ error: "טוקן לא תקין" });
+  }
+}
+
 // API שמחזיר את הצד/צדדים המורשים
 app.get("/api/tree", authenticate, async (req, res) => {
   try {
