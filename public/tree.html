@@ -11,7 +11,78 @@
   </style>
 </head>
 <body>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+  // הגדרות Firebase שלך
+  const firebaseConfig = {
+    apiKey: "API_KEY",
+    authDomain: "PROJECT_ID.firebaseapp.com",
+    projectId: "PROJECT_ID",
+  };
+
+  // אתחול
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // פונקציה לטעינת העץ
+  async function loadFamilyTree(user) {
+    try {
+      // קבלת ID Token מהמשתמש
+      const token = await user.getIdToken();
+
+      // בקשה לשרת
+      const res = await fetch("/api/tree", {
+        headers: { "Authorization": `Bearer ${token}` },
+      });
+
+      if (!res.ok) {
+        throw new Error("בעיה בהרשאות: " + res.status);
+      }
+
+      const data = await res.json();
+      console.log("קבצים מורשים:", data.files);
+
+      const container = document.getElementById("tree-container");
+      container.innerHTML = ""; // איפוס
+
+      if (data.files && data.files.length > 0) {
+        for (const file of data.files) {
+          // טוען את ה־JSON של העץ
+          const treeData = await fetch(`/trees/${file}`).then(r => r.json());
+
+          // הצגה – אפשר להחליף בפונקציית renderTree שלך
+          const treeDiv = document.createElement("pre");
+          treeDiv.textContent = `עץ: ${file}\n` + JSON.stringify(treeData, null, 2);
+          container.appendChild(treeDiv);
+
+          // אם יש לך פונקציה אמיתית שמציירת עץ:
+          // renderTree(treeData);
+        }
+      } else {
+        container.innerHTML = "<p>לא הוגדר צד משפחתי למשתמש.</p>";
+      }
+    } catch (err) {
+      console.error("שגיאה בטעינת עץ:", err);
+      document.getElementById("tree-container").innerHTML = 
+        "<p>שגיאה בטעינת העץ</p>";
+    }
+  }
+
+  // נעקוב אחרי מצב ההתחברות
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("משתמש מחובר:", user.email);
+      loadFamilyTree(user);
+    } else {
+      console.log("אין משתמש מחובר");
+      document.getElementById("tree-container").innerHTML = 
+        "<p>אנא התחבר כדי לראות את העץ</p>";
+    }
+  });
+</script>
+<div id="tree-container"></div>
   <div id="tree"></div>
-  <script src="tree-loader.js"></script>
 </body>
 </html>
