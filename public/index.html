@@ -404,32 +404,39 @@
             });
 
             // עדכון פרטי משתמש
-            const profileDiv = document.getElementById('user-profile-details');
-            if (profileDiv) {
-                if (isLoggedIn) {
-                    let familySideHTML = user.familySide || "";
-                    if (user.familySideLink) {
-                        familySideHTML = `<a href="${user.familySideLink}" target="_blank" class="text-blue-500 hover:underline transition-colors">${user.familySide}</a>`;
-                    }
-                    profileDiv.innerHTML = `
-                        <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                            <span class="font-bold text-sm text-gray-800">${texts.loggedInAs}</span>
-                            <span class="text-sm font-semibold text-blue-800">${user.username}</span>
-                        </div>
-                        <div class="flex items-center space-x-2 rtl:space-x-reverse mt-1">
-                            <span class="font-bold text-sm text-gray-800">${texts.role}</span>
-                            <span class="text-sm font-medium text-gray-600">${user.role}</span>
-                        </div>
-                        <div class="flex items-center space-x-2 rtl:space-x-reverse mt-1">
-                            <span class="font-bold text-sm text-gray-800">${texts.familySide}</span>
-                            <span class="text-sm font-medium text-gray-600">${familySideHTML}</span>
-                        </div>
-                    `;
-                } else {
-                    profileDiv.innerHTML = `<a href="/login.html" class="font-bold text-blue-900 hover:underline transition-colors">${texts.menus[texts.menus.length - 2]}</a>`;
-                }
-            }
-        };
+          const profileDiv = document.getElementById('user-profile-details');
+if (profileDiv) {
+    if (isLoggedIn && user) {
+        // שימוש בערך קיים או ברירת מחדל
+        const displayName = user.username || user.email || "Unknown User";
+        const displayRole = user.role || "User";
+        let displaySide = user.familySide || "Unknown";
+
+        // אם יש קישור לצד המשפחתי
+        if (user.familySideLink) {
+            displaySide = `<a href="${user.familySideLink}" target="_blank" class="text-blue-500 hover:underline transition-colors">${displaySide}</a>`;
+        }
+
+        profileDiv.innerHTML = `
+            <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                <span class="font-bold text-sm text-gray-800">${translations[currentLang].loggedInAs}</span>
+                <span class="text-sm font-semibold text-blue-800">${displayName}</span>
+            </div>
+            <div class="flex items-center space-x-2 rtl:space-x-reverse mt-1">
+                <span class="font-bold text-sm text-gray-800">${translations[currentLang].role}</span>
+                <span class="text-sm font-medium text-gray-600">${displayRole}</span>
+            </div>
+            <div class="flex items-center space-x-2 rtl:space-x-reverse mt-1">
+                <span class="font-bold text-sm text-gray-800">${translations[currentLang].familySide}</span>
+                <span class="text-sm font-medium text-gray-600">${displaySide}</span>
+            </div>
+        `;
+    } else {
+        // משתמש אורח
+        profileDiv.innerHTML = `<a href="/login.html" class="font-bold text-blue-900 hover:underline transition-colors">${translations[currentLang].guest}</a>`;
+    }
+}
+
 
         document.addEventListener("DOMContentLoaded", () => {
             const langSelector = document.getElementById("langSelector");
