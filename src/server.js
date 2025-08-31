@@ -263,6 +263,37 @@ app.get("/api/messages", requireLogin, async (req, res) => {
     res.json({ messages });
 });
 
+// API שמחזיר את הצד/צדדים המורשים
+app.get("/api/tree", authenticate, async (req, res) => {
+  try {
+    const uid = req.user.uid;
+
+    // קריאה למסמך משתמש ב־Firestore
+    const userDoc = await db.collection("users").doc(uid).get();
+    if (!userDoc.exists) {
+      return res.status(403).json({ error: "משתמש לא רשום ב־Firestore" });
+    }
+
+    const userData = userDoc.data();
+    const { role = "member", sides = [] } = userData;
+
+    // superadmin מקבל את כל העצים
+    if (role === "superadmin") {
+      return res.json({ files: ["all_families.json"] });
+    }
+
+    if (!sides || sides.length === 0) {
+      return res.status(403).json({ error: "אין צד משויך למשתמש" });
+    }
+
+    // המרה לשמות קבצים
+    const files = sides.map(s => `${s.toLowerCase().replace(/\s+/g, "_")}.json`);
+    res.json({ files });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "שגיאת שרת" });
+  }
+});
 
 // =========================
 // Admin: Users Management
