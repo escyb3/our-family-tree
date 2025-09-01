@@ -61,7 +61,9 @@ const firestore = admin.firestore();
 // -------------------------
 app.post('/api/login', async (req, res) => {
   const { idToken } = req.body;
-  if (!idToken) return res.status(400).json({ success: false, message: "Missing ID Token" });
+  if (!idToken) {
+    return res.status(400).json({ success: false, message: "Missing ID Token" });
+  }
 
   try {
     // אימות ה-ID Token
@@ -76,11 +78,10 @@ app.post('/api/login', async (req, res) => {
       console.log(`❌ פרופיל לא נמצא עבור UID ${uid} – ניצור אוטומטית`);
 
       const newProfile = {
-        fullName: decoded.name || decoded.email,  // שם מלא אם קיים, אחרת המייל
-        role: 'user',
-        side: 'Unknown',
+        fullName: decoded.name || decoded.email || "משתמש לא ידוע",
+        role: "user",
+        side: "לא מוגדר",
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
-        // הוספת קישור לצד המשפחתי, אם קיים
         familySideLink: null
       };
 
@@ -88,22 +89,38 @@ app.post('/api/login', async (req, res) => {
       profileDoc = await userRef.get();
     }
 
-    const profileData = profileDoc.data();
+    const profileData = profileDoc.data() || {};
 
-    // שמירה בסשן
-    req.session.user = {
+    // בניית אובייקט משתמש בטוח (ללא undefined)
+    const safeUser = {
       uid,
-      email: decoded.email,
-      // התאמה לשמות המאפיינים בקוד הלקוח
-      username: profileData.fullName || decoded.email,
-      role: profileData.role,
-      familySide: profileData.side,
-      // הוספת קישור לצד המשפחתי, אם קיים
+      email: decoded.email || "לא מוגדר",
+      username:
+        profileData.fullName ||
+        profileData.name ||
+        decoded.name ||
+        decoded.email ||
+        "משתמש לא ידוע",
+      role: profileData.role || "user",
+      familySide: profileData.side || "לא מוגדר",
       familySideLink: profileData.familySideLink || null
     };
 
-    console.log(`✅ התחברות הצליחה: ${decoded.email}, שם: ${req.session.user.username}, תפקיד: ${profileData.role}, צד: ${profileData.familySide}`);
-    res.json({ success: true, user: req.session.user });
+    // שמירה בסשן
+    req.session.user = {
+      ...safeUser,
+      profile: profileData
+    };
+
+    req.session.save(err => {
+      if (err) console.error("❌ Session save error:", err);
+    });
+
+    console.log(
+      `✅ התחברות הצליחה: ${safeUser.email}, שם: ${safeUser.username}, תפקיד: ${safeUser.role}, צד: ${safeUser.familySide}`
+    );
+
+    res.json({ success: true, user: safeUser });
 
   } catch (err) {
     console.error("❌ Firebase token verify error:", err);
@@ -155,13 +172,11 @@ app.get('/api/user', async (req, res) => {
       return res.json({
         user: {
           uid,
-          email: req.session.user.email,
-          role: req.session.user.role,
-          // התאמה לשם המאפיין בקוד הלקוח
-          familySide: req.session.user.side,
-          username: req.session.user.name,
-          // הוספת קישור לצד המשפחתי, אם קיים
-          familySideLink: req.session.user.familySideLink 
+          email: req.session.user.email || "לא מוגדר",
+          role: req.session.user.role || "user",
+          familySide: req.session.user.familySide || "לא מוגדר",
+          username: req.session.user.username || req.session.user.email || "משתמש לא ידוע",
+          familySideLink: req.session.user.familySideLink || null
         },
         profile: req.session.user.profile
       });
@@ -176,28 +191,32 @@ app.get('/api/user', async (req, res) => {
       return res.status(401).json({ error: 'פרופיל משתמש לא נמצא.' });
     }
 
-    const profileData = profileDoc.data();
+    const profileData = profileDoc.data() || {};
+
+    // קביעת ערכים עם fallback כדי למנוע undefined
+    const safeUser = {
+      uid,
+      email: userRecord.email || "לא מוגדר",
+      role: profileData.role || "user",
+      familySide: profileData.side || "לא מוגדר",
+      username: profileData.fullName || profileData.name || userRecord.displayName || userRecord.email || "משתמש לא ידוע",
+      familySideLink: profileData.familySideLink || null
+    };
 
     // שמירה בסשן
-    req.session.user.profile = profileData;
-    // שמירה של הקישור לצד המשפחתי, אם קיים
-    req.session.user.familySideLink = profileData.familySideLink || null; 
+    req.session.user = {
+      ...req.session.user,
+      ...safeUser,
+      profile: profileData
+    };
+
     req.session.save(err => {
       if (err) console.error("Error saving session:", err);
     });
 
     // החזרת המידע ללקוח
     res.json({
-      user: {
-        uid,
-        email: userRecord.email,
-        role: profileData.role,
-        // התאמה לשם המאפיין בקוד הלקוח
-        familySide: profileData.side, 
-        username: profileData.name || userRecord.displayName || userRecord.email,
-        // הוספת הקישור לצד המשפחתי, אם קיים
-        familySideLink: profileData.familySideLink || null
-      },
+      user: safeUser,
       profile: profileData
     });
 
