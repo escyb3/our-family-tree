@@ -1,122 +1,783 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he">
 <head>
-  <meta charset="UTF-8" />
-  <title>דוא"ל פנימי – Family Mail</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="./mailbox-style.css" />
-  <!-- אפשר להזריק קונפיגורציה גלובלית לפני טעינת האפליקציה: -->
-  <script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מערכת דוא"ל פנימית</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Heebo', sans-serif;
+            direction: rtl; /* Set default direction to RTL for Hebrew */
+        }
+        .app-container {
+            display: flex;
+            height: 100vh;
+            background-color: #f0f4f8;
+            color: #334e68;
+        }
+        .rtl {
+            direction: rtl;
+        }
+        .ltr {
+            direction: ltr;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
 
-    window.__app_id = "default-app-id";
-    // אופציונלי: אסימון התחברות מותאם
-    // window.__initial_auth_token = "YOUR_CUSTOM_TOKEN";
-  </script>
-
-  <!-- Firebase (מודולרי, ESM מה-CDN) -->
-  <script type="module">
-    // נטען את מודולי Firebase כדי להשתמש מהם ב-app.js (שגם ESM)
-    // שים לב: app.js עצמו ייבא שוב – אין בעיה, הדפדפן יאחד.
-    import "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-  </script>
+        .login-bg {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            min-height: 100vh;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #3b82f6;
+            animation: spin 1s ease infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-  <div id="app">
-    <!-- Header גלובלי קטן -->
-    <header class="app-header">
-      <div class="app-title">📧 דוא"ל פנימי</div>
-      <button id="languageToggle" class="ghost-btn" title="שפה">🌐</button>
-    </header>
+    <!-- Main App Container -->
+    <div id="app-page" class="app-container hidden">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-72 bg-gray-800 text-white p-6 flex flex-col items-center shadow-2xl">
+            <div class="mb-8 text-center">
+                <h1 id="app-title" class="text-3xl font-bold mb-1"></h1>
+                <p id="sidebar-username" class="text-gray-300 text-sm"></p>
+                <p id="your-email" class="text-gray-400 text-xs mt-1"></p>
+            </div>
+            
+            <button id="compose-button" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-full transition-all duration-300 shadow-md mb-6 transform hover:scale-105 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                </svg>
+                <span>הודעה חדשה</span>
+            </button>
+            
+            <nav class="w-full flex-grow">
+                <ul class="space-y-2">
+                    <li><button id="inbox-button" class="w-full text-right p-3 rounded-md transition-colors duration-200 hover:bg-gray-700 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-3" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                        </svg>
+                        <span>תיבת דואר נכנס</span>
+                    </button></li>
+                    <li><button id="sent-button" class="w-full text-right p-3 rounded-md transition-colors duration-200 hover:bg-gray-700 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-3" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l.695-.794a1 1 0 00.169-.111l4.444-4.444-4.444-4.444a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414L10 10.586 4.707 5.293a1 1 0 00-1.414 1.414l5.657 5.657a1 1 0 001.414 0l5.657-5.657a1 1 0 000-1.414z" />
+                            <path d="M10 18a1 1 0 00-1 1v1a1 1 0 102 0v-1a1 1 0 00-1-1z" />
+                        </svg>
+                        <span>דואר יוצא</span>
+                    </button></li>
+                    <li><button id="drafts-button" class="w-full text-right p-3 rounded-md transition-colors duration-200 hover:bg-gray-700 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-3" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M17.5 4.5v-1a1 1 0 00-1-1h-12a1 1 0 00-1 1v1a1 1 0 001 1h12a1 1 0 001-1zM3.5 6.5h13a.5.5 0 01.5.5v12a.5.5 0 01-.5.5h-13a.5.5 0 01-.5-.5V7a.5.5 0 01.5-.5z" />
+                            <path fill-rule="evenodd" d="M4 8a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1z" clip-rule="evenodd" />
+                        </svg>
+                        <span>טיוטות</span>
+                    </button></li>
+                </ul>
+            </nav>
 
-    <!-- אזור סטטוס כללי -->
-    <div id="globalStatus" class="global-status" hidden></div>
+            <button id="lang-switch-button" class="mt-auto bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full transition-all duration-300 shadow-md transform hover:scale-105">English</button>
+        </aside>
 
- <!-- View: Login -->
-<section id="view-login" class="view view--centered">
-  <div class="card card--md">
-    <div class="center-icon">📧</div>
-    <h1 class="title">ברוכים הבאים</h1>
-    <p class="muted">אנא הכנס שם משתמש וסיסמה כדי לנהל את תיבת הדואר המשפחתית שלך.</p>
+        <!-- Main Content Area -->
+        <main class="flex-grow p-8 overflow-y-auto">
+            <div class="max-w-4xl mx-auto">
+                <h2 id="main-title" class="text-3xl font-bold text-gray-800 mb-6"></h2>
+                <div id="main-content">
+                    <!-- Email List -->
+                    <div id="email-list" class="space-y-4"></div>
 
-    <form id="loginForm" class="vstack gap">
-      <!-- Username -->
-      <label class="label" for="usernameInput">שם משתמש</label>
-      <div class="input-with-suffix">
-        <input id="usernameInput" type="text" placeholder="לדוגמה: username" required />
-        <span class="suffix">@family.local</span>
-      </div>
+                    <!-- Email View -->
+                    <div id="email-view" class="bg-white p-6 rounded-lg shadow-md hidden">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 id="email-view-subject" class="text-2xl font-bold"></h3>
+                            <span id="email-view-date" class="text-sm text-gray-500"></span>
+                        </div>
+                        <div class="text-sm text-gray-600 mb-4">
+                            <p id="email-view-sender"></p>
+                            <p id="email-view-recipient"></p>
+                        </div>
+                        <div id="email-view-body" class="text-gray-800 leading-relaxed mb-6 border-t border-b py-4"></div>
+                        <p id="email-view-attachment" class="text-sm text-blue-600 underline cursor-pointer mb-4"></p>
 
-      <!-- Password -->
-      <label class="label" for="passwordInput">סיסמה</label>
-      <input id="passwordInput" type="password" placeholder="הקלד סיסמה" required />
+                        <!-- AI Tools Section -->
+                        <div id="ai-tools-section" class="bg-gray-100 p-4 rounded-md mb-6">
+                          <h4 class="font-bold text-lg mb-2"></h4>
+                          <div class="flex space-x-2 mb-4">
+                              <button id="ai-summarize-button" class="bg-blue-500 text-white py-2 px-4 rounded-md"></button>
+                              <button id="ai-replies-button" class="bg-green-500 text-white py-2 px-4 rounded-md"></button>
+                              <button id="tts-button" class="bg-purple-500 text-white py-2 px-4 rounded-md"></button>
+                          </div>
+                          <div id="ai-summary-text" class="bg-white p-3 rounded-md mt-2 text-sm text-gray-700"></div>
+                          <div id="ai-replies-container" class="flex flex-wrap mt-2"></div>
+                        </div>
 
-      <!-- Submit -->
-      <button id="loginBtn" class="btn primary">התחבר</button>
-      <div id="loginStatus" class="form-status" hidden></div>
-    </form>
-  </div>
-</section>
+                        <div class="flex justify-between">
+                            <button id="back-button" class="bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded-md transition-colors duration-200"></button>
+                            <button id="delete-email-button" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md transition-colors duration-200"></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Compose Form -->
+                    <form id="compose-form" class="bg-white p-6 rounded-lg shadow-md hidden flex-col">
+                        <div class="mb-4">
+                            <label for="compose-recipient" class="block text-gray-700 font-bold mb-2"></label>
+                            <select id="compose-recipient" class="w-full p-2 border border-gray-300 rounded-md"></select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="compose-subject" class="block text-gray-700 font-bold mb-2"></label>
+                            <input type="text" id="compose-subject" class="w-full p-2 border border-gray-300 rounded-md">
+                        </div>
+                        <div class="mb-4">
+                            <label for="compose-body" class="block text-gray-700 font-bold mb-2"></label>
+                            <textarea id="compose-body" rows="10" class="w-full p-2 border border-gray-300 rounded-md resize-y"></textarea>
+                        </div>
+                        <div class="flex items-center space-x-4 mb-4">
+                            <button type="button" id="attach-file-button" class="bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded-md transition-colors duration-200"></button>
+                            <input type="file" id="file-input" class="hidden">
+                            <span id="attachment-info" class="text-sm text-gray-500"></span>
+                            <span id="file-status" class="text-sm"></span>
+                        </div>
+                        <div class="flex justify-end space-x-2 mt-4">
+                            <button type="button" id="voice-input-button" class="bg-blue-500 text-white py-2 px-4 rounded-md transition-colors duration-200"></button>
+                            <button type="submit" id="send-button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md transition-colors duration-200"></button>
+                        </div>
+                        <p id="compose-status" class="text-center mt-4"></p>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
 
+    <!-- Loading Screen -->
+    <div id="loading-page" class="login-bg">
+        <div class="spinner"></div>
+        <p class="mt-4 text-lg font-medium text-gray-600">מתחבר למערכת...</p>
+    </div>
 
-    <!-- View: Mailbox (sidebar + main) -->
-    <section id="view-mailbox" class="view view--fill" hidden>
-      <aside class="sidebar">
-        <div class="app-name">📧דוא"ל משפחתי</div>
+    <!-- JavaScript -->
+    <script type="module">
+        // -------------------- Imports from Firebase SDK --------------------
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import {
+            getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import {
+            getFirestore, doc, collection, addDoc, onSnapshot, query, where, serverTimestamp, getDocs,
+            setDoc, deleteDoc, getDoc, orderBy
+        }
+            from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        <div class="user-block">
-          <div class="muted">ברוך הבא, <span id="sidebarUsername"></span>!</div>
-          <div class="tiny muted">כתובת המייל שלך:</div>
-          <div class="mono" id="sidebarEmail"></div>
-          <div class="tiny muted">מזהה משתמש:</div>
-          <div class="mono tiny" id="sidebarUid"></div>
-        </div>
+        // -------------------- Language & State --------------------
+        const lang = {
+            he: {
+                appName: 'דוא"ל פנימי',
+                loginWelcome: "ברוכים הבאים",
+                yourEmail: "מחובר כ-:",
+                composeButton: "הודעה חדשה",
+                inbox: "תיבת דואר נכנס",
+                sent: "דואר יוצא",
+                drafts: "טיוטות",
+                aiTools: "כלי AI",
+                aiSummarize: "סיכום",
+                aiReplies: "הצעות לתשובה",
+                composeTitle: "הודעה חדשה",
+                composeRecipient: "נמען",
+                composeSubject: "נושא",
+                composeBody: "תוכן",
+                sendButton: "שלח",
+                sendSuccess: "ההודעה נשלחה בהצלחה!",
+                sendError: "שגיאה בשליחת ההודעה. אנא נסה שוב.",
+                emailSender: "מאת: ",
+                emailRecipient: "אל: ",
+                emailSubject: "נושא: ",
+                emailBody: "תוכן:",
+                emailDate: "תאריך: ",
+                noEmails: "אין הודעות בתיבה זו.",
+                noEmailsDrafts: "אין טיוטות.",
+                mailNotFound: "המייל לא נמצא.",
+                deleteConfirm: "האם אתה בטוח שברצונך למחוק מייל זה?",
+                deleteSuccess: "המייל נמחק בהצלחה.",
+                deleteError: "שגיאה במחיקת המייל. אנא נסה שוב.",
+                emailToSelf: " (אל עצמך)",
+                emailToFamily: " (למשפחה)",
+                emailFromAI: " (מבוסס AI)",
+                composePlaceholder: "כתוב את המייל כאן...",
+                composeRecipientPlaceholder: "לדוגמה: מאי",
+                emailSubjectPlaceholder: "(ללא נושא)",
+                emailAttachment: "קובץ מצורף: ",
+                fileUploadTitle: "צרף קבצים",
+                fileUploadButton: "בחר קובץ",
+                fileUploadSuccess: "קובץ צורף בהצלחה.",
+                fileUploadError: "שגיאה בצירוף קובץ.",
+                ttsButton: "הקרא",
+                ttsError: "שגיאה בהפעלת TTS.",
+                aiSummaryError: "שגיאה בסיכום המייל.",
+                aiRepliesError: "שגיאה בקבלת תשובות מוצעות.",
+                aiSummaryButton: "סכם באמצעות AI",
+                aiRepliesButton: "קבל תשובות מוצעות",
+                voiceInputButton: "הקלד בדיבור",
+                voiceInputStop: "הפסק",
+                voiceInputListening: "מאזין...",
+                voiceInputError: "שגיאה בזיהוי קולי.",
+                uploadFile: "העלה קובץ",
+                fileTooLarge: "הקובץ גדול מדי (מקסימום 2MB).",
+                selectRecipient: "בחר נמען",
+                allFamily: "כל המשפחה",
+                aiSummaryPlaceholder: "הטקסט יסוכם כאן...",
+                back: "חזור",
+                delete: "מחק",
+                connecting: "מתחבר למערכת...",
+                familyEmailSuffix: "@family.local"
+            },
+            en: {
+                appName: "Family Mailbox",
+                loginWelcome: "Welcome",
+                yourEmail: "Logged in as:",
+                composeButton: "New Message",
+                inbox: "Inbox",
+                sent: "Sent Mail",
+                drafts: "Drafts",
+                aiTools: "AI Tools",
+                aiSummarize: "Summarize",
+                aiReplies: "Suggested Replies",
+                composeTitle: "New Message",
+                composeRecipient: "Recipient",
+                composeSubject: "Subject",
+                composeBody: "Content",
+                sendButton: "Send",
+                sendSuccess: "Message sent successfully!",
+                sendError: "Error sending message. Please try again.",
+                emailSender: "From: ",
+                emailRecipient: "To: ",
+                emailSubject: "Subject: ",
+                emailBody: "Content:",
+                emailDate: "Date: ",
+                noEmails: "No messages in this folder.",
+                noEmailsDrafts: "No drafts.",
+                mailNotFound: "Mail not found.",
+                deleteConfirm: "Are you sure you want to delete this mail?",
+                deleteSuccess: "Mail deleted successfully.",
+                deleteError: "Error deleting mail. Please try again.",
+                emailToSelf: " (to yourself)",
+                emailToFamily: " (to family)",
+                emailFromAI: " (AI-generated)",
+                composePlaceholder: "Write your email here...",
+                composeRecipientPlaceholder: "e.g., Jane",
+                emailSubjectPlaceholder: "(no subject)",
+                emailAttachment: "Attachment: ",
+                fileUploadTitle: "Attach files",
+                fileUploadButton: "Choose file",
+                fileUploadSuccess: "File attached successfully.",
+                fileUploadError: "Error attaching file.",
+                ttsButton: "Read aloud",
+                ttsError: "Error playing TTS.",
+                aiSummaryError: "Error summarizing email.",
+                aiRepliesError: "Error getting suggested replies.",
+                aiSummaryButton: "Summarize with AI",
+                aiRepliesButton: "Get Suggested Replies",
+                voiceInputButton: "Voice Input",
+                voiceInputStop: "Stop",
+                voiceInputListening: "Listening...",
+                voiceInputError: "Error with voice recognition.",
+                uploadFile: "Upload File",
+                fileTooLarge: "File is too large (max 2MB).",
+                selectRecipient: "Select recipient",
+                allFamily: "All Family",
+                aiSummaryPlaceholder: "The text will be summarized here...",
+                back: "Back",
+                delete: "Delete",
+                connecting: "Connecting to the system...",
+                familyEmailSuffix: "@family.local"
+            }
+        };
 
-        <button id="btnCompose" class="btn primary block">✍️ הודעה חדשה</button>
+        const state = {
+            currentLang: "he",
+            t: lang.he,
+            user: null,
+            emailAddress: "",
+            activeView: "inbox",
+            inboxEmails: [],
+            sentEmails: [],
+            draftEmails: [],
+            selectedEmail: null,
+            compose: {
+                recipient: "",
+                subject: "",
+                body: ""
+            },
+            attachments: null,
+            allEmails: [],
+            familyMembers: []
+        };
+        let db, auth;
 
-        <nav class="nav vstack gap">
-          <button class="nav-btn active" data-folder="inbox">📥 דואר נכנס</button>
-          <button class="nav-btn" data-folder="sent">📤 נשלח</button>
-          <button class="nav-btn" data-folder="trash">🗑️ אשפה</button>
-          <button class="nav-btn" data-folder="spam">🚫 זבל</button>
-        </nav>
+        // -------------------- DOM Elements --------------------
+        const bodyEl = document.body;
+        const appPage = document.getElementById("app-page");
+        const loadingPage = document.getElementById("loading-page");
+        const sidebar = document.getElementById("sidebar");
+        const inboxButton = document.getElementById("inbox-button");
+        const sentButton = document.getElementById("sent-button");
+        const draftsButton = document.getElementById("drafts-button");
+        const composeButton = document.getElementById("compose-button");
+        const appTitle = document.getElementById("app-title");
+        const sidebarUsername = document.getElementById("sidebar-username");
+        const yourEmail = document.getElementById("your-email");
+        const mainContent = document.getElementById("main-content");
+        const composeForm = document.getElementById("compose-form");
+        const composeRecipient = document.getElementById("compose-recipient");
+        const composeSubject = document.getElementById("compose-subject");
+        const composeBody = document.getElementById("compose-body");
+        const composeStatus = document.getElementById("compose-status");
+        const sendButton = document.getElementById("send-button");
+        const attachFileButton = document.getElementById("attach-file-button");
+        const attachmentInfo = document.getElementById("attachment-info");
+        const fileInput = document.getElementById("file-input");
+        const fileStatus = document.getElementById("file-status");
+        const voiceInputButton = document.getElementById("voice-input-button");
+        const ttsButton = document.getElementById("tts-button");
+        const aiSummarizeButton = document.getElementById("ai-summarize-button");
+        const aiRepliesButton = document.getElementById("ai-replies-button");
+        const aiToolsSection = document.getElementById("ai-tools-section");
+        const aiSummaryText = document.getElementById("ai-summary-text");
+        const aiRepliesContainer = document.getElementById("ai-replies-container");
+        const emailList = document.getElementById("email-list");
+        const emailView = document.getElementById("email-view");
+        const emailViewSender = document.getElementById("email-view-sender");
+        const emailViewRecipient = document.getElementById("email-view-recipient");
+        const emailViewSubject = document.getElementById("email-view-subject");
+        const emailViewDate = document.getElementById("email-view-date");
+        const emailViewBody = document.getElementById("email-view-body");
+        const emailViewAttachment = document.getElementById("email-view-attachment");
+        const deleteEmailButton = document.getElementById("delete-email-button");
+        const backButton = document.getElementById("back-button");
+        const mainTitle = document.getElementById("main-title");
+        const langSwitchButton = document.getElementById("lang-switch-button");
 
-        <div class="spacer"></div>
+        // -------------------- Firebase Initialization --------------------
+        const __app_id = "1:199399854104:web:6aec488e6aeee0dec3736d"; // Default for demonstration
+        const __firebase_config = `{
+            "apiKey": "",
+            "authDomain": "test-project.firebaseapp.com",
+            "projectId": "test-project",
+            "storageBucket": "test-project.appspot.com",
+            "messagingSenderId": "199399854104",
+            "appId": "1:199399854104:web:6aec488e6aeee0dec3736d"
+        }`;
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+        auth = getAuth(app);
 
-        <button id="btnContacts" class="nav-btn">👥 אנשי קשר</button>
-      </aside>
+        // -------------------- Utility Functions --------------------
+        function getFamilyEmailFromUser(user) {
+            const email = user.email || user.uid;
+            if (email.endsWith(state.t.familyEmailSuffix)) {
+                return email;
+            }
+            const localPart = email.split('@')[0];
+            return `${localPart}${state.t.familyEmailSuffix}`;
+        }
+        
+        function switchLanguage() {
+            state.currentLang = state.currentLang === "he" ? "en" : "he";
+            state.t = lang[state.currentLang];
+            bodyEl.classList.remove('rtl', 'ltr');
+            bodyEl.classList.add(state.currentLang === "he" ? 'rtl' : 'ltr');
+            renderApp();
+            renderView();
+        }
 
-      <main class="main">
-        <!-- כאן נטען דינמית: רשימת מיילים / תצוגת מייל / קומפוז / אנשי קשר -->
-        <div id="mainContent" class="stretch"></div>
-        <div id="mailContainer"></div>
-            <em>טוען הודעות...</em>
-      </main>
-    </section>
-  </div>
-<script> 
-        window.__firebase_config = {
-  apiKey: "AIzaSyAID_kPGA6Khczh0lIgd7E13LJS76JJ9nI",
-  authDomain: "mailbox-e0ce2.firebaseapp.com",
-  projectId: "mailbox-e0ce2",
-  storageBucket: "mailbox-e0ce2.firebasestorage.app",
-  messagingSenderId: "199399854104",
-  appId: "1:199399854104:web:6aec488e6aeee0dec3736d",
-  measurementId: "G-V3CSEQY5CR"
-};
-</script>
-  <main class="main">
-  <div id="mainContent" class="stretch">
-    <!-- טופס קומפוז הודעה -->
-    <div id="composeForm" class="vstack gap" hidden></div>
-      <div id="recipientInput" type="text" required </div>
-      <div id="subjectInput" type="text" </div>
-      <div id="bodyInput" required></div>
-      <div id="btnSend" type="button" class="btn primary"></div>
-  </div>
-  </main>
-  <!-- אפליקציה (Vanilla JS) -->
-  <script type="module" src="./mailinbox.js"></script>
+        function renderApp() {
+            appTitle.textContent = state.t.appName;
+            sidebarUsername.textContent = state.t.loginWelcome;
+            yourEmail.textContent = state.t.yourEmail + state.emailAddress;
+            composeButton.textContent = state.t.composeButton;
+            inboxButton.textContent = state.t.inbox;
+            sentButton.textContent = state.t.sent;
+            draftsButton.textContent = state.t.drafts;
+            mainTitle.textContent = state.t.inbox;
+            langSwitchButton.textContent = state.currentLang === 'he' ? 'English' : 'עברית';
+        }
+
+        function setupListeners() {
+            const allEmailsQuery = query(collection(db, `artifacts/${__app_id}/public/data/emails`), orderBy("timestamp", "desc"));
+            onSnapshot(allEmailsQuery, (snapshot) => {
+                state.allEmails = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                updateEmailLists();
+            });
+            const usersQuery = collection(db, `artifacts/${__app_id}/public/data/users`);
+            onSnapshot(usersQuery, (snapshot) => {
+                state.familyMembers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderCompose();
+            });
+            renderApp();
+        }
+
+        function updateEmailLists() {
+            state.inboxEmails = state.allEmails.filter(email => email.recipient === state.emailAddress);
+            state.sentEmails = state.allEmails.filter(email => email.sender === state.emailAddress);
+            state.draftEmails = state.allEmails.filter(email => email.sender === state.emailAddress && !email.timestamp);
+            renderView();
+        }
+
+        function renderView() {
+            mainContent.innerHTML = "";
+            composeForm.style.display = "none";
+            emailList.style.display = "none";
+            emailView.style.display = "none";
+            mainTitle.style.display = "block";
+            aiToolsSection.style.display = "none";
+            switch (state.activeView) {
+                case "inbox":
+                    mainTitle.textContent = state.t.inbox;
+                    renderEmailList(state.inboxEmails);
+                    break;
+                case "sent":
+                    mainTitle.textContent = state.t.sent;
+                    renderEmailList(state.sentEmails);
+                    break;
+                case "drafts":
+                    mainTitle.textContent = state.t.drafts;
+                    renderEmailList(state.draftEmails);
+                    break;
+                case "compose":
+                    mainTitle.textContent = state.t.composeTitle;
+                    renderCompose();
+                    break;
+                case "viewEmail":
+                    mainTitle.style.display = "none";
+                    renderEmailView();
+                    break;
+            }
+        }
+
+        function renderEmailList(emails) {
+            emailList.innerHTML = "";
+            emailList.style.display = "block";
+            if (emails.length === 0) {
+                const p = document.createElement("p");
+                p.classList.add("text-center", "text-gray-500", "p-4");
+                p.textContent = state.activeView === "drafts" ? state.t.noEmailsDrafts : state.t.noEmails;
+                emailList.appendChild(p);
+            } else {
+                emails.forEach(email => {
+                    const div = document.createElement("div");
+                    div.classList.add("bg-white", "p-4", "mb-2", "rounded-md", "shadow-sm", "cursor-pointer", "hover:bg-gray-50");
+                    let recipientText = email.recipient.split("@")[0];
+                    const isToSelf = email.sender === email.recipient;
+                    if (isToSelf) {
+                        recipientText += state.t.emailToSelf;
+                    }
+                    div.innerHTML = `
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-lg">${state.activeView === "sent" ? `${state.t.emailRecipient}${recipientText}` : `${state.t.emailSender}${email.sender.split("@")[0]}`}</h3>
+                            <span class="text-xs text-gray-500">${email.timestamp ? new Date(email.timestamp.toDate()).toLocaleDateString() : ""}</span>
+                        </div>
+                        <p class="text-sm text-gray-700 mt-1">${state.t.emailSubject}${email.subject || state.t.emailSubjectPlaceholder}</p>
+                        <p class="text-sm text-gray-500 truncate">${email.body}</p>
+                    `;
+                    div.addEventListener("click", () => {
+                        state.selectedEmail = email;
+                        state.activeView = "viewEmail";
+                        renderView();
+                    });
+                    emailList.appendChild(div);
+                });
+            }
+        }
+
+        function renderCompose() {
+            composeForm.style.display = "flex";
+            composeRecipient.innerHTML = `<option value="">${state.t.selectRecipient}</option>`;
+            const allFamilyOption = document.createElement("option");
+            allFamilyOption.value = "all";
+            allFamilyOption.textContent = state.t.allFamily;
+            composeRecipient.appendChild(allFamilyOption);
+            state.familyMembers.forEach(member => {
+                const username = member.email.split('@')[0];
+                const option = document.createElement("option");
+                option.value = username;
+                option.textContent = username;
+                composeRecipient.appendChild(option);
+            });
+            composeRecipient.value = state.compose.recipient.replace(state.t.familyEmailSuffix, "");
+            composeSubject.value = state.compose.subject;
+            composeBody.value = state.compose.body;
+            document.querySelector("label[for='compose-recipient']").textContent = state.t.composeRecipient;
+            document.querySelector("label[for='compose-subject']").textContent = state.t.composeSubject;
+            document.querySelector("label[for='compose-body']").textContent = state.t.composeBody;
+            composeSubject.placeholder = state.t.emailSubjectPlaceholder;
+            composeRecipient.placeholder = state.t.composeRecipientPlaceholder;
+            composeBody.placeholder = state.t.composePlaceholder;
+            sendButton.textContent = state.t.sendButton;
+            composeStatus.textContent = "";
+            attachmentInfo.textContent = state.attachments ? state.attachments.name : "";
+            attachFileButton.textContent = state.t.uploadFile;
+            voiceInputButton.textContent = state.t.voiceInputButton;
+            const isDraft = state.selectedEmail && !state.selectedEmail.timestamp;
+            if (isDraft) {
+                composeRecipient.value = state.selectedEmail.recipient.replace(state.t.familyEmailSuffix, "");
+                composeSubject.value = state.selectedEmail.subject;
+                composeBody.value = state.selectedEmail.body;
+            }
+        }
+
+        function renderEmailView() {
+            if (!state.selectedEmail) {
+                emailView.innerHTML = `<p>${state.t.mailNotFound}</p>`;
+                return;
+            }
+            emailView.style.display = "block";
+            document.querySelector("#ai-tools-section h4").textContent = state.t.aiTools;
+            backButton.textContent = state.t.back;
+            deleteEmailButton.textContent = state.t.delete;
+            ttsButton.textContent = state.t.ttsButton;
+            aiSummarizeButton.textContent = state.t.aiSummarize;
+            aiRepliesButton.textContent = state.t.aiReplies;
+            emailViewSender.textContent = `${state.t.emailSender}${state.selectedEmail.sender.split("@")[0]}`;
+            emailViewRecipient.textContent = `${state.t.emailRecipient}${state.selectedEmail.recipient.split("@")[0]}`;
+            emailViewSubject.textContent = `${state.t.emailSubject}${state.selectedEmail.subject || state.t.emailSubjectPlaceholder}`;
+            emailViewBody.innerHTML = `<p>${state.t.emailBody}</p><pre class="whitespace-pre-wrap">${state.selectedEmail.body}</pre>`;
+            if (state.selectedEmail.timestamp) {
+                emailViewDate.textContent = `${state.t.emailDate}${new Date(state.selectedEmail.timestamp.toDate()).toLocaleString()}`;
+            } else {
+                emailViewDate.textContent = "";
+            }
+            if (state.selectedEmail.attachment) {
+                const attachmentText = state.selectedEmail.attachment.name || (state.selectedEmail.attachment[0] && state.selectedEmail.attachment[0].name) || "קובץ מצורף";
+                emailViewAttachment.textContent = `${state.t.emailAttachment}${attachmentText}`;
+            } else {
+                emailViewAttachment.textContent = "";
+            }
+            aiSummaryText.textContent = state.t.aiSummaryPlaceholder;
+            aiRepliesContainer.innerHTML = "";
+            aiToolsSection.style.display = "block";
+            if (state.activeView === 'drafts') {
+                aiToolsSection.style.display = 'none';
+            }
+        }
+        async function deleteEmail(id) {
+            // Use a custom modal instead of alert/confirm
+            // The original code used confirm, so for now we'll just log
+            console.log(state.t.deleteConfirm);
+            try {
+                await deleteDoc(doc(db, `artifacts/${__app_id}/public/data/emails`, id));
+                console.log("Document successfully deleted!");
+            } catch (err) {
+                console.error("Error removing document: ", err);
+            }
+        }
+        
+        // -------------------- Event Listeners --------------------
+        inboxButton.addEventListener("click", () => {
+            state.activeView = "inbox";
+            renderView();
+        });
+        sentButton.addEventListener("click", () => {
+            state.activeView = "sent";
+            renderView();
+        });
+        draftsButton.addEventListener("click", () => {
+            state.activeView = "drafts";
+            renderView();
+        });
+        composeButton.addEventListener("click", () => {
+            state.activeView = "compose";
+            state.compose = { recipient: "", subject: "", body: "" };
+            state.attachments = null;
+            renderView();
+        });
+        backButton.addEventListener("click", () => {
+            state.activeView = "inbox";
+            renderView();
+        });
+        deleteEmailButton.addEventListener("click", () => {
+            if (state.selectedEmail) {
+                deleteEmail(state.selectedEmail.id);
+                state.activeView = "inbox";
+                renderView();
+            }
+        });
+        attachFileButton.addEventListener("click", () => {
+            fileInput.click();
+        });
+        fileInput.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 2 * 1024 * 1024) { // 2MB limit
+                    fileStatus.textContent = state.t.fileTooLarge;
+                    fileStatus.style.color = "red";
+                    state.attachments = null;
+                    return;
+                }
+                state.attachments = file;
+                attachmentInfo.textContent = file.name;
+                fileStatus.textContent = state.t.fileUploadSuccess;
+                fileStatus.style.color = "green";
+            }
+        });
+        voiceInputButton.addEventListener("click", async () => {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                console.error("Speech recognition is not supported in this browser.");
+                return;
+            }
+            const recognition = new SpeechRecognition();
+            recognition.lang = state.currentLang;
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+            voiceInputButton.textContent = state.t.voiceInputListening;
+            recognition.start();
+            recognition.onresult = (event) => {
+                const speechResult = event.results[0][0].transcript;
+                composeBody.value += speechResult + " ";
+            };
+            recognition.onend = () => {
+                voiceInputButton.textContent = state.t.voiceInputButton;
+            };
+            recognition.onerror = (event) => {
+                console.error("Speech recognition error:", event.error);
+                voiceInputButton.textContent = state.t.voiceInputButton;
+            };
+        });
+        ttsButton.addEventListener("click", async () => {
+            const textToSpeak = state.selectedEmail.body;
+            if (!textToSpeak) return;
+            const ttsAudioUrl = await fakeTTSUrl(textToSpeak);
+            if (ttsAudioUrl) {
+                const audio = new Audio(ttsAudioUrl);
+                audio.play().catch(e => console.error("Error playing TTS audio:", e));
+            }
+        });
+        aiSummarizeButton.addEventListener("click", async () => {
+            aiSummaryText.textContent = state.t.aiSummaryPlaceholder;
+            try {
+                const summary = await fakeAISummarize(state.selectedEmail.body);
+                aiSummaryText.textContent = summary;
+            } catch (e) {
+                aiSummaryText.textContent = state.t.aiSummaryError;
+            }
+        });
+        aiRepliesButton.addEventListener("click", async () => {
+            aiRepliesContainer.innerHTML = state.t.aiRepliesPlaceholder;
+            try {
+                const replies = await fakeAISuggestReplies(state.selectedEmail.body);
+                aiRepliesContainer.innerHTML = "";
+                replies.forEach(reply => {
+                    const button = document.createElement("button");
+                    button.classList.add("bg-gray-200", "text-gray-800", "p-2", "rounded-md", "hover:bg-gray-300", "text-sm", "mr-2", "mb-2");
+                    button.textContent = reply;
+                    button.addEventListener("click", () => {
+                        state.activeView = "compose";
+                        state.compose.recipient = state.selectedEmail.sender;
+                        state.compose.subject = `RE: ${state.selectedEmail.subject}`;
+                        state.compose.body = reply;
+                        renderView();
+                    });
+                    aiRepliesContainer.appendChild(button);
+                });
+            } catch (e) {
+                aiRepliesContainer.innerHTML = state.t.aiRepliesError;
+            }
+        });
+        langSwitchButton.addEventListener("click", switchLanguage);
+
+        composeForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const recipient = composeRecipient.value.trim();
+            const subject = composeSubject.value.trim();
+            const body = composeBody.value.trim();
+            if (!recipient || !body) {
+                composeStatus.textContent = "Recipient and body are required!";
+                return;
+            }
+            try {
+                const recipientEmail = recipient === 'all' ? `all${state.t.familyEmailSuffix}` : `${recipient}${state.t.familyEmailSuffix}`;
+                await addDoc(collection(db, `artifacts/${__app_id}/public/data/emails`), {
+                    sender: state.emailAddress,
+                    recipient: recipientEmail,
+                    subject: subject || state.t.emailSubjectPlaceholder,
+                    body,
+                    timestamp: serverTimestamp(),
+                    attachment: state.attachments
+                        ? Array.isArray(state.attachments)
+                            ? state.attachments.map(f => ({ name: f.name, size: f.size }))
+                            : { name: state.attachments.name, size: state.attachments.size }
+                        : null
+                });
+                composeStatus.textContent = state.t.sendSuccess;
+                state.compose = { recipient: "", subject: "", body: "" };
+                state.attachments = null;
+                renderCompose();
+            } catch (err) {
+                console.error(err);
+                composeStatus.textContent = state.t.sendError;
+            }
+        });
+        
+        // -------------------- Fake API Helpers --------------------
+        async function fakeAISummarize(text) { return "סיכום הדוגמה: " + text.slice(0, 100) + "…"; }
+        async function fakeAISuggestReplies(text) { return ["תשובה 1", "תשובה 2", "תשובה 3"]; }
+        function fakeTTSUrl(text) { return `https://api.fakeTTS.com/speech?text=${encodeURIComponent(text)}`; }
+        
+        // -------------------- Initialization --------------------
+        const __initial_auth_token = "mock_token_12345";
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // User is authenticated
+                state.emailAddress = getFamilyEmailFromUser(user);
+                // Hide loading, show app
+                loadingPage.classList.add('hidden');
+                appPage.classList.remove('hidden');
+                setupListeners();
+            } else {
+                // No user found, try to sign in
+                try {
+                    if (typeof __initial_auth_token !== 'undefined') {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (err) {
+                    console.error("Authentication failed:", err);
+                    loadingPage.innerHTML = `<p class="mt-4 text-lg font-medium text-red-600">שגיאה בהתחברות. אנא נסה שוב מאוחר יותר.</p>`;
+                }
+            }
+        });
+        
+    </script>
 </body>
 </html>
