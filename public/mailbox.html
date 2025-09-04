@@ -168,20 +168,12 @@
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getAuth, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getAuth, signInWithCustomToken, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
         import { getFirestore, collection, doc, addDoc, setDoc, onSnapshot, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         // Firebase-specific global variables
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = {
-  apiKey: "AIzaSyAID_kPGA6Khczh0lIgd7E13LJS76JJ9nI",
-  authDomain: "mailbox-e0ce2.firebaseapp.com",
-  projectId: "mailbox-e0ce2",
-  storageBucket: "mailbox-e0ce2.firebasestorage.app",
-  messagingSenderId: "199399854104",
-  appId: "1:199399854104:web:6aec488e6aeee0dec3736d",
-  measurementId: "G-V3CSEQY5CR"
-};
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
         // Initialize Firebase
@@ -736,25 +728,20 @@
                     showMessageModal(translations.he.modal.errorTitle, translations.he.modal.authError);
                 }
             } else {
-                // User is not authenticated. Authentication is required to proceed.
-                loadingPage.classList.remove('hidden');
-                loadingText.textContent = translations[state.language].modal.errorTitle;
-                loadingSubtext.textContent = translations[state.language].modal.authRequired;
-                // Since there is no user, we don't proceed with setting up listeners
+                // User is not authenticated. Try to sign in with the token.
+                try {
+                    if (initialAuthToken) {
+                        await signInWithCustomToken(auth, initialAuthToken);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (err) {
+                    console.error("Initial sign-in failed:", err);
+                    loadingText.textContent = translations[state.language].modal.errorTitle;
+                    loadingSubtext.textContent = translations[state.language].modal.authError;
+                }
             }
         });
-
-        // Try to sign in with the custom token immediately upon load
-        if (initialAuthToken) {
-            signInWithCustomToken(auth, initialAuthToken).catch(err => {
-                console.error("Initial custom token sign-in failed:", err);
-                loadingText.textContent = translations[state.language].modal.errorTitle;
-                loadingSubtext.textContent = translations[state.language].modal.authError;
-            });
-        } else {
-            loadingText.textContent = translations[state.language].modal.errorTitle;
-            loadingSubtext.textContent = translations[state.language].modal.authRequired;
-        }
 
         // Initialize UI language
         updateUILanguage();
