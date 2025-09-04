@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>מערכת דוא"ל פנימית</title>
-    <!-- Font Awesome for the checkmark icon -->
+    <!-- Font Awesome for the checkmark icon and trash icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -44,7 +44,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 10vh;
+            height: 100vh;
             background-color: #e2e8f0;
         }
         .checkmark {
@@ -83,6 +83,12 @@
                 <button data-folder="drafts" class="folder-button w-full text-right p-3 rounded-lg font-medium hover:bg-gray-100 transition-colors mb-2">טיוטות</button>
                 <button data-folder="trash" class="folder-button w-full text-right p-3 rounded-lg font-medium hover:bg-gray-100 transition-colors mb-2">זבל</button>
             </div>
+            
+            <!-- Search Input -->
+            <div class="mt-4">
+                <label for="searchInput" class="sr-only">חיפוש</label>
+                <input type="text" id="searchInput" placeholder="חיפוש אימיילים..." class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-right">
+            </div>
 
             <!-- Mail List -->
             <ul id="mailboxList" class="mt-4 flex-1 overflow-y-auto">
@@ -97,6 +103,7 @@
                     <h3 id="emailSubject" class="text-2xl font-bold"></h3>
                     <div class="flex space-x-2 space-x-reverse">
                         <button id="replyButton" class="bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-600 transition-colors">השב</button>
+                        <button id="deleteButton" class="bg-red-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-600 transition-colors"><i class="fas fa-trash"></i></button>
                         <button id="closeButton" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-300 transition-colors">סגור</button>
                     </div>
                 </div>
@@ -166,16 +173,7 @@
 
         // Firebase-specific global variables
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = {
-  apiKey: "AIzaSyAID_kPGA6Khczh0lIgd7E13LJS76JJ9nI",
-  authDomain: "mailbox-e0ce2.firebaseapp.com",
-  projectId: "mailbox-e0ce2",
-  storageBucket: "mailbox-e0ce2.firebasestorage.app",
-  messagingSenderId: "199399854104",
-  appId: "1:199399854104:web:6aec488e6aeee0dec3736d",
-  measurementId: "G-V3CSEQY5CR"
-};
-
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
         // Initialize Firebase
@@ -197,6 +195,7 @@
         const emptyStateText = document.getElementById('emptyStateText');
         const composeView = document.getElementById('composeView');
         const replyButton = document.getElementById('replyButton');
+        const deleteButton = document.getElementById('deleteButton');
         const closeButton = document.getElementById('closeButton');
         const emailSubject = document.getElementById('emailSubject');
         const emailSender = document.getElementById('emailSender');
@@ -224,6 +223,7 @@
         const modalCloseButton = document.getElementById('modalCloseButton');
         const userEmailDisplay = document.getElementById('userEmailDisplay');
         const newEmailButton = document.getElementById('newEmailButton');
+        const searchInput = document.getElementById('searchInput');
 
         // App State
         const state = {
@@ -249,10 +249,12 @@
                     'drafts': 'טיוטות',
                     'trash': 'זבל'
                 },
+                'searchInputPlaceholder': 'חיפוש אימיילים...',
                 'emptyStateText': 'בחר אימייל לצפייה, או לחץ על "הודעה חדשה" כדי ליצור אחת.',
                 'emailView': {
                     'replyButton': 'השב',
                     'closeButton': 'סגור',
+                    'deleteButton': 'מחק',
                     'from': 'מאת:',
                     'sentAt': 'נשלח ב:',
                     'aiFeaturesTitle': 'תכונות AI',
@@ -293,10 +295,12 @@
                     'drafts': 'Drafts',
                     'trash': 'Trash'
                 },
+                'searchInputPlaceholder': 'Search emails...',
                 'emptyStateText': 'Select an email to view, or click "New Message" to compose one.',
                 'emailView': {
                     'replyButton': 'Reply',
                     'closeButton': 'Close',
+                    'deleteButton': 'Delete',
                     'from': 'From:',
                     'sentAt': 'Sent at:',
                     'aiFeaturesTitle': 'AI Features',
@@ -359,6 +363,7 @@
             languageButton.textContent = t.languageButton;
             emptyStateText.textContent = t.emptyStateText;
             replyButton.textContent = t.emailView.replyButton;
+            deleteButton.textContent = state.language === 'he' ? '' : 'Delete';
             closeButton.textContent = t.emailView.closeButton;
             aiFeaturesTitle.textContent = t.emailView.aiFeaturesTitle;
             summaryLabel.textContent = t.emailView.summaryLabel;
@@ -372,6 +377,7 @@
             
             // Update placeholder text
             document.getElementById('composeTo').placeholder = t.composeView.toLabel;
+            document.getElementById('searchInput').placeholder = t.searchInputPlaceholder;
             
             // Update folder names
             folderButtons.forEach(button => {
@@ -405,6 +411,10 @@
             // Simulate network latency
             await new Promise(resolve => setTimeout(resolve, 1000));
             
+            if (!user || !user.uid) {
+                throw new Error("User not authenticated.");
+            }
+
             // For this simulation, we'll return a hardcoded email based on the user's UID.
             const userMap = {
                 // Mock user IDs from Firebase
@@ -415,7 +425,8 @@
             const mockEmail = userMap[user.uid];
             
             if (!mockEmail) {
-                throw new Error("User email not found for UID.");
+                // If the user's UID is not in our map, throw an error
+                throw new Error("User data not found.");
             }
             
             return {
@@ -427,23 +438,35 @@
         // Renders the list of emails in the sidebar
         function renderMailbox() {
             mailboxList.innerHTML = ''; // Clear previous emails
-            const filteredEmails = state.emails.filter(email => {
-                if (state.currentFolder === 'inbox') {
-                    return email.recipient === state.emailAddress;
-                } else if (state.currentFolder === 'sent') {
-                    return email.sender === state.emailAddress;
-                }
-                return false; // For drafts and trash (unimplemented)
-            });
+            let filteredEmails = [];
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            // Filter emails based on the current folder
+            if (state.currentFolder === 'inbox') {
+                filteredEmails = state.emails.filter(email => email.recipient === state.emailAddress && !email.deleted);
+            } else if (state.currentFolder === 'sent') {
+                filteredEmails = state.emails.filter(email => email.sender === state.emailAddress && !email.deleted);
+            } else if (state.currentFolder === 'trash') {
+                filteredEmails = state.emails.filter(email => email.deleted);
+            } else if (state.currentFolder === 'drafts') {
+                // Drafts are not yet implemented, display a message
+                mailboxList.innerHTML = `<li class="text-gray-500 p-2 text-center">${translations[state.language].modal.unimplemented}</li>`;
+                return;
+            }
+
+            // Apply search filter if a search term is present
+            if (searchTerm) {
+                filteredEmails = filteredEmails.filter(email => {
+                    const subject = email.subject.toLowerCase();
+                    const sender = email.sender.toLowerCase();
+                    const body = email.body.toLowerCase();
+                    return subject.includes(searchTerm) || sender.includes(searchTerm) || body.includes(searchTerm);
+                });
+            }
 
             if (filteredEmails.length === 0) {
                 const folderName = translations[state.language].folders[state.currentFolder];
-                // Display placeholder for unimplemented folders or empty folders
-                if (state.currentFolder === 'drafts' || state.currentFolder === 'trash') {
-                    mailboxList.innerHTML = `<li class="text-gray-500 p-2 text-center">${translations[state.language].modal.unimplemented}</li>`;
-                } else {
-                    mailboxList.innerHTML = `<li class="text-gray-500 p-2 text-center">אין אימיילים בתיקיית ${folderName}.</li>`;
-                }
+                mailboxList.innerHTML = `<li class="text-gray-500 p-2 text-center">אין אימיילים בתיקייה זו.</li>`;
                 return;
             }
 
@@ -488,6 +511,13 @@
             emailTimestamp.textContent = `${state.language === 'he' ? 'נשלח ב:' : 'Sent at:'} ${email.timestamp.toDate().toLocaleString(state.language === 'he' ? 'he-IL' : 'en-US', { dateStyle: 'long', timeStyle: 'short' })}`;
             emailBody.innerHTML = email.body.replace(/\n/g, '<br>');
 
+            // Show/hide delete button based on folder
+            if (state.currentFolder === 'trash') {
+                deleteButton.classList.add('hidden');
+            } else {
+                deleteButton.classList.remove('hidden');
+            }
+
             // Hide AI features until content is loaded
             aiSummary.classList.add('hidden');
             summaryText.textContent = '';
@@ -524,6 +554,22 @@
                 console.log(`Email ${email.id} marked as read by ${state.emailAddress}`);
             } catch (e) {
                 console.error("Error marking email as read: ", e);
+            }
+        }
+
+        // Moves an email to the trash
+        async function deleteEmail(email) {
+            if (!email || !email.id) return;
+            const emailDocRef = doc(db, PUBLIC_COLLECTION_PATH, email.id);
+            try {
+                await setDoc(emailDocRef, { deleted: true }, { merge: true });
+                // Return to the empty state after deletion
+                state.currentEmail = null;
+                emailView.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+            } catch (e) {
+                console.error("Error deleting email: ", e);
+                showMessageModal(translations[state.language].modal.errorTitle, translations[state.language].modal.sendError);
             }
         }
         
@@ -571,6 +617,12 @@
                 }
             });
 
+            deleteButton.addEventListener('click', () => {
+                if (state.currentEmail) {
+                    deleteEmail(state.currentEmail);
+                }
+            });
+
             closeButton.addEventListener('click', () => {
                 state.currentEmail = null;
                 emailView.classList.add('hidden');
@@ -602,11 +654,18 @@
                         timestamp: Timestamp.now(),
                         readBy: {
                             [state.emailAddress]: true // The sender has read it
-                        }
+                        },
+                        deleted: false // New emails are not deleted by default
                     });
                     showMessageModal(translations[state.language].modal.successTitle, translations[state.language].modal.successMessage);
+                    
+                    // Clear the compose view
                     composeView.classList.add('hidden');
                     emptyState.classList.remove('hidden');
+                    composeTo.value = '';
+                    composeSubject.value = '';
+                    composeBody.value = '';
+
                 } catch (e) {
                     console.error("Error sending message: ", e);
                     showMessageModal(translations[state.language].modal.errorTitle, translations[state.language].modal.sendError);
@@ -614,12 +673,13 @@
             });
             
             modalCloseButton.addEventListener('click', hideMessageModal);
+            searchInput.addEventListener('input', renderMailbox);
 
             // Folder button listeners
             folderButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const folder = button.dataset.folder;
-                    if (folder === 'drafts' || folder === 'trash') {
+                    if (folder === 'drafts') {
                         showMessageModal(translations[state.language].modal.errorTitle, translations[state.language].modal.unimplemented);
                         return;
                     }
@@ -668,17 +728,25 @@
                     showMessageModal(translations.he.modal.errorTitle, translations.he.modal.authError);
                 }
             } else {
-                // If no user found and no custom token is provided, fail gracefully.
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    loadingText.textContent = translations[state.language].modal.errorTitle;
-                    loadingSubtext.textContent = translations[state.language].modal.authRequired;
-                    appPage.classList.add('hidden');
-                    console.error("Authentication failed: No custom token provided.");
-                }
+                // User is not authenticated. Authentication is required to proceed.
+                loadingPage.classList.remove('hidden');
+                loadingText.textContent = translations[state.language].modal.errorTitle;
+                loadingSubtext.textContent = translations[state.language].modal.authRequired;
+                // Since there is no user, we don't proceed with setting up listeners
             }
         });
+
+        // Try to sign in with the custom token immediately upon load
+        if (initialAuthToken) {
+            signInWithCustomToken(auth, initialAuthToken).catch(err => {
+                console.error("Initial custom token sign-in failed:", err);
+                loadingText.textContent = translations[state.language].modal.errorTitle;
+                loadingSubtext.textContent = translations[state.language].modal.authError;
+            });
+        } else {
+            loadingText.textContent = translations[state.language].modal.errorTitle;
+            loadingSubtext.textContent = translations[state.language].modal.authRequired;
+        }
 
         // Initialize UI language
         updateUILanguage();
