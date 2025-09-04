@@ -44,7 +44,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            height: 10vh;
             background-color: #e2e8f0;
         }
         .checkmark {
@@ -53,9 +53,9 @@
     </style>
 </head>
 <body class="rtl">
-    <!-- Login page -->
+    <!-- Loading screen while authenticating -->
     <div id="loadingPage" class="login-bg">
-        <div class="text-center p-8 bg-white rounded-xl shadow-lg">
+        <div class="text-center p-8 bg-white rounded-xl shadow-lg w-80">
             <h1 id="loadingText" class="text-3xl font-bold text-gray-800">מתחבר...</h1>
             <p id="loadingSubtext" class="mt-2 text-gray-500">אנא המתן...</p>
         </div>
@@ -161,20 +161,12 @@
     
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getAuth, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getAuth, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
         import { getFirestore, collection, doc, addDoc, setDoc, onSnapshot, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         // Firebase-specific global variables
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = {
-  apiKey: "AIzaSyAID_kPGA6Khczh0lIgd7E13LJS76JJ9nI",
-  authDomain: "mailbox-e0ce2.firebaseapp.com",
-  projectId: "mailbox-e0ce2",
-  storageBucket: "mailbox-e0ce2.firebasestorage.app",
-  messagingSenderId: "199399854104",
-  appId: "1:199399854104:web:6aec488e6aeee0dec3736d",
-  measurementId: "G-V3CSEQY5CR"
-};
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
         // Initialize Firebase
@@ -210,7 +202,7 @@
         const aiReplyButtons = document.getElementById('aiReplyButtons');
         const composeTitle = document.getElementById('composeTitle');
         const toLabel = document.getElementById('toLabel');
-        const subjectLabel = document.getElementById('subjectLabel');
+        const subjectLabel = document.getElementById('composeSubject');
         const bodyLabel = document.getElementById('bodyLabel');
         const composeTo = document.getElementById('composeTo');
         const composeSubject = document.getElementById('composeSubject');
@@ -238,7 +230,7 @@
         const translations = {
             'he': {
                 'loadingText': 'מתחבר...',
-                'loadingSubtext': 'אנא המתן...',
+                'loadingSubtext': 'מאחזר פרטי משתמש...',
                 'mailboxTitle': 'תיבת דואר',
                 'newEmailButton': 'הודעה חדשה',
                 'languageButton': 'English',
@@ -277,12 +269,12 @@
                     'fetchError': 'שגיאה בטעינת האימיילים. אנא נסה לרענן את הדף.',
                     'unimplemented': 'תכונה זו עדיין לא יושמה.',
                     'authError': 'שגיאה בהתחברות. אנא נסה שוב מאוחר יותר.',
-                    'apiAuthError': 'שגיאה באימות המשתמש. נא לנסות שוב מאוחר יותר.'
+                    'authRequired': 'חובה להתחבר. אנא השתמש באסימון תקף.'
                 }
             },
             'en': {
                 'loadingText': 'Connecting...',
-                'loadingSubtext': 'Please wait...',
+                'loadingSubtext': 'Retrieving user details...',
                 'mailboxTitle': 'Mailbox',
                 'newEmailButton': 'New Message',
                 'languageButton': 'עברית',
@@ -321,7 +313,7 @@
                     'fetchError': 'Error fetching emails. Please try refreshing the page.',
                     'unimplemented': 'This feature is not yet implemented.',
                     'authError': 'Authentication error. Please try again later.',
-                    'apiAuthError': 'User authentication error. Please try again later.'
+                    'authRequired': 'Authentication required. Please use a valid token.'
                 }
             }
         };
@@ -390,42 +382,37 @@
         }
         
         // -------------------- Core Logic Functions --------------------
-
-        /**
-         * Simulates a real API call to authenticate a user.
-         * The only valid users are those with a '@family.local' domain.
-         * This function acts as the sole authentication gateway.
-         */
-        async function authenticateUserViaAPI(email) {
-            return new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    const internalEmail = deriveInternalEmail(email);
-                    if (internalEmail === email) {
-                        // User is authenticated successfully
-                        resolve({ email: internalEmail, token: initialAuthToken });
-                    } else {
-                        // User is not authenticated
-                        reject(new Error("User authentication failed. Invalid email address."));
-                    }
-                }, 1000); // Simulate network latency
-            });
-        }
         
         /**
-         * Derives the internal email address based on an external email.
-         * If the address ends with '@family.local', it's returned as is.
-         * Otherwise, the domain is replaced with '@family.local'.
+         * Simulates a call to a backend API to get user data.
+         * The mock data is based on the Firebase User UID.
          */
-        function deriveInternalEmail(externalEmail) {
-            if (!externalEmail || typeof externalEmail !== 'string') {
-                throw new Error("Invalid external email provided.");
+        async function fetchUserData(user) {
+            loadingSubtext.textContent = translations[state.language].loadingSubtext;
+            // In a real app, this would be a fetch() call to a real endpoint,
+            // sending the user's auth token to identify them.
+            // For example: `const response = await fetch('/api/user', { headers: { 'Authorization': `Bearer ${await user.getIdToken()}` } });`
+            
+            // Simulate network latency
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // For this simulation, we'll return a hardcoded email based on the user's UID.
+            const userMap = {
+                // Mock user IDs from Firebase
+                "mock_uid_1": "user1@family.local",
+                "mock_uid_2": "manager@family.local",
+                "mock_uid_3": "guest@family.local"
+            };
+            const mockEmail = userMap[user.uid];
+            
+            if (!mockEmail) {
+                throw new Error("User email not found for UID.");
             }
-            if (externalEmail.endsWith('@family.local')) {
-                return externalEmail;
-            } else {
-                const username = externalEmail.substring(0, externalEmail.indexOf('@'));
-                return `${username}@family.local`;
-            }
+            
+            return {
+                email: mockEmail,
+                userId: user.uid
+            };
         }
 
         // Renders the list of emails in the sidebar
@@ -600,7 +587,7 @@
                 try {
                     await addDoc(collection(db, PUBLIC_COLLECTION_PATH), {
                         sender: state.emailAddress,
-                        recipient: deriveInternalEmail(to), // Derive internal address for recipient
+                        recipient: to,
                         subject: subject,
                         body: body,
                         timestamp: Timestamp.now(),
@@ -649,46 +636,43 @@
                 }
             });
         }
-
-        // -------------------- Fake API Functions --------------------
+        
+        // -------------------- Fake AI Functions --------------------
         async function fakeAISummarize(text) { return state.language === 'he' ? "סיכום הדוגמה: " + text.slice(0, 100) + "..." : "Example summary: " + text.slice(0, 100) + "..."; }
         async function fakeAISuggestReplies(text) { return state.language === 'he' ? ["תשובה 1", "תשובה 2", "תשובה 3"] : ["Reply 1", "Reply 2", "Reply 3"]; }
         
         // -------------------- Initialization --------------------
-        (async function initializeApp() {
-            try {
-                // In a real-world scenario, the user would enter their email.
-                // For this demonstration, we use a predefined email address.
-                const userEmail = 'user@example.com';
-                
-                // Step 1: Authenticate the user via the "real" API
-                const userAuth = await authenticateUserViaAPI(userEmail);
-                if (!userAuth || !userAuth.email || !userAuth.token) {
-                    throw new Error("Invalid user data received from API.");
+        
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                try {
+                    // Fetch user data from the simulated API, which is the single source of truth
+                    const userData = await fetchUserData(user);
+                    state.emailAddress = userData.email;
+                    state.userId = userData.userId; // Store the userId for later use
+                    updateUserUI(state.emailAddress);
+                    loadingPage.classList.add('hidden');
+                    appPage.classList.remove('hidden');
+                    setupListeners();
+                } catch (err) {
+                    console.error("Error fetching user data:", err);
+                    showMessageModal(translations.he.modal.errorTitle, translations.he.modal.authError);
                 }
-
-                // Step 2: Authenticate with Firebase using the custom token provided by the API
-                await signInWithCustomToken(auth, userAuth.token);
-                
-                // If authentication is successful, the user is available
-                const currentUser = auth.currentUser;
-                if (!currentUser) {
-                     throw new Error("Firebase sign in failed.");
+            } else {
+                // If no user found and no custom token is provided, fail gracefully.
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    loadingText.textContent = translations[state.language].modal.errorTitle;
+                    loadingSubtext.textContent = translations[state.language].modal.authRequired;
+                    appPage.classList.add('hidden');
+                    console.error("Authentication failed: No custom token provided.");
                 }
-
-                state.emailAddress = userAuth.email;
-                updateUserUI(state.emailAddress);
-                loadingPage.classList.add('hidden');
-                appPage.classList.remove('hidden');
-                setupListeners();
-
-            } catch (err) {
-                console.error("Authentication failed:", err);
-                // Display error message to the user on failure
-                loadingText.textContent = translations[state.language].modal.errorTitle;
-                loadingSubtext.textContent = translations[state.language].modal.apiAuthError;
             }
-        })();
+        });
+
+        // Initialize UI language
+        updateUILanguage();
     </script>
 </body>
 </html>
