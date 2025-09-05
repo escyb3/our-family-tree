@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מערכת דוא"ל פנימית</title>
-    <!-- Font Awesome for the checkmark icon and trash icon -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>מערכת דוא"ל פנימית</title>
+     <!-- Font Awesome for the checkmark icon and trash icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -52,708 +52,313 @@
         }
     </style>
 </head>
-<body class="rtl">
-    <!-- Loading screen while authenticating -->
-    <div id="loadingPage" class="login-bg">
-        <div class="text-center p-8 bg-white rounded-xl shadow-lg w-80">
-            <h1 id="loadingText" class="text-3xl font-bold text-gray-800">מתחבר...</h1>
-            <p id="loadingSubtext" class="mt-2 text-gray-500">אנא המתן...</p>
-        </div>
+</head>
+<body class="bg-gray-100">
+  <div id="loadingPage" class="flex h-screen items-center justify-center">
+    <div class="bg-white p-6 rounded-xl shadow-md text-center">
+      <h1 class="text-2xl font-bold" id="loadingText">מתחבר...</h1>
+      <p id="loadingSubtext">אנא המתן...</p>
     </div>
+  </div>
 
-    <!-- Main App UI -->
-    <div id="appPage" class="app-container hidden">
-        <!-- Sidebar -->
-        <div class="w-1/4 p-4 bg-white border-l-2 border-gray-200 shadow-lg flex flex-col">
-            <h2 id="mailboxTitle" class="text-xl font-bold mb-2">תיבת דואר</h2>
-            <!-- Display the user's email with a green checkmark -->
-            <div class="flex items-center mb-4">
-                <i class="fas fa-check-circle checkmark text-lg ml-2"></i>
-                <p id="userEmailDisplay" class="text-sm text-gray-600"></p>
-            </div>
-            <button id="newEmailButton" class="bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-600 transition-colors w-full mb-4">הודעה חדשה</button>
-            
-            <!-- Language Toggle Button -->
-            <button id="languageButton" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-300 transition-colors w-full mb-4">English</button>
+  <div id="appPage" class="hidden h-screen flex">
+    <aside class="w-1/4 bg-white p-4 shadow-md flex flex-col">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold" id="mailboxTitle">תיבת דואר</h2>
+        <button id="langToggle" class="bg-gray-200 text-sm px-2 py-1 rounded">EN</button>
+      </div>
+      <div class="flex items-center mb-4">
+        <span class="text-green-600 font-bold">✔</span>
+        <p id="userEmailDisplay" class="ml-2 text-gray-700"></p>
+      </div>
+      <button id="newEmailButton" class="bg-blue-500 text-white px-4 py-2 rounded mb-2">הודעה חדשה</button>
+      <button data-folder="inbox" class="folder-btn bg-blue-100 text-blue-800 px-3 py-2 rounded mb-1" id="inboxBtn">נכנס</button>
+      <button data-folder="sent" class="folder-btn px-3 py-2 rounded mb-1" id="sentBtn">נשלח</button>
+      <button data-folder="drafts" class="folder-btn px-3 py-2 rounded mb-1" id="draftsBtn">טיוטות</button>
+      <button data-folder="trash" class="folder-btn px-3 py-2 rounded mb-1" id="trashBtn">זבל</button>
+      <ul id="draftsList" class="mt-4 text-sm text-gray-600"></ul>
+    </aside>
 
-            <!-- Folders -->
-            <div id="foldersList" class="flex-1 overflow-y-auto">
-                <button data-folder="inbox" class="folder-button w-full text-right p-3 rounded-lg font-medium hover:bg-gray-100 transition-colors mb-2 bg-blue-100 text-blue-800">נכנס</button>
-                <button data-folder="sent" class="folder-button w-full text-right p-3 rounded-lg font-medium hover:bg-gray-100 transition-colors mb-2">נשלח</button>
-                <button data-folder="drafts" class="folder-button w-full text-right p-3 rounded-lg font-medium hover:bg-gray-100 transition-colors mb-2">טיוטות</button>
-                <button data-folder="trash" class="folder-button w-full text-right p-3 rounded-lg font-medium hover:bg-gray-100 transition-colors mb-2">זבל</button>
-            </div>
-            
-            <!-- Search Input -->
-            <div class="mt-4">
-                <label for="searchInput" class="sr-only">חיפוש</label>
-                <input type="text" id="searchInput" placeholder="חיפוש אימיילים..." class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-right">
-            </div>
-
-            <!-- Mail List -->
-            <ul id="mailboxList" class="mt-4 flex-1 overflow-y-auto">
-                <!-- Mails will be rendered here -->
-            </ul>
+    <main class="flex-1 p-6 overflow-y-auto">
+      <div id="emptyState" class="text-center text-gray-500">
+        בחר אימייל לצפייה או צור הודעה חדשה.
+      </div>
+      <div id="emailView" class="hidden"></div>
+      <div id="composeView" class="hidden">
+        <h3 class="text-xl font-bold mb-4" id="newMessageTitle">הודעה חדשה</h3>
+        <input id="composeTo" placeholder="אל" class="w-full border p-2 mb-2 rounded" />
+        <input id="composeSubject" placeholder="נושא" class="w-full border p-2 mb-2 rounded" />
+        <textarea id="composeBody" placeholder="תוכן" class="w-full border p-2 mb-2 rounded h-40"></textarea>
+        <div class="flex space-x-2 space-x-reverse mt-2">
+          <button id="sendButton" class="bg-green-500 text-white px-4 py-2 rounded">שלח</button>
+          <button id="saveDraftButton" class="bg-yellow-500 text-white px-4 py-2 rounded">שמור טיוטה</button>
+          <button id="cancelButton" class="bg-gray-300 px-4 py-2 rounded">בטל</button>
+          <button id="translateButton" class="bg-purple-500 text-white px-4 py-2 rounded">תרגם</button>
         </div>
+      </div>
+    </main>
+  </div>
 
-        <!-- Main Content Area -->
-        <div class="flex-1 flex flex-col p-6">
-            <div id="emailView" class="flex-1 bg-white p-6 rounded-xl shadow-lg hidden">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 id="emailSubject" class="text-2xl font-bold"></h3>
-                    <div class="flex space-x-2 space-x-reverse">
-                        <button id="replyButton" class="bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-600 transition-colors">השב</button>
-                        <button id="deleteButton" class="bg-red-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-600 transition-colors"><i class="fas fa-trash"></i></button>
-                        <button id="closeButton" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-300 transition-colors">סגור</button>
-                    </div>
-                </div>
-                <div class="flex items-center text-gray-500 mb-4">
-                    <span id="emailSender" class="font-medium ml-2"></span>
-                    <span id="emailTimestamp"></span>
-                </div>
-                <div id="emailBody" class="text-gray-700 leading-relaxed overflow-y-auto"></div>
-                
-                <!-- AI Features Section -->
-                <div id="aiFeatures" class="mt-6 border-t pt-4 border-gray-200">
-                    <h4 id="aiFeaturesTitle" class="text-lg font-bold mb-2">תכונות AI</h4>
-                    <div id="aiSummary" class="bg-blue-50 p-4 rounded-lg mb-4">
-                        <p id="summaryLabel" class="font-medium text-blue-800">סיכום:</p>
-                        <p id="summaryText" class="text-sm mt-1 text-blue-700"></p>
-                    </div>
-                    <div id="aiReplies">
-                        <p id="repliesLabel" class="font-medium">הצעות לתשובה:</p>
-                        <div id="aiReplyButtons" class="flex flex-wrap mt-2">
-                            <!-- AI reply buttons will be rendered here -->
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, addDoc, setDoc, deleteDoc, doc, onSnapshot, Timestamp, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-            <!-- Compose Email View -->
-            <div id="composeView" class="flex-1 bg-white p-6 rounded-xl shadow-lg hidden">
-                <h3 id="composeTitle" class="text-2xl font-bold mb-4">הודעה חדשה</h3>
-                <div class="mb-4">
-                    <label id="toLabel" for="composeTo" class="block text-gray-700 font-medium mb-1">אל:</label>
-                    <input type="email" id="composeTo" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="כתובת אימייל">
-                </div>
-                <div class="mb-4">
-                    <label id="subjectLabel" for="composeSubject" class="block text-gray-700 font-medium mb-1">נושא:</label>
-                    <input type="text" id="composeSubject" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-                <div class="mb-4">
-                    <label id="bodyLabel" for="composeBody" class="block text-gray-700 font-medium mb-1">תוכן ההודעה:</label>
-                    <textarea id="composeBody" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-48"></textarea>
-                </div>
-                <div class="flex space-x-2 space-x-reverse">
-                    <button id="sendButton" class="bg-green-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-600 transition-colors">שלח</button>
-                    <button id="cancelButton" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-300 transition-colors">בטל</button>
-                </div>
-            </div>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAID_kPGA6Khczh0lIgd7E13LJS76JJ9nI",
+      authDomain: "mailbox-e0ce2.firebaseapp.com",
+      projectId: "mailbox-e0ce2",
+      storageBucket: "mailbox-e0ce2.appspot.com",
+      messagingSenderId: "199399854104",
+      appId: "1:199399854104:web:6aec488e6aeee0dec3736d"
+    };
 
-            <!-- Empty State -->
-            <div id="emptyState" class="flex-1 flex items-center justify-center">
-                <p id="emptyStateText" class="text-lg text-gray-500">בחר אימייל לצפייה, או לחץ על "הודעה חדשה" כדי ליצור אחת.</p>
-            </div>
-        </div>
-    </div>
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-    <!-- Modal for messages -->
-    <div id="messageModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
-        <div class="bg-white p-6 rounded-lg shadow-xl w-80 text-center">
-            <h4 id="modalTitle" class="text-xl font-bold mb-2"></h4>
-            <p id="modalMessage" class="mb-4"></p>
-            <button id="modalCloseButton" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">אישור</button>
-        </div>
-    </div>
-    
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getAuth, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getFirestore, collection, doc, addDoc, setDoc, onSnapshot, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    const loadingPage = document.getElementById("loadingPage");
+    const appPage = document.getElementById("appPage");
+    const userEmailDisplay = document.getElementById("userEmailDisplay");
+    const newEmailButton = document.getElementById("newEmailButton");
+    const composeView = document.getElementById("composeView");
+    const emptyState = document.getElementById("emptyState");
+    const sendButton = document.getElementById("sendButton");
+    const saveDraftButton = document.getElementById("saveDraftButton");
+    const cancelButton = document.getElementById("cancelButton");
+    const translateButton = document.getElementById("translateButton");
+    const composeTo = document.getElementById("composeTo");
+    const composeSubject = document.getElementById("composeSubject");
+    const composeBody = document.getElementById("composeBody");
+    const draftsList = document.getElementById("draftsList");
 
-        // Firebase-specific global variables
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = {
-  apiKey: "AIzaSyAID_kPGA6Khczh0lIgd7E13LJS76JJ9nI",
-  authDomain: "mailbox-e0ce2.firebaseapp.com",
-  projectId: "mailbox-e0ce2",
-  storageBucket: "mailbox-e0ce2.firebasestorage.app",
-  messagingSenderId: "199399854104",
-  appId: "1:199399854104:web:6aec488e6aeee0dec3736d",
-  measurementId: "G-V3CSEQY5CR"
-};
+    const mailboxTitle = document.getElementById("mailboxTitle");
+    const inboxBtn = document.getElementById("inboxBtn");
+    const sentBtn = document.getElementById("sentBtn");
+    const draftsBtn = document.getElementById("draftsBtn");
+    const trashBtn = document.getElementById("trashBtn");
+    const newMessageTitle = document.getElementById("newMessageTitle");
+    const langToggle = document.getElementById("langToggle");
 
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+    const translations = {
+      he: {
+        mailboxTitle: "תיבת דואר",
+        newEmail: "הודעה חדשה",
+        inbox: "נכנס",
+        sent: "נשלח",
+        drafts: "טיוטות",
+        trash: "זבל",
+        emptyState: "בחר אימייל לצפייה או צור הודעה חדשה.",
+        newMessageTitle: "הודעה חדשה",
+        send: "שלח",
+        saveDraft: "שמור טיוטה",
+        cancel: "בטל",
+        translate: "תרגם"
+      },
+      en: {
+        mailboxTitle: "Mailbox",
+        newEmail: "New Message",
+        inbox: "Inbox",
+        sent: "Sent",
+        drafts: "Drafts",
+        trash: "Trash",
+        emptyState: "Select an email to view or create a new one.",
+        newMessageTitle: "New Message",
+        send: "Send",
+        saveDraft: "Save Draft",
+        cancel: "Cancel",
+        translate: "Translate"
+      }
+    };
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+    let currentLang = "he";
 
-        // UI Element References
-        const loadingPage = document.getElementById('loadingPage');
-        const loadingText = document.getElementById('loadingText');
-        const loadingSubtext = document.getElementById('loadingSubtext');
-        const appPage = document.getElementById('appPage');
-        const mailboxTitle = document.getElementById('mailboxTitle');
-        const mailboxList = document.getElementById('mailboxList');
-        const folderButtons = document.querySelectorAll('.folder-button');
-        const languageButton = document.getElementById('languageButton');
-        const emailView = document.getElementById('emailView');
-        const emptyState = document.getElementById('emptyState');
-        const emptyStateText = document.getElementById('emptyStateText');
-        const composeView = document.getElementById('composeView');
-        const replyButton = document.getElementById('replyButton');
-        const deleteButton = document.getElementById('deleteButton');
-        const closeButton = document.getElementById('closeButton');
-        const emailSubject = document.getElementById('emailSubject');
-        const emailSender = document.getElementById('emailSender');
-        const emailTimestamp = document.getElementById('emailTimestamp');
-        const emailBody = document.getElementById('emailBody');
-        const aiFeaturesTitle = document.getElementById('aiFeaturesTitle');
-        const aiSummary = document.getElementById('aiSummary');
-        const summaryLabel = document.getElementById('summaryLabel');
-        const summaryText = document.getElementById('summaryText');
-        const aiReplies = document.getElementById('aiReplies');
-        const repliesLabel = document.getElementById('repliesLabel');
-        const aiReplyButtons = document.getElementById('aiReplyButtons');
-        const composeTitle = document.getElementById('composeTitle');
-        const toLabel = document.getElementById('toLabel');
-        const subjectLabel = document.getElementById('composeSubject');
-        const bodyLabel = document.getElementById('bodyLabel');
-        const composeTo = document.getElementById('composeTo');
-        const composeSubject = document.getElementById('composeSubject');
-        const composeBody = document.getElementById('composeBody');
-        const sendButton = document.getElementById('sendButton');
-        const cancelButton = document.getElementById('cancelButton');
-        const messageModal = document.getElementById('messageModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalMessage = document.getElementById('modalMessage');
-        const modalCloseButton = document.getElementById('modalCloseButton');
-        const userEmailDisplay = document.getElementById('userEmailDisplay');
-        const newEmailButton = document.getElementById('newEmailButton');
-        const searchInput = document.getElementById('searchInput');
+    function applyTranslations() {
+      const t = translations[currentLang];
+      mailboxTitle.textContent = t.mailboxTitle;
+      newEmailButton.textContent = t.newEmail;
+      inboxBtn.textContent = t.inbox;
+      sentBtn.textContent = t.sent;
+      draftsBtn.textContent = t.drafts;
+      trashBtn.textContent = t.trash;
+      emptyState.textContent = t.emptyState;
+      newMessageTitle.textContent = t.newMessageTitle;
+      sendButton.textContent = t.send;
+      saveDraftButton.textContent = t.saveDraft;
+      cancelButton.textContent = t.cancel;
+      translateButton.textContent = t.translate;
+      langToggle.textContent = currentLang === "he" ? "EN" : "HE";
+    }
 
-        // App State
-        const state = {
-            emailAddress: null,
-            userId: null,
-            emails: [],
-            currentEmail: null,
-            currentFolder: 'inbox',
-            language: 'he'
-        };
+    langToggle.addEventListener("click", () => {
+      currentLang = currentLang === "he" ? "en" : "he";
+      applyTranslations();
+    });
 
-        // UI Translation Data
-        const translations = {
-            'he': {
-                'loadingText': 'מתחבר...',
-                'loadingSubtext': 'מאחזר פרטי משתמש...',
-                'mailboxTitle': 'תיבת דואר',
-                'newEmailButton': 'הודעה חדשה',
-                'languageButton': 'English',
-                'folders': {
-                    'inbox': 'נכנס',
-                    'sent': 'נשלח',
-                    'drafts': 'טיוטות',
-                    'trash': 'זבל'
-                },
-                'searchInputPlaceholder': 'חיפוש אימיילים...',
-                'emptyStateText': 'בחר אימייל לצפייה, או לחץ על "הודעה חדשה" כדי ליצור אחת.',
-                'emailView': {
-                    'replyButton': 'השב',
-                    'closeButton': 'סגור',
-                    'deleteButton': 'מחק',
-                    'from': 'מאת:',
-                    'sentAt': 'נשלח ב:',
-                    'aiFeaturesTitle': 'תכונות AI',
-                    'summaryLabel': 'סיכום:',
-                    'repliesLabel': 'הצעות לתשובה:',
-                    'senderPrefix': 'ברוך הבא, ',
-                    'firebaseSuffix': ''
-                },
-                'composeView': {
-                    'composeTitle': 'הודעה חדשה',
-                    'toLabel': 'אל:',
-                    'subjectLabel': 'נושא:',
-                    'bodyLabel': 'תוכן ההודעה:',
-                    'sendButton': 'שלח',
-                    'cancelButton': 'בטל'
-                },
-                'modal': {
-                    'successTitle': 'הצלחה',
-                    'successMessage': 'ההודעה נשלחה בהצלחה!',
-                    'errorTitle': 'שגיאה',
-                    'fieldsError': 'אנא מלא את כל השדות.',
-                    'sendError': 'שגיאה בשליחת ההודעה. אנא נסה שוב.',
-                    'fetchError': 'שגיאה בטעינת האימיילים. אנא נסה לרענן את הדף.',
-                    'unimplemented': 'תכונה זו עדיין לא יושמה.',
-                    'authError': 'שגיאה בהתחברות. אנא נסה שוב מאוחר יותר.',
-                    'authRequired': 'חובה להתחבר. אנא השתמש באסימון תקף.'
-                }
-            },
-            'en': {
-                'loadingText': 'Connecting...',
-                'loadingSubtext': 'Retrieving user details...',
-                'mailboxTitle': 'Mailbox',
-                'newEmailButton': 'New Message',
-                'languageButton': 'עברית',
-                'folders': {
-                    'inbox': 'Inbox',
-                    'sent': 'Sent',
-                    'drafts': 'Drafts',
-                    'trash': 'Trash'
-                },
-                'searchInputPlaceholder': 'Search emails...',
-                'emptyStateText': 'Select an email to view, or click "New Message" to compose one.',
-                'emailView': {
-                    'replyButton': 'Reply',
-                    'closeButton': 'Close',
-                    'deleteButton': 'Delete',
-                    'from': 'From:',
-                    'sentAt': 'Sent at:',
-                    'aiFeaturesTitle': 'AI Features',
-                    'summaryLabel': 'Summary:',
-                    'repliesLabel': 'Suggested Replies:',
-                    'senderPrefix': 'Welcome, ',
-                    'firebaseSuffix': ''
-                },
-                'composeView': {
-                    'composeTitle': 'New Message',
-                    'toLabel': 'To:',
-                    'subjectLabel': 'Subject:',
-                    'bodyLabel': 'Message Body:',
-                    'sendButton': 'Send',
-                    'cancelButton': 'Cancel'
-                },
-                'modal': {
-                    'successTitle': 'Success',
-                    'successMessage': 'Message sent successfully!',
-                    'errorTitle': 'Error',
-                    'fieldsError': 'Please fill in all fields.',
-                    'sendError': 'Error sending message. Please try again.',
-                    'fetchError': 'Error fetching emails. Please try refreshing the page.',
-                    'unimplemented': 'This feature is not yet implemented.',
-                    'authError': 'Authentication error. Please try again later.',
-                    'authRequired': 'Authentication required. Please use a valid token.'
-                }
-            }
-        };
+    async function translateText(text, targetLang) {
+      // דמו בלבד: הוספת תגית לפי שפה
+      if (!text.trim()) return text;
+      if (targetLang === "en") {
+        return "[EN] " + text;
+      } else {
+        return "[HE] " + text;
+      }
+    }
 
-        // --- Firebase Constants ---
-        const PUBLIC_COLLECTION_PATH = `/artifacts/${appId}/public/data/emails`;
+    translateButton.addEventListener("click", async () => {
+      composeSubject.value = await translateText(composeSubject.value, currentLang === "he" ? "en" : "he");
+      composeBody.value = await translateText(composeBody.value, currentLang === "he" ? "en" : "he");
+    });
 
-        // -------------------- UI Utility Functions --------------------
-        function showMessageModal(title, message) {
-            modalTitle.textContent = title;
-            modalMessage.textContent = message;
-            modalCloseButton.textContent = state.language === 'he' ? 'אישור' : 'OK';
-            messageModal.classList.remove('hidden');
+    const state = {
+      emailAddress: null,
+      emails: [],
+      currentFolder: "inbox",
+      editingDraftId: null
+    };
+
+    async function fetchUser() {
+      try {
+        const res = await fetch("/api/user");
+        if (!res.ok) throw new Error("לא מחובר");
+        const data = await res.json();
+        let email = data.user.email;
+        if (email.endsWith("@family.local")) {
+          state.emailAddress = email;
+        } else {
+          const username = email.split("@")[0];
+          state.emailAddress = `${username}@family.local`;
         }
+        userEmailDisplay.textContent = `מחובר כ- ${state.emailAddress}`;
+        loadingPage.classList.add("hidden");
+        appPage.classList.remove("hidden");
+        listenToEmails();
+        listenToDrafts();
+        applyTranslations();
+      } catch (err) {
+        document.getElementById("loadingText").textContent = "שגיאה";
+        document.getElementById("loadingSubtext").textContent = "יש להתחבר למערכת";
+        console.error(err);
+      }
+    }
 
-        function hideMessageModal() {
-            messageModal.classList.add('hidden');
-        }
-
-        function updateUserUI(email) {
-            const prefix = translations[state.language]['emailView']['senderPrefix'];
-            userEmailDisplay.textContent = `${prefix} ${email}`;
-        }
-
-        function updateUILanguage() {
-            const t = translations[state.language];
-            document.body.classList.toggle('rtl', state.language === 'he');
-            document.body.classList.toggle('ltr', state.language === 'en');
-
-            loadingText.textContent = t.loadingText;
-            loadingSubtext.textContent = t.loadingSubtext;
-            mailboxTitle.textContent = t.mailboxTitle;
-            newEmailButton.textContent = t.newEmailButton;
-            languageButton.textContent = t.languageButton;
-            emptyStateText.textContent = t.emptyStateText;
-            replyButton.textContent = t.emailView.replyButton;
-            deleteButton.textContent = state.language === 'he' ? '' : 'Delete';
-            closeButton.textContent = t.emailView.closeButton;
-            aiFeaturesTitle.textContent = t.emailView.aiFeaturesTitle;
-            summaryLabel.textContent = t.emailView.summaryLabel;
-            repliesLabel.textContent = t.emailView.repliesLabel;
-            composeTitle.textContent = t.composeView.composeTitle;
-            toLabel.textContent = t.composeView.toLabel;
-            subjectLabel.textContent = t.composeView.subjectLabel;
-            bodyLabel.textContent = t.composeView.bodyLabel;
-            sendButton.textContent = t.composeView.sendButton;
-            cancelButton.textContent = t.composeView.cancelButton;
-            
-            // Update placeholder text
-            document.getElementById('composeTo').placeholder = t.composeView.toLabel;
-            document.getElementById('searchInput').placeholder = t.searchInputPlaceholder;
-            
-            // Update folder names
-            folderButtons.forEach(button => {
-                const folderName = button.dataset.folder;
-                button.textContent = t.folders[folderName];
-            });
-
-            // Update user display
-            if (state.emailAddress) {
-                updateUserUI(state.emailAddress);
-            }
-
-            // Re-render mailbox to update timestamps
-            if (state.emails.length > 0) {
-                 renderMailbox();
-            }
-        }
-        
-        // -------------------- Core Logic Functions --------------------
-        
-        /**
-         * Simulates a call to a backend API to get user data.
-         * The mock data is based on the Firebase User UID.
-         */
-        async function fetchUserData(user) {
-            loadingSubtext.textContent = translations[state.language].loadingSubtext;
-            // In a real app, this would be a fetch() call to a real endpoint,
-            // sending the user's auth token to identify them.
-            // For example: `const response = await fetch('/api/user', { headers: { 'Authorization': `Bearer ${await user.getIdToken()}` } });`
-            
-            // Simulate network latency
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            if (!user || !user.uid) {
-                throw new Error("User not authenticated.");
-            }
-
-            // For this simulation, we'll return a hardcoded email based on the user's UID.
-            const userMap = {
-                // Mock user IDs from Firebase
-                "mock_uid_1": "user1@family.local",
-                "mock_uid_2": "manager@family.local",
-                "mock_uid_3": "guest@family.local"
-            };
-            const mockEmail = userMap[user.uid];
-            
-            if (!mockEmail) {
-                // If the user's UID is not in our map, throw an error
-                throw new Error("User data not found.");
-            }
-            
-            return {
-                email: mockEmail,
-                userId: user.uid
-            };
-        }
-
-        // Renders the list of emails in the sidebar
-        function renderMailbox() {
-            mailboxList.innerHTML = ''; // Clear previous emails
-            let filteredEmails = [];
-            const searchTerm = searchInput.value.toLowerCase();
-            
-            // Filter emails based on the current folder
-            if (state.currentFolder === 'inbox') {
-                filteredEmails = state.emails.filter(email => email.recipient === state.emailAddress && !email.deleted);
-            } else if (state.currentFolder === 'sent') {
-                filteredEmails = state.emails.filter(email => email.sender === state.emailAddress && !email.deleted);
-            } else if (state.currentFolder === 'trash') {
-                filteredEmails = state.emails.filter(email => email.deleted);
-            } else if (state.currentFolder === 'drafts') {
-                // Drafts are not yet implemented, display a message
-                mailboxList.innerHTML = `<li class="text-gray-500 p-2 text-center">${translations[state.language].modal.unimplemented}</li>`;
-                return;
-            }
-
-            // Apply search filter if a search term is present
-            if (searchTerm) {
-                filteredEmails = filteredEmails.filter(email => {
-                    const subject = email.subject.toLowerCase();
-                    const sender = email.sender.toLowerCase();
-                    const body = email.body.toLowerCase();
-                    return subject.includes(searchTerm) || sender.includes(searchTerm) || body.includes(searchTerm);
-                });
-            }
-
-            if (filteredEmails.length === 0) {
-                const folderName = translations[state.language].folders[state.currentFolder];
-                mailboxList.innerHTML = `<li class="text-gray-500 p-2 text-center">אין אימיילים בתיקייה זו.</li>`;
-                return;
-            }
-
-            filteredEmails.forEach(email => {
-                const isUnread = !email.readBy || !email.readBy[state.emailAddress];
-                const mailItem = document.createElement('li');
-                mailItem.classList.add('p-3', 'rounded-lg', 'cursor-pointer', 'mb-2', 'transition-colors', 'hover:bg-gray-100');
-                if (state.currentEmail && state.currentEmail.id === email.id) {
-                    mailItem.classList.add('bg-blue-100', 'hover:bg-blue-200', 'text-blue-800');
-                } else {
-                    mailItem.classList.add('bg-white', 'text-gray-800');
-                }
-                
-                mailItem.innerHTML = `
-                    <p class="font-bold truncate ${isUnread ? 'text-blue-600' : 'text-gray-800'}">${email.subject}</p>
-                    <p class="text-sm text-gray-500 truncate mt-1">${state.currentFolder === 'sent' ? `אל: ${email.recipient}` : `מאת: ${email.sender}`}</p>
-                    <p class="text-xs text-gray-400 mt-1">${email.timestamp.toDate().toLocaleString(state.language === 'he' ? 'he-IL' : 'en-US', { dateStyle: 'short', timeStyle: 'short' })}</p>
-                `;
-
-                mailItem.addEventListener('click', () => {
-                    displayEmail(email);
-                    if (isUnread && state.currentFolder === 'inbox') {
-                        markAsRead(email);
-                    }
-                });
-                mailboxList.appendChild(mailItem);
-            });
-        }
-        
-        // Displays a single email in the main view
-        function displayEmail(email) {
-            state.currentEmail = email;
-            
-            // Show email view, hide others
-            emailView.classList.remove('hidden');
-            emptyState.classList.add('hidden');
-            composeView.classList.add('hidden');
-
-            // Update UI with email data
-            emailSubject.textContent = email.subject;
-            emailSender.textContent = `${state.language === 'he' ? 'מאת:' : 'From:'} ${email.sender}`;
-            emailTimestamp.textContent = `${state.language === 'he' ? 'נשלח ב:' : 'Sent at:'} ${email.timestamp.toDate().toLocaleString(state.language === 'he' ? 'he-IL' : 'en-US', { dateStyle: 'long', timeStyle: 'short' })}`;
-            emailBody.innerHTML = email.body.replace(/\n/g, '<br>');
-
-            // Show/hide delete button based on folder
-            if (state.currentFolder === 'trash') {
-                deleteButton.classList.add('hidden');
-            } else {
-                deleteButton.classList.remove('hidden');
-            }
-
-            // Hide AI features until content is loaded
-            aiSummary.classList.add('hidden');
-            summaryText.textContent = '';
-            aiReplyButtons.innerHTML = '';
-            
-            // Simulate fetching AI data
-            if (email.body) {
-                // In a real app, this would be a complex API call
-                fakeAISummarize(email.body).then(summary => {
-                    summaryText.textContent = summary;
-                    aiSummary.classList.remove('hidden');
-                });
-                fakeAISuggestReplies(email.body).then(replies => {
-                    replies.forEach(reply => {
-                        const replyButton = document.createElement('button');
-                        replyButton.classList.add('bg-gray-200', 'text-gray-700', 'px-3', 'py-1', 'rounded-lg', 'text-sm', 'hover:bg-gray-300', 'transition-colors', state.language === 'he' ? 'ml-2' : 'mr-2', 'mb-2');
-                        replyButton.textContent = reply;
-                        replyButton.addEventListener('click', () => startCompose(email.sender, `RE: ${email.subject}`, reply));
-                        aiReplyButtons.appendChild(replyButton);
-                    });
-                });
-            }
-        }
-
-        // Marks an email as read by the current user
-        async function markAsRead(email) {
-            const emailDocRef = doc(db, PUBLIC_COLLECTION_PATH, email.id);
-            try {
-                await setDoc(emailDocRef, {
-                    readBy: {
-                        [state.emailAddress]: true
-                    }
-                }, { merge: true });
-                console.log(`Email ${email.id} marked as read by ${state.emailAddress}`);
-            } catch (e) {
-                console.error("Error marking email as read: ", e);
-            }
-        }
-
-        // Moves an email to the trash
-        async function deleteEmail(email) {
-            if (!email || !email.id) return;
-            const emailDocRef = doc(db, PUBLIC_COLLECTION_PATH, email.id);
-            try {
-                await setDoc(emailDocRef, { deleted: true }, { merge: true });
-                // Return to the empty state after deletion
-                state.currentEmail = null;
-                emailView.classList.add('hidden');
-                emptyState.classList.remove('hidden');
-            } catch (e) {
-                console.error("Error deleting email: ", e);
-                showMessageModal(translations[state.language].modal.errorTitle, translations[state.language].modal.sendError);
-            }
-        }
-        
-        // Starts the compose view, optionally pre-filling fields
-        function startCompose(to = '', subject = '', body = '') {
-            emailView.classList.add('hidden');
-            emptyState.classList.add('hidden');
-            composeView.classList.remove('hidden');
-
-            composeTo.value = to;
-            composeSubject.value = subject;
-            composeBody.value = body;
-        }
-
-        // -------------------- Listeners --------------------
-
-        function setupListeners() {
-            // Listen for all emails in the public collection
-            const emailsCollectionRef = collection(db, PUBLIC_COLLECTION_PATH);
-            onSnapshot(emailsCollectionRef, (snapshot) => {
-                const emailsData = [];
-                snapshot.forEach(doc => {
-                    emailsData.push({ id: doc.id, ...doc.data() });
-                });
-                // Sort emails by timestamp, newest first
-                state.emails = emailsData.sort((a, b) => b.timestamp.toMillis() - a.timestamp.toMillis());
-                renderMailbox();
-                // If a specific email was selected, re-render it
-                if (state.currentEmail) {
-                    const updatedEmail = state.emails.find(e => e.id === state.currentEmail.id);
-                    if (updatedEmail) {
-                        displayEmail(updatedEmail);
-                    }
-                }
-            }, (error) => {
-                console.error("Error fetching emails: ", error);
-                showMessageModal(translations[state.language].modal.errorTitle, translations[state.language].modal.fetchError);
-            });
-
-            // Button listeners
-            newEmailButton.addEventListener('click', () => startCompose());
-            replyButton.addEventListener('click', () => {
-                if (state.currentEmail) {
-                    startCompose(state.currentEmail.sender, `RE: ${state.currentEmail.subject}`, '');
-                }
-            });
-
-            deleteButton.addEventListener('click', () => {
-                if (state.currentEmail) {
-                    deleteEmail(state.currentEmail);
-                }
-            });
-
-            closeButton.addEventListener('click', () => {
-                state.currentEmail = null;
-                emailView.classList.add('hidden');
-                emptyState.classList.remove('hidden');
-                renderMailbox();
-            });
-
-            cancelButton.addEventListener('click', () => {
-                composeView.classList.add('hidden');
-                emptyState.classList.remove('hidden');
-            });
-
-            sendButton.addEventListener('click', async () => {
-                const to = composeTo.value.trim();
-                const subject = composeSubject.value.trim();
-                const body = composeBody.value.trim();
-
-                if (!to || !subject || !body) {
-                    showMessageModal(translations[state.language].modal.errorTitle, translations[state.language].modal.fieldsError);
-                    return;
-                }
-
-                try {
-                    await addDoc(collection(db, PUBLIC_COLLECTION_PATH), {
-                        sender: state.emailAddress,
-                        recipient: to,
-                        subject: subject,
-                        body: body,
-                        timestamp: Timestamp.now(),
-                        readBy: {
-                            [state.emailAddress]: true // The sender has read it
-                        },
-                        deleted: false // New emails are not deleted by default
-                    });
-                    showMessageModal(translations[state.language].modal.successTitle, translations[state.language].modal.successMessage);
-                    
-                    // Clear the compose view
-                    composeView.classList.add('hidden');
-                    emptyState.classList.remove('hidden');
-                    composeTo.value = '';
-                    composeSubject.value = '';
-                    composeBody.value = '';
-
-                } catch (e) {
-                    console.error("Error sending message: ", e);
-                    showMessageModal(translations[state.language].modal.errorTitle, translations[state.language].modal.sendError);
-                }
-            });
-            
-            modalCloseButton.addEventListener('click', hideMessageModal);
-            searchInput.addEventListener('input', renderMailbox);
-
-            // Folder button listeners
-            folderButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const folder = button.dataset.folder;
-                    if (folder === 'drafts') {
-                        showMessageModal(translations[state.language].modal.errorTitle, translations[state.language].modal.unimplemented);
-                        return;
-                    }
-                    state.currentFolder = folder;
-                    // Reset active class
-                    folderButtons.forEach(btn => btn.classList.remove('bg-blue-100', 'text-blue-800'));
-                    button.classList.add('bg-blue-100', 'text-blue-800');
-                    // Hide main view
-                    emailView.classList.add('hidden');
-                    composeView.classList.add('hidden');
-                    emptyState.classList.remove('hidden');
-                    state.currentEmail = null;
-                    renderMailbox();
-                });
-            });
-
-            // Language toggle listener
-            languageButton.addEventListener('click', () => {
-                state.language = state.language === 'he' ? 'en' : 'he';
-                updateUILanguage();
-                if (state.currentEmail) {
-                    displayEmail(state.currentEmail);
-                }
-            });
-        }
-        
-        // -------------------- Fake AI Functions --------------------
-        async function fakeAISummarize(text) { return state.language === 'he' ? "סיכום הדוגמה: " + text.slice(0, 100) + "..." : "Example summary: " + text.slice(0, 100) + "..."; }
-        async function fakeAISuggestReplies(text) { return state.language === 'he' ? ["תשובה 1", "תשובה 2", "תשובה 3"] : ["Reply 1", "Reply 2", "Reply 3"]; }
-        
-        // -------------------- Initialization --------------------
-        
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                try {
-                    // Fetch user data from the simulated API, which is the single source of truth
-                    const userData = await fetchUserData(user);
-                    state.emailAddress = userData.email;
-                    state.userId = userData.userId; // Store the userId for later use
-                    updateUserUI(state.emailAddress);
-                    loadingPage.classList.add('hidden');
-                    appPage.classList.remove('hidden');
-                    setupListeners();
-                } catch (err) {
-                    console.error("Error fetching user data:", err);
-                    showMessageModal(translations.he.modal.errorTitle, translations.he.modal.authError);
-                }
-            } else {
-                // User is not authenticated. Try to sign in with the token.
-                try {
-                    if (initialAuthToken) {
-                        await signInWithCustomToken(auth, initialAuthToken);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-                } catch (err) {
-                    console.error("Initial sign-in failed:", err);
-                    loadingText.textContent = translations[state.language].modal.errorTitle;
-                    loadingSubtext.textContent = translations[state.language].modal.authError;
-                }
-            }
+    function listenToEmails() {
+      const emailsRef = collection(db, "emails");
+      onSnapshot(emailsRef, (snapshot) => {
+        state.emails = [];
+        snapshot.forEach(docSnap => {
+          state.emails.push({ id: docSnap.id, ...docSnap.data() });
         });
+        console.log("Emails:", state.emails);
+      });
+    }
 
-        // Initialize UI language
-        updateUILanguage();
-    </script>
+    function listenToDrafts() {
+      const draftsRef = query(collection(db, "emails"), where("folder", "==", "drafts"), where("sender", "==", state.emailAddress));
+      onSnapshot(draftsRef, (snapshot) => {
+        draftsList.innerHTML = "";
+        snapshot.forEach(docSnap => {
+          const draft = docSnap.data();
+          const li = document.createElement("li");
+          li.classList.add("flex", "justify-between", "items-center", "mb-1");
+
+          const span = document.createElement("span");
+          span.textContent = draft.subject || (currentLang === "he" ? "(ללא נושא)" : "(No Subject)");
+          span.classList.add("cursor-pointer", "hover:text-blue-600");
+          span.addEventListener("click", () => {
+            composeTo.value = draft.recipient || "";
+            composeSubject.value = draft.subject || "";
+            composeBody.value = draft.body || "";
+            state.editingDraftId = docSnap.id;
+            emptyState.classList.add("hidden");
+            composeView.classList.remove("hidden");
+          });
+
+          const delBtn = document.createElement("button");
+          delBtn.textContent = "🗑️";
+          delBtn.classList.add("text-red-500", "ml-2");
+          delBtn.addEventListener("click", async (e) => {
+            e.stopPropagation();
+            if (confirm(currentLang === "he" ? "האם למחוק טיוטה זו?" : "Delete this draft?")) {
+              await deleteDoc(doc(db, "emails", docSnap.id));
+            }
+          });
+
+          li.appendChild(span);
+          li.appendChild(delBtn);
+          draftsList.appendChild(li);
+        });
+      });
+    }
+
+    newEmailButton.addEventListener("click", () => {
+      emptyState.classList.add("hidden");
+      composeView.classList.remove("hidden");
+      state.editingDraftId = null;
+      composeTo.value = "";
+      composeSubject.value = "";
+      composeBody.value = "";
+    });
+
+    cancelButton.addEventListener("click", () => {
+      composeView.classList.add("hidden");
+      emptyState.classList.remove("hidden");
+      state.editingDraftId = null;
+    });
+
+    sendButton.addEventListener("click", async () => {
+      try {
+        await addDoc(collection(db, "emails"), {
+          sender: state.emailAddress,
+          recipient: composeTo.value.trim(),
+          subject: composeSubject.value.trim(),
+          body: composeBody.value.trim(),
+          timestamp: Timestamp.now(),
+          deleted: false,
+          folder: "sent"
+        });
+        composeTo.value = "";
+        composeSubject.value = "";
+        composeBody.value = "";
+        composeView.classList.add("hidden");
+        emptyState.classList.remove("hidden");
+        state.editingDraftId = null;
+      } catch (err) {
+        console.error("Send error", err);
+      }
+    });
+
+    saveDraftButton.addEventListener("click", async () => {
+      try {
+        if (state.editingDraftId) {
+          await setDoc(doc(db, "emails", state.editingDraftId), {
+            sender: state.emailAddress,
+            recipient: composeTo.value.trim(),
+            subject: composeSubject.value.trim(),
+            body: composeBody.value.trim(),
+            timestamp: Timestamp.now(),
+            deleted: false,
+            folder: "drafts"
+          });
+        } else {
+          await addDoc(collection(db, "emails"), {
+            sender: state.emailAddress,
+            recipient: composeTo.value.trim(),
+            subject: composeSubject.value.trim(),
+            body: composeBody.value.trim(),
+            timestamp: Timestamp.now(),
+            deleted: false,
+            folder: "drafts"
+          });
+        }
+        composeView.classList.add("hidden");
+        emptyState.classList.remove("hidden");
+        state.editingDraftId = null;
+      } catch (err) {
+        console.error("Draft save error", err);
+      }
+    });
+
+    fetchUser();
+  </script>
 </body>
 </html>
+
