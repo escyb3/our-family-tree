@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Updates</title>
+    <title>עדכונים משפחתיים</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts - Inter -->
@@ -16,6 +16,16 @@
         body {
             font-family: 'Inter', sans-serif;
             background: #f1f5f9;
+        }
+        .modal {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -35,7 +45,7 @@
             <i class="fas fa-home"></i>
             <span class="font-medium">עמוד הבית</span>
         </a>
-        <a href="/gallery.html" class="flex items-center gap-2 text-slate-700 hover:text-blue-600 transition-colors">
+        <a href="gallery.html" class="flex items-center gap-2 text-slate-700 hover:text-blue-600 transition-colors">
             <i class="fas fa-camera"></i>
             <span class="font-medium">גלריה</span>
         </a>
@@ -49,11 +59,15 @@
         </a>
     </nav>
     
-    <!-- Add New Post Button (initially hidden) -->
-    <div id="addPostBtnContainer" class="w-full max-w-4xl flex justify-end mb-6 hidden">
-        <button id="addPostBtn" class="bg-blue-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-colors flex items-center gap-2">
+    <!-- Add New Post Buttons (initially hidden) -->
+    <div id="addPostBtnContainer" class="w-full max-w-4xl flex flex-col sm:flex-row justify-end gap-3 mb-6 hidden">
+        <button id="addPostBtn" class="bg-blue-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
             <i class="fas fa-plus"></i>
             <span>הוסף עדכון חדש</span>
+        </button>
+        <button id="aiPostBtn" class="bg-purple-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-purple-700 transition-colors flex items-center justify-center gap-2">
+            <i class="fas fa-magic"></i>
+            <span>✨כתיבת עדכון עם בינה מלאכותית</span>
         </button>
     </div>
 
@@ -65,6 +79,34 @@
 
     <!-- The user ID will be displayed here for collaboration -->
     <div id="userIdDisplay" class="mt-8 text-center text-sm text-gray-400"></div>
+
+    <!-- AI Assistant Modal -->
+    <div id="aiModal" class="modal fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+        <div class="modal-content bg-white p-8 rounded-xl shadow-2xl w-full max-w-2xl">
+            <h2 class="text-2xl font-bold mb-4 text-slate-800">✨ עוזר הכתיבה של Gemini</h2>
+            <p class="mb-4 text-gray-600">ספר לי על מה תרצה לכתוב, ואני אצור עבורך טיוטה.</p>
+            <div class="mb-4">
+                <label for="aiPrompt" class="block text-sm font-medium text-gray-700 mb-2">נושא העדכון (דוגמא: "טיול משפחתי", "יום הולדת")</label>
+                <textarea id="aiPrompt" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="הכנס את הנושא כאן..."></textarea>
+            </div>
+            <div id="aiResponseContainer" class="hidden mb-4">
+                <p class="text-sm font-medium text-gray-700 mb-2">טיוטה מוכנה:</p>
+                <textarea id="aiResponse" rows="6" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none" readonly></textarea>
+            </div>
+            <div id="aiLoading" class="hidden text-center text-blue-500 mb-4">
+                <i class="fas fa-spinner fa-spin mr-2"></i>
+                <span class="text-sm">יוצר תוכן...</span>
+            </div>
+            <div class="flex justify-end gap-3">
+                <button id="aiGenerateBtn" class="bg-blue-600 text-white px-5 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-colors">צור טיוטה</button>
+                <button id="aiUseBtn" class="bg-green-600 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-700 transition-colors hidden">השתמש בפוסט זה</button>
+                <button id="aiCloseBtn" class="bg-gray-300 text-gray-800 px-5 py-2 rounded-lg shadow-md hover:bg-gray-400 transition-colors">בטל</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Message Container -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50"></div>
 
     <!-- Firebase SDKs -->
     <script type="module">
@@ -99,9 +141,20 @@
 
         const addPostBtnContainer = document.getElementById('addPostBtnContainer');
         const addPostBtn = document.getElementById('addPostBtn');
+        const aiPostBtn = document.getElementById('aiPostBtn');
         const userIdDisplay = document.getElementById('userIdDisplay');
         const updatesContainer = document.getElementById('updatesContainer');
         const loadingMessage = document.getElementById('loadingMessage');
+
+        const aiModal = document.getElementById('aiModal');
+        const aiPromptInput = document.getElementById('aiPrompt');
+        const aiResponseContainer = document.getElementById('aiResponseContainer');
+        const aiResponseTextarea = document.getElementById('aiResponse');
+        const aiGenerateBtn = document.getElementById('aiGenerateBtn');
+        const aiUseBtn = document.getElementById('aiUseBtn');
+        const aiCloseBtn = document.getElementById('aiCloseBtn');
+        const aiLoading = document.getElementById('aiLoading');
+        const toastContainer = document.getElementById('toastContainer');
 
         // Function to check user's role from the API
         const checkUserRole = async () => {
@@ -111,12 +164,162 @@
                     throw new Error('Failed to fetch user data');
                 }
                 const userData = await response.json();
-                return userData.role === 'superadmin';
+                // Correctly access the role property nested inside the 'user' object
+                return userData.user.role === 'superadmin';
             } catch (error) {
                 console.error("Error fetching user role:", error);
                 return false;
             }
         };
+
+        // Helper function for showing toasts
+        const showToast = (message, type = 'success') => {
+            const toast = document.createElement('div');
+            toast.className = `p-4 rounded-lg shadow-md text-white transition-opacity duration-300 mb-3 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
+            toast.textContent = message;
+            toastContainer.appendChild(toast);
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        };
+
+        // --- Gemini API Call Functions ---
+
+        // Function to call Gemini for text generation
+        const generatePostWithGemini = async (promptText) => {
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            const systemPrompt = `כאשר אתה כותב עדכון משפחתי, צור פוסט קצר ומרגש על הנושא הבא. הוסף רגשות ושפה חמה. תוכל להוסיף רעיון לכותרת בולטת בראש התשובה, אך התשובה צריכה להתחיל ישירות עם הכותרת.`;
+            const userQuery = promptText;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+            };
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Gemini API Error:", errorData);
+                throw new Error("Failed to generate content with Gemini.");
+            }
+
+            const result = await response.json();
+            const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (!text) {
+                throw new Error("Received empty or invalid response from Gemini.");
+            }
+
+            return text;
+        };
+        
+        // Function to convert PCM audio to WAV format
+        const pcmToWav = (pcmData, sampleRate) => {
+            const dataLength = pcmData.length * 2;
+            const buffer = new ArrayBuffer(44 + dataLength);
+            const view = new DataView(buffer);
+            let offset = 0;
+
+            const writeString = (str) => {
+                for (let i = 0; i < str.length; i++) {
+                    view.setUint8(offset + i, str.charCodeAt(i));
+                }
+                offset += str.length;
+            };
+
+            // RIFF chunk
+            writeString('RIFF');
+            view.setUint32(offset, 36 + dataLength, true); offset += 4;
+            writeString('WAVE');
+
+            // fmt chunk
+            writeString('fmt ');
+            view.setUint32(offset, 16, true); offset += 4;
+            view.setUint16(offset, 1, true); offset += 2; // PCM
+            view.setUint16(offset, 1, true); offset += 2; // Mono
+            view.setUint32(offset, sampleRate, true); offset += 4;
+            view.setUint32(offset, sampleRate * 2, true); offset += 4; // Byte rate
+            view.setUint16(offset, 2, true); offset += 2; // Block align
+            view.setUint16(offset, 16, true); offset += 2; // Bits per sample
+
+            // data chunk
+            writeString('data');
+            view.setUint32(offset, dataLength, true); offset += 4;
+            
+            for (let i = 0; i < pcmData.length; i++) {
+                view.setInt16(offset, pcmData[i], true);
+                offset += 2;
+            }
+
+            return new Blob([view], { type: 'audio/wav' });
+        };
+        
+        // Function to call Gemini for Text-to-Speech
+        const playPostAudio = async (text) => {
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{
+                    parts: [{ text: text }]
+                }],
+                generationConfig: {
+                    responseModalities: ["AUDIO"],
+                    speechConfig: {
+                        voiceConfig: {
+                            prebuiltVoiceConfig: { voiceName: "Fenrir" }
+                        }
+                    }
+                },
+                model: "gemini-2.5-flash-preview-tts"
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error("TTS API Error:", errorData);
+                    throw new Error("Failed to generate TTS audio.");
+                }
+
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.[0];
+                const audioData = part?.inlineData?.data;
+                const mimeType = part?.inlineData?.mimeType;
+
+                if (audioData && mimeType && mimeType.startsWith("audio/")) {
+                    const sampleRate = 16000; // The model returns 16k Hz PCM audio
+                    const pcmData = new Uint8Array(atob(audioData).split('').map(c => c.charCodeAt(0)));
+                    const pcm16 = new Int16Array(pcmData.buffer);
+                    const wavBlob = pcmToWav(pcm16, sampleRate);
+                    const audioUrl = URL.createObjectURL(wavBlob);
+
+                    const audio = new Audio(audioUrl);
+                    audio.play();
+
+                    showToast('מנגן את העדכון בקול!', 'success');
+                } else {
+                    throw new Error("Invalid audio data received.");
+                }
+
+            } catch (e) {
+                console.error("Error playing audio:", e);
+                showToast('אירעה שגיאה בניגון האודיו.', 'error');
+            }
+        };
+
+        // --- Main App Logic ---
 
         // Sign in and check user role
         (async () => {
@@ -154,7 +357,7 @@
                 snapshot.forEach((doc) => {
                     const post = doc.data();
                     const postElement = document.createElement('div');
-                    postElement.classList.add('bg-white', 'p-5', 'rounded-xl', 'shadow-md', 'transition-all', 'duration-300', 'hover:shadow-xl', 'hover:scale-105', 'cursor-pointer');
+                    postElement.classList.add('bg-white', 'p-5', 'rounded-xl', 'shadow-md', 'transition-all', 'duration-300', 'hover:shadow-xl', 'hover:scale-105', 'cursor-pointer', 'relative');
                     
                     const postDate = post.timestamp ? new Date(post.timestamp.toDate()).toLocaleDateString('he-IL') : 'תאריך לא ידוע';
 
@@ -168,16 +371,23 @@
                             פורסם בתאריך: ${postDate}
                         </p>
                         <p class="mt-3 text-slate-700 leading-relaxed">${post.content}</p>
+                        <button class="absolute top-4 left-4 p-2 bg-slate-200 text-slate-700 rounded-full shadow-md hover:bg-slate-300 transition-colors play-btn">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
                     `;
+                    postElement.querySelector('.play-btn').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        playPostAudio(post.content);
+                    });
                     updatesContainer.appendChild(postElement);
                 });
             }
         });
 
-        // Add new post functionality - only enabled for superadmins
+        // Add new post functionality
         addPostBtn.addEventListener('click', async () => {
             if (!isSuperadmin) {
-                console.error("אין הרשאה להוסיף עדכון.");
+                showToast('אין לך הרשאה להוסיף עדכון.', 'error');
                 return;
             }
 
@@ -194,11 +404,86 @@
                     imageUrl: imageUrl || null,
                     timestamp: serverTimestamp()
                 });
-                console.log("Post added successfully!");
+                showToast('העדכון נוסף בהצלחה!');
             } catch (e) {
                 console.error("Error adding document: ", e);
+                showToast('שגיאה בהוספת העדכון.', 'error');
             }
         });
+
+        // AI Assistant Button functionality
+        aiPostBtn.addEventListener('click', () => {
+            if (!isSuperadmin) {
+                showToast('אין לך הרשאה להשתמש בכלי הזה.', 'error');
+                return;
+            }
+            aiModal.classList.remove('hidden');
+        });
+
+        // Close Modal button
+        aiCloseBtn.addEventListener('click', () => {
+            aiModal.classList.add('hidden');
+            aiPromptInput.value = '';
+            aiResponseTextarea.value = '';
+            aiResponseContainer.classList.add('hidden');
+            aiUseBtn.classList.add('hidden');
+            aiGenerateBtn.classList.remove('hidden');
+        });
+
+        // Generate Post with AI button
+        aiGenerateBtn.addEventListener('click', async () => {
+            const userPrompt = aiPromptInput.value.trim();
+            if (!userPrompt) {
+                showToast('אנא הכנס נושא כדי ליצור טיוטה.', 'error');
+                return;
+            }
+
+            aiLoading.classList.remove('hidden');
+            aiGenerateBtn.disabled = true;
+
+            try {
+                const generatedText = await generatePostWithGemini(userPrompt);
+                aiResponseTextarea.value = generatedText;
+                aiResponseContainer.classList.remove('hidden');
+                aiUseBtn.classList.remove('hidden');
+            } catch (e) {
+                console.error(e);
+                aiResponseTextarea.value = "אירעה שגיאה ביצירת התוכן. אנא נסה שוב מאוחר יותר.";
+                aiResponseContainer.classList.remove('hidden');
+                aiUseBtn.classList.add('hidden');
+            } finally {
+                aiLoading.classList.add('hidden');
+                aiGenerateBtn.disabled = false;
+            }
+        });
+
+        // Use AI-generated Post
+        aiUseBtn.addEventListener('click', async () => {
+            const generatedText = aiResponseTextarea.value.trim();
+            if (!generatedText) return;
+            
+            // Extract the first line as title and the rest as content
+            const lines = generatedText.split('\n');
+            const title = lines[0].trim().replace(/^"|"$/g, ''); // Remove surrounding quotes if they exist
+            const content = lines.slice(1).join('\n').trim();
+
+            const imageUrl = prompt("הכנס קישור לתמונה (אופציונלי):", "");
+
+            try {
+                await addDoc(collection(db, updatesCollectionPath), {
+                    title: title,
+                    content: content,
+                    imageUrl: imageUrl || null,
+                    timestamp: serverTimestamp()
+                });
+                showToast('העדכון נוסף בהצלחה!');
+                aiModal.classList.add('hidden');
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                showToast('שגיאה בהוספת העדכון.', 'error');
+            }
+        });
+
     </script>
 </body>
 </html>
