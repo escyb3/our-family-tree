@@ -1,57 +1,204 @@
-<html>
-  <head>
-    <title>About Page</title>
-    <h2> Family Updates Page</h2>
-   <style>
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: #f2f6fc;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #0057a3;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.8rem;
-      font-weight: bold;
-    }
-    .menu-bar {
-      background: #e9f1fb;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 10px;
-      gap: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      border-bottom: 1px solid #ccc;
-    }
-    .menu-bar a {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background-color: white;
-      color: #003366;
-      text-decoration: none;
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      transition: background 0.3s;
-    }
-    .menu-bar a:hover {
-      background-color: #dceeff;
-    }
-    .content {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 1rem;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-  </style>
-    <body>
-    <h3>This Page in currently unavailable. Please try again later</h3>
-      <body/>
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>עדכונים משפחתיים</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f1f5f9;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-4">
+
+    <!-- Header -->
+    <header class="w-full max-w-4xl bg-white p-6 md:p-8 rounded-xl shadow-lg text-center mb-6">
+        <h1 class="text-3xl sm:text-4xl font-bold text-slate-800">עדכונים משפחתיים</h1>
+        <p class="mt-2 text-md sm:text-lg text-gray-500">
+            רגעים מהחיים שלנו, עדכונים וחדשות
+        </p>
+    </header>
+
+    <!-- Navigation Menu -->
+    <nav class="w-full max-w-4xl bg-white p-4 rounded-xl shadow-md flex justify-center flex-wrap gap-3 sm:gap-6 mb-6">
+        <a href="https://our-family-tree.onrender.com" class="flex items-center gap-2 text-slate-700 hover:text-blue-600 transition-colors">
+            <i class="fas fa-home"></i>
+            <span class="font-medium">עמוד הבית</span>
+        </a>
+        <a href="gallery.html" class="flex items-center gap-2 text-slate-700 hover:text-blue-600 transition-colors">
+            <i class="fas fa-camera"></i>
+            <span class="font-medium">גלריה</span>
+        </a>
+        <a href="#" class="flex items-center gap-2 text-slate-700 hover:text-blue-600 transition-colors">
+            <i class="fas fa-calendar-alt"></i>
+            <span class="font-medium">אירועים</span>
+        </a>
+        <a href="#" class="flex items-center gap-2 text-slate-700 hover:text-blue-600 transition-colors">
+            <i class="fas fa-info-circle"></i>
+            <span class="font-medium">אודות</span>
+        </a>
+    </nav>
+    
+    <!-- Add New Post Button (initially hidden) -->
+    <div id="addPostBtnContainer" class="w-full max-w-4xl flex justify-end mb-6 hidden">
+        <button id="addPostBtn" class="bg-blue-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-colors flex items-center gap-2">
+            <i class="fas fa-plus"></i>
+            <span>הוסף עדכון חדש</span>
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <main id="updatesContainer" class="w-full max-w-4xl grid gap-6 md:grid-cols-2 lg:grid-cols-2">
+        <!-- Posts will be loaded here from Firebase -->
+        <div id="loadingMessage" class="col-span-full text-center text-gray-500 text-lg">טוען עדכונים...</div>
+    </main>
+
+    <!-- The user ID will be displayed here for collaboration -->
+    <div id="userIdDisplay" class="mt-8 text-center text-sm text-gray-400"></div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+
+        // Global variables for Firebase configuration
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // User-provided Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyAYQQirPOWoStlPemw6kTi0NZx9acUXK0Y",
+            authDomain: "updates-about.firebaseapp.com",
+            projectId: "updates-about",
+            storageBucket: "updates-about.firebasestorage.app",
+            messagingSenderId: "952728099675",
+            appId: "1:952728099675:web:998af7fa17094cc0b9987e",
+            measurementId: "G-DYZQPCH6XX"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        let userId = null;
+        let isSuperadmin = false;
+
+        const addPostBtnContainer = document.getElementById('addPostBtnContainer');
+        const addPostBtn = document.getElementById('addPostBtn');
+        const userIdDisplay = document.getElementById('userIdDisplay');
+        const updatesContainer = document.getElementById('updatesContainer');
+        const loadingMessage = document.getElementById('loadingMessage');
+
+        // Function to check user's role from the API
+        const checkUserRole = async () => {
+            try {
+                const response = await fetch('/api/user');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user data');
+                }
+                const userData = await response.json();
+                return userData.role === 'superadmin';
+            } catch (error) {
+                console.error("Error fetching user role:", error);
+                return false;
+            }
+        };
+
+        // Sign in and check user role
+        (async () => {
+            try {
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                userId = auth.currentUser.uid;
+                userIdDisplay.textContent = `מזהה משתמש: ${userId}`;
+                console.log("Firebase initialized and user authenticated.");
+
+                // Check if the authenticated user has the 'superadmin' role via API
+                isSuperadmin = await checkUserRole();
+                if (isSuperadmin) {
+                    addPostBtnContainer.classList.remove('hidden');
+                    console.log("משתמש הוא מנהל מערכת.");
+                }
+
+            } catch (error) {
+                console.error("Authentication error: ", error);
+            }
+        })();
+
+        // Get updates from Firestore and display them
+        const updatesCollectionPath = `/artifacts/${appId}/public/data/updates`;
+
+        onSnapshot(collection(db, updatesCollectionPath), (snapshot) => {
+            loadingMessage.classList.add('hidden');
+            updatesContainer.innerHTML = '';
+            if (snapshot.empty) {
+                updatesContainer.innerHTML = `<div class="col-span-full text-center text-gray-500 text-lg">אין עדכונים זמינים. הוסף אחד עכשיו!</div>`;
+            } else {
+                snapshot.forEach((doc) => {
+                    const post = doc.data();
+                    const postElement = document.createElement('div');
+                    postElement.classList.add('bg-white', 'p-5', 'rounded-xl', 'shadow-md', 'transition-all', 'duration-300', 'hover:shadow-xl', 'hover:scale-105', 'cursor-pointer');
+                    
+                    const postDate = post.timestamp ? new Date(post.timestamp.toDate()).toLocaleDateString('he-IL') : 'תאריך לא ידוע';
+
+                    const imageUrl = post.imageUrl || `https://placehold.co/600x400/000000/FFFFFF?text=עדכון+משפחתי`;
+                    
+                    postElement.innerHTML = `
+                        <img src="${imageUrl}" alt="${post.title}" class="rounded-lg mb-4 w-full h-auto object-cover">
+                        <h3 class="text-xl font-semibold text-slate-800">${post.title}</h3>
+                        <p class="text-gray-500 text-sm mt-1">
+                            <i class="far fa-calendar-alt ml-1"></i>
+                            פורסם בתאריך: ${postDate}
+                        </p>
+                        <p class="mt-3 text-slate-700 leading-relaxed">${post.content}</p>
+                    `;
+                    updatesContainer.appendChild(postElement);
+                });
+            }
+        });
+
+        // Add new post functionality - only enabled for superadmins
+        addPostBtn.addEventListener('click', async () => {
+            if (!isSuperadmin) {
+                console.error("אין הרשאה להוסיף עדכון.");
+                return;
+            }
+
+            const title = prompt("הכנס כותרת לעדכון:");
+            if (!title) return;
+            const content = prompt("הכנס את תוכן העדכון:");
+            if (!content) return;
+            const imageUrl = prompt("הכנס קישור לתמונה (אופציונלי):");
+            
+            try {
+                await addDoc(collection(db, updatesCollectionPath), {
+                    title: title,
+                    content: content,
+                    imageUrl: imageUrl || null,
+                    timestamp: serverTimestamp()
+                });
+                console.log("Post added successfully!");
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
+        });
+    </script>
+</body>
 </html>
