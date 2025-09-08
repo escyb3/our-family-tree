@@ -333,6 +333,56 @@ app.get("/api/tree", authenticate, async (req, res) => {
   }
 });
 
+
+// ----------------- API -----------------
+
+// ✅ שליפת כל העדכונים (כולם רואים)
+app.get("/api/updates", async (req, res) => {
+  try {
+    const updatesRef = collection(db, "updates");
+    const snapshot = await getDocs(updatesRef);
+
+    const updates = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    res.json(updates);
+  } catch (err) {
+    console.error("Error fetching updates:", err);
+    res.status(500).json({ error: "שגיאה בשליפת עדכונים" });
+  }
+});
+
+// ✅ הוספת עדכון חדש (רק סופר אדמין)
+app.post("/api/updates", async (req, res) => {
+  try {
+    if (!req.user || req.user.role !== "superadmin") {
+      return res.status(403).json({ error: "אין הרשאה לבצע פעולה זו" });
+    }
+
+    const { title, content, imageUrl } = req.body;
+
+    if (!title || !content) {
+      return res.status(400).json({ error: "חסר כותרת או תוכן" });
+    }
+
+    const updatesRef = collection(db, "updates");
+    const docRef = await addDoc(updatesRef, {
+      title,
+      content,
+      imageUrl: imageUrl || null,
+      timestamp: serverTimestamp(),
+      createdBy: req.user.id
+    });
+
+    res.json({ success: true, id: docRef.id });
+  } catch (err) {
+    console.error("Error adding update:", err);
+    res.status(500).json({ error: "שגיאה בהוספת עדכון" });
+  }
+});
+
 // =========================
 // Admin: Users Management
 // =========================
