@@ -136,233 +136,71 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
-        let userId = null;
-        let isSuperadmin = false;
+            let userId = null;
+    let isSuperadmin = false;
 
-        const addPostBtnContainer = document.getElementById('addPostBtnContainer');
-        const addPostBtn = document.getElementById('addPostBtn');
-        const aiPostBtn = document.getElementById('aiPostBtn');
-        const userIdDisplay = document.getElementById('userIdDisplay');
-        const updatesContainer = document.getElementById('updatesContainer');
-        const loadingMessage = document.getElementById('loadingMessage');
+    const addPostBtnContainer = document.getElementById('addPostBtnContainer');
+    const addPostBtn = document.getElementById('addPostBtn');
+    const aiPostBtn = document.getElementById('aiPostBtn');
+    const userIdDisplay = document.getElementById('userIdDisplay');
+    const updatesContainer = document.getElementById('updatesContainer');
+    const loadingMessage = document.getElementById('loadingMessage');
 
-        const aiModal = document.getElementById('aiModal');
-        const aiPromptInput = document.getElementById('aiPrompt');
-        const aiResponseContainer = document.getElementById('aiResponseContainer');
-        const aiResponseTextarea = document.getElementById('aiResponse');
-        const aiGenerateBtn = document.getElementById('aiGenerateBtn');
-        const aiUseBtn = document.getElementById('aiUseBtn');
-        const aiCloseBtn = document.getElementById('aiCloseBtn');
-        const aiLoading = document.getElementById('aiLoading');
-        const toastContainer = document.getElementById('toastContainer');
+    const aiModal = document.getElementById('aiModal');
+    const aiPromptInput = document.getElementById('aiPrompt');
+    const aiResponseContainer = document.getElementById('aiResponseContainer');
+    const aiResponseTextarea = document.getElementById('aiResponse');
+    const aiGenerateBtn = document.getElementById('aiGenerateBtn');
+    const aiUseBtn = document.getElementById('aiUseBtn');
+    const aiCloseBtn = document.getElementById('aiCloseBtn');
+    const aiLoading = document.getElementById('aiLoading');
+    const toastContainer = document.getElementById('toastContainer');
 
-        // Function to check user's role from the API
-        const checkUserRole = async () => {
-            try {
-                const response = await fetch('/api/user');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch user data');
-                }
-                const userData = await response.json();
-                // Correctly access the role property nested inside the 'user' object
-                return userData.user.role === 'superadmin';
-            } catch (error) {
-                console.error("Error fetching user role:", error);
-                return false;
-            }
-        };
+    // בדיקת הרשאת המשתמש דרך ה־API
+    const checkUserRole = async () => {
+        try {
+            const response = await fetch('/api/user');
+            if (!response.ok) throw new Error('Failed to fetch user data');
+            const userData = await response.json();
+            return userData.user.role === 'superadmin';
+        } catch (error) {
+            console.error("Error fetching user role:", error);
+            return false;
+        }
+    };
 
-        // Helper function for showing toasts
-        const showToast = (message, type = 'success') => {
-            const toast = document.createElement('div');
-            toast.className = `p-4 rounded-lg shadow-md text-white transition-opacity duration-300 mb-3 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
-            toast.textContent = message;
-            toastContainer.appendChild(toast);
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
-        };
+    // הודעות קופצות
+    const showToast = (message, type = 'success') => {
+        const toast = document.createElement('div');
+        toast.className = `p-4 rounded-lg shadow-md text-white transition-opacity duration-300 mb-3 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
+        toast.textContent = message;
+        toastContainer.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    };
 
-        // --- Gemini API Call Functions ---
+    // ניגון טקסט בקול
+    const playPostAudio = async (text) => {
+        alert("כאן יחובר ה־TTS (כמו בקוד שלך עם Gemini).");
+    };
 
-        // Function to call Gemini for text generation
-        const generatePostWithGemini = async (promptText) => {
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-            const systemPrompt = `כאשר אתה כותב עדכון משפחתי, צור פוסט קצר ומרגש על הנושא הבא. הוסף רגשות ושפה חמה. תוכל להוסיף רעיון לכותרת בולטת בראש התשובה, אך התשובה צריכה להתחיל ישירות עם הכותרת.`;
-            const userQuery = promptText;
-
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] },
-            };
-
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.error("Gemini API Error:", errorData);
-                throw new Error("Failed to generate content with Gemini.");
-            }
-
-            const result = await response.json();
-            const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
-            if (!text) {
-                throw new Error("Received empty or invalid response from Gemini.");
-            }
-
-            return text;
-        };
-        
-        // Function to convert PCM audio to WAV format
-        const pcmToWav = (pcmData, sampleRate) => {
-            const dataLength = pcmData.length * 2;
-            const buffer = new ArrayBuffer(44 + dataLength);
-            const view = new DataView(buffer);
-            let offset = 0;
-
-            const writeString = (str) => {
-                for (let i = 0; i < str.length; i++) {
-                    view.setUint8(offset + i, str.charCodeAt(i));
-                }
-                offset += str.length;
-            };
-
-            // RIFF chunk
-            writeString('RIFF');
-            view.setUint32(offset, 36 + dataLength, true); offset += 4;
-            writeString('WAVE');
-
-            // fmt chunk
-            writeString('fmt ');
-            view.setUint32(offset, 16, true); offset += 4;
-            view.setUint16(offset, 1, true); offset += 2; // PCM
-            view.setUint16(offset, 1, true); offset += 2; // Mono
-            view.setUint32(offset, sampleRate, true); offset += 4;
-            view.setUint32(offset, sampleRate * 2, true); offset += 4; // Byte rate
-            view.setUint16(offset, 2, true); offset += 2; // Block align
-            view.setUint16(offset, 16, true); offset += 2; // Bits per sample
-
-            // data chunk
-            writeString('data');
-            view.setUint32(offset, dataLength, true); offset += 4;
-            
-            for (let i = 0; i < pcmData.length; i++) {
-                view.setInt16(offset, pcmData[i], true);
-                offset += 2;
-            }
-
-            return new Blob([view], { type: 'audio/wav' });
-        };
-        
-        // Function to call Gemini for Text-to-Speech
-        const playPostAudio = async (text) => {
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
-
-            const payload = {
-                contents: [{
-                    parts: [{ text: text }]
-                }],
-                generationConfig: {
-                    responseModalities: ["AUDIO"],
-                    speechConfig: {
-                        voiceConfig: {
-                            prebuiltVoiceConfig: { voiceName: "Fenrir" }
-                        }
-                    }
-                },
-                model: "gemini-2.5-flash-preview-tts"
-            };
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    console.error("TTS API Error:", errorData);
-                    throw new Error("Failed to generate TTS audio.");
-                }
-
-                const result = await response.json();
-                const part = result?.candidates?.[0]?.content?.parts?.[0];
-                const audioData = part?.inlineData?.data;
-                const mimeType = part?.inlineData?.mimeType;
-
-                if (audioData && mimeType && mimeType.startsWith("audio/")) {
-                    const sampleRate = 16000; // The model returns 16k Hz PCM audio
-                    const pcmData = new Uint8Array(atob(audioData).split('').map(c => c.charCodeAt(0)));
-                    const pcm16 = new Int16Array(pcmData.buffer);
-                    const wavBlob = pcmToWav(pcm16, sampleRate);
-                    const audioUrl = URL.createObjectURL(wavBlob);
-
-                    const audio = new Audio(audioUrl);
-                    audio.play();
-
-                    showToast('מנגן את העדכון בקול!', 'success');
-                } else {
-                    throw new Error("Invalid audio data received.");
-                }
-
-            } catch (e) {
-                console.error("Error playing audio:", e);
-                showToast('אירעה שגיאה בניגון האודיו.', 'error');
-            }
-        };
-
-        // --- Main App Logic ---
-
-        // Sign in and check user role
-        (async () => {
-            try {
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-                userId = auth.currentUser.uid;
-                userIdDisplay.textContent = `מזהה משתמש: ${userId}`;
-                console.log("Firebase initialized and user authenticated.");
-
-                // Check if the authenticated user has the 'superadmin' role via API
-                isSuperadmin = await checkUserRole();
-                if (isSuperadmin) {
-                    addPostBtnContainer.classList.remove('hidden');
-                    console.log("משתמש הוא מנהל מערכת.");
-                }
-
-            } catch (error) {
-                console.error("Authentication error: ", error);
-            }
-        })();
-
-        // Get updates from Firestore and display them
-        const updatesCollectionPath = `/artifacts/${appId}/public/data/updates`;
-
-        onSnapshot(collection(db, updatesCollectionPath), (snapshot) => {
-            loadingMessage.classList.add('hidden');
+    // --- טעינת עדכונים מה־API ---
+    const loadUpdates = async () => {
+        loadingMessage.classList.remove('hidden');
+        try {
+            const res = await fetch('/api/updates');
+            const updates = await res.json();
             updatesContainer.innerHTML = '';
-            if (snapshot.empty) {
+
+            if (updates.length === 0) {
                 updatesContainer.innerHTML = `<div class="col-span-full text-center text-gray-500 text-lg">אין עדכונים זמינים. הוסף אחד עכשיו!</div>`;
             } else {
-                snapshot.forEach((doc) => {
-                    const post = doc.data();
+                updates.forEach(post => {
                     const postElement = document.createElement('div');
                     postElement.classList.add('bg-white', 'p-5', 'rounded-xl', 'shadow-md', 'transition-all', 'duration-300', 'hover:shadow-xl', 'hover:scale-105', 'cursor-pointer', 'relative');
-                    
-                    const postDate = post.timestamp ? new Date(post.timestamp.toDate()).toLocaleDateString('he-IL') : 'תאריך לא ידוע';
 
+                    const postDate = post.createdAt ? new Date(post.createdAt).toLocaleDateString('he-IL') : 'תאריך לא ידוע';
                     const imageUrl = post.imageUrl || `https://placehold.co/600x400/000000/FFFFFF?text=עדכון+משפחתי`;
-                    
+
                     postElement.innerHTML = `
                         <img src="${imageUrl}" alt="${post.title}" class="rounded-lg mb-4 w-full h-auto object-cover">
                         <h3 class="text-xl font-semibold text-slate-800">${post.title}</h3>
@@ -382,108 +220,109 @@
                     updatesContainer.appendChild(postElement);
                 });
             }
-        });
+        } catch (e) {
+            console.error("Error loading updates:", e);
+            showToast('שגיאה בטעינת עדכונים', 'error');
+        } finally {
+            loadingMessage.classList.add('hidden');
+        }
+    };
 
-        // Add new post functionality
-        addPostBtn.addEventListener('click', async () => {
-            if (!isSuperadmin) {
-                showToast('אין לך הרשאה להוסיף עדכון.', 'error');
-                return;
-            }
+    // הוספת עדכון חדש
+    const addNewUpdate = async (title, content, imageUrl) => {
+        if (!isSuperadmin) {
+            showToast('אין לך הרשאה להוסיף עדכון.', 'error');
+            return;
+        }
 
-            const title = prompt("הכנס כותרת לעדכון:");
-            if (!title) return;
-            const content = prompt("הכנס את תוכן העדכון:");
-            if (!content) return;
-            const imageUrl = prompt("הכנס קישור לתמונה (אופציונלי):");
-            
-            try {
-                await addDoc(collection(db, updatesCollectionPath), {
-                    title: title,
-                    content: content,
-                    imageUrl: imageUrl || null,
-                    timestamp: serverTimestamp()
-                });
-                showToast('העדכון נוסף בהצלחה!');
-            } catch (e) {
-                console.error("Error adding document: ", e);
-                showToast('שגיאה בהוספת העדכון.', 'error');
-            }
-        });
+        try {
+            const res = await fetch('/api/updates', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, content, imageUrl })
+            });
+            if (!res.ok) throw new Error("Failed to add update");
+            showToast('העדכון נוסף בהצלחה!');
+            loadUpdates();
+        } catch (e) {
+            console.error("Error adding update:", e);
+            showToast('שגיאה בהוספת עדכון.', 'error');
+        }
+    };
 
-        // AI Assistant Button functionality
-        aiPostBtn.addEventListener('click', () => {
-            if (!isSuperadmin) {
-                showToast('אין לך הרשאה להשתמש בכלי הזה.', 'error');
-                return;
-            }
-            aiModal.classList.remove('hidden');
-        });
+    // --- הפעלת הלוגיקה ---
+    (async () => {
+        isSuperadmin = await checkUserRole();
+        if (isSuperadmin) addPostBtnContainer.classList.remove('hidden');
+        loadUpdates();
+    })();
 
-        // Close Modal button
-        aiCloseBtn.addEventListener('click', () => {
-            aiModal.classList.add('hidden');
-            aiPromptInput.value = '';
-            aiResponseTextarea.value = '';
-            aiResponseContainer.classList.add('hidden');
+    // כפתור הוספת עדכון ידני
+    addPostBtn.addEventListener('click', async () => {
+        const title = prompt("הכנס כותרת לעדכון:");
+        if (!title) return;
+        const content = prompt("הכנס את תוכן העדכון:");
+        if (!content) return;
+        const imageUrl = prompt("הכנס קישור לתמונה (אופציונלי):", "");
+        addNewUpdate(title, content, imageUrl);
+    });
+
+    // כפתור פתיחת מודל AI
+    aiPostBtn.addEventListener('click', () => {
+        if (!isSuperadmin) {
+            showToast('אין לך הרשאה להשתמש בכלי הזה.', 'error');
+            return;
+        }
+        aiModal.classList.remove('hidden');
+    });
+
+    // כפתור סגירה של מודל AI
+    aiCloseBtn.addEventListener('click', () => {
+        aiModal.classList.add('hidden');
+        aiPromptInput.value = '';
+        aiResponseTextarea.value = '';
+        aiResponseContainer.classList.add('hidden');
+        aiUseBtn.classList.add('hidden');
+        aiGenerateBtn.classList.remove('hidden');
+    });
+
+    // כפתור יצירת פוסט עם AI
+    aiGenerateBtn.addEventListener('click', async () => {
+        const userPrompt = aiPromptInput.value.trim();
+        if (!userPrompt) {
+            showToast('אנא הכנס נושא כדי ליצור טיוטה.', 'error');
+            return;
+        }
+        aiLoading.classList.remove('hidden');
+        aiGenerateBtn.disabled = true;
+
+        try {
+            const generatedText = "🔹 טיוטת פוסט משפחתי לדוגמה שנוצר ע״י AI על בסיס הנושא: " + userPrompt;
+            aiResponseTextarea.value = generatedText;
+            aiResponseContainer.classList.remove('hidden');
+            aiUseBtn.classList.remove('hidden');
+        } catch (e) {
+            console.error(e);
+            aiResponseTextarea.value = "אירעה שגיאה ביצירת התוכן.";
+            aiResponseContainer.classList.remove('hidden');
             aiUseBtn.classList.add('hidden');
-            aiGenerateBtn.classList.remove('hidden');
-        });
+        } finally {
+            aiLoading.classList.add('hidden');
+            aiGenerateBtn.disabled = false;
+        }
+    });
 
-        // Generate Post with AI button
-        aiGenerateBtn.addEventListener('click', async () => {
-            const userPrompt = aiPromptInput.value.trim();
-            if (!userPrompt) {
-                showToast('אנא הכנס נושא כדי ליצור טיוטה.', 'error');
-                return;
-            }
-
-            aiLoading.classList.remove('hidden');
-            aiGenerateBtn.disabled = true;
-
-            try {
-                const generatedText = await generatePostWithGemini(userPrompt);
-                aiResponseTextarea.value = generatedText;
-                aiResponseContainer.classList.remove('hidden');
-                aiUseBtn.classList.remove('hidden');
-            } catch (e) {
-                console.error(e);
-                aiResponseTextarea.value = "אירעה שגיאה ביצירת התוכן. אנא נסה שוב מאוחר יותר.";
-                aiResponseContainer.classList.remove('hidden');
-                aiUseBtn.classList.add('hidden');
-            } finally {
-                aiLoading.classList.add('hidden');
-                aiGenerateBtn.disabled = false;
-            }
-        });
-
-        // Use AI-generated Post
-        aiUseBtn.addEventListener('click', async () => {
-            const generatedText = aiResponseTextarea.value.trim();
-            if (!generatedText) return;
-            
-            // Extract the first line as title and the rest as content
-            const lines = generatedText.split('\n');
-            const title = lines[0].trim().replace(/^"|"$/g, ''); // Remove surrounding quotes if they exist
-            const content = lines.slice(1).join('\n').trim();
-
-            const imageUrl = prompt("הכנס קישור לתמונה (אופציונלי):", "");
-
-            try {
-                await addDoc(collection(db, updatesCollectionPath), {
-                    title: title,
-                    content: content,
-                    imageUrl: imageUrl || null,
-                    timestamp: serverTimestamp()
-                });
-                showToast('העדכון נוסף בהצלחה!');
-                aiModal.classList.add('hidden');
-            } catch (e) {
-                console.error("Error adding document: ", e);
-                showToast('שגיאה בהוספת העדכון.', 'error');
-            }
-        });
-
-    </script>
+    // כפתור שימוש בטיוטת ה־AI
+    aiUseBtn.addEventListener('click', async () => {
+        const generatedText = aiResponseTextarea.value.trim();
+        if (!generatedText) return;
+        const lines = generatedText.split('\n');
+        const title = lines[0].trim();
+        const content = lines.slice(1).join('\n').trim();
+        const imageUrl = prompt("הכנס קישור לתמונה (אופציונלי):", "");
+        addNewUpdate(title, content, imageUrl);
+        aiModal.classList.add('hidden');
+    });
+</script>
 </body>
 </html>
