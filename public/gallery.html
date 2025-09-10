@@ -360,19 +360,6 @@
             initFirebase();
         }, []);
 
-   export default function FamilyGallery({ db, appId, userId, isAuthReady, isPublicView, language }) {
-  const [photos, setPhotos] = useState([]);
-  const [albums, setAlbums] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const [newAlbumName, setNewAlbumName] = useState('');
-  const [preview, setPreview] = useState(null);
-
-  const fileRef = useRef(null);
-  const nameRef = useRef(null);
-  const familyRef = useRef(null);
-
   // Fetch photos from Firestore
   useEffect(() => {
     if (!isAuthReady || !db || !userId) return;
