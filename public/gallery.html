@@ -360,142 +360,153 @@
             initFirebase();
         }, []);
 
-     // Fetch photos from Firestore once auth is ready
-useEffect(() => {
+   export default function FamilyGallery({ db, appId, userId, isAuthReady, isPublicView, language }) {
+  const [photos, setPhotos] = useState([]);
+  const [albums, setAlbums] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [newAlbumName, setNewAlbumName] = useState('');
+  const [preview, setPreview] = useState(null);
+
+  const fileRef = useRef(null);
+  const nameRef = useRef(null);
+  const familyRef = useRef(null);
+
+  // Fetch photos from Firestore
+  useEffect(() => {
     if (!isAuthReady || !db || !userId) return;
 
     const path = isPublicView
-        ? `/artifacts/${appId}/public/data/family_gallery`
-        : `/artifacts/${appId}/users/${userId}/family_gallery`;
+      ? `/artifacts/${appId}/public/data/family_gallery`
+      : `/artifacts/${appId}/users/${userId}/family_gallery`;
 
     const photosCollectionRef = firebase.collection(db, path);
     const q = firebase.query(photosCollectionRef, firebase.orderBy('createdAt', 'desc'));
 
-    const unsubscribe = firebase.onSnapshot(q, (snapshot) => {
+    const unsubscribe = firebase.onSnapshot(
+      q,
+      (snapshot) => {
         const fetchedPhotos = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
+          id: doc.id,
+          ...doc.data()
         }));
         setPhotos(fetchedPhotos);
         setLoading(false);
 
-        // Update albums list
         const uniqueAlbums = ['כל התמונות', ...new Set(fetchedPhotos.map(p => p.album).filter(Boolean))];
         setAlbums(uniqueAlbums);
-    }, (e) => {
+      },
+      (e) => {
         console.error("Error fetching photos:", e);
         setError(t.error);
         setLoading(false);
-    });
+      }
+    );
 
     return () => unsubscribe();
-}, [isAuthReady, db, userId, isPublicView, language]);
+  }, [isAuthReady, db, userId, isPublicView, language]);
 
-// Handle photo upload as Base64 (no Firebase Storage)
-const handleUpload = async (e) => {
+  // Handle photo upload as Base64
+  const handleUpload = async (e) => {
     e.preventDefault();
-    const file = fileRef.current.files[0];
-    const name = nameRef.current.value;
-    const family = familyRef.current.value;
+    const file = fileRef.current?.files[0];
+    const name = nameRef.current?.value;
+    const family = familyRef.current?.value;
 
     if (!file || !name) {
-        showMessage(t.requiredFields);
-        return;
+      alert(t.requiredFields);
+      return;
     }
 
     setUploading(true);
     try {
-        // Convert file to Base64 URL
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
 
-        reader.onload = async () => {
-            const base64Url = reader.result;
+      reader.onload = async () => {
+        const base64Url = reader.result;
 
-            const photosCollectionRef = firebase.collection(db, `/artifacts/${appId}/users/${userId}/family_gallery`);
-            await firebase.addDoc(photosCollectionRef, {
-                name,
-                family,
-                path: base64Url,  // השמירה היא כקישור Base64
-                createdAt: firebase.serverTimestamp(),
-                album: newAlbumName || null,
-            });
+        const path = `/artifacts/${appId}/users/${userId}/family_gallery`;
+        const photosCollectionRef = firebase.collection(db, path);
 
-            showMessage(t.uploadSuccess);
-            nameRef.current.value = '';
-            familyRef.current.value = '';
-            fileRef.current.value = '';
-            setNewAlbumName('');
-            setUploading(false);
-        };
+        await firebase.addDoc(photosCollectionRef, {
+          name,
+          family,
+          path: base64Url,
+          createdAt: firebase.serverTimestamp(),
+          album: newAlbumName || null,
+        });
 
-        reader.onerror = (err) => {
-            console.error("Error reading file:", err);
-            setError(t.error);
-            setUploading(false);
-        };
+        alert(t.uploadSuccess);
+        nameRef.current.value = '';
+        familyRef.current.value = '';
+        fileRef.current.value = '';
+        setNewAlbumName('');
+        setPreview(null);
+        setUploading(false);
+      };
 
-    } catch (e) {
-        console.error("Error uploading photo:", e);
+      reader.onerror = (err) => {
+        console.error("Error reading file:", err);
         setError(t.error);
         setUploading(false);
-    }
-};
-
-// Delete photo
-const confirmDelete = async () => {
-    if (!photoToDelete) return;
-
-    try {
-        const docRef = firebase.doc(db, `/artifacts/${appId}/users/${userId}/family_gallery`, photoToDelete.id);
-        await firebase.deleteDoc(docRef);
-
-        showMessage(t.deleteSuccess);
+      };
     } catch (e) {
-        console.error("Error deleting photo:", e);
-        setError(t.error);
-    } finally {
-        setShowDeleteModal(false);
-        setPhotoToDelete(null);
+      console.error("Error uploading photo:", e);
+      setError(t.error);
+      setUploading(false);
     }
-};
+  };
 
-// Update photo details
-const handleUpdate = async () => {
-    if (!editingPhoto) return;
-    try {
-        const docRef = firebase.doc(db, `/artifacts/${appId}/users/${userId}/family_gallery`, editingPhoto.id);
-        await firebase.updateDoc(docRef, {
-            name: editName,
-            family: editFamily,
-        });
-        showMessage(t.updateSuccess);
-        setEditingPhoto(null);
-        closeModal();
-    } catch (e) {
-        console.error("Error updating photo:", e);
-        setError(t.error);
-    }
-};
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => setPreview(reader.result);
+  };
 
-// Share photo to public gallery
-const handleShare = async (photo) => {
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
+    fileRef.current.files = e.dataTransfer.files;
+    handleFileChange({ target: { files: e.dataTransfer.files } });
+  };
+  const handleDragOver = (e) => e.preventDefault();
+
+  const handleDelete = async (photoId) => {
+    if (!photoId) return;
     try {
-        const publicCollectionRef = firebase.collection(db, `/artifacts/${appId}/public/data/family_gallery`);
-        await firebase.addDoc(publicCollectionRef, {
-            name: photo.name,
-            family: photo.family,
-            path: photo.path,
-            createdAt: firebase.serverTimestamp(),
-            originalPhotoId: photo.id,
-            originalUserId: userId,
-        });
-        showMessage(t.shareSuccess);
+      const path = `/artifacts/${appId}/users/${userId}/family_gallery`;
+      const docRef = firebase.doc(db, path, photoId);
+      await firebase.deleteDoc(docRef);
+      alert(t.deleteSuccess);
     } catch (e) {
-        console.error("Error sharing photo:", e);
-        setError(t.error);
+      console.error("Error deleting photo:", e);
+      setError(t.error);
     }
-};
+  };
+
+  const handleShare = async (photo) => {
+    try {
+      const publicCollectionRef = firebase.collection(db, `/artifacts/${appId}/public/data/family_gallery`);
+      await firebase.addDoc(publicCollectionRef, {
+        name: photo.name,
+        family: photo.family,
+        path: photo.path,
+        createdAt: firebase.serverTimestamp(),
+        originalPhotoId: photo.id,
+        originalUserId: userId,
+      });
+      alert(t.shareSuccess);
+    } catch (e) {
+      console.error("Error sharing photo:", e);
+      setError(t.error);
+    }
+  };
+
         export default function ImagePreview() {
   const [preview, setPreview] = useState(null);
   const fileRef = useRef(null);
