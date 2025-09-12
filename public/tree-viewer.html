@@ -184,7 +184,7 @@
         const fetchFamilyData = async (familySide) => {
             statusMessageEl.textContent = i18n[currentLang]['loading_family'](familySide);
             try {
-                const response = await fetch(`public/data/${familySide}.json`);
+                const response = await fetch(`data/${familySide}.json`);
                 if (!response.ok) {
                     throw new Error(i18n[currentLang]['no_family_data']);
                 }
