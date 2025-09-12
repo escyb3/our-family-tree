@@ -1,1584 +1,2468 @@
 {
-  "name": "Eliazer Samuel",
-  "id": 385,
-  "children": [
-    {
-      "name": "Samuel Zanwil Eliaser Leizer Groenstad",
-      "id": 383,
-      "spouse": {
-        "name": "Marianne Philip de Vries",
-        "id": 384
+  "name_he": "משפחת גרונשטאט",
+  "name_en": "Groenstad Family",
+  "origin_he": "הולנד",
+  "origin_en": "Netherlands",
+  "history_summary_he": "ההיסטוריה של משפחת גרונשטאט החלה בהולנד. המסמך כולל מידע אודות שורשי המשפחה וענפיה השונים, שהתפרסו על פני דורות רבים.",
+  "history_summary_en": "The history of the Groenstad family began in the Netherlands. This document includes information about the family's roots and its various branches, spanning many generations.",
+  "root_member": {
+    "name_he": "אליעזר שמואל גרונשטאט",
+    "name_en": "Eliazer Samuel Groenstad",
+    "id": 385,
+    "role_he": "האב המייסד",
+    "role_en": "Founding Father",
+    "children": [
+      {
+        "name_he": "שמואל זנוויל גרונשטאט",
+        "name_en": "Samuel Zanwil Groenstad",
+        "id": 383,
+        "role_he": "בן",
+        "role_en": "Son",
+        "spouse": {
+          "name_he": "מריאן פיליפ דה פריס",
+          "name_en": "Marianne Philip de Vries",
+          "id": 384
+        },
+        "children": []
       },
-      "children": [
-        {
-          "name": "Philip Samuel Groenstad",
-          "id": 376,
-          "spouse": {
-            "name": "Saartje Salomons",
-            "id": 377
-          },
-          "children": [
-            {
-              "name": "Marie Philip Groenstad",
-              "id": 349,
-              "spouse": {
-                "name": "Izak Israel Benjamin Behr",
-                "id": 350
+      {
+        "name_he": "פיליפ שמואל גרונשטאט",
+        "name_en": "Philip Samuel Groenstad",
+        "id": 376,
+        "role_he": "בן",
+        "role_en": "Son",
+        "spouse": {
+          "name_he": "שרה סלמונס",
+          "name_en": "Saartje Salomons",
+          "id": 377
+        },
+        "children": [
+          {
+            "name_he": "מארי פיליפ גרונשטאט",
+            "name_en": "Marie Philip Groenstad",
+            "id": 349,
+            "role_he": "בת",
+            "role_en": "Daughter",
+            "spouse": {
+              "name_he": "יצחק ישראל בנימין בר",
+              "name_en": "Izak Israel Benjamin Behr",
+              "id": 350
+            },
+            "children": [
+              {
+                "name_he": "שרה בר",
+                "name_en": "Sara Behr",
+                "id": 313,
+                "role_he": "בת",
+                "role_en": "Daughter"
               },
-              "children": [
-                {
-                  "name": "Sara Behr",
-                  "id": 313
+              {
+                "name_he": "ישראל בר",
+                "name_en": "Israël Behr",
+                "id": 314,
+                "role_he": "בן",
+                "role_en": "Son"
+              },
+              {
+                "name_he": "מוזס בר",
+                "name_en": "Mozes Behr",
+                "id": 315,
+                "role_he": "בן",
+                "role_en": "Son",
+                "spouse": {
+                  "name_he": "סלי קלרה בואנו דה מסקיטה",
+                  "name_en": "Selly Clara Bueno de Mesquita",
+                  "id": 316
                 },
-                {
-                  "name": "Israël Behr",
-                  "id": 314
-                },
-                {
-                  "name": "Mozes Behr",
-                  "id": 315,
-                  "spouse": {
-                    "name": "Selly Clara Bueno de Mesquita",
-                    "id": 316
-                  },
-                  "children": [
-                    {
-                      "name": "Isak (Jacques) Behr",
-                      "id": 251,
-                      "spouse": {
-                        "name": "Anna Pieternella Vas",
-                        "id": 252
+                "children": [
+                  {
+                    "name_he": "יצחק (ז'אק) בר",
+                    "name_en": "Isak (Jacques) Behr",
+                    "id": 251,
+                    "role_he": "בן",
+                    "role_en": "Son",
+                    "spouse": {
+                      "name_he": "אנה פיטרנלה ואס",
+                      "name_en": "Anna Pieternella Vas",
+                      "id": 252
+                    },
+                    "children": [
+                      {
+                        "name_he": "סלין מארי בר",
+                        "name_en": "Céline Marie Behr",
+                        "id": 166,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
                       },
-                      "children": [
-                        {
-                          "name": "Céline Marie Behr",
-                          "id": 166
+                      {
+                        "name_he": "מאוריץ ז'אק בר",
+                        "name_en": "Maurits Jacques Behr",
+                        "id": 167,
+                        "role_he": "בן",
+                        "role_en": "Son"
+                      },
+                      {
+                        "name_he": "ברתה הנרייט בר",
+                        "name_en": "Bertha Henriette Behr",
+                        "id": 168,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "אנני ז'קלין בר",
+                        "name_en": "Annie Jacqueline Behr",
+                        "id": 169,
+                        "role_he": "בת",
+                        "role_en": "Daughter",
+                        "spouse": {
+                          "name_he": "הנדריק מריוס ואן ליסטן",
+                          "name_en": "Hendrik Marius van Leesten",
+                          "id": 170
                         },
-                        {
-                          "name": "Maurits Jacques Behr",
-                          "id": 167
-                        },
-                        {
-                          "name": "Bertha Henriette Behr",
-                          "id": 168
-                        },
-                        {
-                          "name": "Annie Jacqueline Behr",
-                          "id": 169,
-                          "spouse": {
-                            "name": "Hendrik Marius van Leesten",
-                            "id": 170
-                          },
-                          "children": [
-                            {
-                              "name": "Hendrik Marius Van Leesten",
-                              "id": 113,
-                              "spouse": {
-                                "name": "Kathryn Alberta Smith",
-                                "id": 114
-                              },
-                              "children": [
-                                {
-                                  "name": "Hendrik Marius Van Leesten",
-                                  "id": 48
-                                },
-                                {
-                                  "name": "Michael Smith Vanleesten",
-                                  "id": 49
-                                },
-                                {
-                                  "name": "John Matthew Van Leesten",
-                                  "id": 51
-                                },
-                                {
-                                  "name": "Karriem Muhammad",
-                                  "id": 52
-                                },
-                                {
-                                  "name": "Rashad Munir",
-                                  "id": 53
-                                }
-                              ]
+                        "children": [
+                          {
+                            "name_he": "הנדריק מריוס ואן ליסטן",
+                            "name_en": "Hendrik Marius Van Leesten",
+                            "id": 113,
+                            "role_he": "נין",
+                            "role_en": "Great-grandson",
+                            "spouse": {
+                              "name_he": "קתרין אלברטה סמית",
+                              "name_en": "Kathryn Alberta Smith",
+                              "id": 114
                             },
-                            {
-                              "name": "Permon Hendrik van Leesten",
-                              "id": 116
-                            }
-                          ]
-                        },
-                        {
-                          "name": "Irene Clara Behr",
-                          "id": 171
-                        },
-                        {
-                          "name": "Lilly Corrie Behr",
-                          "id": 172
-                        },
-                        {
-                          "name": "Florie Sophie Behr",
-                          "id": 173
-                        }
-                      ]
+                            "children": [
+                              {
+                                "name_he": "הנדריק מריוס ואן ליסטן",
+                                "name_en": "Hendrik Marius Van Leesten",
+                                "id": 48,
+                                "role_he": "נין-נין",
+                                "role_en": "Great-great-grandson"
+                              },
+                              {
+                                "name_he": "מייקל סמית' ואןליסטן",
+                                "name_en": "Michael Smith Vanleesten",
+                                "id": 49,
+                                "role_he": "נין-נין",
+                                "role_en": "Great-great-grandson"
+                              },
+                              {
+                                "name_he": "ג'ון מתיו ואן ליסטן",
+                                "name_en": "John Matthew Van Leesten",
+                                "id": 51,
+                                "role_he": "נין-נין",
+                                "role_en": "Great-great-grandson"
+                              },
+                              {
+                                "name_he": "קארים מוחמד",
+                                "name_en": "Karriem Muhammad",
+                                "id": 52,
+                                "role_he": "נין-נין",
+                                "role_en": "Great-great-grandson"
+                              },
+                              {
+                                "name_he": "רשאד מוניר",
+                                "name_en": "Rashad Munir",
+                                "id": 53,
+                                "role_he": "נין-נין",
+                                "role_en": "Great-great-grandson"
+                              }
+                            ]
+                          },
+                          {
+                            "name_he": "פרמון הנדריק ואן ליסטן",
+                            "name_en": "Permon Hendrik van Leesten",
+                            "id": 116,
+                            "role_he": "נין",
+                            "role_en": "Great-grandson"
+                          }
+                        ]
+                      },
+                      {
+                        "name_he": "אירן קלרה בר",
+                        "name_en": "Irene Clara Behr",
+                        "id": 171,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "לילי קורי בר",
+                        "name_en": "Lilly Corrie Behr",
+                        "id": 172,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "פלורי סופי בר",
+                        "name_en": "Florie Sophie Behr",
+                        "id": 173,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      }
+                    ]
+                  },
+                  {
+                    "name_he": "הארטוג בר",
+                    "name_en": "Hartog Behr",
+                    "id": 253,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  },
+                  {
+                    "name_he": "בנימין בר",
+                    "name_en": "Benjamin Behr",
+                    "id": 254,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  },
+                  {
+                    "name_he": "אברהם בר",
+                    "name_en": "Abraham Behr",
+                    "id": 255,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  },
+                  {
+                    "name_he": "יעקב בר",
+                    "name_en": "Jacob Behr",
+                    "id": 256,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  },
+                  {
+                    "name_he": "קלרה בר",
+                    "name_en": "Clara Behr",
+                    "id": 257,
+                    "role_he": "בת",
+                    "role_en": "Daughter"
+                  }
+                ]
+              },
+              {
+                "name_he": "ילד בר",
+                "name_en": "Kind Behr",
+                "id": 317,
+                "role_he": "ילד",
+                "role_en": "Child"
+              },
+              {
+                "name_he": "אסתר בר",
+                "name_en": "Esther Behr",
+                "id": 318,
+                "role_he": "בת",
+                "role_en": "Daughter"
+              },
+              {
+                "name_he": "בנימין בר",
+                "name_en": "Benjamin Behr",
+                "id": 319,
+                "role_he": "בן",
+                "role_en": "Son"
+              },
+              {
+                "name_he": "ילד בר",
+                "name_en": "Kind Behr",
+                "id": 320,
+                "role_he": "ילד",
+                "role_en": "Child"
+              },
+              {
+                "name_he": "סיימון בר",
+                "name_en": "Simon Behr",
+                "id": 321,
+                "role_he": "בן",
+                "role_en": "Son"
+              },
+              {
+                "name_he": "סלינה בר",
+                "name_en": "Salina Behr",
+                "id": 322,
+                "role_he": "בת",
+                "role_en": "Daughter",
+                "spouse": {
+                  "name_he": "רפאל אנסל",
+                  "name_en": "Raphael Ensel",
+                  "id": 323
+                },
+                "children": [
+                  {
+                    "name_he": "סלומון אנסל",
+                    "name_en": "Salomon Ensel",
+                    "id": 258,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  },
+                  {
+                    "name_he": "מריה אנסל",
+                    "name_en": "Maria Ensel",
+                    "id": 259,
+                    "role_he": "בת",
+                    "role_en": "Daughter"
+                  },
+                  {
+                    "name_he": "יצחק אנסל",
+                    "name_en": "Isaac Ensel",
+                    "id": 260,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  },
+                  {
+                    "name_he": "אנדריאס אנסל",
+                    "name_en": "Andries Ensel",
+                    "id": 261,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  },
+                  {
+                    "name_he": "קאטיה אנסל",
+                    "name_en": "Kaatje Ensel",
+                    "id": 262,
+                    "role_he": "בת",
+                    "role_en": "Daughter",
+                    "spouse": {
+                      "name_he": "גודמן דה יונג",
+                      "name_en": "Goedman de Jong",
+                      "id": 263
                     },
-                    {
-                      "name": "Hartog Behr",
-                      "id": 253
+                    "children": [
+                      {
+                        "name_he": "אליזבת דה יונג",
+                        "name_en": "Elisabeth de Jong",
+                        "id": 174,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "הלנה דה יונג",
+                        "name_en": "Helena de Jong",
+                        "id": 175,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "יצחק דה יונג",
+                        "name_en": "Isaäc de Jong",
+                        "id": 176,
+                        "role_he": "בן",
+                        "role_en": "Son"
+                      },
+                      {
+                        "name_he": "סלין דה יונג",
+                        "name_en": "Saline de Jong",
+                        "id": 177,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "סלומון דה יונג",
+                        "name_en": "Salomon de Jong",
+                        "id": 178,
+                        "role_he": "בן",
+                        "role_en": "Son"
+                      },
+                      {
+                        "name_he": "סלין דה יונג",
+                        "name_en": "Celine de Jong",
+                        "id": 179,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "ברנד דה יונג",
+                        "name_en": "Barend de Jong",
+                        "id": 180,
+                        "role_he": "בן",
+                        "role_en": "Son"
+                      },
+                      {
+                        "name_he": "דוד דה יונג",
+                        "name_en": "David de Jong",
+                        "id": 181,
+                        "role_he": "בן",
+                        "role_en": "Son"
+                      }
+                    ]
+                  },
+                  {
+                    "name_he": "חנה אנסל",
+                    "name_en": "Hanna Ensel",
+                    "id": 264,
+                    "role_he": "בת",
+                    "role_en": "Daughter",
+                    "spouse": {
+                      "name_he": "פיליפ דה הונד",
+                      "name_en": "Philip de Hond",
+                      "id": 265
                     },
-                    {
-                      "name": "Benjamin Behr",
-                      "id": 254
-                    },
-                    {
-                      "name": "Abraham Behr",
-                      "id": 255
-                    },
-                    {
-                      "name": "Jacob Behr",
-                      "id": 256
-                    },
-                    {
-                      "name": "Clara Behr",
-                      "id": 257
+                    "children": [
+                      {
+                        "name_he": "יהודית דה הונד",
+                        "name_en": "Judith de Hond",
+                        "id": 182,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      }
+                    ]
+                  },
+                  {
+                    "name_he": "שרה אנסל",
+                    "name_en": "Sara Ensel",
+                    "id": 267,
+                    "role_he": "בת",
+                    "role_en": "Daughter"
+                  },
+                  {
+                    "name_he": "דוד אנסל",
+                    "name_en": "David Ensel",
+                    "id": 268,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  },
+                  {
+                    "name_he": "פיליפ אנסל",
+                    "name_en": "Philip Ensel",
+                    "id": 269,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  },
+                  {
+                    "name_he": "פריץ אנסל",
+                    "name_en": "Frits Ensel",
+                    "id": 183,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  },
+                  {
+                    "name_he": "יעקב אנסל",
+                    "name_en": "Jacob Ensel",
+                    "id": 184,
+                    "role_he": "בן",
+                    "role_en": "Son",
+                    "spouse": {
+                      "name_he": "וילהלמינה סוזנה ג'רארדו",
+                      "name_en": "Wilhelmina Susanna Gerardu",
+                      "id": 270
                     }
-                  ]
-                },
-                {
-                  "name": "Kind Behr",
-                  "id": 317
-                },
-                {
-                  "name": "Esther Behr",
-                  "id": 318
-                },
-                {
-                  "name": "Benjamin Behr",
-                  "id": 319
-                },
-                {
-                  "name": "Kind Behr",
-                  "id": 320
-                },
-                {
-                  "name": "Simon Behr",
-                  "id": 321
-                },
-                {
-                  "name": "Salina Behr",
-                  "id": 322,
-                  "spouse": {
-                    "name": "Raphael Ensel",
-                    "id": 323
                   },
-                  "children": [
-                    {
-                      "name": "Salomon Ensel",
-                      "id": 258
+                  {
+                    "name_he": "סלינה אנסל",
+                    "name_en": "Salina Ensel",
+                    "id": 185,
+                    "role_he": "בת",
+                    "role_en": "Daughter",
+                    "spouse": {
+                      "name_he": "וילם סטיינס",
+                      "name_en": "Willem Steines",
+                      "id": 186
                     },
-                    {
-                      "name": "Maria Ensel",
-                      "id": 259
-                    },
-                    {
-                      "name": "Isaac Ensel",
-                      "id": 260
-                    },
-                    {
-                      "name": "Andries Ensel",
-                      "id": 261
-                    },
-                    {
-                      "name": "Kaatje Ensel",
-                      "id": 262,
-                      "spouse": {
-                        "name": "Goedman de Jong",
-                        "id": 263
-                      },
-                      "children": [
-                        {
-                          "name": "Elisabeth de Jong",
-                          "id": 174
-                        },
-                        {
-                          "name": "Helena de Jong",
-                          "id": 175
-                        },
-                        {
-                          "name": "Isaäc de Jong",
-                          "id": 176
-                        },
-                        {
-                          "name": "Saline de Jong",
-                          "id": 177
-                        },
-                        {
-                          "name": "Salomon de Jong",
-                          "id": 178
-                        },
-                        {
-                          "name": "Celine de Jong",
-                          "id": 179
-                        },
-                        {
-                          "name": "Barend de Jong",
-                          "id": 180
-                        },
-                        {
-                          "name": "David de Jong",
-                          "id": 181
-                        }
-                      ]
-                    },
-                    {
-                      "name": "Hanna Ensel",
-                      "id": 264,
-                      "spouse": {
-                        "name": "Philip de Hond",
-                        "id": 265
-                      },
-                      "children": [
-                        {
-                          "name": "Judith de Hond",
-                          "id": 182
-                        }
-                      ]
-                    },
-                    {
-                      "name": "Sara Ensel",
-                      "id": 267
-                    },
-                    {
-                      "name": "David Ensel",
-                      "id": 268
-                    },
-                    {
-                      "name": "Philip Ensel",
-                      "id": 269,
-                      "children": [
-                        {
-                          "name": "Frits Ensel",
-                          "id": 183
-                        }
-                      ]
-                    },
-                    {
-                      "name": "Jacob Ensel",
-                      "id": 184,
-                      "spouse": {
-                        "name": "Wilhelmina Susanna Gerardu",
-                        "id": 270
-                      },
-                      "children": [
-                        {
-                          "name": "Salina Ensel",
-                          "id": 185,
-                          "spouse": {
-                            "name": "Willem Steines",
-                            "id": 186
-                          },
-                          "children": [
-                            {
-                              "name": "Johannes Willem Steines",
-                              "id": 117
-                            }
-                          ]
-                        },
-                        {
-                          "name": "Johanna Ensel",
-                          "id": 187
-                        },
-                        {
-                          "name": "Raphael Ensel",
-                          "id": 188
-                        }
-                      ]
-                    },
-                    {
-                      "name": "Johanna Ensel",
-                      "id": 190,
-                      "spouse": {
-                        "name": "Hendrik Grim",
-                        "id": 191
-                      },
-                      "children": [
-                        {
-                          "name": "Hendrika Grim",
-                          "id": 119
-                        }
-                      ]
-                    },
-                    {
-                      "name": "Johan (Joop) Ensel",
-                      "id": 192
-                    },
-                    {
-                      "name": "Alida Ensel",
-                      "id": 272,
-                      "spouse": {
-                        "name": "Levie Walvis",
-                        "id": 273
-                      },
-                      "children": [
-                        {
-                          "name": "Sara Walvis",
-                          "id": 194
-                        },
-                        {
-                          "name": "Salina Walvis",
-                          "id": 195
-                        }
-                      ]
-                    },
-                    {
-                      "name": "Abraham Ensel",
-                      "id": 274,
-                      "spouse": {
-                        "name": "Rebecca de Klijn",
-                        "id": 275
-                      },
-                      "children": [
-                        {
-                          "name": "Raphaël Ensel",
-                          "id": 196
-                        },
-                        {
-                          "name": "Bertha Ensel",
-                          "id": 197
-                        },
-                        {
-                          "name": "Salina Ensel",
-                          "id": 198
-                        },
-                        {
-                          "name": "Benjamin Ensel",
-                          "id": 199
-                        },
-                        {
-                          "name": "Rachel Ensel",
-                          "id": 200
-                        }
-                      ]
-                    },
-                    {
-                      "name": "Betje Raphael Meijers",
-                      "id": 276
-                    },
-                    {
-                      "name": "Mr. Ensel",
-                      "id": 277
-                    }
-                  ]
-                },
-                {
-                  "name": "Hinderina Behr",
-                  "id": 324
-                },
-                {
-                  "name": "Betje Behr",
-                  "id": 326,
-                  "spouse": {
-                    "name": "Benjamin de Vries",
-                    "id": 327
+                    "children": [
+                      {
+                        "name_he": "יוהנס וילם סטיינס",
+                        "name_en": "Johannes Willem Steines",
+                        "id": 117,
+                        "role_he": "בן",
+                        "role_en": "Son"
+                      }
+                    ]
                   },
-                  "children": [
-                    {
-                      "name": "Heiman Izaäc de Vries",
-                      "id": 278,
-                      "spouse": {
-                        "name": "Leentje De Vries",
-                        "id": 279
-                      },
-                      "children": [
-                        {
-                          "name": "Betje de Vries",
-                          "id": 201
-                        },
-                        {
-                          "name": "Johanna de Vries",
-                          "id": 202
-                        },
-                        {
-                          "name": "Martha Mathilda de Vries",
-                          "id": 203
-                        },
-                        {
-                          "name": "Miriam Devora Deveirje de Vries",
-                          "id": 204,
-                          "spouse": {
-                            "name": "Baruch Aaron Izraelovich Israeli",
-                            "id": 205
-                          },
-                          "children": [
-                            {
-                              "name": "Unkown Izraelovich Israeli",
-                              "id": 120,
-                              "spouse": {
-                                "name": "Israel Bikovsky",
-                                "id": 121
-                              },
-                              "children": [
-                                {
-                                  "name": "Bar Bikovsky",
-                                  "id": 54
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "name": "Sara de Vries",
-                          "id": 206
-                        },
-                        {
-                          "name": "Judith de Vries",
-                          "id": 207
-                        }
-                      ]
-                    },
-                    {
-                      "name": "Jacob de Vries",
-                      "id": 280
-                    },
-                    {
-                      "name": "Maria de Vries",
-                      "id": 282,
-                      "spouse": {
-                        "name": "Mozes Jesaja van der Velde",
-                        "id": 283
-                      },
-                      "children": [
-                        {
-                          "name": "Hans van der Velde",
-                          "id": 208
-                        },
-                        {
-                          "name": "Emile van der Velde",
-                          "id": 209
-                        },
-                        {
-                          "name": "Julia Van der velde",
-                          "id": 210,
-                          "spouse": {
-                            "name": "Eduard Ido Izaks",
-                            "id": 211
-                          },
-                          "children": [
-                            {
-                              "name": "Miriam Izaks",
-                              "id": 122,
-                              "spouse": {
-                                "name": "Shimon Caspi",
-                                "id": 123
-                              },
-                              "children": [
-                                {
-                                  "name": "Avigal Caspi",
-                                  "id": 55,
-                                  "spouse": {
-                                    "name": "Catriel Unknown",
-                                    "id": 56
-                                  },
-                                  "children": [
-                                    {
-                                      "name": "Ruth Unknown",
-                                      "id": 3
-                                    },
-                                    {
-                                      "name": "Noam Unknown",
-                                      "id": 4
-                                    },
-                                    {
-                                      "name": "Yonatan Unknown",
-                                      "id": 5
-                                    },
-                                    {
-                                      "name": "Yael Unknown",
-                                      "id": 6
-                                    }
-                                  ]
-                                },
-                                {
-                                  "name": "Matan Caspi",
-                                  "id": 57,
-                                  "spouse": {
-                                    "name": "Oriyah Unknown",
-                                    "id": 58
-                                  },
-                                  "children": [
-                                    {
-                                      "name": "Halel Caspi",
-                                      "id": 7
-                                    },
-                                    {
-                                      "name": "Nave Caspi",
-                                      "id": 8
-                                    },
-                                    {
-                                      "name": "Mr./Ms. Caspi",
-                                      "id": 9
-                                    },
-                                    {
-                                      "name": "Mr./Ms. Caspi",
-                                      "id": 10
-                                    }
-                                  ]
-                                },
-                                {
-                                  "name": "Bnaya Caspi",
-                                  "id": 59,
-                                  "spouse": {
-                                    "name": "Ruth Unknown",
-                                    "id": 60
-                                  },
-                                  "children": [
-                                    {
-                                      "name": "Gilad Caspi",
-                                      "id": 11
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "name": "Chana Noa Izaks",
-                              "id": 125,
-                              "spouse": {
-                                "name": "Shmuel Bromberg",
-                                "id": 126
-                              },
-                              "children": [
-                                {
-                                  "name": "Noga Bromberg",
-                                  "id": 61,
-                                  "spouse": {
-                                    "name": "Avi Grossman",
-                                    "id": 62
-                                  },
-                                  "children": [
-                                    {
-                                      "name": "Roi Baruch Grossman",
-                                      "id": 12
-                                    },
-                                    {
-                                      "name": "Maayan Ziva Grossman",
-                                      "id": 13
-                                    },
-                                    {
-                                      "name": "Yishai Ido Grossman",
-                                      "id": 14
-                                    },
-                                    {
-                                      "name": "Eyal Moshe Grossman",
-                                      "id": 15
-                                    },
-                                    {
-                                      "name": "Yael Tziyon Grossman",
-                                      "id": 16
-                                    }
-                                  ]
-                                },
-                                {
-                                  "name": "Merav Bromberg",
-                                  "id": 63,
-                                  "spouse": {
-                                    "name": "Yanai Ben Abou",
-                                    "id": 64
-                                  },
-                                  "children": [
-                                    {
-                                      "name": "Yair Moshe Ben Abou",
-                                      "id": 17
-                                    },
-                                    {
-                                      "name": "Avishai Yosef Ben Abou",
-                                      "id": 18
-                                    },
-                                    {
-                                      "name": "Beeri Ido Ben Abou",
-                                      "id": 19
-                                    },
-                                    {
-                                      "name": "Omer Shlomo Ben Abou",
-                                      "id": 20
-                                    }
-                                  ]
-                                },
-                                {
-                                  "name": "Amitai Bromberg",
-                                  "id": 65,
-                                  "spouse": {
-                                    "name": "Noga Amran",
-                                    "id": 66
-                                  },
-                                  "children": [
-                                    {
-                                      "name": "Ido Baruch Bromberg",
-                                      "id": 21
-                                    },
-                                    {
-                                      "name": "Hadas Rachel Bromberg",
-                                      "id": 22
-                                    },
-                                    {
-                                      "name": "Ariel Moshe Bromberg",
-                                      "id": 23
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "name": "Reuven Yitzhak Izaks",
-                              "id": 127,
-                              "spouse": {
-                                "name": "Edna Unknown",
-                                "id": 128
-                              },
-                              "children": [
-                                {
-                                  "name": "Efrat Izaks",
-                                  "id": 67
-                                },
-                                {
-                                  "name": "Smadar Izaks",
-                                  "id": 69
-                                },
-                                {
-                                  "name": "Ido Izaks",
-                                  "id": 71,
-                                  "spouse": {
-                                    "name": "Maya Unknown",
-                                    "id": 72
-                                  },
-                                  "children": [
-                                    {
-                                      "name": "Tehila Izaks",
-                                      "id": 24
-                                    },
-                                    {
-                                      "name": "Moshe Izaks",
-                                      "id": 25
-                                    },
-                                    {
-                                      "name": "Orah Izaks",
-                                      "id": 26
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "name": "Hadassah Elisheva Izaks",
-                              "id": 129,
-                              "spouse": {
-                                "name": "Hillel Serlui",
-                                "id": 130
-                              },
-                              "children": [
-                                {
-                                  "name": "Bacol Serlui",
-                                  "id": 73,
-                                  "spouse": {
-                                    "name": "Mr. TBA",
-                                    "id": 74
-                                  },
-                                  "children": [
-                                    {
-                                      "name": "Orah Maayan TBA",
-                                      "id": 27
-                                    }
-                                  ]
-                                },
-                                {
-                                  "name": "Elyashiv Serlui",
-                                  "id": 76,
-                                  "spouse": {
-                                    "name": "Irit Unknown",
-                                    "id": 77
-                                  },
-                                  "children": [
-                                    {
-                                      "name": "Noam Adi Serlouie",
-                                      "id": 28
-                                    },
-                                    {
-                                      "name": "Nitai Avraham Serlouie",
-                                      "id": 29
-                                    },
-                                    {
-                                      "name": "Noga Emunah Pessia Serlouie",
-                                      "id": 30
-                                    },
-                                    {
-                                      "name": "Meytav Malachi Serlouie",
-                                      "id": 31
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "name": "Benjamin Izaks",
-                              "id": 132,
-                              "spouse": {
-                                "name": "Ronit Gazit",
-                                "id": 133
-                              },
-                              "children": [
-                                {
-                                  "name": "Evyatar Izaks",
-                                  "id": 78
-                                },
-                                {
-                                  "name": "Avidan Izaks",
-                                  "id": 79,
-                                  "spouse": {
-                                    "name": "Tal Sezana",
-                                    "id": 80
-                                  },
-                                  "children": [
-                                    {
-                                      "name": "Opalya Izaks",
-                                      "id": 32
-                                    }
-                                  ]
-                                },
-                                {
-                                  "name": "Elkana Izaks",
-                                  "id": 81
-                                },
-                                {
-                                  "name": "Edut Izaks",
-                                  "id": 82
-                                },
-                                {
-                                  "name": "Elroi Izaks",
-                                  "id": 84
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "name": "Aaron de Vries",
-                          "id": 284,
-                          "spouse": {
-                            "name": "Henriette Engelsman",
-                            "id": 285
-                          },
-                          "children": [
-                            {
-                              "name": "Sientje Jeannette de Vries",
-                              "id": 212
-                            },
-                            {
-                              "name": "Betje Marie de Vries",
-                              "id": 213
-                            },
-                            {
-                              "name": "Lea Sippora de Vries",
-                              "id": 214
-                            },
-                            {
-                              "name": "Jeannette Henriette de Vries",
-                              "id": 215
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "name": "Philippus Behr",
-                  "id": 328,
-                  "spouse": {
-                    "name": "Betje van Dam",
-                    "id": 329
+                  {
+                    "name_he": "יוהנה אנסל",
+                    "name_en": "Johanna Ensel",
+                    "id": 187,
+                    "role_he": "בת",
+                    "role_en": "Daughter"
                   },
-                  "children": [
-                    {
-                      "name": "Henderina Behr",
-                      "id": 286
+                  {
+                    "name_he": "רפאל אנסל",
+                    "name_en": "Raphael Ensel",
+                    "id": 188,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  },
+                  {
+                    "name_he": "יוהנה אנסל",
+                    "name_en": "Johanna Ensel",
+                    "id": 190,
+                    "role_he": "בת",
+                    "role_en": "Daughter",
+                    "spouse": {
+                      "name_he": "הנדריק גרים",
+                      "name_en": "Hendrik Grim",
+                      "id": 191
                     },
-                    {
-                      "name": "Frieda Mindus",
+                    "children": [
+                      {
+                        "name_he": "הנדריקה גרים",
+                        "name_en": "Hendrika Grim",
+                        "id": 119,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      }
+                    ]
+                  },
+                  {
+                    "name_he": "יוהן (יואופ) אנסל",
+                    "name_en": "Johan (Joop) Ensel",
+                    "id": 192,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  },
+                  {
+                    "name_he": "אלידה אנסל",
+                    "name_en": "Alida Ensel",
+                    "id": 272,
+                    "role_he": "בת",
+                    "role_en": "Daughter",
+                    "spouse": {
+                      "name_he": "לוי וולפיש",
+                      "name_en": "Levie Walvis",
+                      "id": 273
+                    },
+                    "children": [
+                      {
+                        "name_he": "שרה וולפיש",
+                        "name_en": "Sara Walvis",
+                        "id": 194,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "סלינה וולפיש",
+                        "name_en": "Salina Walvis",
+                        "id": 195,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      }
+                    ]
+                  },
+                  {
+                    "name_he": "אברהם אנסל",
+                    "name_en": "Abraham Ensel",
+                    "id": 274,
+                    "role_he": "בן",
+                    "role_en": "Son",
+                    "spouse": {
+                      "name_he": "רבקה דה קליין",
+                      "name_en": "Rebecca de Klijn",
+                      "id": 275
+                    },
+                    "children": [
+                      {
+                        "name_he": "רפאל אנסל",
+                        "name_en": "Raphaël Ensel",
+                        "id": 196,
+                        "role_he": "בן",
+                        "role_en": "Son"
+                      },
+                      {
+                        "name_he": "ברתה אנסל",
+                        "name_en": "Bertha Ensel",
+                        "id": 197,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "סלינה אנסל",
+                        "name_en": "Salina Ensel",
+                        "id": 198,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "בנימין אנסל",
+                        "name_en": "Benjamin Ensel",
+                        "id": 199,
+                        "role_he": "בן",
+                        "role_en": "Son"
+                      },
+                      {
+                        "name_he": "רחל אנסל",
+                        "name_en": "Rachel Ensel",
+                        "id": 200,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      }
+                    ]
+                  },
+                  {
+                    "name_he": "בטיה רפאל מיירס",
+                    "name_en": "Betje Raphael Meijers",
+                    "id": 276,
+                    "role_he": "בת",
+                    "role_en": "Daughter"
+                  },
+                  {
+                    "name_he": "אדון אנסל",
+                    "name_en": "Mr. Ensel",
+                    "id": 277,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  }
+                ]
+              },
+              {
+                "name_he": "הינדרינה בר",
+                "name_en": "Hinderina Behr",
+                "id": 324,
+                "role_he": "בת",
+                "role_en": "Daughter"
+              },
+              {
+                "name_he": "בטיה בר",
+                "name_en": "Betje Behr",
+                "id": 326,
+                "role_he": "בת",
+                "role_en": "Daughter",
+                "spouse": {
+                  "name_he": "בנימין דה פריס",
+                  "name_en": "Benjamin de Vries",
+                  "id": 327
+                },
+                "children": [
+                  {
+                    "name_he": "היימן יצחק דה פריס",
+                    "name_en": "Heiman Izaäc de Vries",
+                    "id": 278,
+                    "role_he": "בן",
+                    "role_en": "Son",
+                    "spouse": {
+                      "name_he": "ליינטיה דה פריס",
+                      "name_en": "Leentje De Vries",
+                      "id": 279
+                    },
+                    "children": [
+                      {
+                        "name_he": "בטיה דה פריס",
+                        "name_en": "Betje de Vries",
+                        "id": 201,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "יוהנה דה פריס",
+                        "name_en": "Johanna de Vries",
+                        "id": 202,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "מרתה מתילדה דה פריס",
+                        "name_en": "Martha Mathilda de Vries",
+                        "id": 203,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "מרים דבורה דה פריס",
+                        "name_en": "Miriam Devora Deveirje de Vries",
+                        "id": 204,
+                        "role_he": "בת",
+                        "role_en": "Daughter",
+                        "spouse": {
+                          "name_he": "ברוך אהרון איזראלוביץ ישראלי",
+                          "name_en": "Baruch Aaron Izraelovich Israeli",
+                          "id": 205
+                        },
+                        "children": [
+                          {
+                            "name_he": "לא ידוע איזראלוביץ ישראלי",
+                            "name_en": "Unknown Izraelovich Israeli",
+                            "id": 120,
+                            "role_he": "בן",
+                            "role_en": "Son",
+                            "spouse": {
+                              "name_he": "ישראל ביקובסקי",
+                              "name_en": "Israel Bikovsky",
+                              "id": 121
+                            },
+                            "children": [
+                              {
+                                "name_he": "בר ביקובסקי",
+                                "name_en": "Bar Bikovsky",
+                                "id": 54,
+                                "role_he": "בן",
+                                "role_en": "Son"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name_he": "שרה דה פריס",
+                        "name_en": "Sara de Vries",
+                        "id": 206,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "יהודית דה פריס",
+                        "name_en": "Judith de Vries",
+                        "id": 207,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      }
+                    ]
+                  },
+                  {
+                    "name_he": "יעקב דה פריס",
+                    "name_en": "Jacob de Vries",
+                    "id": 280,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  },
+                  {
+                    "name_he": "מריה דה פריס",
+                    "name_en": "Maria de Vries",
+                    "id": 282,
+                    "role_he": "בת",
+                    "role_en": "Daughter",
+                    "spouse": {
+                      "name_he": "מוזס ישעיה ואן דר ולדה",
+                      "name_en": "Mozes Jesaja van der Velde",
+                      "id": 283
+                    },
+                    "children": [
+                      {
+                        "name_he": "הנס ואן דר ולדה",
+                        "name_en": "Hans van der Velde",
+                        "id": 208,
+                        "role_he": "בן",
+                        "role_en": "Son"
+                      },
+                      {
+                        "name_he": "אמיל ואן דר ולדה",
+                        "name_en": "Emile van der Velde",
+                        "id": 209,
+                        "role_he": "בן",
+                        "role_en": "Son"
+                      },
+                      {
+                        "name_he": "ג'וליה ואן דר ולדה",
+                        "name_en": "Julia Van der velde",
+                        "id": 210,
+                        "role_he": "בת",
+                        "role_en": "Daughter",
+                        "spouse": {
+                          "name_he": "אדוארד ידו יצחקס",
+                          "name_en": "Eduard Ido Izaks",
+                          "id": 211
+                        },
+                        "children": [
+                          {
+                            "name_he": "מרים יצחקס",
+                            "name_en": "Miriam Izaks",
+                            "id": 122,
+                            "role_he": "בת",
+                            "role_en": "Daughter",
+                            "spouse": {
+                              "name_he": "שמעון כספי",
+                              "name_en": "Shimon Caspi",
+                              "id": 123
+                            },
+                            "children": [
+                              {
+                                "name_he": "אביגיל כספי",
+                                "name_en": "Avigal Caspi",
+                                "id": 55,
+                                "role_he": "בת",
+                                "role_en": "Daughter",
+                                "spouse": {
+                                  "name_he": "קתריאל אלמוני",
+                                  "name_en": "Catriel Unknown",
+                                  "id": 56
+                                },
+                                "children": [
+                                  {
+                                    "name_he": "רות אלמוני",
+                                    "name_en": "Ruth Unknown",
+                                    "id": 3,
+                                    "role_he": "בת",
+                                    "role_en": "Daughter"
+                                  },
+                                  {
+                                    "name_he": "נועם אלמוני",
+                                    "name_en": "Noam Unknown",
+                                    "id": 4,
+                                    "role_he": "בן",
+                                    "role_en": "Son"
+                                  },
+                                  {
+                                    "name_he": "יהונתן אלמוני",
+                                    "name_en": "Yonatan Unknown",
+                                    "id": 5,
+                                    "role_he": "בן",
+                                    "role_en": "Son"
+                                  },
+                                  {
+                                    "name_he": "יעל אלמוני",
+                                    "name_en": "Yael Unknown",
+                                    "id": 6,
+                                    "role_he": "בת",
+                                    "role_en": "Daughter"
+                                  }
+                                ]
+                              },
+                              {
+                                "name_he": "מתן כספי",
+                                "name_en": "Matan Caspi",
+                                "id": 57,
+                                "role_he": "בן",
+                                "role_en": "Son",
+                                "spouse": {
+                                  "name_he": "אוריה אלמוני",
+                                  "name_en": "Oriyah Unknown",
+                                  "id": 58
+                                },
+                                "children": [
+                                  {
+                                    "name_he": "הלל כספי",
+                                    "name_en": "Halel Caspi",
+                                    "id": 7,
+                                    "role_he": "בת",
+                                    "role_en": "Daughter"
+                                  },
+                                  {
+                                    "name_he": "נאווה כספי",
+                                    "name_en": "Nave Caspi",
+                                    "id": 8,
+                                    "role_he": "בת",
+                                    "role_en": "Daughter"
+                                  },
+                                  {
+                                    "name_he": "ילד כספי",
+                                    "name_en": "Mr./Ms. Caspi",
+                                    "id": 9,
+                                    "role_he": "ילד/ה",
+                                    "role_en": "Mr./Ms. Caspi"
+                                  },
+                                  {
+                                    "name_he": "ילד כספי",
+                                    "name_en": "Mr./Ms. Caspi",
+                                    "id": 10,
+                                    "role_he": "ילד/ה",
+                                    "role_en": "Mr./Ms. Caspi"
+                                  }
+                                ]
+                              },
+                              {
+                                "name_he": "בניה כספי",
+                                "name_en": "Bnaya Caspi",
+                                "id": 59,
+                                "role_he": "בן",
+                                "role_en": "Son",
+                                "spouse": {
+                                  "name_he": "רות אלמונית",
+                                  "name_en": "Ruth Unknown",
+                                  "id": 60
+                                },
+                                "children": [
+                                  {
+                                    "name_he": "גלעד כספי",
+                                    "name_en": "Gilad Caspi",
+                                    "id": 11,
+                                    "role_he": "בן",
+                                    "role_en": "Son"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "name_he": "חנה נועה יצחקס",
+                            "name_en": "Chana Noa Izaks",
+                            "id": 125,
+                            "role_he": "בת",
+                            "role_en": "Daughter",
+                            "spouse": {
+                              "name_he": "שמואל ברומברג",
+                              "name_en": "Shmuel Bromberg",
+                              "id": 126
+                            },
+                            "children": [
+                              {
+                                "name_he": "נוגה ברומברג",
+                                "name_en": "Noga Bromberg",
+                                "id": 61,
+                                "role_he": "בת",
+                                "role_en": "Daughter",
+                                "spouse": {
+                                  "name_he": "אבי גרוסמן",
+                                  "name_en": "Avi Grossman",
+                                  "id": 62
+                                },
+                                "children": [
+                                  {
+                                    "name_he": "רועי ברוך גרוסמן",
+                                    "name_en": "Roi Baruch Grossman",
+                                    "id": 12,
+                                    "role_he": "בן",
+                                    "role_en": "Son"
+                                  },
+                                  {
+                                    "name_he": "מעיין זיוה גרוסמן",
+                                    "name_en": "Maayan Ziva Grossman",
+                                    "id": 13,
+                                    "role_he": "בת",
+                                    "role_en": "Daughter"
+                                  },
+                                  {
+                                    "name_he": "ישעי עדו גרוסמן",
+                                    "name_en": "Yishai Ido Grossman",
+                                    "id": 14,
+                                    "role_he": "בן",
+                                    "role_en": "Son"
+                                  },
+                                  {
+                                    "name_he": "אייל משה גרוסמן",
+                                    "name_en": "Eyal Moshe Grossman",
+                                    "id": 15,
+                                    "role_he": "בן",
+                                    "role_en": "Son"
+                                  },
+                                  {
+                                    "name_he": "יעל ציון גרוסמן",
+                                    "name_en": "Yael Tziyon Grossman",
+                                    "id": 16,
+                                    "role_he": "בת",
+                                    "role_en": "Daughter"
+                                  }
+                                ]
+                              },
+                              {
+                                "name_he": "מרב ברומברג",
+                                "name_en": "Merav Bromberg",
+                                "id": 63,
+                                "role_he": "בת",
+                                "role_en": "Daughter",
+                                "spouse": {
+                                  "name_he": "ינאי בן אבו",
+                                  "name_en": "Yanai Ben Abou",
+                                  "id": 64
+                                },
+                                "children": [
+                                  {
+                                    "name_he": "יאיר משה בן אבו",
+                                    "name_en": "Yair Moshe Ben Abou",
+                                    "id": 17,
+                                    "role_he": "בן",
+                                    "role_en": "Son"
+                                  },
+                                  {
+                                    "name_he": "אבישי יוסף בן אבו",
+                                    "name_en": "Avishai Yosef Ben Abou",
+                                    "id": 18,
+                                    "role_he": "בן",
+                                    "role_en": "Son"
+                                  },
+                                  {
+                                    "name_he": "בארי עדו בן אבו",
+                                    "name_en": "Beeri Ido Ben Abou",
+                                    "id": 19,
+                                    "role_he": "בן",
+                                    "role_en": "Son"
+                                  },
+                                  {
+                                    "name_he": "עומר שלמה בן אבו",
+                                    "name_en": "Omer Shlomo Ben Abou",
+                                    "id": 20,
+                                    "role_he": "בן",
+                                    "role_en": "Son"
+                                  }
+                                ]
+                              },
+                              {
+                                "name_he": "אמיתי ברומברג",
+                                "name_en": "Amitai Bromberg",
+                                "id": 65,
+                                "role_he": "בן",
+                                "role_en": "Son",
+                                "spouse": {
+                                  "name_he": "נוגה עמרן",
+                                  "name_en": "Noga Amran",
+                                  "id": 66
+                                },
+                                "children": [
+                                  {
+                                    "name_he": "עדו ברוך ברומברג",
+                                    "name_en": "Ido Baruch Bromberg",
+                                    "id": 21,
+                                    "role_he": "בן",
+                                    "role_en": "Son"
+                                  },
+                                  {
+                                    "name_he": "הדס רחל ברומברג",
+                                    "name_en": "Hadas Rachel Bromberg",
+                                    "id": 22,
+                                    "role_he": "בת",
+                                    "role_en": "Daughter"
+                                  },
+                                  {
+                                    "name_he": "אריאל משה ברומברג",
+                                    "name_en": "Ariel Moshe Bromberg",
+                                    "id": 23,
+                                    "role_he": "בן",
+                                    "role_en": "Son"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "name_he": "ראובן יצחק יצחקס",
+                            "name_en": "Reuven Yitzhak Izaks",
+                            "id": 127,
+                            "role_he": "בן",
+                            "role_en": "Son",
+                            "spouse": {
+                              "name_he": "עדנה אלמונית",
+                              "name_en": "Edna Unknown",
+                              "id": 128
+                            },
+                            "children": [
+                              {
+                                "name_he": "אפרת יצחקס",
+                                "name_en": "Efrat Izaks",
+                                "id": 67,
+                                "role_he": "בת",
+                                "role_en": "Daughter"
+                              },
+                              {
+                                "name_he": "סמדר יצחקס",
+                                "name_en": "Smadar Izaks",
+                                "id": 69,
+                                "role_he": "בת",
+                                "role_en": "Daughter"
+                              },
+                              {
+                                "name_he": "עידו יצחקס",
+                                "name_en": "Ido Izaks",
+                                "id": 71,
+                                "role_he": "בן",
+                                "role_en": "Son",
+                                "spouse": {
+                                  "name_he": "מאיה אלמונית",
+                                  "name_en": "Maya Unknown",
+                                  "id": 72
+                                },
+                                "children": [
+                                  {
+                                    "name_he": "תהילה יצחקס",
+                                    "name_en": "Tehila Izaks",
+                                    "id": 24,
+                                    "role_he": "בת",
+                                    "role_en": "Daughter"
+                                  },
+                                  {
+                                    "name_he": "משה יצחקס",
+                                    "name_en": "Moshe Izaks",
+                                    "id": 25,
+                                    "role_he": "בן",
+                                    "role_en": "Son"
+                                  },
+                                  {
+                                    "name_he": "אורה יצחקס",
+                                    "name_en": "Orah Izaks",
+                                    "id": 26,
+                                    "role_he": "בת",
+                                    "role_en": "Daughter"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "name_he": "הדסה אלישבע יצחקס",
+                            "name_en": "Hadassah Elisheva Izaks",
+                            "id": 129,
+                            "role_he": "בת",
+                            "role_en": "Daughter",
+                            "spouse": {
+                              "name_he": "הלל סרלואי",
+                              "name_en": "Hillel Serlui",
+                              "id": 130
+                            },
+                            "children": [
+                              {
+                                "name_he": "בכל סרלואי",
+                                "name_en": "Bacol Serlui",
+                                "id": 73,
+                                "role_he": "בת",
+                                "role_en": "Daughter",
+                                "spouse": {
+                                  "name_he": "מר ט.ב.א",
+                                  "name_en": "Mr. TBA",
+                                  "id": 74
+                                },
+                                "children": [
+                                  {
+                                    "name_he": "אורה מעיין ט.ב.א",
+                                    "name_en": "Orah Maayan TBA",
+                                    "id": 27,
+                                    "role_he": "בת",
+                                    "role_en": "Daughter"
+                                  }
+                                ]
+                              },
+                              {
+                                "name_he": "אלישיב סרלואי",
+                                "name_en": "Elyashiv Serlui",
+                                "id": 76,
+                                "role_he": "בן",
+                                "role_en": "Son",
+                                "spouse": {
+                                  "name_he": "אירית אלמונית",
+                                  "name_en": "Irit Unknown",
+                                  "id": 77
+                                },
+                                "children": [
+                                  {
+                                    "name_he": "נועם עדי סרלואי",
+                                    "name_en": "Noam Adi Serlouie",
+                                    "id": 28,
+                                    "role_he": "בת",
+                                    "role_en": "Daughter"
+                                  },
+                                  {
+                                    "name_he": "ניתאי אברהם סרלואי",
+                                    "name_en": "Nitai Avraham Serlouie",
+                                    "id": 29,
+                                    "role_he": "בן",
+                                    "role_en": "Son"
+                                  },
+                                  {
+                                    "name_he": "נוגה אמונה פסיה סרלואי",
+                                    "name_en": "Noga Emunah Pessia Serlouie",
+                                    "id": 30,
+                                    "role_he": "בת",
+                                    "role_en": "Daughter"
+                                  },
+                                  {
+                                    "name_he": "מיתב מלאכי סרלואי",
+                                    "name_en": "Meytav Malachi Serlouie",
+                                    "id": 31,
+                                    "role_he": "בן",
+                                    "role_en": "Son"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "name_he": "בנימין יצחקס",
+                            "name_en": "Benjamin Izaks",
+                            "id": 132,
+                            "role_he": "בן",
+                            "role_en": "Son",
+                            "spouse": {
+                              "name_he": "רונית גזית",
+                              "name_en": "Ronit Gazit",
+                              "id": 133
+                            },
+                            "children": [
+                              {
+                                "name_he": "אביתר יצחקס",
+                                "name_en": "Evyatar Izaks",
+                                "id": 78,
+                                "role_he": "בן",
+                                "role_en": "Son"
+                              },
+                              {
+                                "name_he": "אבידן יצחקס",
+                                "name_en": "Avidan Izaks",
+                                "id": 79,
+                                "role_he": "בן",
+                                "role_en": "Son",
+                                "spouse": {
+                                  "name_he": "טל סזנה",
+                                  "name_en": "Tal Sezana",
+                                  "id": 80
+                                },
+                                "children": [
+                                  {
+                                    "name_he": "אופליה יצחקס",
+                                    "name_en": "Opalya Izaks",
+                                    "id": 32,
+                                    "role_he": "בת",
+                                    "role_en": "Daughter"
+                                  }
+                                ]
+                              },
+                              {
+                                "name_he": "אלקנה יצחקס",
+                                "name_en": "Elkana Izaks",
+                                "id": 81,
+                                "role_he": "בן",
+                                "role_en": "Son"
+                              },
+                              {
+                                "name_he": "עדות יצחקס",
+                                "name_en": "Edut Izaks",
+                                "id": 82,
+                                "role_he": "בת",
+                                "role_en": "Daughter"
+                              },
+                              {
+                                "name_he": "אלרואי יצחקס",
+                                "name_en": "Elroi Izaks",
+                                "id": 84,
+                                "role_he": "בן",
+                                "role_en": "Son"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name_he": "אהרון דה פריס",
+                    "name_en": "Aaron de Vries",
+                    "id": 284,
+                    "role_he": "בן",
+                    "role_en": "Son",
+                    "spouse": {
+                      "name_he": "הנרייט אנגלסמן",
+                      "name_en": "Henriette Engelsman",
+                      "id": 285
+                    },
+                    "children": [
+                      {
+                        "name_he": "סינטיה ז'נט דה פריס",
+                        "name_en": "Sientje Jeannette de Vries",
+                        "id": 212,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "בטיה מארי דה פריס",
+                        "name_en": "Betje Marie de Vries",
+                        "id": 213,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "לאה סיפורה דה פריס",
+                        "name_en": "Lea Sippora de Vries",
+                        "id": 214,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "ז'נט הנרייט דה פריס",
+                        "name_en": "Jeannette Henriette de Vries",
+                        "id": 215,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name_he": "פיליפוס בר",
+                "name_en": "Philippus Behr",
+                "id": 328,
+                "role_he": "בן",
+                "role_en": "Son",
+                "spouse": {
+                  "name_he": "בטיה ואן דאם",
+                  "name_en": "Betje van Dam",
+                  "id": 329
+                },
+                "children": [
+                  {
+                    "name_he": "הנדרינה בר",
+                    "name_en": "Henderina Behr",
+                    "id": 286,
+                    "role_he": "בת",
+                    "role_en": "Daughter",
+                    "spouse": {
+                      "name_he": "פרידה מינדוס",
+                      "name_en": "Frieda Mindus",
                       "id": 330
                     },
-                    {
-                      "name": "Kind Behr",
-                      "id": 287
-                    }
-                  ]
-                },
-                {
-                  "name": "Kaatje Behr",
-                  "id": 331
-                },
-                {
-                  "name": "Abraham Izak Behr",
-                  "id": 332,
-                  "spouse": {
-                    "name": "Jette Bernard",
-                    "id": 333
-                  },
-                  "children": [
-                    {
-                      "name": "Froukje van Coeverden van Coevoerden Behr",
-                      "id": 288,
-                      "spouse": {
-                        "name": "Joël (Jolie) van Coevorden",
-                        "id": 289
-                      },
-                      "children": [
-                        {
-                          "name": "Bernard (Benno) van Coevorden",
-                          "id": 216
-                        },
-                        {
-                          "name": "Jette (Jetty) Mary van Coevorden",
-                          "id": 218
-                        }
-                      ]
-                    },
-                    {
-                      "name": "Isaac Abraham Isaac Behr",
-                      "id": 290,
-                      "spouse": {
-                        "name": "Deborah Berend Abraham Berend Samuel Gompel Gombrecht De Lange",
-                        "id": 291
-                      },
-                      "children": [
-                        {
-                          "name": "Abraham Isaac Abraham Isaac Behr",
-                          "id": 220
-                        },
-                        {
-                          "name": "Hester-Henrietta Isaac Abraham Isaac Behr",
-                          "id": 221
-                        }
-                      ]
-                    },
-                    {
-                      "name": "Maria Mina Behr",
-                      "id": 292,
-                      "spouse": {
-                        "name": "Eliazar Pinto",
-                        "id": 293
-                      },
-                      "children": [
-                        {
-                          "name": "Reneé Sylvia Frida Pinto",
-                          "id": 222,
-                          "spouse": {
-                            "name": "Henry (Hans) Wolf",
-                            "id": 223
-                          },
-                          "children": [
-                            {
-                              "name": "Max Jaap Wolf",
-                              "id": 134
-                            }
-                          ]
-                        },
-                        {
-                          "name": "Jette \"Jetty\" Renée Pinto",
-                          "id": 224,
-                          "spouse": {
-                            "name": "Lazarus \"Leo\" van Gelder",
-                            "id": 225
-                          },
-                          "children": [
-                            {
-                              "name": "Monique Elisa van Gelder",
-                              "id": 136,
-                              "spouse": {
-                                "name": "Jochanan Chaïm Belinfante",
-                                "id": 137
-                              },
-                              "children": [
-                                {
-                                  "name": "Tzivya Mariasha Jona van Gelder",
-                                  "id": 86
-                                },
-                                {
-                                  "name": "Esya Belinfante",
-                                  "id": 88
-                                }
-                              ]
-                            },
-                            {
-                              "name": "Ronald van Gelder",
-                              "id": 138
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "name": "Ephraim Behr",
-                      "id": 295,
-                      "spouse": {
-                        "name": "Bertha Aleida Jacobs",
-                        "id": 296
-                      },
-                      "children": [
-                        {
-                          "name": "Elly Behr",
-                          "id": 226,
-                          "spouse": {
-                            "name": "Mauritz Jacobus",
-                            "id": 227
-                          },
-                          "children": [
-                            {
-                              "name": "Simone Jacobus",
-                              "id": 139
-                            },
-                            {
-                              "name": "Daniel Eli Jacobus",
-                              "id": 89
-                            },
-                            {
-                              "name": "Jonathan Ekad Jacobus",
-                              "id": 90
-                            },
-                            {
-                              "name": "Martijn Jacobus",
-                              "id": 140
-                            },
-                            {
-                              "name": "Dorine Jacobus",
-                              "id": 141,
-                              "spouse": {
-                                "name": "Bart Leemhuis",
-                                "id": 142
-                              },
-                              "children": [
-                                {
-                                  "name": "Thomas Leemhuis",
-                                  "id": 91
-                                },
-                                {
-                                  "name": "Robin Leemhuis",
-                                  "id": 92
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "name": "Abraham Edward Behr",
-                          "id": 228,
-                          "spouse": {
-                            "name": "Sheila Stockland",
-                            "id": 229
-                          },
-                          "children": [
-                            {
-                              "name": "Irit Behr",
-                              "id": 143
-                            },
-                            {
-                              "name": "nn Behr",
-                              "id": 93
-                            },
-                            {
-                              "name": "Ehud Behr",
-                              "id": 144,
-                              "spouse": {
-                                "name": "Vered V Zukeman",
-                                "id": 145
-                              },
-                              "children": [
-                                {
-                                  "name": "Ori Behr",
-                                  "id": 94
-                                },
-                                {
-                                  "name": "Sapier Jamie Behr",
-                                  "id": 95,
-                                  "spouse": {
-                                    "name": "Rafael Nieto Sliva",
-                                    "id": 96
-                                  },
-                                  "children": [
-                                    {
-                                      "name": "Luca Gustavo Nieto Behr",
-                                      "id": 33
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "name": "Jetteke Behr",
-                          "id": 230,
-                          "spouse": {
-                            "name": "Leo de Galan",
-                            "id": 231
-                          },
-                          "children": [
-                            {
-                              "name": "Bastiaan de Galan",
-                              "id": 146,
-                              "spouse": {
-                                "name": "Marian van Kraaij",
-                                "id": 147
-                              },
-                              "children": [
-                                {
-                                  "name": "Ruben Eduard de Galan",
-                                  "id": 97
-                                },
-                                {
-                                  "name": "Evi Miriam de Galan",
-                                  "id": 98
-                                }
-                              ]
-                            },
-                            {
-                              "name": "Karen de Galan",
-                              "id": 148,
-                              "spouse": {
-                                "name": "Peter Baggen",
-                                "id": 149
-                              },
-                              "children": [
-                                {
-                                  "name": "Tamar Baggen",
-                                  "id": 99
-                                },
-                                {
-                                  "name": "Yente Sam Baggen",
-                                  "id": 100
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "name": "Saartje Behr",
-                  "id": 334,
-                  "spouse": {
-                    "name": "Jechiël Roco",
-                    "id": 335
-                  },
-                  "children": [
-                    {
-                      "name": "Sara Roco",
-                      "id": 297
-                    },
-                    {
-                      "name": "David Roco",
-                      "id": 298
-                    },
-                    {
-                      "name": "Isaac Roco",
-                      "id": 299
-                    },
-                    {
-                      "name": "Philip ROCO",
-                      "id": 300
-                    },
-                    {
-                      "name": "Marie (Miriam) Roco",
-                      "id": 301
-                    },
-                    {
-                      "name": "Joseph Roco",
-                      "id": 302
-                    },
-                    {
-                      "name": "Abraham ROCO",
-                      "id": 303
-                    }
-                  ]
-                },
-                {
-                  "name": "Samuel Behr",
-                  "id": 336
-                }
-              ]
-            },
-            {
-              "name": "Betje Groenstad",
-              "id": 351,
-              "spouse": {
-                "name": "Salomon Coster",
-                "id": 352
+                    "children": [
+                      {
+                        "name_he": "ילד בר",
+                        "name_en": "Kind Behr",
+                        "id": 287,
+                        "role_he": "ילד/ה",
+                        "role_en": "Child"
+                      }
+                    ]
+                  }
+                ]
               },
-              "children": [
-                {
-                  "name": "Mozes Coster",
-                  "id": 337
-                },
-                {
-                  "name": "Samuel Coster",
-                  "id": 338
-                }
-              ]
-            },
-            {
-              "name": "Martha Groenstad",
-              "id": 353
-            },
-            {
-              "name": "Lina Groenstad",
-              "id": 354,
-              "spouse": {
-                "name": "Levi Joseph Muller",
-                "id": 355
+              {
+                "name_he": "קאטיה בר",
+                "name_en": "Kaatje Behr",
+                "id": 331,
+                "role_he": "בת",
+                "role_en": "Daughter"
               },
-              "children": [
-                {
-                  "name": "Maria Muller",
-                  "id": 339
-                }
-              ]
-            },
-            {
-              "name": "Samuel Philip Gronestadt",
-              "id": 356
-            }
-          ]
-        },
-        {
-          "name": "Leendert Leizer Samuel Zanwil Groenstad Melamed",
-          "id": 378,
-          "spouse": {
-            "name": "Branca Brendele Hartog Hirts Kazer",
-            "id": 379
+              {
+                "name_he": "אברהם יצחק בר",
+                "name_en": "Abraham Izak Behr",
+                "id": 332,
+                "role_he": "בן",
+                "role_en": "Son",
+                "spouse": {
+                  "name_he": "ג'טה ברנרד",
+                  "name_en": "Jette Bernard",
+                  "id": 333
+                },
+                "children": [
+                  {
+                    "name_he": "פרוקיה ואן קוורדן",
+                    "name_en": "Froukje van Coeverden",
+                    "id": 288,
+                    "role_he": "בת",
+                    "role_en": "Daughter",
+                    "spouse": {
+                      "name_he": "ג'ואל (ג'ולי) ואן קוורדן",
+                      "name_en": "Joël (Jolie) van Coevorden",
+                      "id": 289
+                    },
+                    "children": [
+                      {
+                        "name_he": "ברנרד (בנו) ואן קוורדן",
+                        "name_en": "Bernard (Benno) van Coevorden",
+                        "id": 216,
+                        "role_he": "בן",
+                        "role_en": "Son"
+                      },
+                      {
+                        "name_he": "ג'טה (ג'טי) מארי ואן קוורדן",
+                        "name_en": "Jette (Jetty) Mary van Coevorden",
+                        "id": 218,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      }
+                    ]
+                  },
+                  {
+                    "name_he": "יצחק אברהם בר",
+                    "name_en": "Isaac Abraham Behr",
+                    "id": 290,
+                    "role_he": "בן",
+                    "role_en": "Son",
+                    "spouse": {
+                      "name_he": "דבורה ברנד דה לאנגה",
+                      "name_en": "Deborah Berend De Lange",
+                      "id": 291
+                    },
+                    "children": [
+                      {
+                        "name_he": "אברהם יצחק בר",
+                        "name_en": "Abraham Isaac Behr",
+                        "id": 220,
+                        "role_he": "בן",
+                        "role_en": "Son"
+                      },
+                      {
+                        "name_he": "הסטר-הנרייטה בר",
+                        "name_en": "Hester-Henrietta Behr",
+                        "id": 221,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      }
+                    ]
+                  },
+                  {
+                    "name_he": "מריה מינה בר",
+                    "name_en": "Maria Mina Behr",
+                    "id": 292,
+                    "role_he": "בת",
+                    "role_en": "Daughter",
+                    "spouse": {
+                      "name_he": "אליעזר פינטו",
+                      "name_en": "Eliazar Pinto",
+                      "id": 293
+                    },
+                    "children": [
+                      {
+                        "name_he": "רנה סילביה פרידה פינטו",
+                        "name_en": "Reneé Sylvia Frida Pinto",
+                        "id": 222,
+                        "role_he": "בת",
+                        "role_en": "Daughter",
+                        "spouse": {
+                          "name_he": "הנרי (הנס) וולף",
+                          "name_en": "Henry (Hans) Wolf",
+                          "id": 223
+                        },
+                        "children": [
+                          {
+                            "name_he": "מקס יאפ וולף",
+                            "name_en": "Max Jaap Wolf",
+                            "id": 134,
+                            "role_he": "בן",
+                            "role_en": "Son"
+                          }
+                        ]
+                      },
+                      {
+                        "name_he": "ג'טה "ג'טי" רנה פינטו",
+                        "name_en": "Jette \"Jetty\" Renée Pinto",
+                        "id": 224,
+                        "role_he": "בת",
+                        "role_en": "Daughter",
+                        "spouse": {
+                          "name_he": "לזרוס "ליאו" ואן גלדר",
+                          "name_en": "Lazarus \"Leo\" van Gelder",
+                          "id": 225
+                        },
+                        "children": [
+                          {
+                            "name_he": "מוניק אליסה ואן גלדר",
+                            "name_en": "Monique Elisa van Gelder",
+                            "id": 136,
+                            "role_he": "בת",
+                            "role_en": "Daughter",
+                            "spouse": {
+                              "name_he": "יוחנן חיים בלינפנטה",
+                              "name_en": "Jochanan Chaïm Belinfante",
+                              "id": 137
+                            },
+                            "children": [
+                              {
+                                "name_he": "צביה מריאשה ואן גלדר",
+                                "name_en": "Tzivya Mariasha Jona van Gelder",
+                                "id": 86,
+                                "role_he": "בת",
+                                "role_en": "Daughter"
+                              },
+                              {
+                                "name_he": "אסיה בלינפנטה",
+                                "name_en": "Esya Belinfante",
+                                "id": 88,
+                                "role_he": "בת",
+                                "role_en": "Daughter"
+                              }
+                            ]
+                          },
+                          {
+                            "name_he": "רונלד ואן גלדר",
+                            "name_en": "Ronald van Gelder",
+                            "id": 138,
+                            "role_he": "בן",
+                            "role_en": "Son"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name_he": "אפרים בר",
+                    "name_en": "Ephraim Behr",
+                    "id": 295,
+                    "role_he": "בן",
+                    "role_en": "Son",
+                    "spouse": {
+                      "name_he": "ברתה אליידה ג'ייקובס",
+                      "name_en": "Bertha Aleida Jacobs",
+                      "id": 296
+                    },
+                    "children": [
+                      {
+                        "name_he": "אלי בר",
+                        "name_en": "Elly Behr",
+                        "id": 226,
+                        "role_he": "בת",
+                        "role_en": "Daughter",
+                        "spouse": {
+                          "name_he": "מאוריץ ג'קובס",
+                          "name_en": "Mauritz Jacobus",
+                          "id": 227
+                        },
+                        "children": [
+                          {
+                            "name_he": "סימון ג'קובס",
+                            "name_en": "Simone Jacobus",
+                            "id": 139,
+                            "role_he": "בת",
+                            "role_en": "Daughter"
+                          },
+                          {
+                            "name_he": "דניאל אלי ג'קובס",
+                            "name_en": "Daniel Eli Jacobus",
+                            "id": 89,
+                            "role_he": "בן",
+                            "role_en": "Son"
+                          },
+                          {
+                            "name_he": "ג'ונתן עקד ג'קובס",
+                            "name_en": "Jonathan Ekad Jacobus",
+                            "id": 90,
+                            "role_he": "בן",
+                            "role_en": "Son"
+                          }
+                        ]
+                      },
+                      {
+                        "name_he": "אברהם אדוארד בר",
+                        "name_en": "Abraham Edward Behr",
+                        "id": 228,
+                        "role_he": "בן",
+                        "role_en": "Son",
+                        "spouse": {
+                          "name_he": "שילה סטוקלנד",
+                          "name_en": "Sheila Stockland",
+                          "id": 229
+                        },
+                        "children": [
+                          {
+                            "name_he": "עירית בר",
+                            "name_en": "Irit Behr",
+                            "id": 143,
+                            "role_he": "בת",
+                            "role_en": "Daughter",
+                            "children": [
+                              {
+                                "name_he": "נ.נ. בר",
+                                "name_en": "nn Behr",
+                                "id": 93,
+                                "role_he": "ילד/ה",
+                                "role_en": "Child"
+                              }
+                            ]
+                          },
+                          {
+                            "name_he": "אהוד בר",
+                            "name_en": "Ehud Behr",
+                            "id": 144,
+                            "role_he": "בן",
+                            "role_en": "Son",
+                            "spouse": {
+                              "name_he": "ורד זוּקמן",
+                              "name_en": "Vered V Zukeman",
+                              "id": 145
+                            },
+                            "children": [
+                              {
+                                "name_he": "אורי בר",
+                                "name_en": "Ori Behr",
+                                "id": 94,
+                                "role_he": "בן",
+                                "role_en": "Son"
+                              },
+                              {
+                                "name_he": "ספיר ג'יימי בר",
+                                "name_en": "Sapier Jamie Behr",
+                                "id": 95,
+                                "role_he": "בת",
+                                "role_en": "Daughter"
+                              },
+                              {
+                                "name_he": "רפאל ניאטו סליבה",
+                                "name_en": "Rafael Nieto Sliva",
+                                "id": 96,
+                                "role_he": "בן",
+                                "role_en": "Son",
+                                "children": [
+                                  {
+                                    "name_he": "לוקה גוסטבו ניאטו בר",
+                                    "name_en": "Luca Gustavo Nieto Behr",
+                                    "id": 33,
+                                    "role_he": "בן",
+                                    "role_en": "Son"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name_he": "ג'טקה בר",
+                        "name_en": "Jetteke Behr",
+                        "id": 230,
+                        "role_he": "בת",
+                        "role_en": "Daughter",
+                        "spouse": {
+                          "name_he": "ליאו דה גלאן",
+                          "name_en": "Leo de Galan",
+                          "id": 231
+                        },
+                        "children": [
+                          {
+                            "name_he": "בסטיאן דה גלאן",
+                            "name_en": "Bastiaan de Galan",
+                            "id": 146,
+                            "role_he": "בן",
+                            "role_en": "Son",
+                            "spouse": {
+                              "name_he": "מריאן ואן קראי",
+                              "name_en": "Marian van Kraaij",
+                              "id": 147
+                            },
+                            "children": [
+                              {
+                                "name_he": "רובן אדוארד דה גלאן",
+                                "name_en": "Ruben Eduard de Galan",
+                                "id": 97,
+                                "role_he": "בן",
+                                "role_en": "Son"
+                              },
+                              {
+                                "name_he": "אבי מרים דה גלאן",
+                                "name_en": "Evi Miriam de Galan",
+                                "id": 98,
+                                "role_he": "בת",
+                                "role_en": "Daughter"
+                              }
+                            ]
+                          },
+                          {
+                            "name_he": "קארן דה גלאן",
+                            "name_en": "Karen de Galan",
+                            "id": 148,
+                            "role_he": "בת",
+                            "role_en": "Daughter",
+                            "spouse": {
+                              "name_he": "פיטר בגן",
+                              "name_en": "Peter Baggen",
+                              "id": 149
+                            },
+                            "children": [
+                              {
+                                "name_he": "תמר בגן",
+                                "name_en": "Tamar Baggen",
+                                "id": 99,
+                                "role_he": "בת",
+                                "role_en": "Daughter"
+                              },
+                              {
+                                "name_he": "ינטה סם בגן",
+                                "name_en": "Yente Sam Baggen",
+                                "id": 100,
+                                "role_he": "בת",
+                                "role_en": "Daughter"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name_he": "שרה בר",
+                "name_en": "Saartje Behr",
+                "id": 334,
+                "role_he": "בת",
+                "role_en": "Daughter",
+                "spouse": {
+                  "name_he": "יחיאל רוקו",
+                  "name_en": "Jechiël Roco",
+                  "id": 335
+                },
+                "children": [
+                  {
+                    "name_he": "שרה רוקו",
+                    "name_en": "Sara Roco",
+                    "id": 297,
+                    "role_he": "בת",
+                    "role_en": "Daughter"
+                  },
+                  {
+                    "name_he": "דוד רוקו",
+                    "name_en": "David Roco",
+                    "id": 298,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  },
+                  {
+                    "name_he": "יצחק רוקו",
+                    "name_en": "Isaac Roco",
+                    "id": 299,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  },
+                  {
+                    "name_he": "פיליפ רוקו",
+                    "name_en": "Philip Roco",
+                    "id": 300,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  },
+                  {
+                    "name_he": "מארי (מרים) רוקו",
+                    "name_en": "Marie (Miriam) Roco",
+                    "id": 301,
+                    "role_he": "בת",
+                    "role_en": "Daughter"
+                  },
+                  {
+                    "name_he": "יוסף רוקו",
+                    "name_en": "Joseph Roco",
+                    "id": 302,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  },
+                  {
+                    "name_he": "אברהם רוקו",
+                    "name_en": "Abraham Roco",
+                    "id": 303,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  }
+                ]
+              },
+              {
+                "name_he": "שמואל בר",
+                "name_en": "Samuel Behr",
+                "id": 336,
+                "role_he": "בן",
+                "role_en": "Son"
+              }
+            ]
           },
-          "children": [
-            {
-              "name": "Hartog Leendert Groenstat",
-              "id": 357
+          {
+            "name_he": "בטיה גרונשטאט",
+            "name_en": "Betje Groenstad",
+            "id": 351,
+            "role_he": "בת",
+            "role_en": "Daughter",
+            "spouse": {
+              "name_he": "סלומון קוסטר",
+              "name_en": "Salomon Coster",
+              "id": 352
             },
-            {
-              "name": "Eva Heva Leendert Leizer Groenstad",
-              "id": 358
-            },
-            {
-              "name": "Eva Heva Leendert Leizergroenstadt Groenstad",
-              "id": 359,
-              "spouse": {
-                "name": "Jesaïas Andries Slier",
-                "id": 360
+            "children": [
+              {
+                "name_he": "מוזס קוסטר",
+                "name_en": "Mozes Coster",
+                "id": 337,
+                "role_he": "בן",
+                "role_en": "Son"
               },
-              "children": [
-                {
-                  "name": "Andries Jesaïas Slier",
-                  "id": 340
-                },
-                {
-                  "name": "Betje Jesaïas Slier",
-                  "id": 341
-                },
-                {
-                  "name": "Naatje Jesaïas Slier",
-                  "id": 342
-                },
-                {
-                  "name": "Elisabeth Jesaia Slier",
-                  "id": 343
-                },
-                {
-                  "name": "Judith Jesaïas Slier",
-                  "id": 344
-                }
-              ]
-            },
-            {
-              "name": "Philip Eliazer Groenstad",
-              "id": 361
-            }
-          ]
-        },
-        {
-          "name": "Eliaser Salomon Groenstad",
-          "id": 380
-        },
-        {
-          "name": "Hermanus Emanuel / Mendele Samuel / Zanwil Groenstad Zanwil",
-          "id": 381,
-          "spouse": {
-            "name": "Sara Ephraim Amelander Levie Amelander",
-            "id": 382
+              {
+                "name_he": "שמואל קוסטר",
+                "name_en": "Samuel Coster",
+                "id": 338,
+                "role_he": "בן",
+                "role_en": "Son"
+              }
+            ]
           },
-          "children": [
-            {
-              "name": "Marianne Groenstad",
-              "id": 363
+          {
+            "name_he": "מרתה גרונשטאט",
+            "name_en": "Martha Groenstad",
+            "id": 353,
+            "role_he": "בת",
+            "role_en": "Daughter"
+          },
+          {
+            "name_he": "לינה גרונשטאט",
+            "name_en": "Lina Groenstad",
+            "id": 354,
+            "role_he": "בת",
+            "role_en": "Daughter",
+            "spouse": {
+              "name_he": "לוי יוסף מולר",
+              "name_en": "Levi Joseph Muller",
+              "id": 355
             },
-            {
-              "name": "Marianne Groenstad",
-              "id": 364
+            "children": [
+              {
+                "name_he": "מריה מולר",
+                "name_en": "Maria Muller",
+                "id": 339,
+                "role_he": "בת",
+                "role_en": "Daughter"
+              }
+            ]
+          },
+          {
+            "name_he": "שמואל פיליפ גרונשטאט",
+            "name_en": "Samuel Philip Gronestadt",
+            "id": 356,
+            "role_he": "בן",
+            "role_en": "Son"
+          }
+        ]
+      },
+      {
+        "name_he": "לינדרט לייזר גרונשטאט",
+        "name_en": "Leendert Leizer Groenstad Melamed",
+        "id": 378,
+        "role_he": "בן",
+        "role_en": "Son",
+        "spouse": {
+          "name_he": "ברנקה ברנדלה הארטוג הירץ קאזר",
+          "name_en": "Branca Brendele Hartog Hirts Kazer",
+          "id": 379
+        },
+        "children": [
+          {
+            "name_he": "הארטוג ליינדרט גרונסטאט",
+            "name_en": "Hartog Leendert Groenstat",
+            "id": 357,
+            "role_he": "בן",
+            "role_en": "Son"
+          },
+          {
+            "name_he": "אווה הוה לייזר גרונשטאט",
+            "name_en": "Eva Heva Leendert Leizer Groenstad",
+            "id": 358,
+            "role_he": "בת",
+            "role_en": "Daughter"
+          },
+          {
+            "name_he": "אווה הוה לייזר גרונשטאט",
+            "name_en": "Eva Heva Leendert Leizergroenstadt Groenstad",
+            "id": 359,
+            "role_he": "בת",
+            "role_en": "Daughter",
+            "spouse": {
+              "name_he": "ישעיהו אנדריאס סלייר",
+              "name_en": "Jesaïas Andries Slier",
+              "id": 360
             },
-            {
-              "name": "Ephraim Emanuel Groenstad",
-              "id": 365,
-              "spouse": {
-                "name": "Saartje Kool",
-                "id": 366
+            "children": [
+              {
+                "name_he": "אנדריאס ישעיהו סלייר",
+                "name_en": "Andries Jesaïas Slier",
+                "id": 340,
+                "role_he": "בן",
+                "role_en": "Son"
               },
-              "children": [
-                {
-                  "name": "Lion Ephraim Groenstad",
-                  "id": 345,
-                  "spouse": {
-                    "name": "MIETJE (MIRJAM) Swart",
-                    "id": 346
+              {
+                "name_he": "בטיה ישעיהו סלייר",
+                "name_en": "Betje Jesaïas Slier",
+                "id": 341,
+                "role_he": "בת",
+                "role_en": "Daughter"
+              },
+              {
+                "name_he": "נאטיה ישעיהו סלייר",
+                "name_en": "Naatje Jesaïas Slier",
+                "id": 342,
+                "role_he": "בת",
+                "role_en": "Daughter"
+              },
+              {
+                "name_he": "אליזבת ישעיהו סלייר",
+                "name_en": "Elisabeth Jesaia Slier",
+                "id": 343,
+                "role_he": "בת",
+                "role_en": "Daughter"
+              },
+              {
+                "name_he": "יהודית ישעיהו סלייר",
+                "name_en": "Judith Jesaïas Slier",
+                "id": 344,
+                "role_he": "בת",
+                "role_en": "Daughter"
+              }
+            ]
+          },
+          {
+            "name_he": "פיליפ אליעזר גרונשטאט",
+            "name_en": "Philip Eliazer Groenstad",
+            "id": 361,
+            "role_he": "בן",
+            "role_en": "Son"
+          }
+        ]
+      },
+      {
+        "name_he": "אליעזר סלומון גרונשטאט",
+        "name_en": "Eliaser Salomon Groenstad",
+        "id": 380,
+        "role_he": "בן",
+        "role_en": "Son"
+      },
+      {
+        "name_he": "הרמנוס עמנואל גרונשטאט",
+        "name_en": "Hermanus Emanuel Groenstad",
+        "id": 381,
+        "role_he": "בן",
+        "role_en": "Son",
+        "spouse": {
+          "name_he": "שרה אפרים אמלנדר",
+          "name_en": "Sara Ephraim Amelander",
+          "id": 382
+        },
+        "children": [
+          {
+            "name_he": "מריאן גרונשטאט",
+            "name_en": "Marianne Groenstad",
+            "id": 363,
+            "role_he": "בת",
+            "role_en": "Daughter"
+          },
+          {
+            "name_he": "מריאן גרונשטאט",
+            "name_en": "Marianne Groenstad",
+            "id": 364,
+            "role_he": "בת",
+            "role_en": "Daughter"
+          }
+        ]
+      },
+      {
+        "name_he": "אפרים עמנואל גרונשטאט",
+        "name_en": "Ephraim Emanuel Groenstad",
+        "id": 365,
+        "role_he": "בן",
+        "role_en": "Son",
+        "spouse": {
+          "name_he": "שרה קול",
+          "name_en": "Saartje Kool",
+          "id": 366
+        },
+        "children": [
+          {
+            "name_he": "ליון אפרים גרונשטאט",
+            "name_en": "Lion Ephraim Groenstad",
+            "id": 345,
+            "role_he": "בן",
+            "role_en": "Son",
+            "spouse": {
+              "name_he": "מיטיה (מרים) שוורץ",
+              "name_en": "MIETJE (MIRJAM) Swart",
+              "id": 346
+            },
+            "children": [
+              {
+                "name_he": "חנה גרונשטאט",
+                "name_en": "Hanna Groenstad",
+                "id": 304,
+                "role_he": "בת",
+                "role_en": "Daughter"
+              },
+              {
+                "name_he": "סלי גרונשטאט",
+                "name_en": "Selly Groenstad",
+                "id": 305,
+                "role_he": "בת",
+                "role_en": "Daughter",
+                "spouse": {
+                  "name_he": "יוסף דויים",
+                  "name_en": "Joseph Duim",
+                  "id": 306
+                },
+                "children": [
+                  {
+                    "name_he": "קאטו דויים",
+                    "name_en": "Cato Duim",
+                    "id": 232,
+                    "role_he": "בת",
+                    "role_en": "Daughter",
+                    "spouse": {
+                      "name_he": "מארטן פוט",
+                      "name_en": "Maarten Poot",
+                      "id": 234
+                    },
+                    "children": [
+                      {
+                        "name_he": "ג'ון פוט",
+                        "name_en": "John Poot",
+                        "id": 150,
+                        "role_he": "בן",
+                        "role_en": "Son"
+                      },
+                      {
+                        "name_he": "מריטה הלן פוט",
+                        "name_en": "Marita Hélène Poot",
+                        "id": 151,
+                        "role_he": "בת",
+                        "role_en": "Daughter",
+                        "spouse": {
+                          "name_he": "יוהנס פרנס רייס",
+                          "name_en": "Johannes Frans Reiss",
+                          "id": 152
+                        },
+                        "children": [
+                          {
+                            "name_he": "ג'ון אדווין רייס",
+                            "name_en": "John Edwin Reiss",
+                            "id": 101,
+                            "role_he": "בן",
+                            "role_en": "Son"
+                          },
+                          {
+                            "name_he": "רנה אלן רייס",
+                            "name_en": "Renée Ellen Reiss",
+                            "id": 102,
+                            "role_he": "בת",
+                            "role_en": "Daughter",
+                            "spouse": {
+                              "name_he": "דויד בניסטנט",
+                              "name_en": "Dawied Benistant",
+                              "id": 103
+                            },
+                            "children": [
+                              {
+                                "name_he": "חיים בניסטנט",
+                                "name_en": "Chaim Benistant",
+                                "id": 34,
+                                "role_he": "בן",
+                                "role_en": "Son",
+                                "spouse": {
+                                  "name_he": "ננסי קוסטר",
+                                  "name_en": "Nancy Koster",
+                                  "id": 35
+                                },
+                                "children": [
+                                  {
+                                    "name_he": "זואי סלי בניסטנט",
+                                    "name_en": "Zoe Selly Benistant",
+                                    "id": 1,
+                                    "role_he": "בת",
+                                    "role_en": "Daughter"
+                                  },
+                                  {
+                                    "name_he": "נועה אסתר בניסטנט",
+                                    "name_en": "Noa Esther Benistant",
+                                    "id": 2,
+                                    "role_he": "בת",
+                                    "role_en": "Daughter"
+                                  }
+                                ]
+                              },
+                              {
+                                "name_he": "רחל בניסטנט",
+                                "name_en": "Rachel Benistant",
+                                "id": 36,
+                                "role_he": "בת",
+                                "role_en": "Daughter"
+                              },
+                              {
+                                "name_he": "שמחה אלישע בניסטנט",
+                                "name_en": "Simcha Elishah Benistant",
+                                "id": 37,
+                                "role_he": "בן",
+                                "role_en": "Son"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name_he": "קורה מירי פוט",
+                        "name_en": "Cora Miri Poot",
+                        "id": 153,
+                        "role_he": "בת",
+                        "role_en": "Daughter",
+                        "spouse": {
+                          "name_he": "אברהם בורשטיין",
+                          "name_en": "Avraham Burstein",
+                          "id": 154
+                        },
+                        "children": [
+                          {
+                            "name_he": "רונן בורשטיין",
+                            "name_en": "Ronen Burstein",
+                            "id": 104,
+                            "role_he": "בן",
+                            "role_en": "Son"
+                          },
+                          {
+                            "name_he": "אורן בורשטיין",
+                            "name_en": "Oren Burstein",
+                            "id": 105,
+                            "role_he": "בן",
+                            "role_en": "Son",
+                            "spouse": {
+                              "name_he": "אושרית כליי",
+                              "name_en": "Oshrit Kalai",
+                              "id": 106
+                            },
+                            "children": [
+                              {
+                                "name_he": "אורי בורשטיין",
+                                "name_en": "Orie Burstein",
+                                "id": 38,
+                                "role_he": "בן",
+                                "role_en": "Son"
+                              },
+                              {
+                                "name_he": "שאני בורשטיין",
+                                "name_en": "Shannie Burstein",
+                                "id": 39,
+                                "role_he": "בת",
+                                "role_en": "Daughter"
+                              }
+                            ]
+                          },
+                          {
+                            "name_he": "חן בורשטיין",
+                            "name_en": "Chen Burstein",
+                            "id": 107,
+                            "role_he": "בת",
+                            "role_en": "Daughter",
+                            "spouse": {
+                              "name_he": "רונן גורלנד",
+                              "name_en": "Ronen Gurland",
+                              "id": 108
+                            },
+                            "children": [
+                              {
+                                "name_he": "אלון מייקל גורלנד",
+                                "name_en": "Alon Michael Gurland",
+                                "id": 40,
+                                "role_he": "בן",
+                                "role_en": "Son"
+                              },
+                              {
+                                "name_he": "נועה גורלנד",
+                                "name_en": "Noa Gurland",
+                                "id": 41,
+                                "role_he": "בת",
+                                "role_en": "Daughter"
+                              },
+                              {
+                                "name_he": "ילד גורלנד",
+                                "name_en": "kind Gurland",
+                                "id": 42,
+                                "role_he": "ילד/ה",
+                                "role_en": "Child"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
                   },
-                  "children": [
-                    {
-                      "name": "Hanna Groenstad",
-                      "id": 304
+                  {
+                    "name_he": "מרי דויים",
+                    "name_en": "Mary Duim",
+                    "id": 235,
+                    "role_he": "בת",
+                    "role_en": "Daughter",
+                    "spouse": {
+                      "name_he": "אלכסנדר קופויט",
+                      "name_en": "Alexander Kopuit",
+                      "id": 236
                     },
-                    {
-                      "name": "Selly Groenstad",
-                      "id": 305,
-                      "spouse": {
-                        "name": "Joseph Duim",
-                        "id": 306
+                    "children": [
+                      {
+                        "name_he": "רוברט ג'ון קופויט",
+                        "name_en": "Robert John Kopuit",
+                        "id": 155,
+                        "role_he": "בן",
+                        "role_en": "Son"
                       },
-                      "children": [
-                        {
-                          "name": "Cato Duim",
-                          "id": 232,
-                          "spouse": {
-                            "name": "Maarten Poot",
-                            "id": 234
-                          },
-                          "children": [
-                            {
-                              "name": "John Poot",
-                              "id": 150
-                            },
-                            {
-                              "name": "Marita Hélène Poot",
-                              "id": 151,
-                              "spouse": {
-                                "name": "Johannes Frans Reiss",
-                                "id": 152
-                              },
-                              "children": [
-                                {
-                                  "name": "John Edwin Reiss",
-                                  "id": 101
-                                },
-                                {
-                                  "name": "Renée Ellen Reiss",
-                                  "id": 102,
-                                  "spouse": {
-                                    "name": "Dawied Benistant",
-                                    "id": 103
-                                  },
-                                  "children": [
-                                    {
-                                      "name": "Chaim Benistant",
-                                      "id": 34,
-                                      "spouse": {
-                                        "name": "Nancy Koster",
-                                        "id": 35
-                                      },
-                                      "children": [
-                                        {
-                                          "name": "Zoe Selly Benistant",
-                                          "id": 1
-                                        },
-                                        {
-                                          "name": "Noa Esther Benistant",
-                                          "id": 2
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "name": "Rachel Benistant",
-                                      "id": 36
-                                    },
-                                    {
-                                      "name": "Simcha Elishah Benistant",
-                                      "id": 37
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "name": "Cora Miri Poot",
-                              "id": 153,
-                              "spouse": {
-                                "name": "Avraham Burstein",
-                                "id": 154
-                              },
-                              "children": [
-                                {
-                                  "name": "Ronen Burstein",
-                                  "id": 104
-                                },
-                                {
-                                  "name": "Oren Burstein",
-                                  "id": 105,
-                                  "spouse": {
-                                    "name": "Oshrit Kalai",
-                                    "id": 106
-                                  },
-                                  "children": [
-                                    {
-                                      "name": "Orie Burstein",
-                                      "id": 38
-                                    },
-                                    {
-                                      "name": "Shannie Burstein",
-                                      "id": 39
-                                    }
-                                  ]
-                                },
-                                {
-                                  "name": "Chen Burstein",
-                                  "id": 107,
-                                  "spouse": {
-                                    "name": "Ronen Gurland",
-                                    "id": 108
-                                  },
-                                  "children": [
-                                    {
-                                      "name": "Alon Michael Gurland",
-                                      "id": 40
-                                    },
-                                    {
-                                      "name": "Noa Gurland",
-                                      "id": 41
-                                    },
-                                    {
-                                      "name": "kind Gurland",
-                                      "id": 42
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "name": "Mary Duim",
-                          "id": 235,
-                          "spouse": {
-                            "name": "Alexander Kopuit",
-                            "id": 236
-                          },
-                          "children": [
-                            {
-                              "name": "Robert John Kopuit",
-                              "id": 155
-                            },
-                            {
-                              "name": "Max Alexander Kopuit",
-                              "id": 157
-                            },
-                            {
-                              "name": "Martin Wim Dick Kopuit",
-                              "id": 158,
-                              "spouse": {
-                                "name": "Hermina Catharina Wilhelmina Kalkwarf",
-                                "id": 159
-                              },
-                              "children": [
-                                {
-                                  "name": "Lachnan Kopuit",
-                                  "id": 109,
-                                  "spouse": {
-                                    "name": "Wendy van der Wege",
-                                    "id": 110
-                                  },
-                                  "children": [
-                                    {
-                                      "name": "Wouter Kopuit",
-                                      "id": 43
-                                    },
-                                    {
-                                      "name": "Matthijs Kopuit",
-                                      "id": 44
-                                    }
-                                  ]
-                                },
-                                {
-                                  "name": "Hill Kopuit",
-                                  "id": 111,
-                                  "spouse": {
-                                    "name": "Natascha Michielsen",
-                                    "id": 112
-                                  },
-                                  "children": [
-                                    {
-                                      "name": "Killian Kopuit",
-                                      "id": 45
-                                    },
-                                    {
-                                      "name": "Julani Kopuit",
-                                      "id": 46
-                                    },
-                                    {
-                                      "name": "Jace Kopuit",
-                                      "id": 47
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "name": "Frans van Loenen",
-                              "id": 160
-                            },
-                            {
-                              "name": "Marjolijn Duim",
-                              "id": 161
-                            }
-                          ]
-                        },
-                        {
-                          "name": "Willem Duim",
-                          "id": 238
-                        }
-                      ]
-                    },
-                    {
-                      "name": "Marianne Flora Groenstad",
-                      "id": 307,
-                      "spouse": {
-                        "name": "Philip Van van Praag",
-                        "id": 308
+                      {
+                        "name_he": "מקס אלכסנדר קופויט",
+                        "name_en": "Max Alexander Kopuit",
+                        "id": 157,
+                        "role_he": "בן",
+                        "role_en": "Son"
                       },
-                      "children": [
-                        {
-                          "name": "Philip van Praag",
-                          "id": 239,
-                          "spouse": {
-                            "name": "Hendrikje Adriana van Viersen",
-                            "id": 240
-                          },
-                          "children": [
-                            {
-                              "name": "Arie van Praag",
-                              "id": 162
-                            },
-                            {
-                              "name": "Marianne Flora van Praag",
-                              "id": 163
-                            },
-                            {
-                              "name": "Philip van Praag",
-                              "id": 164
-                            }
-                          ]
+                      {
+                        "name_he": "מרטין וים דיק קופויט",
+                        "name_en": "Martin Wim Dick Kopuit",
+                        "id": 158,
+                        "role_he": "בן",
+                        "role_en": "Son",
+                        "spouse": {
+                          "name_he": "הרמינה קתרינה וילהלמינה קלקווארף",
+                          "name_en": "Hermina Catharina Wilhelmina Kalkwarf",
+                          "id": 159
                         },
-                        {
-                          "name": "Bert van Praag",
-                          "id": 241,
-                          "spouse": {
-                            "name": "Ms. van Praag",
-                            "id": 242
+                        "children": [
+                          {
+                            "name_he": "לחנן קופויט",
+                            "name_en": "Lachnan Kopuit",
+                            "id": 109,
+                            "role_he": "בן",
+                            "role_en": "Son",
+                            "spouse": {
+                              "name_he": "ונדי ואן דר ווגה",
+                              "name_en": "Wendy van der Wege",
+                              "id": 110
+                            },
+                            "children": [
+                              {
+                                "name_he": "וואוטר קופויט",
+                                "name_en": "Wouter Kopuit",
+                                "id": 43,
+                                "role_he": "בן",
+                                "role_en": "Son"
+                              },
+                              {
+                                "name_he": "מתיאס קופויט",
+                                "name_en": "Matthijs Kopuit",
+                                "id": 44,
+                                "role_he": "בן",
+                                "role_en": "Son"
+                              }
+                            ]
                           },
-                          "children": [
-                            {
-                              "name": "Arie van Praag",
-                              "id": 165
-                            }
-                          ]
-                        },
-                        {
-                          "name": "Marian Elisabeth van Praag",
-                          "id": 243
-                        }
-                      ]
-                    },
-                    {
-                      "name": "Ephraim Groenstad",
-                      "id": 309,
-                      "spouse": {
-                        "name": "Sara Judith van Kollem",
-                        "id": 310
+                          {
+                            "name_he": "היל קופויט",
+                            "name_en": "Hill Kopuit",
+                            "id": 111,
+                            "role_he": "בן",
+                            "role_en": "Son",
+                            "spouse": {
+                              "name_he": "נטשה מיכילסן",
+                              "name_en": "Natascha Michielsen",
+                              "id": 112
+                            },
+                            "children": [
+                              {
+                                "name_he": "קיליאן קופויט",
+                                "name_en": "Killian Kopuit",
+                                "id": 45,
+                                "role_he": "בן",
+                                "role_en": "Son"
+                              },
+                              {
+                                "name_he": "ג'ולאני קופויט",
+                                "name_en": "Julani Kopuit",
+                                "id": 46,
+                                "role_he": "בת",
+                                "role_en": "Daughter"
+                              },
+                              {
+                                "name_he": "ג'ייס קופויט",
+                                "name_en": "Jace Kopuit",
+                                "id": 47,
+                                "role_he": "בן",
+                                "role_en": "Son"
+                              }
+                            ]
+                          }
+                        ]
                       },
-                      "children": [
-                        {
-                          "name": "Mimi Groenstad",
-                          "id": 244
-                        },
-                        {
-                          "name": "Nana Groenstad",
-                          "id": 245
-                        },
-                        {
-                          "name": "Hanna Groenstad",
-                          "id": 248
-                        },
-                        {
-                          "name": "Eleazer Groenstad",
-                          "id": 250
-                        }
-                      ]
-                    },
-                    {
-                      "name": "Jacob Raphael Groenstad",
-                      "id": 311
-                    }
-                  ]
+                      {
+                        "name_he": "פראנס ואן לואנן",
+                        "name_en": "Frans van Loenen",
+                        "id": 160,
+                        "role_he": "בן",
+                        "role_en": "Son"
+                      },
+                      {
+                        "name_he": "מרולין דויים",
+                        "name_en": "Marjolijn Duim",
+                        "id": 161,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      }
+                    ]
+                  },
+                  {
+                    "name_he": "וילם דויים",
+                    "name_en": "Willem Duim",
+                    "id": 238,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  }
+                ]
+              },
+              {
+                "name_he": "מריאן פלורה גרונשטאט",
+                "name_en": "Marianne Flora Groenstad",
+                "id": 307,
+                "role_he": "בת",
+                "role_en": "Daughter",
+                "spouse": {
+                  "name_he": "פיליפ ואן פראג",
+                  "name_en": "Philip Van van Praag",
+                  "id": 308
                 },
-                {
-                  "name": "Jacob Groenstad",
-                  "id": 347
+                "children": [
+                  {
+                    "name_he": "פיליפ ואן פראג",
+                    "name_en": "Philip van Praag",
+                    "id": 239,
+                    "role_he": "בן",
+                    "role_en": "Son",
+                    "spouse": {
+                      "name_he": "הנדריקיה אדריאנה ואן וירסן",
+                      "name_en": "Hendrikje Adriana van Viersen",
+                      "id": 240
+                    },
+                    "children": [
+                      {
+                        "name_he": "אריה ואן פראג",
+                        "name_en": "Arie van Praag",
+                        "id": 162,
+                        "role_he": "בן",
+                        "role_en": "Son"
+                      },
+                      {
+                        "name_he": "מריאן פלורה ואן פראג",
+                        "name_en": "Marianne Flora van Praag",
+                        "id": 163,
+                        "role_he": "בת",
+                        "role_en": "Daughter"
+                      },
+                      {
+                        "name_he": "פיליפ ואן פראג",
+                        "name_en": "Philip van Praag",
+                        "id": 164,
+                        "role_he": "בן",
+                        "role_en": "Son"
+                      }
+                    ]
+                  },
+                  {
+                    "name_he": "ברט ואן פראג",
+                    "name_en": "Bert van Praag",
+                    "id": 241,
+                    "role_he": "בן",
+                    "role_en": "Son",
+                    "spouse": {
+                      "name_he": "גברת ואן פראג",
+                      "name_en": "Ms. van Praag",
+                      "id": 242
+                    },
+                    "children": [
+                      {
+                        "name_he": "אריה ואן פראג",
+                        "name_en": "Arie van Praag",
+                        "id": 165,
+                        "role_he": "בן",
+                        "role_en": "Son"
+                      }
+                    ]
+                  },
+                  {
+                    "name_he": "מריאן אליזבת ואן פראג",
+                    "name_en": "Marian Elisabeth van Praag",
+                    "id": 243,
+                    "role_he": "בת",
+                    "role_en": "Daughter"
+                  }
+                ]
+              },
+              {
+                "name_he": "אפרים גרונשטאט",
+                "name_en": "Ephraim Groenstad",
+                "id": 309,
+                "role_he": "בן",
+                "role_en": "Son",
+                "spouse": {
+                  "name_he": "שרה יהודית ואן קולם",
+                  "name_en": "Sara Judith van Kollem",
+                  "id": 310
                 },
-                {
-                  "name": "Flora Groenstad",
-                  "id": 348
-                }
-              ]
-            },
-            {
-              "name": "Fijtje Groenstad",
-              "id": 367
-            },
-            {
-              "name": "Samuel Emanuel Groenstad",
-              "id": 368
-            },
-            {
-              "name": "Grietje Groenstad",
-              "id": 369
-            },
-            {
-              "name": "Henriette Groenstad",
-              "id": 370
-            },
-            {
-              "name": "Marianne Groenstad",
-              "id": 371
-            },
-            {
-              "name": "Eva Groenstad",
-              "id": 372
-            },
-            {
-              "name": "Marianne Groenstad",
-              "id": 373
-            },
-            {
-              "name": "Betje Groenstad",
-              "id": 374
-            },
-            {
-              "name": "Gesina Groenstad",
-              "id": 375
-            }
-          ]
-        }
-      ]
-    }
-  ]
+                "children": [
+                  {
+                    "name_he": "מימי גרונשטאט",
+                    "name_en": "Mimi Groenstad",
+                    "id": 244,
+                    "role_he": "בת",
+                    "role_en": "Daughter"
+                  },
+                  {
+                    "name_he": "ננה גרונשטאט",
+                    "name_en": "Nana Groenstad",
+                    "id": 245,
+                    "role_he": "בת",
+                    "role_en": "Daughter"
+                  },
+                  {
+                    "name_he": "חנה גרונשטאט",
+                    "name_en": "Hanna Groenstad",
+                    "id": 248,
+                    "role_he": "בת",
+                    "role_en": "Daughter"
+                  },
+                  {
+                    "name_he": "אליעזר גרונשטאט",
+                    "name_en": "Eleazer Groenstad",
+                    "id": 250,
+                    "role_he": "בן",
+                    "role_en": "Son"
+                  }
+                ]
+              },
+              {
+                "name_he": "יעקב רפאל גרונשטאט",
+                "name_en": "Jacob Raphael Groenstad",
+                "id": 311,
+                "role_he": "בן",
+                "role_en": "Son"
+              },
+              {
+                "name_he": "יעקב גרונשטאט",
+                "name_en": "Jacob Groenstad",
+                "id": 347,
+                "role_he": "בן",
+                "role_en": "Son"
+              },
+              {
+                "name_he": "פלורה גרונשטאט",
+                "name_en": "Flora Groenstad",
+                "id": 348,
+                "role_he": "בת",
+                "role_en": "Daughter"
+              }
+            ]
+          },
+          {
+            "name_he": "פייטיה גרונשטאט",
+            "name_en": "Fijtje Groenstad",
+            "id": 367,
+            "role_he": "בת",
+            "role_en": "Daughter"
+          },
+          {
+            "name_he": "שמואל עמנואל גרונשטאט",
+            "name_en": "Samuel Emanuel Groenstad",
+            "id": 368,
+            "role_he": "בן",
+            "role_en": "Son"
+          },
+          {
+            "name_he": "גריטיה גרונשטאט",
+            "name_en": "Grietje Groenstad",
+            "id": 369,
+            "role_he": "בת",
+            "role_en": "Daughter"
+          },
+          {
+            "name_he": "הנרייט גרונשטאט",
+            "name_en": "Henriette Groenstad",
+            "id": 370,
+            "role_he": "בת",
+            "role_en": "Daughter"
+          },
+          {
+            "name_he": "מריאן גרונשטאט",
+            "name_en": "Marianne Groenstad",
+            "id": 371,
+            "role_he": "בת",
+            "role_en": "Daughter"
+          },
+          {
+            "name_he": "אווה גרונשטאט",
+            "name_en": "Eva Groenstad",
+            "id": 372,
+            "role_he": "בת",
+            "role_en": "Daughter"
+          },
+          {
+            "name_he": "מריאן גרונשטאט",
+            "name_en": "Marianne Groenstad",
+            "id": 373,
+            "role_he": "בת",
+            "role_en": "Daughter"
+          },
+          {
+            "name_he": "בטיה גרונשטאט",
+            "name_en": "Betje Groenstad",
+            "id": 374,
+            "role_he": "בת",
+            "role_en": "Daughter"
+          },
+          {
+            "name_he": "גסינה גרונשטאט",
+            "name_en": "Gesina Groenstad",
+            "id": 375,
+            "role_he": "בת",
+            "role_en": "Daughter"
+          }
+        ]
+      }
+    ]
+  }
 }
