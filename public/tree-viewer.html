@@ -19,6 +19,64 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2), 0 0 40px rgba(59, 130, 246, 0.4);
         }
+        .tree-node {
+            position: relative;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+            background-color: #f9fafb;
+            text-align: center;
+        }
+        .tree-node-connector::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 1px;
+            height: 20px;
+            background-color: #d1d5db;
+            transform: translateX(-50%);
+        }
+        .tree-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .tree-children {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 2rem;
+            position: relative;
+            padding-top: 2rem;
+        }
+        .tree-children::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #d1d5db;
+        }
+        .tree-children > div {
+            padding-top: 2rem;
+            position: relative;
+        }
+        .tree-children > div::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 1px;
+            height: 2rem;
+            background-color: #d1d5db;
+            transform: translateX(-50%);
+        }
+        /* RTL specific styles */
+        [dir="rtl"] .tree-children {
+            direction: rtl;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 min-h-screen flex items-center justify-center p-4">
@@ -34,7 +92,7 @@
             </div>
         </header>
 
-        <main id="content-container" class="w-full"></main>
+        <main id="content-container" class="w-full overflow-x-auto"></main>
 
         <div id="error-message" class="hidden text-center mt-10 p-6 bg-red-200 text-red-800 rounded-lg glowing-border">
             <p class="font-bold text-xl mb-2" data-he="שגיאה: לא ניתן לטעון את הנתונים." data-en="Error: Could not load data.">שגיאה: לא ניתן לטעון את הנתונים.</p>
@@ -123,10 +181,10 @@
             }
         };
 
-        const fetchFamilyData = async (side) => {
-            statusMessageEl.textContent = i18n[currentLang]['loading_family'](side);
+        const fetchFamilyData = async (familySide) => {
+            statusMessageEl.textContent = i18n[currentLang]['loading_family'](familySide);
             try {
-                const response = await fetch(`public/data/${side}.json`);
+                const response = await fetch(`public/data/${familySide}.json`);
                 if (!response.ok) {
                     throw new Error(i18n[currentLang]['no_family_data']);
                 }
@@ -138,11 +196,11 @@
             }
         };
 
-        const loadAndDisplayData = async (side) => {
+        const loadAndDisplayData = async (familySide) => {
             contentContainerEl.innerHTML = '';
             
             try {
-                const data = await fetchFamilyData(side);
+                const data = await fetchFamilyData(familySide);
                 contentContainerEl.dataset.familyData = JSON.stringify(data); // Store data for language toggle
                 renderData(data);
                 statusMessageEl.textContent = i18n[currentLang]['success'];
@@ -153,35 +211,46 @@
             }
         };
 
+        // Recursive function to generate HTML for the family tree
+        const generateTreeHtml = (member) => {
+            if (!member) return '';
+            const memberName = currentLang === 'he' ? member.name_he : member.name_en;
+            const memberRole = currentLang === 'he' ? member.role_he : member.role_en;
+
+            let childrenHtml = '';
+            if (member.children && member.children.length > 0) {
+                const childrenContent = member.children.map(child => `
+                    <div>
+                        ${generateTreeHtml(child)}
+                    </div>
+                `).join('');
+                childrenHtml = `<div class="tree-children">${childrenContent}</div>`;
+            }
+
+            return `
+                <div class="tree-container">
+                    <div class="tree-node border border-gray-300 bg-white shadow-md rounded-lg p-4">
+                        <div class="font-bold text-lg text-blue-600">${memberName}</div>
+                        <div class="text-gray-600 text-sm">${memberRole}</div>
+                    </div>
+                    ${childrenHtml}
+                </div>
+            `;
+        };
+
         const renderData = (data) => {
             const familyName = currentLang === 'he' ? data.name_he : data.name_en;
             const origin = currentLang === 'he' ? data.origin_he : data.origin_en;
             const summary = currentLang === 'he' ? data.history_summary_he : data.history_summary_en;
-            const members = data.members;
-            const memberTitle = currentLang === 'he' ? 'חברי משפחה' : 'Family Members';
 
             const html = `
                 <div class="bg-white p-8 rounded-xl shadow-md transition-transform transform hover:scale-[1.02] border border-gray-200">
                     <h2 class="text-3xl md:text-4xl font-bold text-blue-600 mb-4">${familyName}</h2>
                     <p class="text-gray-600 mb-6">${i18n[currentLang]['origin']}: <span class="text-orange-500 font-semibold">${origin}</span></p>
                     <p class="text-gray-700 mb-8 leading-relaxed">${summary}</p>
-
-                    <h3 class="text-2xl md:text-3xl font-semibold text-blue-600 mb-6">${memberTitle}</h3>
-                    <div class="space-y-6">
-                        ${members.map(member => `
-                            <div class="bg-gray-50 p-6 rounded-lg flex items-start space-x-6 transition-transform transform hover:scale-[1.02] shadow-sm border border-gray-200">
-                                <!-- Placeholder icon or image -->
-                                <div class="w-12 h-12 flex-shrink-0 bg-blue-500 rounded-full flex items-center justify-center text-2xl font-bold text-white shadow-md">
-                                    ${member.name[0]}
-                                </div>
-                                <div class="flex-grow">
-                                    <h4 class="text-xl font-bold text-gray-800">${member.name}</h4>
-                                    <p class="text-gray-600">${member.role}</p>
-                                    ${member.story ? `<p class="text-gray-500 mt-3 text-sm leading-snug">${member.story}</p>` : ''}
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
+                </div>
+                <div class="mt-8 flex justify-center">
+                    ${generateTreeHtml(data.root_member)}
                 </div>
             `;
             contentContainerEl.innerHTML = html;
@@ -191,8 +260,8 @@
             errorMessageEl.classList.add('hidden');
             try {
                 const user = await fetchUserData();
-                if (user.isAuthenticated && user.side) {
-                    await loadAndDisplayData(user.side);
+                if (user.isAuthenticated && user.familySide) {
+                    await loadAndDisplayData(user.familySide);
                 } else {
                     statusMessageEl.textContent = '';
                     errorMessageEl.classList.remove('hidden');
