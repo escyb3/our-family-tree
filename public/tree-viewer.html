@@ -123,7 +123,7 @@
             }
         };
 
-        const fetchFamilyData = async (familySide) => {
+        const fetchFamilyData = async (side) => {
             statusMessageEl.textContent = i18n[currentLang]['loading_family'](side);
             try {
                 const response = await fetch(`public/data/${side}.json`);
@@ -191,8 +191,8 @@
             errorMessageEl.classList.add('hidden');
             try {
                 const user = await fetchUserData();
-                if (user.isAuthenticated && user.familySide) {
-                    await loadAndDisplayData(user.familySide);
+                if (user.isAuthenticated && user.side) {
+                    await loadAndDisplayData(user.side);
                 } else {
                     statusMessageEl.textContent = '';
                     errorMessageEl.classList.remove('hidden');
