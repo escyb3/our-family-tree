@@ -401,7 +401,7 @@ if (!firebaseConfig) {
          * @returns {Promise<string>} The AI's response text.
          */
         async function callGeminiAPI(prompt, base64Image = null, responseMimeType = null) {
-            const apiKey = "AIzaSyBzCmJ7_ovCYVXwTB-f5WJe94kvU-GisiI"; // API key is provided at runtime
+            const apiKey = "AIzaSyDdV6QSioltjA8jkGh5p3d7njCNzcVGXwI"; // API key is provided at runtime
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
             const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
 
