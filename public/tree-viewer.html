@@ -124,9 +124,9 @@
         };
 
         const fetchFamilyData = async (familySide) => {
-            statusMessageEl.textContent = i18n[currentLang]['loading_family'](familySide);
+            statusMessageEl.textContent = i18n[currentLang]['loading_family'](side);
             try {
-                const response = await fetch(`public/data/${familySide}.json`);
+                const response = await fetch(`public/data/${side}.json`);
                 if (!response.ok) {
                     throw new Error(i18n[currentLang]['no_family_data']);
                 }
@@ -138,11 +138,11 @@
             }
         };
 
-        const loadAndDisplayData = async (familySide) => {
+        const loadAndDisplayData = async (side) => {
             contentContainerEl.innerHTML = '';
             
             try {
-                const data = await fetchFamilyData(familySide);
+                const data = await fetchFamilyData(side);
                 contentContainerEl.dataset.familyData = JSON.stringify(data); // Store data for language toggle
                 renderData(data);
                 statusMessageEl.textContent = i18n[currentLang]['success'];
