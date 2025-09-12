@@ -1,58 +1,212 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>עץ משפחה לפי צד</title>
-  <script src="https://unpkg.com/@hpcc-js/wasm@1.14.0/dist/index.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gedcom-parser@2.0.0/dist/gedcom.min.js"></script>
-  <style>
-    body { font-family: sans-serif; padding: 20px; direction: rtl; }
-    #tree-container { width: 100%; height: 600px; border: 1px solid #ccc; overflow: auto; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Tree</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .glowing-border {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5), 0 0 30px rgba(59, 130, 246, 0.3);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .glowing-border:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2), 0 0 40px rgba(59, 130, 246, 0.4);
+        }
+    </style>
 </head>
-<body>
-  <h1>עץ המשפחה</h1>
-  <div id="tree-container">טוען את העץ...</div>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex items-center justify-center p-4">
+    <div id="app-container" class="w-full max-w-4xl p-8 md:p-12 rounded-2xl shadow-xl bg-white border border-gray-200" dir="rtl">
+        <header class="mb-12 flex items-start justify-between">
+            <button id="lang-toggle-button" class="px-6 py-2 rounded-full font-bold transition-colors duration-300
+                                                 bg-blue-600 hover:bg-blue-700 text-white shadow-lg
+                                                 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
+                    data-he="English" data-en="עברית">English</button>
+            <div class="flex flex-col items-center flex-grow">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2" data-he="מציג נתוני משפחה" data-en="Family Data Viewer">מציג נתוני משפחה</h1>
+                <p id="status-message" class="text-lg md:text-xl text-gray-500"></p>
+            </div>
+        </header>
 
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const side = urlParams.get("side") || null;
+        <main id="content-container" class="w-full"></main>
 
-    // מיפוי בין צדדים לשמות קבצים
-    const gedcomFiles = {
-      "BenAbou": "/data/BenAbou.ged",
-      "Elharrar": "/data/Elharrar.ged",
-      "Malca": "/data/Malca.ged",
-      "BenDavid": "/data/BenDavid.ged",
-      "Bromberg": "/data/Bromberg.ged",
-      "Barenbaum": "/data/Barenbaum.ged",
-      "FassSchneck": "/data/FassSchneck.ged",
-      "Weinberger": "/data/Weinberger.ged",
-      "Leibner": "/data/Leibner.ged",
-      "vanderVelde": "/data/vanderVelde.ged",
-      "Behr": "/data/Behr.ged",
-      "deVries": "/data/deVries.ged",
-      "Italiaander": "/data/Italiaander.ged",
-      "Izaks": "/data/Izaks.ged",
-      "Chapon": "/data/Chapon.ged"
-    };
+        <div id="error-message" class="hidden text-center mt-10 p-6 bg-red-200 text-red-800 rounded-lg glowing-border">
+            <p class="font-bold text-xl mb-2" data-he="שגיאה: לא ניתן לטעון את הנתונים." data-en="Error: Could not load data.">שגיאה: לא ניתן לטעון את הנתונים.</p>
+            <p data-he="אנא ודא שהינך מחובר ונסה שוב מאוחר יותר." data-en="Please ensure you are logged in and try again later.">אנא ודא שהינך מחובר ונסה שוב מאוחר יותר.</p>
+        </div>
+    </div>
 
-    if (!side || !gedcomFiles[side]) {
-      document.getElementById("tree-container").innerText = "שגיאה: אין צד משפחה מוגדר או שהוא לא קיים.";
-    } else {
-      fetch(gedcomFiles[side])
-        .then(res => res.text())
-        .then(text => {
-          const parsed = GEDCOM.parse(text);
-          renderTree(parsed);
+    <script>
+        const statusMessageEl = document.getElementById('status-message');
+        const contentContainerEl = document.getElementById('content-container');
+        const errorMessageEl = document.getElementById('error-message');
+        const langToggleButton = document.getElementById('lang-toggle-button');
+        const appContainerEl = document.getElementById('app-container');
+
+        const i18n = {
+            'he': {
+                'loading_user': 'בודק חיבור משתמש...',
+                'loading_family': (family) => `טוען נתונים עבור משפחת ${family}...`,
+                'success': 'הנתונים נטענו בהצלחה!',
+                'no_user_family': 'שגיאה: לא ניתן לזהות את משפחת המשתמש. יש לוודא שהינך מחובר.',
+                'network_error': 'שגיאת רשת או שהמשתמש לא מחובר',
+                'no_user_details': 'לא ניתן לטעון את פרטי המשתמש. אנא התחבר/י ונסה/י שוב.',
+                'no_family_data': 'שגיאת רשת או שהנתונים לא זמינים.',
+                'no_family_data_message': 'לא ניתן לטעון את נתוני המשפחה.',
+                'origin': 'מוצא',
+                'members': 'חברי משפחה',
+                'toggle_to_en': 'English',
+                'toggle_to_he': 'עברית'
+            },
+            'en': {
+                'loading_user': 'Checking user connection...',
+                'loading_family': (family) => `Loading data for the ${family} family...`,
+                'success': 'Data loaded successfully!',
+                'no_user_family': 'Error: Could not identify user\'s family. Please ensure you are logged in.',
+                'network_error': 'Network error or user is not logged in',
+                'no_user_details': 'Could not load user details. Please log in and try again.',
+                'no_family_data': 'Network error or data is not available.',
+                'no_family_data_message': 'Could not load family data.',
+                'origin': 'Origin',
+                'members': 'Family Members',
+                'toggle_to_en': 'English',
+                'toggle_to_he': 'עברית'
+            }
+        };
+
+        let currentLang = 'he';
+
+        const updateUIStrings = () => {
+            document.body.dir = currentLang === 'he' ? 'rtl' : 'ltr';
+            appContainerEl.dir = currentLang === 'he' ? 'rtl' : 'ltr';
+
+            document.querySelectorAll('[data-he]').forEach(el => {
+                const heText = el.getAttribute('data-he');
+                const enText = el.getAttribute('data-en');
+                el.textContent = currentLang === 'he' ? heText : enText;
+            });
+
+            // Update button text
+            const heBtnText = langToggleButton.getAttribute('data-he');
+            const enBtnText = langToggleButton.getAttribute('data-en');
+            langToggleButton.textContent = currentLang === 'he' ? heBtnText : enBtnText;
+
+            // Re-render data if it's already on screen
+            if (contentContainerEl.dataset.familyData) {
+                renderData(JSON.parse(contentContainerEl.dataset.familyData));
+            }
+        };
+
+        langToggleButton.addEventListener('click', () => {
+            currentLang = currentLang === 'he' ? 'en' : 'he';
+            updateUIStrings();
         });
-    }
 
-    function renderTree(data) {
-      const container = document.getElementById("tree-container");
-      container.innerHTML = "<pre>" + JSON.stringify(data, null, 2) + "</pre>";
-      // כאן אפשר לשלב גם ויזואליזציה
-    }
-  </script>
+        const fetchUserData = async () => {
+            statusMessageEl.textContent = i18n[currentLang]['loading_user'];
+            try {
+                const response = await fetch('/api/user');
+                if (!response.ok) {
+                    throw new Error(i18n[currentLang]['network_error']);
+                }
+                const user = await response.json();
+                return user;
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+                throw new Error(i18n[currentLang]['no_user_details']);
+            }
+        };
+
+        const fetchFamilyData = async (familySide) => {
+            statusMessageEl.textContent = i18n[currentLang]['loading_family'](familySide);
+            try {
+                const response = await fetch(`public/data/${familySide}.json`);
+                if (!response.ok) {
+                    throw new Error(i18n[currentLang]['no_family_data']);
+                }
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error("Error fetching family data:", error);
+                throw new Error(i18n[currentLang]['no_family_data_message']);
+            }
+        };
+
+        const loadAndDisplayData = async (familySide) => {
+            contentContainerEl.innerHTML = '';
+            
+            try {
+                const data = await fetchFamilyData(familySide);
+                contentContainerEl.dataset.familyData = JSON.stringify(data); // Store data for language toggle
+                renderData(data);
+                statusMessageEl.textContent = i18n[currentLang]['success'];
+            } catch (error) {
+                statusMessageEl.textContent = '';
+                errorMessageEl.classList.remove('hidden');
+                errorMessageEl.innerHTML = `<p class="font-bold text-xl mb-2">${error.message}</p><p>${i18n[currentLang]['no_user_details']}</p>`;
+            }
+        };
+
+        const renderData = (data) => {
+            const familyName = currentLang === 'he' ? data.name_he : data.name_en;
+            const origin = currentLang === 'he' ? data.origin_he : data.origin_en;
+            const summary = currentLang === 'he' ? data.history_summary_he : data.history_summary_en;
+            const members = data.members;
+            const memberTitle = currentLang === 'he' ? 'חברי משפחה' : 'Family Members';
+
+            const html = `
+                <div class="bg-white p-8 rounded-xl shadow-md transition-transform transform hover:scale-[1.02] border border-gray-200">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-600 mb-4">${familyName}</h2>
+                    <p class="text-gray-600 mb-6">${i18n[currentLang]['origin']}: <span class="text-orange-500 font-semibold">${origin}</span></p>
+                    <p class="text-gray-700 mb-8 leading-relaxed">${summary}</p>
+
+                    <h3 class="text-2xl md:text-3xl font-semibold text-blue-600 mb-6">${memberTitle}</h3>
+                    <div class="space-y-6">
+                        ${members.map(member => `
+                            <div class="bg-gray-50 p-6 rounded-lg flex items-start space-x-6 transition-transform transform hover:scale-[1.02] shadow-sm border border-gray-200">
+                                <!-- Placeholder icon or image -->
+                                <div class="w-12 h-12 flex-shrink-0 bg-blue-500 rounded-full flex items-center justify-center text-2xl font-bold text-white shadow-md">
+                                    ${member.name[0]}
+                                </div>
+                                <div class="flex-grow">
+                                    <h4 class="text-xl font-bold text-gray-800">${member.name}</h4>
+                                    <p class="text-gray-600">${member.role}</p>
+                                    ${member.story ? `<p class="text-gray-500 mt-3 text-sm leading-snug">${member.story}</p>` : ''}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            contentContainerEl.innerHTML = html;
+        };
+
+        const initApp = async () => {
+            errorMessageEl.classList.add('hidden');
+            try {
+                const user = await fetchUserData();
+                if (user.isAuthenticated && user.familySide) {
+                    await loadAndDisplayData(user.familySide);
+                } else {
+                    statusMessageEl.textContent = '';
+                    errorMessageEl.classList.remove('hidden');
+                    errorMessageEl.innerHTML = `<p class="font-bold">${i18n[currentLang]['no_user_family']}</p>`;
+                }
+            } catch (error) {
+                statusMessageEl.textContent = '';
+                errorMessageEl.classList.remove('hidden');
+                errorMessageEl.innerHTML = `<p class="font-bold">שגיאה: ${error.message}</p>`;
+            }
+        };
+        
+        window.onload = initApp;
+
+    </script>
 </body>
 </html>
