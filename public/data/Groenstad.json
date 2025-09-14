@@ -1401,7 +1401,7 @@
                           }
                         ]
                      },
-{,
+{
 "name_he": "ג'טה "ג'טי" רנה פינטו",
 "name_en": "Jette "Jetty" Renée Pinto",
 "id": 224,
@@ -1411,7 +1411,8 @@
 "name_he": "לזרוס "ליאו" ואן גלדר",
 "name_en": "Lazarus "Leo" van Gelder",
 "id": 225
-},
+}
+}
 "children": [
 {
 "name_he": "מוניק אליסה ואן גלדר",
