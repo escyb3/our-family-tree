@@ -1403,13 +1403,13 @@
                       },
                       {
                         "name_he": "ג'טה "ג'טי" רנה פינטו",
-                        "name_en": "Jette \"Jetty\" Renée Pinto",
+                        "name_en": "Jette \"Jetty\ Renée Pinto",
                         "id": 224,
                         "role_he": "בת",
                         "role_en": "Daughter",
                         "spouse": {
                           "name_he": "לזרוס "ליאו" ואן גלדר",
-                          "name_en": "Lazarus \"Leo\" van Gelder",
+                          "name_en": "Lazarus \"Leo\ van Gelder",
                           "id": 225
                         },
                         "children": [
