@@ -1716,80 +1716,78 @@
                   }
                 ]
               },
-              {
-                "name_he": "שמואל בר",
-                "name_en": "Samuel Behr",
-                "id": 336,
-                "role_he": "בן",
-                "role_en": "Son"
-              }
-            ]
-          },
-          {
-            "name_he": "בטיה גרונשטאט",
-            "name_en": "Betje Groenstad",
-            "id": 351,
-            "role_he": "בת",
-            "role_en": "Daughter",
-            "spouse": {
-              "name_he": "סלומון קוסטר",
-              "name_en": "Salomon Coster",
-              "id": 352
-            },
-            "children": [
-              {
-                "name_he": "מוזס קוסטר",
-                "name_en": "Mozes Coster",
-                "id": 337,
-                "role_he": "בן",
-                "role_en": "Son"
-              },
-              {
-                "name_he": "שמואל קוסטר",
-                "name_en": "Samuel Coster",
-                "id": 338,
-                "role_he": "בן",
-                "role_en": "Son"
-              }
-            ]
-          },
-          {
-            "name_he": "מרתה גרונשטאט",
-            "name_en": "Martha Groenstad",
-            "id": 353,
-            "role_he": "בת",
-            "role_en": "Daughter"
-          },
-          {
-            "name_he": "לינה גרונשטאט",
-            "name_en": "Lina Groenstad",
-            "id": 354,
-            "role_he": "בת",
-            "role_en": "Daughter",
-            "spouse": {
-              "name_he": "לוי יוסף מולר",
-              "name_en": "Levi Joseph Muller",
-              "id": 355
-            },
-            "children": [
-              {
-                "name_he": "מריה מולר",
-                "name_en": "Maria Muller",
-                "id": 339,
-                "role_he": "בת",
-                "role_en": "Daughter"
-              }
-            ]
-          },
-          {
-            "name_he": "שמואל פיליפ גרונשטאט",
-            "name_en": "Samuel Philip Gronestadt",
-            "id": 356,
-            "role_he": "בן",
-            "role_en": "Son"
-          }
-        ]
+               {
+      "name_he": "שמואל בר",
+      "name_en": "Samuel Behr",
+      "id": 336,
+      "role_he": "בן",
+      "role_en": "Son"
+    },
+    {
+      "name_he": "בטיה גרונשטאט",
+      "name_en": "Betje Groenstad",
+      "id": 351,
+      "role_he": "בת",
+      "role_en": "Daughter",
+      "spouse": {
+        "name_he": "סלומון קוסטר",
+        "name_en": "Salomon Coster",
+        "id": 352
       },
+      "children": [
+        {
+          "name_he": "מוזס קוסטר",
+          "name_en": "Mozes Coster",
+          "id": 337,
+          "role_he": "בן",
+          "role_en": "Son"
+        },
+        {
+          "name_he": "שמואל קוסטר",
+          "name_en": "Samuel Coster",
+          "id": 338,
+          "role_he": "בן",
+          "role_en": "Son"
+        }
+      ]
+    },
+    {
+      "name_he": "מרתה גרונשטאט",
+      "name_en": "Martha Groenstad",
+      "id": 353,
+      "role_he": "בת",
+      "role_en": "Daughter"
+    },
+    {
+      "name_he": "לינה גרונשטאט",
+      "name_en": "Lina Groenstad",
+      "id": 354,
+      "role_he": "בת",
+      "role_en": "Daughter",
+      "spouse": {
+        "name_he": "לוי יוסף מולר",
+        "name_en": "Levi Joseph Muller",
+        "id": 355
+      },
+      "children": [
+        {
+          "name_he": "מריה מולר",
+          "name_en": "Maria Muller",
+          "id": 339,
+          "role_he": "בת",
+          "role_en": "Daughter"
+        }
+      ]
+    },
+    {
+      "name_he": "שמואל פיליפ גרונשטאט",
+      "name_en": "Samuel Philip Gronestadt",
+      "id": 356,
+      "role_he": "בן",
+      "role_en": "Son"
+    }
+  ]
+}
       {
         "name_he": "לינדרט לייזר גרונשטאט",
         "name_en": "Leendert Leizer Groenstad Melamed",
