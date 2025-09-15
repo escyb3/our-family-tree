@@ -1401,63 +1401,56 @@
         }
       ]
     },
+   {
+  "name_he": "ג'טה \"ג'טי\" רנה פינטו",
+  "name_en": "Jette \"Jetty\" Renée Pinto",
+  "id": 224,
+  "role_he": "בת",
+  "role_en": "Daughter",
+  "spouse": {
+    "name_he": "לזרוס \"ליאו\" ואן גלדר",
+    "name_en": "Lazarus \"Leo\" van Gelder",
+    "id": 225
+  },
+  "children": [
     {
-      "name_he": "ג'טה \"ג'טי\" רנה פינטו",
-      "name_en": "Jette \"Jetty\" Renée Pinto",
-      "id": 224,
+      "name_he": "מוניק אליסה ואן גלדר",
+      "name_en": "Monique Elisa van Gelder",
+      "id": 136,
       "role_he": "בת",
       "role_en": "Daughter",
       "spouse": {
-        "name_he": "לזרוס \"ליאו\" ואן גלדר",
-        "name_en": "Lazarus \"Leo\" van Gelder",
-        "id": 225
+        "name_he": "יוחנן חיים בלינפנטה",
+        "name_en": "Jochanan Chaïm Belinfante",
+        "id": 137
       },
       "children": [
         {
-          "name_he": "מוניק אליסה ואן גלדר",
-          "name_en": "Monique Elisa van Gelder",
-          "id": 136,
+          "name_he": "צביה מריאשה ואן גלדר",
+          "name_en": "Tzivya Mariasha Jona van Gelder",
+          "id": 86,
           "role_he": "בת",
-          "role_en": "Daughter",
-          "spouse": {
-            "name_he": "יוחנן חיים בלינפנטה",
-            "name_en": "Jochanan Chaïm Belinfante",
-            "id": 137
-          },
-          "children": [
-            {
-              "name_he": "צביה מריאשה ואן גלדר",
-              "name_en": "Tzivya Mariasha Jona van Gelder",
-              "id": 86,
-              "role_he": "בת",
-              "role_en": "Daughter"
-            }
-          ]
+          "role_en": "Daughter"
+        },
+        {
+          "name_he": "אסיה בלינפנטה",
+          "name_en": "Esya Belinfante",
+          "id": 88,
+          "role_he": "בת",
+          "role_en": "Daughter"
         }
       ]
+    },
+    {
+      "name_he": "רונלד ואן גלדר",
+      "name_en": "Ronald van Gelder",
+      "id": 138,
+      "role_he": "בן",
+      "role_en": "Son"
     }
   ]
 }
-                              {
-                                "name_he": "אסיה בלינפנטה",
-                                "name_en": "Esya Belinfante",
-                                "id": 88,
-                                "role_he": "בת",
-                                "role_en": "Daughter"
-                              }
-                            ]
-                          },
-                          {
-                            "name_he": "רונלד ואן גלדר",
-                            "name_en": "Ronald van Gelder",
-                            "id": 138,
-                            "role_he": "בן",
-                            "role_en": "Son"
-                          }
-                        ]
-                      }
-                    ]
-                  },
+
                   {
                     "name_he": "אפרים בר",
                     "name_en": "Ephraim Behr",
