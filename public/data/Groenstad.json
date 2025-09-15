@@ -1368,74 +1368,75 @@
                       }
                     ]
                   },
-                  {
-                    "name_he": "מריה מינה בר",
-                    "name_en": "Maria Mina Behr",
-                    "id": 292,
-                    "role_he": "בת",
-                    "role_en": "Daughter",
-                    "spouse": {
-                      "name_he": "אליעזר פינטו",
-                      "name_en": "Eliazar Pinto",
-                      "id": 293
-                    },
-                    "children": [
-                      {
-                        "name_he": "רנה סילביה פרידה פינטו",
-                        "name_en": "Reneé Sylvia Frida Pinto",
-                        "id": 222,
-                        "role_he": "בת",
-                        "role_en": "Daughter",
-                        "spouse": {
-                          "name_he": "הנרי (הנס) וולף",
-                          "name_en": "Henry (Hans) Wolf",
-                          "id": 223
-                        },
-                        "children": [
-                          {
-                            "name_he": "מקס יאפ וולף",
-                            "name_en": "Max Jaap Wolf",
-                            "id": 134,
-                            "role_he": "בן",
-                            "role_en": "Son"
-                          }
-                        ]
-                     },
-{
-"name_he": "ג'טה "ג'טי" רנה פינטו",
-"name_en": "Jette "Jetty" Renée Pinto",
-"id": 224,
-"role_he": "בת",
-"role_en": "Daughter",
-"spouse": {
-"name_he": "לזרוס "ליאו" ואן גלדר",
-"name_en": "Lazarus "Leo" van Gelder",
-"id": 225
-}
-}
-"children": [
-{
-"name_he": "מוניק אליסה ואן גלדר",
-"name_en": "Monique Elisa van Gelder",
-"id": 136,
-"role_he": "בת",
-"role_en": "Daughter",
-"spouse": {
-"name_he": "יוחנן חיים בלינפנטה",
-"name_en": "Jochanan Chaïm Belinfante",
-"id": 137
-},
-"children": [
-{
-"name_he": "צביה מריאשה ואן גלדר",
-"name_en": "Tzivya Mariasha Jona van Gelder",
-"id": 86,
-"role_he": "בת",
-"role_en": "Daughter"
-}
-]
-}
-]
+                 {
+  "name_he": "מריה מינה בר",
+  "name_en": "Maria Mina Behr",
+  "id": 292,
+  "role_he": "בת",
+  "role_en": "Daughter",
+  "spouse": {
+    "name_he": "אליעזר פינטו",
+    "name_en": "Eliazar Pinto",
+    "id": 293
+  },
+  "children": [
+    {
+      "name_he": "רנה סילביה פרידה פינטו",
+      "name_en": "Reneé Sylvia Frida Pinto",
+      "id": 222,
+      "role_he": "בת",
+      "role_en": "Daughter",
+      "spouse": {
+        "name_he": "הנרי (הנס) וולף",
+        "name_en": "Henry (Hans) Wolf",
+        "id": 223
+      },
+      "children": [
+        {
+          "name_he": "מקס יאפ וולף",
+          "name_en": "Max Jaap Wolf",
+          "id": 134,
+          "role_he": "בן",
+          "role_en": "Son"
+        }
+      ]
+    },
+    {
+      "name_he": "ג'טה \"ג'טי\" רנה פינטו",
+      "name_en": "Jette \"Jetty\" Renée Pinto",
+      "id": 224,
+      "role_he": "בת",
+      "role_en": "Daughter",
+      "spouse": {
+        "name_he": "לזרוס \"ליאו\" ואן גלדר",
+        "name_en": "Lazarus \"Leo\" van Gelder",
+        "id": 225
+      },
+      "children": [
+        {
+          "name_he": "מוניק אליסה ואן גלדר",
+          "name_en": "Monique Elisa van Gelder",
+          "id": 136,
+          "role_he": "בת",
+          "role_en": "Daughter",
+          "spouse": {
+            "name_he": "יוחנן חיים בלינפנטה",
+            "name_en": "Jochanan Chaïm Belinfante",
+            "id": 137
+          },
+          "children": [
+            {
+              "name_he": "צביה מריאשה ואן גלדר",
+              "name_en": "Tzivya Mariasha Jona van Gelder",
+              "id": 86,
+              "role_he": "בת",
+              "role_en": "Daughter"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
                               {
                                 "name_he": "אסיה בלינפנטה",
