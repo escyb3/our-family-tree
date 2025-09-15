@@ -1451,53 +1451,56 @@
   ]
 }
 
-                  {
-                    "name_he": "אפרים בר",
-                    "name_en": "Ephraim Behr",
-                    "id": 295,
-                    "role_he": "בן",
-                    "role_en": "Son",
-                    "spouse": {
-                      "name_he": "ברתה אליידה ג'ייקובס",
-                      "name_en": "Bertha Aleida Jacobs",
-                      "id": 296
-                    },
-                    "children": [
-                      {
-                        "name_he": "אלי בר",
-                        "name_en": "Elly Behr",
-                        "id": 226,
-                        "role_he": "בת",
-                        "role_en": "Daughter",
-                        "spouse": {
-                          "name_he": "מאוריץ ג'קובס",
-                          "name_en": "Mauritz Jacobus",
-                          "id": 227
-                        },
-                        "children": [
-                          {
-                            "name_he": "סימון ג'קובס",
-                            "name_en": "Simone Jacobus",
-                            "id": 139,
-                            "role_he": "בת",
-                            "role_en": "Daughter"
-                          },
-                          {
-                            "name_he": "דניאל אלי ג'קובס",
-                            "name_en": "Daniel Eli Jacobus",
-                            "id": 89,
-                            "role_he": "בן",
-                            "role_en": "Son"
-                          },
-                          {
-                            "name_he": "ג'ונתן עקד ג'קובס",
-                            "name_en": "Jonathan Ekad Jacobus",
-                            "id": 90,
-                            "role_he": "בן",
-                            "role_en": "Son"
-                          }
-                        ]
-                      },
+                 {
+  "name_he": "אפרים בר",
+  "name_en": "Ephraim Behr",
+  "id": 295,
+  "role_he": "בן",
+  "role_en": "Son",
+  "spouse": {
+    "name_he": "ברתה אליידה ג'ייקובס",
+    "name_en": "Bertha Aleida Jacobs",
+    "id": 296
+  },
+  "children": [
+    {
+      "name_he": "אלי בר",
+      "name_en": "Elly Behr",
+      "id": 226,
+      "role_he": "בת",
+      "role_en": "Daughter",
+      "spouse": {
+        "name_he": "מאוריץ ג'קובס",
+        "name_en": "Mauritz Jacobus",
+        "id": 227
+      },
+      "children": [
+        {
+          "name_he": "סימון ג'קובס",
+          "name_en": "Simone Jacobus",
+          "id": 139,
+          "role_he": "בת",
+          "role_en": "Daughter"
+        },
+        {
+          "name_he": "דניאל אלי ג'קובס",
+          "name_en": "Daniel Eli Jacobus",
+          "id": 89,
+          "role_he": "בן",
+          "role_en": "Son"
+        },
+        {
+          "name_he": "ג'ונתן עקד ג'קובס",
+          "name_en": "Jonathan Ekad Jacobus",
+          "id": 90,
+          "role_he": "בן",
+          "role_en": "Son"
+        }
+      ]
+    }
+  ]
+}
+
                       {
                         "name_he": "אברהם אדוארד בר",
                         "name_en": "Abraham Edward Behr",
