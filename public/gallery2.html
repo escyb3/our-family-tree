@@ -1,134 +1,853 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>גלריית תמונות משפחתית</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp, deleteDoc, doc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>גלריית תמונות משפחתית</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
-window.firebase = { initializeApp, getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged, getFirestore, collection, onSnapshot, addDoc, serverTimestamp, deleteDoc, doc, updateDoc, query, orderBy };
-</script>
-<style>
-body { font-family: 'Heebo', sans-serif; background-color:#f0f4f8; direction:rtl; text-align:right; }
-.animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-</style>
-</head>
-<body class="bg-gray-50 p-4 sm:p-8">
-<div id="root"></div>
-<script type="text/babel">
-const { useState, useEffect, useRef } = React;
-
-function App() {
-    const [db, setDb] = useState(null);
-    const [auth, setAuth] = useState(null);
-    const [userId, setUserId] = useState(null);
-    const [photos, setPhotos] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [selectedFamily, setSelectedFamily] = useState('all');
-    const fileInputRef = useRef(null);
-
-    const families = ['Ben Abou','Elharrar','Malka','Ben David','Bromberg','Barenbaum','Fass-Schneck','Weinberger','Leibner','van der Velde','Behr','de Vries','Italiaander','Izaks','Chapon'];
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyB99bQpokjpcuXilwu3usXoOFLmegkVnb4",
-        authDomain: "family-gallery-d707d.firebaseapp.com",
-        projectId: "family-gallery-d707d"
-    };
-
-    useEffect(() => {
-        const app = window.firebase.initializeApp(firebaseConfig);
-        const firestoreDb = window.firebase.getFirestore(app);
-        const firebaseAuth = window.firebase.getAuth(app);
-
-        setDb(firestoreDb);
-        setAuth(firebaseAuth);
-
-        const signIn = async () => {
-            try {
-                await window.firebase.signInAnonymously(firebaseAuth);
-            } catch (e) { setError('שגיאה בהתחברות למערכת'); }
+        window.firebase = {
+            initializeApp,
+            getAuth,
+            signInAnonymously,
+            signInWithCustomToken,
+            onAuthStateChanged,
+            getFirestore,
+            collection,
+            onSnapshot,
+            addDoc,
+            serverTimestamp,
+            deleteDoc,
+            doc,
+            updateDoc,
+            getStorage,
+            ref,
+            uploadBytes,
+            getDownloadURL
         };
-        signIn();
-
-        const unsubscribe = window.firebase.onAuthStateChanged(firebaseAuth, user => {
-            if(user) setUserId(user.uid);
-        });
-
-        return () => unsubscribe();
-    }, []);
-
-    useEffect(() => {
-        if(db && userId){
-            const photosRef = window.firebase.collection(db, 'photos');
-            const q = window.firebase.query(photosRef, window.firebase.orderBy('createdAt','desc'));
-            const unsubscribe = window.firebase.onSnapshot(q, snapshot => {
-                const allPhotos = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
-                setPhotos(selectedFamily==='all' ? allPhotos : allPhotos.filter(p=>p.family===selectedFamily));
-                setIsLoading(false);
-            });
-            return () => unsubscribe();
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        .font-inter {
+            font-family: 'Inter', sans-serif;
         }
-    }, [db, userId, selectedFamily]);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .animate-scale-in {
+            animation: scaleIn 0.3s ease-out;
+        }
+        .animate-spin-fast {
+            animation: spin 0.4s linear infinite;
+        }
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-50 text-gray-800 min-h-screen p-4 sm:p-8">
 
-    const handleUpload = async (event) => {
-        event.preventDefault();
-        const url = fileInputRef.current.value.trim();
-        const family = event.target.familySelect.value;
-        if(!url){ setError('אנא הכנס URL של תמונה'); return; }
-        if(!family){ setError('בחר משפחה'); return; }
-        try {
-            await window.firebase.addDoc(window.firebase.collection(db,'photos'), {
-                userId,
-                url,
-                family,
-                createdAt: window.firebase.serverTimestamp(),
-                story: ''
-            });
-            fileInputRef.current.value = '';
-        } catch(e){ setError('שגיאה בהוספת התמונה'); }
-    };
+    <!-- Toast messages container -->
+    <div id="toast-container" class="fixed top-4 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-2 z-50"></div>
 
-    return (
-        <div className="container mx-auto px-2 sm:px-4 py-8">
-            <h1 className="text-center text-5xl font-extrabold mb-8">גלריית תמונות משפחתית</h1>
-
-            <form onSubmit={handleUpload} className="mb-8">
-                <input type="text" placeholder="הכנס URL של תמונה" ref={fileInputRef} className="w-full p-2 rounded mb-2 border"/>
-                <select name="familySelect" className="w-full p-2 rounded mb-2 border">
-                    <option value="">בחר משפחה</option>
-                    {families.map(f=> <option key={f} value={f}>{f}</option>)}
-                </select>
-                <button type="submit" className="w-full py-2 bg-blue-600 text-white rounded">העלה תמונה</button>
-            </form>
-
-            {error && <div className="text-red-600 mb-4">{error}</div>}
-
-            {isLoading ? <p>טוען תמונות...</p> :
-                photos.length===0 ? <p>אין תמונות להצגה</p> :
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {photos.map(p=>(
-                        <div key={p.id} className="bg-white p-2 rounded shadow">
-                            <img src={p.url} alt="" className="w-full h-48 object-cover rounded"/>
-                            <p className="text-sm mt-1">{p.family}</p>
-                        </div>
-                    ))}
+    <!-- Main Container -->
+    <div class="container mx-auto max-w-5xl">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-800" data-key="title">גלריית תמונות משפחתית</h1>
+            <p class="mt-2 text-slate-500 text-lg" data-key="subtitle">שתף רגעים יקרים עם המשפחה</p>
+            <div class="mt-4 flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
+                <div class="flex items-center p-2 bg-slate-200 text-slate-700 rounded-lg text-sm shadow-inner">
+                    <span data-key="userIdLabel">מזהה משתמש:</span>
+                    <strong id="user-id" class="mx-2">טוען...</strong>
+                    <button id="copy-user-id-btn" title="העתק מזהה משתמש" class="p-1 rounded-full bg-slate-300 hover:bg-slate-400 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </button>
                 </div>
-            }
-        </div>
-    );
-}
+                <div class="mt-2 sm:mt-0">
+                    <label for="language-select" class="sr-only">בחר שפה</label>
+                    <select id="language-select" class="p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 bg-white shadow-sm">
+                        <option value="he">עברית</option>
+                        <option value="en">English</option>
+                        <option value="yi">ייִדיש</option>
+                        <option value="fr">Français</option>
+                        <option value="nl">Nederlands</option>
+                    </select>
+                </div>
+            </div>
+        </header>
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(React.createElement(App));
-</script>
+        <!-- Upload Section -->
+        <div class="bg-white p-6 rounded-3xl shadow-xl mb-10">
+            <h2 class="text-2xl font-semibold mb-4 text-slate-700" data-key="uploadSectionTitle">העלאת תמונה</h2>
+            <form id="upload-form" class="space-y-4">
+                <input
+                    type="file"
+                    accept="image/*"
+                    id="file-input"
+                    class="w-full p-3 rounded-lg border-2 border-dashed border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-400 transition-all text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200"
+                />
+                <input
+                    type="text"
+                    id="person-name-input"
+                    placeholder="שם האדם בתמונה"
+                    class="w-full p-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-400 transition-all shadow-sm"
+                    data-key="personNamePlaceholder"
+                />
+                <div class="relative">
+                    <textarea
+                        id="story-input"
+                        class="w-full h-32 p-3 border border-slate-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 shadow-sm transition-all"
+                        placeholder="כתוב כאן סיפור קצר על התמונה..."
+                        data-key="storyPlaceholder"
+                    ></textarea>
+                    <button
+                        type="button"
+                        id="generate-desc-btn"
+                        class="absolute bottom-3 right-3 py-1 px-3 bg-slate-200 text-slate-700 rounded-full font-medium text-sm hover:bg-slate-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        data-key="generateDescriptionButton"
+                    >
+                        צור תיאור ✨
+                    </button>
+                </div>
+                <select id="family-select" name="familySelect" class="w-full p-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-400 transition-all shadow-sm bg-white">
+                    <option value="בחר משפחה" class="text-slate-400" data-key="familySelectPlaceholder">בחר משפחה</option>
+                    <!-- Family options will be populated here by JavaScript -->
+                </select>
+                <button
+                    type="submit"
+                    id="upload-btn"
+                    class="w-full py-3 bg-gradient-to-r from-teal-500 to-sky-500 text-white rounded-lg font-bold hover:from-teal-600 hover:to-sky-600 transition-all shadow-md hover:shadow-lg transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                    data-key="uploadButton"
+                >
+                    העלה תמונה
+                </button>
+            </form>
+        </div>
+
+        <!-- Filters and Photo Grid -->
+        <div class="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
+            <h2 class="text-2xl font-semibold text-slate-700" data-key="gallerySectionTitle">גלריה</h2>
+            <select id="filter-family-select" class="w-full sm:w-auto p-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-400 transition-all shadow-sm bg-white">
+                <!-- Filter options will be populated here by JavaScript -->
+            </select>
+        </div>
+
+        <!-- Photo Grid -->
+        <div id="photo-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Photos will be rendered here by JavaScript -->
+        </div>
+
+    </div>
+
+    <!-- Story Edit Modal -->
+    <div id="edit-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl animate-scale-in">
+            <h3 class="text-2xl font-bold mb-4 text-center" data-key="editStoryTitle">ערוך סיפור לתמונה</h3>
+            <div class="space-y-4">
+                <input
+                    type="text"
+                    id="modal-person-name"
+                    placeholder="שם האדם בתמונה"
+                    class="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-400 shadow-sm transition-all"
+                    data-key="personNamePlaceholder"
+                />
+                <div class="relative">
+                    <textarea
+                        id="modal-story"
+                        class="w-full h-32 p-3 border border-slate-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-slate-400 shadow-sm transition-all"
+                        placeholder="כתוב כאן סיפור קצר על התמונה..."
+                        data-key="storyPlaceholder"
+                    ></textarea>
+                    <button
+                        type="button"
+                        id="generate-story-btn-modal"
+                        class="absolute bottom-3 right-3 py-1 px-3 bg-slate-200 text-slate-700 rounded-full font-medium text-sm hover:bg-slate-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        data-key="generateStoryButton"
+                    >
+                        צור סיפור ✨
+                    </button>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 mt-4">
+                <button id="cancel-edit-btn" class="py-2 px-4 rounded-lg text-slate-600 border border-slate-300 hover:bg-slate-100 transition-colors shadow-sm" data-key="cancelButton">
+                    בטל
+                </button>
+                <button id="save-edit-btn" class="py-2 px-4 rounded-lg bg-emerald-500 text-white font-bold hover:bg-emerald-600 transition-colors shadow-md" data-key="saveButton">
+                    שמור
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript logic -->
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', () => {
+            // Global variables from the environment
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+            const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+            const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+            // Firebase instances
+            let db, auth, storage;
+            let userId = null;
+            let currentPhotos = [];
+            let isGenerating = false;
+            let selectedPhotoToEdit = null;
+
+            // Translations
+            const translations = {
+                he: {
+                    title: 'גלריית תמונות משפחתית',
+                    subtitle: 'שתף רגעים יקרים עם המשפחה',
+                    userIdLabel: 'מזהה משתמש',
+                    uploadSectionTitle: 'העלאת תמונה',
+                    personNamePlaceholder: 'שם האדם בתמונה',
+                    fileInputLabel: 'בחר קובץ',
+                    familySelectPlaceholder: 'בחר משפחה',
+                    uploadButton: 'העלה תמונה',
+                    uploading: 'מעלה...',
+                    gallerySectionTitle: 'גלריה',
+                    allFamilies: 'כל המשפחות',
+                    noPhotos: 'אין תמונות להצגה. התחל בהעלאה!',
+                    editStoryTitle: 'ערוך סיפור לתמונה',
+                    storyPlaceholder: 'כתוב כאן סיפור קצר על התמונה...',
+                    saveButton: 'שמור',
+                    cancelButton: 'בטל',
+                    storyLabel: 'סיפור:',
+                    personNameLabel: 'שם:',
+                    noStory: 'אין סיפור',
+                    noPersonName: 'אין שם',
+                    errorConnect: 'שגיאה בהתחברות למערכת. אנא רענן את הדף.',
+                    errorFirebaseInit: 'שגיאה באתחול Firebase. ודא שההגדרות תקינות.',
+                    errorLoadingPhotos: 'שגיאה בטעינת התמונות.',
+                    errorUploadFileAndFamily: 'אנא בחר קובץ תמונה ובחר משפחה.',
+                    errorUploading: 'שגיאה בהעלאת התמונה.',
+                    errorDeleting: 'שגיאה במחיקת התמונה.',
+                    errorSavingStory: 'שגיאה בשמירת הסיפור.',
+                    successUpload: 'התמונה הועלתה בהצלחה!',
+                    successDelete: 'התמונה נמחקה בהצלחה!',
+                    successSaveStory: 'הסיפור נשמר בהצלחה!',
+                    editStoryButton: 'ערוך סיפור',
+                    deletePhotoButton: 'מחק תמונה',
+                    selectLanguage: 'בחר שפה',
+                    copyUserId: 'העתק מזהה משתמש',
+                    copied: 'הועתק!',
+                    generateStoryButton: 'צור סיפור ✨',
+                    generateDescriptionButton: 'צור תיאור ✨',
+                    generating: 'יוצר...',
+                    generatingLoading: 'יוצר...',
+                },
+                en: {
+                    title: 'Family Photo Gallery',
+                    subtitle: 'Share precious family moments',
+                    userIdLabel: 'User ID',
+                    uploadSectionTitle: 'Upload Photo',
+                    personNamePlaceholder: 'Person\'s name in photo',
+                    fileInputLabel: 'Choose file',
+                    familySelectPlaceholder: 'Select a family',
+                    uploadButton: 'Upload Photo',
+                    uploading: 'Uploading...',
+                    gallerySectionTitle: 'Gallery',
+                    allFamilies: 'All Families',
+                    noPhotos: 'No photos to display. Start by uploading!',
+                    editStoryTitle: 'Edit Photo Story',
+                    storyPlaceholder: 'Write a short story about the photo here...',
+                    saveButton: 'Save',
+                    cancelButton: 'Cancel',
+                    storyLabel: 'Story:',
+                    personNameLabel: 'Name:',
+                    noStory: 'No story',
+                    noPersonName: 'No name',
+                    errorConnect: 'Error connecting to the system. Please refresh the page.',
+                    errorFirebaseInit: 'Error initializing Firebase. Please ensure settings are correct.',
+                    errorLoadingPhotos: 'Error loading photos.',
+                    errorUploadFileAndFamily: 'Please select a photo file and a family.',
+                    errorUploading: 'Error uploading the photo.',
+                    errorDeleting: 'Error deleting the photo.',
+                    errorSavingStory: 'Error saving the story.',
+                    successUpload: 'Photo uploaded successfully!',
+                    successDelete: 'Photo deleted successfully!',
+                    successSaveStory: 'Story saved successfully!',
+                    editStoryButton: 'Edit Story',
+                    deletePhotoButton: 'Delete Photo',
+                    selectLanguage: 'Select Language',
+                    copyUserId: 'Copy User ID',
+                    copied: 'Copied!',
+                    generateStoryButton: 'Generate Story ✨',
+                    generateDescriptionButton: 'Generate Description ✨',
+                    generating: 'Generating...',
+                    generatingLoading: 'Generating...',
+                },
+                yi: {
+                    title: 'משפּחה בילדער גאַלעריע',
+                    subtitle: 'טיילן טײַערע משפּחה מאָמענטן',
+                    userIdLabel: 'באַניצער אידענטיפֿיקאַציע',
+                    uploadSectionTitle: 'בילד ופֿלאָדן',
+                    personNamePlaceholder: 'מענטשנס נאָמען אין בילד',
+                    fileInputLabel: 'קלויבן טעקע',
+                    familySelectPlaceholder: 'וויילן משפּחה',
+                    uploadButton: 'בילד ופֿלאָדן',
+                    uploading: 'לוידערט...',
+                    gallerySectionTitle: 'גאַלעריע',
+                    allFamilies: 'אַלע משפּחות',
+                    noPhotos: 'קיין בילדער צו ווייזן. הייבט אָן מיט ופֿלאָדן!',
+                    editStoryTitle: 'באַאַרבעטן בילד מעשׂה',
+                    storyPlaceholder: 'שרײַבט דאָ אַ קורצע מעשׂה וועגן דעם בילד...',
+                    saveButton: 'היטן',
+                    cancelButton: 'אָפּרופן',
+                    storyLabel: 'מעשׂה:',
+                    personNameLabel: 'נאָמען:',
+                    noStory: 'קיין מעשׂה',
+                    noPersonName: 'קיין נאָמען',
+                    errorConnect: 'טעות ביים פֿאַרבינדן צו דער סיסטעם. ביטע דערפֿרישן די זייט.',
+                    errorFirebaseInit: 'טעות ביים אָנהייבן פֿייערבייס. פֿאַרזיכערן אַז די אײַנשטעלונגען זענען ריכטיק.',
+                    errorLoadingPhotos: 'טעות ביים לאָדן די בילדער.',
+                    errorUploadFileAndFamily: 'ביטע וויילן אַ בילד טעקע און אַ משפּחה.',
+                    errorUploading: 'טעות ביים ופֿלאָדן דעם בילד.',
+                    errorDeleting: 'טעות ביים אויסמעקן דעם בילד.',
+                    errorSavingStory: 'טעות ביים היטן די מעשׂה.',
+                    successUpload: 'בילד דערפֿאָלגרייַך ופֿגעלאָדן!',
+                    successDelete: 'בילד דערפֿאָלגרייַך אויסגעמעקט!',
+                    successSaveStory: 'מעשׂה דערפֿאָלגרייַך געהיטן!',
+                    editStoryButton: 'באַאַרבעטן מעשׂה',
+                    deletePhotoButton: 'אויסמעקן בילד',
+                    selectLanguage: 'וויילן שפּראַך',
+                    copyUserId: 'קאָפּירן באַניצער אידענטיפֿיקאַציע',
+                    copied: 'קאָפּירט!',
+                    generateStoryButton: 'גענערירן מעשׂה ✨',
+                    generateDescriptionButton: 'גענערירן באַשרײַבונג ✨',
+                    generating: 'גענערירט...',
+                    generatingLoading: 'גענערירט...',
+                },
+                fr: {
+                    title: 'Galerie de photos de famille',
+                    subtitle: 'Partagez de précieux moments en famille',
+                    userIdLabel: 'Identifiant d\'utilisateur',
+                    uploadSectionTitle: 'Télécharger une photo',
+                    personNamePlaceholder: 'Nom de la personne sur la photo',
+                    fileInputLabel: 'Choisir un fichier',
+                    familySelectPlaceholder: 'Sélectionner une famille',
+                    uploadButton: 'Télécharger une photo',
+                    uploading: 'Téléchargement...',
+                    gallerySectionTitle: 'Galerie',
+                    allFamilies: 'Toutes les familles',
+                    noPhotos: 'Aucune photo à afficher. Commencez par en télécharger une !',
+                    editStoryTitle: 'Modifier l\'histoire de la photo',
+                    storyPlaceholder: 'Écrivez une courte histoire sur la photo ici...',
+                    saveButton: 'Sauvegarder',
+                    cancelButton: 'Annuler',
+                    storyLabel: 'Histoire:',
+                    personNameLabel: 'Nom:',
+                    noStory: 'Pas d\'histoire',
+                    noPersonName: 'Pas de nom',
+                    errorConnect: 'Erreur de connexion au système. Veuillez rafraîchir la page.',
+                    errorFirebaseInit: 'Erreur d\'initialisation de Firebase. Veuillez vérifier les paramètres.',
+                    errorLoadingPhotos: 'Erreur lors du chargement des photos.',
+                    errorUploadFileAndFamily: 'Veuillez sélectionner un fichier photo et une famille.',
+                    errorUploading: 'Erreur lors du téléchargement de la photo.',
+                    errorDeleting: 'Erreur lors de la suppression de la photo.',
+                    errorSavingStory: 'Erreur lors de la sauvegarde de l\'histoire.',
+                    successUpload: 'Photo téléchargée avec succès !',
+                    successDelete: 'Photo supprimée avec succès !',
+                    successSaveStory: 'Histoire sauvegardée avec succès !',
+                    editStoryButton: 'Modifier l\'histoire',
+                    deletePhotoButton: 'Supprimer la photo',
+                    selectLanguage: 'Sélectionner la langue',
+                    copyUserId: 'Copier l\'ID utilisateur',
+                    copied: 'Copié!',
+                    generateStoryButton: 'Générer une histoire ✨',
+                    generateDescriptionButton: 'Générer une description ✨',
+                    generating: 'Génération...',
+                    generatingLoading: 'Génération...',
+                },
+                nl: {
+                    title: 'Familie Foto Galerij',
+                    subtitle: 'Deel dierbare familiemomenten',
+                    userIdLabel: 'Gebruikers-ID',
+                    uploadSectionTitle: 'Foto uploaden',
+                    personNamePlaceholder: 'Naam van de persoon op de foto',
+                    fileInputLabel: 'Bestand kiezen',
+                    familySelectPlaceholder: 'Selecteer een familie',
+                    uploadButton: 'Foto uploaden',
+                    uploading: 'Bezig met uploaden...',
+                    gallerySectionTitle: 'Galerij',
+                    allFamilies: 'Alle families',
+                    noPhotos: 'Geen foto\'s om weer te geven. Begin met uploaden!',
+                    editStoryTitle: 'Verhaal van de foto bewerken',
+                    storyPlaceholder: 'Schrijf hier een kort verhaal over de foto...',
+                    saveButton: 'Opslaan',
+                    cancelButton: 'Annuleren',
+                    storyLabel: 'Verhaal:',
+                    personNameLabel: 'Naam:',
+                    noStory: 'Geen verhaal',
+                    noPersonName: 'Geen naam',
+                    errorConnect: 'Fout bij het verbinden met het systeem. Vernieuw de pagina.',
+                    errorFirebaseInit: 'Fout bij het initialiseren van Firebase. Zorg ervoor dat de instellingen correct zijn.',
+                    errorLoadingPhotos: 'Fout bij het laden van de foto\'s.',
+                    errorUploadFileAndFamily: 'Selecteer alstublieft een fotobestand en een familie.',
+                    errorUploading: 'Fout bij het uploaden van de foto.',
+                    errorDeleting: 'Fout bij het verwijderen van de foto.',
+                    errorSavingStory: 'Fout bij het opslaan van het verhaal.',
+                    successUpload: 'Foto succesvol geüpload!',
+                    successDelete: 'Foto succesvol verwijderd!',
+                    successSaveStory: 'Verhaal succesvol opgeslagen!',
+                    editStoryButton: 'Verhaal bewerken',
+                    deletePhotoButton: 'Foto verwijderen',
+                    selectLanguage: 'Selecteer taal',
+                    copyUserId: 'Kopieer gebruikers-ID',
+                    copied: 'Gekopieerd!',
+                    generateStoryButton: 'Verhaal genereren ✨',
+                    generateDescriptionButton: 'Beschrijving genereren ✨',
+                    generating: 'Genereren...',
+                    generatingLoading: 'Genereren...',
+                }
+            };
+            const families = ['כל המשפחות', 'Ben Abou', 'Elharrar', 'Malka', 'Ben David', 'Bromberg', 'Barenbaum', 'Fass-Schneck', 'Weinberger', 'Leibner', 'van der Velde', 'Behr', 'de Vries', 'Italiaander', 'Izaks', 'Chapon'];
+
+            let currentLang = 'he';
+            const elementsToTranslate = document.querySelectorAll('[data-key]');
+            const langSelect = document.getElementById('language-select');
+            const uploadBtn = document.getElementById('upload-btn');
+            const generateDescBtn = document.getElementById('generate-desc-btn');
+            const generateStoryBtnModal = document.getElementById('generate-story-btn-modal');
+            const uploadFamilySelect = document.getElementById('family-select');
+            const filterFamilySelect = document.getElementById('filter-family-select');
+            const photoGrid = document.getElementById('photo-grid');
+            const userIdSpan = document.getElementById('user-id');
+            const modal = document.getElementById('edit-modal');
+            const modalPersonNameInput = document.getElementById('modal-person-name');
+            const modalStoryInput = document.getElementById('modal-story');
+
+            // --- UI and State Management ---
+            const updateUIStrings = (lang) => {
+                elementsToTranslate.forEach(el => {
+                    const key = el.getAttribute('data-key');
+                    if (translations[lang] && translations[lang][key]) {
+                        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                            el.placeholder = translations[lang][key];
+                        } else {
+                            el.textContent = translations[lang][key];
+                        }
+                    }
+                });
+                const body = document.body;
+                body.setAttribute('lang', lang);
+                body.setAttribute('dir', lang === 'he' || lang === 'yi' ? 'rtl' : 'ltr');
+                // Manually update buttons with icons
+                generateDescBtn.innerHTML = `${translations[lang].generateDescriptionButton} <span id="spinner-desc" class="hidden animate-spin-fast text-sky-500">
+                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+                </span>`;
+                generateStoryBtnModal.innerHTML = `${translations[lang].generateStoryButton} <span id="spinner-story" class="hidden animate-spin-fast text-sky-500">
+                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+                </span>`;
+
+                const allPhotos = Array.from(photoGrid.children);
+                allPhotos.forEach(photoEl => {
+                    const storyLabelEl = photoEl.querySelector('.story-label');
+                    const personNameLabelEl = photoEl.querySelector('.person-name-label');
+                    const editBtn = photoEl.querySelector('.edit-btn');
+                    const deleteBtn = photoEl.querySelector('.delete-btn');
+                    const generateStoryBtn = photoEl.querySelector('.generate-story-btn');
+
+                    if (storyLabelEl) storyLabelEl.textContent = translations[lang].storyLabel;
+                    if (personNameLabelEl) personNameLabelEl.textContent = translations[lang].personNameLabel;
+                    if (editBtn) editBtn.title = translations[lang].editStoryButton;
+                    if (deleteBtn) deleteBtn.title = translations[lang].deletePhotoButton;
+                    if (generateStoryBtn) generateStoryBtn.title = translations[lang].generateStoryButton;
+
+                    // Update dynamic text
+                    const photoData = JSON.parse(photoEl.getAttribute('data-photo'));
+                    const storyText = photoEl.querySelector('.story-text');
+                    const personNameText = photoEl.querySelector('.person-name-text');
+                    if (storyText) storyText.textContent = photoData.story || translations[lang].noStory;
+                    if (personNameText) personNameText.textContent = photoData.personName || translations[lang].noPersonName;
+                });
+            };
+
+            const populateFamilySelectors = () => {
+                families.forEach(f => {
+                    const uploadOption = document.createElement('option');
+                    uploadOption.value = f;
+                    uploadOption.textContent = f;
+                    if (f === 'כל המשפחות') {
+                        uploadOption.disabled = true;
+                        uploadOption.selected = true;
+                        uploadOption.hidden = true;
+                        uploadOption.className = "text-slate-400";
+                    }
+                    uploadFamilySelect.appendChild(uploadOption);
+
+                    const filterOption = document.createElement('option');
+                    filterOption.value = f;
+                    filterOption.textContent = f;
+                    filterFamilySelect.appendChild(filterOption);
+                });
+            };
+            populateFamilySelectors();
+
+            const showToast = (message, isError = false) => {
+                const toastContainer = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = `py-2 px-4 rounded-full shadow-lg z-50 animate-fade-in transition-all duration-300 ${isError ? 'bg-rose-600' : 'bg-emerald-500'} text-white font-bold`;
+                toast.textContent = message;
+                toastContainer.appendChild(toast);
+                setTimeout(() => {
+                    toast.classList.remove('animate-fade-in');
+                    toast.classList.add('opacity-0');
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            };
+
+            const showLoadingState = (el, isLoading) => {
+                const spinner = el.querySelector('span');
+                if (isLoading) {
+                    el.disabled = true;
+                    if (spinner) spinner.classList.remove('hidden');
+                    el.textContent = translations[currentLang].generatingLoading;
+                    el.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    el.disabled = false;
+                    if (spinner) spinner.classList.add('hidden');
+                    el.textContent = translations[currentLang][el.id.startsWith('generate-desc') ? 'generateDescriptionButton' : 'generateStoryButton'];
+                    el.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            };
+
+            const renderPhotos = (photos, selectedFamily) => {
+                const filteredPhotos = selectedFamily === 'כל המשפחות' ? photos : photos.filter(p => p.family === selectedFamily);
+
+                photoGrid.innerHTML = ''; // Clear current photos
+
+                if (filteredPhotos.length === 0) {
+                    photoGrid.innerHTML = `<p class="text-center text-slate-500 text-lg py-12 col-span-full" data-key="noPhotos">${translations[currentLang].noPhotos}</p>`;
+                    return;
+                }
+
+                filteredPhotos.forEach((p, index) => {
+                    const photoCard = document.createElement('div');
+                    photoCard.className = `group bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col transition-all hover:shadow-2xl duration-300 animate-fade-in`;
+                    photoCard.style.animationDelay = `${index * 0.1}s`;
+                    photoCard.setAttribute('data-photo', JSON.stringify(p));
+
+                    photoCard.innerHTML = `
+                        <img
+                            src="${p.url}"
+                            alt="${p.story || 'תמונה משפחתית'}"
+                            class="w-full h-48 object-cover object-center"
+                            onerror="this.src='https://placehold.co/400x300/e5e7eb/6b7280?text=תמונה+לא+נמצאה';"
+                        />
+                        <div class="p-4 flex-grow flex flex-col justify-between">
+                            <div class="mb-2">
+                                <p class="text-sm text-slate-500 font-medium mb-1">${p.family}</p>
+                                <p class="text-md font-semibold text-slate-700">
+                                    <span class="person-name-label" data-key="personNameLabel">${translations[currentLang].personNameLabel}</span>
+                                    <span class="person-name-text">${p.personName || translations[currentLang].noPersonName}</span>
+                                </p>
+                                <p class="text-sm text-slate-600 mt-1">
+                                    <span class="story-label" data-key="storyLabel">${translations[currentLang].storyLabel}</span>
+                                    <span class="story-text">${p.story || translations[currentLang].noStory}</span>
+                                </p>
+                            </div>
+                            <div class="flex items-center space-x-2 space-x-reverse justify-end mt-2">
+                                <button
+                                    class="generate-story-btn text-white bg-slate-500 hover:bg-slate-600 transition-colors p-2 rounded-full shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                                    title="${translations[currentLang].generateStoryButton}"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2ZM8 14l-2 2h4l2 2 2-2h4l-2-2m-2-4l2-2-2-2-2 2" />
+                                    </svg>
+                                </button>
+                                <button
+                                    class="edit-btn text-slate-500 hover:text-slate-700 transition-colors bg-slate-100 p-2 rounded-full shadow-sm hover:shadow-md"
+                                    title="${translations[currentLang].editStoryButton}"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                                        <path d="m15 5 4 4" />
+                                    </svg>
+                                </button>
+                                ${p.userId === userId ? `
+                                <button
+                                    class="delete-btn text-rose-500 hover:text-rose-700 transition-colors bg-rose-100 p-2 rounded-full shadow-sm hover:shadow-md"
+                                    title="${translations[currentLang].deletePhotoButton}"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 6h18" />
+                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                                        <line x1="10" x2="10" y1="11" y2="17" />
+                                        <line x1="14" x2="14" y1="11" y2="17" />
+                                    </svg>
+                                </button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                    photoGrid.appendChild(photoCard);
+                });
+            };
+
+            // --- Firebase and API Logic ---
+            const initializeFirebase = () => {
+                if (firebaseConfig) {
+                    try {
+                        const app = firebase.initializeApp(firebaseConfig);
+                        db = firebase.getFirestore(app);
+                        auth = firebase.getAuth(app);
+                        storage = firebase.getStorage(app);
+
+                        const signIn = async () => {
+                            try {
+                                if (initialAuthToken) {
+                                    await firebase.signInWithCustomToken(auth, initialAuthToken);
+                                } else {
+                                    await firebase.signInAnonymously(auth);
+                                }
+                            } catch (e) {
+                                showToast(translations[currentLang].errorConnect, true);
+                                console.error(e);
+                            }
+                        };
+                        signIn();
+
+                        firebase.onAuthStateChanged(auth, (user) => {
+                            if (user) {
+                                userId = user.uid;
+                                userIdSpan.textContent = userId;
+                                setupFirestoreListener();
+                            }
+                        });
+                    } catch (e) {
+                        showToast(translations[currentLang].errorFirebaseInit, true);
+                        console.error(e);
+                    }
+                }
+            };
+
+            const setupFirestoreListener = () => {
+                const photosRef = firebase.collection(db, `artifacts/${appId}/public/data/photos`);
+                firebase.onSnapshot(photosRef, (snapshot) => {
+                    const allPhotos = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    currentPhotos = allPhotos.sort((a, b) => b.createdAt?.seconds - a.createdAt?.seconds);
+                    renderPhotos(currentPhotos, filterFamilySelect.value);
+                }, (e) => {
+                    showToast(translations[currentLang].errorLoadingPhotos, true);
+                    console.error(e);
+                });
+            };
+
+            const callGeminiApi = async (prompt) => {
+                let retryCount = 0;
+                const maxRetries = 3;
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                while (retryCount < maxRetries) {
+                    try {
+                        const payload = {
+                            contents: [{ parts: [{ text: prompt }] }],
+                            generationConfig: {
+                                responseMimeType: "text/plain"
+                            },
+                        };
+
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`API call failed with status: ${response.status}`);
+                        }
+
+                        const result = await response.json();
+                        const generatedText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                        return generatedText;
+                    } catch (e) {
+                        console.error("Gemini API call error:", e);
+                        retryCount++;
+                        if (retryCount < maxRetries) {
+                            await new Promise(resolve => setTimeout(resolve, Math.pow(2, retryCount) * 1000));
+                        } else {
+                            showToast("Failed to generate text from Gemini API.", true);
+                            return null;
+                        }
+                    }
+                }
+            };
+
+            // --- Event Handlers ---
+            const handleUpload = async (event) => {
+                event.preventDefault();
+                const fileInput = document.getElementById('file-input');
+                const personNameInput = document.getElementById('person-name-input');
+                const storyInput = document.getElementById('story-input');
+                const familySelect = document.getElementById('family-select');
+
+                const file = fileInput.files[0];
+                const personName = personNameInput.value.trim();
+                const story = storyInput.value.trim();
+                const family = familySelect.value;
+                
+                if (!file || family === 'בחר משפחה') {
+                    showToast(translations[currentLang].errorUploadFileAndFamily, true);
+                    return;
+                }
+                
+                uploadBtn.disabled = true;
+                uploadBtn.textContent = translations[currentLang].uploading;
+
+                try {
+                    const storageRef = firebase.ref(storage, `artifacts/${appId}/public/images/${userId}/${file.name}`);
+                    const snapshot = await firebase.uploadBytes(storageRef, file);
+                    const downloadURL = await firebase.getDownloadURL(snapshot.ref);
+
+                    await firebase.addDoc(firebase.collection(db, `artifacts/${appId}/public/data/photos`), {
+                        userId,
+                        url: downloadURL,
+                        family,
+                        personName,
+                        createdAt: firebase.serverTimestamp(),
+                        story: story
+                    });
+                    
+                    fileInput.value = '';
+                    personNameInput.value = '';
+                    storyInput.value = '';
+                    showToast(translations[currentLang].successUpload);
+                } catch (e) {
+                    showToast(translations[currentLang].errorUploading, true);
+                    console.error(e);
+                } finally {
+                    uploadBtn.disabled = false;
+                    uploadBtn.textContent = translations[currentLang].uploadButton;
+                }
+            };
+
+            const handleDelete = async (photoId) => {
+                try {
+                    await firebase.deleteDoc(firebase.doc(db, `artifacts/${appId}/public/data/photos`, photoId));
+                    showToast(translations[currentLang].successDelete);
+                } catch (e) {
+                    showToast(translations[currentLang].errorDeleting, true);
+                    console.error(e);
+                }
+            };
+            
+            const handleSaveEdit = async () => {
+                if (!selectedPhotoToEdit) return;
+                const newStory = modalStoryInput.value;
+                const newPersonName = modalPersonNameInput.value.trim();
+                try {
+                    await firebase.updateDoc(firebase.doc(db, `artifacts/${appId}/public/data/photos`, selectedPhotoToEdit.id), {
+                        story: newStory,
+                        personName: newPersonName
+                    });
+                    modal.classList.add('hidden');
+                    showToast(translations[currentLang].successSaveStory);
+                } catch(e) {
+                    showToast(translations[currentLang].errorSavingStory, true);
+                    console.error(e);
+                }
+            };
+
+            const handleEdit = (photo) => {
+                selectedPhotoToEdit = photo;
+                modalPersonNameInput.value = photo.personName || '';
+                modalStoryInput.value = photo.story || '';
+                modal.classList.remove('hidden');
+            };
+
+            const handleGenerateStory = async () => {
+                showLoadingState(generateStoryBtnModal, true);
+                const prompt = `Write a short, creative, and heartwarming story about this family photo. The person's name is ${selectedPhotoToEdit.personName}. The photo's current story is: "${selectedPhotoToEdit.story}". Use the provided information and invent a new, engaging story. Do not use markdown formatting.`;
+                const newStory = await callGeminiApi(prompt);
+                if (newStory) {
+                    modalStoryInput.value = newStory;
+                }
+                showLoadingState(generateStoryBtnModal, false);
+            };
+
+            const handleGenerateDescription = async () => {
+                showLoadingState(generateDescBtn, true);
+                const personNameInput = document.getElementById('person-name-input');
+                const storyInput = document.getElementById('story-input');
+                const prompt = `Write a short, engaging description for a family photo. The photo is about ${personNameInput.value}. The tone should be warm and friendly.`;
+                const newDescription = await callGeminiApi(prompt);
+                if (newDescription) {
+                    storyInput.value = newDescription;
+                }
+                showLoadingState(generateDescBtn, false);
+            };
+
+            const copyToClipboard = () => {
+                if (userId) {
+                    const el = document.createElement('textarea');
+                    el.value = userId;
+                    document.body.appendChild(el);
+                    el.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(el);
+                    showToast(translations[currentLang].copied);
+                }
+            };
+
+            // --- Event Listeners Setup ---
+            document.getElementById('upload-form').addEventListener('submit', handleUpload);
+            document.getElementById('copy-user-id-btn').addEventListener('click', copyToClipboard);
+            document.getElementById('cancel-edit-btn').addEventListener('click', () => modal.classList.add('hidden'));
+            document.getElementById('save-edit-btn').addEventListener('click', handleSaveEdit);
+            document.getElementById('generate-desc-btn').addEventListener('click', handleGenerateDescription);
+            document.getElementById('generate-story-btn-modal').addEventListener('click', handleGenerateStory);
+            langSelect.addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                updateUIStrings(currentLang);
+                // Re-render photos to update dynamic text
+                renderPhotos(currentPhotos, filterFamilySelect.value);
+            });
+            filterFamilySelect.addEventListener('change', (e) => {
+                renderPhotos(currentPhotos, e.target.value);
+            });
+
+            // Event delegation for dynamically created buttons
+            photoGrid.addEventListener('click', (event) => {
+                const photoCard = event.target.closest('.group');
+                if (!photoCard) return;
+
+                const photoData = JSON.parse(photoCard.getAttribute('data-photo'));
+
+                if (event.target.closest('.delete-btn')) {
+                    handleDelete(photoData.id);
+                }
+                if (event.target.closest('.edit-btn')) {
+                    handleEdit(photoData);
+                }
+                if (event.target.closest('.generate-story-btn')) {
+                    selectedPhotoToEdit = photoData; // Set the selected photo for the modal logic
+                    handleGenerateStory(photoData);
+                }
+            });
+
+            initializeFirebase();
+        });
+    </script>
 </body>
 </html>
