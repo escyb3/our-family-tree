@@ -201,7 +201,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Global variables from the environment
             const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-            const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+            const firebaseConfig = {
               apiKey: "AIzaSyB99bQpokjpcuXilwu3usXoOFLmegkVnb4",
             authDomain: "family-gallery-d707d.firebaseapp.com",
             projectId: "family-gallery-d707d",
