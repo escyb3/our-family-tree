@@ -1714,93 +1714,93 @@
       "id": 356,
       "role_he": "בן",
       "role_en": "Son"
+    },
+    {
+      "name_he": "לינדרט לייזר גרונשטאט",
+      "name_en": "Leendert Leizer Groenstad Melamed",
+      "id": 378,
+      "role_he": "בן",
+      "role_en": "Son",
+      "spouse": {
+        "name_he": "ברנקה ברנדלה הארטוג הירץ קאזר",
+        "name_en": "Branca Brendele Hartog Hirts Kazer",
+        "id": 379
+      },
+      "children": [
+        {
+          "name_he": "הארטוג ליינדרט גרונסטאט",
+          "name_en": "Hartog Leendert Groenstat",
+          "id": 357,
+          "role_he": "בן",
+          "role_en": "Son"
+        },
+        {
+          "name_he": "אווה הוה לייזר גרונשטאט",
+          "name_en": "Eva Heva Leendert Leizer Groenstad",
+          "id": 358,
+          "role_he": "בת",
+          "role_en": "Daughter"
+        },
+        {
+          "name_he": "אווה הוה לייזר גרונשטאט",
+          "name_en": "Eva Heva Leendert Leizergroenstadt Groenstad",
+          "id": 359,
+          "role_he": "בת",
+          "role_en": "Daughter",
+          "spouse": {
+            "name_he": "ישעיהו אנדריאס סלייר",
+            "name_en": "Jesaïas Andries Slier",
+            "id": 360
+          },
+          "children": [
+            {
+              "name_he": "אנדריאס ישעיהו סלייר",
+              "name_en": "Andries Jesaïas Slier",
+              "id": 340,
+              "role_he": "בן",
+              "role_en": "Son"
+            },
+            {
+              "name_he": "בטיה ישעיהו סלייר",
+              "name_en": "Betje Jesaïas Slier",
+              "id": 341,
+              "role_he": "בת",
+              "role_en": "Daughter"
+            },
+            {
+              "name_he": "נאטיה ישעיהו סלייר",
+              "name_en": "Naatje Jesaïas Slier",
+              "id": 342,
+              "role_he": "בת",
+              "role_en": "Daughter"
+            },
+            {
+              "name_he": "אליזבת ישעיהו סלייר",
+              "name_en": "Elisabeth Jesaia Slier",
+              "id": 343,
+              "role_he": "בת",
+              "role_en": "Daughter"
+            },
+            {
+              "name_he": "יהודית ישעיהו סלייר",
+              "name_en": "Judith Jesaïas Slier",
+              "id": 344,
+              "role_he": "בת",
+              "role_en": "Daughter"
+            }
+          ]
+        },
+        {
+          "name_he": "פיליפ אליעזר גרונשטאט",
+          "name_en": "Philip Eliazer Groenstad",
+          "id": 361,
+          "role_he": "בן",
+          "role_en": "Son"
+        }
+      ]
     }
   ]
 }
-      {
-        "name_he": "לינדרט לייזר גרונשטאט",
-        "name_en": "Leendert Leizer Groenstad Melamed",
-        "id": 378,
-        "role_he": "בן",
-        "role_en": "Son",
-        "spouse": {
-          "name_he": "ברנקה ברנדלה הארטוג הירץ קאזר",
-          "name_en": "Branca Brendele Hartog Hirts Kazer",
-          "id": 379
-        },
-        "children": [
-          {
-            "name_he": "הארטוג ליינדרט גרונסטאט",
-            "name_en": "Hartog Leendert Groenstat",
-            "id": 357,
-            "role_he": "בן",
-            "role_en": "Son"
-          },
-          {
-            "name_he": "אווה הוה לייזר גרונשטאט",
-            "name_en": "Eva Heva Leendert Leizer Groenstad",
-            "id": 358,
-            "role_he": "בת",
-            "role_en": "Daughter"
-          },
-          {
-            "name_he": "אווה הוה לייזר גרונשטאט",
-            "name_en": "Eva Heva Leendert Leizergroenstadt Groenstad",
-            "id": 359,
-            "role_he": "בת",
-            "role_en": "Daughter",
-            "spouse": {
-              "name_he": "ישעיהו אנדריאס סלייר",
-              "name_en": "Jesaïas Andries Slier",
-              "id": 360
-            },
-            "children": [
-              {
-                "name_he": "אנדריאס ישעיהו סלייר",
-                "name_en": "Andries Jesaïas Slier",
-                "id": 340,
-                "role_he": "בן",
-                "role_en": "Son"
-              },
-              {
-                "name_he": "בטיה ישעיהו סלייר",
-                "name_en": "Betje Jesaïas Slier",
-                "id": 341,
-                "role_he": "בת",
-                "role_en": "Daughter"
-              },
-              {
-                "name_he": "נאטיה ישעיהו סלייר",
-                "name_en": "Naatje Jesaïas Slier",
-                "id": 342,
-                "role_he": "בת",
-                "role_en": "Daughter"
-              },
-              {
-                "name_he": "אליזבת ישעיהו סלייר",
-                "name_en": "Elisabeth Jesaia Slier",
-                "id": 343,
-                "role_he": "בת",
-                "role_en": "Daughter"
-              },
-              {
-                "name_he": "יהודית ישעיהו סלייר",
-                "name_en": "Judith Jesaïas Slier",
-                "id": 344,
-                "role_he": "בת",
-                "role_en": "Daughter"
-              }
-            ]
-          },
-          {
-            "name_he": "פיליפ אליעזר גרונשטאט",
-            "name_en": "Philip Eliazer Groenstad",
-            "id": 361,
-            "role_he": "בן",
-            "role_en": "Son"
-          }
-        ]
-      },
       {
         "name_he": "אליעזר סלומון גרונשטאט",
         "name_en": "Eliaser Salomon Groenstad",
