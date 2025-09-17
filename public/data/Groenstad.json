@@ -1699,22 +1699,21 @@
         "id": 355
       },
       "children": [
-        {
-          "name_he": "מריה מולר",
-          "name_en": "Maria Muller",
-          "id": 339,
-          "role_he": "בת",
-          "role_en": "Daughter"
-        }
-      ]
-    },
-    {
-      "name_he": "שמואל פיליפ גרונשטאט",
-      "name_en": "Samuel Philip Gronestadt",
-      "id": 356,
-      "role_he": "בן",
-      "role_en": "Son"
-    },
+      {
+  "name_he": "מריה מולר",
+  "name_en": "Maria Muller",
+  "id": 339,
+  "role_he": "בת",
+  "role_en": "Daughter"
+},
+{
+  "name_he": "שמואל פיליפ גרונשטאט",
+  "name_en": "Samuel Philip Gronestadt",
+  "id": 356,
+  "role_he": "בן",
+  "role_en": "Son"
+}
+
     {
       "name_he": "לינדרט לייזר גרונשטאט",
       "name_en": "Leendert Leizer Groenstad Melamed",
