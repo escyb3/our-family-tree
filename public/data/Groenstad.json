@@ -2126,58 +2126,54 @@
                             ]
                           },
                           {
-                            "name_he": "היל קופויט",
-                            "name_en": "Hill Kopuit",
-                            "id": 111,
-                            "role_he": "בן",
-                            "role_en": "Son",
-                            "spouse": {
-                              "name_he": "נטשה מיכילסן",
-                              "name_en": "Natascha Michielsen",
-                              "id": 112
-                            },
-                            "children": [
-                              {
-                                "name_he": "קיליאן קופויט",
-                                "name_en": "Killian Kopuit",
-                                "id": 45,
-                                "role_he": "בן",
-                                "role_en": "Son"
-                              },
-                              {
-                                "name_he": "ג'ולאני קופויט",
-                                "name_en": "Julani Kopuit",
-                                "id": 46,
-                                "role_he": "בת",
-                                "role_en": "Daughter"
-                              },
-                              [
+  "name_he": "היל קופויט",
+  "name_en": "Hill Kopuit",
+  "id": 111,
+  "role_he": "בן",
+  "role_en": "Son",
+  "spouse": {
+    "name_he": "נטשה מיכילסן",
+    "name_en": "Natascha Michielsen",
+    "id": 112
+  },
+  "children": [
     {
-    "name_he": "ג'ייס קופויט",
-    "name_en": "Jace Kopuit",
-    "id": 47,
-    "role_he": "בן",
-    "role_en": "Son"
-     }
-      ],
-
-                      
-                      {
-                        "name_he": "פראנס ואן לואנן",
-                        "name_en": "Frans van Loenen",
-                        "id": 160,
-                        "role_he": "בן",
-                        "role_en": "Son"
-                      },
-                      {
-                        "name_he": "מרולין דויים",
-                        "name_en": "Marjolijn Duim",
-                        "id": 161,
-                        "role_he": "בת",
-                        "role_en": "Daughter"
-                      }
-                    ]
-                  },
+      "name_he": "קיליאן קופויט",
+      "name_en": "Killian Kopuit",
+      "id": 45,
+      "role_he": "בן",
+      "role_en": "Son"
+    },
+    {
+      "name_he": "ג'ולאני קופויט",
+      "name_en": "Julani Kopuit",
+      "id": 46,
+      "role_he": "בת",
+      "role_en": "Daughter"
+    },
+    {
+      "name_he": "ג'ייס קופויט",
+      "name_en": "Jace Kopuit",
+      "id": 47,
+      "role_he": "בן",
+      "role_en": "Son"
+    },
+    {
+      "name_he": "פראנס ואן לואנן",
+      "name_en": "Frans van Loenen",
+      "id": 160,
+      "role_he": "בן",
+      "role_en": "Son"
+    },
+    {
+      "name_he": "מרולין דויים",
+      "name_en": "Marjolijn Duim",
+      "id": 161,
+      "role_he": "בת",
+      "role_en": "Daughter"
+    }
+  ]
+},
                   {
                     "name_he": "וילם דויים",
                     "name_en": "Willem Duim",
