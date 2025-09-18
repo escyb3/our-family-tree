@@ -1415,14 +1415,9 @@ app.post("/api/gemini", async (req, res) => {
 // Node 16+
 // npm i express compression helmet dotenv
 require('dotenv').config();
-const express = require('express');
-const path = require('path');
+
 const compression = require('compression');
 const helmet = require('helmet');
-
-const app = express();
-const PORT = process.env.PORT || 3000;
-const STATIC_DIR = path.resolve(process.env.STATIC_DIR || path.join(process.cwd(), 'public'));
 
 // -------------- ה־JS שמונע F12 / Inspect / קליק ימני (מוזרק לדפי HTML) --------------
 const blockerScript = `
