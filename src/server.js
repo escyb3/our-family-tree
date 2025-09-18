@@ -1411,6 +1411,124 @@ app.post("/api/gemini", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+// server-inject.js
+// Node 16+
+// npm i express compression helmet dotenv
+require('dotenv').config();
+const express = require('express');
+const path = require('path');
+const compression = require('compression');
+const helmet = require('helmet');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+const STATIC_DIR = path.resolve(process.env.STATIC_DIR || path.join(process.cwd(), 'public'));
+
+// -------------- ה־JS שמונע F12 / Inspect / קליק ימני (מוזרק לדפי HTML) --------------
+const blockerScript = `
+<script>
+(function(){
+  // קוד המגן - חוסם מקשים נפוצים, קליק ימני והצגת מקור
+  function showForbidden() {
+    try {
+      document.documentElement.innerHTML = "<h1 style='color:#c0392b;font-family:Arial, sans-serif;text-align:center;margin-top:20%'>403 Forbidden</h1>";
+    } catch (e) {}
+  }
+
+  // חוסם מקשים נפוצים לפתיחת DevTools / view-source
+  document.addEventListener('keydown', function(e) {
+    var key = e.key || e.keyCode;
+    // F12
+    if (e.key === 'F12' || e.keyCode === 123) {
+      e.preventDefault(); e.stopPropagation(); showForbidden();
+    }
+    // Ctrl+Shift+I / Ctrl+Shift+J
+    if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.keyCode === 73 || e.keyCode === 74)) {
+      e.preventDefault(); e.stopPropagation(); showForbidden();
+    }
+    // Ctrl+U (view-source)
+    if (e.ctrlKey && (e.key === 'U' || e.keyCode === 85)) {
+      e.preventDefault(); e.stopPropagation(); showForbidden();
+    }
+    // Ctrl+Shift+C (inspect element)
+    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.keyCode === 67)) {
+      e.preventDefault(); e.stopPropagation(); showForbidden();
+    }
+  }, true);
+
+  // חוסם קליק ימני
+  document.addEventListener('contextmenu', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    try { alert('403 Forbidden'); } catch(_) {}
+  }, true);
+
+  // חוסם שילוב של קיצורי מקשים דפדפן מקובלים נוספים (mac parity)
+  document.addEventListener('keydown', function(e) {
+    if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === 'I') {
+      e.preventDefault(); e.stopPropagation(); showForbidden();
+    }
+  }, true);
+
+  // אופציונלי: אם רוצים להסתיר את הקוד עוד יותר — ניתן minify/obfuscate בחבילות build.
+})();
+</script>
+`;
+
+// -------------- middleware להזרקה של ה־script לכל תגובת HTML ----------------
+function injectScriptMiddleware(req, res, next) {
+  // אם רוצים לכבות ב־ENV
+  if (process.env.DISABLE_INJECTION === '1' || process.env.DISABLE_INJECTION === 'true') return next();
+
+  // שמירה על הפונקציונליות המקורית של res.send
+  const oldSend = res.send;
+  res.send = function (body) {
+    try {
+      // להמיר Buffer ל־string
+      if (Buffer.isBuffer(body)) body = body.toString('utf8');
+
+      // רק אם מדובר ב־HTML (מחרוזת המכילה </body>) - הזרקה סמנטית לפני </body>
+      const contentType = (res.getHeader && res.getHeader('Content-Type')) || '';
+      const isHtml = typeof body === 'string' && body.toLowerCase().includes('</body>');
+      const headerHtml = typeof contentType === 'string' && contentType.includes('text/html');
+
+      if (isHtml || headerHtml) {
+        // הַזרָקָה לפני התגית הסוגרת </body>
+        body = body.replace(/<\/body>/i, blockerScript + '</body>');
+      }
+    } catch (e) {
+      // במידה ושגיאה - לא לעכב משלוח התשובה
+      console.error('injectScriptMiddleware error:', e && e.message);
+    }
+    return oldSend.call(this, body);
+  };
+  next();
+}
+
+// -------------- שימוש ב־middleware ואבטחה בסיסית ----------------
+app.use(compression());
+app.use(helmet());
+app.use(injectScriptMiddleware);
+
+// חסימה על צד השרת של בקשות לקבצי מקור מסוימים (למקרים שמנסים לקחת ישירות main.js וכו')
+app.use((req, res, next) => {
+  const forbiddenExts = ['.map', '.ts', '.env', '.git', '.lock'];
+  const url = req.url.split('?')[0].toLowerCase();
+  for (const ext of forbiddenExts) {
+    if (url.endsWith(ext) || url.includes('/.git') || url.includes('/.env')) {
+      return res.status(403).send('403 Forbidden');
+    }
+  }
+  next();
+});
+
+// serve static files (HTML/CSS/images) - ה־middleware יוזרק לכל HTML שנשלח
+app.use(express.static(STATIC_DIR, { extensions: ['html'] }));
+
+// fallback ל־index.html עבור SPA (מבטיח הזרקה גם לדף זה)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(STATIC_DIR, 'index.html'));
+});
 // =========================
 // הפעלת השרת
 // =========================
