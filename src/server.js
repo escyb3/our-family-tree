@@ -17,6 +17,7 @@ const ai = require("./ai");
 const fetch = require("node-fetch");
 const crypto = require("crypto");
 const cors = require("cors");
+const compression = require('compression');
 const app = express();
 const jwt = require("jsonwebtoken");
 const SECRET = process.env.JWT_SECRET || "secretKey";
@@ -1416,7 +1417,7 @@ app.post("/api/gemini", async (req, res) => {
 // npm i express compression helmet dotenv
 require('dotenv').config();
 
-const compression = require('compression');
+
 const helmet = require('helmet');
 
 // -------------- ה־JS שמונע F12 / Inspect / קליק ימני (מוזרק לדפי HTML) --------------
