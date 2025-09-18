@@ -6,11 +6,13 @@
   <title>📅 לוח שנה משפחתי</title>
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales-all.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@hebcal/core@2.4.1/dist/index.umd.js"></script>
   <script src="https://unpkg.com/hebcal/dist/hebcal.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    /* Custom CSS styles for the application */
     .ltr * {
       direction: ltr !important;
       text-align: left !important;
@@ -19,18 +21,33 @@
       direction: rtl !important;
       text-align: right !important;
     }
+    .full-calendar-wrapper {
+        direction: rtl;
+    }
+    .full-calendar-wrapper.ltr {
+        direction: ltr;
+    }
+    .hebrew-date {
+      display: block;
+      font-size: 0.75rem;
+      color: #718096;
+      margin-top: 2px;
+    }
+    .gregorian-date {
+      font-weight: bold;
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800 rtl">
   <div class="max-w-6xl mx-auto py-10 px-6">
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-4xl font-bold text-blue-800">📅 לוח שנה משפחתי</h1>
-      <button id="toggleLang" class="bg-gray-200 px-4 py-2 rounded">ENGLISH</button>
+    <div class="flex flex-col sm:flex-row justify-between items-center mb-6">
+      <h1 id="mainTitle" class="text-3xl sm:text-4xl font-bold text-blue-800 mb-4 sm:mb-0">📅 לוח שנה משפחתי</h1>
+      <button id="toggleLang" class="bg-gray-200 px-4 py-2 rounded-lg font-semibold hover:bg-gray-300 transition">ENGLISH</button>
     </div>
 
-    <div class="bg-white p-4 rounded-xl mb-6">
-      <label class="block text-sm font-medium text-gray-600 mb-2">🔍 סינון לפי סוג אירוע:</label>
-      <select id="filterType" class="border border-gray-300 rounded p-2 w-full">
+    <div class="bg-white p-4 rounded-xl shadow mb-6">
+      <label id="filterLabel" for="filterType" class="block text-sm font-medium text-gray-600 mb-2">🔍 סינון לפי סוג אירוע:</label>
+      <select id="filterType" class="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
         <option value="all">הצג הכל</option>
         <option value="birthday">🎂 יום הולדת</option>
         <option value="yahrzeit">🕯️ אזכרה</option>
@@ -39,78 +56,178 @@
       </select>
     </div>
 
-    <div id="calendar" class="bg-white p-6 rounded-xl shadow mb-12"></div>
+    <!-- Calendar container -->
+    <div id="calendar" class="bg-white p-6 rounded-xl shadow mb-12 full-calendar-wrapper"></div>
 
+    <!-- Form for adding new events -->
     <form id="addEventForm" class="bg-white p-6 rounded-xl shadow space-y-4 max-w-2xl mx-auto">
-      <h3 class="text-xl font-semibold text-gray-700 mb-4">➕ הוסף אירוע חדש</h3>
+      <h3 id="formTitle" class="text-xl font-semibold text-gray-700 mb-4">➕ הוסף אירוע חדש</h3>
 
-      <input type="text" id="eventTitle" class="w-full border p-2 rounded" placeholder="שם האירוע" required>
-      <input type="date" id="eventDate" class="w-full border p-2 rounded" required>
+      <input type="text" id="eventTitle" class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="שם האירוע" required>
+      <input type="date" id="eventDate" class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
 
-      <select id="eventType" class="w-full border p-2 rounded">
+      <select id="eventType" class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
         <option value="birthday">🎂 יום הולדת</option>
         <option value="yahrzeit">🕯️ אזכרה</option>
         <option value="wedding">💍 נישואין</option>
         <option value="other">📌 אחר</option>
       </select>
 
-      <select id="repeatYearly" class="w-full border p-2 rounded">
+      <select id="repeatYearly" class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
         <option value="yes">✅ חוזר כל שנה</option>
         <option value="no">❌ חד פעמי</option>
       </select>
 
-      <input type="text" id="hebrewDate" class="w-full border p-2 rounded" readonly placeholder="תאריך עברי (אוטומטי)">
-      <input type="email" id="email" class="w-full border p-2 rounded" placeholder="אימייל לברכה (אופציונלי)">
+      <input type="text" id="hebrewDate" class="w-full border p-2 rounded-lg bg-gray-100 cursor-not-allowed" readonly placeholder="תאריך עברי (אוטומטי)">
+      <input type="email" id="email" class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="אימייל לברכה (אופציונלי)">
 
-      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">הוסף אירוע</button>
+      <button id="addEventBtn" type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition">הוסף אירוע</button>
     </form>
+    
+    <!-- Custom message box for success messages -->
+    <div id="messageBox" class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg hidden transition-opacity duration-300">
+      <p id="messageText"></p>
+    </div>
   </div>
 
   <script>
+    let calendar;
+    let eventsData = [];
+
     const icons = {
       birthday: '🎂', yahrzeit: '🕯️', wedding: '💍', other: '📌'
     };
     const colors = {
       birthday: '#facc15', yahrzeit: '#f87171', wedding: '#60a5fa', other: '#a78bfa'
     };
-    let lang = 'he';
+    let currentLang = 'he';
 
-    async function fetchEvents() {
-      const res = await fetch('/api/events');
-      return await res.json();
+    const hebrewTexts = {
+      mainTitle: '📅 לוח שנה משפחתי',
+      toggleBtn: 'ENGLISH',
+      filterLabel: '🔍 סינון לפי סוג אירוע:',
+      filterAll: 'הצג הכל',
+      formTitle: '➕ הוסף אירוע חדש',
+      eventTitlePlaceholder: 'שם האירוע',
+      repeatYes: '✅ חוזר כל שנה',
+      repeatNo: '❌ חד פעמי',
+      hebrewDatePlaceholder: 'תאריך עברי (אוטומטי)',
+      emailPlaceholder: 'אימייל לברכה (אופציונלי)',
+      addEventBtn: 'הוסף אירוע',
+      successMessage: '🎉 האירוע נוסף בהצלחה!'
+    };
+
+    const englishTexts = {
+      mainTitle: '📅 Family Calendar',
+      toggleBtn: 'עברית',
+      filterLabel: '🔍 Filter by Event Type:',
+      filterAll: 'Show All',
+      formTitle: '➕ Add a New Event',
+      eventTitlePlaceholder: 'Event Name',
+      repeatYes: '✅ Repeats yearly',
+      repeatNo: '❌ One-time',
+      hebrewDatePlaceholder: 'Hebrew Date (Automatic)',
+      emailPlaceholder: 'Email for greeting (optional)',
+      addEventBtn: 'Add Event',
+      successMessage: '🎉 Event added successfully!'
+    };
+
+    function updateUI() {
+      const texts = currentLang === 'he' ? hebrewTexts : englishTexts;
+      document.getElementById('mainTitle').textContent = texts.mainTitle;
+      document.getElementById('toggleLang').textContent = texts.toggleBtn;
+      document.getElementById('filterLabel').textContent = texts.filterLabel;
+      document.getElementById('filterType').options[0].textContent = texts.filterAll;
+      document.getElementById('formTitle').textContent = texts.formTitle;
+      document.getElementById('eventTitle').placeholder = texts.eventTitlePlaceholder;
+      document.getElementById('repeatYearly').options[0].textContent = texts.repeatYes;
+      document.getElementById('repeatYearly').options[1].textContent = texts.repeatNo;
+      document.getElementById('hebrewDate').placeholder = texts.hebrewDatePlaceholder;
+      document.getElementById('email').placeholder = texts.emailPlaceholder;
+      document.getElementById('addEventBtn').textContent = texts.addEventBtn;
+    }
+
+    function showMessage(text, isSuccess = true) {
+      const messageBox = document.getElementById('messageBox');
+      const messageText = document.getElementById('messageText');
+      
+      messageText.textContent = text;
+      messageBox.className = `fixed bottom-4 left-1/2 -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300 ${isSuccess ? 'bg-green-500' : 'bg-red-500'}`;
+      messageBox.classList.remove('hidden');
+
+      setTimeout(() => {
+        messageBox.classList.add('hidden');
+      }, 3000);
+    }
+
+    function renderCalendar() {
+      if (calendar) {
+        calendar.destroy();
+      }
+
+      const calendarEl = document.getElementById('calendar');
+      calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: currentLang,
+        headerToolbar: { left: 'prev,next today', center: 'title', right: 'dayGridMonth,listMonth' },
+        events: eventsData,
+        // Using dayCellContent to render both dates inside the cell
+        dayCellContent: function(info) {
+          const container = document.createElement('div');
+          container.classList.add('flex', 'flex-col', 'items-start', 'w-full', 'h-full');
+
+          // Check if it is a trailing or leading day to not display a gregorian date
+          if (info.isPast) {
+            container.classList.add('opacity-50');
+          }
+          
+          const gregorianDateEl = document.createElement('span');
+          gregorianDateEl.classList.add('fc-daygrid-day-number');
+          gregorianDateEl.textContent = info.dayNumberText;
+          container.appendChild(gregorianDateEl);
+          
+          if (currentLang === 'he' && typeof Hebcal !== 'undefined') {
+              const hebDate = new Hebcal.HDate(info.date);
+              const hebDateEl = document.createElement('span');
+              hebDateEl.className = 'hebrew-date';
+              hebDateEl.textContent = hebDate.renderGematriya();
+              container.appendChild(hebDateEl);
+          }
+          return { domNodes: [container] };
+        }
+      });
+      calendar.render();
     }
 
     function toggleLanguage() {
-      lang = lang === 'he' ? 'en' : 'he';
-      document.documentElement.lang = lang;
+      currentLang = currentLang === 'he' ? 'en' : 'he';
+      document.documentElement.lang = currentLang;
       document.body.classList.toggle('rtl');
       document.body.classList.toggle('ltr');
-      document.getElementById('toggleLang').textContent = lang === 'he' ? 'ENGLISH' : 'עברית';
+      document.getElementById('calendar').classList.toggle('rtl');
+      document.getElementById('calendar').classList.toggle('ltr');
+      updateUI();
+      renderCalendar();
     }
 
     document.getElementById('toggleLang').addEventListener('click', toggleLanguage);
 
-    document.addEventListener('DOMContentLoaded', async function() {
-          const hebrew = document.getElementById("event-hebrew").value;
-    const type = document.getElementById("event-type").value;
-    const title = document.getElementById("event-title").value;
-    const date = document.getElementById("event-date").value;
-      const calendarEl = document.getElementById('calendar');
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'he',
-        headerToolbar: { left: 'prev,next today', center: 'title', right: 'dayGridMonth,listMonth' },
-        events: await fetchEvents()
-      });
-      calendar.render();
+    document.addEventListener('DOMContentLoaded', function() {
+      updateUI(); // Initial UI setup
+      renderCalendar(); // Initial calendar render
 
       document.getElementById('eventDate').addEventListener('change', function() {
-        const [y, m, d] = this.value.split('-').map(Number);
-        const hebDate = new Hebcal.HDate(new Date(y, m - 1, d));
-        document.getElementById('hebrewDate').value = hebDate.renderGematriya();
+        const dateInput = this.value;
+        if (dateInput && typeof Hebcal !== 'undefined') {
+          const [y, m, d] = dateInput.split('-').map(Number);
+          const hebDate = new Hebcal.HDate(new Date(y, m - 1, d));
+          document.getElementById('hebrewDate').value = hebDate.renderGematriya();
+        } else {
+          document.getElementById('hebrewDate').value = '';
+        }
       });
 
-      document.getElementById('addEventForm').addEventListener('submit', async function(e) {
+      document.getElementById('addEventForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const title = document.getElementById('eventTitle').value;
         const date = document.getElementById('eventDate').value;
@@ -126,30 +243,27 @@
             type,
             repeatYearly: repeat === 'yes',
             email,
-            language: lang
+            language: currentLang
           }
         };
 
-        await fetch('/api/events', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newEvent)
-        });
-
+        eventsData.push(newEvent);
         calendar.addEvent(newEvent);
-        alert('🎉 האירוע נוסף בהצלחה!');
+
+        const successMessage = currentLang === 'he' ? hebrewTexts.successMessage : englishTexts.successMessage;
+        showMessage(successMessage);
         this.reset();
         document.getElementById('hebrewDate').value = '';
       });
 
-      document.getElementById('filterType').addEventListener('change', async () => {
+      document.getElementById('filterType').addEventListener('change', () => {
         const type = document.getElementById('filterType').value;
         calendar.removeAllEvents();
-        const events = await fetchEvents();
-        const filtered = type === 'all' ? events : events.filter(e => e.extendedProps.type === type);
+        const filtered = type === 'all' ? eventsData : eventsData.filter(e => e.extendedProps.type === type);
         filtered.forEach(e => calendar.addEvent(e));
       });
     });
   </script>
 </body>
 </html>
+
