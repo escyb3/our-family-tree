@@ -1412,7 +1412,6 @@ app.post("/api/gemini", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-================
 // הפעלת השרת
 // =========================
 const PORT = process.env.PORT || 3000;
