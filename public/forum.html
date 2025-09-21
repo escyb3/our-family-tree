@@ -122,8 +122,9 @@
                     <button type="button" id="improveTextBtn" class="w-1/2 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-lang-key="improveBtn">
                         ✨ שפר את הניסוח
                     </button>
+                    <!-- FIX: Added disabled and selected to the first option to prevent submission -->
                     <select id="newThreadCategory" required class="w-1/2 px-4 py-2 border rounded-lg focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="selectCategoryPlaceholder">
-                        <option value="" data-lang-key="selectCategoryOption">בחר קטגוריה...</option>
+                        <option value="" disabled selected data-lang-key="selectCategoryOption">בחר קטגוריה...</option>
                         <option value="היסטוריה משפחתית" data-lang-key="categoryHistory">היסטוריה משפחתית</option>
                         <option value="שאלות" data-lang-key="categoryQuestions">שאלות</option>
                         <option value="עדכונים" data-lang-key="categoryUpdates">עדכונים</option>
@@ -158,7 +159,7 @@
         // Firebase imports
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, doc, updateDoc, arrayUnion, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, doc, updateDoc, arrayUnion, arrayRemove, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Global variables for Firebase configuration and app ID
         const firebaseConfig = {
@@ -615,13 +616,14 @@
                 const threadId = favoriteBtn.dataset.threadId;
                 const threadRef = doc(db, `artifacts/${appId}/public/data/threads`, threadId);
                 
-                const isFavorited = favoriteBtn.querySelector('svg').classList.contains('text-yellow-400');
-                
+                // FIX: Check if the user ID exists in the favorites array before adding/removing
+                const threadDoc = await getDoc(threadRef);
+                const favorites = threadDoc.data().favorites || [];
+                const isFavorited = favorites.includes(userId);
+
                 try {
                     if (isFavorited) {
-                        // Using arrayUnion with a mock value since `arrayRemove` requires a field value, which is not available here.
-                        // In a real app, you would use `FieldValue.arrayRemove(userId)`.
-                        await updateDoc(threadRef, { favorites: arrayUnion('REMOVE_ME_') });
+                        await updateDoc(threadRef, { favorites: arrayRemove(userId) });
                     } else {
                         await updateDoc(threadRef, { favorites: arrayUnion(userId) });
                     }
