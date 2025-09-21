@@ -12,6 +12,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Custom CSS styles for the application */
+    @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap');
+    body {
+      font-family: 'Heebo', sans-serif;
+    }
     .ltr * {
       direction: ltr !important;
       text-align: left !important;
@@ -21,10 +25,10 @@
       text-align: right !important;
     }
     .full-calendar-wrapper {
-        direction: rtl;
+      direction: rtl;
     }
     .full-calendar-wrapper.ltr {
-        direction: ltr;
+      direction: ltr;
     }
     /* Hide hebrew dates by default */
     .hebrew-date {
@@ -36,14 +40,13 @@
     }
     /* Show hebrew dates when the parent has the .hebrew-dates-visible class */
     .hebrew-dates-visible .hebrew-date {
-        display: block;
+      display: block;
     }
     .fc-daygrid-day-top {
-        flex-direction: column;
-        align-items: flex-end;
+      flex-direction: column;
+      align-items: flex-end;
     }
     .loading-indicator {
-      display: none;
       border: 4px solid #f3f3f3;
       border-top: 4px solid #3498db;
       border-radius: 50%;
@@ -55,7 +58,6 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-    /* Style for the custom toggle button in the header */
     .fc-toolbar-chunk .fc-toggle-hebrew-button {
       background-color: #cbd5e1;
       color: #4a5568;
@@ -67,76 +69,146 @@
     .fc-toolbar-chunk .fc-toggle-hebrew-button:hover {
       background-color: #e2e8f0;
     }
+    .modal-overlay {
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+    }
+    /* Custom styling for input date/color fields */
+    input[type="date"], input[type="color"] {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-color: #fff;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        cursor: pointer;
+    }
+    input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+    input[type="color"]::-webkit-color-swatch {
+      border: none;
+    }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-800 rtl">
+<body class="bg-gray-100 text-gray-800 rtl">
   <div class="max-w-6xl mx-auto py-10 px-6">
     <div class="flex flex-col sm:flex-row justify-between items-center mb-6">
       <h1 id="mainTitle" class="text-3xl sm:text-4xl font-bold text-blue-800 mb-4 sm:mb-0">📅 לוח שנה משפחתי</h1>
-      <div class="flex gap-2">
-        <button id="showFormBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition">➕ הוסף אירוע</button>
-        <button id="toggleLang" class="bg-gray-200 px-4 py-2 rounded-lg font-semibold hover:bg-gray-300 transition">ENGLISH</button>
+      <div class="flex flex-wrap gap-2 justify-center sm:justify-end">
+        <button id="showFormBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition shadow-md hover:shadow-lg">➕ הוסף אירוע</button>
+        <button id="toggleLang" class="bg-gray-200 px-4 py-2 rounded-lg font-semibold hover:bg-gray-300 transition shadow-md hover:shadow-lg">ENGLISH</button>
       </div>
     </div>
 
-    <div class="bg-white p-4 rounded-xl shadow mb-6">
-      <label id="filterLabel" for="filterType" class="block text-sm font-medium text-gray-600 mb-2">🔍 סינון לפי סוג אירוע:</label>
-      <select id="filterType" class="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <option value="all">הצג הכל</option>
-        <option value="birthday">🎂 יום הולדת</option>
-        <option value="yahrzeit">🕯️ אזכרה</option>
-        <option value="wedding">💍 נישואין</option>
-        <option value="other">📌 אחר</option>
-      </select>
+    <div class="flex flex-wrap gap-2 sm:gap-4 mb-4 items-center">
+        <button id="goToTodayBtn" class="bg-green-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-600 transition shadow-md hover:shadow-lg">היום</button>
+        <div class="flex-grow">
+            <label id="filterLabel" for="filterType" class="block text-sm font-medium text-gray-600 sr-only">🔍 סינון לפי סוג אירוע:</label>
+            <select id="filterType" class="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200">
+              <option value="all">הצג הכל</option>
+              <option value="birthday">🎂 יום הולדת</option>
+              <option value="yahrzeit">🕯️ אזכרה</option>
+              <option value="wedding">💍 נישואין</option>
+              <option value="other">📌 אחר</option>
+            </select>
+        </div>
+        <div class="flex-grow">
+          <input type="date" id="goToDateInput" class="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200" placeholder="עבור לתאריך">
+        </div>
     </div>
 
     <!-- Calendar container -->
-    <div id="calendar" class="bg-white p-6 rounded-xl shadow mb-12 full-calendar-wrapper"></div>
+    <div id="calendar" class="bg-white p-6 rounded-xl shadow-lg mb-12 full-calendar-wrapper hidden"></div>
+    <div id="loadingCalendar" class="flex justify-center items-center h-64">
+      <div class="loading-indicator"></div>
+      <p id="loadingText" class="text-gray-500 mr-4">טוען אירועים...</p>
+    </div>
     <div id="userIdDisplay" class="text-center text-sm text-gray-500 mb-4"></div>
 
-    <!-- Form for adding new events -->
-    <form id="addEventForm" class="bg-white p-6 rounded-xl shadow space-y-4 max-w-2xl mx-auto hidden">
-      <h3 id="formTitle" class="text-xl font-semibold text-gray-700 mb-4">➕ הוסף אירוע חדש</h3>
+    <!-- Modal for adding/editing new events -->
+    <div id="eventFormModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300 hidden modal-overlay">
+      <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-lg mx-4 transform transition-transform duration-300 scale-95">
+        <div class="flex justify-between items-center mb-4">
+          <h3 id="formTitle" class="text-xl font-semibold text-gray-700">➕ הוסף אירוע חדש</h3>
+          <button id="closeFormBtn" class="text-gray-400 hover:text-gray-600 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <form id="addEventForm" class="space-y-4">
+          <input type="hidden" id="eventId">
+          <input type="text" id="eventTitle" class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" placeholder="שם האירוע" required>
+          <input type="date" id="eventDate" class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" required>
 
-      <input type="text" id="eventTitle" class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="שם האירוע" required>
-      <input type="date" id="eventDate" class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          <select id="eventType" class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+            <option value="birthday">🎂 יום הולדת</option>
+            <option value="yahrzeit">🕯️ אזכרה</option>
+            <option value="wedding">💍 נישואין</option>
+            <option value="other">📌 אחר</option>
+          </select>
 
-      <select id="eventType" class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <option value="birthday">🎂 יום הולדת</option>
-        <option value="yahrzeit">🕯️ אזכרה</option>
-        <option value="wedding">💍 נישואין</option>
-        <option value="other">📌 אחר</option>
-      </select>
+          <select id="repeatYearly" class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+            <option value="yes">✅ חוזר כל שנה</option>
+            <option value="no">❌ חד פעמי</option>
+          </select>
 
-      <select id="repeatYearly" class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <option value="yes">✅ חוזר כל שנה</option>
-        <option value="no">❌ חד פעמי</option>
-      </select>
+          <input type="text" id="hebrewDate" class="w-full border p-2 rounded-lg bg-gray-100 cursor-not-allowed transition-all" readonly placeholder="תאריך עברי (אוטומטי)">
+          <input type="email" id="email" class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" placeholder="אימייל לברכה (אופציונלי)">
+          
+          <div class="flex items-center gap-2">
+            <label for="eventColor" class="block text-sm font-medium text-gray-700">בחר צבע:</label>
+            <input type="color" id="eventColor" value="#60a5fa" class="w-12 h-8 rounded-lg cursor-pointer">
+          </div>
 
-      <input type="text" id="hebrewDate" class="w-full border p-2 rounded-lg bg-gray-100 cursor-not-allowed" readonly placeholder="תאריך עברי (אוטומטי)">
-      <input type="email" id="email" class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="אימייל לברכה (אופציונלי)">
-      
-      <!-- Gemini API greeting generator -->
-      <div class="flex items-center gap-2">
-        <button type="button" id="generateGreetingBtn" class="w-full bg-yellow-500 text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition flex items-center justify-center">
-          <span id="generateBtnText">✨ צור ברכה</span>
-          <div id="loadingIndicator" class="loading-indicator mr-2"></div>
-        </button>
+          <div class="flex items-center gap-2">
+            <button type="button" id="generateGreetingBtn" class="w-1/2 bg-yellow-500 text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition-all duration-300 flex items-center justify-center shadow-md">
+              <span id="generateBtnText">✨ צור ברכה</span>
+              <div id="loadingIndicator" class="loading-indicator ml-2 hidden"></div>
+            </button>
+            <button type="button" id="playGreetingBtn" class="w-1/2 bg-purple-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-purple-700 transition-all duration-300 flex items-center justify-center shadow-md">
+              <span id="playBtnText">🔊 השמע</span>
+              <div id="playLoadingIndicator" class="loading-indicator ml-2 hidden"></div>
+            </button>
+          </div>
+          
+          <textarea id="generatedGreeting" class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-y" rows="4" placeholder="ברכה שנוצרה על ידי בינה מלאכותית" readonly></textarea>
+
+          <div id="greetingActions" class="flex gap-2 hidden">
+            <button type="button" id="copyGreetingBtn" class="w-1/2 bg-gray-200 text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-gray-300 transition-all duration-300 shadow-md">העתק ברכה</button>
+            <button type="button" id="sendEmailBtn" class="w-1/2 bg-green-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-600 transition-all duration-300 shadow-md">שלח במייל</button>
+          </div>
+
+          <button id="addEventBtn" type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg">הוסף אירוע</button>
+        </form>
       </div>
-
-      <textarea id="generatedGreeting" class="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y" rows="4" placeholder="ברכה שנוצרה על ידי בינה מלאכותית" readonly></textarea>
-
-      <!-- New buttons for copying and sending -->
-      <div id="greetingActions" class="flex gap-2 hidden">
-        <button type="button" id="copyGreetingBtn" class="w-1/2 bg-gray-200 text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-gray-300 transition">העתק ברכה</button>
-        <button type="button" id="sendEmailBtn" class="w-1/2 bg-green-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-600 transition">שלח במייל</button>
-      </div>
-
-      <button id="addEventBtn" type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition">הוסף אירוע</button>
-    </form>
+    </div>
     
+    <!-- Modal for event details and deletion -->
+    <div id="eventDetailsModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300 hidden modal-overlay">
+        <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-sm mx-4 transform transition-transform duration-300 scale-95">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="eventDetailsTitle" class="text-xl font-semibold text-gray-700"></h3>
+                <button id="closeDetailsBtn" class="text-gray-400 hover:text-gray-600 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+            </div>
+            <p id="eventDetailsDate" class="text-gray-600 mb-2"></p>
+            <p id="eventDetailsType" class="text-gray-600 mb-4"></p>
+            <p id="eventDetailsGreeting" class="text-gray-800 text-sm italic border-l-4 border-blue-500 pl-4 mb-4"></p>
+            <div class="flex flex-col gap-2">
+                <button id="editEventBtn" class="w-full bg-yellow-500 text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition-all duration-300 shadow-md">ערוך אירוע</button>
+                <button id="deleteEventBtn" class="w-full bg-red-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-600 transition-all duration-300 shadow-md">מחק אירוע</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Custom message box for success messages -->
-    <div id="messageBox" class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg hidden transition-opacity duration-300">
+    <div id="messageBox" class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg hidden transition-opacity duration-300 z-50">
       <p id="messageText"></p>
     </div>
   </div>
@@ -144,7 +216,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, collection, addDoc, onSnapshot, query, where, doc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, where, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     let calendar;
     let db, auth;
@@ -155,7 +227,7 @@
     const colors = {
       birthday: '#facc15', yahrzeit: '#f87171', wedding: '#60a5fa', other: '#a78bfa'
     };
-    let currentLang = 'he';
+    let currentLang = localStorage.getItem('lang') || 'he';
 
     const hebrewTexts = {
       mainTitle: '📅 לוח שנה משפחתי',
@@ -163,23 +235,41 @@
       showFormBtn: '➕ הוסף אירוע',
       filterLabel: '🔍 סינון לפי סוג אירוע:',
       filterAll: 'הצג הכל',
-      formTitle: '➕ הוסף אירוע חדש',
+      formTitleAdd: '➕ הוסף אירוע חדש',
+      formTitleEdit: '✏️ ערוך אירוע',
       eventTitlePlaceholder: 'שם האירוע',
       repeatYes: '✅ חוזר כל שנה',
       repeatNo: '❌ חד פעמי',
       hebrewDatePlaceholder: 'תאריך עברי (אוטומטי)',
       emailPlaceholder: 'אימייל לברכה (אופציונלי)',
       addEventBtn: 'הוסף אירוע',
-      successMessage: '🎉 האירוע נוסף בהצלחה!',
+      editEventBtn: 'שמור שינויים',
+      successMessageAdd: '🎉 האירוע נוסף בהצלחה!',
+      successMessageEdit: '🎉 האירוע נערך בהצלחה!',
       userIdLabel: 'מזהה משתמש:',
       generateBtnText: '✨ צור ברכה',
+      playBtnText: '🔊 השמע',
       greetingPlaceholder: 'ברכה שנוצרה על ידי בינה מלאכותית',
       copyBtn: 'העתק ברכה',
       sendBtn: 'שלח במייל',
       copySuccess: 'הברכה הועתקה!',
       copyError: 'שגיאה בהעתקה',
       hideHebrewDates: 'הסתר תאריכים עבריים',
-      showHebrewDates: 'הצג תאריכים עבריים'
+      showHebrewDates: 'הצג תאריכים עבריים',
+      loadingText: 'טוען אירועים...',
+      generateLoading: 'יוצר...',
+      playLoading: 'טוען...',
+      deleteBtn: 'מחק אירוע',
+      editBtn: 'ערוך אירוע',
+      deleteSuccess: 'האירוע נמחק בהצלחה!',
+      detailsTitle: 'פרטי אירוע',
+      detailsDate: 'תאריך:',
+      detailsType: 'סוג:',
+      detailsRepeat: 'חוזר כל שנה:',
+      detailsOneTime: 'חד פעמי',
+      detailsGreeting: 'ברכה:',
+      goToTodayBtn: 'היום',
+      goToDatePlaceholder: 'עבור לתאריך'
     };
 
     const englishTexts = {
@@ -188,24 +278,95 @@
       showFormBtn: '➕ Add Event',
       filterLabel: '🔍 Filter by Event Type:',
       filterAll: 'Show All',
-      formTitle: '➕ Add a New Event',
+      formTitleAdd: '➕ Add a New Event',
+      formTitleEdit: '✏️ Edit Event',
       eventTitlePlaceholder: 'Event Name',
       repeatYes: '✅ Repeats yearly',
       repeatNo: '❌ One-time',
       hebrewDatePlaceholder: 'Hebrew Date (Automatic)',
       emailPlaceholder: 'Email for greeting (optional)',
       addEventBtn: 'Add Event',
-      successMessage: '🎉 Event added successfully!',
+      editEventBtn: 'Save Changes',
+      successMessageAdd: '🎉 Event added successfully!',
+      successMessageEdit: '🎉 Event updated successfully!',
       userIdLabel: 'User ID:',
       generateBtnText: '✨ Generate Greeting',
+      playBtnText: '🔊 Play',
       greetingPlaceholder: 'AI-generated greeting',
       copyBtn: 'Copy Greeting',
       sendBtn: 'Send via Email',
       copySuccess: 'Greeting copied!',
       copyError: 'Error copying',
       hideHebrewDates: 'Hide Hebrew Dates',
-      showHebrewDates: 'Show Hebrew Dates'
+      showHebrewDates: 'Show Hebrew Dates',
+      loadingText: 'Loading events...',
+      generateLoading: 'Generating...',
+      playLoading: 'Loading...',
+      deleteBtn: 'Delete Event',
+      editBtn: 'Edit Event',
+      deleteSuccess: 'Event deleted successfully!',
+      detailsTitle: 'Event Details',
+      detailsDate: 'Date:',
+      detailsType: 'Type:',
+      detailsRepeat: 'Repeats Yearly:',
+      detailsOneTime: 'One-time',
+      detailsGreeting: 'Greeting:',
+      goToTodayBtn: 'Today',
+      goToDatePlaceholder: 'Go to Date'
     };
+
+    function base64ToArrayBuffer(base64) {
+        const binaryString = atob(base64);
+        const len = binaryString.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+        return bytes.buffer;
+    }
+
+    function pcmToWav(pcm16, sampleRate) {
+        const numChannels = 1;
+        const bitsPerSample = 16;
+        const byteRate = (sampleRate * numChannels * bitsPerSample) / 8;
+        const blockAlign = (numChannels * bitsPerSample) / 8;
+        const dataSize = pcm16.length * 2;
+        const buffer = new ArrayBuffer(44 + dataSize);
+        const view = new DataView(buffer);
+
+        // RIFF chunk
+        writeString(view, 0, 'RIFF');
+        view.setUint32(4, 36 + dataSize, true);
+        writeString(view, 8, 'WAVE');
+
+        // fmt chunk
+        writeString(view, 12, 'fmt ');
+        view.setUint32(16, 16, true);
+        view.setUint16(20, 1, true); // PCM format
+        view.setUint16(22, numChannels, true);
+        view.setUint32(24, sampleRate, true);
+        view.setUint32(28, byteRate, true);
+        view.setUint16(32, blockAlign, true);
+        view.setUint16(34, bitsPerSample, true);
+
+        // data chunk
+        writeString(view, 36, 'data');
+        view.setUint32(40, dataSize, true);
+
+        // PCM data
+        const pcmView = new DataView(buffer, 44);
+        for (let i = 0; i < pcm16.length; i++) {
+            pcmView.setInt16(i * 2, pcm16[i], true);
+        }
+
+        return new Blob([view], { type: 'audio/wav' });
+
+        function writeString(view, offset, str) {
+            for (let i = 0; i < str.length; i++) {
+                view.setUint8(offset + i, str.charCodeAt(i));
+            }
+        }
+    }
 
     function updateUI() {
       const texts = currentLang === 'he' ? hebrewTexts : englishTexts;
@@ -214,19 +375,29 @@
       document.getElementById('showFormBtn').textContent = texts.showFormBtn;
       document.getElementById('filterLabel').textContent = texts.filterLabel;
       document.getElementById('filterType').options[0].textContent = texts.filterAll;
-      document.getElementById('formTitle').textContent = texts.formTitle;
       document.getElementById('eventTitle').placeholder = texts.eventTitlePlaceholder;
       document.getElementById('repeatYearly').options[0].textContent = texts.repeatYes;
       document.getElementById('repeatYearly').options[1].textContent = texts.repeatNo;
       document.getElementById('hebrewDate').placeholder = texts.hebrewDatePlaceholder;
       document.getElementById('email').placeholder = texts.emailPlaceholder;
-      document.getElementById('addEventBtn').textContent = texts.addEventBtn;
-      document.getElementById('userIdDisplay').textContent = `${texts.userIdLabel} ${userId || '...loading'}`;
       document.getElementById('generateBtnText').textContent = texts.generateBtnText;
+      document.getElementById('playBtnText').textContent = texts.playBtnText;
       document.getElementById('greetingActions').classList.add('hidden');
       document.getElementById('generatedGreeting').placeholder = texts.greetingPlaceholder;
       document.getElementById('copyGreetingBtn').textContent = texts.copyBtn;
       document.getElementById('sendEmailBtn').textContent = texts.sendBtn;
+      document.getElementById('loadingText').textContent = texts.loadingText;
+      document.getElementById('goToTodayBtn').textContent = texts.goToTodayBtn;
+      document.getElementById('goToDateInput').placeholder = texts.goToDatePlaceholder;
+
+      const eventId = document.getElementById('eventId').value;
+      if (eventId) {
+          document.getElementById('formTitle').textContent = texts.formTitleEdit;
+          document.getElementById('addEventBtn').textContent = texts.editEventBtn;
+      } else {
+          document.getElementById('formTitle').textContent = texts.formTitleAdd;
+          document.getElementById('addEventBtn').textContent = texts.addEventBtn;
+      }
     }
 
     function showMessage(text, isSuccess = true) {
@@ -234,21 +405,74 @@
       const messageText = document.getElementById('messageText');
       
       messageText.textContent = text;
-      messageBox.className = `fixed bottom-4 left-1/2 -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300 ${isSuccess ? 'bg-green-500' : 'bg-red-500'}`;
+      messageBox.className = `fixed bottom-4 left-1/2 -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg transition-opacity duration-300 z-50 ${isSuccess ? 'bg-green-500' : 'bg-red-500'}`;
       messageBox.classList.remove('hidden');
 
       setTimeout(() => {
         messageBox.classList.add('hidden');
       }, 3000);
     }
+
+    function showFormModal() {
+        document.getElementById('addEventForm').reset();
+        document.getElementById('eventId').value = '';
+        document.getElementById('generatedGreeting').value = '';
+        document.getElementById('greetingActions').classList.add('hidden');
+        updateUI();
+        const modal = document.getElementById('eventFormModal');
+        modal.classList.remove('hidden');
+        modal.querySelector('div').classList.remove('scale-95');
+        modal.querySelector('div').classList.add('scale-100');
+    }
+
+    function hideFormModal() {
+        const modal = document.getElementById('eventFormModal');
+        modal.querySelector('div').classList.remove('scale-100');
+        modal.querySelector('div').classList.add('scale-95');
+        setTimeout(() => modal.classList.add('hidden'), 300);
+    }
     
+    function hideDetailsModal() {
+        const modal = document.getElementById('eventDetailsModal');
+        modal.querySelector('div').classList.remove('scale-100');
+        modal.querySelector('div').classList.add('scale-95');
+        setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+    
+    function loadEventForEdit(event) {
+        const texts = currentLang === 'he' ? hebrewTexts : englishTexts;
+        const { title, start, color, extendedProps, id } = event;
+        const { type, repeatYearly, email, greeting } = extendedProps;
+
+        document.getElementById('eventId').value = id;
+        document.getElementById('eventTitle').value = title.substring(2).trim(); // Remove emoji
+        document.getElementById('eventDate').value = start ? moment(start).format('YYYY-MM-DD') : '';
+        document.getElementById('eventType').value = type;
+        document.getElementById('repeatYearly').value = repeatYearly ? 'yes' : 'no';
+        document.getElementById('eventColor').value = color || colors[type];
+        document.getElementById('email').value = email || '';
+        document.getElementById('generatedGreeting').value = greeting || '';
+        
+        if (greeting) {
+            document.getElementById('greetingActions').classList.remove('hidden');
+        } else {
+            document.getElementById('greetingActions').classList.add('hidden');
+        }
+
+        document.getElementById('formTitle').textContent = texts.formTitleEdit;
+        document.getElementById('addEventBtn').textContent = texts.editEventBtn;
+        
+        hideDetailsModal();
+        showFormModal();
+    }
+
     function renderCalendar(eventsData) {
+      const calendarEl = document.getElementById('calendar');
+      
       if (calendar) {
         calendar.destroy();
       }
-      const calendarEl = document.getElementById('calendar');
       
-      // Load preference from local storage
       const shouldShowHebrewDates = localStorage.getItem('showHebrewDates') === 'true';
       if (shouldShowHebrewDates) {
         calendarEl.classList.add('hebrew-dates-visible');
@@ -271,15 +495,13 @@
               const calendarEl = document.getElementById('calendar');
               const isVisible = calendarEl.classList.toggle('hebrew-dates-visible');
               
-              // Save preference to local storage
               localStorage.setItem('showHebrewDates', isVisible);
               
               this.text = isVisible ? (currentLang === 'he' ? hebrewTexts.hideHebrewDates : englishTexts.hideHebrewDates) : (currentLang === 'he' ? hebrewTexts.showHebrewDates : englishTexts.showHebrewDates);
             }
           }
         },
-        events: eventsData.map(doc => ({ id: doc.id, data: doc.data() })),
-        // קריאה לפונקציה הוספת התאריכים לאחר שכל תא יום נוצר ב-DOM
+        events: eventsData,
         dayCellDidMount: function(info) {
           if (currentLang === 'he' && typeof Hebcal !== 'undefined') {
             const date = info.date;
@@ -289,31 +511,71 @@
             hebDateEl.textContent = hebDate.renderGematriya();
             const dayTop = info.el.querySelector('.fc-daygrid-day-top');
             if (dayTop) {
-              // בדיקה לוודא שלא נוסיף את התאריך מספר פעמים
               if (!dayTop.querySelector('.hebrew-date')) {
                 dayTop.appendChild(hebDateEl);
               }
             }
           }
         },
+        eventClick: function(info) {
+          const event = info.event;
+          const { title, start, extendedProps, id } = event;
+          const { type, repeatYearly, greeting } = extendedProps;
+          const texts = currentLang === 'he' ? hebrewTexts : englishTexts;
+          const eventDetailsModal = document.getElementById('eventDetailsModal');
+          const eventDetailsTitle = document.getElementById('eventDetailsTitle');
+          const eventDetailsDate = document.getElementById('eventDetailsDate');
+          const eventDetailsType = document.getElementById('eventDetailsType');
+          const eventDetailsGreeting = document.getElementById('eventDetailsGreeting');
+          const deleteEventBtn = document.getElementById('deleteEventBtn');
+          const editEventBtn = document.getElementById('editEventBtn');
+
+          eventDetailsTitle.textContent = title;
+          eventDetailsDate.textContent = `${texts.detailsDate} ${moment(start).format('LL')}`;
+          eventDetailsType.textContent = `${texts.detailsType} ${icons[type]} ${type}`;
+          eventDetailsGreeting.textContent = greeting || (currentLang === 'he' ? 'אין ברכה זמינה.' : 'No greeting available.');
+
+          deleteEventBtn.onclick = async () => {
+            if (userId) {
+              try {
+                const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+                const docRef = doc(db, `artifacts/${appId}/users/${userId}/userEvents`, id);
+                await deleteDoc(docRef);
+                showMessage(texts.deleteSuccess);
+                hideDetailsModal();
+              } catch (error) {
+                console.error("Error deleting document: ", error);
+                showMessage("שגיאה במחיקת האירוע", false);
+              }
+            }
+          };
+
+          editEventBtn.onclick = () => {
+              loadEventForEdit(event);
+          };
+
+          eventDetailsModal.classList.remove('hidden');
+        }
       });
       calendar.render();
     }
 
     function toggleLanguage() {
       currentLang = currentLang === 'he' ? 'en' : 'he';
+      localStorage.setItem('lang', currentLang);
       document.documentElement.lang = currentLang;
       document.body.classList.toggle('rtl');
       document.body.classList.toggle('ltr');
       document.getElementById('calendar').classList.toggle('rtl');
       document.getElementById('calendar').classList.toggle('ltr');
       updateUI();
-      renderCalendar(calendar.getEvents()); // Re-render to apply language changes
+      // Re-render the calendar with the new language setting
+      renderCalendar(calendar.getEvents());
     }
 
     document.getElementById('toggleLang').addEventListener('click', toggleLanguage);
     
-    // Gemini API integration
+    // Gemini API integration - Greeting Generator
     async function generateGreeting() {
       const eventTitle = document.getElementById('eventTitle').value;
       const eventType = document.getElementById('eventType').value;
@@ -331,7 +593,7 @@
       const greetingActions = document.getElementById('greetingActions');
 
       generateBtn.disabled = true;
-      document.getElementById('generateBtnText').textContent = '';
+      document.getElementById('generateBtnText').textContent = currentLang === 'he' ? hebrewTexts.generateLoading : englishTexts.generateLoading;
       loadingIndicator.style.display = 'block';
       greetingActions.classList.add('hidden');
       greetingTextarea.value = '';
@@ -394,11 +656,93 @@
 
       makeRequestWithRetry();
     }
+    
+    // Gemini API integration - Text-to-Speech
+    async function playGreeting() {
+        const textToSpeak = document.getElementById('generatedGreeting').value;
+        if (!textToSpeak) {
+            showMessage(currentLang === 'he' ? 'אין ברכה להשמעה.' : 'No greeting to play.', false);
+            return;
+        }
+
+        const playBtn = document.getElementById('playGreetingBtn');
+        const loadingIndicator = document.getElementById('playLoadingIndicator');
+        const oldBtnText = document.getElementById('playBtnText').textContent;
+
+        playBtn.disabled = true;
+        document.getElementById('playBtnText').textContent = currentLang === 'he' ? hebrewTexts.playLoading : englishTexts.playLoading;
+        loadingIndicator.style.display = 'block';
+
+        const payload = {
+            contents: [{ parts: [{ text: textToSpeak }] }],
+            generationConfig: {
+                responseModalities: ["AUDIO"],
+                speechConfig: {
+                    voiceConfig: {
+                        prebuiltVoiceConfig: { voiceName: "Fenrir" }
+                    }
+                }
+            },
+            model: "gemini-2.5-flash-preview-tts"
+        };
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+        let retryCount = 0;
+        const maxRetries = 3;
+        const initialDelay = 1000;
+
+        async function makeRequestWithRetry() {
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    if (response.status === 429 && retryCount < maxRetries) {
+                        const delay = initialDelay * Math.pow(2, retryCount);
+                        console.log(`Rate limit exceeded. Retrying in ${delay / 1000}s...`);
+                        retryCount++;
+                        return new Promise(resolve => setTimeout(() => resolve(makeRequestWithRetry()), delay));
+                    } else {
+                        throw new Error(`API request failed with status: ${response.status}`);
+                    }
+                }
+                
+                const result = await response.json();
+                const audioData = result?.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+                const mimeType = result?.candidates?.[0]?.content?.parts?.[0]?.inlineData?.mimeType;
+
+                if (audioData && mimeType && mimeType.startsWith("audio/")) {
+                    const sampleRateMatch = mimeType.match(/rate=(\d+)/);
+                    const sampleRate = sampleRateMatch ? parseInt(sampleRateMatch[1], 10) : 16000;
+                    const pcmData = base64ToArrayBuffer(audioData);
+                    const pcm16 = new Int16Array(pcmData);
+                    const wavBlob = pcmToWav(pcm16, sampleRate);
+                    const audioUrl = URL.createObjectURL(wavBlob);
+                    const audio = new Audio(audioUrl);
+                    audio.play();
+                } else {
+                    showMessage(currentLang === 'he' ? "שגיאה ביצירת הקול. נסה שוב." : "Error generating audio. Please try again.", false);
+                }
+            } catch (error) {
+                console.error("TTS API Error:", error);
+                showMessage(currentLang === 'he' ? "שגיאה בחיבור לשרת קול. נסה שוב מאוחר יותר." : "Server connection error for audio. Please try again later.", false);
+            } finally {
+                playBtn.disabled = false;
+                loadingIndicator.style.display = 'none';
+                document.getElementById('playBtnText').textContent = oldBtnText;
+            }
+        }
+        
+        makeRequestWithRetry();
+    }
 
     document.addEventListener('DOMContentLoaded', async function() {
-      // Firebase initialization
-      const appId = "default-app-id";
-      const firebaseConfig = {
+      const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+      const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
         apiKey: "AIzaSyCEPQmjY_CzCyidws9md0g3rgq1q6bKjmg",
         authDomain: "calendar-90846.firebaseapp.com",
         projectId: "calendar-90846",
@@ -407,14 +751,21 @@
         appId: "1:144676327138:web:111fd274ba8836a35ad8bb",
         measurementId: "G-3B1R5YE9KX"
       };
+
       const app = initializeApp(firebaseConfig);
       db = getFirestore(app);
       auth = getAuth(app);
       const userIdDisplay = document.getElementById('userIdDisplay');
+      const calendarEl = document.getElementById('calendar');
+      const loadingEl = document.getElementById('loadingCalendar');
 
-      // Authentication
+      const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
       try {
-        await signInAnonymously(auth);
+        if (initialAuthToken) {
+          await signInWithCustomToken(auth, initialAuthToken);
+        } else {
+          await signInAnonymously(auth);
+        }
       } catch (error) {
         console.error("Firebase Auth Error:", error);
       }
@@ -425,36 +776,60 @@
           updateUI();
           userIdDisplay.textContent = `${hebrewTexts.userIdLabel} ${userId}`;
           
-          // Firestore listener
           const eventsRef = collection(db, `artifacts/${appId}/users/${userId}/userEvents`);
           onSnapshot(eventsRef, (snapshot) => {
-            const eventsData = snapshot.docs.map(doc => ({ id: doc.id, data: doc.data() }));
-            renderCalendar(eventsData);
-            document.getElementById('filterType').value = 'all'; // Reset filter after refresh
+            const eventsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            
+            if (!calendar) {
+                loadingEl.classList.add('hidden');
+                calendarEl.classList.remove('hidden');
+                renderCalendar(eventsData);
+            } else {
+                calendar.removeAllEvents();
+                calendar.addEventSource(eventsData);
+            }
+            document.getElementById('filterType').value = 'all';
           });
-
         } else {
-          // User is signed out, handle as needed
           userId = null;
           updateUI();
-          renderCalendar([]); // Render an empty calendar
+          if (!calendar) {
+            loadingEl.classList.add('hidden');
+            calendarEl.classList.remove('hidden');
+            renderCalendar([]);
+          } else {
+            calendar.removeAllEvents();
+          }
         }
       });
       
-      // Initialize local storage preference if not set
       if (localStorage.getItem('showHebrewDates') === null) {
         localStorage.setItem('showHebrewDates', 'false');
       }
 
-      // UI updates and event listeners
       updateUI();
 
       document.getElementById('showFormBtn').addEventListener('click', () => {
-        const form = document.getElementById('addEventForm');
-        form.classList.toggle('hidden');
+        document.getElementById('eventId').value = '';
+        updateUI();
+        showFormModal();
       });
       
+      document.getElementById('closeFormBtn').addEventListener('click', hideFormModal);
+      document.getElementById('closeDetailsBtn').addEventListener('click', hideDetailsModal);
       document.getElementById('generateGreetingBtn').addEventListener('click', generateGreeting);
+      document.getElementById('playGreetingBtn').addEventListener('click', playGreeting);
+      document.getElementById('goToTodayBtn').addEventListener('click', () => {
+          if (calendar) {
+              calendar.today();
+          }
+      });
+      document.getElementById('goToDateInput').addEventListener('change', (e) => {
+          const date = e.target.value;
+          if (date && calendar) {
+              calendar.gotoDate(date);
+          }
+      });
 
       document.getElementById('copyGreetingBtn').addEventListener('click', () => {
           const greetingText = document.getElementById('generatedGreeting').value;
@@ -494,17 +869,19 @@
 
       document.getElementById('addEventForm').addEventListener('submit', async function(e) {
         e.preventDefault();
+        const eventId = document.getElementById('eventId').value;
         const title = document.getElementById('eventTitle').value;
         const date = document.getElementById('eventDate').value;
         const type = document.getElementById('eventType').value;
         const repeat = document.getElementById('repeatYearly').value;
+        const color = document.getElementById('eventColor').value;
         const email = document.getElementById('email').value;
         const greeting = document.getElementById('generatedGreeting').value;
 
         const newEvent = {
           title: `${icons[type]} ${title}`,
           start: date,
-          color: colors[type],
+          color: color,
           extendedProps: {
             type,
             repeatYearly: repeat === 'yes',
@@ -516,19 +893,27 @@
 
         if (userId) {
           try {
-            await addDoc(collection(db, `artifacts/${appId}/users/${userId}/userEvents`), newEvent);
-            const successMessage = currentLang === 'he' ? hebrewTexts.successMessage : englishTexts.successMessage;
-            showMessage(successMessage);
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+            if (eventId) {
+                const docRef = doc(db, `artifacts/${appId}/users/${userId}/userEvents`, eventId);
+                await updateDoc(docRef, newEvent);
+                showMessage(currentLang === 'he' ? hebrewTexts.successMessageEdit : englishTexts.successMessageEdit);
+            } else {
+                await addDoc(collection(db, `artifacts/${appId}/users/${userId}/userEvents`), newEvent);
+                showMessage(currentLang === 'he' ? hebrewTexts.successMessageAdd : englishTexts.successMessageAdd);
+            }
             this.reset();
             document.getElementById('hebrewDate').value = '';
             document.getElementById('generatedGreeting').value = '';
             document.getElementById('greetingActions').classList.add('hidden');
+            hideFormModal();
           } catch (error) {
-            console.error("Error adding document: ", error);
-            showMessage("שגיאה בהוספת האירוע", false);
+            console.error("Error adding/updating document: ", error);
+            showMessage("שגיאה בהוספת/עריכת האירוע", false);
           }
         } else {
           showMessage("משתמש לא מחובר, לא ניתן לשמור אירועים.", false);
+          console.error("User ID is not available.");
         }
       });
 
