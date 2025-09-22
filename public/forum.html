@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -10,85 +10,113 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for a star icon -->
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
             --main-bg: #f3f4f6;
-            --card-bg: #ffffff;
+            --card-bg-light: rgba(255, 255, 255, 0.4);
+            --card-bg-dark: rgba(31, 41, 55, 0.4);
             --text-color: #1f2937;
             --primary-color: #4f46e5;
             --secondary-color: #6b7280;
-            --border-color: #e5e7eb;
-            --shadow-color: rgba(0, 0, 0, 0.05);
+            --border-color: rgba(255, 255, 255, 0.2);
+            --dark-border-color: rgba(75, 85, 99, 0.2);
+            --shadow-color: rgba(0, 0, 0, 0.1);
         }
 
         .dark-mode {
             --main-bg: #111827;
-            --card-bg: #1f2937;
             --text-color: #e5e7eb;
             --primary-color: #818cf8;
             --secondary-color: #d1d5db;
-            --border-color: #374151;
-            --shadow-color: rgba(0, 0, 0, 0.2);
+            --shadow-color: rgba(0, 0, 0, 0.3);
         }
-
+        
         body {
             font-family: 'Heebo', sans-serif;
             background-color: var(--main-bg);
             color: var(--text-color);
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.5s, color 0.5s;
+            background-image: linear-gradient(135deg, #d1d5db 0%, #a5b4fc 50%, #f3f4f6 100%);
+        }
+
+        .dark-mode body {
+            background-image: linear-gradient(135deg, #374151 0%, #1e293b 50%, #111827 100%);
         }
 
         h1, h2, h3 {
             font-weight: 700;
         }
 
-        .container {
-            background-color: var(--card-bg);
-            transition: background-color 0.3s;
+        .glassmorphism-container {
+            background-color: var(--card-bg-light);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 12px 40px 0 var(--shadow-color);
+            transition: background-color 0.5s, border-color 0.5s;
+        }
+
+        .dark-mode .glassmorphism-container {
+            background-color: var(--card-bg-dark);
+            border: 1px solid var(--dark-border-color);
         }
 
         input, textarea, select {
-            border-color: var(--border-color);
-            background-color: var(--main-bg);
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             color: var(--text-color);
             transition: all 0.3s;
-            box-shadow: 0 1px 2px var(--shadow-color);
         }
         
         .dark-mode input, .dark-mode textarea, .dark-mode select {
-            background-color: #1f2937;
+            background-color: rgba(31, 41, 55, 0.1);
             color: #e5e7eb;
-            border-color: #4b5563;
+            border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+        }
+        
+        .dark-mode input:focus, .dark-mode textarea:focus, .dark-mode select:focus {
+            background-color: rgba(31, 41, 55, 0.2);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.3);
         }
 
         .thread {
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
         }
 
         .thread:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transform: translateY(-6px);
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 5px 15px -2px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        .dark-mode .thread:hover {
+             background-color: rgba(31, 41, 55, 0.7);
         }
 
         .favorite-btn:hover {
-            transform: scale(1.1);
+            transform: scale(1.3) rotate(15deg);
         }
 
         /* Gradient for buttons */
         .gradient-btn {
-            background-image: linear-gradient(to right, #4c68d7, #667eea);
-            transition: all 0.3s;
+            background-image: linear-gradient(45deg, #6b46e5, #8a57ea);
+            box-shadow: 0 4px 15px 0 rgba(107, 70, 229, 0.6);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
 
         .gradient-btn:hover {
-            background-image: linear-gradient(to right, #435ebf, #5b72e0);
-        }
-
-        .gradient-btn:focus {
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.5);
+            background-image: linear-gradient(45deg, #5a3bc9, #7948c9);
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 8px 25px 0 rgba(107, 70, 229, 0.8);
         }
 
         .outline-btn {
@@ -101,21 +129,33 @@
         .outline-btn:hover {
             background-color: var(--primary-color);
             color: white;
+            box-shadow: 0 4px 15px 0 rgba(79, 70, 229, 0.4);
         }
 
         .reply-form button {
-            transition: transform 0.2s;
+            transition: transform 0.2s, background-color 0.2s;
         }
 
         .reply-form button:hover {
-            transform: scale(1.05);
+            transform: scale(1.1);
+            background-color: #4c37b0;
         }
 
         .disabled-btn {
-            opacity: 0.5;
+            opacity: 0.7;
             cursor: not-allowed;
             background-image: none;
             background-color: #9ca3af;
+            box-shadow: none;
+            transform: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.8s ease-out forwards;
         }
 
     </style>
@@ -123,38 +163,38 @@
 <body class="bg-gray-100 text-gray-800">
 
     <!-- Main Container -->
-    <div class="container mx-auto p-4 sm:p-8 max-w-4xl bg-white rounded-3xl shadow-2xl my-8">
+    <div class="container mx-auto p-4 sm:p-8 max-w-4xl glassmorphism-container rounded-[2rem] shadow-2xl my-10">
         
         <!-- Header -->
-        <header class="text-center pb-6 border-b border-gray-200 mb-6">
-            <h1 class="text-4xl sm:text-5xl font-extrabold text-indigo-700" data-lang-key="title">🗣️ פורום משפחתנו</h1>
-            <p class="text-gray-500 mt-2" data-lang-key="subtitle">מקום להתעדכן, לשאול ולחלוק זיכרונות משפחתיים.</p>
+        <header class="text-center pb-8 border-b border-gray-200 dark:border-gray-700 mb-8">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-indigo-700 dark:text-indigo-400" data-lang-key="title">🗣️ פורום משפחתנו</h1>
+            <p class="text-gray-500 dark:text-gray-400 mt-2 text-lg" data-lang-key="subtitle">מקום להתעדכן, לשאול ולחלוק זיכרונות משפחתיים.</p>
         </header>
 
         <!-- User & App Info Section -->
-        <div class="flex items-center justify-between flex-wrap gap-2 mb-6 text-sm text-gray-500">
+        <div class="flex items-center justify-between flex-wrap gap-4 mb-6 text-sm text-gray-500 dark:text-gray-400">
             <span id="userIdDisplay" class="truncate flex items-center gap-1">
-                <span class="font-mono text-gray-700 font-semibold" id="userIdValue">טוען...</span>
-                <span id="userName" class="text-gray-600 font-medium"></span>
-                <button id="copyUserIdBtn" class="bg-gray-200 hover:bg-gray-300 rounded-full p-1 transition-colors duration-200" title="העתק מזהה משתמש">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <span class="font-mono text-gray-700 dark:text-gray-300 font-semibold text-lg" id="userIdValue">טוען...</span>
+                <span id="userName" class="text-gray-600 dark:text-gray-400 font-medium"></span>
+                <button id="copyUserIdBtn" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors duration-200" title="העתק מזהה משתמש">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                     </svg>
                 </button>
             </span>
-            <div id="copySuccessMsg" class="absolute bg-green-500 text-white text-xs px-2 py-1 rounded-md opacity-0 transition-opacity duration-300">הועתק!</div>
-            <div class="flex items-center gap-2">
-                <button id="darkModeToggle" class="flex items-center gap-2 px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-full text-sm font-medium transition-colors duration-200">
+            <div id="copySuccessMsg" class="absolute bg-green-500 text-white text-xs px-3 py-1 rounded-md opacity-0 transition-opacity duration-300">הועתק!</div>
+            <div class="flex items-center gap-3">
+                <button id="darkModeToggle" class="flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full text-sm font-medium transition-colors duration-200">
                     <span id="darkModeIcon">🌓</span> <span data-lang-key="darkModeBtn">מצב כהה</span>
                 </button>
-                <button id="langToggle" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-full text-sm font-medium transition-colors duration-200">
+                <button id="langToggle" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full text-sm font-medium transition-colors duration-200">
                     English
                 </button>
             </div>
         </div>
         
         <!-- User Name Section -->
-        <div class="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 mb-8 flex flex-col sm:flex-row items-center gap-4 shadow-sm">
+        <div class="glassmorphism-container rounded-2xl p-6 mb-8 flex flex-col sm:flex-row items-center gap-4 shadow-sm">
             <h2 class="text-2xl font-bold text-gray-700 dark:text-gray-300 mb-2 sm:mb-0" data-lang-key="userNameSection">👤 שם המשתמש שלך</h2>
             <div class="flex flex-grow gap-2 w-full">
                 <input type="text" id="userNameInput" placeholder="הכנס את שמך" class="flex-grow px-4 py-2 border rounded-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200" data-lang-key="userNamePlaceholder">
@@ -176,17 +216,16 @@
         </div>
 
         <!-- New Thread Form -->
-        <div class="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 mb-8 shadow-sm">
+        <div class="glassmorphism-container rounded-[2rem] p-8 mb-8 shadow-sm">
             <h2 class="text-2xl font-bold mb-4 text-gray-700 dark:text-gray-300" data-lang-key="newThreadHeader">✍️ פרסם שרשור חדש</h2>
             <form id="newThreadForm" class="space-y-4">
-                <input type="text" id="newThreadTitle" placeholder="כותרת השרשור" required class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="titlePlaceholder">
-                <textarea id="newThreadContent" rows="4" placeholder="שתף את מחשבותיך..." required class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="contentPlaceholder"></textarea>
+                <input type="text" id="newThreadTitle" placeholder="כותרת השרשור" required class="w-full px-4 py-3 border rounded-xl focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="titlePlaceholder">
+                <textarea id="newThreadContent" rows="4" placeholder="שתף את מחשבותיך..." required class="w-full px-4 py-3 border rounded-xl focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="contentPlaceholder"></textarea>
                 <div class="flex flex-col sm:flex-row gap-2">
                     <button type="button" id="improveTextBtn" class="w-full sm:w-1/2 outline-btn font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-lang-key="improveBtn">
                         ✨ שפר את הניסוח
                     </button>
-                    <!-- FIX: Added disabled and selected to the first option to prevent submission -->
-                    <select id="newThreadCategory" required class="w-full sm:w-1/2 px-4 py-2 border rounded-lg focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="selectCategoryPlaceholder">
+                    <select id="newThreadCategory" required class="w-full sm:w-1/2 px-4 py-3 border rounded-lg focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="selectCategoryPlaceholder">
                         <option value="" disabled selected data-lang-key="selectCategoryOption">בחר קטגוריה...</option>
                         <option value="היסטוריה משפחתית" data-lang-key="categoryHistory">היסטוריה משפחתית</option>
                         <option value="שאלות" data-lang-key="categoryQuestions">שאלות</option>
@@ -195,8 +234,8 @@
                 </div>
                 <button type="submit" id="submitThreadBtn" class="w-full gradient-btn text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled-btn" disabled>
                     <span id="submitBtnText" data-lang-key="submitBtn">📤 פרסם שרשור</span>
-                    <div id="loadingSpinner" class="hidden animate-spin h-5 w-5 text-white mx-auto">
-                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <div id="loadingSpinner" class="hidden animate-spin h-6 w-6 text-white mx-auto">
+                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
@@ -536,16 +575,21 @@
         
         // Function to check if all form fields are valid and enable/disable the submit button
         const updateSubmitButtonState = () => {
+            // Get the trimmed values of the input fields and the selected category.
             const title = newThreadTitle.value.trim();
             const content = newThreadContent.value.trim();
             const category = newThreadCategory.value;
 
+            // The button is only enabled when all three fields have valid input.
+            // An empty string in JavaScript is "falsy", so this condition works well.
             if (title && content && category) {
                 submitThreadBtn.disabled = false;
                 submitThreadBtn.classList.remove('disabled-btn');
+                submitThreadBtn.classList.add('gradient-btn');
             } else {
                 submitThreadBtn.disabled = true;
                 submitThreadBtn.classList.add('disabled-btn');
+                submitThreadBtn.classList.remove('gradient-btn');
             }
         };
 
@@ -566,7 +610,7 @@
             const displayAuthor = data.authorName || data.authorId;
 
             const threadElement = document.createElement('div');
-            threadElement.className = `thread p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 transition-all hover:shadow-lg`;
+            threadElement.className = `thread p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 transition-all hover:shadow-lg animate-fadeIn`;
             threadElement.setAttribute('data-thread-id', threadId);
             threadElement.innerHTML = `
                 <div class="flex items-start justify-between">
@@ -754,7 +798,10 @@
         categoryFilter.addEventListener('change', fetchThreads);
 
         // Initialize the app on window load
-        window.onload = initializeFirebase;
+        window.onload = () => {
+            initializeFirebase();
+            updateSubmitButtonState(); // Initial check on page load
+        };
     </script>
 </body>
 </html>
