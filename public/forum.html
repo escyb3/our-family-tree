@@ -823,6 +823,45 @@
             initializeFirebase();
             updateSubmitButtonState(); // Initial check on page load
         };
+        // --- Custom dropdown behavior for categories ---
+(function(){
+const categoryDropdownBtn = document.getElementById('categoryDropdownBtn');
+const categoryDropdownList = document.getElementById('categoryDropdownList');
+const selectedCategoryLabel = document.getElementById('selectedCategoryLabel');
+const hiddenCategorySelect = document.getElementById('newThreadCategory');
+
+if (!categoryDropdownBtn || !categoryDropdownList || !selectedCategoryLabel || !hiddenCategorySelect) return;
+
+// פותח/סוגר
+categoryDropdownBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = categoryDropdownBtn.getAttribute('aria-expanded') === 'true';
+    categoryDropdownBtn.setAttribute('aria-expanded', String(!isOpen));
+    categoryDropdownList.classList.toggle('hidden');
+});
+
+// בחירת אפשרות
+categoryDropdownList.addEventListener('click', (e) => {
+    const li = e.target.closest('[role="option"]');
+    if (!li) return;
+    const value = li.dataset.value;
+    const label = li.textContent.trim();
+    selectedCategoryLabel.textContent = label;
+    hiddenCategorySelect.value = value; // עדכון ה־select הנסתר
+    categoryDropdownList.classList.add('hidden');
+    categoryDropdownBtn.setAttribute('aria-expanded', 'false');
+    hiddenCategorySelect.dispatchEvent(new Event('change', { bubbles: true }));
+});
+
+// סגירה בלחיצה בחוץ
+document.addEventListener('click', (e) => {
+    if (!categoryDropdownBtn.contains(e.target) && !categoryDropdownList.contains(e.target)) {
+        categoryDropdownList.classList.add('hidden');
+        categoryDropdownBtn.setAttribute('aria-expanded', 'false');
+    }
+});
+})();
+
     </script>
 </body>
 </html>
