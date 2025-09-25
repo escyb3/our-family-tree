@@ -1073,36 +1073,40 @@ app.use((req, res, next) => {
   next();
 });
 
-// דף התחברות (login.html)
-app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "login.html"));
-});
+// הגדרת נקודת קצה (endpoint) לקבלת בקשות POST מהטופס
+app.post('/update-request', (req, res) => {
+  const formData = req.body;
+  const filePath = path.join(__dirname, 'Update-request.JSON');
 
-// תהליך התחברות POST
-app.post("/login", (req, res) => {
-  const { username, password } = req.body;
-  let users = ["admin", "avishai", "merav", "yanai"];
-  let drafts = {}; // שמירת טיוטות לפי משתמש
+  console.log('Received form data:', formData);
 
+  // קריאה לקובץ ה-JSON הקיים (אם הוא קיים)
+  let existingData = [];
   try {
-    users = JSON.parse(fs.readFileSync(path.join(__dirname, "data", "users.json")));
-  } catch (e) {
-    console.error("❌ שגיאה בקריאת users.json:", e);
-    return res.status(500).send("שגיאה בשרת, נסה שוב מאוחר יותר");
-  }
-
-  const user = users.find(u => u.username === username);
-  if (!user) return res.status(401).send("שם משתמש לא קיים");
-
-  bcrypt.compare(password, user.password, (err, result) => {
-    if (err) {
-      console.error("❌ שגיאה בהשוואת סיסמא:", err);
-      return res.status(500).send("שגיאה בשרת, נסה שוב מאוחר יותר");
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    existingData = JSON.parse(fileContent);
+  } catch (err) {
+    // אם הקובץ לא קיים, ניצור מערך ריק חדש
+    if (err.code !== 'ENOENT') {
+      console.error('Error reading file:', err);
+      return res.status(500).send('An error occurred while processing the request.');
     }
-    if (!result) return res.status(401).send("סיסמה שגויה");
+  }
+  
+  // הוספת הנתונים החדשים למערך
+  existingData.push(formData);
 
-    req.session.user = { username: user.username, role: user.role, side: user.side };
-    res.json({ success: true });
+  // שמירת הנתונים המעודכנים לקובץ JSON
+  fs.writeFile(filePath, JSON.stringify(existingData, null, 2), (err) => {
+    if (err) {
+      console.error('Error saving file:', err);
+      // שליחת תגובה עם שגיאה
+      return res.status(500).send('An error occurred while saving the request.');
+    }
+
+    console.log('File saved successfully to Update-request.JSON');
+    // שליחת תגובת הצלחה
+    res.status(200).send('Your request has been saved successfully to the server.');
   });
 });
 
