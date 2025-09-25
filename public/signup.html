@@ -2,21 +2,71 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>הרשמה</title>
-  <link rel="stylesheet" href="style.css">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS configuration for Hebrew text (RTL) -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
 </head>
-<body>
-  <h1>הרשמה</h1>
-  <form action="/signup" method="POST">
-    <input name="username" required placeholder="שם משתמש">
-    <input name="password" type="password" required placeholder="סיסמה">
-    <select name="familySide">
-      <option value="Ben Abou">Ben Abou</option>
-      <option value="Elharrar">Elharrar</option>
-      <option value="Malca">Malca</option>
-      <option vaule="Other">Other</option>
-    </select>
-    <button type="submit">הירשם</button>
-  </form>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
+    <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">הרשמה</h1>
+    <form id="signup-form" class="space-y-4">
+      <input name="username" required placeholder="שם משתמש" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-right">
+      <input name="password" type="password" required placeholder="סיסמה" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-right">
+      <select name="familySide" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-right">
+        <option value="Ben Abou">Ben Abou</option>
+        <option value="Elharrar">Elharrar</option>
+        <option value="Malca">Malca</option>
+        <option value="Other">Other</option>
+      </select>
+      <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-3 px-4 rounded-md hover:bg-indigo-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">הירשם</button>
+    </form>
+    <!-- Container for the message -->
+    <div id="message-container" class="mt-4 text-center"></div>
+  </div>
+
+  <script>
+    // Get the form element and the message container
+    const form = document.getElementById('signup-form');
+    const messageContainer = document.getElementById('message-container');
+
+    // Add an event listener for the form submission
+    form.addEventListener('submit', function(event) {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+
+      // Clear any previous messages
+      messageContainer.innerHTML = '';
+
+      // Create a loading message
+      const loadingMessage = document.createElement('p');
+      loadingMessage.textContent = 'טוען...';
+      loadingMessage.classList.add('text-gray-500', 'font-semibold', 'animate-pulse');
+      messageContainer.appendChild(loadingMessage);
+
+      // Simulate a server response delay
+      setTimeout(() => {
+        // Clear the loading message
+        messageContainer.innerHTML = '';
+
+        // Create the final message element
+        const finalMessage = document.createElement('p');
+        
+        // Set the text content and style of the final message
+        finalMessage.textContent = 'לא ניתן להירשם לאתר המשפחה. צור קשר עם הבעלים של האתר לקבלת פרטי כניסה';
+        finalMessage.classList.add('text-red-500', 'font-semibold', 'text-lg');
+
+        // Append the final message to the container
+        messageContainer.appendChild(finalMessage);
+      }, 2000); // 2-second delay
+    });
+  </script>
 </body>
 </html>
