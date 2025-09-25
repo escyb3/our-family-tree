@@ -225,15 +225,29 @@
                     <button type="button" id="improveTextBtn" class="w-full sm:w-1/2 outline-btn font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-lang-key="improveBtn">
                         ✨ שפר את הניסוח
                     </button>
-                    <select id="newThreadCategory" required 
-        class="w-full sm:w-1/2 px-4 py-3 border rounded-lg focus:ring focus:ring-indigo-300 focus:outline-none" 
-        data-lang-key="selectCategoryPlaceholder">
-    <option value="" selected hidden data-lang-key="selectCategoryOption">בחר קטגוריה...</option>
-    <option value="היסטוריה משפחתית" data-lang-key="categoryHistory">היסטוריה משפחתית</option>
-    <option value="שאלות" data-lang-key="categoryQuestions">שאלות</option>
-    <option value="עדכונים" data-lang-key="categoryUpdates">עדכונים</option>
-</select>
+     <div class="relative w-full sm:w-1/2">
+  <button id="categoryDropdownBtn" type="button" aria-haspopup="listbox" aria-expanded="false"
+          class="w-full px-4 py-3 border rounded-lg text-left flex items-center justify-between bg-transparent focus:ring focus:ring-indigo-300">
+    <span id="selectedCategoryLabel" class="truncate">בחר קטגוריה...</span>
+    <i class="fas fa-chevron-down text-sm"></i>
+  </button>
+
+  <ul id="categoryDropdownList" role="listbox" tabindex="-1"
+      class="hidden absolute right-0 left-0 mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg z-50 overflow-auto max-h-48 text-right">
+    <li role="option" data-value="היסטוריה משפחתית" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">היסטוריה משפחתית</li>
+    <li role="option" data-value="שאלות" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">שאלות</li>
+    <li role="option" data-value="עדכונים" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">עדכונים</li>
+  </ul>
+
+  <!-- select נסתר לשמירה על התמיכה בקוד הקיים -->
+  <select id="newThreadCategory" class="sr-only" aria-hidden="true">
+    <option value="">בחר קטגוריה...</option>
+    <option value="היסטוריה משפחתית">היסטוריה משפחתית</option>
+    <option value="שאלות">שאלות</option>
+    <option value="עדכונים">עדכונים</option>
+  </select>
 </div>
+
 
 <button type="submit" id="submitThreadBtn" 
         class="w-full gradient-btn text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled-btn" 
