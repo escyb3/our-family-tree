@@ -225,19 +225,26 @@
                     <button type="button" id="improveTextBtn" class="w-full sm:w-1/2 outline-btn font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-lang-key="improveBtn">
                         ✨ שפר את הניסוח
                     </button>
-                    <select id="newThreadCategory" required class="w-full sm:w-1/2 px-4 py-3 border rounded-lg focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="selectCategoryPlaceholder">
-                    <option value="" selected data-lang-key="selectCategoryOption">בחר קטגוריה...</option>
-                      <option value="היסטוריה משפחתית" data-lang-key="categoryHistory">היסטוריה משפחתית</option>
-                        <option value="שאלות" data-lang-key="categoryQuestions">שאלות</option>
-                        <option value="עדכונים" data-lang-key="categoryUpdates">עדכונים</option>
-                    </select>
-                </div>
-                <button type="submit" id="submitThreadBtn" class="w-full gradient-btn text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled-btn" disabled>
-                    <span id="submitBtnText" data-lang-key="submitBtn">📤 פרסם שרשור</span>
-                    <div id="loadingSpinner" class="hidden animate-spin h-6 w-6 text-white mx-auto">
-                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <select id="newThreadCategory" required 
+        class="w-full sm:w-1/2 px-4 py-3 border rounded-lg focus:ring focus:ring-indigo-300 focus:outline-none" 
+        data-lang-key="selectCategoryPlaceholder">
+    <option value="" selected hidden data-lang-key="selectCategoryOption">בחר קטגוריה...</option>
+    <option value="היסטוריה משפחתית" data-lang-key="categoryHistory">היסטוריה משפחתית</option>
+    <option value="שאלות" data-lang-key="categoryQuestions">שאלות</option>
+    <option value="עדכונים" data-lang-key="categoryUpdates">עדכונים</option>
+</select>
+</div>
+
+<button type="submit" id="submitThreadBtn" 
+        class="w-full gradient-btn text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled-btn" 
+        disabled>
+    <span id="submitBtnText" data-lang-key="submitBtn">📤 פרסם שרשור</span>
+    <div id="loadingSpinner" class="hidden animate-spin h-6 w-6 text-white mx-auto">
+        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" 
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+            </path>
                         </svg>
                     </div>
                 </button>
