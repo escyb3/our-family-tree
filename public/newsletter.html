@@ -86,7 +86,7 @@
             <strong class="font-semibold text-gray-900">ספר:</strong> <span class="text-gray-700">סדרת הארי פוטר - סדרת הספרים האהובה על כל המשפחה. קסם ודמיון בכל עמוד!</span>
           </div>
           <div id="recommendation2">
-            <strong class="font-semibold text-gray-900">סרט:</strong> <span class="text-gray-700">הקול בראש (Inside Out) - סרט אנימציה של דיסני/פיקסאר שמרגש ומצחיק גם ילדים וגם מבוגרים.</span>
+            <strong class="font-semibold text-gray-900">סרט:</strong> <span class="text-700">הקול בראש (Inside Out) - סרט אנימציה של דיסני/פיקסאר שמרגש ומצחיק גם ילדים וגם מבוגרים.</span>
           </div>
           <div id="recommendation3">
             <strong class="font-semibold text-gray-900">מקום לבקר בו:</strong> <span class="text-gray-700">גן החיות התנ"כי בירושלים - חוויה לימודית וכיפית לכל הגילאים.</span>
@@ -160,7 +160,7 @@
         </h2>
         <p id="contactText" class="text-gray-700 leading-relaxed">
           יש לכם חדשות מרגשות, המלצות או תמונות מהטיול המשפחתי?
-          פשוט שלחו לנו את העדכונים שלכם למייל: <strong>[כתובת המייל שלכם כאן]</strong>.
+          פשוט שלחו לנו את העדכונים שלכם למייל: <strong>familylocal@gmx.com</strong>.
         </p>
       </section>
 
@@ -203,12 +203,60 @@
         endDate: new Date('2025-12-23T23:59:59')
       },
       {
+        id: 'tuBishvat',
+        name: { he: 'ט"ו בשבט', en: 'Tu B\'Shvat' },
+        message: { he: '🌳 ט"ו בשבט שמח!', en: '🌳 Happy Tu B\'Shvat!' },
+        detailed_message: { he: 'חג ט"ו בשבט שמח לכל המשפחה! זהו ראש השנה לאילנות, זמן לזכור את חשיבות הטבע והצמיחה. אנו מאחלים לכם שתהיה לכם שנה של פריחה והגשמה, ושנמשיך לשתול זרעים של אהבה ותקווה בעולמנו.', en: 'Happy Tu B\'Shvat to the whole family! It\'s the New Year for trees, a time to remember the importance of nature and growth. We wish you a year of blooming and fulfillment, and that we continue to plant seeds of love and hope in our world.' },
+        startDate: new Date('2026-02-02T00:00:00'),
+        endDate: new Date('2026-02-03T23:59:59')
+      },
+      {
+        id: 'purim',
+        name: { he: 'פורים', en: 'Purim' },
+        message: { he: '🎭 חג פורים שמח!', en: '🎭 Happy Purim!' },
+        detailed_message: { he: 'פורים שמח לכל המשפחה! שיהיה לכם חג מלא בשמחה, תחפושות יצירתיות, משלוחי מנות טעימים ואווירה של התחדשות. בואו נחגוג יחד את שמחת החיים ואת כוחה של האחדות.', en: 'Happy Purim to the whole family! May you have a holiday full of joy, creative costumes, delicious mishloach manot, and a spirit of renewal. Let\'s celebrate the joy of life and the power of unity together.' },
+        startDate: new Date('2026-03-14T00:00:00'),
+        endDate: new Date('2026-03-15T23:59:59')
+      },
+      {
         id: 'passover',
         name: { he: 'פסח', en: 'Passover' },
         message: { he: '🍷 חג פסח שמח!', en: '🍷 Happy Passover!' },
         detailed_message: { he: 'חג פסח כשר ושמח לכל המשפחה! אנו מאחלים לכם חג של חירות, של סיפורים מההגדה ושל ארוחות משפחתיות בלתי נשכחות. מי ייתן ותזכו ליהנות מכל רגע יחד.', en: 'A kosher and happy Passover to the entire family! We wish you a holiday of freedom, stories from the Haggadah, and unforgettable family meals. May you enjoy every moment together.' },
         startDate: new Date('2026-04-02T00:00:00'),
         endDate: new Date('2026-04-10T23:59:59')
+      },
+      {
+        id: 'israeliIndependenceDay',
+        name: { he: 'יום העצמאות', en: 'Israeli Independence Day' },
+        message: { he: '🇮🇱 יום העצמאות שמח!', en: '🇮🇱 Happy Independence Day!' },
+        detailed_message: { he: 'יום העצמאות שמח! זהו יום של חגיגה, של גאווה ושל הוקרה למדינה שלנו. בואו נזכור את כל מי שהקריב למענה ונמשיך לבנות יחד עתיד טוב יותר.', en: 'Happy Independence Day! This is a day of celebration, pride, and appreciation for our country. Let\'s remember all those who sacrificed for it and continue to build a better future together.' },
+        startDate: new Date('2026-05-02T00:00:00'),
+        endDate: new Date('2026-05-03T23:59:59')
+      },
+      {
+        id: 'lagBaOmer',
+        name: { he: 'ל"ג בעומר', en: 'Lag BaOmer' },
+        message: { he: '🔥 ל"ג בעומר שמח!', en: '🔥 Happy Lag BaOmer!' },
+        detailed_message: { he: 'חג ל"ג בעומר שמח! זהו זמן של התחדשות ושל שמחה, של הדלקת מדורות משותפות ושל שירים. אנו מאחלים לכם חג מלא באור וחום, ושהשנה תהיה מוארת ופורייה עבור כולנו.', en: 'Happy Lag BaOmer! This is a time of renewal and joy, of shared bonfires and songs. We wish you a holiday full of light and warmth, and that the year will be bright and fruitful for us all.' },
+        startDate: new Date('2026-05-23T00:00:00'),
+        endDate: new Date('2026-05-24T23:59:59')
+      },
+      {
+        id: 'shavuot',
+        name: { he: 'שבועות', en: 'Shavuot' },
+        message: { he: '🧀 חג שבועות שמח!', en: '🧀 Happy Shavuot!' },
+        detailed_message: { he: 'חג שבועות שמח ומלא בגבינות! אנו מאחלים לכם חג של לימוד, של קבלת התורה ושל ארוחות חלביות טעימות. מי ייתן ותזכו ליהנות מכל רגע עם בני המשפחה.', en: 'Happy and cheese-filled Shavuot! We wish you a holiday of learning, receiving the Torah, and delicious dairy meals. May you enjoy every moment with your family.' },
+        startDate: new Date('2026-06-21T00:00:00'),
+        endDate: new Date('2026-06-22T23:59:59')
+      },
+      {
+        id: 'tishaBAv',
+        name: { he: 'ט׳ באב', en: 'Tisha B\'Av' },
+        message: { he: '😔 צום קל', en: '😔 Easy Fast' },
+        detailed_message: { he: 'צום קל וגמר חתימה טובה. יום זה הוא יום של אבל על חורבן בית המקדש. אנו זוכרים ומקווים לימים טובים יותר.', en: 'An easy fast and a good final signing. This day is a day of mourning for the destruction of the Temple. We remember and hope for better days.' },
+        startDate: new Date('2026-07-23T00:00:00'),
+        endDate: new Date('2026-07-24T23:59:59')
       }
     ];
 
@@ -270,7 +318,7 @@
             <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">28 בספטמבר:</strong> יום הולדת 65 לחיים מלכה!</li>
         `,
         'contactTitle': '✍️ רוצים לשתף?',
-        'contactText': 'יש לכם חדשות מרגשות, המלצות או תמונות מהטיול המשפחתי? פשוט שלחו לנו את העדכונים שלכם למייל: <strong>[כתובת המייל שלכם כאן]</strong>.',
+        'contactText': 'יש לכם חדשות מרגשות, המלצות או תמונות מהטיול המשפחתי? פשוט שלחו לנו את העדכונים שלכם למייל: <strong>familylocal@gmx.com</strong>.',
         'footerText1': 'תודה שקראתם! נתראה במהדורה הבאה.',
         'footerText2': '&copy; 2025 עלון המשפחה. כל הזכויות שמורות.',
         'buttonText': 'Switch to English'
@@ -306,7 +354,7 @@
             <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">September 28:</strong> 65th birthday of Chaim Malka!</li>
         `,
         'contactTitle': '✍️ Want to Share?',
-        'contactText': 'Have exciting news, recommendations, or photos from a family trip? Simply send us your updates to this email: <strong>[Your Email Here]</strong>.',
+        'contactText': 'Have exciting news, recommendations, or photos from a family trip? Simply send us your updates to this email: <strong>familylocal@gmx.com</strong>.',
         'footerText1': 'Thanks for reading! See you in the next edition.',
         'footerText2': '&copy; 2025 The Family Newsletter. All rights reserved.',
         'buttonText': 'החלפה לעברית'
