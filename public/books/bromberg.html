@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ספר משפחתי דיגיטלי — Moshe Haim Bromberg</title>
+  <title data-lang-key="app_title">ספר משפחתי דיגיטלי — Moshe Haim Bromberg</title>
   <style>
     :root {
       --bg: #f9fafb;
@@ -19,6 +19,7 @@
       font-family: Inter,Segoe UI,Arial,sans-serif;
       background: linear-gradient(180deg, #e0f2fe 0%, #fef3c7 60%);
       color: var(--text);
+      transition: background-color 0.3s;
     }
     .wrap {
       max-width: 1100px;
@@ -41,17 +42,30 @@
     }
     .controls {
       display: flex;
+      justify-content: space-between;
+      align-items: center;
       gap: 10px;
       flex-wrap: wrap;
       margin-bottom: 18px;
     }
-    .btn {
-      background: linear-gradient(90deg, var(--accent), #4f46e5);
-      padding: 8px 12px;
-      border-radius: 10px;
-      color: white;
-      border: 0;
+    .language-controls button {
+      background: var(--card);
+      border: 1px solid #d1d5db;
+      padding: 4px 8px;
+      border-radius: 8px;
       cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .language-controls button.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+    .language-controls {
+        display: flex;
+        gap: 6px;
     }
     .page {
       background: var(--card);
@@ -88,80 +102,103 @@
     li {
       margin: 6px 0;
     }
-    .spouse {
+    .spouse::before {
+      content: attr(data-lang-content);
       color: #374151;
-      margin-left: 6px;
+      margin: 0 6px;
     }
     .note {
       color: var(--muted);
       font-size: 13px;
     }
-    nav.pagination {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-    nav.pagination button {
-      background: transparent;
-      border: 1px solid rgba(0,0,0,0.1);
-      color: var(--muted);
-      padding: 6px 10px;
-      border-radius: 8px;
-    }
     footer {
       color: var(--muted);
       font-size: 13px;
       margin-top: 18px;
+      text-align: right; /* Default for RTL */
     }
     .id {
       font-weight: 700;
       color: var(--text);
       margin-left: 8px;
     }
+
+    /* Directional overrides for LTR languages */
+    html[lang="en"], html[lang="fr"] {
+        direction: ltr;
+        text-align: left;
+    }
+    html[lang="en"] .wrap, html[lang="fr"] .wrap {
+        /* No change needed, auto-handles */
+    }
+    html[lang="en"] footer, html[lang="fr"] footer {
+        text-align: left;
+    }
+    html[lang="en"] ul, html[lang="fr"] ul {
+        padding-right: 18px;
+        padding-left: 0;
+    }
+    html[lang="en"] .id, html[lang="fr"] .id {
+        margin-right: 8px;
+        margin-left: 0;
+    }
+    /* Yiddish is generally RTL */
+    html[lang="yi"] {
+        direction: rtl;
+        text-align: right;
+    }
   </style>
 </head>
-<body>
+<body onload="setLanguage('he')">
   <div class="wrap">
     <header>
       <div>
-        <h1>📖 ספר משפחתי דיגיטלי — Moshe Haim Bromberg</h1>
-        <p>עץ יוּחָסין — צאצאים וענפים. ניתן להרחיב כל ענף.</p>
+        <h1 data-lang-key="app_title">📖 ספר משפחתי דיגיטלי — Moshe Haim Bromberg</h1>
+        <p data-lang-key="header_desc">עץ יוּחָסין — צאצאים וענפים. ניתן להרחיב כל ענף.</p>
       </div>
     </header>
 
     <div class="controls">
-      <button class="btn" onclick="document.getElementById('wrap-search').scrollIntoView()">חפש</button>
-      <div class="note">לחץ על ענף כדי להרחיב/לסגור. לדפדוף — השתמש בניווט בעמודים למטה.</div>
+      <div class="language-controls">
+        <button onclick="setLanguage('he')" id="lang-he">עברית</button>
+        <button onclick="setLanguage('en')" id="lang-en">English</button>
+        <button onclick="setLanguage('fr')" id="lang-fr">Français</button>
+        <button onclick="setLanguage('yi')" id="lang-yi">ייִדיש</button>
+      </div>
+      <div class="note">
+        <span data-lang-key="controls_note">לחץ על ענף כדי להרחיב/לסגור.</span>
+        <span data-lang-key="page_nav_note">לדפדוף — השתמש בניווט בעמודים למטה.</span>
+      </div>
     </div>
 
     <!-- Page 1 -->
     <section class="page" id="page-1">
-      <h2>עמוד 1 — Moshe Haim Bromberg (231) — צאצאים</h2>
+      <h2 data-lang-key="page1_title">עמוד 1 — Moshe Haim Bromberg (231) — צאצאים</h2>
       <div class="tree">
         <details open>
-          <summary><span class="id">Moshe Haim Bromberg (231)</span> — <span class="spouse">+ Lea Unknown (232)</span></summary>
+          <summary><span class="id">Moshe Haim Bromberg (231)</span> <span class="spouse" data-lang-content="+">+ Lea Unknown (232)</span></summary>
           <ul>
             <li>
               <details>
-                <summary>Ida Bromberg (225) — <span class="spouse">+ Robert Kasner (226)</span></summary>
+                <summary>Ida Bromberg (225) <span class="spouse" data-lang-content="+">+ Robert Kasner (226)</span></summary>
                 <ul>
                   <li>
                     <details>
-                      <summary>Toby Ruth Kasner (200) — <span class="spouse">+ Samuel Zeavin (201)</span></summary>
+                      <summary>Toby Ruth Kasner (200) <span class="spouse" data-lang-content="+">+ Samuel Zeavin (201)</span></summary>
                       <ul>
                         <li>
                           <details>
-                            <summary>Irvin I Zeavin (158) — <span class="spouse">+ Barbara Ione Chesen (159)</span></summary>
+                            <summary>Irvin I Zeavin (158) <span class="spouse" data-lang-content="+">+ Barbara Ione Chesen (159)</span></summary>
                             <ul>
-                              <li>Robert Alan Zeavin (82) <span class="note">(1)</span></li>
+                              <li>Robert Alan Zeavin (82) <span class="note" data-lang-key="branch_note">(1)</span></li>
                               <li>Michael Jeffrey Zeavin (84)</li>
-                              <li>Lynne Marie Zeavin (86) <span class="note">(2)</span> — <span class="spouse">+ Robin Marian Michener (161)</span></li>
-                              <li>Andrew R Zeavin (89) <span class="note">(3)</span></li>
-                              <li>Bernard Harold Zeavin (162) <span class="note">(4)</span></li>
-                              <li>Beverly Anne Zeavin (164) — <span class="spouse">+ William Pitt Riley (165)</span>
+                              <li>Lynne Marie Zeavin (86) <span class="note" data-lang-key="branch_note">(2)</span> <span class="spouse" data-lang-content="+">+ Robin Marian Michener (161)</span></li>
+                              <li>Andrew R Zeavin (89) <span class="note" data-lang-key="branch_note">(3)</span></li>
+                              <li>Bernard Harold Zeavin (162) <span class="note" data-lang-key="branch_note">(4)</span></li>
+                              <li>Beverly Anne Zeavin (164) <span class="spouse" data-lang-content="+">+ William Pitt Riley (165)</span>
                                 <ul>
-                                  <li>Susan Lauren Riley (100) <span class="note">(5)</span></li>
-                                  <li>Jill Alexandra Riley (102) <span class="note">(6)</span></li>
+                                  <li>Susan Lauren Riley (100) <span class="note" data-lang-key="branch_note">(5)</span></li>
+                                  <li>Jill Alexandra Riley (102) <span class="note" data-lang-key="branch_note">(6)</span></li>
                                 </ul>
                               </li>
                             </ul>
@@ -170,20 +207,20 @@
                       </ul>
                     </details>
                   </li>
-                  <li>Samuel Kasner (202) — <span class="spouse">+ Anne Ostrofsky (203)</span></li>
-                  <li>Sidney Morley Kasner (168) <span class="note">(7)</span></li>
+                  <li>Samuel Kasner (202) <span class="spouse" data-lang-content="+">+ Anne Ostrofsky (203)</span></li>
+                  <li>Sidney Morley Kasner (168) <span class="note" data-lang-key="branch_note">(7)</span></li>
                   <li>Bernard Melvin Kasner (170)</li>
-                  <li>Maurice Kasner (204) — <span class="spouse">+ Violet Lillian Ballard (205)</span></li>
-                  <li>Kenneth Ballard Kasner (171) <span class="note">(8)</span></li>
-                  <li>Florence Kasner (206) — <span class="spouse">+ Sidney Freedman (207)</span>
+                  <li>Maurice Kasner (204) <span class="spouse" data-lang-content="+">+ Violet Lillian Ballard (205)</span></li>
+                  <li>Kenneth Ballard Kasner (171) <span class="note" data-lang-key="branch_note">(8)</span></li>
+                  <li>Florence Kasner (206) <span class="spouse" data-lang-content="+">+ Sidney Freedman (207)</span>
                     <ul>
-                      <li>Beverly Anne Freedman (174) <span class="note">(9)</span></li>
+                      <li>Beverly Anne Freedman (174) <span class="note" data-lang-key="branch_note">(9)</span></li>
                     </ul>
                   </li>
-                  <li>Rose Kasner (208) — <span class="spouse">+ Max Kaplan (209)</span>
+                  <li>Rose Kasner (208) <span class="spouse" data-lang-content="+">+ Max Kaplan (209)</span>
                     <ul>
-                      <li>Sharon Kaplan (176) <span class="note">(10)</span></li>
-                      <li>Brian Kaplan (178) <span class="note">(11)</span></li>
+                      <li>Sharon Kaplan (176) <span class="note" data-lang-key="branch_note">(10)</span></li>
+                      <li>Brian Kaplan (178) <span class="note" data-lang-key="branch_note">(11)</span></li>
                     </ul>
                   </li>
                 </ul>
@@ -192,19 +229,19 @@
 
             <li>
               <details>
-                <summary>Harry Browne (227) — <span class="spouse">+ Dora Browne (228)</span></summary>
+                <summary>Harry Browne (227) <span class="spouse" data-lang-content="+">+ Dora Browne (228)</span></summary>
                 <ul>
                   <li>Sally Browne (210)</li>
                   <li>
                     <details>
-                      <summary>Max Browne (211) — <span class="spouse">+ Betty Leah Smith (212)</span></summary>
+                      <summary>Max Browne (211) <span class="spouse" data-lang-content="+">+ Betty Leah Smith (212)</span></summary>
                       <ul>
-                        <li>Ronald Bernard Browne (180) <span class="note">(12)</span></li>
-                        <li>Barbara Browne (182) <span class="note">(13)</span></li>
+                        <li>Ronald Bernard Browne (180) <span class="note" data-lang-key="branch_note">(12)</span></li>
+                        <li>Barbara Browne (182) <span class="note" data-lang-key="branch_note">(13)</span></li>
                         <li>Anne Browne (214)</li>
-                        <li>Jack Browne (215) — <span class="spouse">+ Estelle Bernstein (216)</span></li>
-                        <li>Lawrence Browne (184) <span class="note">(14)</span></li>
-                        <li>Sharon Browne (186) <span class="note">(15)</span></li>
+                        <li>Jack Browne (215) <span class="spouse" data-lang-content="+">+ Estelle Bernstein (216)</span></li>
+                        <li>Lawrence Browne (184) <span class="note" data-lang-key="branch_note">(14)</span></li>
+                        <li>Sharon Browne (186) <span class="note" data-lang-key="branch_note">(15)</span></li>
                         <li>Stanley Browne (217)</li>
                       </ul>
                     </details>
@@ -215,21 +252,21 @@
 
             <li>
               <details>
-                <summary>Shmuel Bromberg (229) — <span class="spouse">+ Rivkah Birenbaum (230)</span></summary>
+                <summary>Shmuel Bromberg (229) <span class="spouse" data-lang-content="+">+ Rivkah Birenbaum (230)</span></summary>
                 <ul>
                   <li>
                     <details>
-                      <summary>Molly Bromberg (218) — <span class="spouse">+ Hymie Myers (219)</span></summary>
+                      <summary>Molly Bromberg (218) <span class="spouse" data-lang-content="+">+ Hymie Myers (219)</span></summary>
                       <ul>
-                        <li>Martin Myers (189) <span class="note">(16)</span></li>
-                        <li>Karen Myers (192) <span class="note">(17)</span></li>
+                        <li>Martin Myers (189) <span class="note" data-lang-key="branch_note">(16)</span></li>
+                        <li>Karen Myers (192) <span class="note" data-lang-key="branch_note">(17)</span></li>
                       </ul>
                     </details>
                   </li>
-                  <li>Moshe Yosef Bromberg (220) — <span class="spouse">+ Rachel Witta Weinberger (221)</span></li>
-                  <li>Rivka Bromberg (194) <span class="note">(18)</span></li>
-                  <li>Nesya Bromberg (196) <span class="note">(19)</span></li>
-                  <li>Shmuel Bromberg (198) <span class="note">(20)</span></li>
+                  <li>Moshe Yosef Bromberg (220) <span class="spouse" data-lang-content="+">+ Rachel Witta Weinberger (221)</span></li>
+                  <li>Rivka Bromberg (194) <span class="note" data-lang-key="branch_note">(18)</span></li>
+                  <li>Nesya Bromberg (196) <span class="note" data-lang-key="branch_note">(19)</span></li>
+                  <li>Shmuel Bromberg (198) <span class="note" data-lang-key="branch_note">(20)</span></li>
                   <li>David Bromberg (222)</li>
                   <li>Rachel Bromberg (223)</li>
                   <li>Abraham Abba Bromberg (224)</li>
@@ -243,12 +280,12 @@
 
     <!-- Page 2 -->
     <section class="page" id="page-2">
-      <h2>עמוד 2 — פירוט ענפים (1)–(9)</h2>
+      <h2 data-lang-key="page2_title">עמוד 2 — פירוט ענפים (1)–(9)</h2>
       <div class="tree">
         <details>
-          <summary>(1) Robert Alan Zeavin (82)</summary>
+          <summary data-lang-key="branch_title">(1) Robert Alan Zeavin (82)</summary>
           <ul>
-            <li>+ Yadira Vidal (83)
+            <li><span class="spouse" data-lang-content="+">+ Yadira Vidal (83)</span>
               <ul>
                 <li>Hadley Barbara Zeavin (7)</li>
                 <li>Georgia Cassidy Zeavin (8)</li>
@@ -258,9 +295,9 @@
         </details>
 
         <details>
-          <summary>(2) Lynne Marie Zeavin (86)</summary>
+          <summary data-lang-key="branch_title">(2) Lynne Marie Zeavin (86)</summary>
           <ul>
-            <li>+ Charles John Musser (87)
+            <li><span class="spouse" data-lang-content="+">+ Charles John Musser (87)</span>
               <ul>
                 <li>Hannah Zeavin (9)</li>
               </ul>
@@ -269,9 +306,9 @@
         </details>
 
         <details>
-          <summary>(3) Andrew R Zeavin (89)</summary>
+          <summary data-lang-key="branch_title">(3) Andrew R Zeavin (89)</summary>
           <ul>
-            <li>+ Jennifer Danielle Parton (90)
+            <li><span class="spouse" data-lang-content="+">+ Jennifer Danielle Parton (90)</span>
               <ul>
                 <li>Nathaniel Zeavin (11)</li>
               </ul>
@@ -280,17 +317,17 @@
         </details>
 
         <details>
-          <summary>(4) Bernard Harold Zeavin (162)</summary>
+          <summary data-lang-key="branch_title">(4) Bernard Harold Zeavin (162)</summary>
           <ul>
-            <li>+ Naomi Dolores Sokol (163)
+            <li><span class="spouse" data-lang-content="+">+ Naomi Dolores Sokol (163)</span>
               <ul>
                 <li>
                   <details>
-                    <summary>Gerald L MD Zeavin (91) — <span class="spouse">+ Rebecca Delano (92)</span></summary>
+                    <summary>Gerald L MD Zeavin (91) <span class="spouse" data-lang-content="+">+ Rebecca Delano (92)</span></summary>
                     <ul>
                       <li>
                         <details>
-                          <summary>William Zeavin (12) — <span class="spouse">+ Molly Tomek (13)</span></summary>
+                          <summary>William Zeavin (12) <span class="spouse" data-lang-content="+">+ Molly Tomek (13)</span></summary>
                           <ul>
                             <li>Daughter Zeavin (1)</li>
                             <li>Thatcher Zeavin (2)</li>
@@ -299,7 +336,7 @@
                       </li>
                       <li>
                         <details>
-                          <summary>Laura Brockway Zeavin (14) — <span class="spouse">+ Sean John Ferguson (15)</span></summary>
+                          <summary>Laura Brockway Zeavin (14) <span class="spouse" data-lang-content="+">+ Sean John Ferguson (15)</span></summary>
                           <ul>
                             <li>Ava Ferguson (3)</li>
                             <li>Max Ferguson (4)</li>
@@ -309,7 +346,7 @@
                       <li>Bradford Alan Zeavin (94)</li>
                       <li>
                         <details>
-                          <summary>Jill Robin Zeavin (95) — <span class="spouse">+ William Louis Payne (96)</span></summary>
+                          <summary>Jill Robin Zeavin (95) <span class="spouse" data-lang-content="+">+ William Louis Payne (96)</span></summary>
                           <ul>
                             <li>William Taylor Payne (16)</li>
                           </ul>
@@ -317,7 +354,7 @@
                       </li>
                       <li>
                         <details>
-                          <summary>Spencer Tracy Zeavin (98) — <span class="spouse">+ Jennifer Wheat (99)</span></summary>
+                          <summary>Spencer Tracy Zeavin (98) <span class="spouse" data-lang-content="+">+ Jennifer Wheat (99)</span></summary>
                           <ul>
                             <li>Peyton Samuel Zeavin (17)</li>
                           </ul>
@@ -331,9 +368,9 @@
         </details>
 
         <details>
-          <summary>(5) Susan Lauren Riley (100)</summary>
+          <summary data-lang-key="branch_title">(5) Susan Lauren Riley (100)</summary>
           <ul>
-            <li>+ David Isaac Thompson (101)
+            <li><span class="spouse" data-lang-content="+">+ David Isaac Thompson (101)</span>
               <ul>
                 <li>Piper Toby Riley Thompson (18)</li>
                 <li>Belle Scout Riley Thompson (19)</li>
@@ -343,9 +380,9 @@
         </details>
 
         <details>
-          <summary>(6) Jill Alexandra Riley (102)</summary>
+          <summary data-lang-key="branch_title">(6) Jill Alexandra Riley (102)</summary>
           <ul>
-            <li>+ Ron Hawkins (103)
+            <li><span class="spouse" data-lang-content="+">+ Ron Hawkins (103)</span>
               <ul>
                 <li>Ruby B Hawkins (20)</li>
               </ul>
@@ -354,14 +391,14 @@
         </details>
 
         <details>
-          <summary>(7) Sidney Morley Kasner (168)</summary>
+          <summary data-lang-key="branch_title">(7) Sidney Morley Kasner (168)</summary>
           <ul>
-            <li>+ Elizabeth Margaret Dawyduk (169)
+            <li><span class="spouse" data-lang-content="+">+ Elizabeth Margaret Dawyduk (169)</span>
               <ul>
                 <li>Deborah Lynn Kasner (104)</li>
                 <li>
                   <details>
-                    <summary>Tracy Leah Kasner (106) — <span class="spouse">+ David Greaves (107)</span></summary>
+                    <summary>Tracy Leah Kasner (106) <span class="spouse" data-lang-content="+">+ David Greaves (107)</span></summary>
                     <ul>
                       <li>Nesya Ann Greaves (21)</li>
                       <li>Aaron Kasner Greaves (22)</li>
@@ -374,9 +411,9 @@
         </details>
 
         <details>
-          <summary>(8) Kenneth Ballard Kasner (171)</summary>
+          <summary data-lang-key="branch_title">(8) Kenneth Ballard Kasner (171)</summary>
           <ul>
-            <li>+ Susan Kay Ishmael-Royer (172)
+            <li><span class="spouse" data-lang-content="+">+ Susan Kay Ishmael-Royer (172)</span>
               <ul>
                 <li>Kristofor A Kasner (109)</li>
                 <li>Keith Alexanderbal Kasner (111)</li>
@@ -386,9 +423,9 @@
         </details>
 
         <details>
-          <summary>(9) Beverly Anne Freedman (174)</summary>
+          <summary data-lang-key="branch_title">(9) Beverly Anne Freedman (174)</summary>
           <ul>
-            <li>+ James Lauder (Jim) Brunton (175)
+            <li><span class="spouse" data-lang-content="+">+ James Lauder (Jim) Brunton (175)</span>
               <ul>
                 <li>Robert James Brunton (113)</li>
               </ul>
@@ -400,12 +437,12 @@
 
     <!-- Page 3 -->
     <section class="page" id="page-3">
-      <h2>עמוד 3 — פירוט ענפים (10)–(17)</h2>
+      <h2 data-lang-key="page3_title">עמוד 3 — פירוט ענפים (10)–(17)</h2>
       <div class="tree">
         <details>
-          <summary>(10) Sharon Kaplan (176)</summary>
+          <summary data-lang-key="branch_title">(10) Sharon Kaplan (176)</summary>
           <ul>
-            <li>+ Mel Myers (177)
+            <li><span class="spouse" data-lang-content="+">+ Mel Myers (177)</span>
               <ul>
                 <li>Noel Myers (114)</li>
                 <li>Sarah Myers (115)</li>
@@ -416,9 +453,9 @@
         </details>
 
         <details>
-          <summary>(11) Brian Kaplan (178)</summary>
+          <summary data-lang-key="branch_title">(11) Brian Kaplan (178)</summary>
           <ul>
-            <li>+ Renee Kimmel (179)
+            <li><span class="spouse" data-lang-content="+">+ Renee Kimmel (179)</span>
               <ul>
                 <li>Harris Kaplan (117)</li>
                 <li>Rachel Kaplan (118)</li>
@@ -428,13 +465,13 @@
         </details>
 
         <details>
-          <summary>(12) Ronald Bernard Browne (180)</summary>
+          <summary data-lang-key="branch_title">(12) Ronald Bernard Browne (180)</summary>
           <ul>
-            <li>+ Sheila Hoffman (181)
+            <li><span class="spouse" data-lang-content="+">+ Sheila Hoffman (181)</span>
               <ul>
                 <li>
                   <details>
-                    <summary>Sanford Browne (119) — <span class="spouse">+ Lisa Berman (120)</span></summary>
+                    <summary>Sanford Browne (119) <span class="spouse" data-lang-content="+">+ Lisa Berman (120)</span></summary>
                     <ul>
                       <li>Noah Kyle Browne (24)</li>
                       <li>Spencer Jacob Browne (25)</li>
@@ -449,21 +486,21 @@
         </details>
 
         <details>
-          <summary>(13) Barbara Browne (182)</summary>
+          <summary data-lang-key="branch_title">(13) Barbara Browne (182)</summary>
           <ul>
-            <li>+ Stanley Earl Goldman (183)
+            <li><span class="spouse" data-lang-content="+">+ Stanley Earl Goldman (183)</span>
               <ul>
                 <li>Glenn Goldman (122)</li>
               </ul>
             </li>
-            <li>+ Beryl Tsang (123)
+            <li><span class="spouse" data-lang-content="+">+ Beryl Tsang (123)</span>
               <ul>
                 <li>Leah Mariam Goldman (27)</li>
                 <li>Marshall Don Goldman (28)</li>
                 <li>Carolynn Goldman (124)</li>
                 <li>
                   <details>
-                    <summary>Paul Goldman (126) — <span class="spouse">+ Martha Elizabeth Papsin (127)</span></summary>
+                    <summary>Paul Goldman (126) <span class="spouse" data-lang-content="+">+ Martha Elizabeth Papsin (127)</span></summary>
                     <ul>
                       <li>Russell Goldman (29)</li>
                       <li>Daniel Goldman (30)</li>
@@ -476,13 +513,13 @@
         </details>
 
         <details>
-          <summary>(14) Lawrence Browne (184)</summary>
+          <summary data-lang-key="branch_title">(14) Lawrence Browne (184)</summary>
           <ul>
-            <li>+ Judith M Kalenson (185)
+            <li><span class="spouse" data-lang-content="+">+ Judith M Kalenson (185)</span>
               <ul>
                 <li>
                   <details>
-                    <summary>Daniel Alexander Browne (128) — <span class="spouse">+ Lisa Cericola (129)</span></summary>
+                    <summary>Daniel Alexander Browne (128) <span class="spouse" data-lang-content="+">+ Lisa Cericola (129)</span></summary>
                     <ul>
                       <li>Theo Browne (31)</li>
                     </ul>
@@ -494,14 +531,14 @@
         </details>
 
         <details>
-          <summary>(15) Sharon Browne (186)</summary>
+          <summary data-lang-key="branch_title">(15) Sharon Browne (186)</summary>
           <ul>
-            <li>+ Mr. Israel (188)
+            <li><span class="spouse" data-lang-content="+">+ Mr. Israel (188)</span>
               <ul>
                 <li>Shauna Israel (130)</li>
               </ul>
             </li>
-            <li>+ Stephen Isenberg (131)
+            <li><span class="spouse" data-lang-content="+">+ Stephen Isenberg (131)</span>
               <ul>
                 <li>Lauren Isenberg (32)</li>
                 <li>Megan Isenberg (33)</li>
@@ -511,21 +548,21 @@
         </details>
 
         <details>
-          <summary>(16) Martin Myers (189)</summary>
+          <summary data-lang-key="branch_title">(16) Martin Myers (189)</summary>
           <ul>
-            <li>+ Nancy Myers (190)
+            <li><span class="spouse" data-lang-content="+">+ Nancy Myers (190)</span>
               <ul>
                 <li>Carla Myers (132)</li>
                 <li>Peter Myers (34)</li>
                 <li>
                   <details>
-                    <summary>Rebecca Myers (133) — <span class="spouse">+ Scott Labby (134)</span></summary>
+                    <summary>Rebecca Myers (133) <span class="spouse" data-lang-content="+">+ Scott Labby (134)</span></summary>
                     <ul>
                       <li>Maren Labby (35)</li>
                     </ul>
                   </details>
                 </li>
-                <li>+ Seth Frader-Thompson (135)
+                <li><span class="spouse" data-lang-content="+">+ Seth Frader-Thompson (135)</span>
                   <ul>
                     <li>Sam Frader-Thompson (36)</li>
                   </ul>
@@ -536,9 +573,9 @@
         </details>
 
         <details>
-          <summary>(17) Karen Myers (192)</summary>
+          <summary data-lang-key="branch_title">(17) Karen Myers (192)</summary>
           <ul>
-            <li>+ Bob Yukich (193)
+            <li><span class="spouse" data-lang-content="+">+ Bob Yukich (193)</span>
               <ul>
                 <li>Aaron Yukich (136)</li>
               </ul>
@@ -550,15 +587,15 @@
 
     <!-- Page 4 -->
     <section class="page" id="page-4">
-      <h2>עמוד 4 — פירוט ענפים (18)–(20)</h2>
+      <h2 data-lang-key="page4_title">עמוד 4 — פירוט ענפים (18)–(20)</h2>
       <div class="tree">
         <details open>
-          <summary>(18) Rivka Bromberg (194) — <span class="spouse">+ Nissim Pilosof (195)</span></summary>
+          <summary data-lang-key="branch_title">(18) Rivka Bromberg (194) <span class="spouse" data-lang-content="+">+ Nissim Pilosof (195)</span></summary>
           <ul>
             <li>Noah Pilosof (138)</li>
             <li>
               <details>
-                <summary>Oren Pilosof (139) — <span class="spouse">+ Aya Unknown (140)</span></summary>
+                <summary>Oren Pilosof (139) <span class="spouse" data-lang-content="+">+ Aya Unknown (140)</span></summary>
                 <ul>
                   <li>Ayala Pilosof (37)</li>
                 </ul>
@@ -566,7 +603,7 @@
             </li>
             <li>
               <details>
-                <summary>Shai Pilosof (141) — <span class="spouse">+ Ms. Unknown (142)</span></summary>
+                <summary>Shai Pilosof (141) <span class="spouse" data-lang-content="+">+ Ms. Unknown (142)</span></summary>
                 <ul>
                   <li>Ofek Pilosof (38)</li>
                   <li>Gal Pilosof (39)</li>
@@ -578,18 +615,18 @@
         </details>
 
         <details open>
-          <summary>(19) Nesya Bromberg (196) — <span class="spouse">+ Aryeh Junger (197)</span></summary>
+          <summary data-lang-key="branch_title">(19) Nesya Bromberg (196) <span class="spouse" data-lang-content="+">+ Aryeh Junger (197)</span></summary>
           <ul>
             <li>
               <details>
-                <summary>Eran Junger (143) — <span class="spouse">+ Anat Unknown (144)</span></summary>
+                <summary>Eran Junger (143) <span class="spouse" data-lang-content="+">+ Anat Unknown (144)</span></summary>
                 <ul>
                   <li>Moshe Eitan Junger (41)</li>
                   <li>Ayala Junger (42)</li>
                   <li>Naomi Junger (43)</li>
                   <li>Talya Junger (44)</li>
                   <li>Levi Yitzhak Junger (45)</li>
-                  <li>Eshdat Junger (46) — <span class="spouse">+ Srael Unknown (47)</span>
+                  <li>Eshdat Junger (46) <span class="spouse" data-lang-content="+">+ Srael Unknown (47)</span>
                     <ul>
                       <li>Mr. Unknown (5)</li>
                     </ul>
@@ -601,12 +638,12 @@
             </li>
             <li>
               <details>
-                <summary>Ohad Junger (145) — <span class="spouse">+ Yael Unknown (146)</span></summary>
+                <summary>Ohad Junger (145) <span class="spouse" data-lang-content="+">+ Yael Unknown (146)</span></summary>
                 <ul>
                   <li>Oriya Matan Junger (50)</li>
                   <li>
                     <details>
-                      <summary>Tal Junger (51) — <span class="spouse">+ Maor Barjel (52)</span></summary>
+                      <summary>Tal Junger (51) <span class="spouse" data-lang-content="+">+ Maor Barjel (52)</span></summary>
                       <ul>
                         <li>Yonatan Barjel (6)</li>
                         <li>Noam Junger (53)</li>
@@ -620,7 +657,7 @@
             </li>
             <li>
               <details>
-                <summary>Alon Junger (147) — <span class="spouse">+ Sivan Unknown (148)</span></summary>
+                <summary>Alon Junger (147) <span class="spouse" data-lang-content="+">+ Sivan Unknown (148)</span></summary>
                 <ul>
                   <li>Mia Junger (56)</li>
                   <li>Gal Junger (57)</li>
@@ -629,7 +666,7 @@
             </li>
             <li>
               <details>
-                <summary>Michal Junger (149) — <span class="spouse">+ Natti Ben Moshe (150)</span></summary>
+                <summary>Michal Junger (149) <span class="spouse" data-lang-content="+">+ Natti Ben Moshe (150)</span></summary>
                 <ul>
                   <li>Yonatan Ben Moshe (58)</li>
                   <li>Inon Ben Moshe (60)</li>
@@ -649,11 +686,11 @@
         </details>
 
         <details>
-          <summary>(20) Shmuel Bromberg (198) — <span class="spouse">+ Chana Noa Izaks (199)</span></summary>
+          <summary data-lang-key="branch_title">(20) Shmuel Bromberg (198) <span class="spouse" data-lang-content="+">+ Chana Noa Izaks (199)</span></summary>
           <ul>
             <li>
               <details>
-                <summary>Noga Bromberg (152) — <span class="spouse">+ Avi Grossman (153)</span></summary>
+                <summary>Noga Bromberg (152) <span class="spouse" data-lang-content="+">+ Avi Grossman (153)</span></summary>
                 <ul>
                   <li>Roi Baruch Grossman (70)</li>
                   <li>Maayan Ziva Grossman (71)</li>
@@ -665,7 +702,7 @@
             </li>
             <li>
               <details>
-                <summary>Merav Bromberg (154) — <span class="spouse">+ Yanai Ben Abou (155)</span></summary>
+                <summary>Merav Bromberg (154) <span class="spouse" data-lang-content="+">+ Yanai Ben Abou (155)</span></summary>
                 <ul>
                   <li>Yair Moshe Ben Abou (75)</li>
                   <li>Avishai Yosef Ben Abou (76)</li>
@@ -676,7 +713,7 @@
             </li>
             <li>
               <details>
-                <summary>Amitai Bromberg (156) — <span class="spouse">+ Noga Amran (157)</span></summary>
+                <summary>Amitai Bromberg (156) <span class="spouse" data-lang-content="+">+ Noga Amran (157)</span></summary>
                 <ul>
                   <li>Ido Baruch Bromberg (79)</li>
                   <li>Hadas Rachel Bromberg (80)</li>
@@ -691,13 +728,149 @@
 
     <!-- Page 5 -->
     <section class="page" id="page-5">
-      <h2>עמוד 5</h2>
-      <p class="note">זהו סוף הרשימה כרגע. תוכל להוסיף צאצאים נוספים בהמשך.</p>
+      <h2 data-lang-key="page5_title">עמוד 5</h2>
+      <p class="note">
+        <span data-lang-key="end_note_1">זהו סוף הרשימה כרגע.</span>
+        <span data-lang-key="end_note_2">תוכל להוסיף צאצאים נוספים בהמשך.</span>
+      </p>
     </section>
 
     <footer>
-      <p class="note">ניתן להציע תיקונים באמצעות <a href="https://our-family-tree.onrender.com/update-request.html"> הטופס הבא</a>.</p>
+      <p class="note">
+        <span data-lang-key="footer_note">ניתן להציע תיקונים באמצעות</span>
+        <a href="https://our-family-tree.onrender.com/update-request.html" data-lang-key="footer_link">הטופס הבא</a>.
+      </p>
     </footer>
   </div>
+
+  <script>
+    // Translation data for UI elements
+    const translations = {
+      // General UI Texts
+      app_title: {
+        he: "ספר משפחתי דיגיטלי — Moshe Haim Bromberg",
+        en: "Digital Family Book — Moshe Haim Bromberg",
+        fr: "Livre de Famille Numérique — Moshe Haim Bromberg",
+        yi: "דיגיטאַל פאַמיליע בוך — Moshe Haim Bromberg"
+      },
+      header_desc: {
+        he: "עץ יוּחָסין — צאצאים וענפים. ניתן להרחיב כל ענף.",
+        en: "Genealogy Tree — Descendants and Branches. Expand any branch.",
+        fr: "Arbre Généalogique — Descendants et Branches. Développez n'importe quelle branche.",
+        yi: "ייִחוס בוים — קינדער און צווייגן. איר קענט עפֿענען יעדן צווייג."
+      },
+      controls_note: {
+        he: "לחץ על ענף כדי להרחיב/לסגור.",
+        en: "Click a branch to expand/collapse.",
+        fr: "Cliquez sur une branche pour développer/réduire.",
+        yi: "דרוקט אַ צווייג צו עפֿענען/פֿאַרמאַכן."
+      },
+      page_nav_note: {
+        he: "לדפדוף — השתמש בניווט בעמודים למטה.",
+        en: "To browse — use page navigation below.",
+        fr: "Pour naviguer — utilisez la navigation par page ci-dessous.",
+        yi: "צו בלעטערן — ניצט די בלעטער־נאַוויגאַציע אונטן."
+      },
+      // Page Titles (Parameterized)
+      page1_title: {
+        he: "עמוד 1 — Moshe Haim Bromberg (231) — צאצאים",
+        en: "Page 1 — Moshe Haim Bromberg (231) — Descendants",
+        fr: "Page 1 — Moshe Haim Bromberg (231) — Descendants",
+        yi: "בלאַט 1 — Moshe Haim Bromberg (231) — קינדער"
+      },
+      page2_title: {
+        he: "עמוד 2 — פירוט ענפים (1)–(9)",
+        en: "Page 2 — Branch Details (1)–(9)",
+        fr: "Page 2 — Détails des Branches (1)–(9)",
+        yi: "בלאַט 2 — צווייג דעטאַלן (1)–(9)"
+      },
+      page3_title: {
+        he: "עמוד 3 — פירוט ענפים (10)–(17)",
+        en: "Page 3 — Branch Details (10)–(17)",
+        fr: "Page 3 — Détails des Branches (10)–(17)",
+        yi: "בלאַט 3 — צווייג דעטאַלן (10)–(17)"
+      },
+      page4_title: {
+        he: "עמוד 4 — פירוט ענפים (18)–(20)",
+        en: "Page 4 — Branch Details (18)–(20)",
+        fr: "Page 4 — Détails des Branches (18)–(20)",
+        yi: "בלאַט 4 — צווייג דעטאַלן (18)–(20)"
+      },
+      page5_title: {
+        he: "עמוד 5",
+        en: "Page 5",
+        fr: "Page 5",
+        yi: "בלאַט 5"
+      },
+      // Notes
+      end_note_1: {
+        he: "זהו סוף הרשימה כרגע.",
+        en: "This is the end of the current list.",
+        fr: "C'est la fin de la liste actuelle.",
+        yi: "דאָס איז דער סוף פֿון דער רשימה יעצט."
+      },
+      end_note_2: {
+        he: "תוכל להוסיף צאצאים נוספים בהמשך.",
+        en: "You can add more descendants later.",
+        fr: "Vous pouvez ajouter d'autres descendants plus tard.",
+        yi: "איר קענט שפּעטער צולייגן נאָך קינדער."
+      },
+      footer_note: {
+        he: "ניתן להציע תיקונים באמצעות",
+        en: "Corrections can be suggested using",
+        fr: "Des corrections peuvent être suggérées via",
+        yi: "קאָרעקציעס קענען פֿאָרגעלייגט ווערן דורך"
+      },
+      footer_link: {
+        he: "הטופס הבא",
+        en: "this form",
+        fr: "ce formulaire",
+        yi: "די דאָזיקע פאָרעם"
+      },
+      // Symbols / Markers
+      spouse_marker: {
+        he: "+",
+        en: "+",
+        fr: "+",
+        yi: "מיט" // Yiddish often uses "mit" (with) for spouse
+      },
+    };
+
+    /**
+     * Changes the language of the page content.
+     * @param {string} lang - The target language ('he', 'en', 'fr', 'yi').
+     */
+    function setLanguage(lang) {
+      // 1. Update HTML language and direction attributes
+      document.documentElement.lang = lang;
+      // Set direction based on language (Yiddish is typically RTL, others are LTR/RTL)
+      document.documentElement.dir = (lang === 'he' || lang === 'yi') ? 'rtl' : 'ltr';
+
+      // 2. Translate elements using data-lang-key
+      for (const key in translations) {
+        const elements = document.querySelectorAll(`[data-lang-key="${key}"]`);
+        elements.forEach(el => {
+          // Fallback to English if translation is missing
+          el.textContent = translations[key][lang] || translations[key]['en'];
+        });
+      }
+
+      // 3. Handle specific spouse markers (using pseudo-elements via data-lang-content)
+      const spouseMarker = translations.spouse_marker[lang] || translations.spouse_marker['en'];
+      const spouseElements = document.querySelectorAll('.spouse');
+      spouseElements.forEach(el => {
+        el.setAttribute('data-lang-content', spouseMarker);
+      });
+      
+      // 4. Update active button state
+      document.querySelectorAll('.language-controls button').forEach(button => {
+        button.classList.remove('active');
+      });
+      const activeBtn = document.getElementById(`lang-${lang}`);
+      if (activeBtn) {
+        activeBtn.classList.add('active');
+      }
+    }
+  </script>
 </body>
 </html>
