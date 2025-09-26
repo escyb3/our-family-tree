@@ -11,7 +11,7 @@
             font-family: 'Inter', sans-serif;
             background-color: #f3f4f6;
         }
-        /* Full-screen loading overlay */
+        /* Full-screen loading overlay with transition */
         #loading-container {
             position: fixed;
             top: 0;
@@ -23,6 +23,12 @@
             align-items: center;
             justify-content: center;
             z-index: 50;
+            opacity: 1;
+            transition: opacity 0.5s ease-out; /* Add a smooth fade-out effect */
+        }
+        #loading-container.hidden {
+            opacity: 0;
+            pointer-events: none; /* Make the container non-interactive when hidden */
         }
     </style>
 </head>
