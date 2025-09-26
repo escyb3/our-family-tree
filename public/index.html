@@ -237,37 +237,21 @@ const updateContent = (lang, isLoggedIn, user) => {
             // עדכון HTML, dir ו-title
 
             document.documentElement.lang = lang;
-
             document.documentElement.setAttribute("dir", (lang === "he" || lang === "yi") ? "rtl" : "ltr");
-
             document.title = texts.title;
-
-
-
+    
             const textElementsMap = {
-
                 "welcomeTitle": "welcomeTitle",
-
                 "welcomeSubtitle": "welcomeSubtitle",
-
                 "search-title": "searchTitle",
-
                 "search-input": "searchPlaceholder",
-
                 "sectionWelcome": "sectionWelcome",
-
                 "intro1": "intro1",
-
                 "intro2": "intro2",
-
                 "sectionTree": "sectionTree",
-
                 "newsTitle": "newsTitle",
-
                 "footerText": "footerText",
-
                 "adminLink": "adminLink"
-
             };
 
 
