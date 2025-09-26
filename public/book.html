@@ -75,8 +75,13 @@
 
                 const user = await response.json();
 
+                // Check if the familySide property exists in the response
+                if (!user || !user.familySide) {
+                    throw new Error("נתונים לא תקינים מהשרת: המאפיין familySide חסר או לא מוגדר.");
+                }
+
                 // Display user details
-                userNameSpan.textContent = user.name;
+                userNameSpan.textContent = user.name || "לא זוהה";
                 userFamilySideSpan.textContent = user.familySide;
 
                 // Now, fetch the content of the specific family book file
@@ -95,7 +100,10 @@
             } catch (error) {
                 // Handle any errors that occur during the fetch process
                 console.error("שגיאה בטעינת הנתונים:", error);
-                loadingContainer.innerHTML = `<p class="text-red-500 text-lg">אירעה שגיאה בטעינת הנתונים: ${error.message}</p>`;
+                loadingContainer.innerHTML = `<div class="p-6 rounded-xl bg-red-100 text-red-700 border border-red-300 shadow-md">
+                    <p class="font-bold text-xl mb-2">אירעה שגיאה</p>
+                    <p class="text-lg">${error.message}. אנא ודא שהשרת בנתיב /api/user מחזיר נתונים תקינים.</p>
+                </div>`;
                 return; // Stop execution to prevent showing the main content
             }
 
