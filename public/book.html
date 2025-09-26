@@ -107,15 +107,9 @@
                 // הזרקת התוכן לעמוד הראשי
                 familyBookContent.innerHTML = bookContent;
 
-                // הצגת הודעת הצלחה לפני המעבר
-                loadingSpinner.classList.add('hidden');
-                loadingMessage.textContent = "הטעינה הושלמה בהצלחה!";
-                
-                // הסתרת מסך הטעינה והצגת התוכן הראשי לאחר עיכוב קצר
-                setTimeout(() => {
-                    loadingContainer.classList.add('hidden');
-                    mainContent.classList.remove('hidden');
-                }, 500); // עיכוב קצר כדי שהמשתמש יספיק לראות את הודעת ההצלחה
+                // הסתרת מסך הטעינה והצגת התוכן הראשי מיד
+                loadingContainer.classList.add('hidden');
+                mainContent.classList.remove('hidden');
 
             } catch (error) {
                 // טיפול בשגיאות שמתרחשות במהלך תהליך ה-fetch
