@@ -73,7 +73,11 @@
                     throw new Error(`שגיאת HTTP: ${response.status}`);
                 }
 
-                const user = await response.json();
+                // Get the full response data
+                const data = await response.json();
+
+                // Access the user object correctly from the nested structure
+                const user = data.user;
 
                 // Check if the familySide property exists in the response
                 if (!user || !user.familySide) {
@@ -81,7 +85,8 @@
                 }
 
                 // Display user details
-                userNameSpan.textContent = user.name || "לא זוהה";
+                // Note: The server code returns a 'username' property, not 'name'
+                userNameSpan.textContent = user.username || "לא זוהה";
                 userFamilySideSpan.textContent = user.familySide;
 
                 // Now, fetch the content of the specific family book file
