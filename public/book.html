@@ -30,11 +30,12 @@
 
     <!-- Full-screen loading overlay -->
     <div id="loading-container" class="flex flex-col items-center justify-center">
-        <svg class="animate-spin h-12 w-12 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <!-- The content inside this div will be updated dynamically -->
+        <svg id="loading-spinner" class="animate-spin h-12 w-12 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
-        <p class="text-gray-600 mt-4 text-lg">טוען נתוני משתמש...</p>
+        <p id="loading-message" class="text-gray-600 mt-4 text-lg">טוען נתוני משתמש...</p>
     </div>
 
     <!-- Container for the main application content -->
@@ -57,39 +58,43 @@
     </div>
 
     <script>
-        // Use window.onload to ensure the DOM is fully loaded before running the script
+        // שימוש ב-window.onload כדי להבטיח שה-DOM נטען במלואו לפני הרצת הסקריפט
         window.onload = async function() {
             const loadingContainer = document.getElementById('loading-container');
             const mainContent = document.getElementById('main-content');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const loadingMessage = document.getElementById('loading-message');
             const userNameSpan = document.querySelector('#userName span');
             const userFamilySideSpan = document.querySelector('#userFamilySide span');
             const familyBookContent = document.getElementById('familyBookContent');
 
             try {
-                // Fetch user data from the real API endpoint
+                // שלב 1: קבלת נתוני המשתמש מהשרת
+                loadingMessage.textContent = "מזהה משתמש...";
                 const response = await fetch('/api/user');
 
                 if (!response.ok) {
                     throw new Error(`שגיאת HTTP: ${response.status}`);
                 }
 
-                // Get the full response data
+                // קבלת נתוני התגובה המלאים
                 const data = await response.json();
 
-                // Access the user object correctly from the nested structure
+                // גישה לאובייקט המשתמש הנכון מהמבנה המקונן
                 const user = data.user;
 
-                // Check if the familySide property exists in the response
+                // בדיקה אם המאפיין familySide קיים בתגובה
                 if (!user || !user.familySide) {
                     throw new Error("נתונים לא תקינים מהשרת: המאפיין familySide חסר או לא מוגדר.");
                 }
 
-                // Display user details
-                // Note: The server code returns a 'username' property, not 'name'
+                // הצגת פרטי המשתמש
+                // הערה: קוד השרת מחזיר את המאפיין 'username', לא 'name'
                 userNameSpan.textContent = user.username || "לא זוהה";
                 userFamilySideSpan.textContent = user.familySide;
 
-                // Now, fetch the content of the specific family book file
+                // שלב 2: טעינת תוכן ספר המשפחה
+                loadingMessage.textContent = "טוען את ספר המשפחה...";
                 const familyBookUrl = `books/${user.familySide}.html`;
                 const bookResponse = await fetch(familyBookUrl);
 
@@ -99,22 +104,29 @@
                 
                 const bookContent = await bookResponse.text();
 
-                // Inject the content into the main page
+                // הזרקת התוכן לעמוד הראשי
                 familyBookContent.innerHTML = bookContent;
 
+                // הצגת הודעת הצלחה לפני המעבר
+                loadingSpinner.classList.add('hidden');
+                loadingMessage.textContent = "הטעינה הושלמה בהצלחה!";
+                
+                // הסתרת מסך הטעינה והצגת התוכן הראשי לאחר עיכוב קצר
+                setTimeout(() => {
+                    loadingContainer.classList.add('hidden');
+                    mainContent.classList.remove('hidden');
+                }, 500); // עיכוב קצר כדי שהמשתמש יספיק לראות את הודעת ההצלחה
+
             } catch (error) {
-                // Handle any errors that occur during the fetch process
+                // טיפול בשגיאות שמתרחשות במהלך תהליך ה-fetch
                 console.error("שגיאה בטעינת הנתונים:", error);
+                loadingSpinner.classList.add('hidden');
                 loadingContainer.innerHTML = `<div class="p-6 rounded-xl bg-red-100 text-red-700 border border-red-300 shadow-md">
                     <p class="font-bold text-xl mb-2">אירעה שגיאה</p>
-                    <p class="text-lg">${error.message}. אנא ודא שהשרת בנתיב /api/user מחזיר נתונים תקינים.</p>
+                    <p class="text-lg">${error.message}.</p>
                 </div>`;
-                return; // Stop execution to prevent showing the main content
+                return; // עוצר את ההרצה כדי למנוע הצגת התוכן הראשי
             }
-
-            // Hide the loading overlay and show the main content
-            loadingContainer.classList.add('hidden');
-            mainContent.classList.remove('hidden');
         };
     </script>
 </body>
