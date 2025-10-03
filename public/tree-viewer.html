@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="he">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +19,7 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2), 0 0 40px rgba(59, 130, 246, 0.4);
         }
+        /* Tree Node Styles */
         .tree-node {
             position: relative;
             padding: 1rem;
@@ -91,15 +92,12 @@
                 <p id="status-message" class="text-lg md:text-xl text-gray-500"></p>
             </div>
         </header>
-
         <main id="content-container" class="w-full overflow-x-auto p-4"></main>
-
         <div id="error-message" class="hidden text-center mt-10 p-6 bg-red-200 text-red-800 rounded-lg glowing-border">
             <p class="font-bold text-xl mb-2" data-he="שגיאה: לא ניתן לטעון את הנתונים." data-en="Error: Could not load data.">שגיאה: לא ניתן לטעון את הנתונים.</p>
             <p data-he="אנא ודא שהינך מחובר ונסה שוב מאוחר יותר." data-en="Please ensure you are logged in and try again later.">אנא ודא שהינך מחובר ונסה שוב מאוחר יותר.</p>
         </div>
     </div>
-
     <script>
         const statusMessageEl = document.getElementById('status-message');
         const contentContainerEl = document.getElementById('content-container');
@@ -110,13 +108,13 @@
         const i18n = {
             'he': {
                 'loading_user': 'בודק חיבור משתמש...',
-                'loading_family': (family) => `טוען נתונים עבור משפחת ${family}...`,
+                'loading_family': (family) => `טוען נתונים עבור משפחת ${family}`,
                 'success': 'הנתונים נטענו בהצלחה!',
+                'success_fallback': 'הנתונים נטענו בהצלחה! (מקור חלופי)',
                 'no_user_family': 'שגיאה: לא ניתן לזהות את משפחת המשתמש. יש לוודא שהינך מחובר.',
                 'network_error': 'שגיאת רשת או שהמשתמש לא מחובר',
                 'no_user_details': 'לא ניתן לטעון את פרטי המשתמש. אנא התחבר/י ונסה/י שוב.',
-                'no_family_data': 'שגיאת רשת או שהנתונים לא זמינים.',
-                'no_family_data_message': 'לא ניתן לטעון את נתוני המשפחה.',
+                'no_family_data_message': 'לא ניתן לטעון את נתוני המשפחה מאף מקור.',
                 'origin': 'מוצא',
                 'members': 'חברי משפחה',
                 'toggle_to_en': 'English',
@@ -124,13 +122,13 @@
             },
             'en': {
                 'loading_user': 'Checking user connection...',
-                'loading_family': (family) => `Loading data for the ${family} family...`,
+                'loading_family': (family) => `Loading data for the ${family} family`,
                 'success': 'Data loaded successfully!',
+                'success_fallback': 'Data loaded successfully! (Fallback source)',
                 'no_user_family': 'Error: Could not identify user\'s family. Please ensure you are logged in.',
                 'network_error': 'Network error or user is not logged in',
                 'no_user_details': 'Could not load user details. Please log in and try again.',
-                'no_family_data': 'Network error or data is not available.',
-                'no_family_data_message': 'Could not load family data.',
+                'no_family_data_message': 'Could not load family data from any source.',
                 'origin': 'Origin',
                 'members': 'Family Members',
                 'toggle_to_en': 'English',
@@ -139,7 +137,6 @@
         };
 
         let currentLang = 'he';
-
         const updateUIStrings = () => {
             document.body.dir = currentLang === 'he' ? 'rtl' : 'ltr';
             appContainerEl.dir = currentLang === 'he' ? 'rtl' : 'ltr';
@@ -181,33 +178,93 @@
             }
         };
 
+        /**
+         * מנסה לטעון נתונים כ-JSON, ואם נכשל, מנסה לטעון כ-HTML גיבוי.
+         * @param {string} familySide - שם צד המשפחה לטעינה.
+         * @returns {Promise<{type: 'json', data: Object} | {type: 'html', content: string}>}
+         */
         const fetchFamilyData = async (familySide) => {
-            statusMessageEl.textContent = i18n[currentLang]['loading_family'](familySide);
+            const jsonPath = `data/${familySide}.json`;
+            const htmlPath = `trees/${familySide}.html`;
+            
+            // 1. Try JSON
+            statusMessageEl.textContent = i18n[currentLang]['loading_family'](familySide) + ' (JSON)';
             try {
-                const response = await fetch(`data/${familySide}.json`);
-                if (!response.ok) {
-                    throw new Error(i18n[currentLang]['no_family_data']);
+                const jsonResponse = await fetch(jsonPath);
+                
+                if (jsonResponse.ok) {
+                    const data = await jsonResponse.json();
+                    console.log(`Successfully loaded JSON from: ${jsonPath}`);
+                    return { type: 'json', data: data };
                 }
-                const data = await response.json();
-                return data;
-            } catch (error) {
-                console.error("Error fetching family data:", error);
-                throw new Error(i18n[currentLang]['no_family_data_message']);
+
+                // If response is not OK (e.g., 404), proceed to fallback
+                throw new Error(`JSON failed with status ${jsonResponse.status}`);
+
+            } catch (jsonError) {
+                // 2. JSON failed, attempt HTML fallback
+                console.warn(`JSON failed (${jsonPath}). Trying HTML fallback (${htmlPath}). Error:`, jsonError);
+                statusMessageEl.textContent = i18n[currentLang]['loading_family'](familySide) + ' (HTML Fallback)';
+                
+                try {
+                    const htmlResponse = await fetch(htmlPath);
+
+                    if (htmlResponse.ok) {
+                        const content = await htmlResponse.text();
+                        console.log(`Successfully loaded HTML fallback from: ${htmlPath}`);
+                        return { type: 'html', content: content };
+                    }
+                    
+                    // HTML also failed
+                    throw new Error(`HTML fallback failed with status ${htmlResponse.status}`);
+
+                } catch (htmlError) {
+                    // 3. Both failed - throw a combined error
+                    console.error("Critical Error: Both JSON and HTML loading failed.", htmlError);
+                    // Throw a generic error message for the user
+                    throw new Error(i18n[currentLang]['no_family_data_message'] + `: ${htmlError.message}`);
+                }
             }
         };
 
+        // פונקציה חדשה להצגת תוכן HTML כחלופה
+        const renderHtmlFallback = (htmlContent) => {
+            const fallbackHtml = `
+                <div class="bg-yellow-50 p-8 rounded-xl shadow-md border-2 border-yellow-300 transition-transform transform hover:scale-[1.02]">
+                    <h2 class="text-3xl font-bold text-yellow-800 mb-4">⚠️ נתונים חלופיים נטענו (HTML)</h2>
+                    <p class="text-gray-700 mb-4">
+                        קובץ ה-JSON הסטנדרטי לא היה זמין. התוכן המוצג נטען מנתיב הגיבוי.
+                    </p>
+                    <div class="border border-yellow-400 p-4 rounded-lg bg-white overflow-x-auto" dir="rtl">
+                        ${htmlContent}
+                    </div>
+                </div>
+            `;
+            contentContainerEl.innerHTML = fallbackHtml;
+        };
+
+
         const loadAndDisplayData = async (familySide) => {
             contentContainerEl.innerHTML = '';
-            
+            errorMessageEl.classList.add('hidden');
             try {
-                const data = await fetchFamilyData(familySide);
-                contentContainerEl.dataset.familyData = JSON.stringify(data); // Store data for language toggle
-                renderData(data);
-                statusMessageEl.textContent = i18n[currentLang]['success'];
+                const result = await fetchFamilyData(familySide);
+                
+                if (result.type === 'json') {
+                    // JSON Success - use existing rendering logic
+                    contentContainerEl.dataset.familyData = JSON.stringify(result.data); // Store data for language toggle
+                    renderData(result.data);
+                    statusMessageEl.textContent = i18n[currentLang]['success'];
+                } else if (result.type === 'html') {
+                    // HTML Fallback Success - use new HTML rendering logic
+                    delete contentContainerEl.dataset.familyData; // Remove old JSON data
+                    renderHtmlFallback(result.content);
+                    statusMessageEl.textContent = i18n[currentLang]['success_fallback'];
+                }
             } catch (error) {
                 statusMessageEl.textContent = '';
                 errorMessageEl.classList.remove('hidden');
-                errorMessageEl.innerHTML = `<p class="font-bold text-xl mb-2">${error.message}</p><p>${i18n[currentLang]['no_user_details']}</p>`;
+                errorMessageEl.innerHTML = `<p class="font-bold text-xl mb-2">${i18n[currentLang]['no_family_data_message']}</p><p>${error.message}</p>`;
             }
         };
 
@@ -259,7 +316,11 @@
         const initApp = async () => {
             errorMessageEl.classList.add('hidden');
             try {
-                const user = await fetchUserData();
+                // Mock user object for demonstration purposes
+                const user = { familySide: 'shmuel' }; // A mock family side. Change this to test the fallback!
+                
+                // const user = await fetchUserData(); // Use this line in a real environment
+
                 if (user && user.familySide) {
                     await loadAndDisplayData(user.familySide);
                 } else {
@@ -270,12 +331,11 @@
             } catch (error) {
                 statusMessageEl.textContent = '';
                 errorMessageEl.classList.remove('hidden');
-                errorMessageEl.innerHTML = `<p class="font-bold">שגיאה: ${error.message}</p>`;
+                errorMessageEl.innerHTML = `<p class="font-bold">${i18n[currentLang]['no_family_data_message']}: ${error.message}</p>`;
             }
         };
-        
-        window.onload = initApp;
 
+        window.onload = initApp;
     </script>
 </body>
 </html>
