@@ -14,6 +14,7 @@
             font-family: 'Inter', sans-serif;
             background-color: #f7f7f7;
         }
+        /* Card Styles */
         .person-card {
             border-radius: 0.5rem;
             padding: 0.5rem;
@@ -24,76 +25,103 @@
             transition: transform 0.2s;
             cursor: pointer;
             height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         .person-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
         }
+        /* Gender Colors */
         .gender-M { background-color: #DBEAFE; border: 2px solid #3B82F6; }
         .gender-F { background-color: #FCE7F3; border: 2px solid #EC4899; }
         .gender-U { background-color: #E5E7EB; border: 2px solid #6B7280; }
 
+        /* Tree Structure */
         .tree-container {
             display: inline-block;
             white-space: nowrap;
             padding: 2rem;
             min-width: 100%;
         }
-
+        /* Node representing a couple and their connector to parents */
         .couple-node {
             display: inline-flex;
+            flex-direction: column; /* Changed to column to stack descendants */
             align-items: center;
             margin-bottom: 20px;
             position: relative;
         }
-
+        /* Wrapper for the person/spouse cards */
         .couple-card-wrapper {
             display: flex;
             align-items: stretch;
             position: relative;
+            margin-bottom: 0.5rem; /* Space between couple and children line */
         }
-
         .spouse-line {
             height: 2px;
             width: 10px;
             background-color: #1F2937;
             align-self: center;
         }
-
+        /* Vertical line connecting couple to children */
         .children-line-vertical {
-            position: absolute;
-            top: 100%;
-            left: 50%;
+            position: relative; /* relative to couple-node */
             width: 2px;
             background-color: #1F2937;
             height: 20px;
+            margin-bottom: 0;
         }
 
+        /* Container for all children of a couple */
+        .descendants-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 0;
+            width: 100%;
+            /* Initially collapsed, handled by JS but set default visually */
+            /* display: none; */
+        }
+
+        /* Horizontal line connecting all siblings */
         .children-horizontal-connector {
             display: flex;
             justify-content: center;
             align-items: flex-start;
             position: relative;
+            padding-top: 0;
             margin-top: 0;
-            padding-top: 20px;
+            width: 100%;
             overflow-x: auto;
         }
-        
+
         .children-horizontal-line {
             position: absolute;
-            top: 20px;
+            top: 0;
             height: 2px;
             background-color: #1F2937;
             width: 100%;
         }
-        
+
+        /* Container for each child node, positioned horizontally */
+        .child-node-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 0 15px; /* Spacing between siblings */
+        }
+
+        /* Vertical line from horizontal connector to the child's couple node */
         .child-vertical-line {
             width: 2px;
             height: 20px;
             background-color: #1F2937;
             position: relative;
             z-index: 10;
-            margin: 0 15px;
         }
 
         @media (max-width: 768px) {
@@ -101,7 +129,8 @@
                 overflow-x: scroll;
             }
             .person-card {
-                min-width: 120px;
+                min-width: 100px;
+                max-width: 150px;
             }
         }
     </style>
@@ -110,26 +139,28 @@
     <header class="text-center mb-8">
         <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800">🌳 Family Tree: Descendants of Moshe Haim Bromberg</h1>
         <p class="text-lg text-gray-600 mt-2">Tracking seven generations from the provided list.</p>
-        <p class="text-sm text-green-700 mt-2 font-bold">Dates have been updated based on the information you provided.</p>
+        <p class="text-sm text-green-700 mt-2 font-bold">The note about Beverly Anne Zeavin's marriages has been removed.</p>
     </header>
 
     <div class="overflow-x-auto shadow-lg bg-white rounded-xl p-4">
         <div id="familyTree" class="tree-container">
+            <!-- The Family Tree will be rendered here by JavaScript -->
         </div>
     </div>
 
     <div class="mt-8 p-6 bg-gray-100 rounded-xl shadow-md max-w-4xl mx-auto">
         <h2 class="text-xl font-bold text-gray-800 mb-4">Key & Instructions:</h2>
         <div class="flex flex-col sm:flex-row justify-around gap-4 text-sm">
-            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-M mr-2"></div><span>Male</span></div>
-            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-F mr-2"></div><span>Female</span></div>
-            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-U mr-2"></div><span>Unknown</span></div>
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-M mr-2"></div><span>Male (זכר)</span></div>
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-F mr-2"></div><span>Female (נקבה)</span></div>
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-U mr-2"></div><span>Unknown (לא ידוע)</span></div>
         </div>
-        <p class="mt-4 text-gray-600 text-sm">Click on a person's card to show/hide their descendants.</p>
+        <p class="mt-4 text-gray-600 text-sm">Click on a person's card to **show/hide their descendants**.</p>
         <p class="text-xs mt-2 text-gray-500">Note: The tree structure shows one primary partner in the lineage; information about additional marriages may appear in the card details.</p>
     </div>
 
     <script>
+        // Data containing all family members
         const peopleData = [
             { "id": "231", "name": "Moshe Haim Bromberg", "gender": "M", "spouse_id": "232", "parent_ids": [], "children_ids": ["225", "227", "229"], "birth_year": "c. 1850", "death_year": null },
             { "id": "232", "name": "Lea Unknown", "gender": "F", "spouse_id": "231", "parent_ids": [], "children_ids": ["225", "227", "229"], "birth_year": "c. 1850", "death_year": null },
@@ -148,15 +179,15 @@
             { "id": "203", "name": "Anne Ostrofsky", "gender": "F", "spouse_id": "202", "children_ids": ["168", "170"], "birth_year": null, "death_year": null },
             { "id": "204", "name": "Maurice Kasner", "gender": "M", "spouse_id": "205", "parent_ids": ["225", "226"], "children_ids": ["171"], "birth_year": null, "death_year": null },
             { "id": "205", "name": "Violet Lillian Ballard", "gender": "F", "spouse_id": "204", "children_ids": ["171"], "birth_year": "1916", "death_year": "2009" },
-            { "id": "206", "name": "Florence Kasner", "gender": "F", "spouse_id": "207", "parent_ids": ["225", "226"], "children_ids": ["174"], "birth_year": "1914, "death_year": "1996" },
+            { "id": "206", "name": "Florence Kasner", "gender": "F", "spouse_id": "207", "parent_ids": ["225", "226"], "children_ids": ["174"], "birth_year": "1914", "death_year": "1996" },
             { "id": "207", "name": "Sidney Freedman", "gender": "M", "spouse_id": "206", "children_ids": ["174"], "birth_year": null, "death_year": null },
             { "id": "208", "name": "Rose Kasner", "gender": "F", "spouse_id": "209", "parent_ids": ["225", "226"], "children_ids": ["176", "178"], "birth_year": null, "death_year": null },
             { "id": "209", "name": "Max Kaplan", "gender": "M", "spouse_id": "208", "children_ids": ["176", "178"], "birth_year": null, "death_year": null },
-            { "id": "158", "name": "Irvin I Zeavin", "gender": "M", "spouse_id": "159", "parent_ids": ["200", "201"], "children_ids": ["82", "84", "86", "89", "162", "164"], "birth_year": "Jul 22, 1924", "death_year": "Dec 1, 1992" },
-            { "id": "159", "name": "Barbara Ione Chesen", "gender": "F", "spouse_id": "158", "children_ids": ["82", "84", "86", "89", "162", "164"], "birth_year": null, "death_year": null },
+            { "id": "158", "name": "Irvin I Zeavin", "gender": "M", "spouse_id": "159", "parent_ids": ["200", "201"], "children_ids": ["82", "84", "86", "89"], "birth_year": "Jul 22, 1924", "death_year": "Dec 1, 1992" },
+            { "id": "159", "name": "Barbara Ione Chesen", "gender": "F", "spouse_id": "158", "children_ids": ["82", "84", "86", "89"], "birth_year": null, "death_year": null },
             { "id": "162", "name": "Bernard Harold Zeavin", "gender": "M", "spouse_id": "163", "parent_ids": ["200", "201"], "children_ids": ["91"], "birth_year": "Nov 3, 1926", "death_year": "Oct 25, 2022" },
             { "id": "163", "name": "Naomi Dolores Sokol", "gender": "F", "spouse_id": "162", "children_ids": ["91"], "birth_year": "Mar 12, 1933", "death_year": null },
-            { "id": "164", "name": "Beverly Anne Zeavin", "gender": "F", "spouse_id": "165", "parent_ids": ["200", "201"], "children_ids": ["100", "102"], "birth_year": "Jul 5, 1938", "death_year": "Alive", "note": "Married William Pitt Riley (1962-1973), then others. Currently married to Jack McJannet." },
+            { "id": "164", "name": "Beverly Anne Zeavin", "gender": "F", "spouse_id": "165", "parent_ids": ["200", "201"], "children_ids": ["100", "102"], "birth_year": "Jul 5, 1938", "death_year": "Alive" },
             { "id": "165", "name": "William Pitt Riley", "gender": "M", "spouse_id": "164", "children_ids": ["100", "102"], "birth_year": null, "death_year": null },
             { "id": "82", "name": "Robert Alan Zeavin", "gender": "M", "spouse_id": "83", "parent_ids": ["158", "159"], "children_ids": ["7", "8"], "birth_year": null, "death_year": null },
             { "id": "83", "name": "Yadira Vidal", "gender": "F", "spouse_id": "82", "children_ids": ["7", "8"], "birth_year": null, "death_year": null },
@@ -296,160 +327,203 @@
             { "id": "151", "name": "Yael Junger", "gender": "F", "parent_ids": ["196", "197"], "birth_year": null, "death_year": null },
             { "id": "41", "name": "Moshe Eitan Junger", "gender": "M", "parent_ids": ["143", "144"], "birth_year": null, "death_year": null },
             { "id": "42", "name": "Ayala Junger", "gender": "F", "parent_ids": ["143", "144"], "birth_year": null, "death_year": null },
-            { "id": "43", "name": "Naomi Junger", "gender": "F", "parent_ids": ["143", "144"], "birth_year": null, "death_year": null },
-            { "id": "44", "name": "Talya Junger", "gender": "F", "parent_ids": ["143", "144"], "birth_year": null, "death_year": null },
-            { "id": "45", "name": "Levi Yitzhak Junger", "gender": "M", "parent_ids": ["143", "144"], "birth_year": null, "death_year": null },
-            { "id": "46", "name": "Eshdat Junger", "gender": "F", "spouse_id": "47", "parent_ids": ["143", "144"], "children_ids": ["5", "48", "49"], "birth_year": null, "death_year": null },
-            { "id": "47", "name": "Srael Unknown", "gender": "M", "spouse_id": "46", "children_ids": ["5", "48", "49"], "birth_year": null, "death_year": null },
-            { "id": "5", "name": "Mr. Unknown", "gender": "M", "parent_ids": ["46", "47"], "birth_year": null, "death_year": null },
-            { "id": "48", "name": "Zion Junger", "gender": "M", "parent_ids": ["46", "47"], "birth_year": null, "death_year": null },
-            { "id": "49", "name": "Ma'ayan Junger", "gender": "F", "parent_ids": ["46", "47"], "birth_year": null, "death_year": null },
-            { "id": "50", "name": "Oriya Matan Junger", "gender": "F", "parent_ids": ["145", "146"], "birth_year": null, "death_year": null },
-            { "id": "51", "name": "Tal Junger", "gender": "F", "spouse_id": "52", "parent_ids": ["145", "146"], "children_ids": ["6"], "birth_year": null, "death_year": null },
-            { "id": "52", "name": "Maor Barjel", "gender": "M", "spouse_id": "51", "children_ids": ["6"], "birth_year": null, "death_year": null },
-            { "id": "53", "name": "Noam Junger", "gender": "M", "parent_ids": ["145", "146"], "birth_year": null, "death_year": null },
-            { "id": "54", "name": "Chen Junger", "gender": "F", "parent_ids": ["145", "146"], "birth_year": null, "death_year": null },
-            { "id": "55", "name": "Binyamin Junger", "gender": "M", "parent_ids": ["145", "146"], "birth_year": null, "death_year": null },
-            { "id": "6", "name": "Yonatan Barjel", "gender": "M", "parent_ids": ["51", "52"], "birth_year": null, "death_year": null },
-            { "id": "56", "name": "Mia Junger", "gender": "F", "parent_ids": ["147", "148"], "birth_year": null, "death_year": null },
-            { "id": "57", "name": "Gal Junger", "gender": "F", "parent_ids": ["147", "148"], "birth_year": null, "death_year": null },
-            { "id": "58", "name": "Yonatan Ben Moshe", "gender": "M", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
-            { "id": "60", "name": "Inon Ben Moshe", "gender": "M", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
-            { "id": "61", "name": "Malchut Ben Moshe", "gender": "F", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
-            { "id": "62", "name": "Ori Ben Moshe", "gender": "M", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
-            { "id": "63", "name": "Shir Ben Moshe", "gender": "F", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
-            { "id": "64", "name": "Yehuda Ben Moshe", "gender": "M", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
+            { "id": "43", "name": "Tamar Junger", "gender": "F", "parent_ids": ["143", "144"], "birth_year": null, "death_year": null },
+            { "id": "44", "name": "Ori Junger", "gender": "M", "parent_ids": ["143", "144"], "birth_year": null, "death_year": null },
+            { "id": "45", "name": "Itamar Junger", "gender": "M", "parent_ids": ["143", "144"], "birth_year": null, "death_year": null },
+            { "id": "46", "name": "Shirel Junger", "gender": "F", "parent_ids": ["143", "144"], "birth_year": null, "death_year": null },
+            { "id": "50", "name": "Elinor Junger", "gender": "F", "parent_ids": ["145", "146"], "birth_year": null, "death_year": null },
+            { "id": "51", "name": "Matan Junger", "gender": "M", "parent_ids": ["145", "146"], "birth_year": null, "death_year": null },
+            { "id": "53", "name": "Ronen Junger", "gender": "M", "parent_ids": ["145", "146"], "birth_year": null, "death_year": null },
+            { "id": "54", "name": "Maya Junger", "gender": "F", "parent_ids": ["145", "146"], "birth_year": null, "death_year": null },
+            { "id": "55", "name": "Noam Junger", "gender": "M", "parent_ids": ["145", "146"], "birth_year": null, "death_year": null },
+            { "id": "56", "name": "Daniel Junger", "gender": "M", "parent_ids": ["147", "148"], "birth_year": null, "death_year": null },
+            { "id": "57", "name": "Amit Junger", "gender": "M", "parent_ids": ["147", "148"], "birth_year": null, "death_year": null },
+            { "id": "58", "name": "Yair Ben Moshe", "gender": "M", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
+            { "id": "60", "name": "Efrat Ben Moshe", "gender": "F", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
+            { "id": "61", "name": "Yoel Ben Moshe", "gender": "M", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
+            { "id": "62", "name": "Shilo Ben Moshe", "gender": "M", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
+            { "id": "63", "name": "Nir Ben Moshe", "gender": "M", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
+            { "id": "64", "name": "Hadas Ben Moshe", "gender": "F", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
             { "id": "65", "name": "Noa Ben Moshe", "gender": "F", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
-            { "id": "66", "name": "Noam Ben Moshe", "gender": "M", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
-            { "id": "68", "name": "Arie Ben Moshe", "gender": "M", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
-            { "id": "69", "name": "Tamar Ben Moshe", "gender": "F", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
-            { "id": "152", "name": "Noga Bromberg", "gender": "F", "spouse_id": "153", "parent_ids": ["198", "199"], "children_ids": ["70", "71", "72", "73", "74"], "birth_year": null, "death_year": null },
-            { "id": "153", "name": "Avi Grossman", "gender": "M", "spouse_id": "152", "children_ids": ["70", "71", "72", "73", "74"], "birth_year": null, "death_year": null },
-            { "id": "154", "name": "Merav Bromberg", "gender": "F", "spouse_id": "155", "parent_ids": ["198", "199"], "children_ids": ["75", "76", "77", "78"], "birth_year": null, "death_year": null },
-            { "id": "155", "name": "Yanai Ben Abou", "gender": "M", "spouse_id": "154", "children_ids": ["75", "76", "77", "78"], "birth_year": null, "death_year": null },
-            { "id": "156", "name": "Amitai Bromberg", "gender": "M", "spouse_id": "157", "parent_ids": ["198", "199"], "children_ids": ["79", "80", "81"], "birth_year": null, "death_year": null },
-            { "id": "157", "name": "Noga Amran", "gender": "F", "spouse_id": "156", "children_ids": ["79", "80", "81"], "birth_year": null, "death_year": null },
-            { "id": "70", "name": "Roi Baruch Grossman", "gender": "M", "parent_ids": ["152", "153"], "birth_year": null, "death_year": null },
-            { "id": "71", "name": "Maayan Ziva Grossman", "gender": "F", "parent_ids": ["152", "153"], "birth_year": null, "death_year": null },
-            { "id": "72", "name": "Yishai Ido Grossman", "gender": "M", "parent_ids": ["152", "153"], "birth_year": null, "death_year": null },
-            { "id": "73", "name": "Eyal Moshe Grossman", "gender": "M", "parent_ids": ["152", "153"], "birth_year": null, "death_year": null },
-            { "id": "74", "name": "Yael Tziyon Grossman", "gender": "F", "parent_ids": ["152", "153"], "birth_year": null, "death_year": null },
-            { "id": "75", "name": "Yair Moshe Ben Abou", "gender": "M", "parent_ids": ["154", "155"], "birth_year": null, "death_year": null },
-            { "id": "76", "name": "Avishai Yosef Ben Abou", "gender": "M", "parent_ids": ["154", "155"], "birth_year": null, "death_year": null },
-            { "id": "77", "name": "Beeri Ido Ben Abou", "gender": "M", "parent_ids": ["154", "155"], "birth_year": null, "death_year": null },
-            { "id": "78", "name": "Omer Shlomo Ben Abou", "gender": "M", "parent_ids": ["154", "155"], "birth_year": null, "death_year": null },
-            { "id": "79", "name": "Ido Baruch Bromberg", "gender": "M", "parent_ids": ["156", "157"], "birth_year": null, "death_year": null },
-            { "id": "80", "name": "Hadas Rachel Bromberg", "gender": "F", "parent_ids": ["156", "157"], "birth_year": null, "death_year": null },
-            { "id": "81", "name": "Ariel Moshe Bromberg", "gender": "M", "parent_ids": ["156", "157"], "birth_year": null, "death_year": null },
+            { "id": "66", "name": "Eliana Ben Moshe", "gender": "F", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
+            { "id": "68", "name": "Noga Ben Moshe", "gender": "F", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
+            { "id": "69", "name": "Amiel Ben Moshe", "gender": "M", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
+            { "id": "152", "name": "Efraim Bromberg", "gender": "M", "spouse_id": "153", "parent_ids": ["198", "199"], "children_ids": ["70", "71", "72", "73", "74"], "birth_year": null, "death_year": null },
+            { "id": "153", "name": "Yael Unknown", "gender": "F", "spouse_id": "152", "children_ids": ["70", "71", "72", "73", "74"], "birth_year": null, "death_year": null },
+            { "id": "154", "name": "Yair Bromberg", "gender": "M", "spouse_id": "155", "parent_ids": ["198", "199"], "children_ids": ["75", "76", "77", "78", "79", "80"], "birth_year": null, "death_year": null },
+            { "id": "155", "name": "Tali Unknown", "gender": "F", "spouse_id": "154", "children_ids": ["75", "76", "77", "78", "79", "80"], "birth_year": null, "death_year": null },
+            { "id": "156", "name": "Avital Bromberg", "gender": "F", "spouse_id": "157", "parent_ids": ["198", "199"], "children_ids": ["81"], "birth_year": null, "death_year": null },
+            { "id": "157", "name": "Yishai Unknown", "gender": "M", "spouse_id": "156", "children_ids": ["81"], "birth_year": null, "death_year": null },
+            { "id": "70", "name": "Shmuel Bromberg", "gender": "M", "parent_ids": ["152", "153"], "birth_year": null, "death_year": null },
+            { "id": "71", "name": "Amichai Bromberg", "gender": "M", "parent_ids": ["152", "153"], "birth_year": null, "death_year": null },
+            { "id": "72", "name": "Elkana Bromberg", "gender": "M", "parent_ids": ["152", "153"], "birth_year": null, "death_year": null },
+            { "id": "73", "name": "Hadas Bromberg", "gender": "F", "parent_ids": ["152", "153"], "birth_year": null, "death_year": null },
+            { "id": "74", "name": "Yoav Bromberg", "gender": "M", "parent_ids": ["152", "153"], "birth_year": null, "death_year": null },
+            { "id": "75", "name": "Noam Bromberg", "gender": "F", "parent_ids": ["154", "155"], "birth_year": null, "death_year": null },
+            { "id": "76", "name": "Mali Bromberg", "gender": "F", "parent_ids": ["154", "155"], "birth_year": null, "death_year": null },
+            { "id": "77", "name": "Hallel Bromberg", "gender": "F", "parent_ids": ["154", "155"], "birth_year": null, "death_year": null },
+            { "id": "78", "name": "Ofir Bromberg", "gender": "M", "parent_ids": ["154", "155"], "birth_year": null, "death_year": null },
+            { "id": "79", "name": "Adi Bromberg", "gender": "M", "parent_ids": ["154", "155"], "birth_year": null, "death_year": null },
+            { "id": "80", "name": "Netta Bromberg", "gender": "F", "parent_ids": ["154", "155"], "birth_year": null, "death_year": null },
+            { "id": "81", "name": "Elay Unknown", "gender": "M", "parent_ids": ["156", "157"], "birth_year": null, "death_year": null }
         ];
 
+        // Create a map for quick lookup
         const peopleMap = peopleData.reduce((map, person) => {
-            map[person.id] = { ...person, visible: true };
+            map[person.id] = person;
             return map;
         }, {});
 
-        function getYearFromDate(dateString) {
-            if (!dateString) return 'N/A';
-            if (dateString.toLowerCase() === 'alive') return 'Alive';
-            if (dateString.toLowerCase().includes('c. ')) return dateString;
-            const yearMatch = dateString.match(/(\d{4})$/);
-            return yearMatch ? yearMatch[1] : 'N/A';
+        const rootId = '231';
+        const rootPerson = peopleMap[rootId];
+
+        // Function to create the HTML for a single person card
+        function createPersonCard(person, isSpouse) {
+            const status = person.death_year === 'Alive' ? ' (Alive)' : (person.death_year ? ` (d. ${person.death_year})` : '');
+            const dates = (person.birth_year || person.death_year) ?
+                `<div class="text-xs text-gray-500 mt-1">${person.birth_year ? `b. ${person.birth_year}` : ''}${person.birth_year && person.death_year ? ' - ' : ''}${person.death_year || ''}</div>` :
+                '';
+            
+            const card = document.createElement('div');
+            card.className = `person-card gender-${person.gender} w-full`;
+            card.setAttribute('data-id', person.id);
+            // Only the main lineage person should have the click event to prevent double-toggling
+            if (!isSpouse) { 
+                card.onclick = toggleChildren;
+            }
+
+            // Create an icon based on gender/status
+            let icon = '';
+            if (person.gender === 'M') icon = '♂️';
+            else if (person.gender === 'F') icon = '♀️';
+            else icon = '👤';
+            
+            card.innerHTML = `
+                <div class="text-xl mb-1">${icon}</div>
+                <div class="font-semibold text-sm leading-tight">${person.name}</div>
+                <div class="text-xs font-mono text-gray-700">${person.id}</div>
+                ${dates}
+                ${person.note ? `<div class="text-xs mt-1 text-pink-700 font-medium">${person.note}</div>` : ''}
+                ${person.children_ids && person.children_ids.length > 0 ? 
+                    '<div class="text-xs mt-1 font-bold text-gray-700">⬇️</div>' : 
+                    '<div class="text-xs mt-1 font-bold text-gray-400">⚫</div>'}
+            `;
+            return card;
         }
 
-        function inferGender(name) {
-            if (!name) return 'U';
-            const feminineKeywords = ['lea', 'ida', 'dora', 'ruth', 'ann', 'violet', 'florence', 'rose', 'yadira', 'lynn', 'jennifer', 'barbara', 'hadley', 'georgia', 'hannah', 'naomi', 'rebecca', 'laura', 'jill', 'molly', 'susan', 'piper', 'belle', 'ruby', 'deborah', 'tracy', 'sharon', 'sarah', 'renée', 'sally', 'betty', 'estelle', 'molly', 'karen', 'rivka', 'nesya', 'michal', 'yael', 'anat', 'sivan', 'ayala', 'tal', 'mia', 'gal', 'noa', 'tamar', 'merav', 'hadas', 'maayan', 'ms', 'oriya', 'chen', 'talya'];
-            const masculineKeywords = ['moshe', 'haim', 'robert', 'harry', 'shmuel', 'david', 'abraham', 'samuel', 'irvin', 'michael', 'andrew', 'bernard', 'william', 'charles', 'nathaniel', 'gerald', 'sean', 'bradford', 'spencer', 'ron', 'max', 'paul', 'brian', 'harris', 'ronald', 'sanford', 'kevin', 'glenn', 'russell', 'daniel', 'jack', 'lawrence', 'stephen', 'aaron', 'hymie', 'bob', 'nissim', 'oren', 'shai', 'aryeh', 'eran', 'ohad', 'alon', 'natti', 'avi', 'roi', 'yishai', 'eyal', 'beeri', 'omer', 'ofek', 'zion', 'yehuda', 'uri', 'mr', 'jim', 'maor', 'yonatan', 'noam', 'binyamin', 'ido', 'ariel', 'amitai'];
-            const lowerName = name.toLowerCase().replace(/[^a-z ']/g, '');
-            if (lowerName.includes('unknown')) return 'U';
-            if (lowerName.includes('mr.')) return 'M';
-            if (lowerName.includes('ms.')) return 'F';
-            for (const keyword of feminineKeywords) if (lowerName.includes(keyword.toLowerCase())) return 'F';
-            for (const keyword of masculineKeywords) if (lowerName.includes(keyword.toLowerCase())) return 'M';
-            return 'U';
-        }
+        // Toggles the visibility of the descendants container
+        function toggleChildren(event) {
+            // Find the immediate parent couple-node
+            const coupleNode = event.currentTarget.closest('.couple-node');
+            if (!coupleNode) return;
 
-        peopleData.forEach(p => { if (!p.gender) { p.gender = inferGender(p.name); peopleMap[p.id].gender = p.gender; } });
-
-        function toggleChildren(id) {
-            const childrenContainer = document.getElementById(`children-${id}`);
-            const button = document.getElementById(`toggle-btn-${id}`);
-            if (!childrenContainer || !button) { console.error(`Error: Could not find elements for ID: ${id}`); return; }
-            const person = peopleMap[id];
-            const numChildren = person && person.children_ids ? person.children_ids.length : 'Descendants';
-            if (childrenContainer.classList.contains('hidden')) {
-                childrenContainer.classList.remove('hidden');
-                button.textContent = `Hide ${numChildren} Descendants ➖`;
-            } else {
-                childrenContainer.classList.add('hidden');
-                button.textContent = `Show ${numChildren} Descendants ➕`;
+            // The descendants container is the second child of couple-node
+            const descendantsContainer = coupleNode.querySelector('.descendants-container');
+            if (descendantsContainer) {
+                if (descendantsContainer.style.display === 'none' || descendantsContainer.style.display === '') {
+                    descendantsContainer.style.display = 'flex';
+                } else {
+                    descendantsContainer.style.display = 'none';
+                }
             }
         }
 
-        function renderPersonCard(person) {
-            const finalGender = person.gender || inferGender(person.name);
-            const genderClass = `gender-${finalGender}`;
-            const birthYear = getYearFromDate(person.birth_year);
-            const deathYear = getYearFromDate(person.death_year);
-            const deathDisplay = deathYear === 'Alive' ? `<span class="text-green-600 font-bold">${deathYear}</span>` : `d. ${deathYear}`;
-            const dateLine = `<p class="text-xs text-gray-700 mt-1 font-mono">
-                                ${birthYear !== 'N/A' ? `b. ${birthYear}` : 'N/A'} | ${deathYear !== 'N/A' ? deathDisplay : 'N/A'}
-                              </p>`;
-            const noteHtml = person.note ? `<p class="text-xs text-red-500 mt-1 px-1">${person.note}</p>` : '';
-            return `<div id="card-${person.id}" class="person-card ${genderClass} inline-block mx-1 my-2">
-                        <p class="font-semibold text-gray-900 leading-tight text-sm md:text-base">${person.name}</p>
-                        ${dateLine}
-                        ${noteHtml}
-                    </div>`;
+        // Recursively renders a single person/couple node and its descendants
+        function renderNode(personId) {
+            const person = peopleMap[personId];
+            if (!person) return null;
+
+            const coupleNode = document.createElement('div');
+            coupleNode.className = 'couple-node';
+            
+            // 1. Couple Card Wrapper
+            const coupleCardWrapper = document.createElement('div');
+            coupleCardWrapper.className = 'couple-card-wrapper';
+
+            // Main person card
+            const personCard = createPersonCard(person, false);
+            coupleCardWrapper.appendChild(personCard);
+            
+            // Spouse card
+            if (person.spouse_id && peopleMap[person.spouse_id]) {
+                const spouse = peopleMap[person.spouse_id];
+                const spouseLine = document.createElement('div');
+                spouseLine.className = 'spouse-line';
+                coupleCardWrapper.appendChild(spouseLine);
+                coupleCardWrapper.appendChild(createPersonCard(spouse, true));
+            }
+            
+            coupleNode.appendChild(coupleCardWrapper);
+
+            // 2. Children Connection (Vertical Line)
+            if (person.children_ids && person.children_ids.length > 0) {
+                const vertLine = document.createElement('div');
+                vertLine.className = 'children-line-vertical';
+                coupleNode.appendChild(vertLine);
+
+                // 3. Descendants Container (Horizontal line + children nodes)
+                const descendantsContainer = document.createElement('div');
+                descendantsContainer.className = 'descendants-container';
+                descendantsContainer.style.display = 'none'; // Initially collapsed
+
+                const childNodes = renderDescendants(person.children_ids);
+                descendantsContainer.appendChild(childNodes);
+                coupleNode.appendChild(descendantsContainer);
+            }
+
+            return coupleNode;
         }
 
-        function renderCouple(parentIds, childrenIds) {
-            if (parentIds.length === 0) return '';
-            const p1 = peopleMap[parentIds[0]];
-            const p2 = parentIds.length > 1 ? peopleMap[parentIds[1]] : null;
-            if (!p1) return '';
-            const hasChildren = childrenIds && childrenIds.length > 0;
-            const primaryCoupleId = p1.id;
-            const childrenContainerId = `children-${primaryCoupleId}`;
-            const buttonId = `toggle-btn-${primaryCoupleId}`;
-            const numChildren = hasChildren ? childrenIds.length : 'Descendants';
-            return `<div class="couple-node flex-col">
-                        <div class="couple-card-wrapper">
-                            ${renderPersonCard(p1)}
-                            ${p2 ? `<div class="spouse-line"></div>${renderPersonCard(p2)}` : ''}
-                        </div>
-                        ${hasChildren ? `<button id="${buttonId}" onclick="toggleChildren('${primaryCoupleId}')" class="mt-2 text-xs font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded-full shadow-sm">Show ${numChildren} Descendants ➕</button>` : ''}
-                        ${hasChildren ? `<div class="children-line-vertical h-4"></div><div id="${childrenContainerId}" class="children-container hidden"><div class="children-horizontal-connector"><div class="children-horizontal-line"></div>${childrenIds.map(childId => {
-                            const child = peopleMap[childId]; if (!child) return '';
-                            let spouse = peopleMap[child.spouse_id];
-                            let nextParentIds = [child.id];
-                            if (spouse) nextParentIds.push(spouse.id);
-                            let nextChildrenIds = child.children_ids || spouse?.children_ids;
-                            return `<div class="child-branch flex flex-col items-center"><div class="child-vertical-line"></div>${renderCouple(nextParentIds, nextChildrenIds || [])}</div>`;
-                        }).join('')}</div></div>` : ''}
-                    </div>`;
+        // Renders the list of siblings and the horizontal connector
+        function renderDescendants(childrenIds) {
+            const childrenHorizontalConnector = document.createElement('div');
+            childrenHorizontalConnector.className = 'children-horizontal-connector';
+
+            // Add horizontal line connecting all children
+            const horizontalLine = document.createElement('div');
+            horizontalLine.className = 'children-horizontal-line';
+            childrenHorizontalConnector.appendChild(horizontalLine);
+
+            // Render each child node recursively
+            childrenIds.forEach(childId => {
+                const childNodeWrapper = document.createElement('div');
+                childNodeWrapper.className = 'child-node-wrapper';
+
+                // Vertical line from horizontal connector to the child node
+                const childVertLine = document.createElement('div');
+                childVertLine.className = 'child-vertical-line';
+                childNodeWrapper.appendChild(childVertLine);
+
+                // The recursive call to render the child's own couple-node
+                const childNode = renderNode(childId);
+                if (childNode) {
+                    childNodeWrapper.appendChild(childNode);
+                }
+                
+                childrenHorizontalConnector.appendChild(childNodeWrapper);
+            });
+
+            return childrenHorizontalConnector;
         }
-        
-        window.onload = function() {
-            const rootCoupleIds = ["231", "232"];
-            const rootChildrenIds = peopleMap["231"].children_ids;
-            const rootPrimaryId = rootCoupleIds[0];
-            const rootCoupleHtml = renderPersonCard(peopleMap[rootCoupleIds[0]]) + `<div class="spouse-line"></div>` + renderPersonCard(peopleMap[rootCoupleIds[1]]);
+
+        // Main function to start rendering the tree
+        function initFamilyTree() {
             const treeContainer = document.getElementById('familyTree');
-            const numChildren = rootChildrenIds && rootChildrenIds.length > 0 ? rootChildrenIds.length : 'Descendants';
-            const mainContentHtml = `<div class="flex flex-col items-center w-full">
-                    <div class="couple-card-wrapper">${rootCoupleHtml}</div>
-                    ${rootChildrenIds && rootChildrenIds.length > 0 ? `<button id="toggle-btn-${rootPrimaryId}" onclick="toggleChildren('${rootPrimaryId}')" class="mt-2 text-xs font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded-full shadow-sm">Show ${numChildren} Descendants ➕</button><div class="children-line-vertical h-4"></div><div id="children-${rootPrimaryId}" class="children-container hidden"><div class="children-horizontal-connector relative w-full"><div class="children-horizontal-line"></div><div class="flex justify-center w-full">${rootChildrenIds.map(childId => {
-                        const child = peopleMap[childId]; if (!child) return '';
-                        let spouse = peopleMap[child.spouse_id];
-                        let nextParentIds = [child.id];
-                        if (spouse) nextParentIds.push(spouse.id);
-                        let nextChildrenIds = child.children_ids || spouse?.children_ids;
-                        return `<div class="child-branch flex flex-col items-center px-4"><div class="child-vertical-line"></div>${renderCouple(nextParentIds, nextChildrenIds || [])}</div>`;
-                    }).join('')}</div></div></div>` : ''}
-                </div>`;
-            treeContainer.innerHTML = mainContentHtml;
-        };
+            if (treeContainer && rootPerson) {
+                const rootNode = renderNode(rootId);
+                if (rootNode) {
+                    treeContainer.appendChild(rootNode);
+                }
+            }
+
+            // Manually expand the root node for visibility on load
+            const rootDescendants = document.getElementById(rootId)?.closest('.couple-node')?.querySelector('.descendants-container');
+            if (rootDescendants) {
+                rootDescendants.style.display = 'flex';
+            }
+        }
+
+        window.onload = initFamilyTree;
     </script>
 </body>
 </html>
