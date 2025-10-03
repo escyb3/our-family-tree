@@ -28,7 +28,7 @@
             <span class="sm:hidden">🌍</span>
         </button>
         <h1 id="mainTitle" class="text-5xl font-bold text-gray-900 mb-2">עלון המשפחה</h1>
-        <p id="mainSubtitle" class="text-lg text-gray-500">מהדורה חודשית - ספטמבר 2025</p>
+        <p id="mainSubtitle" class="text-lg text-gray-500">מהדורה חודשית - אוקטובר 2025</p>
       </div>
     </header>
 
@@ -114,42 +114,7 @@
           <span class="ml-2">🎂</span> ימי הולדת ואירועים קרובים
         </h2>
         <ul id="eventsList" class="space-y-3 text-gray-700">
-          <li class="flex items-center">
-            <span class="ml-2">🎉</span>
-            <strong class="font-semibold">24 בספטמבר:</strong> יום הולדת 78 לסר ג'יימס לאודר (ג'ים) ברונטון!
-          </li>
-          <li class="flex items-center">
-            <span class="ml-2">🎉</span>
-            <strong class="font-semibold">24 בספטמבר:</strong> יום הולדת 44 לחן גורלנד!
-          </li>
-          <li class="flex items-center">
-            <span class="ml-2">🎉</span>
-            <strong class="font-semibold">25 בספטמבר:</strong> יום הולדת 6 לג'ון פטריק קיו!
-          </li>
-          <li class="flex items-center">
-            <span class="ml-2">🎉</span>
-            <strong class="font-semibold">25 בספטמבר:</strong> יום הולדת 53 לאבי כהן!
-          </li>
-          <li class="flex items-center">
-            <span class="ml-2">🎉</span>
-            <strong class="font-semibold">27 בספטמבר:</strong> יום הולדת 66 לסמדר פילוסוף!
-          </li>
-          <li class="flex items-center">
-            <span class="ml-2">🎉</span>
-            <strong class="font-semibold">27 בספטמבר:</strong> יום הולדת 85 ללאון גורק!
-          </li>
-          <li class="flex items-center">
-            <span class="ml-2">🎉</span>
-            <strong class="font-semibold">28 בספטמבר:</strong> יום הולדת 43 למירב בן אבו!
-          </li>
-          <li class="flex items-center">
-            <span class="ml-2">🎉</span>
-            <strong class="font-semibold">28 בספטמבר:</strong> יום הולדת 26 לשמולי הולצר!
-          </li>
-          <li class="flex items-center">
-            <span class="ml-2">🎉</span>
-            <strong class="font-semibold">28 בספטמבר:</strong> יום הולדת 65 לחיים מלכה!
-          </li>
+          <!-- This content is dynamically loaded from the JS 'translations' object -->
         </ul>
       </section>
       
@@ -160,7 +125,7 @@
         </h2>
         <p id="contactText" class="text-gray-700 leading-relaxed">
           יש לכם חדשות מרגשות, המלצות או תמונות מהטיול המשפחתי?
-          פשוט שלחו לנו את העדכונים שלכם למייל: <strong>familylocal@gmx.com</strong>.
+          פשוט שלחו לנו את העדכונים שלכם למייל: <strong>[כתובת המייל שלכם כאן]</strong>.
         </p>
       </section>
 
@@ -184,7 +149,7 @@
         message: { he: '🍎 שנה טובה!', en: '🍎 Happy New Year!' },
         detailed_message: { he: 'אנו רוצים לאחל לכל משפחתנו שנה טובה ומבורכת. שתהא זו שנה של התחלות חדשות, בריאות, אושר ושגשוג. מי ייתן וכל משאלותינו הטובות יתגשמו.', en: 'We want to wish our entire family a good and blessed year. May this be a year of new beginnings, health, happiness, and prosperity. May all our good wishes come true.' },
         startDate: new Date('2025-09-22T00:00:00'),
-        endDate: new Date('2025-10-04T23:59:59') // User specified a cutoff date of Oct 4
+        endDate: new Date('2025-10-04T23:59:59') 
       },
       {
         id: 'sukkot',
@@ -289,7 +254,7 @@
     const translations = {
       'he': {
         'mainTitle': 'עלון המשפחה',
-        'mainSubtitle': 'מהדורה חודשית - ספטמבר 2025',
+        'mainSubtitle': 'מהדורה חודשית - אוקטובר 2025',
         'websiteTitle': '🎉 פתחנו אתר משפחתי חדש!',
         'websiteText': 'אנחנו נרגשים להכריז שהאתר המשפחתי החדש שלנו כבר באוויר! האתר הוא מרכז אחד לכל הדברים המשפחתיים: גלריית תמונות, לוח אירועים, צ\'אט AI משפחתי שיעזור לכם לפתור כל בעיה משפחתית (טוב, כמעט), ועוד. היכנסו לבקר, להתעדכן ולשתף.',
         'inMemoryTitle': '🕯️ לזכר יקירנו',
@@ -307,25 +272,24 @@
         'photosText': 'כמה תמונות שצולמו לאחרונה, כדי להזכיר לכולנו את הרגעים היפים שאנו חולקים יחד.',
         'eventsTitle': '🎂 ימי הולדת ואירועים קרובים',
         'eventsList': `
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">24 בספטמבר:</strong> יום הולדת 78 לסר ג'יימס לאודר (ג'ים) ברונטון!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">24 בספטמבר:</strong> יום הולדת 44 לחן גורלנד!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">25 בספטמבר:</strong> יום הולדת 6 לג'ון פטריק קיו!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">25 בספטמבר:</strong> יום הולדת 53 לאבי כהן!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">27 בספטמבר:</strong> יום הולדת 66 לסמדר פילוסוף!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">27 בספטמבר:</strong> יום הולדת 85 ללאון גורק!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">28 בספטמבר:</strong> יום הולדת 43 למירב בן אבו!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">28 בספטמבר:</strong> יום הולדת 26 לשמולי הולצר!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">28 בספטמבר:</strong> יום הולדת 65 לחיים מלכה!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">3 באוקטובר:</strong> יום הולדת 78 לג'ודית מ. בראון!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">5 באוקטובר:</strong> יום הולדת 43 לאביגיל כספי!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">5 באוקטובר:</strong> יום הולדת 58 לנטלי גל!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">6 באוקטובר:</strong> יום הולדת 91 לעזרא יעקב דוידס!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">6 באוקטובר:</strong> יום הולדת 73 למייקל ג'פרי זאבין!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">6 באוקטובר:</strong> יום הולדת 20 לטליה יונגר!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">6 באוקטובר:</strong> יום הולדת 89 לסטנלי מוסס!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">7 באוקטובר:</strong> יום הולדת 73 ללוי יצחק ברנדווין!</li>
         `,
         'contactTitle': '✍️ רוצים לשתף?',
-        'contactText': 'יש לכם חדשות מרגשות, המלצות או תמונות מהטיול המשפחתי? פשוט שלחו לנו את העדכונים שלכם למייל: <strong>familylocal@gmx.com</strong>.',
+        'contactText': 'יש לכם חדשות מרגשות, המלצות או תמונות מהטיול המשפחתי? פשוט שלחו לנו את העדכונים שלכם למייל: <strong>[כתובת המייל שלכם כאן]</strong>.',
         'footerText1': 'תודה שקראתם! נתראה במהדורה הבאה.',
         'footerText2': '&copy; 2025 עלון המשפחה. כל הזכויות שמורות.',
         'buttonText': 'Switch to English'
       },
       'en': {
         'mainTitle': 'The Family Newsletter',
-        'mainSubtitle': 'Monthly Edition - September 2025',
+        'mainSubtitle': 'Monthly Edition - October 2025',
         'websiteTitle': '🎉 New Family Website is Live!',
         'websiteText': 'We are excited to announce that our new family website is now live! The site is a central hub for all things family: a photo gallery, an events calendar, a family AI chat to help with any family issue (well, almost), and more. Come visit, get updated, and share!',
         'inMemoryTitle': '🕯️ In Loving Memory',
@@ -343,18 +307,17 @@
         'photosText': 'A few recent photos, to remind us all of the beautiful moments we share together.',
         'eventsTitle': '🎂 Upcoming Birthdays & Events',
         'eventsList': `
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">September 24:</strong> 78th birthday of Sir James Lauder (Jim) Brunton!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">September 24:</strong> 44th birthday of Chen Gurland!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">September 25:</strong> 6th birthday of John Patrick Keogh!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">25 בספטמבר:</strong> 53rd birthday of Avi Cohen!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">September 27:</strong> 66th birthday of Smadar Pilosof!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">September 27:</strong> 85th birthday of Leon Gork!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">September 28:</strong> 43rd birthday of Merav Ben Abou!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">September 28:</strong> 26th birthday of Shmuli Holczer!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">September 28:</strong> 65th birthday of Chaim Malka!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">October 3:</strong> 78th birthday of Judith M Browne!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">October 5:</strong> 43rd birthday of Avigal Caspi!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">October 5:</strong> 58th birthday of Nathalie Gal!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">October 6:</strong> 91st birthday of Ezra Jacob Davids!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">October 6:</strong> 73rd birthday of Michael Jeffrey Zeavin!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">October 6:</strong> 20th birthday of Talya Junger!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">October 6:</strong> 89th birthday of Stanley Moses!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">October 7:</strong> 73rd birthday of Levi Yitzchak Brandwein!</li>
         `,
         'contactTitle': '✍️ Want to Share?',
-        'contactText': 'Have exciting news, recommendations, or photos from a family trip? Simply send us your updates to this email: <strong>familylocal@gmx.com</strong>.',
+        'contactText': 'Have exciting news, recommendations, or photos from a family trip? Simply send us your updates to this email: <strong>[Your Email Here]</strong>.',
         'footerText1': 'Thanks for reading! See you in the next edition.',
         'footerText2': '&copy; 2025 The Family Newsletter. All rights reserved.',
         'buttonText': 'החלפה לעברית'
@@ -417,7 +380,10 @@
       elementsToTranslate.photosTitle.innerHTML = langData.photosTitle;
       elementsToTranslate.photosText.textContent = langData.photosText;
       elementsToTranslate.eventsTitle.innerHTML = langData.eventsTitle;
+      
+      // Update the birthdays list
       elementsToTranslate.eventsList.innerHTML = langData.eventsList;
+
       elementsToTranslate.contactTitle.innerHTML = langData.contactTitle;
       elementsToTranslate.contactText.innerHTML = langData.contactText;
       elementsToTranslate.footerText1.textContent = langData.footerText1;
