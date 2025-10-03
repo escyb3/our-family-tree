@@ -89,7 +89,7 @@
                     data-he="English" data-en="עברית">English</button>
             <div class="flex flex-col items-center flex-grow">
                 <h1 class="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2" data-he="מציג נתוני משפחה" data-en="Family Data Viewer">מציג נתוני משפחה</h1>
-                <p id="status-message" class="text-lg md:text-xl text-gray-500"></p>
+                <p id="status-message" class="text-lg md:text-xl text-gray-500 text-center"></p>
             </div>
         </header>
         <main id="content-container" class="w-full overflow-x-auto p-4"></main>
@@ -118,7 +118,8 @@
                 'origin': 'מוצא',
                 'members': 'חברי משפחה',
                 'toggle_to_en': 'English',
-                'toggle_to_he': 'עברית'
+                'toggle_to_he': 'עברית',
+                'link_prefix': 'קישור לקובץ: ' // New text for the link prefix
             },
             'en': {
                 'loading_user': 'Checking user connection...',
@@ -132,7 +133,8 @@
                 'origin': 'Origin',
                 'members': 'Family Members',
                 'toggle_to_en': 'English',
-                'toggle_to_he': 'עברית'
+                'toggle_to_he': 'עברית',
+                'link_prefix': 'Link to file: ' // New text for the link prefix
             }
         };
 
@@ -152,9 +154,22 @@
             const enBtnText = langToggleButton.getAttribute('data-en');
             langToggleButton.textContent = currentLang === 'he' ? heBtnText : enBtnText;
 
-            // Re-render data if it's already on screen
+            // Re-render data and status message if data is already on screen
+            const familyUrl = contentContainerEl.dataset.familyUrl;
             if (contentContainerEl.dataset.familyData) {
                 renderData(JSON.parse(contentContainerEl.dataset.familyData));
+                
+                const successText = i18n[currentLang]['success']; 
+                const linkPrefix = i18n[currentLang]['link_prefix'];
+                const linkHtml = `<a href="${familyUrl}" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold underline break-all">${familyUrl}</a>`;
+                statusMessageEl.innerHTML = `<span>${successText}</span><br class="hidden sm:inline" /><span>${linkPrefix}${linkHtml}</span>`;
+
+            } else if (familyUrl) {
+                // Handle HTML fallback case (where familyData is not set but URL is)
+                const successText = i18n[currentLang]['success_fallback']; 
+                const linkPrefix = i18n[currentLang]['link_prefix'];
+                const linkHtml = `<a href="${familyUrl}" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold underline break-all">${familyUrl}</a>`;
+                statusMessageEl.innerHTML = `<span>${successText}</span><br class="hidden sm:inline" /><span>${linkPrefix}${linkHtml}</span>`;
             }
         };
 
@@ -183,7 +198,7 @@
         /**
          * מנסה לטעון נתונים כ-JSON, ואם נכשל, מנסה לטעון כ-HTML גיבוי.
          * @param {string} familySide - שם צד המשפחה לטעינה.
-         * @returns {Promise<{type: 'json', data: Object} | {type: 'html', content: string}>}
+         * @returns {Promise<{type: 'json', data: Object, url: string} | {type: 'html', content: string, url: string}>}
          */
         const fetchFamilyData = async (familySide) => {
             const jsonPath = `data/${familySide}.json`;
@@ -197,7 +212,7 @@
                 if (jsonResponse.ok) {
                     const data = await jsonResponse.json();
                     console.log(`Successfully loaded JSON from: ${jsonPath}`);
-                    return { type: 'json', data: data };
+                    return { type: 'json', data: data, url: jsonPath }; // החזרת הנתיב
                 }
 
                 // If response is not OK (e.g., 404), proceed to fallback
@@ -214,7 +229,7 @@
                     if (htmlResponse.ok) {
                         const content = await htmlResponse.text();
                         console.log(`Successfully loaded HTML fallback from: ${htmlPath}`);
-                        return { type: 'html', content: content };
+                        return { type: 'html', content: content, url: htmlPath }; // החזרת הנתיב
                     }
                     
                     // HTML also failed
@@ -252,16 +267,30 @@
             try {
                 const result = await fetchFamilyData(familySide);
                 
-                if (result.type === 'json') {
+                // 1. הגדרת הודעת הסטטוס והקישור
+                const isJson = result.type === 'json';
+                const successText = isJson 
+                    ? i18n[currentLang]['success'] 
+                    : i18n[currentLang]['success_fallback'];
+                
+                const linkPrefix = i18n[currentLang]['link_prefix'];
+                // יצירת קישור עם הנתיב המלא
+                const linkHtml = `<a href="${result.url}" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold underline break-all">${result.url}</a>`;
+                
+                // עדכון הודעת הסטטוס להצגת ההודעה והקישור בשתי שורות (במקום אחד)
+                statusMessageEl.innerHTML = `<span>${successText}</span><br class="hidden sm:inline" /><span>${linkPrefix}${linkHtml}</span>`;
+
+                // 2. שמירת URL ב-dataset לצורך עדכון שפה
+                contentContainerEl.dataset.familyUrl = result.url;
+
+                if (isJson) {
                     // JSON Success - use existing rendering logic
                     contentContainerEl.dataset.familyData = JSON.stringify(result.data); // Store data for language toggle
                     renderData(result.data);
-                    statusMessageEl.textContent = i18n[currentLang]['success'];
-                } else if (result.type === 'html') {
+                } else {
                     // HTML Fallback Success - use new HTML rendering logic
                     delete contentContainerEl.dataset.familyData; // Remove old JSON data
                     renderHtmlFallback(result.content);
-                    statusMessageEl.textContent = i18n[currentLang]['success_fallback'];
                 }
             } catch (error) {
                 statusMessageEl.textContent = '';
