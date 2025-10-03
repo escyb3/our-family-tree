@@ -166,12 +166,14 @@
         const fetchUserData = async () => {
             statusMessageEl.textContent = i18n[currentLang]['loading_user'];
             try {
+                // קריאה אמיתית ל-API לקבלת פרטי משתמש
                 const response = await fetch('/api/user');
                 if (!response.ok) {
                     throw new Error(i18n[currentLang]['network_error']);
                 }
                 const user = await response.json();
-                return user.user;
+                // מניחים שאובייקט המשתמש נמצא תחת user.user
+                return user.user; 
             } catch (error) {
                 console.error("Error fetching user data:", error);
                 throw new Error(i18n[currentLang]['no_user_details']);
@@ -316,10 +318,8 @@
         const initApp = async () => {
             errorMessageEl.classList.add('hidden');
             try {
-                // Mock user object for demonstration purposes
-                const user = { familySide: 'shmuel' }; // A mock family side. Change this to test the fallback!
-                
-                // const user = await fetchUserData(); // Use this line in a real environment
+                // הסרנו את המוק. קוראים ל-fetchUserData() כדי לקבל את familySide מהמשתמש המחובר.
+                const user = await fetchUserData(); 
 
                 if (user && user.familySide) {
                     await loadAndDisplayData(user.familySide);
