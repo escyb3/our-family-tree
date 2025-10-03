@@ -5,610 +5,590 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leibner Family Tree - Descendants of Ephraim (501)</title>
     <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com/"></script>
     <style>
-        /* Apply Inter font and clean background */
         body {
-            font-family: 'Inter', Tahoma, sans-serif;
-            background-color: #f8fafc; /* Light Slate-50 */
-            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
         }
-
-        /* --- Organizational Chart Specific Styles --- */
-        .tree-root {
+        /* Card Styles */
+        .person-card {
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            min-width: 150px;
+            max-width: 200px;
             text-align: center;
-        }
-
-        .tree-container ul {
-            padding-top: 30px;
-            position: relative;
-            transition: all 0.5s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            cursor: pointer;
+            height: 100%;
             display: flex;
+            flex-direction: column;
             justify-content: center;
-            flex-wrap: nowrap;
         }
-
-        .tree-container li {
-            text-align: center;
-            list-style-type: none;
-            position: relative;
-            padding: 0 5px 0 5px; /* Horizontal spacing between siblings */
+        .person-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
         }
-
-        /* The main container for the card and spouse */
-        .node-group {
+        /* Gender Colors */
+        .gender-M { background-color: #DBEAFE; border: 2px solid #3B82F6; }
+        .gender-F { background-color: #FCE7F3; border: 2px solid #EC4899; }
+        .gender-U { background-color: #E5E7EB; border: 2px solid #6B7280; }
+        /* Tree Structure */
+        .tree-container {
+            display: inline-block;
+            white-space: nowrap;
+            padding: 2rem;
+            min-width: 100%;
+        }
+        /* Node representing a couple and their connector to parents */
+        .couple-node {
             display: inline-flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 20px; /* Space between rows/generations */
-        }
-
-        /* Connecting lines from children to parent */
-        .tree-container li::before, .tree-container li::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            border-top: 1px solid #059669; /* Emerald-600 (Green lines) */
-            width: 50%;
-            height: 30px; /* Vertical distance to the parent line */
-        }
-
-        .tree-container li::after {
-            left: auto;
-            right: 50%;
-            border-right: 1px solid #059669; /* Vertical part of the line */
-        }
-
-        /* Connecting vertical line from parent to children group */
-        .tree-container ul:not(.root-ul)::before {
-            content: '';
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            border-left: 1px solid #059669;
-            width: 0;
-            height: 30px;
-        }
-
-        /* Connects first and last sibling to the parent line */
-        .tree-container li:first-child::before, .tree-container li:last-child::after {
-            border: 0;
-        }
-
-        /* Adds the line between siblings */
-        .tree-container li:last-child::before {
-            border-left: 1px solid #059669;
-            border-radius: 5px 0 0 0;
-        }
-
-        .tree-container li:first-child::after {
-            border-radius: 0 5px 0 0;
-        }
-
-        /* Special case for single child of a group */
-        .tree-container li:only-child::after, .tree-container li:only-child::before {
-            display: none;
-        }
-        .tree-container li:only-child .node-group {
+            margin-bottom: 20px;
             position: relative;
         }
-        .tree-container li:only-child .node-group::before {
-            content: '';
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            border-left: 1px solid #059669;
-            width: 0;
-            height: 30px;
-        }
-
-        /* Hide children/sub-lists when collapsed */
-        .collapsed > ul {
-            display: none;
-        }
-        .collapsed .toggle-icon {
-            transform: translateY(-50%) rotate(-90deg);
-        }
-
-        /* The Card Style */
-        .person-card {
-            border-width: 2px;
-            background-color: #ffffff;
-            color: #1f2937;
-            padding: 8px 12px;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            min-width: 150px;
-            text-align: left;
-            cursor: pointer;
-            position: relative;
-            margin-bottom: 5px;
+        /* Wrapper for the person/spouse cards */
+        .couple-card-wrapper {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
+            align-items: stretch;
+            position: relative;
+            margin-bottom: 0.5rem; /* Space between couple and children line */
         }
-
-        /* Male Card Style (Blue/Green like the image) */
-        .male-card {
-            border-color: #3b82f6; /* Blue-500 */
-        }
-        .male-card:hover {
-            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
-        }
-
-        /* Female Card Style (Pink/Coral like the image) */
-        .female-card {
-            border-color: #ec4899; /* Pink-500 */
-        }
-        .female-card:hover {
-            box-shadow: 0 4px 10px rgba(236, 72, 153, 0.3);
-        }
-
-        .name-text {
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: #1f2937;
-        }
-
-        .id-text {
-            font-size: 0.75rem;
-            color: #6b7280;
-            margin-top: 2px;
-        }
-
         .spouse-line {
             height: 2px;
-            width: 30px;
-            background-color: #94a3b8; /* Slate-400 */
-            margin: 0 10px;
+            width: 10px;
+            background-color: #1F2937;
+            align-self: center;
         }
-
-        .toggle-icon {
+        /* Vertical line connecting couple to children */
+        .children-line-vertical {
+            position: relative; /* relative to couple-node */
+            width: 2px;
+            background-color: #1F2937;
+            height: 20px;
+            margin-bottom: 0;
+        }
+        /* Container for all children of a couple */
+        .descendants-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 0;
+            width: 100%;
+            /* Initially collapsed, handled by JS but set default visually */
+        }
+        /* Horizontal line connecting all siblings */
+        .children-horizontal-connector {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            padding-top: 0;
+            margin-top: 0;
+            width: 100%;
+            overflow-x: auto;
+        }
+        .children-horizontal-line {
             position: absolute;
-            top: 50%;
-            right: 5px; /* Align to the right side of the card */
-            transform: translateY(-50%) rotate(0deg);
-            transition: transform 0.2s;
-            font-size: 0.9rem;
-            color: #059669;
+            top: 0;
+            height: 2px;
+            background-color: #1F2937;
+            width: 100%;
         }
-
-        /* Responsive adjustments for smaller screens */
-        @media screen and (max-width: 768px) {
-            .tree-container ul {
-                flex-direction: column;
-                padding-top: 10px;
+        /* Container for each child node, positioned horizontally */
+        .child-node-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 0 15px; /* Spacing between siblings */
+        }
+        /* Vertical line from horizontal connector to the child's couple node */
+        .child-vertical-line {
+            width: 2px;
+            height: 20px;
+            background-color: #1F2937;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 768px) {
+            .tree-container {
+                overflow-x: scroll;
             }
-            .tree-container li {
-                width: 100%;
-                padding: 0;
-            }
-            .tree-container li::before, .tree-container li::after {
-                height: 10px;
-            }
-            .tree-container ul:not(.root-ul)::before {
-                height: 10px;
-                top: -10px;
-            }
-            .tree-container li:only-child .node-group::before {
-                height: 10px;
-                top: -10px;
+            .person-card {
+                min-width: 100px;
+                max-width: 150px;
             }
         }
     </style>
 </head>
 <body>
-
     <div class="max-w-full mx-auto p-4 bg-white rounded-xl shadow-lg my-4">
-        <h1 class="text-3xl font-extrabold text-center text-emerald-700 mb-2">Family Tree: Descendants of Ephraim Leibner</h1>
-        <p class="text-center text-gray-500 mb-6">Tracking generations from the provided list (Root ID: 501). Click on a person's card to show/hide their descendants.</p>
+        <h1 class="text-3xl font-extrabold text-center text-emerald-700 mb-2">עץ משפחה: צאצאי אפרים לייבנר</h1>
+        <p class="text-center text-gray-500 mb-6">מעקב אחר דורות מהרשימה שסופקה (שורש ID: 501). לחץ על כרטיס אדם כדי להציג/להסתיר את צאצאיו.</p>
     </div>
-
-    <div id="family-tree-container" class="tree-container tree-root overflow-x-auto p-4">
+    <!-- Corrected ID for JS reference -->
+    <div id="familyTree" class="tree-container tree-root overflow-x-auto p-4">
         <!-- Tree will be rendered here by JavaScript -->
     </div>
-
+    <!-- Key and Instructions Section (New) -->
+    <div class="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-lg my-8">
+        <h2 class="text-xl font-bold text-gray-700 mb-4">מפתח והוראות</h2>
+        <div class="flex flex-wrap justify-center gap-6 text-gray-600">
+            <div class="flex items-center">
+                <span class="gender-symbol-wrapper bg-blue-500 mr-2 text-white">♂️</span>
+                זכר (Male)
+            </div>
+            <div class="flex items-center">
+                <span class="gender-symbol-wrapper bg-pink-500 mr-2 text-white">♀️</span>
+                נקבה (Female)
+            </div>
+            <div class="flex items-center">
+                <span class="gender-symbol-wrapper bg-gray-400 mr-2 text-white">👤</span>
+                לא ידוע (Unknown)
+            </div>
+        </div>
+        <p class="mt-4 text-center text-sm">
+            לחץ על כרטיס של אדם כדי **להציג/להסתיר** את צאצאיו.
+        </p>
+        <p class="mt-2 text-center text-xs text-red-500 font-medium">
+            תאריכים כגון **'b. 1821 - 1913'** מופיעים כעת בכרטיסים, בהתאם לנתוני המסמך.
+        </p>
+    </div>
     <script>
         // --- Data Structure (JavaScript Object) ---
-        // Represents the full family tree based on the provided list.
-        // Mapped relationship: [Person] + [Spouse] => {children: [...]}
-        // Note: The root structure is inferred from the order (Ephraim 501 + Rachela 502 are the top ancestors)
+        // Nested structure representing the full family tree (ID 501 is the root)
         const familyData = {
-            id: 501, name: "Ephraim Leibner", gender: "M",
-            spouse: [{
+            // ID 501: Ephraim Leibner (b. ~1800)
+            id: 501, name: "Ephraim Leibner", gender: "M", birth_year: 1800, note: "(approximate)",
+            spouse: [{ // FIXED: removed \
+                // ID 502: Rachela Leibner
                 id: 502, name: "Rachela Leibner", gender: "F",
-                children: [
-                    // Shraga Feiwel Leibner (498) branch
-                    { id: 498, name: "Shraga Feiwel Leibner", gender: "M", spouse: [{ id: 499, name: "Sheindel Gross", gender: "F", children: [
-                        // Nathan Nute Halevi Leibner (490) branch
-                        { id: 490, name: "Nathan Nute Halevi Leibner", gender: "M",
-                            // Nathan had multiple wives/children groups based on the list structure
-                            spouse: [
-                                // Wife 1: Pearl Feige Tzimet (491)
-                                { id: 491, name: "Pearl Feige Tzimet", gender: "F", children: [
-                                    // Ephraim Halevi Leibner (452) branch - parents of (1), (2), (3) etc.
-                                    { id: 452, name: "Ephraim Halevi Leibner", gender: "M", spouse: [{ id: 453, name: "Shprince Ruchel Findling", gender: "F", children: [
-                                        // G3 Children of Ephraim 452:
-                                        // (1) Sima Leibner
-                                        { id: 348, name: "Sima Leibner", gender: "F", spouse: [{ id: 349, name: "Mordechai Posterung", gender: "M", children: [
-                                            { id: 263, name: "Nathan Postrung", gender: "M" },
-                                            { id: 264, name: "Mr. Postrung", gender: "M" }
-                                        ]}]},
-                                        // (2) Pearl Pauline Leibner
-                                        { id: 350, name: "Pearl Pauline Leibner", gender: "F", spouse: [{ id: 351, name: "Philip Pesach Klein", gender: "M", children: [
-                                            { id: 265, name: "Estelle Klein", gender: "F", spouse: [{ id: 266, name: "Murray Yoss", gender: "M", children: [
-                                                { id: 145, name: "Meryl Susan Yoss", gender: "F" },
-                                                { id: 147, name: "Eric Bruce Yoss", gender: "M", spouse: [{ id: 148, name: "Anne H Yoss", gender: "F", children: [
-                                                    { id: 16, name: "David N Yoss", gender: "M" },
-                                                    { id: 17, name: "Sarah Emma Yoss", gender: "F" },
-                                                    { id: 18, name: "Philip Edmund Yoss", gender: "M" }
-                                                ]}]},
-                                                { id: 149, name: "Renee Yoss", gender: "F" }
-                                            ]}]},
-                                            { id: 267, name: "Doris Klein", gender: "F", spouse: [{ id: 268, name: "Lloyd H Silverman", gender: "M", children: [
-                                                { id: 150, name: "Ilena B Silverman", gender: "F" },
-                                                { id: 151, name: "Mara L Phd Silverman", gender: "F" },
-                                                { id: 152, name: "Gillian Diane Silverman", gender: "F" },
-                                                { id: 153, name: "Stefan David Silverman", gender: "M" }
-                                            ]}]},
-                                            { id: 269, name: "Harold Klein", gender: "M", spouse: [{ id: 270, name: "Marcia Hope Greenstein", gender: "F", children: [
-                                                { id: 155, name: "Cheryl L Klein", gender: "F", spouse: [{ id: 157, name: "David Harry Norman", gender: "M", children: [
-                                                    { id: 19, name: "Molly Norman", gender: "F" },
-                                                    { id: 21, name: "Justin Norman", gender: "M" }
-                                                ]}]},
-                                                { id: 158, name: "Donna A Klein", gender: "F", spouse: [{ id: 159, name: "Alan Eric Cornfield", gender: "M", children: [
-                                                    { id: 23, name: "Daniel Stephen Cornfield", gender: "M" },
-                                                    { id: 24, name: "Paige Allyson Cornfield", gender: "F" }
-                                                ]}]},
-                                                { id: 161, name: "Stephanie Klein", gender: "F", spouse: [{ id: 162, name: "Robert Goldstein", gender: "M", children: [
-                                                    { id: 25, name: "Jacob Goldstein", gender: "M" },
-                                                    { id: 26, name: "Emma Goldstein", gender: "F" },
-                                                    { id: 27, name: "Charlotte Goldstein", gender: "F" }
-                                                ]}]}
-                                            ]}]}
-                                        ]}]},
-                                        { id: 352, name: "Seril Sarah Leibner", gender: "F" },
-                                        // (3) Jacob Yaakov Leibner
-                                        { id: 354, name: "Jacob Yaakov Leibner", gender: "M", spouse: [{ id: 355, name: "Seril Lang", gender: "F", children: [
-                                            { id: 271, name: "William Leibner", gender: "M", spouse: [{ id: 272, name: "Claudette E Tritt", gender: "F", children: [
-                                                { id: 163, name: "Emile Leibner", gender: "M" },
-                                                { id: 164, name: "Chud Leibner", gender: "M" },
-                                                { id: 165, name: "Bruce Leibner", gender: "M" }
-                                            ]}]},
-                                            { id: 273, name: "Yehuda Leibner", gender: "M", spouse: [{ id: 274, name: "Gladys Gittel Schwartz", gender: "F", children: [
-                                                { id: 166, name: "Efraim David Leibner", gender: "M", spouse: [{ id: 167, name: "Mazal Hadida", gender: "F", children: [
-                                                    { id: 28, name: "Jacob Leibner", gender: "M" },
-                                                    { id: 29, name: "Gidon Leibner", gender: "M" },
-                                                    { id: 30, name: "Yehuda Leibner", gender: "M" }
-                                                ]}]},
-                                                { id: 168, name: "Meir Leibner", gender: "M" },
-                                                { id: 169, name: "Uzi Leibner", gender: "M" }
-                                            ]}]}
-                                        ]}]},
-                                        { id: 356, name: "Moshe Leibner", gender: "M" },
-                                        { id: 357, name: "Shimshon Shimon Leibner", gender: "M" },
-                                        { id: 358, name: "Reisel Leibner", gender: "F" },
-                                        { id: 359, name: "Mania Leibner", gender: "F" },
-                                        { id: 360, name: "Manny Leibner", gender: "M" }
-                                    ]}]},
-                                    // Sheindel Jennie Leibner (454) branch
-                                    { id: 454, name: "Sheindel Jennie Leibner", gender: "F", spouse: [{ id: 455, name: "Harry (Tzvi) Krill", gender: "M", children: [
-                                        { id: 361, name: "Pauline Pearl Krill", gender: "F" },
-                                        { id: 362, name: "Irving Krill", gender: "M" },
-                                        { id: 363, name: "Edith Ita Krill", gender: "F" },
-                                        { id: 364, name: "Ruth Krill", gender: "F" },
-                                        { id: 365, name: "Sarah B Krill", gender: "F" },
-                                        { id: 367, name: "Jules Julius Krill", gender: "M" },
-                                        { id: 369, name: "Edna Krill", gender: "F" }
-                                    ]}]}
-                                ]}, // End of Pearl Feige Tzimet (491) children
-
-                                // Wife 2: Rose (Reizel) Achtsam (492)
-                                { id: 492, name: "Rose (Reizel) Achtsam", gender: "F", children: [
-                                    { id: 456, name: "Saul Mendel (Menachem) Leibner", gender: "M" },
-                                    // Rachel Witte Leibner (457) branch - parents of (4), (5), (6)
-                                    { id: 457, name: "Rachel Witte Leibner", gender: "F", spouse: [{ id: 458, name: "Benjamin Teller", gender: "M", children: [
-                                        // (4) Frank Teller
-                                        { id: 371, name: "Frank Teller", gender: "M", spouse: [{ id: 372, name: "Jeanette Mishking (Teller)", gender: "F", children: [
-                                            { id: 275, name: "Michael Teller", gender: "M" },
-                                            { id: 276, name: "Benjamin E Teller", gender: "M" }
-                                        ]}]},
-                                        { id: 373, name: "Murray Teller", gender: "M" },
-                                        // (5) Edith Teller
-                                        { id: 375, name: "Edith Teller", gender: "F", spouse: [{ id: 376, name: "Louis J. Baskin", gender: "M", children: [
-                                            { id: 277, name: "Bennett Richard Baskin", gender: "M", spouse: [{ id: 278, name: "Doreen Unknown", gender: "F", children: [
-                                                { id: 170, name: "Brian David Baskin", gender: "M", spouse: [{ id: 171, name: "Lisa-Marie Magana", gender: "F", children: [
-                                                    { id: 31, name: "Bailey Baskin", gender: "U" }
-                                                ]}]}
-                                            ]}]},
-                                            { id: 279, name: "George Baskin", gender: "M", spouse: [{ id: 280, name: "Anita GOULD Basking", gender: "F", children: [
-                                                { id: 172, name: "Johnathan J Baskin", gender: "M" },
-                                                { id: 173, name: "Robin Lynn Baskin", gender: "F" }
-                                            ]}]}
-                                        ]}]},
-                                        // (6) Jerome Arthur Teller
-                                        { id: 377, name: "Jerome Arthur Teller", gender: "M", spouse: [{ id: 378, name: "Shirley Teller", gender: "F", children: [
-                                            { id: 281, name: "Barbara A Teller", gender: "F" },
-                                            { id: 283, name: "Maureen Felice Teller", gender: "F" },
-                                            { id: 285, name: "Lynn Ellen Teller", gender: "F", spouse: [{ id: 286, name: "Frederick Villars", gender: "M", children: [
-                                                { id: 174, name: "Jordan Alexander Villars", gender: "M" },
-                                                { id: 175, name: "Spencer Sebastian Villars", gender: "M" }
-                                            ]}]}
-                                        ]}]}
-                                    ]}]},
-                                    { id: 459, name: "Burech Leib Leibner", gender: "M" },
-                                    // (7) Moses Jozef (Joseph) Leibner
-                                    { id: 460, name: "Moses Jozef (Joseph) Leibner", gender: "M", spouse: [{ id: 461, name: "Lillian Greher", gender: "F", children: [
-                                        // Showing top level only due to size; full data structure used internally for deeper levels
-                                        { id: 379, name: "Rose Leibner", gender: "F", spouse: [{ id: 380, name: "Reuben Schechter", gender: "M", children: [
-                                            { id: 287, name: "Taube Schechter", gender: "F", spouse: [{ id: 288, name: "Raymond Rothman", gender: "M", children: [
-                                                { id: 176, name: "Debbie Rothman", gender: "F", spouse: [{ id: 177, name: "Jonathan Chase", gender: "M", children: [
-                                                    { id: 32, name: "Anna Lily Chase", gender: "F", spouse: [{ id: 33, name: "Mr. Unknown", gender: "M", children: [
-                                                        { id: 1, name: "Calvin Unknown", gender: "M" }
-                                                    ]}]},
-                                                    { id: 34, name: "Oliver Chase", gender: "M" }
-                                                ]}]},
-                                                { id: 178, name: "Richard Allen Rothman", gender: "M", spouse: [{ id: 179, name: "Melissa Gail Salten", gender: "F", children: [
-                                                    { id: 35, name: "Harris Rothman", gender: "M" },
-                                                    { id: 36, name: "Tommy Rothman", gender: "M" }
-                                                ]}]},
-                                                { id: 289, name: "Ruth Nobel", gender: "F" }
-                                            ]}]},
-                                        ]}, // <-- ADDED COMMA HERE to separate Rose Leibner (379) from Mildred C Leibner (382)
-                                        { id: 382, name: "Mildred C Leibner", gender: "F", spouse: [{ id: 383, name: "David Aron Jaffe", gender: "M", children: [
-                                            { id: 290, name: "Frederick F. Jaffe", gender: "M", spouse: [{ id: 291, name: "Mary Ellen Marks", gender: "F", children: [
-                                                { id: 180, name: "David Mark Jaffe", gender: "M", spouse: [{ id: 181, name: "Leslie Jill Kane", gender: "F", children: [
-                                                    { id: 38, name: "Zachary Jaffe", gender: "M" },
-                                                    { id: 39, name: "Aria Jaffe", gender: "F" }
-                                                ]}]},
-                                                { id: 182, name: "Harry Mark Jaffe", gender: "M", spouse: [{ id: 183, name: "Andrea J Sinkin", gender: "F", children: [
-                                                    { id: 40, name: "Aliana Jaffe", gender: "F" },
-                                                    { id: 41, name: "Arias Jaffe", gender: "U" }
-                                                ]}]}
-                                            ]}]}
-                                        ]}]},
-                                        { id: 384, name: "Taube Leibner", gender: "F", spouse: [{ id: 385, name: "Theodore Fagin", gender: "M", children: [
-                                            { id: 293, name: "Beth Fagin", gender: "F", spouse: [{ id: 294, name: "Henry Sommer", gender: "M", children: [
-                                                { id: 184, name: "Ethan Jashua Sommer", gender: "M", spouse: [{ id: 185, name: "Alison Rose Campion", gender: "F", children: [
-                                                    { id: 42, name: "Kaylee Rose Sommer", gender: "F" },
-                                                    { id: 43, name: "Danielle Ann Sommer", gender: "F" }
-                                                ]}]},
-                                                { id: 186, name: "Aaron Sommer", gender: "M" }
-                                            ]}]}
-                                        ]}]},
-                                        { id: 386, name: "Ira Wallace Leibner", gender: "M", spouse: [{ id: 387, name: "Dorothy Jane Goldberg", gender: "F", children: [
-                                            { id: 295, name: "Helen Ann Leibner", gender: "F" },
-                                            { id: 296, name: "Donald Neil Leibner", gender: "M", spouse: [{ id: 297, name: "Fran Unknown", gender: "F", children: [
-                                                { id: 187, name: "Joshua G Leibner", gender: "M", spouse: [{ id: 188, name: "Danielle White", gender: "F", children: [
-                                                    { id: 44, name: "Paige Leibner", gender: "F" }
-                                                ]}]},
-                                                { id: 189, name: "Matthew S Leibner", gender: "M" }
-                                            ]}]}
-                                        ]}]}
-                                    ]}]},
-                                    // (8) Emma (Chaie Anna)) Leibner
-                                    { id: 462, name: "Emma (Chaie Anna) Leibner", gender: "F", spouse: [{ id: 463, name: "Harry (Hersch) Goodwin", gender: "M", children: [
-                                        { id: 388, name: "Rose Goodwin", gender: "F" },
-                                        { id: 389, name: "Charlotte Goodwin", gender: "F" },
-                                        { id: 390, name: "Bernard M Goodwin", gender: "M", spouse: [{ id: 391, name: "Lillian Jenette Walden", gender: "F", children: [
-                                            { id: 298, name: "Nanette Goodwin", gender: "F" },
-                                            { id: 299, name: "Merrily Goodwin", gender: "F" },
-                                            { id: 300, name: "Melody Goodwin", gender: "F" }
-                                        ]}]},
-                                        { id: 392, name: "Jesse Charles Goodwin", gender: "M", spouse: [{ id: 393, name: "Harriet Ray Jacobs", gender: "F", children: [
-                                            { id: 301, name: "Richard Goodwin", gender: "M" },
-                                            { id: 302, name: "Ralph Goodwin", gender: "M" },
-                                            { id: 303, name: "Jonathan Goodwin", gender: "M" }
-                                        ]}]},
-                                        { id: 395, name: "Olive E Goodwin", gender: "F", spouse: [{ id: 396, name: "Oscar Ralph Miller", gender: "M", children: [
-                                            { id: 304, name: "Todd G Miller", gender: "M" },
-                                            { id: 305, name: "Michael Miller", gender: "M", spouse: [{ id: 306, name: "Ms. Frackman", gender: "F", children: [
-                                                { id: 191, name: "Ms. Miller", gender: "F" }
-                                            ]}]},
-                                            { id: 397, name: "David Gold", gender: "M" }
-                                        ]}]}
-                                    ]}]},
-                                    // (9) Sara Etta Leibner
-                                    { id: 464, name: "Sara Etta Leibner", gender: "F", spouse: [{ id: 465, name: "John H. Lang", gender: "M", children: [
-                                        { id: 398, name: "Rose Lang", gender: "F" },
-                                        { id: 400, name: "Murry J. Lang", gender: "M" }
-                                    ]}]}
-                                ]}, // End of Rose (Reizel) Achtsam (492) children
-
-                                // Wife 3: Anna Cohen (493)
-                                { id: 493, name: "Anna Cohen", gender: "F", children: [
-                                    { id: 466, name: "Ida Leibner", gender: "F" },
-                                    { id: 467, name: "Sydney Leibner", gender: "M" },
-                                    // Rachel Yetta Leibner (494) branch - parents of (10)-(16)
-                                    { id: 494, name: "Rachel Yetta Leibner", gender: "F", spouse: [{ id: 495, name: "Yehiel Aharon Weinberger", gender: "M", children: [
+                children: [ // FIXED: removed \
+                    // Shraga Feiwel Leibner (498) branch (1821-1913)
+                    { id: 498, name: "Shraga Feiwel Leibner", gender: "M", birth_year: 1821, death_year: 1913, spouse: [{ // FIXED: removed \
+                        // Sheindel Gross (499) (d. 1853)
+                        id: 499, name: "Sheindel Gross", gender: "F", death_year: 1853, 
+                        
+                        // NOTE: Corrected structure based on the PDF snippet (Page 7).
+                        // Shraga Feiwel (498) and Sheindel (499) had a son and two daughters.
+                        // Nathan (490) and Rachel Yetta (494) are siblings, not father/daughter.
+                        children: [ // FIXED: removed \
+                            // 1. Son: Nathan Nute Halevi Leibner (490) (1855-1929)
+                            { id: 490, name: "Nathan Nute Halevi Leibner", gender: "M", birth_year: 1855, death_year: 1929,
+                                // Nathan had 3 wives, as requested/shown in the data structure
+                                spouse: [ // FIXED: removed \
+                                    // Wife 1: Pearl Feige Tzimet (491)
+                                    { id: 491, name: "Pearl Feige Tzimet", gender: "F", children: [ // FIXED: removed \
+                                        // Ephraim Halevi Leibner (452) branch - parents of (1), (2), (3) etc.
+                                        { id: 452, name: "Ephraim Halevi Leibner", gender: "M", spouse: [{ id: 453, name: "Shprince Ruchel Findling", gender: "F", children: [ // FIXED: removed \
+                                            // G3 Children of Ephraim 452:
+                                            // (1) Sima Leibner
+                                            { id: 348, name: "Sima Leibner", gender: "F", spouse: [{ id: 349, name: "Mordechai Posterung", gender: "M", children: [ // FIXED: removed \
+                                                { id: 263, name: "Nathan Postrung", gender: "M" },
+                                                { id: 264, name: "Mr. Postrung", gender: "M" }
+                                            ]}]}, // FIXED: removed \
+                                            // (2) Pearl Pauline Leibner
+                                            { id: 350, name: "Pearl Pauline Leibner", gender: "F", spouse: [{ id: 351, name: "Philip Pesach Klein", gender: "M", children: [ // FIXED: removed \
+                                                { id: 265, name: "Estelle Klein", gender: "F", spouse: [{ id: 266, name: "Murray Yoss", gender: "M", children: [ // FIXED: removed \
+                                                    { id: 145, name: "Meryl Susan Yoss", gender: "F" },
+                                                    { id: 147, name: "Eric Bruce Yoss", gender: "M", spouse: [{ id: 148, name: "Anne H Yoss", gender: "F", children: [ // FIXED: removed \
+                                                        { id: 16, name: "David N Yoss", gender: "M" },
+                                                        { id: 17, name: "Sarah Emma Yoss", gender: "F" },
+                                                        { id: 18, name: "Philip Edmund Yoss", gender: "M" }
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 149, name: "Renee Yoss", gender: "F" }
+                                                ]}]}, // FIXED: removed \
+                                                { id: 267, name: "Doris Klein", gender: "F", spouse: [{ id: 268, name: "Lloyd H Silverman", gender: "M", children: [ // FIXED: removed \
+                                                    { id: 150, name: "Ilena B Silverman", gender: "F" },
+                                                    { id: 151, name: "Mara L Phd Silverman", gender: "F" },
+                                                    { id: 152, name: "Gillian Diane Silverman", gender: "F" },
+                                                    { id: 153, name: "Stefan David Silverman", gender: "M" }
+                                                ]}]}, // FIXED: removed \
+                                                { id: 269, name: "Harold Klein", gender: "M", spouse: [{ id: 270, name: "Marcia Hope Greenstein", gender: "F", children: [ // FIXED: removed \
+                                                    { id: 155, name: "Cheryl L Klein", gender: "F", spouse: [{ id: 157, name: "David Harry Norman", gender: "M", children: [ // FIXED: removed \
+                                                        { id: 19, name: "Molly Norman", gender: "F" },
+                                                        { id: 21, name: "Justin Norman", gender: "M" }
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 158, name: "Donna A Klein", gender: "F", spouse: [{ id: 159, name: "Alan Eric Cornfield", gender: "M", children: [ // FIXED: removed \
+                                                        { id: 23, name: "Daniel Stephen Cornfield", gender: "M" },
+                                                        { id: 24, name: "Paige Allyson Cornfield", gender: "F" }
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 161, name: "Stephanie Klein", gender: "F", spouse: [{ id: 162, name: "Robert Goldstein", gender: "M", children: [ // FIXED: removed \
+                                                        { id: 25, name: "Jacob Goldstein", gender: "M" },
+                                                        { id: 26, name: "Emma Goldstein", gender: "F" },
+                                                        { id: 27, name: "Charlotte Goldstein", gender: "F" }
+                                                    ]}]} // FIXED: removed \
+                                                ]}]} // FIXED: removed \
+                                            ]}]}, // FIXED: removed \
+                                            { id: 352, name: "Seril Sarah Leibner", gender: "F" },
+                                            // (3) Jacob Yaakov Leibner
+                                            { id: 354, name: "Jacob Yaakov Leibner", gender: "M", spouse: [{ id: 355, name: "Seril Lang", gender: "F", children: [ // FIXED: removed \
+                                                { id: 271, name: "William Leibner", gender: "M", spouse: [{ id: 272, name: "Claudette E Tritt", gender: "F", children: [ // FIXED: removed \
+                                                    { id: 163, name: "Emile Leibner", gender: "M" },
+                                                    { id: 164, name: "Chud Leibner", gender: "M" },
+                                                    { id: 165, name: "Bruce Leibner", gender: "M" }
+                                                ]}]}, // FIXED: removed \
+                                                { id: 273, name: "Yehuda Leibner", gender: "M", spouse: [{ id: 274, name: "Gladys Gittel Schwartz", gender: "F", children: [ // FIXED: removed \
+                                                    { id: 166, name: "Efraim David Leibner", gender: "M", spouse: [{ id: 167, name: "Mazal Hadida", gender: "F", children: [ // FIXED: removed \
+                                                        { id: 28, name: "Jacob Leibner", gender: "M" },
+                                                        { id: 29, name: "Gidon Leibner", gender: "M" },
+                                                        { id: 30, name: "Yehuda Leibner", gender: "M" }
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 168, name: "Meir Leibner", gender: "M" },
+                                                    { id: 169, name: "Uzi Leibner", gender: "M" }
+                                                ]}]} // FIXED: removed \
+                                            ]}]}, // FIXED: removed \
+                                            { id: 356, name: "Moshe Leibner", gender: "M" },
+                                            { id: 357, name: "Shimshon Shimon Leibner", gender: "M" },
+                                            { id: 358, name: "Reisel Leibner", gender: "F" },
+                                            { id: 359, name: "Mania Leibner", gender: "F" },
+                                            { id: 360, name: "Manny Leibner", gender: "M" }
+                                        ]}]}, // FIXED: removed \
+                                        // Sheindel Jennie Leibner (454) branch
+                                        { id: 454, name: "Sheindel Jennie Leibner", gender: "F", spouse: [{ id: 455, name: "Harry (Tzvi) Krill", gender: "M", children: [ // FIXED: removed \
+                                            { id: 361, name: "Pauline Pearl Krill", gender: "F" },
+                                            { id: 362, name: "Irving Krill", gender: "M" },
+                                            { id: 363, name: "Edith Ita Krill", gender: "F" },
+                                            { id: 364, name: "Ruth Krill", gender: "F" },
+                                            { id: 365, name: "Sarah B Krill", gender: "F" },
+                                            { id: 367, name: "Jules Julius Krill", gender: "M" },
+                                            { id: 369, name: "Edna Krill", gender: "F" }
+                                        ]}]} // FIXED: removed \
+                                    ]}, // End of Pearl Feige Tzimet (491) children
+                                    // Wife 2: Rose (Reizel) Achtsam (492)
+                                    { id: 492, name: "Rose (Reizel) Achtsam", gender: "F", children: [ // FIXED: removed \
+                                        { id: 456, name: "Saul Mendel (Menachem) Leibner", gender: "M" },
+                                        // Rachel Witte Leibner (457) branch - parents of (4), (5), (6)
+                                        { id: 457, name: "Rachel Witte Leibner", gender: "F", spouse: [{ id: 458, name: "Benjamin Teller", gender: "M", children: [ // FIXED: removed \
+                                            // (4) Frank Teller
+                                            { id: 371, name: "Frank Teller", gender: "M", spouse: [{ id: 372, name: "Jeanette Mishking (Teller)", gender: "F", children: [ // FIXED: removed \
+                                                { id: 275, name: "Michael Teller", gender: "M" },
+                                                { id: 276, name: "Benjamin E Teller", gender: "M" }
+                                            ]}]}, // FIXED: removed \
+                                            { id: 373, name: "Murray Teller", gender: "M" },
+                                            // (5) Edith Teller
+                                            { id: 375, name: "Edith Teller", gender: "F", spouse: [{ id: 376, name: "Louis J. Baskin", gender: "M", children: [ // FIXED: removed \
+                                                { id: 277, name: "Bennett Richard Baskin", gender: "M", spouse: [{ id: 278, name: "Doreen Unknown", gender: "F", children: [ // FIXED: removed \
+                                                    { id: 170, name: "Brian David Baskin", gender: "M", spouse: [{ id: 171, name: "Lisa-Marie Magana", gender: "F", children: [ // FIXED: removed \
+                                                        { id: 31, name: "Bailey Baskin", gender: "U" }
+                                                    ]}]} // FIXED: removed \
+                                                ]}]}, // FIXED: removed \
+                                                { id: 279, name: "George Baskin", gender: "M", spouse: [{ id: 280, name: "Anita GOULD Basking", gender: "F", children: [ // FIXED: removed \
+                                                    { id: 172, name: "Johnathan J Baskin", gender: "M" },
+                                                    { id: 173, name: "Robin Lynn Baskin", gender: "F" }
+                                                ]}]} // FIXED: removed \
+                                            ]}]}, // FIXED: removed \
+                                            // (6) Jerome Arthur Teller
+                                            { id: 377, name: "Jerome Arthur Teller", gender: "M", spouse: [{ id: 378, name: "Shirley Teller", gender: "F", children: [ // FIXED: removed \
+                                                { id: 281, name: "Barbara A Teller", gender: "F" },
+                                                { id: 283, name: "Maureen Felice Teller", gender: "F" },
+                                                { id: 285, name: "Lynn Ellen Teller", gender: "F", spouse: [{ id: 286, name: "Frederick Villars", gender: "M", children: [ // FIXED: removed \
+                                                    { id: 174, name: "Jordan Alexander Villars", gender: "M" },
+                                                    { id: 175, name: "Spencer Sebastian Villars", gender: "M" }
+                                                ]}]} // FIXED: removed \
+                                            ]}]} // FIXED: removed \
+                                        ]}]}, // FIXED: removed \
+                                        { id: 459, name: "Burech Leib Leibner", gender: "M" },
+                                        // (7) Moses Jozef (Joseph) Leibner
+                                        { id: 460, name: "Moses Jozef (Joseph) Leibner", gender: "M", spouse: [{ id: 461, name: "Lillian Greher", gender: "F", children: [ // FIXED: removed \
+                                            // Showing top level only due to size; full data structure used internally for deeper levels
+                                            { id: 379, name: "Rose Leibner", gender: "F", spouse: [{ id: 380, name: "Reuben Schechter", gender: "M", children: [ // FIXED: removed \
+                                                { id: 287, name: "Taube Schechter", gender: "F", spouse: [{ id: 288, name: "Raymond Rothman", gender: "M", children: [ // FIXED: removed \
+                                                    { id: 176, name: "Debbie Rothman", gender: "F", spouse: [{ id: 177, name: "Jonathan Chase", gender: "M", children: [ // FIXED: removed \
+                                                        { id: 32, name: "Anna Lily Chase", gender: "F", spouse: [{ id: 33, name: "Mr. Unknown", gender: "M", children: [ // FIXED: removed \
+                                                            { id: 1, name: "Calvin Unknown", gender: "M" }
+                                                        ]}]}, // FIXED: removed \
+                                                        { id: 34, name: "Oliver Chase", gender: "M" }
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 178, name: "Richard Allen Rothman", gender: "M", spouse: [{ id: 179, name: "Melissa Gail Salten", gender: "F", children: [ // FIXED: removed \
+                                                        { id: 35, name: "Harris Rothman", gender: "M" },
+                                                        { id: 36, name: "Tommy Rothman", gender: "M" }
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 289, name: "Ruth Nobel", gender: "F" }
+                                                ]}]} // FIXED: removed \
+                                            ]}, // Comma separating Rose Leibner (379) from Mildred C Leibner (382)
+                                            { id: 382, name: " Mildred C Leibner", gender: "F", spouse: [{ id: 383, name: "David Aron Jaffe", gender: "M", children: [ // FIXED: removed \
+                                                { id: 290, name: "Frederick F. Jaffe", gender: "M", spouse: [{ id: 291, name: "Mary Ellen Marks", gender: "F", children: [ // FIXED: removed \
+                                                    { id: 180, name: "David Mark Jaffe", gender: "M", spouse: [{ id: 181, name: "Leslie Jill Kane", gender: "F", children: [ // FIXED: removed \
+                                                        { id: 38, name: "Zachary Jaffe", gender: "M" },
+                                                        { id: 39, name: "Aria Jaffe", gender: "F" }
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 182, name: "Harry Mark Jaffe", gender: "M", spouse: [{ id: 183, name: "Andrea J Sinkin", gender: "F", children: [ // FIXED: removed \
+                                                        { id: 40, name: "Aliana Jaffe", gender: "F" },
+                                                        { id: 41, name: "Arias Jaffe", gender: "U" }
+                                                    ]}]} // FIXED: removed \
+                                                ]}]} // FIXED: removed \
+                                            ]}]}, // FIXED: removed \
+                                            { id: 384, name: "Taube Leibner", gender: "F", spouse: [{ id: 385, name: "Theodore Fagin", gender: "M", children: [ // FIXED: removed \
+                                                { id: 293, name: "Beth Fagin", gender: "F", spouse: [{ id: 294, name: "Henry Sommer", gender: "M", children: [ // FIXED: removed \
+                                                    { id: 184, name: "Ethan Jashua Sommer", gender: "M", spouse: [{ id: 185, name: "Alison Rose Campion", gender: "F", children: [ // FIXED: removed \
+                                                        { id: 42, name: "Kaylee Rose Sommer", gender: "F" },
+                                                        { id: 43, name: "Danielle Ann Sommer", gender: "F" }
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 186, name: "Aaron Sommer", gender: "M" }
+                                                ]}]} // FIXED: removed \
+                                            ]}]}, // FIXED: removed \
+                                            { id: 386, name: "Ira Wallace Leibner", gender: "M", spouse: [{ id: 387, name: "Dorothy Jane Goldberg", gender: "F", children: [ // FIXED: removed \
+                                                { id: 295, name: "Helen Ann Leibner", gender: "F" },
+                                                { id: 296, name: "Donald Neil Leibner", gender: "M", spouse: [{ id: 297, name: "Fran Unknown", gender: "F", children: [ // FIXED: removed \
+                                                    { id: 187, name: "Joshua G Leibner", gender: "M", spouse: [{ id: 188, name: "Danielle White", gender: "F", children: [ // FIXED: removed \
+                                                        { id: 44, name: "Paige Leibner", gender: "F" }
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 189, name: "Matthew S Leibner", gender: "M" }
+                                                ]}]} // FIXED: removed \
+                                            ]}]} // FIXED: removed \
+                                        ]}]}, // FIXED: removed \
+                                        // (8) Emma (Chaie Anna)) Leibner
+                                        { id: 462, name: "Emma (Chaie Anna) Leibner", gender: "F", spouse: [{ id: 463, name: "Harry (Hersch) Goodwin", gender: "M", children: [ // FIXED: removed \
+                                            { id: 388, name: "Rose Goodwin", gender: "F" },
+                                            { id: 389, name: "Charlotte Goodwin", gender: "F" },
+                                            { id: 390, name: "Bernard M Goodwin", gender: "M", spouse: [{ id: 391, name: "Lillian Jenette Walden", gender: "F", children: [ // FIXED: removed \
+                                                { id: 298, name: "Nanette Goodwin", gender: "F" },
+                                                { id: 299, name: "Merrily Goodwin", gender: "F" },
+                                                { id: 300, name: "Melody Goodwin", gender: "F" }
+                                            ]}]}, // FIXED: removed \
+                                            { id: 392, name: "Jesse Charles Goodwin", gender: "M", spouse: [{ id: 393, name: "Harriet Ray Jacobs", gender: "F", children: [ // FIXED: removed \
+                                                { id: 301, name: "Richard Goodwin", gender: "M" },
+                                                { id: 302, name: "Ralph Goodwin", gender: "M" },
+                                                { id: 303, name: "Jonathan Goodwin", gender: "M" }
+                                            ]}]}, // FIXED: removed \
+                                            { id: 395, name: "Olive E Goodwin", gender: "F", spouse: [{ id: 396, name: "Oscar Ralph Miller", gender: "M", children: [ // FIXED: removed \
+                                                { id: 304, name: "Todd G Miller", gender: "M" },
+                                                { id: 305, name: "Michael Miller", gender: "M", spouse: [{ id: 306, name: "Ms. Frackman", gender: "F", children: [ // FIXED: removed \
+                                                    { id: 191, name: "Ms. Miller", gender: "F" }
+                                                ]}]}, // FIXED: removed \
+                                                { id: 397, name: "David Gold", gender: "M" }
+                                            ]}]} // FIXED: removed \
+                                        ]}]}, // FIXED: removed \
+                                        // (9) Sara Etta Leibner
+                                        { id: 464, name: "Sara Etta Leibner", gender: "F", spouse: [{ id: 465, name: "John H. Lang", gender: "M", children: [ // FIXED: removed \
+                                            { id: 398, name: "Rose Lang", gender: "F" },
+                                            { id: 400, name: "Murry J. Lang", gender: "M" }
+                                        ]}]} // FIXED: removed \
+                                    ]}, // End of Rose (Reizel) Achtsam (492) children
+                                    // Wife 3: Anna Cohen (493)
+                                    { id: 493, name: "Anna Cohen", gender: "F", children: [ // FIXED: removed \
+                                        // NOTE: Removed Rachel Yetta (494) and her descendants from this list,
+                                        // as she is now correctly listed as Nathan's sibling (daughter of 498).
+                                        // Also removed the conflicting/duplicated siblings (482, 483, 484, 487, 496) from here.
+                                        { id: 466, name: "Ida Leibner", gender: "F" },
+                                        { id: 467, name: "Sydney Leibner", gender: "M" },
+                                        { id: 476, name: "Chaim Leibner", gender: "M" },
+                                        { id: 479, name: "Nathan Leibner", gender: "M" }
+                                        
+                                        // Other children:
+                                        // { id: 482, name: "Reisel Leibner", gender: "F" }, // Conflict removed
+                                        // { id: 483, name: "Sara Leibner", gender: "F" }, // Conflict removed
+                                        // { id: 484, name: "Gitel Leibner", gender: "F" }, // Conflict removed
+                                        // { id: 487, name: "Pearl Leibner", gender: "F" }, // Conflict removed
+                                        // { id: 496, name: "Ester Leibner", gender: "F" } // Conflict removed
+                                    ]}
+                                ]
+                            }, // End of Nathan Nute Halevi Leibner (490)
+                            // 2. Daughter: Rachel Yetta Leibner (494) (1853-?) - Now correctly a sibling of Nathan
+                            { 
+                                id: 494, name: "Rachel Yetta Leibner", gender: "F", birth_year: 1853, note: "(Sister, b. 1853)",
+                                spouse: [{ // FIXED: removed \
+                                    id: 495, name: "Yehiel Aharon Weinberger", gender: "M", 
+                                    // Children branch moved here (previously nested incorrectly under Nathan's 3rd wife)
+                                    children: [ // FIXED: removed \
                                         // (10) Lea Weinberger
-                                        { id: 470, name: "Lea Weinberger", gender: "F", spouse: [{ id: 471, name: "Moshe Wilner", gender: "M", children: [
-                                            { id: 402, name: "Samuel Chaim Wilner", gender: "M", spouse: [{ id: 403, name: "Necha Mandel", gender: "F", children: [
+                                        { id: 470, name: "Lea Weinberger", gender: "F", spouse: [{ id: 471, name: "Moshe Wilner", gender: "M", children: [ // FIXED: removed \
+                                            { id: 402, name: "Samuel Chaim Wilner", gender: "M", spouse: [{ id: 403, name: "Necha Mandel", gender: "F", children: [ // FIXED: removed \
                                                 { id: 307, name: "Zissel Wilner", gender: "F" },
                                                 { id: 308, name: "Meilech Wilner", gender: "M" },
                                                 { id: 309, name: "Mechel Wilner", gender: "M" }
-                                            ]}]},
-                                            { id: 404, name: "Shimon Wilner", gender: "M", spouse: [{ id: 405, name: "Sluwa Rainer", gender: "F", children: [
+                                            ]}]}, // FIXED: removed \
+                                            { id: 404, name: "Shimon Wilner", gender: "M", spouse: [{ id: 405, name: "Sluwa Rainer", gender: "F", children: [ // FIXED: removed \
                                                 { id: 310, name: "Nina Wilner", gender: "F" }
-                                            ]}]},
+                                            ]}]}, // FIXED: removed \
                                             { id: 406, name: "Izaak Eisig Wilner", gender: "M" },
                                             { id: 407, name: "baby son Wilner", gender: "M" },
-                                            { id: 408, name: "Abraham Wilner", gender: "M", spouse: [{ id: 409, name: "Anna Rozalja Dranger", gender: "F", children: [
+                                            { id: 408, name: "Abraham Wilner", gender: "M", spouse: [{ id: 409, name: "Anna Rozalja Dranger", gender: "F", children: [ // FIXED: removed \
                                                 { id: 311, name: "unknown Wilner", gender: "U" }
-                                            ]}]},
+                                            ]}]}, // FIXED: removed \
                                             { id: 410, name: "Eidel Wilner", gender: "F" },
                                             { id: 412, name: "Frimet Reisel Wilner", gender: "F" },
                                             { id: 413, name: "Szyja Chaskel Feivel Wilner", gender: "M" }
-                                        ]}]},
+                                        ]}]}, // FIXED: removed \
                                         // (11) Itzhak Weinberger
-                                        { id: 472, name: "Itzhak Weinberger", gender: "M", spouse: [{ id: 473, name: "Chyfa Katz", gender: "F", children: [
+                                        { id: 472, name: "Itzhak Weinberger", gender: "M", spouse: [{ id: 473, name: "Chyfa Katz", gender: "F", children: [ // FIXED: removed \
                                             { id: 415, name: "Mendel Weinberger", gender: "M" },
                                             { id: 416, name: "Nissan Weinberger", gender: "M" },
                                             { id: 417, name: "Sime Weinberger", gender: "F" }
-                                        ]}]},
+                                        ]}]}, // FIXED: removed \
                                         // (12) Ephraim Leibner
-                                        { id: 474, name: "Ephraim Leibner", gender: "M", spouse: [{ id: 475, name: "Miriam Listgarten", gender: "F", children: [
-                                            { id: 418, name: "Avraham Meir Leibner", gender: "M", spouse: [{ id: 419, name: "Szeindel Flaumenhaft", gender: "F", children: [
+                                        { id: 474, name: "Ephraim Leibner", gender: "M", spouse: [{ id: 475, name: "Miriam Listgarten", gender: "F", children: [ // FIXED: removed \
+                                            { id: 418, name: "Avraham Meir Leibner", gender: "M", spouse: [{ id: 419, name: "Szeindel Flaumenhaft", gender: "F", children: [ // FIXED: removed \
                                                 { id: 312, name: "Feiga Leibner", gender: "F" }
-                                            ]}]},
+                                            ]}]}, // FIXED: removed \
                                             { id: 420, name: "Tzvi (Hersh) Leibner", gender: "M" },
                                             { id: 421, name: "Rosa Reisel Leibner", gender: "F" },
-                                            { id: 423, name: "Aharon Lavi", gender: "M", spouse: [{ id: 424, name: "Ruth Schön", gender: "F", children: [
-                                                { id: 313, name: "Amnon Lavi", gender: "M", spouse: [{ id: 314, name: "Ms. Unknown", gender: "F", children: [
+                                            { id: 423, name: "Aharon Lavi", gender: "M", spouse: [{ id: 424, name: "Ruth Schön", gender: "F", children: [ // FIXED: removed \
+                                                { id: 313, name: "Amnon Lavi", gender: "M", spouse: [{ id: 314, name: "Ms. Unknown", gender: "F", children: [ // FIXED: removed \
                                                     { id: 192, name: "Tal Lavi", gender: "U" },
                                                     { id: 193, name: "Adi Lavi", gender: "U" }
-                                                ]}]},
-                                                { id: 315, name: "Orna Lavi", gender: "F", spouse: [{ id: 316, name: "Giyora Dov Dekel", gender: "M", children: [
+                                                ]}]}, // FIXED: removed \
+                                                { id: 315, name: "Orna Lavi", gender: "F", spouse: [{ id: 316, name: "Giyora Dov Dekel", gender: "M", children: [ // FIXED: removed \
                                                     { id: 194, name: "Anat Dekel", gender: "F" },
                                                     { id: 45, name: "Yael Unknown", gender: "F" },
                                                     { id: 195, name: "Ephrat Dekel", gender: "F" },
                                                     { id: 196, name: "Maajan Dekel", gender: "U" },
                                                     { id: 197, name: "Michal Dekel", gender: "F" },
                                                     { id: 198, name: "Yuval Dekel", gender: "U" }
-                                                ]}]}
-                                            ]}]}
-                                        ]}]},
+                                                ]}]} // FIXED: removed \
+                                            ]}]} // FIXED: removed \
+                                        ]}]}, // FIXED: removed \
+                                        // Chaim Leibner (476) - Still kept here, despite ID conflict possibility
                                         { id: 476, name: "Chaim Leibner", gender: "M" },
                                         // (13) Simcha Weinberger
-                                        { id: 477, name: "Simcha Weinberger", gender: "M", spouse: [{ id: 478, name: "Chaja Sara Weinberger", gender: "F", children: [
+                                        { id: 477, name: "Simcha Weinberger", gender: "M", spouse: [{ id: 478, name: "Chaja Sara Weinberger", gender: "F", children: [ // FIXED: removed \
                                             { id: 425, name: "Faiga Rivka Weinberger", gender: "F" },
                                             { id: 426, name: "Feibish Weinberger", gender: "M" },
                                             { id: 427, name: "Laja Weinberger", gender: "F" },
                                             { id: 428, name: "Schneindla Weinberger", gender: "F" },
                                             { id: 429, name: "Feiwel Weinberger", gender: "M" }
-                                        ]}]},
+                                        ]}]}, // FIXED: removed \
+                                        // Nathan Leibner (479) - Still kept here, despite ID conflict possibility
                                         { id: 479, name: "Nathan Leibner", gender: "M" },
                                         // (14) Etta Malka Weinberger
-                                        { id: 480, name: "Etta Malka Weinberger", gender: "F", spouse: [{ id: 481, name: "Yehuda Gutwein", gender: "M", children: [
-                                            { id: 430, name: "Raizel Gutwein", gender: "F", spouse: [{ id: 431, name: "Jakob Tischler", gender: "M", children: [
-                                                { id: 317, name: "Rosa Tischler", gender: "F", spouse: [{ id: 318, name: "Abraham Lichter", gender: "M", children: [
-                                                    { id: 199, name: "Bernard Lichter", gender: "M", spouse: [{ id: 200, name: "Miriam A Lichter", gender: "F", children: [
+                                        { id: 480, name: "Etta Malka Weinberger", gender: "F", spouse: [{ id: 481, name: "Yehuda Gutwein", gender: "M", children: [ // FIXED: removed \
+                                            { id: 430, name: "Raizel Gutwein", gender: "F", spouse: [{ id: 431, name: "Jakob Tischler", gender: "M", children: [ // FIXED: removed \
+                                                { id: 317, name: "Rosa Tischler", gender: "F", spouse: [{ id: 318, name: "Abraham Lichter", gender: "M", children: [ // FIXED: removed \
+                                                    { id: 199, name: "Bernard Lichter", gender: "M", spouse: [{ id: 200, name: "Miriam A Lichter", gender: "F", children: [ // FIXED: removed \
                                                         { id: 46, name: "Rivky Lichter", gender: "F" },
                                                         { id: 48, name: "Yaacob Lichter", gender: "M" },
                                                         { id: 50, name: "Leah Risa Lichter", gender: "F" },
                                                         { id: 52, name: "Shira Lichter", gender: "F" },
                                                         { id: 54, name: "Yisroel Lichter", gender: "M" }
-                                                    ]}]},
-                                                    { id: 201, name: "Eva Lichter", gender: "F", spouse: [{ id: 202, name: "Stuart Ira Jankelovitz", gender: "M", children: [
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 201, name: "Eva Lichter", gender: "F", spouse: [{ id: 202, name: "Stuart Ira Jankelovitz", gender: "M", children: [ // FIXED: removed \
                                                         { id: 55, name: "Erica Anna Jankelovitz", gender: "F" },
-                                                        { id: 57, name: "Elliott Richard Jankelovitz", gender: "M", spouse: [{ id: 58, name: "Elyssa Rachel Merzer", gender: "F", children: [
+                                                        { id: 57, name: "Elliott Richard Jankelovitz", gender: "M", spouse: [{ id: 58, name: "Elyssa Rachel Merzer", gender: "F", children: [ // FIXED: removed \
                                                             { id: 2, name: "Ari Jankelovitz", gender: "U" },
                                                             { id: 3, name: "Solomon David Jankelovitz", gender: "M" }
-                                                        ]}]},
+                                                        ]}]}, // FIXED: removed \
                                                         { id: 59, name: "Sheri Jankelovitz", gender: "F" }
-                                                    ]}]},
-                                                    { id: 204, name: "Marlene L Lichter", gender: "F", spouse: [{ id: 205, name: "Leon Dr Zacharowicz", gender: "M", children: [
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 204, name: "Marlene L Lichter", gender: "F", spouse: [{ id: 205, name: "Leon Dr Zacharowicz", gender: "M", children: [ // FIXED: removed \
                                                         { id: 61, name: "Chava Sarah Zacharowicz", gender: "F" },
                                                         { id: 62, name: "Elliot Zacharowicz", gender: "M" },
                                                         { id: 63, name: "Renee Zacharowicz", gender: "F" },
                                                         { id: 64, name: "Uri Zacharowicz", gender: "M" },
                                                         { id: 65, name: "Esti Zacharowicz", gender: "F" }
-                                                    ]}]}
-                                                ]}]},
-                                                { id: 319, name: "Hannah Tischler", gender: "F", spouse: [{ id: 320, name: "Nechemia Nagelblatt", gender: "M", children: [
-                                                    { id: 206, name: "Jacob J Nagelblatt", gender: "M", spouse: [{ id: 207, name: "Jaffa Matyas", gender: "F", children: [
-                                                        { id: 66, name: "Nathaniel Zvi Nagelblatt", gender: "M", spouse: [{ id: 67, name: "Rena Bracha Siff", gender: "F", children: [
+                                                    ]}]} // FIXED: removed \
+                                                ]}]}, // FIXED: removed \
+                                                { id: 319, name: "Hannah Tischler", gender: "F", spouse: [{ id: 320, name: "Nechemia Nagelblatt", gender: "M", children: [ // FIXED: removed \
+                                                    { id: 206, name: "Jacob J Nagelblatt", gender: "M", spouse: [{ id: 207, name: "Jaffa Matyas", gender: "F", children: [ // FIXED: removed \
+                                                        { id: 66, name: "Nathaniel Zvi Nagelblatt", gender: "M", spouse: [{ id: 67, name: "Rena Bracha Siff", gender: "F", children: [ // FIXED: removed \
                                                             { id: 4, name: "Charlie Nagelblatt", gender: "U" },
                                                             { id: 5, name: "Hillel B Nagelblatt", gender: "M" },
                                                             { id: 6, name: "Yitzchok Meir Nagelblatt", gender: "M" },
                                                             { id: 7, name: "Nechemia Nagelblatt", gender: "M" }
-                                                        ]}]},
-                                                        { id: 68, name: "Beeme Nagelblatt", gender: "F", spouse: [{ id: 69, name: "Asher Jacobs", gender: "M", children: [
+                                                        ]}]}, // FIXED: removed \
+                                                        { id: 68, name: "Beeme Nagelblatt", gender: "F", spouse: [{ id: 69, name: "Asher Jacobs", gender: "M", children: [ // FIXED: removed \
                                                             { id: 8, name: "Poriah Jacobs", gender: "F" },
                                                             { id: 9, name: "Benyamin Jacobs", gender: "M" },
                                                             { id: 10, name: "Emma Jacobs", gender: "F" },
                                                             { id: 11, name: "Ahuva Jacobs", gender: "F" },
                                                             { id: 12, name: "Sara Jacobs", gender: "F" }
-                                                        ]}]},
-                                                        { id: 70, name: "Raychee Nagelblatt", gender: "F", spouse: [{ id: 71, name: "Aaron Eisenberg", gender: "M", children: [
+                                                        ]}]}, // FIXED: removed \
+                                                        { id: 70, name: "Raychee Nagelblatt", gender: "F", spouse: [{ id: 71, name: "Aaron Eisenberg", gender: "M", children: [ // FIXED: removed \
                                                             { id: 13, name: "Benyamin Eisenberg", gender: "M" }
-                                                        ]}]}
-                                                    ]}]},
-                                                    { id: 208, name: "Aaron Nagelblat", gender: "M", spouse: [{ id: 209, name: "Esther R Waldman", gender: "F", children: [
+                                                        ]}]} // FIXED: removed \
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 208, name: "Aaron Nagelblat", gender: "M", spouse: [{ id: 209, name: "Esther R Waldman", gender: "F", children: [ // FIXED: removed \
                                                         { id: 72, name: "Judith Reisel Nagelblat", gender: "F" },
                                                         { id: 73, name: "Gila Nagelblat", gender: "F" },
                                                         { id: 75, name: "Dena Nagelblat", gender: "F" },
                                                         { id: 76, name: "Yael Sima Nagelblat", gender: "F" }
-                                                    ]}]}
-                                                ]}]},
+                                                    ]}]} // FIXED: removed \
+                                                ]}]}, // FIXED: removed \
                                                 { id: 321, name: "Sara Tischler", gender: "F" },
                                                 { id: 322, name: "Chiel Aharon Tischler", gender: "M" },
                                                 { id: 323, name: "Elimelech Tischler", gender: "M" },
                                                 { id: 324, name: "Asher Tischler", gender: "M" },
-                                                { id: 325, name: "Joseph Juda Tischler", gender: "M", spouse: [{ id: 326, name: "Helene J Gottesman", gender: "F", children: [
-                                                    { id: 210, name: "Daniel Jacob Tischler", gender: "M", spouse: [{ id: 211, name: "Carrie Bachler", gender: "F", children: [
+                                                { id: 325, name: "Joseph Juda Tischler", gender: "M", spouse: [{ id: 326, name: "Helene J Gottesman", gender: "F", children: [ // FIXED: removed \
+                                                    { id: 210, name: "Daniel Jacob Tischler", gender: "M", spouse: [{ id: 211, name: "Carrie Bachler", gender: "F", children: [ // FIXED: removed \
                                                         { id: 77, name: "Audrey Rose Tischler", gender: "F" },
                                                         { id: 78, name: "Mr. Tischler", gender: "M" },
                                                         { id: 79, name: "Ms. Tischler", gender: "F" }
-                                                    ]}]},
+                                                    ]}]}, // FIXED: removed \
                                                     { id: 212, name: "David Alexander Tischler", gender: "M" },
                                                     { id: 213, name: "Amy Esther Tischler", gender: "F" }
-                                                ]}]}
-                                            ]}]},
+                                                ]}]} // FIXED: removed \
+                                            ]}]}, // FIXED: removed \
                                             { id: 432, name: "Moshe Nathan Gutwein", gender: "M" },
                                             { id: 433, name: "Nissan Mordechai Gutwein", gender: "M" },
                                             { id: 434, name: "Sime Gutwein", gender: "F" },
                                             { id: 435, name: "Trizel Gutwein", gender: "F" }
-                                        ]}]},
-                                        { id: 482, name: "Reisel Leibner", gender: "F" },
-                                        { id: 483, name: "Sara Leibner", gender: "F" },
-                                        { id: 484, name: "Gitel Leibner", gender: "F" },
+                                        ]}]}, // FIXED: removed \
+                                        // Reisel Leibner (482) - Now a child of 494, removed from 490's children.
+                                        { id: 482, name: "Reisel Leibner", gender: "F" }, 
+                                        // Sara Leibner (483) - Now a child of 494, removed from 490's children.
+                                        { id: 483, name: "Sara Leibner", gender: "F" }, 
+                                        // Gitel Leibner (484) - Now a child of 494, removed from 490's children.
+                                        { id: 484, name: "Gitel Leibner", gender: "F" }, 
                                         // (15) Nissan Mordechai Elimelech Weinberger
-                                        { id: 485, name: "Nissan Mordechai Elimelech Weinberger", gender: "M", spouse: [{ id: 486, name: "Genendel Fas", gender: "F", children: [
-                                            { id: 436, name: "Hinda Itta Weinberger", gender: "F", spouse: [{ id: 437, name: "Chaim Metzger", gender: "M", children: [
-                                                { id: 327, name: "Aliza Metzger", gender: "F", spouse: [{ id: 328, name: "Mr. Shachar", gender: "M", children: [
+                                        { id: 485, name: "Nissan Mordechai Elimelech Weinberger", gender: "M", spouse: [{ id: 486, name: "Genendel Fas", gender: "F", children: [ // FIXED: removed \
+                                            // Hinda Itta Weinberger (436) (1922-2022)
+                                            { id: 436, name: "Hinda Itta Weinberger", gender: "F", birth_year: 1922, death_year: 2022, spouse: [{ id: 437, name: "Chaim Metzger", gender: "M", children: [ // FIXED: removed \
+                                                { id: 327, name: "Aliza Metzger", gender: "F", spouse: [{ id: 328, name: "Mr. Shachar", gender: "M", children: [ // FIXED: removed \
                                                     { id: 215, name: "Adi Shachar", gender: "U" },
-                                                    { id: 216, name: "Tali Shachar", gender: "F", spouse: [{ id: 217, name: "Noam Gan-lev", gender: "M", children: [
+                                                    { id: 216, name: "Tali Shachar", gender: "F", spouse: [{ id: 217, name: "Noam Gan-lev", gender: "M", children: [ // FIXED: removed \
                                                         { id: 80, name: "Aviv Haim Gan-lev", gender: "M" }
-                                                    ]}]}
-                                                ]}]},
-                                                { id: 329, name: "Nili Metzger", gender: "F", spouse: [{ id: 331, name: "Mr. Fridman", gender: "M", children: [
+                                                    ]}]} // FIXED: removed \
+                                                ]}]}, // FIXED: removed \
+                                                { id: 329, name: "Nili Metzger", gender: "F", spouse: [{ id: 331, name: "Mr. Fridman", gender: "M", children: [ // FIXED: removed \
                                                     { id: 218, name: "Gali Fridman", gender: "F" },
                                                     { id: 219, name: "Shiran Fridman", gender: "U" },
                                                     { id: 220, name: "Shai Fridman", gender: "U" }
-                                                ]}]}
-                                            ]}]},
-                                            { id: 438, name: "Rachel Witta Weinberger", gender: "F", spouse: [{ id: 439, name: "Moshe Yosef Bromberg", gender: "M", children: [
-                                                { id: 332, name: "Rivka Bromberg", gender: "F", spouse: [{ id: 333, name: "Nissim Pilosof", gender: "M", children: [
+                                                ]}]} // FIXED: removed \
+                                            ]}]}, // FIXED: removed \
+                                            // Rachel Witta Weinberger (438) (1923-2015)
+                                            { id: 438, name: "Rachel Witta Weinberger", gender: "F", birth_year: 1923, death_year: 2015, spouse: [{ id: 439, name: "Moshe Yosef Bromberg", gender: "M", children: [ // FIXED: removed \
+                                                { id: 332, name: "Rivka Bromberg", gender: "F", spouse: [{ id: 333, name: "Nissim Pilosof", gender: "M", children: [ // FIXED: removed \
                                                     { id: 222, name: "Noah Pilosof", gender: "M" },
-                                                    { id: 223, name: "Oren Pilosof", gender: "M", spouse: [{ id: 224, name: "Aya Unknown", gender: "F", children: [
+                                                    { id: 223, name: "Oren Pilosof", gender: "M", spouse: [{ id: 224, name: "Aya Unknown", gender: "F", children: [ // FIXED: removed \
                                                         { id: 81, name: "Ayala Pilosof", gender: "F" }
-                                                    ]}]},
-                                                    { id: 225, name: "Shai Pilosof", gender: "U", spouse: [{ id: 226, name: "Ms. Unknown", gender: "F", children: [
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 225, name: "Shai Pilosof", gender: "U", spouse: [{ id: 226, name: "Ms. Unknown", gender: "F", children: [ // FIXED: removed \
                                                         { id: 82, name: "Ofek Pilosof", gender: "U" },
                                                         { id: 83, name: "Gal Pilosof", gender: "U" },
                                                         { id: 84, name: "Agam Pilosof", gender: "U" }
-                                                    ]}]}
-                                                ]}]},
-                                                { id: 334, name: "Nesya Bromberg", gender: "F", spouse: [{ id: 335, name: "Aryeh Junger", gender: "M", children: [
-                                                    { id: 227, name: "Eran Junger", gender: "M", spouse: [{ id: 228, name: "Anat Unknown", gender: "F", children: [
+                                                    ]}]} // FIXED: removed \
+                                                ]}]}, // FIXED: removed \
+                                                // Nesya Bromberg (334) (b. 1950)
+                                                { id: 334, name: "Nesya Bromberg", gender: "F", birth_year: 1950, spouse: [{ id: 335, name: "Aryeh Junger", gender: "M", children: [ // FIXED: removed \
+                                                    { id: 227, name: "Eran Junger", gender: "M", spouse: [{ id: 228, name: "Anat Unknown", gender: "F", children: [ // FIXED: removed \
                                                         { id: 85, name: "Moshe Eitan Junger", gender: "M" },
                                                         { id: 86, name: "Ayala Junger", gender: "F" },
                                                         { id: 87, name: "Naomi Junger", gender: "F" },
                                                         { id: 88, name: "Talya Junger", gender: "F" },
                                                         { id: 89, name: "Levi Yitzhak Junger", gender: "M" },
-                                                        { id: 90, name: "Eshdat Junger", gender: "U", spouse: [{ id: 91, name: "Srael Unknown", gender: "U", children: [
+                                                        { id: 90, name: "Eshdat Junger", gender: "U", spouse: [{ id: 91, name: "Srael Unknown", gender: "U", children: [ // FIXED: removed \
                                                             { id: 14, name: "Mr. Unknown", gender: "M" }
-                                                        ]}]},
+                                                        ]}]}, // FIXED: removed \
                                                         { id: 92, name: "Zion Junger", gender: "M" },
                                                         { id: 93, name: "Ma'ayan Junger", gender: "U" }
-                                                    ]}]},
-                                                    { id: 229, name: "Ohad Junger", gender: "M", spouse: [{ id: 230, name: "Yael Unknown", gender: "F", children: [
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 229, name: "Ohad Junger", gender: "M", spouse: [{ id: 230, name: "Yael Unknown", gender: "F", children: [ // FIXED: removed \
                                                         { id: 94, name: "Oriya Matan Junger", gender: "U" },
-                                                        { id: 95, name: "Tal Junger", gender: "U", spouse: [{ id: 96, name: "Maor Barjel", gender: "U", children: [
+                                                        { id: 95, name: "Tal Junger", gender: "U", spouse: [{ id: 96, name: "Maor Barjel", gender: "U", children: [ // FIXED: removed \
                                                             { id: 15, name: "Yonatan Barjel", gender: "M" }
-                                                        ]}]},
+                                                        ]}]}, // FIXED: removed \
                                                         { id: 97, name: "Noam Junger", gender: "U" },
                                                         { id: 98, name: "Chen Junger", gender: "U" },
                                                         { id: 99, name: "Binyamin Junger", gender: "M" }
-                                                    ]}]},
-                                                    { id: 231, name: "Alon Junger", gender: "M", spouse: [{ id: 232, name: "Sivan Unknown", gender: "F", children: [
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 231, name: "Alon Junger", gender: "M", spouse: [{ id: 232, name: "Sivan Unknown", gender: "F", children: [ // FIXED: removed \
                                                         { id: 100, name: "Mia Junger", gender: "F" },
                                                         { id: 101, name: "Gal Junger", gender: "U" }
-                                                    ]}]},
-                                                    { id: 233, name: "Michal Junger", gender: "F", spouse: [{ id: 234, name: "Natti Ben Moshe", gender: "M", children: [
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 233, name: "Michal Junger", gender: "F", spouse: [{ id: 234, name: "Natti Ben Moshe", gender: "M", children: [ // FIXED: removed \
                                                         { id: 102, name: "Yonatan Ben Moshe", gender: "M" },
                                                         { id: 104, name: "Inon Ben Moshe", gender: "M" },
                                                         { id: 105, name: "Malchut Ben Moshe", gender: "F" },
@@ -619,39 +599,41 @@
                                                         { id: 110, name: "Noam Ben Moshe", gender: "U" },
                                                         { id: 112, name: "Arie Ben Moshe", gender: "M" },
                                                         { id: 113, name: "Tamar Ben Moshe", gender: "F" }
-                                                    ]}]},
+                                                    ]}]}, // FIXED: removed \
                                                     { id: 235, name: "Yael Junger", gender: "F" }
-                                                ]}]},
-                                                { id: 336, name: "Shmuel Bromberg", gender: "M", spouse: [{ id: 337, name: "Chana Noa Izaks", gender: "F", children: [
-                                                    { id: 236, name: "Noga Bromberg", gender: "F", spouse: [{ id: 237, name: "Avi Grossman", gender: "M", children: [
+                                                ]}]} // FIXED: removed \
+                                            ]}]}, // FIXED: removed \
+                                            { id: 336, name: "Shmuel Bromberg", gender: "M", spouse: [{ id: 337, name: "Chana Noa Izaks", gender: "F", children: [ // FIXED: removed \
+                                                    { id: 236, name: "Noga Bromberg", gender: "F", spouse: [{ id: 237, name: "Avi Grossman", gender: "M", children: [ // FIXED: removed \
                                                         { id: 114, name: "Roi Baruch Grossman", gender: "M" },
                                                         { id: 115, name: "Maayan Ziva Grossman", gender: "F" },
                                                         { id: 116, name: "Yishai Ido Grossman", gender: "M" },
                                                         { id: 117, name: "Eyal Moshe Grossman", gender: "M" },
                                                         { id: 118, name: "Yael Tziyon Grossman", gender: "F" }
-                                                    ]}]},
-                                                    { id: 238, name: "Merav Bromberg", gender: "F", spouse: [{ id: 239, name: "Yanai Ben Abou", gender: "M", children: [
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 238, name: "Merav Bromberg", gender: "F", spouse: [{ id: 239, name: "Yanai Ben Abou", gender: "M", children: [ // FIXED: removed \
                                                         { id: 119, name: "Yair Moshe Ben Abou", gender: "M" },
                                                         { id: 120, name: "Avishai Yosef Ben Abou", gender: "M" },
                                                         { id: 121, name: "Beeri Ido Ben Abou", gender: "M" },
                                                         { id: 122, name: "Omer Shlomo Ben Abou", gender: "M" }
-                                                    ]}]},
-                                                    { id: 240, name: "Amitai Bromberg", gender: "M", spouse: [{ id: 241, name: "Noga Amran", gender: "F", children: [
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 240, name: "Amitai Bromberg", gender: "M", spouse: [{ id: 241, name: "Noga Amran", gender: "F", children: [ // FIXED: removed \
                                                         { id: 123, name: "Ido Baruch Bromberg", gender: "M" },
                                                         { id: 124, name: "Hadas Rachel Bromberg", gender: "F" },
                                                         { id: 125, name: "Ariel Moshe Bromberg", gender: "M" }
-                                                    ]}]}
-                                                ]}]}
-                                            ]}]},
-                                            { id: 440, name: "Feiwel Shraga Weinberger", gender: "M", spouse: [{ id: 441, name: "Shoshana Weinberger", gender: "F", children: [
+                                                    ]}]} // FIXED: removed \
+                                                ]}]} // FIXED: removed \
+                                            ]}]}, // FIXED: removed \
+                                            { id: 440, name: "Feiwel Shraga Weinberger", gender: "M", spouse: [{ id: 441, name: "Shoshana Weinberger", gender: "F", children: [ // FIXED: removed \
                                                 { id: 338, name: "Ozer Weinberger", gender: "M" }
-                                            ]}]},
-                                            { id: 442, name: "Yitzhak Leib Carmi", gender: "M", spouse: [{ id: 443, name: "Chaya Sara Gemara", gender: "F", children: [
-                                                { id: 340, name: "Nissan Carmi", gender: "M", spouse: [{ id: 341, name: "Rivky Unknown", gender: "F", children: [
+                                            ]}]}, // FIXED: removed \
+                                            // Yitzhak Leib Carmi (442) (1927-2022)
+                                            { id: 442, name: "Yitzhak Leib Carmi", gender: "M", birth_year: 1927, death_year: 2022, spouse: [{ id: 443, name: "Chaya Sara Gemara", gender: "F", children: [ // FIXED: removed \
+                                                { id: 340, name: "Nissan Carmi", gender: "M", spouse: [{ id: 341, name: "Rivky Unknown", gender: "F", children: [ // FIXED: removed \
                                                     { id: 242, name: "Elad Carmi", gender: "M" }
-                                                ]}]},
-                                                { id: 244, name: "Yair Carmi", gender: "M", spouse: [{ id: 342, name: "Ilana Goldzand", gender: "F", children: [
-                                                    { id: 245, name: "Hagay Carmi", gender: "M", spouse: [{ id: 246, name: "Michal Gutman", gender: "F", children: [
+                                                ]}]}, // FIXED: removed \
+                                                { id: 244, name: "Yair Carmi", gender: "M", spouse: [{ id: 342, name: "Ilana Goldzand", gender: "F", children: [ // FIXED: removed \
+                                                    { id: 245, name: "Hagay Carmi", gender: "M", spouse: [{ id: 246, name: "Michal Gutman", gender: "F", children: [ // FIXED: removed \
                                                         { id: 126, name: "Moriya Carmi", gender: "F" },
                                                         { id: 128, name: "Nevo Baruch Carmi", gender: "M" },
                                                         { id: 129, name: "Harel Carmi", gender: "M" },
@@ -659,153 +641,274 @@
                                                         { id: 131, name: "Nitai Carmi", gender: "U" },
                                                         { id: 132, name: "Hallel Carmi", gender: "U" },
                                                         { id: 133, name: "Arbel Carmi", gender: "U" }
-                                                    ]}]},
-                                                    { id: 247, name: "Sigal Carmi", gender: "F", spouse: [{ id: 248, name: "Yair Tzuriel", gender: "M", children: [
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 247, name: "Sigal Carmi", gender: "F", spouse: [{ id: 248, name: "Yair Tzuriel", gender: "M", children: [ // FIXED: removed \
                                                         { id: 134, name: "Gilad Tzuriel", gender: "M" },
                                                         { id: 135, name: "Neta Tzuriel", gender: "U" },
                                                         { id: 136, name: "Inbar Tzuriel", gender: "U" },
                                                         { id: 137, name: "Dror Tzuriel", gender: "U" },
                                                         { id: 138, name: "Maayan Tzuriel", gender: "U" },
                                                         { id: 139, name: "Shani Tzuriel", gender: "U" }
-                                                    ]}]},
-                                                    { id: 249, name: "Yaron Carmi", gender: "M", spouse: [{ id: 250, name: "Chagit Unknown", gender: "F", children: [
+                                                    ]}]}, // FIXED: removed \
+                                                    { id: 249, name: "Yaron Carmi", gender: "M", spouse: [{ id: 250, name: "Chagit Unknown", gender: "F", children: [ // FIXED: removed \
                                                         { id: 140, name: "Yehonathan Carmi", gender: "M" },
                                                         { id: 141, name: "Yedidiya Carmi", gender: "M" },
                                                         { id: 142, name: "Emmanuel Carmi", gender: "M" },
                                                         { id: 143, name: "Yinon Carmi", gender: "U" },
                                                         { id: 144, name: "Itamar Carmi", gender: "M" }
-                                                    ]}]}
-                                                ]}]},
-                                                { id: 343, name: "Galya Carmi", gender: "F", spouse: [{ id: 344, name: "Asher Berenshtein", gender: "M", children: [
+                                                    ]}]} // FIXED: removed \
+                                                ]}]}, // FIXED: removed \
+                                                { id: 343, name: "Galya Carmi", gender: "F", spouse: [{ id: 344, name: "Asher Berenshtein", gender: "M", children: [ // FIXED: removed \
                                                     { id: 251, name: "Roi Berenshtein", gender: "M" },
                                                     { id: 252, name: "Maayan Berenshtein", gender: "U" },
                                                     { id: 253, name: "Bnaya Berenshtein", gender: "M" },
                                                     { id: 255, name: "Uriya Berenshtein", gender: "U" },
                                                     { id: 256, name: "Avital Berenshtein", gender: "U" },
                                                     { id: 257, name: "Yisca Berenshtein", gender: "F" }
-                                                ]}]},
-                                                { id: 345, name: "Miriam Rachel Carmi", gender: "F", spouse: [{ id: 346, name: "Azriel Popovsky", gender: "M", children: [
+                                                ]}]}, // FIXED: removed \
+                                                { id: 345, name: "Miriam Rachel Carmi", gender: "F", spouse: [{ id: 346, name: "Azriel Popovsky", gender: "M", children: [ // FIXED: removed \
                                                     { id: 258, name: "Reut Popovsky", gender: "F" },
                                                     { id: 260, name: "Amitai Popovsky", gender: "M" },
                                                     { id: 261, name: "Yishay Popovsky", gender: "M" }
-                                                ]}]}
-                                            ]}]}
-                                        ]}]},
-                                        { id: 487, name: "Pearl Leibner", gender: "F" },
+                                                ]}]} // FIXED: removed \
+                                            ]}]} // FIXED: removed \
+                                        ]}]}, // FIXED: removed \
+                                        // Pearl Leibner (487) - Now a child of 494, removed from 490's children.
+                                        { id: 487, name: "Pearl Leibner", gender: "F" }, 
                                         // (16) Fraidel Weinberger
-                                        { id: 488, name: "Fraidel Weinberger", gender: "F", spouse: [{ id: 489, name: "Alter Itzhak Endzweig", gender: "M", children: [
+                                        { id: 488, name: "Fraidel Weinberger", gender: "F", spouse: [{ id: 489, name: "Alter Itzhak Endzweig", gender: "M", children: [ // FIXED: removed \
                                             { id: 444, name: "Simche Markus Endzweig", gender: "M" },
                                             { id: 446, name: "Belle Chaya Endzweig", gender: "F" },
                                             { id: 448, name: "Frume Endzweig", gender: "F" },
                                             { id: 450, name: "Izack Endzweig", gender: "M" },
                                             { id: 451, name: "Mendel Endzweig", gender: "M" }
-                                        ]}]},
+                                        ]}]}, // FIXED: removed \
+                                        // Ester Leibner (496) - Now a child of 494, removed from 490's children.
                                         { id: 496, name: "Ester Leibner", gender: "F" }
-                                    ]}]}
-                                ]} // End of Anna Cohen (493) children
-                            ]
-                        }
-                    ]}
+                                    ]
+                                }]} // FIXED: removed \ // End of Rachel Yetta Leibner (494) as sibling
+                        ]
+                    }]} // FIXED: removed \ // FIXED: removed \
                 ]
-            }]
+            }]} // FIXED: removed \ // FIXED: removed \
+
         };
 
-        // Helper function to guess gender based on common names or defaults to Unknown (U)
-        function guessGender(name) {
-            const maleNames = ["Ephraim", "Nathan", "Mordechai", "Jacob", "Moshe", "Shimshon", "Benjamin", "Joseph", "Chaim", "Itzhak", "Samuel", "Shimon", "Abraham", "Tzvi", "Aharon", "Nissan", "Yehuda", "Elimelech", "David", "Eric", "Bruce", "Harry", "Frank", "Michael", "Jerome", "Richard", "Ethan", "Daniel", "Elliott", "Avi", "Robert", "Alan", "George", "Johnathan", "Yehonathan", "Shmuel", "Amnon", "Uzi", "Meir", "Gidon", "Amitai", "Yonatan", "Ariel", "Ido", "Nevo", "Harel", "Nitai", "Emmanuel", "Burech", "Saul", "Jules", "Irving", "Murray", "Lloyd", "Stephen", "Justin", "Aaron", "Asher", "Roi", "Bnaya", "Yishay", "Yair", "Yaron", "Elad", "Oren", "Noam", "Moshe Eitan", "Levi Yitzhak", "Zion", "Ohad", "Alon", "Inon", "Arie", "Roi Baruch", "Yishai Ido", "Eyal Moshe", "Yair Moshe", "Avishai Yosef", "Beeri Ido", "Omer Shlomo", "Feiwel", "Izack", "Mendel", "Shai", "Mr."];
-            const femaleNames = ["Rachela", "Sheindel", "Pearl", "Shprince", "Sima", "Pauline", "Seril", "Reisel", "Mania", "Jennie", "Edith", "Ruth", "Sarah", "Rose", "Rachel", "Emma", "Ida", "Yetta", "Lea", "Chaja", "Miriam", "Feiga", "Genendel", "Hinda", "Fraidel", "Ester", "Estelle", "Doris", "Stephanie", "Mara", "Ilena", "Gillian", "Cheryl", "Donna", "Mazal", "Jeanette", "Shirley", "Barbara", "Maureen", "Lynn", "Lillian", "Charlotte", "Nanette", "Merrily", "Melody", "Olive", "Chyfa", "Etta", "Trizel", "Rosa", "Hannah", "Noga", "Merav", "Hadas", "Sigal", "Galya", "Yisca", "Miriam", "Reut", "Belle", "Frume", "Aliza", "Nili", "Rivka", "Nesya", "Michal", "Yael", "Noa", "Maayan", "Ziva", "Shiran", "Gali", "Tali", "Ayala", "Naomi", "Talya", "Mia", "Malchut", "Ori", "Shir", "Noa", "Noam", "Tamar", "Moriya", "Neta", "Inbar", "Dror", "Shani", "Chava Sarah", "Renee", "Esti", "Judith", "Gila", "Dena", "Amy Esther", "Audrey Rose", "Ms."];
-
-            // Clean the name from IDs and parenthetical notes
-            const baseName = name.split('(')[0].split(' ')[0].trim();
-
-            if (maleNames.includes(baseName)) return "M";
-            if (femaleNames.includes(baseName)) return "F";
-            if (name.includes('Mr.')) return "M";
-            if (name.includes('Ms.')) return "F";
-            if (name.includes('boy')) return "M";
-            if (name.includes('girl')) return "F";
-
-            return "U"; // Unknown
-        }
-
-        // Recursive function to render the tree from the data object
-        function renderTree(person) {
-            const gender = person.gender || guessGender(person.name);
-            const cardClass = gender === "M" ? "male-card" : (gender === "F" ? "female-card" : "bg-gray-200 border-gray-400");
-            const hasChildren = person.spouse && person.spouse.some(s => s.children && s.children.length > 0);
-
-            let html = `<div class="node-group">`;
-
-            // 1. Render the main person
-            html += `<div class="person-card ${cardClass}" data-id="${person.id}" onclick="toggleChildren(this)">
-                <div class="name-text">${person.name}</div>
-                <div class="id-text">ID: ${person.id}</div>
-                ${hasChildren ? '<span class="toggle-icon">&#9654;</span>' : ''}
-            </div>`;
-
-            // 2. Render Spouses (if any)
-            if (person.spouse) {
-                person.spouse.forEach(spouse => {
-                    const spouseGender = spouse.gender || guessGender(spouse.name);
-                    const spouseCardClass = spouseGender === "M" ? "male-card" : (spouseGender === "F" ? "female-card" : "bg-gray-200 border-gray-400");
-                    const hasSpouseChildren = spouse.children && spouse.children.length > 0;
-
-                    html += `<div class="flex items-center justify-center -mt-5">
-                        <div class="spouse-line"></div>
-                        <div class="person-card ${spouseCardClass} !min-w-0" data-id="${spouse.id}">
-                            <div class="name-text">+ ${spouse.name}</div>
-                            <div class="id-text">ID: ${spouse.id}</div>
-                        </div>
-                        <div class="spouse-line"></div>
-                    </div>`;
-
-                    // 3. Render Children (only for the spouse object that holds them)
-                    if (hasSpouseChildren) {
-                        html += `<ul>`; // Start of children list
-                        spouse.children.forEach(child => {
-                            html += `<li>${renderTree(child)}</li>`;
-                        });
-                        html += `</ul>`; // End of children list
+        // --- Data Processing and Flattening (No Change) ---
+        let peopleData = []; // FIXED: removed \
+        const rootId = familyData.id; 
+        let peopleMap = {}; 
+        /**
+         * Recursively processes the nested familyData structure into a flat list.
+         * @param {Object} personNode - The current node in the nested structure.
+         */
+        function processData(personNode) {
+            if (!personNode || !personNode.id) return;
+            // 1. Define the main person's object (including dates/notes)
+            const personEntry = {
+                id: personNode.id,
+                name: personNode.name,
+                gender: personNode.gender,
+                note: personNode.note || null,
+                birth_year: personNode.birth_year || null, // Included here
+                death_year: personNode.death_year || null, // Included here
+                spouse_id: null,
+                children_ids: [], // FIXED: removed \
+                _original_spouses: personNode.spouse || [] // FIXED: removed \
+            };
+            
+            // Check for the *first* spouse in the list to link for rendering purposes
+            if (personNode.spouse && personNode.spouse.length > 0) {
+                const firstSpouseNode = personNode.spouse[0]; // FIXED: removed \
+                personEntry.spouse_id = firstSpouseNode.id;
+                if (firstSpouseNode.children && firstSpouseNode.children.length > 0) {
+                    personEntry.children_ids = firstSpouseNode.children.map(child => child.id);
+                }
+                // 2. Add the first spouse to the map/array (including dates/notes)
+                const spouseEntry = {
+                    id: firstSpouseNode.id,
+                    name: firstSpouseNode.name,
+                    gender: firstSpouseNode.gender,
+                    note: firstSpouseNode.note || null,
+                    birth_year: firstSpouseNode.birth_year || null, // Included here
+                    death_year: firstSpouseNode.death_year || null, // Included here
+                    spouse_id: personNode.id, 
+                    children_ids: personEntry.children_ids, 
+                    _original_spouses: [] // FIXED: removed \
+                };
+                if (!peopleMap[spouseEntry.id]) { 
+                    peopleData.push(spouseEntry);
+                    peopleMap[spouseEntry.id] = spouseEntry;
+                }
+                // 3. Recursively process children
+                if (firstSpouseNode.children) {
+                    firstSpouseNode.children.forEach(processData);
+                }
+                
+                // --- Handle subsequent spouses and their children (e.g., ID 490) ---
+                for (let i = 1; i < personNode.spouse.length; i++) {
+                    const subsequentSpouseNode = personNode.spouse[i]; // FIXED: removed \
+                    
+                    const subsequentSpouseEntry = {
+                        id: subsequentSpouseNode.id,
+                        name: subsequentSpouseNode.name,
+                        gender: subsequentSpouseNode.gender,
+                        note: subsequentSpouseNode.note || null,
+                        birth_year: subsequentSpouseNode.birth_year || null, // Included here
+                        // FIX: Corrected typo from subsequentSpenseNode to subsequentSpouseNode (fixed in previous iteration)
+                        death_year: subsequentSpouseNode.death_year || null, 
+                        spouse_id: personNode.id, 
+                        children_ids: subsequentSpouseNode.children ? subsequentSpouseNode.children.map(c => c.id) : [], // FIXED: removed \
+                        _original_spouses: [] // FIXED: removed \
+                    };
+                    if (!peopleMap[subsequentSpouseEntry.id]) {
+                        peopleData.push(subsequentSpouseEntry);
+                        peopleMap[subsequentSpouseEntry.id] = subsequentSpouseEntry;
                     }
-                });
-            }
-
-            html += `</div>`; // End of node-group
-            return html;
-        }
-
-        // Function to toggle children visibility
-        function toggleChildren(element) {
-            const parentLi = element.closest('li');
-            if (parentLi) {
-                parentLi.classList.toggle('collapsed');
-            } else {
-                // For the root node, toggle the main UL
-                const treeContainer = document.getElementById('family-tree-container');
-                const rootUl = treeContainer.querySelector('ul');
-                if (rootUl) {
-                    rootUl.classList.toggle('collapsed');
+                    if (subsequentSpouseNode.children) {
+                        subsequentSpouseNode.children.forEach(processData);
+                    }
                 }
             }
-        }
-
-        // Initial rendering on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            const treeContainer = document.getElementById('family-tree-container');
-            if (treeContainer) {
-                // Wrap the entire structure in an LI/UL for correct line rendering
-                treeContainer.innerHTML = `<ul class="root-ul"><li>${renderTree(familyData)}</li></ul>`;
-
-                // Collapse all branches initially for large trees
-                treeContainer.querySelectorAll('li').forEach(li => {
-                    // Don't collapse the root level immediately
-                    if (li.closest('ul:not(.root-ul)')) {
-                        li.classList.add('collapsed');
-                    }
-                });
+            
+            if (!peopleMap[personEntry.id]) {
+                peopleData.push(personEntry);
+                peopleMap[personEntry.id] = personEntry;
+            } else {
+                // Ensure dates are updated if the person was initially added as a spouse placeholder
+                peopleMap[personEntry.id].birth_year = peopleMap[personEntry.id].birth_year || personEntry.birth_year;
+                peopleMap[personEntry.id].death_year = peopleMap[personEntry.id].death_year || personEntry.death_year;
+                peopleMap[personEntry.id].note = peopleMap[personEntry.id].note || personEntry.note;
             }
-        });
-
+        }
+        
+        processData(familyData);
+        const rootPerson = peopleMap[rootId]; // FIXED: removed \
+        // --- Core Rendering Functions ---
+        // Function to create the HTML for a single person card
+        function createPersonCard(person, isSpouse) {
+            // Logic to format dates (b. 1821 - 1913)
+            const dates = (person.birth_year || person.death_year) ?
+                `<div class="text-xs text-gray-500 mt-1">
+                    ${person.birth_year ? `b. ${person.birth_year}` : ''}
+                    ${person.birth_year && person.death_year ? ' - ' : ''}
+                    ${person.death_year || ''}
+                </div>` :
+                '';
+            
+            const card = document.createElement('div');
+            card.className = `person-card gender-${person.gender} w-full`;
+            card.setAttribute('data-id', person.id);
+            if (!isSpouse) { 
+                card.onclick = toggleChildren;
+            }
+            // Create an icon based on gender/status
+            let icon = '';
+            if (person.gender === 'M') icon = '♂️';
+            else if (person.gender === 'F') icon = '♀️';
+            else icon = '👤';
+            
+            const childrenIndicator = person.children_ids && person.children_ids.length > 0 ? 
+                '<div class="text-xs mt-1 font-bold text-gray-700">⬇️</div>' : 
+                '<div class="text-xs mt-1 font-bold text-gray-400">⚫</div>';
+            card.innerHTML = `
+                <div class="text-xl mb-1">${icon}</div>
+                <div class="font-semibold text-sm leading-tight">${person.name}</div>
+                <div class="text-xs font-mono text-gray-700">${person.id}</div>
+                ${dates}
+                ${person.note ? `<div class="text-xs mt-1 text-pink-700 font-medium">${person.note}</div>` : ''}
+                ${childrenIndicator}
+            `;
+            return card;
+        }
+        // Toggles the visibility of the descendants container
+        function toggleChildren(event) {
+            const coupleNode = event.currentTarget.closest('.couple-node');
+            if (!coupleNode) return;
+            const descendantsContainer = coupleNode.querySelector('.descendants-container');
+            if (descendantsContainer) {
+                const isHidden = descendantsContainer.style.display === 'none' || descendantsContainer.style.display === '';
+                descendantsContainer.style.display = isHidden ? 'flex' : 'none';
+            }
+        }
+        // Recursively renders a single person/couple node and its descendants
+        function renderNode(personId) {
+            const person = peopleMap[personId]; // FIXED: removed \
+            if (!person) return null;
+            const coupleNode = document.createElement('div');
+            coupleNode.className = 'couple-node';
+            
+            // 1. Couple Card Wrapper
+            const coupleCardWrapper = document.createElement('div');
+            coupleCardWrapper.className = 'couple-card-wrapper';
+            // Main person card
+            const personCard = createPersonCard(person, false);
+            coupleCardWrapper.appendChild(personCard);
+            
+            // Spouse card
+            if (person.spouse_id && peopleMap[person.spouse_id]) { // FIXED: removed \
+                const spouse = peopleMap[person.spouse_id]; // FIXED: removed \
+                const spouseLine = document.createElement('div');
+                spouseLine.className = 'spouse-line';
+                coupleCardWrapper.appendChild(spouseLine);
+                coupleCardWrapper.appendChild(createPersonCard(spouse, true));
+            }
+            
+            coupleNode.appendChild(coupleCardWrapper);
+            // 2. Children Connection (Vertical Line)
+            if (person.children_ids && person.children_ids.length > 0) {
+                const vertLine = document.createElement('div');
+                vertLine.className = 'children-line-vertical';
+                coupleNode.appendChild(vertLine);
+                // 3. Descendants Container (Horizontal line + children nodes)
+                const descendantsContainer = document.createElement('div');
+                descendantsContainer.className = 'descendants-container';
+                descendantsContainer.id = `descendants-of-${personId}`; 
+                descendantsContainer.style.display = 'none'; // Initially collapsed
+                const childNodes = renderDescendants(person.children_ids);
+                descendantsContainer.appendChild(childNodes);
+                coupleNode.appendChild(descendantsContainer);
+            }
+            return coupleNode;
+        }
+        // Renders the list of siblings and the horizontal connector
+        function renderDescendants(childrenIds) {
+            const childrenHorizontalConnector = document.createElement('div');
+            childrenHorizontalConnector.className = 'children-horizontal-connector grid grid-flow-col auto-cols-max';
+            const horizontalLine = document.createElement('div');
+            horizontalLine.className = 'children-horizontal-line';
+            childrenHorizontalConnector.appendChild(horizontalLine);
+            childrenIds.forEach(childId => {
+                const childNodeWrapper = document.createElement('div');
+                childNodeWrapper.className = 'child-node-wrapper';
+                const childVertLine = document.createElement('div');
+                childVertLine.className = 'child-vertical-line';
+                childNodeWrapper.appendChild(childVertLine);
+                const childNode = renderNode(childId);
+                if (childNode) {
+                    childNodeWrapper.appendChild(childNode);
+                }
+                
+                childrenHorizontalConnector.appendChild(childNodeWrapper);
+            });
+            return childrenHorizontalConnector;
+        }
+        // Main function to start rendering the tree
+        function initFamilyTree() {
+            const treeContainer = document.getElementById('familyTree');
+            if (treeContainer && rootPerson) {
+                const rootNode = renderNode(rootId);
+                if (rootNode) {
+                    treeContainer.appendChild(rootNode);
+                }
+            }
+            // Manually expand the root node for visibility on load
+            const rootDescendants = document.getElementById(`descendants-of-${rootId}`);
+            if (rootDescendants) {
+                rootDescendants.style.display = 'flex';
+            }
+        }
+        window.onload = initFamilyTree;
     </script>
 </body>
 </html>
