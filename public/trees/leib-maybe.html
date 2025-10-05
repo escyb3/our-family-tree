@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leibner Family Tree - Descendants of Ephraim (501)</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com/"></script>
+    <style>
+        /* Base styles for a clean, modern look */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+        }
+        /* Card Styles */
+        .person-card {
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            min-width: 150px;
+            max-width: 200px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .person-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+        /* Gender Colors */
+        .gender-M { background-color: #DBEAFE; border: 2px solid #3B82F6; }
+        .gender-F { background-color: #FCE7F3; border: 2px solid #EC4899; }
+        .gender-U { background-color: #E5E7EB; border: 2px solid #6B7280; }
+        
+        /* Tree Structure */
+        .tree-container {
+            display: inline-block;
+            white-space: nowrap;
+            padding: 2rem;
+            min-width: 100%;
+        }
+        /* Node representing a couple and their connector to parents */
+        .couple-node {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        /* Wrapper for the person/spouse cards */
+        .couple-card-wrapper {
+            display: flex;
+            align-items: stretch;
+            position: relative;
+            margin-bottom: 0.5rem; /* Space between couple and children line */
+        }
+        .spouse-line {
+            height: 2px;
+            width: 10px;
+            background-color: #1F2937;
+            align-self: center;
+        }
+        /* Vertical line connecting couple to children */
+        .children-line-vertical {
+            position: relative; /* relative to couple-node */
+            width: 2px;
+            background-color: #1F2937;
+            height: 20px;
+            margin-bottom: 0;
+        }
+        /* Container for all children of a couple */
+        .descendants-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 0;
+            width: 100%;
+        }
+        /* Horizontal line connecting all siblings */
+        .children-horizontal-connector {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            padding-top: 0;
+            margin-top: 0;
+            width: 100%;
+            overflow-x: auto;
+        }
+        .children-horizontal-line {
+            position: absolute;
+            top: 0;
+            height: 2px;
+            background-color: #1F2937;
+            width: 100%;
+        }
+        /* Container for each child node, positioned horizontally */
+        .child-node-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 0 15px; /* Spacing between siblings */
+        }
+        /* Vertical line from horizontal connector to the child's couple node */
+        .child-vertical-line {
+            width: 2px;
+            height: 20px;
+            background-color: #1F2937;
+            position: relative;
+            z-index: 10;
+        }
+        @media (max-width: 768px) {
+            .tree-container {
+                overflow-x: scroll;
+            }
+            .person-card {
+                min-width: 100px;
+                max-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="max-w-full mx-auto p-4 bg-white rounded-xl shadow-lg my-4">
+        <h1 class="text-3xl font-extrabold text-center text-emerald-700 mb-2">Leibner Family Tree (Descendants of Ephraim)</h1>
+        <p class="text-center text-gray-500 mb-6">Tracing all individuals mentioned in the document. Click a card to collapse/expand children.</p>
+    </div>
+
+    <!-- Corrected ID for JS reference -->
+    <div id="familyTree" class="tree-container tree-root overflow-x-auto p-4">
+        <!-- Tree will be rendered here by JavaScript -->
+    </div>
+
+    <!-- Key and Instructions Section (New) -->
+    <div class="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-lg my-8">
+        <h2 class="text-xl font-bold text-gray-700 mb-4">Key and Instructions (מפתח והוראות)</h2>
+        <div class="flex flex-wrap justify-center gap-6 text-gray-600">
+            <div class="flex items-center">
+                <span class="bg-blue-500 mr-2 text-white px-2 py-1 rounded">♂️</span>
+                Male (זכר)
+            </div>
+            <div class="flex items-center">
+                <span class="bg-pink-500 mr-2 text-white px-2 py-1 rounded">♀️</span>
+                Female (נקבה)
+            </div>
+            <div class="flex items-center">
+                <span class="bg-gray-400 mr-2 text-white px-2 py-1 rounded">👤</span>
+                Unknown (לא ידוע)
+            </div>
+        </div>
+        <p class="mt-4 text-center text-sm">
+            Click on a person card to **toggle** their descendants' visibility.
+        </p>
+        <p class="mt-2 text-center text-xs text-red-500 font-medium">
+            Placeholder individuals (Generation III/IV) were added to connect the two known generations (II and V).
+        </p>
+    </div>
+
+    <script>
+        // Root ID for the tree rendering function
+        const rootId = "501"; 
+
+        // Nested data structure containing ALL individuals mentioned in the document,
+        // translated and structured for the recursive rendering function.
+        const familyData = {
+            id: rootId, 
+            name: "Ephraim Leibner",
+            gender: "M", 
+            birth_year: 1800,
+            note: "Generation I (Ancestor)",
+            spouse: [
+                {
+                    id: "502", 
+                    name: "Rachela",
+                    gender: "F",
+                    note: "Got acquainted with Ephraim",
+                    children: [
+                        {
+                            id: "490", 
+                            name: "Shraga Feiwel Leibner",
+                            gender: "M",
+                            birth_year: 1821,
+                            death_year: 1913,
+                            note: "Generation II, Korczyna. Had a clothing stand.",
+                            spouse: [
+                                // Spouse 1: Sheindel Gross (Children: Nathan & Rachel Yetta)
+                                {
+                                    id: "491",
+                                    name: "Sheindel Gross",
+                                    gender: "F",
+                                    death_year: 1853,
+                                    note: "First wife, died 1853. Children: Nathan & Rachel Yetta.",
+                                    children: [
+                                        {
+                                            id: "485",
+                                            name: "Nathan Nute Halevi",
+                                            gender: "M",
+                                            birth_year: 1855,
+                                            death_year: 1929,
+                                            note: "Generation III",
+                                            spouse: [{ id: "486", name: "Spouse of Nathan (U)", gender: "U", children: [] }]
+                                        },
+                                        {
+                                            id: "487",
+                                            name: "Rachel Yetta",
+                                            gender: "F",
+                                            birth_year: 1853,
+                                            note: "Generation III",
+                                            spouse: [{ id: "488", name: "Spouse of Rachel (U)", gender: "U", children: [] }]
+                                        }
+                                    ]
+                                },
+                                // Spouse 2: Gitla (The line connecting to Gen V/VI)
+                                {
+                                    id: "492",
+                                    name: "Gitla",
+                                    gender: "F",
+                                    note: "Second wife (The line to V/VI generations)",
+                                    children: [
+                                        {
+                                            id: "Gen3_Unknown",
+                                            name: "Unknown Child",
+                                            gender: "U",
+                                            note: "Generation III Placeholder",
+                                            spouse: [
+                                                {
+                                                    id: "Gen3_Spouse",
+                                                    name: "Unknown Spouse",
+                                                    gender: "U",
+                                                    children: [
+                                                        {
+                                                            id: "Gen4_Unknown",
+                                                            name: "Unknown Child (Parent of Gen V)",
+                                                            gender: "U",
+                                                            note: "Generation IV Placeholder",
+                                                            spouse: [
+                                                                {
+                                                                    id: "Gen4_Spouse",
+                                                                    name: "Unknown Spouse",
+                                                                    gender: "U",
+                                                                    children: [
+                                                                        // Generation V: Individuals from the document TOC
+                                                                        {
+                                                                            id: "Hinda_W",
+                                                                            name: "Hinda Weinberger",
+                                                                            gender: "F",
+                                                                            birth_year: 1922,
+                                                                            death_year: 2022,
+                                                                            note: "Generation V",
+                                                                            spouse: [{ id: "Hinda_S", name: "Spouse of Hinda (U)", gender: "M", children: [] }]
+                                                                        },
+                                                                        {
+                                                                            id: "Rachel_W",
+                                                                            name: "Rachel Weinberger",
+                                                                            gender: "F",
+                                                                            birth_year: 1923,
+                                                                            death_year: 2015,
+                                                                            note: "Generation V (Included in the PDF TOC)",
+                                                                            spouse: [
+                                                                                {
+                                                                                    id: "Rachel_S",
+                                                                                    name: "Spouse of Rachel (U)",
+                                                                                    gender: "M",
+                                                                                    children: [
+                                                                                        // Generation VI: Nesya Bromberg
+                                                                                        {
+                                                                                            id: "Nesya_B",
+                                                                                            name: "Nesya Bromberg",
+                                                                                            gender: "F",
+                                                                                            birth_year: 1950,
+                                                                                            note: "Generation VI (Included in the PDF TOC)",
+                                                                                            spouse: [{ id: "Nesya_S", name: "Spouse of Nesya (U)", gender: "M", children: [] }]
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            id: "Yitzhak_C",
+                                                                            name: "Yitzhak Carmi",
+                                                                            gender: "M",
+                                                                            birth_year: 1927,
+                                                                            death_year: 2022,
+                                                                            note: "Generation V",
+                                                                            spouse: [{ id: "Yitzhak_S", name: "Spouse of Yitzhak (U)", gender: "F", children: [] }]
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // --- Data Processing and Flattening ---
+        let peopleData = []; 
+        let peopleMap = {}; 
+
+        /**
+         * Recursively processes the nested familyData structure into a flat list (peopleMap).
+         * This conversion is necessary for the rendering functions to quickly look up individuals by ID,
+         * regardless of their position in the nested structure.
+         * @param {Object} personNode - The current node in the nested structure.
+         */
+        function processData(personNode) {
+            if (!personNode || !personNode.id) return;
+
+            // 1. Define the main person's object (including dates/notes)
+            const personEntry = {
+                id: personNode.id,
+                name: personNode.name,
+                gender: personNode.gender || 'U', // Default to Unknown
+                note: personNode.note || null,
+                birth_year: personNode.birth_year || null,
+                death_year: personNode.death_year || null,
+                spouse_id: null,
+                children_ids: [], 
+                _original_spouses: personNode.spouse || [] 
+            };
+            
+            // Only process if the person hasn't been added yet (e.g. as a spouse already)
+            if (!peopleMap[personEntry.id]) {
+                peopleData.push(personEntry);
+                peopleMap[personEntry.id] = personEntry;
+            }
+
+            // Check for the *first* spouse in the list to link for primary rendering
+            if (personNode.spouse && personNode.spouse.length > 0) {
+                const firstSpouseNode = personNode.spouse[0]; 
+                
+                // Link main person to first spouse
+                personEntry.spouse_id = firstSpouseNode.id;
+
+                // Process first spouse's children
+                if (firstSpouseNode.children && firstSpouseNode.children.length > 0) {
+                    personEntry.children_ids = firstSpouseNode.children.map(child => child.id);
+                }
+
+                // 2. Add the first spouse to the map/array
+                const spouseEntry = {
+                    id: firstSpouseNode.id,
+                    name: firstSpouseNode.name,
+                    gender: firstSpouseNode.gender || 'U',
+                    note: firstSpouseNode.note || null,
+                    birth_year: firstSpouseNode.birth_year || null, 
+                    death_year: firstSpouseNode.death_year || null, 
+                    spouse_id: personNode.id, 
+                    children_ids: personEntry.children_ids, // Share children IDs
+                    _original_spouses: [] 
+                };
+                if (!peopleMap[spouseEntry.id]) { 
+                    peopleData.push(spouseEntry);
+                    peopleMap[spouseEntry.id] = spouseEntry;
+                }
+
+                // 3. Recursively process children from the primary union
+                if (firstSpouseNode.children) {
+                    firstSpouseNode.children.forEach(processData);
+                }
+                
+                // --- Handle subsequent spouses (for display/lookup but NOT primary rendering of children) ---
+                for (let i = 1; i < personNode.spouse.length; i++) {
+                    const subsequentSpouseNode = personNode.spouse[i]; 
+                    
+                    const subsequentSpouseEntry = {
+                        id: subsequentSpouseNode.id,
+                        name: subsequentSpouseNode.name,
+                        gender: subsequentSpouseNode.gender || 'U',
+                        note: subsequentSpouseNode.note || null,
+                        birth_year: subsequentSpouseNode.birth_year || null, 
+                        death_year: subsequentSpouseNode.death_year || null, 
+                        spouse_id: personNode.id, 
+                        // Note: children_ids are NOT attached here, as children are already linked to the main person in the main loop
+                        children_ids: subsequentSpouseNode.children ? subsequentSpouseNode.children.map(c => c.id) : [], 
+                        _original_spouses: [] 
+                    };
+                    if (!peopleMap[subsequentSpouseEntry.id]) {
+                        peopleData.push(subsequentSpouseEntry);
+                        peopleMap[subsequentSpouseEntry.id] = subsequentSpouseEntry;
+                    }
+
+                    // Recursively process children from subsequent unions
+                    if (subsequentSpouseNode.children) {
+                        subsequentSpouseNode.children.forEach(processData);
+                    }
+                }
+            }
+        }
+        
+        processData(familyData);
+        const rootPerson = peopleMap[rootId]; 
+        // --- Core Rendering Functions ---
+        
+        /**
+         * Creates the HTML for a single person card.
+         * @param {Object} person - The person object from peopleMap.
+         * @param {boolean} isSpouse - True if the card represents a spouse.
+         * @returns {HTMLElement} The created card div.
+         */
+        function createPersonCard(person, isSpouse) {
+            // Logic to format dates (e.g., b. 1821 - 1913)
+            const dates = (person.birth_year || person.death_year) ?
+                `<div class="text-xs text-gray-500 mt-1">
+                    ${person.birth_year ? `b. ${person.birth_year}` : ''}
+                    ${(person.birth_year || person.death_year) ? ' - ' : ''}
+                    ${person.death_year || ''}
+                </div>` :
+                '';
+            
+            const card = document.createElement('div');
+            card.className = `person-card gender-${person.gender} w-full`;
+            card.setAttribute('data-id', person.id);
+
+            // Only the main person in the couple should be clickable to toggle children
+            if (!isSpouse) { 
+                card.onclick = toggleChildren;
+            }
+
+            // Create an icon based on gender
+            let icon = '';
+            if (person.gender === 'M') icon = '♂️';
+            else if (person.gender === 'F') icon = '♀️';
+            else icon = '👤';
+            
+            const childrenIndicator = person.children_ids && person.children_ids.length > 0 ? 
+                '<div class="text-xs mt-1 font-bold text-gray-700">⬇️</div>' : 
+                '<div class="text-xs mt-1 font-bold text-gray-400">⚫</div>';
+
+            card.innerHTML = `
+                <div class="text-xl mb-1">${icon}</div>
+                <div class="font-semibold text-sm leading-tight">${person.name}</div>
+                <div class="text-xs font-mono text-gray-700">${person.id}</div>
+                ${dates}
+                ${person.note ? `<div class="text-xs mt-1 text-pink-700 font-medium">${person.note}</div>` : ''}
+                ${childrenIndicator}
+            `;
+            return card;
+        }
+
+        // Toggles the visibility of the descendants container
+        function toggleChildren(event) {
+            // Prevent the click event from propagating to parent nodes which might also be clickable
+            event.stopPropagation();
+
+            const coupleNode = event.currentTarget.closest('.couple-node');
+            if (!coupleNode) return;
+
+            const descendantsContainer = coupleNode.querySelector('.descendants-container');
+            if (descendantsContainer) {
+                const isHidden = descendantsContainer.style.display === 'none' || descendantsContainer.style.display === '';
+                descendantsContainer.style.display = isHidden ? 'flex' : 'none';
+            }
+        }
+
+        /**
+         * Recursively renders a single person/couple node and its descendants.
+         * @param {string} personId - The ID of the current person (head of the node).
+         * @returns {HTMLElement | null} The created couple node or null if person not found.
+         */
+        function renderNode(personId) {
+            const person = peopleMap[personId]; 
+            if (!person) return null;
+
+            const coupleNode = document.createElement('div');
+            coupleNode.className = 'couple-node';
+            
+            // 1. Couple Card Wrapper
+            const coupleCardWrapper = document.createElement('div');
+            coupleCardWrapper.className = 'couple-card-wrapper';
+
+            // Main person card
+            const personCard = createPersonCard(person, false);
+            coupleCardWrapper.appendChild(personCard);
+            
+            // Spouse card
+            if (person.spouse_id && peopleMap[person.spouse_id]) { 
+                const spouse = peopleMap[person.spouse_id]; 
+                
+                const spouseLine = document.createElement('div');
+                spouseLine.className = 'spouse-line';
+                coupleCardWrapper.appendChild(spouseLine);
+                
+                // Add spouse card (not clickable for children toggle)
+                coupleCardWrapper.appendChild(createPersonCard(spouse, true));
+            }
+            
+            coupleNode.appendChild(coupleCardWrapper);
+
+            // 2. Children Connection (Vertical Line) and Descendants Container
+            if (person.children_ids && person.children_ids.length > 0) {
+                const vertLine = document.createElement('div');
+                vertLine.className = 'children-line-vertical';
+                coupleNode.appendChild(vertLine);
+
+                // 3. Descendants Container (Horizontal line + children nodes)
+                const descendantsContainer = document.createElement('div');
+                descendantsContainer.className = 'descendants-container';
+                descendantsContainer.id = `descendants-of-${personId}`; 
+                descendantsContainer.style.display = 'none'; // Initially collapsed
+
+                const childNodes = renderDescendants(person.children_ids);
+                descendantsContainer.appendChild(childNodes);
+                coupleNode.appendChild(descendantsContainer);
+            }
+
+            return coupleNode;
+        }
+
+        /**
+         * Renders the list of siblings and the horizontal connector.
+         * @param {string[]} childrenIds - Array of child IDs (siblings).
+         * @returns {HTMLElement} The horizontal connector div.
+         */
+        function renderDescendants(childrenIds) {
+            const childrenHorizontalConnector = document.createElement('div');
+            // Use flex-nowrap to keep it horizontal and allow scroll
+            childrenHorizontalConnector.className = 'children-horizontal-connector flex flex-nowrap';
+
+            // Horizontal line spanning across all siblings
+            const horizontalLine = document.createElement('div');
+            horizontalLine.className = 'children-horizontal-line';
+            childrenHorizontalConnector.appendChild(horizontalLine);
+
+            childrenIds.forEach(childId => {
+                const childNodeWrapper = document.createElement('div');
+                childNodeWrapper.className = 'child-node-wrapper';
+
+                // Vertical line connecting sibling wrapper to the main horizontal line
+                const childVertLine = document.createElement('div');
+                childVertLine.className = 'child-vertical-line';
+                childNodeWrapper.appendChild(childVertLine);
+
+                // Recursively render the child node (which is a new couple-node)
+                const childNode = renderNode(childId);
+                if (childNode) {
+                    childNodeWrapper.appendChild(childNode);
+                }
+                
+                childrenHorizontalConnector.appendChild(childNodeWrapper);
+            });
+
+            return childrenHorizontalConnector;
+        }
+
+        // Main function to start rendering the tree
+        function initFamilyTree() {
+            const treeContainer = document.getElementById('familyTree');
+            if (treeContainer && rootPerson) {
+                const rootNode = renderNode(rootId);
+                if (rootNode) {
+                    treeContainer.appendChild(rootNode);
+                }
+            }
+            // Manually expand the root node for visibility on load
+            const rootDescendants = document.getElementById(`descendants-of-${rootId}`);
+            if (rootDescendants) {
+                rootDescendants.style.display = 'flex';
+            }
+        }
+        
+        window.onload = initFamilyTree;
+    </script>
+
+</body>
+</html>
