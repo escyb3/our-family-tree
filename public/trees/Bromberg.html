@@ -151,11 +151,11 @@
         <h2 class="text-xl font-bold text-gray-800 mb-4">Key and instructions:</h2>
         <div class="flex flex-col sm:flex-row justify-around gap-4 text-sm">
             <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-M mr-2"></div><span>Male (זכר)</span></div>
-            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-F mr-2"></div><span>Female(נקבה)</span></div>
-            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-U mr-2"></div><span>Unknown(לא ידוע)</span></div>
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-F mr-2"></div><span>Female (נקבה)</span></div>
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-U mr-2"></div><span>Unknown (לא ידוע)</span></div>
         </div>
         <p class="mt-4 text-gray-600 text-sm">Click on a person's card to **show/hide their descendants**.</p>
-        <p class="text-xs mt-2 text-gray-500 font-bold">Please note: A person with multiple partner cards linked (for example, Martin Myers) is a person who has had multiple documented partners.</p>
+        <p class="text-xs mt-2 text-gray-500 font-bold">Please note: A person with multiple partner cards linked  is a person who has had multiple documented partners.</p>
     </div>
 
     <script>
@@ -227,11 +227,13 @@
             { "id": "168", "name": "Sidney Morley Kasner", "gender": "M", "spouse_ids": ["169"], "parent_ids": ["202", "203"], "children_ids": ["104", "106"], "birth_year": null, "death_year": null },
             { "id": "169", "name": "Elizabeth Margaret Dawyduk", "gender": "F", "spouse_id": "168", "children_ids": ["104", "106"], "birth_year": null, "death_year": null },
             { "id": "170", "name": "Bernard Melvin Kasner", "gender": "M", "parent_ids": ["202", "203"], "birth_year": null, "death_year": null },
-            { "id": "104", "name": "Deborah Lynn Kasner", "gender": "F", "parent_ids": ["168", "169"], "birth_year": null, "death_year": null },
-            { "id": "106", "name": "Tracy Leah Kasner", "gender": "F", "spouse_ids": ["107"], "parent_ids": ["168", "169"], "children_ids": ["21", "22"], "birth_year": null, "death_year": null },
+            { "id": "104", "name": "Deborah Lynn Kasner", "gender": "F","spouse_id":["105"] "parent_ids": ["168", "169"], "birth_year": null, "death_year": null },
+            { "id": "105", "name": "Pierette Boily", "gender": "F","spouse_id":["104"] "parent_ids": null, "birth_year": null, "death_year": null },
+            { "id": "106", "name": "Tracy Leah Kasner", "gender": "F", "spouse_ids": ["107", "108"], "parent_ids": ["168", "169"], "children_ids": ["21", "22"], "birth_year": null, "death_year": null },
             { "id": "107", "name": "David Greaves", "gender": "M", "spouse_id": "106", "children_ids": ["21", "22"], "birth_year": null, "death_year": null },
             { "id": "21", "name": "Nesya Ann Greaves", "gender": "F", "parent_ids": ["106", "107"], "birth_year": null, "death_year": null },
             { "id": "22", "name": "Aaron Kasner Greaves", "gender": "M", "parent_ids": ["106", "107"], "birth_year": null, "death_year": null },
+            { "id": "108", "name": "Sean Shore", "gender": "M", "spouse_ids": "106", "children_ids": null, "birth_year": null, "death_year": null },
             { "id": "171", "name": "Kenneth Ballard Kasner", "gender": "M", "spouse_ids": ["172"], "parent_ids": ["204", "205"], "children_ids": ["109", "111"], "birth_year": null, "death_year": null },
             { "id": "172", "name": "Susan Kay Ishmael-Royer", "gender": "F", "spouse_id": "171", "children_ids": ["109", "111"], "birth_year": null, "death_year": null },
             { "id": "109", "name": "Kristofor A Kasner", "gender": "M", "parent_ids": ["171", "172"], "birth_year": null, "death_year": null },
