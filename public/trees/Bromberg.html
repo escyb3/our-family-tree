@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Tree: Descendants of Moshe Haim Bromberg</title>
+    <title>Family Tree: Descendants of Moshe Haim Bromberg (Multi-Spouse)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -34,9 +34,9 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
         }
         /* Gender Colors */
-        .gender-M { background-color: #DBEAFE; border: 2px solid #3B82F6; }
-        .gender-F { background-color: #FCE7F3; border: 2px solid #EC4899; }
-        .gender-U { background-color: #E5E7EB; border: 2px solid #6B7280; }
+        .gender-M { background-color: #DBEAFE; border: 2px solid #3B82F6; } /* Blue for Male */
+        .gender-F { background-color: #FCE7F3; border: 2px solid #EC4899; } /* Pink for Female */
+        .gender-U { background-color: #E5E7EB; border: 2px solid #6B7280; } /* Grey for Unknown */
 
         /* Tree Structure */
         .tree-container {
@@ -45,10 +45,9 @@
             padding: 2rem;
             min-width: 100%;
         }
-        /* Node representing a couple and their connector to parents */
         .couple-node {
             display: inline-flex;
-            flex-direction: column; /* Changed to column to stack descendants */
+            flex-direction: column;
             align-items: center;
             margin-bottom: 20px;
             position: relative;
@@ -58,17 +57,18 @@
             display: flex;
             align-items: stretch;
             position: relative;
-            margin-bottom: 0.5rem; /* Space between couple and children line */
+            margin-bottom: 0.5rem;
         }
+        /* Line connecting two partners or a partner to the main person */
         .spouse-line {
             height: 2px;
-            width: 10px;
+            width: 10px; /* Reduced width for multiple connections */
             background-color: #1F2937;
             align-self: center;
         }
-        /* Vertical line connecting couple to children */
+        /* Vertical line connecting couple/multiple spouses to children */
         .children-line-vertical {
-            position: relative; /* relative to couple-node */
+            position: relative;
             width: 2px;
             background-color: #1F2937;
             height: 20px;
@@ -82,8 +82,7 @@
             align-items: center;
             padding-top: 0;
             width: 100%;
-            /* Initially collapsed, handled by JS but set default visually */
-            /* display: none; */
+            /* Initially collapsed, handled by JS */
         }
 
         /* Horizontal line connecting all siblings */
@@ -137,83 +136,84 @@
 </head>
 <body class="bg-gray-50 p-4 md:p-8">
     <header class="text-center mb-8">
-        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800">🌳 Family Tree: Descendants of Moshe Haim Bromberg</h1>
-        <p class="text-lg text-gray-600 mt-2">Tracking seven generations from the provided list.</p>
-        <p class="text-sm text-green-700 mt-2 font-bold">The Family Tree is updated to October 2025, 1/5786</p>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800">🌳 Bromberg Family Tree</h1>
+        <p class="text-lg text-gray-600 mt-2">הצגת דורות מרובים עם תמיכה במספר בני זוג.</p>
+        <p class="text-sm text-green-700 mt-2 font-bold">The tree is updated to October 2025- 7/5785</p>
     </header>
 
     <div class="overflow-x-auto shadow-lg bg-white rounded-xl p-4">
         <div id="familyTree" class="tree-container">
-            <!-- The Family Tree will be rendered here by JavaScript -->
+            <!-- עץ המשפחה יוצג כאן באמצעות JavaScript -->
         </div>
     </div>
 
     <div class="mt-8 p-6 bg-gray-100 rounded-xl shadow-md max-w-4xl mx-auto">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">Key & Instructions:</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Key and instructions:</h2>
         <div class="flex flex-col sm:flex-row justify-around gap-4 text-sm">
             <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-M mr-2"></div><span>Male (זכר)</span></div>
-            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-F mr-2"></div><span>Female (נקבה)</span></div>
-            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-U mr-2"></div><span>Unknown (לא ידוע)</span></div>
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-F mr-2"></div><span>Female(נקבה)</span></div>
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-U mr-2"></div><span>Unknown(לא ידוע)</span></div>
         </div>
         <p class="mt-4 text-gray-600 text-sm">Click on a person's card to **show/hide their descendants**.</p>
-        <p class="text-xs mt-2 text-gray-500">Note: The tree structure shows one primary partner in the lineage; information about additional marriages may appear in the card details.</p>
+        <p class="text-xs mt-2 text-gray-500 font-bold">Please note: A person with multiple partner cards linked (for example, Martin Myers) is a person who has had multiple documented partners.</p>
     </div>
 
     <script>
         // Data containing all family members
+        // NOTE: The 'spouse_id' property has been replaced with 'spouse_ids' (an array) for all primary lineage members.
         const peopleData = [
-            { "id": "231", "name": "Moshe Haim Bromberg", "gender": "M", "spouse_id": "232", "parent_ids": [], "children_ids": ["225", "227", "229"], "birth_year": "c. 1850", "death_year": null },
+            { "id": "231", "name": "Moshe Haim Bromberg", "gender": "M", "spouse_ids": ["232"], "parent_ids": [], "children_ids": ["225", "227", "229"], "birth_year": "c. 1850", "death_year": null },
             { "id": "232", "name": "Lea Unknown", "gender": "F", "spouse_id": "231", "parent_ids": [], "children_ids": ["225", "227", "229"], "birth_year": "c. 1850", "death_year": null },
-            { "id": "225", "name": "Ida Bromberg Kasner", "gender": "F", "spouse_id": "226", "parent_ids": ["231", "232"], "children_ids": ["200", "202", "204", "206", "208"], "birth_year": "Nov 4, 1871", "death_year": "Apr 13, 1961" },
+            { "id": "225", "name": "Ida Bromberg Kasner", "gender": "F", "spouse_ids": ["226"], "parent_ids": ["231", "232"], "children_ids": ["200", "202", "204", "206", "208"], "birth_year": "Nov 4, 1871", "death_year": "Apr 13, 1961" },
             { "id": "226", "name": "Robert Kasner", "gender": "M", "spouse_id": "225", "parent_ids": [], "children_ids": ["200", "202", "204", "206", "208"], "birth_year": "Apr 8, 1871", "death_year": "Sep 27, 1949" },
-            { "id": "227", "name": "Harry Browne", "gender": "M", "spouse_id": "228", "parent_ids": ["231", "232"], "children_ids": ["210", "211", "214", "215", "217"], "birth_year": null, "death_year": null },
+            { "id": "227", "name": "Harry Browne", "gender": "M", "spouse_ids": ["228"], "parent_ids": ["231", "232"], "children_ids": ["210", "211", "214", "215", "217"], "birth_year": null, "death_year": null },
             { "id": "228", "name": "Dora Browne", "gender": "F", "spouse_id": "227", "parent_ids": [], "children_ids": ["210", "211", "214", "215", "217"], "birth_year": null, "death_year": null },
-            { "id": "229", "name": "Shmuel Bromberg", "gender": "M", "spouse_id": "230", "parent_ids": ["231", "232"], "children_ids": ["218", "220", "222", "223", "224"], "birth_year": null, "death_year": null },
+            { "id": "229", "name": "Shmuel Bromberg", "gender": "M", "spouse_ids": ["230"], "parent_ids": ["231", "232"], "children_ids": ["218", "220", "222", "223", "224"], "birth_year": null, "death_year": null },
             { "id": "230", "name": "Rivkah Birenbaum", "gender": "F", "spouse_id": "229", "parent_ids": [], "children_ids": ["218", "220", "222", "223", "224"], "birth_year": null, "death_year": null },
             { "id": "222", "name": "David Bromberg", "gender": "M", "parent_ids": ["229", "230"], "birth_year": "1918", "death_year": null },
             { "id": "223", "name": "Rachel Bromberg", "gender": "F", "parent_ids": ["229", "230"], "birth_year": "1920", "death_year": null },
             { "id": "224", "name": "Abraham Abba Bromberg", "gender": "M", "parent_ids": ["229", "230"], "birth_year": "1922", "death_year": null },
-            { "id": "200", "name": "Toby Ruth Kasner Zeavin", "gender": "F", "spouse_id": "201", "parent_ids": ["225", "226"], "children_ids": ["158", "162", "164"], "birth_year": "Oct 20, 1903", "death_year": "Nov 26, 1990" },
+            { "id": "200", "name": "Toby Ruth Kasner Zeavin", "gender": "F", "spouse_ids": ["201"], "parent_ids": ["225", "226"], "children_ids": ["158", "162", "164"], "birth_year": "Oct 20, 1903", "death_year": "Nov 26, 1990" },
             { "id": "201", "name": "Samuel Zeavin", "gender": "M", "spouse_id": "200", "children_ids": ["158", "162", "164"], "birth_year": "Aug 23, 1901", "death_year": "Mar 31, 1991" },
-            { "id": "202", "name": "Samuel Kasner", "gender": "M", "spouse_id": "203", "parent_ids": ["225", "226"], "children_ids": ["168", "170"], "birth_year": "Sep 26 1909", "death_year": null },
+            { "id": "202", "name": "Samuel Kasner", "gender": "M", "spouse_ids": ["203"], "parent_ids": ["225", "226"], "children_ids": ["168", "170"], "birth_year": "Sep 26 1909", "death_year": null },
             { "id": "203", "name": "Anne Ostrofsky", "gender": "F", "spouse_id": "202", "children_ids": ["168", "170"], "birth_year": null, "death_year": null },
-            { "id": "204", "name": "Maurice Kasner", "gender": "M", "spouse_id": "205", "parent_ids": ["225", "226"], "children_ids": ["171"], "birth_year": null, "death_year": null },
+            { "id": "204", "name": "Maurice Kasner", "gender": "M", "spouse_ids": ["205"], "parent_ids": ["225", "226"], "children_ids": ["171"], "birth_year": null, "death_year": null },
             { "id": "205", "name": "Violet Lillian Ballard", "gender": "F", "spouse_id": "204", "children_ids": ["171"], "birth_year": "1916", "death_year": "2009" },
-            { "id": "206", "name": "Florence Kasner", "gender": "F", "spouse_id": "207", "parent_ids": ["225", "226"], "children_ids": ["174"], "birth_year": "1914", "death_year": "1996" },
+            { "id": "206", "name": "Florence Kasner", "gender": "F", "spouse_ids": ["207"], "parent_ids": ["225", "226"], "children_ids": ["174"], "birth_year": "1914", "death_year": "1996" },
             { "id": "207", "name": "Sidney Freedman", "gender": "M", "spouse_id": "206", "children_ids": ["174"], "birth_year": null, "death_year": null },
-            { "id": "208", "name": "Rose Kasner", "gender": "F", "spouse_id": "209", "parent_ids": ["225", "226"], "children_ids": ["176", "178"], "birth_year": null, "death_year": null },
+            { "id": "208", "name": "Rose Kasner", "gender": "F", "spouse_ids": ["209"], "parent_ids": ["225", "226"], "children_ids": ["176", "178"], "birth_year": null, "death_year": null },
             { "id": "209", "name": "Max Kaplan", "gender": "M", "spouse_id": "208", "children_ids": ["176", "178"], "birth_year": null, "death_year": null },
-            { "id": "158", "name": "Irvin I Zeavin", "gender": "M", "spouse_id": "159", "parent_ids": ["200", "201"], "children_ids": ["82", "84", "86", "89"], "birth_year": "Jul 22, 1924", "death_year": "Dec 1, 1992" },
+            { "id": "158", "name": "Irvin I Zeavin", "gender": "M", "spouse_ids": ["159"], "parent_ids": ["200", "201"], "children_ids": ["82", "84", "86", "89"], "birth_year": "Jul 22, 1924", "death_year": "Dec 1, 1992" },
             { "id": "159", "name": "Barbara Ione Chesen", "gender": "F", "spouse_id": "158", "children_ids": ["82", "84", "86", "89"], "birth_year": null, "death_year": null },
-            { "id": "162", "name": "Bernard Harold Zeavin", "gender": "M", "spouse_id": "163", "parent_ids": ["200", "201"], "children_ids": ["91"], "birth_year": "Nov 3, 1926", "death_year": "Oct 25, 2022" },
+            { "id": "162", "name": "Bernard Harold Zeavin", "gender": "M", "spouse_ids": ["163"], "parent_ids": ["200", "201"], "children_ids": ["91"], "birth_year": "Nov 3, 1926", "death_year": "Oct 25, 2022" },
             { "id": "163", "name": "Naomi Dolores Sokol", "gender": "F", "spouse_id": "162", "children_ids": ["91"], "birth_year": "Mar 12, 1933", "death_year": null },
-            { "id": "164", "name": "Beverly Anne Zeavin", "gender": "F", "spouse_id": "165", "parent_ids": ["200", "201"], "children_ids": ["100", "102"], "birth_year": "Jul 5, 1938", "death_year": "Alive" },
+            { "id": "164", "name": "Beverly Anne Zeavin", "gender": "F", "spouse_ids": ["165"], "parent_ids": ["200", "201"], "children_ids": ["100", "102"], "birth_year": "Jul 5, 1938", "death_year": "Alive" },
             { "id": "165", "name": "William Pitt Riley", "gender": "M", "spouse_id": "164", "children_ids": ["100", "102"], "birth_year": null, "death_year": null },
-            { "id": "82", "name": "Robert Alan Zeavin", "gender": "M", "spouse_id": "83", "parent_ids": ["158", "159"], "children_ids": ["7", "8"], "birth_year": null, "death_year": null },
+            { "id": "82", "name": "Robert Alan Zeavin", "gender": "M", "spouse_ids": ["83"], "parent_ids": ["158", "159"], "children_ids": ["7", "8"], "birth_year": null, "death_year": null },
             { "id": "83", "name": "Yadira Vidal", "gender": "F", "spouse_id": "82", "children_ids": ["7", "8"], "birth_year": null, "death_year": null },
             { "id": "84", "name": "Michael Jeffrey Zeavin", "gender": "M", "parent_ids": ["158", "159"], "birth_year": null, "death_year": null },
-            { "id": "86", "name": "Lynne Marie Zeavin", "gender": "F", "spouse_id": "87", "parent_ids": ["158", "159"], "children_ids": ["9"], "birth_year": null, "death_year": null },
+            { "id": "86", "name": "Lynne Marie Zeavin", "gender": "F", "spouse_ids": ["87"], "parent_ids": ["158", "159"], "children_ids": ["9"], "birth_year": null, "death_year": null },
             { "id": "87", "name": "Charles John Musser", "gender": "M", "spouse_id": "86", "children_ids": ["9"], "birth_year": null, "death_year": null },
-            { "id": "89", "name": "Andrew R Zeavin", "gender": "M", "spouse_id": "90", "parent_ids": ["158", "159"], "children_ids": ["11"], "birth_year": null, "death_year": null },
+            { "id": "89", "name": "Andrew R Zeavin", "gender": "M", "spouse_ids": ["90"], "parent_ids": ["158", "159"], "children_ids": ["11"], "birth_year": null, "death_year": null },
             { "id": "90", "name": "Jennifer Danielle Parton", "gender": "F", "spouse_id": "89", "children_ids": ["11"], "birth_year": null, "death_year": null },
-            { "id": "91", "name": "Gerald L MD Zeavin", "gender": "M", "spouse_id": "92", "parent_ids": ["162", "163"], "children_ids": ["12", "14", "94", "95", "98"], "birth_year": null, "death_year": null },
+            { "id": "91", "name": "Gerald L MD Zeavin", "gender": "M", "spouse_ids": ["92"], "parent_ids": ["162", "163"], "children_ids": ["12", "14", "94", "95", "98"], "birth_year": null, "death_year": null },
             { "id": "92", "name": "Rebecca Delano", "gender": "F", "spouse_id": "91", "children_ids": ["12", "14", "94", "95", "98"], "birth_year": null, "death_year": null },
-            { "id": "100", "name": "Susan Lauren Riley", "gender": "F", "spouse_id": "101", "parent_ids": ["164", "165"], "children_ids": ["18", "19"], "birth_year": null, "death_year": null },
+            { "id": "100", "name": "Susan Lauren Riley", "gender": "F", "spouse_ids": ["101"], "parent_ids": ["164", "165"], "children_ids": ["18", "19"], "birth_year": null, "death_year": null },
             { "id": "101", "name": "David Isaac Thompson", "gender": "M", "spouse_id": "100", "children_ids": ["18", "19"], "birth_year": null, "death_year": null },
-            { "id": "102", "name": "Jill Alexandra Riley", "gender": "F", "spouse_id": "103", "parent_ids": ["164", "165"], "children_ids": ["20"], "birth_year": null, "death_year": null },
+            { "id": "102", "name": "Jill Alexandra Riley", "gender": "F", "spouse_ids": ["103"], "parent_ids": ["164", "165"], "children_ids": ["20"], "birth_year": null, "death_year": null },
             { "id": "103", "name": "Ron Hawkins", "gender": "M", "spouse_id": "102", "children_ids": ["20"], "birth_year": null, "death_year": null },
             { "id": "7", "name": "Hadley Barbara Zeavin", "gender": "F", "parent_ids": ["82", "83"], "birth_year": null, "death_year": null },
             { "id": "8", "name": "Georgia Cassidy Zeavin", "gender": "F", "parent_ids": ["82", "83"], "birth_year": null, "death_year": null },
             { "id": "9", "name": "Hannah Zeavin", "gender": "F", "parent_ids": ["86", "87"], "birth_year": null, "death_year": null },
             { "id": "11", "name": "Nathaniel Zeavin", "gender": "M", "parent_ids": ["89", "90"], "birth_year": null, "death_year": null },
-            { "id": "12", "name": "William Zeavin", "gender": "M", "spouse_id": "13", "parent_ids": ["91", "92"], "children_ids": ["1", "2"], "birth_year": null, "death_year": null },
+            { "id": "12", "name": "William Zeavin", "gender": "M", "spouse_ids": ["13"], "parent_ids": ["91", "92"], "children_ids": ["1", "2"], "birth_year": null, "death_year": null },
             { "id": "13", "name": "Molly Tomek", "gender": "F", "spouse_id": "12", "children_ids": ["1", "2"], "birth_year": null, "death_year": null },
-            { "id": "14", "name": "Laura Brockway Zeavin", "gender": "F", "spouse_id": "15", "parent_ids": ["91", "92"], "children_ids": ["3", "4"], "birth_year": null, "death_year": null },
+            { "id": "14", "name": "Laura Brockway Zeavin", "gender": "F", "spouse_ids": ["15"], "parent_ids": ["91", "92"], "children_ids": ["3", "4"], "birth_year": null, "death_year": null },
             { "id": "15", "name": "Sean John Ferguson", "gender": "M", "spouse_id": "14", "children_ids": ["3", "4"], "birth_year": null, "death_year": null },
             { "id": "94", "name": "Bradford Alan Zeavin", "gender": "M", "parent_ids": ["91", "92"], "birth_year": null, "death_year": null },
-            { "id": "95", "name": "Jill Robin Zeavin", "gender": "F", "spouse_id": "96", "parent_ids": ["91", "92"], "children_ids": ["16"], "birth_year": null, "death_year": null },
+            { "id": "95", "name": "Jill Robin Zeavin", "gender": "F", "spouse_ids": ["96"], "parent_ids": ["91", "92"], "children_ids": ["16"], "birth_year": null, "death_year": null },
             { "id": "96", "name": "William Louis Payne", "gender": "M", "spouse_id": "95", "children_ids": ["16"], "birth_year": null, "death_year": null },
-            { "id": "98", "name": "Spencer Tracy Zeavin", "gender": "M", "spouse_id": "99", "parent_ids": ["91", "92"], "children_ids": ["17"], "birth_year": null, "death_year": null },
+            { "id": "98", "name": "Spencer Tracy Zeavin", "gender": "M", "spouse_ids": ["99"], "parent_ids": ["91", "92"], "children_ids": ["17"], "birth_year": null, "death_year": null },
             { "id": "99", "name": "Jennifer Wheat", "gender": "F", "spouse_id": "98", "children_ids": ["17"], "birth_year": null, "death_year": null },
             { "id": "1", "name": "Daughter Zeavin", "gender": "F", "parent_ids": ["12", "13"], "birth_year": null, "death_year": null },
             { "id": "2", "name": "Thatcher Zeavin", "gender": "M", "parent_ids": ["12", "13"], "birth_year": null, "death_year": null },
@@ -224,24 +224,24 @@
             { "id": "18", "name": "Piper Toby Riley Thompson", "gender": "F", "parent_ids": ["100", "101"], "birth_year": null, "death_year": null },
             { "id": "19", "name": "Belle Scout Riley Thompson", "gender": "F", "parent_ids": ["100", "101"], "birth_year": null, "death_year": null },
             { "id": "20", "name": "Ruby B Hawkins", "gender": "F", "parent_ids": ["102", "103"], "birth_year": null, "death_year": null },
-            { "id": "168", "name": "Sidney Morley Kasner", "gender": "M", "spouse_id": "169", "parent_ids": ["202", "203"], "children_ids": ["104", "106"], "birth_year": null, "death_year": null },
+            { "id": "168", "name": "Sidney Morley Kasner", "gender": "M", "spouse_ids": ["169"], "parent_ids": ["202", "203"], "children_ids": ["104", "106"], "birth_year": null, "death_year": null },
             { "id": "169", "name": "Elizabeth Margaret Dawyduk", "gender": "F", "spouse_id": "168", "children_ids": ["104", "106"], "birth_year": null, "death_year": null },
             { "id": "170", "name": "Bernard Melvin Kasner", "gender": "M", "parent_ids": ["202", "203"], "birth_year": null, "death_year": null },
             { "id": "104", "name": "Deborah Lynn Kasner", "gender": "F", "parent_ids": ["168", "169"], "birth_year": null, "death_year": null },
-            { "id": "106", "name": "Tracy Leah Kasner", "gender": "F", "spouse_id": "107", "parent_ids": ["168", "169"], "children_ids": ["21", "22"], "birth_year": null, "death_year": null },
+            { "id": "106", "name": "Tracy Leah Kasner", "gender": "F", "spouse_ids": ["107"], "parent_ids": ["168", "169"], "children_ids": ["21", "22"], "birth_year": null, "death_year": null },
             { "id": "107", "name": "David Greaves", "gender": "M", "spouse_id": "106", "children_ids": ["21", "22"], "birth_year": null, "death_year": null },
             { "id": "21", "name": "Nesya Ann Greaves", "gender": "F", "parent_ids": ["106", "107"], "birth_year": null, "death_year": null },
             { "id": "22", "name": "Aaron Kasner Greaves", "gender": "M", "parent_ids": ["106", "107"], "birth_year": null, "death_year": null },
-            { "id": "171", "name": "Kenneth Ballard Kasner", "gender": "M", "spouse_id": "172", "parent_ids": ["204", "205"], "children_ids": ["109", "111"], "birth_year": null, "death_year": null },
+            { "id": "171", "name": "Kenneth Ballard Kasner", "gender": "M", "spouse_ids": ["172"], "parent_ids": ["204", "205"], "children_ids": ["109", "111"], "birth_year": null, "death_year": null },
             { "id": "172", "name": "Susan Kay Ishmael-Royer", "gender": "F", "spouse_id": "171", "children_ids": ["109", "111"], "birth_year": null, "death_year": null },
             { "id": "109", "name": "Kristofor A Kasner", "gender": "M", "parent_ids": ["171", "172"], "birth_year": null, "death_year": null },
             { "id": "111", "name": "Keith Alexanderbal Kasner", "gender": "M", "parent_ids": ["171", "172"], "birth_year": null, "death_year": null },
-            { "id": "174", "name": "Beverly Anne Freedman", "gender": "F", "spouse_id": "175", "parent_ids": ["206", "207"], "children_ids": ["113"], "birth_year": null, "death_year": null },
+            { "id": "174", "name": "Beverly Anne Freedman", "gender": "F", "spouse_ids": ["175"], "parent_ids": ["206", "207"], "children_ids": ["113"], "birth_year": null, "death_year": null },
             { "id": "175", "name": "James Lauder (Jim) Brunton", "gender": "M", "spouse_id": "174", "children_ids": ["113"], "birth_year": null, "death_year": null },
             { "id": "113", "name": "Robert James Brunton", "gender": "M", "parent_ids": ["174", "175"], "birth_year": null, "death_year": null },
-            { "id": "176", "name": "Sharon Kaplan", "gender": "F", "spouse_id": "177", "parent_ids": ["208", "209"], "children_ids": ["114", "115", "116"], "birth_year": null, "death_year": null },
+            { "id": "176", "name": "Sharon Kaplan", "gender": "F", "spouse_ids": ["177"], "parent_ids": ["208", "209"], "children_ids": ["114", "115", "116"], "birth_year": null, "death_year": null },
             { "id": "177", "name": "Mel Myers", "gender": "M", "spouse_id": "176", "children_ids": ["114", "115", "116"], "birth_year": null, "death_year": null },
-            { "id": "178", "name": "Brian Kaplan", "gender": "M", "spouse_id": "179", "parent_ids": ["208", "209"], "children_ids": ["117", "118"], "birth_year": null, "death_year": null },
+            { "id": "178", "name": "Brian Kaplan", "gender": "M", "spouse_ids": ["179"], "parent_ids": ["208", "209"], "children_ids": ["117", "118"], "birth_year": null, "death_year": null },
             { "id": "179", "name": "Renee Kimmel", "gender": "F", "spouse_id": "178", "children_ids": ["117", "118"], "birth_year": null, "death_year": null },
             { "id": "114", "name": "Noel Myers", "gender": "M", "parent_ids": ["176", "177"], "birth_year": null, "death_year": null },
             { "id": "115", "name": "Sarah Myers", "gender": "F", "parent_ids": ["176", "177"], "birth_year": null, "death_year": null },
@@ -249,81 +249,83 @@
             { "id": "117", "name": "Harris Kaplan", "gender": "M", "parent_ids": ["178", "179"], "birth_year": null, "death_year": null },
             { "id": "118", "name": "Rachel Kaplan", "gender": "F", "parent_ids": ["178", "179"], "birth_year": null, "death_year": null },
             { "id": "210", "name": "Sally Browne", "gender": "F", "parent_ids": ["227", "228"], "birth_year": null, "death_year": null },
-            { "id": "211", "name": "Max Browne", "gender": "M", "spouse_id": "212", "parent_ids": ["227", "228"], "children_ids": ["180", "182"], "birth_year": null, "death_year": null },
+            { "id": "211", "name": "Max Browne", "gender": "M", "spouse_ids": ["212"], "parent_ids": ["227", "228"], "children_ids": ["180", "182"], "birth_year": null, "death_year": null },
             { "id": "212", "name": "Betty Leah Smith", "gender": "F", "spouse_id": "211", "children_ids": ["180", "182"], "birth_year": null, "death_year": null },
             { "id": "214", "name": "Anne Browne", "gender": "F", "parent_ids": ["227", "228"], "birth_year": null, "death_year": null },
-            { "id": "215", "name": "Jack Browne", "gender": "M", "spouse_id": "216", "parent_ids": ["227", "228"], "children_ids": ["184", "186"], "birth_year": null, "death_year": null },
+            { "id": "215", "name": "Jack Browne", "gender": "M", "spouse_ids": ["216"], "parent_ids": ["227", "228"], "children_ids": ["184", "186"], "birth_year": null, "death_year": null },
             { "id": "216", "name": "Estelle Bernstein", "gender": "F", "spouse_id": "215", "children_ids": ["184", "186"], "birth_year": null, "death_year": null },
             { "id": "217", "name": "Stanley Browne", "gender": "M", "parent_ids": ["227", "228"], "birth_year": null, "death_year": null },
-            { "id": "180", "name": "Ronald Bernard Browne", "gender": "M", "spouse_id": "181", "parent_ids": ["211", "212"], "children_ids": ["119", "121"], "birth_year": null, "death_year": null },
+            { "id": "180", "name": "Ronald Bernard Browne", "gender": "M", "spouse_ids": ["181"], "parent_ids": ["211", "212"], "children_ids": ["119", "121"], "birth_year": null, "death_year": null },
             { "id": "181", "name": "Sheila Hoffman", "gender": "F", "spouse_id": "180", "children_ids": ["119", "121"], "birth_year": null, "death_year": null },
-            { "id": "182", "name": "Barbara Browne", "gender": "F", "spouse_id": "183", "parent_ids": ["211", "212"], "children_ids": ["122", "124", "126"], "birth_year": null, "death_year": null },
+            { "id": "182", "name": "Barbara Browne", "gender": "F", "spouse_ids": ["183"], "parent_ids": ["211", "212"], "children_ids": ["122", "124", "126"], "birth_year": null, "death_year": null },
             { "id": "183", "name": "Stanley Earl Goldman", "gender": "M", "spouse_id": "182", "children_ids": ["122", "124", "126"], "birth_year": null, "death_year": null },
-            { "id": "119", "name": "Sanford Browne", "gender": "M", "spouse_id": "120", "parent_ids": ["180", "181"], "children_ids": ["24", "25", "26"], "birth_year": null, "death_year": null },
+            { "id": "119", "name": "Sanford Browne", "gender": "M", "spouse_ids": ["120"], "parent_ids": ["180", "181"], "children_ids": ["24", "25", "26"], "birth_year": null, "death_year": null },
             { "id": "120", "name": "Lisa Berman", "gender": "F", "spouse_id": "119", "children_ids": ["24", "25", "26"], "birth_year": null, "death_year": null },
             { "id": "121", "name": "Kevin Jason Leslie Browne", "gender": "M", "parent_ids": ["180", "181"], "birth_year": null, "death_year": null },
             { "id": "24", "name": "Noah Kyle Browne", "gender": "M", "parent_ids": ["119", "120"], "birth_year": null, "death_year": null },
             { "id": "25", "name": "Spencer Jacob Browne", "gender": "M", "parent_ids": ["119", "120"], "birth_year": null, "death_year": null },
             { "id": "26", "name": "Kendall Browne", "gender": "F", "parent_ids": ["119", "120"], "birth_year": null, "death_year": null },
-            { "id": "122", "name": "Glenn Goldman", "gender": "M", "spouse_id": "123", "parent_ids": ["182", "183"], "children_ids": ["27", "28"], "birth_year": null, "death_year": null },
+            { "id": "122", "name": "Glenn Goldman", "gender": "M", "spouse_ids": ["123"], "parent_ids": ["182", "183"], "children_ids": ["27", "28"], "birth_year": null, "death_year": null },
             { "id": "123", "name": "Beryl Tsang", "gender": "F", "spouse_id": "122", "children_ids": ["27", "28"], "birth_year": null, "death_year": null },
             { "id": "124", "name": "Carolynn Goldman", "gender": "F", "parent_ids": ["182", "183"], "birth_year": null, "death_year": null },
-            { "id": "126", "name": "Paul Goldman", "gender": "M", "spouse_id": "127", "parent_ids": ["182", "183"], "children_ids": ["29", "30"], "birth_year": null, "death_year": null },
+            { "id": "126", "name": "Paul Goldman", "gender": "M", "spouse_ids": ["127"], "parent_ids": ["182", "183"], "children_ids": ["29", "30"], "birth_year": null, "death_year": null },
             { "id": "127", "name": "Martha Elizabeth Papsin", "gender": "F", "spouse_id": "126", "children_ids": ["29", "30"], "birth_year": null, "death_year": null },
             { "id": "27", "name": "Leah Mariam Goldman", "gender": "F", "parent_ids": ["122", "123"], "birth_year": null, "death_year": null },
             { "id": "28", "name": "Marshall Don Goldman", "gender": "M", "parent_ids": ["122", "123"], "birth_year": null, "death_year": null },
             { "id": "29", "name": "Russell Goldman", "gender": "M", "parent_ids": ["126", "127"], "birth_year": null, "death_year": null },
             { "id": "30", "name": "Daniel Goldman", "gender": "M", "parent_ids": ["126", "127"], "birth_year": null, "death_year": null },
-            { "id": "184", "name": "Lawrence Browne", "gender": "M", "spouse_id": "185", "parent_ids": ["215", "216"], "children_ids": ["128"], "birth_year": null, "death_year": null },
+            { "id": "184", "name": "Lawrence Browne", "gender": "M", "spouse_ids": ["185"], "parent_ids": ["215", "216"], "children_ids": ["128"], "birth_year": null, "death_year": null },
             { "id": "185", "name": "Judith M Kalenson", "gender": "F", "spouse_id": "184", "children_ids": ["128"], "birth_year": null, "death_year": null },
-            { "id": "186", "name": "Sharon Browne", "gender": "F", "spouse_id": "188", "parent_ids": ["215", "216"], "children_ids": ["130"], "birth_year": null, "death_year": null },
+            { "id": "186", "name": "Sharon Browne", "gender": "F", "spouse_ids": ["188"], "parent_ids": ["215", "216"], "children_ids": ["130"], "birth_year": null, "death_year": null },
             { "id": "188", "name": "Mr. Israel", "gender": "M", "spouse_id": "186", "children_ids": ["130"], "birth_year": null, "death_year": null },
-            { "id": "128", "name": "Daniel Alexander Browne", "gender": "M", "spouse_id": "129", "parent_ids": ["184", "185"], "children_ids": ["31"], "birth_year": null, "death_year": null },
+            { "id": "128", "name": "Daniel Alexander Browne", "gender": "M", "spouse_ids": ["129"], "parent_ids": ["184", "185"], "children_ids": ["31"], "birth_year": null, "death_year": null },
             { "id": "129", "name": "Lisa Cericola", "gender": "F", "spouse_id": "128", "children_ids": ["31"], "birth_year": null, "death_year": null },
             { "id": "31", "name": "Theo Browne", "gender": "M", "parent_ids": ["128", "129"], "birth_year": null, "death_year": null },
-            { "id": "130", "name": "Shauna Israel", "gender": "F", "spouse_id": "131", "parent_ids": ["186", "188"], "children_ids": ["32", "33"], "birth_year": null, "death_year": null },
+            { "id": "130", "name": "Shauna Israel", "gender": "F", "spouse_ids": ["131"], "parent_ids": ["186", "188"], "children_ids": ["32", "33"], "birth_year": null, "death_year": null },
             { "id": "131", "name": "Stephen Isenberg", "gender": "M", "spouse_id": "130", "children_ids": ["32", "33"], "birth_year": null, "death_year": null },
             { "id": "32", "name": "Lauren Isenberg", "gender": "F", "parent_ids": ["130", "131"], "birth_year": null, "death_year": null },
             { "id": "33", "name": "Megan Isenberg", "gender": "F", "parent_ids": ["130", "131"], "birth_year": null, "death_year": null },
-            { "id": "218", "name": "Molly Bromberg", "gender": "F", "spouse_id": "219", "parent_ids": ["229", "230"], "children_ids": ["189", "192"], "birth_year": null, "death_year": null },
+            // *** DEMONSTRATION OF MULTIPLE SPOUSES (ID 189) ***
+            { "id": "218", "name": "Molly Bromberg", "gender": "F", "spouse_ids": ["219"], "parent_ids": ["229", "230"], "children_ids": ["189", "192"], "birth_year": null, "death_year": null },
             { "id": "219", "name": "Hymie Myers", "gender": "M", "spouse_id": "218", "children_ids": ["189", "192"], "birth_year": null, "death_year": null },
-            { "id": "220", "name": "Moshe Yosef Bromberg", "gender": "M", "spouse_id": "221", "parent_ids": ["229", "230"], "children_ids": ["194", "196", "198"], "birth_year": null, "death_year": null },
+            { "id": "220", "name": "Moshe Yosef Bromberg", "gender": "M", "spouse_ids": ["221"], "parent_ids": ["229", "230"], "children_ids": ["194", "196", "198"], "birth_year": null, "death_year": null },
             { "id": "221", "name": "Rachel Witta Weinberger", "gender": "F", "spouse_id": "220", "children_ids": ["194", "196", "198"], "birth_year": null, "death_year": null },
-            { "id": "189", "name": "Martin Myers", "gender": "M", "spouse_id": "190", "parent_ids": ["218", "219"], "children_ids": ["132", "34", "133"], "birth_year": null, "death_year": null },
+            { "id": "189", "name": "Martin Myers", "gender": "M", "spouse_ids": ["190", "191"], "parent_ids": ["218", "219"], "children_ids": ["132", "34", "133"], "birth_year": null, "death_year": null },
             { "id": "190", "name": "Nancy Myers", "gender": "F", "spouse_id": "189", "children_ids": ["132", "34", "133"], "birth_year": null, "death_year": null },
-            { "id": "191", "name": "Patty Myers", "gender": "F", "spouse_id": "189", "children_ids": null, "birth_year": null, "death_year": null },
-            { "id": "192", "name": "Karen Myers", "gender": "F", "spouse_id": "193", "parent_ids": ["218", "219"], "children_ids": ["136"], "birth_year": null, "death_year": null },
+            { "id": "191", "name": "Patty Myers", "gender": "F", "spouse_id": "189", "children_ids": [], "birth_year": null, "death_year": null, "note": "Second spouse of Martin (189)"},
+            { "id": "192", "name": "Karen Myers", "gender": "F", "spouse_ids": ["193"], "parent_ids": ["218", "219"], "children_ids": ["136"], "birth_year": null, "death_year": null },
             { "id": "193", "name": "Bob Yukich", "gender": "M", "spouse_id": "192", "children_ids": ["136"], "birth_year": null, "death_year": null },
             { "id": "132", "name": "Carla Myers", "gender": "F", "parent_ids": ["189", "190"], "birth_year": null, "death_year": null },
             { "id": "34", "name": "Peter Myers", "gender": "M", "parent_ids": ["132"], "birth_year": null, "death_year": null },
-            {"id": "133", "name": "Rebecca Myers", "gender": "F", "spouse_id": ["134", "135"], "parent_ids": ["189", "190"], "children_ids": ["35", "36"], "birth_year": null, "death_year": null}
+            // Note: The structure for 133/135/35/36 implies 135 is spouse of 35, not 133. Maintaining original structure.
+            { "id": "133", "name": "Rebecca Myers", "gender": "F", "spouse_ids": ["134"], "parent_ids": ["189", "190"], "children_ids": ["35", "36"], "birth_year": null, "death_year": null, "note": "Data structure uses a single spouse for visualization" },
             { "id": "134", "name": "Scott Labby", "gender": "M", "spouse_id": "133", "children_ids": ["35"], "birth_year": null, "death_year": null },
-            { "id": "35", "name": "Maren Labby", "gender": "F", "spouse_id": "135", "parent_ids": ["133", "134"], "children_ids": ["36"], "birth_year": null, "death_year": null },
-            { "id": "135", "name": "Seth Frader-Thompson", "gender": "M", "spouse_id": "133", "children_ids": ["36"], "birth_year": null, "death_year": null },
+            { "id": "35", "name": "Maren Labby", "gender": "F", "spouse_ids": ["135"], "parent_ids": ["133", "134"], "children_ids": ["36"], "birth_year": null, "death_year": null },
+            { "id": "135", "name": "Seth Frader-Thompson", "gender": "M", "spouse_id": "35", "children_ids": ["36"], "birth_year": null, "death_year": null },
             { "id": "36", "name": "Sam Frader-Thompson", "gender": "M", "parent_ids": ["35", "135"], "birth_year": null, "death_year": null },
             { "id": "136", "name": "Aaron Yukich", "gender": "M", "parent_ids": ["192", "193"], "birth_year": null, "death_year": null },
-            { "id": "194", "name": "Rivka Bromberg", "gender": "F", "spouse_id": "195", "parent_ids": ["220", "221"], "children_ids": ["138", "139", "141"], "birth_year": null, "death_year": null },
+            { "id": "194", "name": "Rivka Bromberg", "gender": "F", "spouse_ids": ["195"], "parent_ids": ["220", "221"], "children_ids": ["138", "139", "141"], "birth_year": null, "death_year": null },
             { "id": "195", "name": "Nissim Pilosof", "gender": "M", "spouse_id": "194", "children_ids": ["138", "139", "141"], "birth_year": null, "death_year": null },
-            { "id": "196", "name": "Nesya Bromberg", "gender": "F", "spouse_id": "197", "parent_ids": ["220", "221"], "children_ids": ["143", "145", "147", "149", "151"], "birth_year": null, "death_year": null },
+            { "id": "196", "name": "Nesya Bromberg", "gender": "F", "spouse_ids": ["197"], "parent_ids": ["220", "221"], "children_ids": ["143", "145", "147", "149", "151"], "birth_year": null, "death_year": null },
             { "id": "197", "name": "Aryeh Junger", "gender": "M", "spouse_id": "196", "children_ids": ["143", "145", "147", "149", "151"], "birth_year": null, "death_year": null },
-            { "id": "198", "name": "Shmuel Bromberg", "gender": "M", "spouse_id": "199", "parent_ids": ["220", "221"], "children_ids": ["152", "154", "156"], "birth_year": null, "death_year": null },
+            { "id": "198", "name": "Shmuel Bromberg", "gender": "M", "spouse_ids": ["199"], "parent_ids": ["220", "221"], "children_ids": ["152", "154", "156"], "birth_year": null, "death_year": null },
             { "id": "199", "name": "Chana Noa Izaks", "gender": "F", "spouse_id": "198", "children_ids": ["152", "154", "156"], "birth_year": null, "death_year": null },
             { "id": "138", "name": "Noah Pilosof", "gender": "F", "parent_ids": ["194", "195"], "birth_year": null, "death_year": null },
-            { "id": "139", "name": "Oren Pilosof", "gender": "M", "spouse_id": "140", "parent_ids": ["194", "195"], "children_ids": ["37"], "birth_year": null, "death_year": null },
+            { "id": "139", "name": "Oren Pilosof", "gender": "M", "spouse_ids": ["140"], "parent_ids": ["194", "195"], "children_ids": ["37"], "birth_year": null, "death_year": null },
             { "id": "140", "name": "Aya Unknown", "gender": "F", "spouse_id": "139", "children_ids": ["37"], "birth_year": null, "death_year": null },
-            { "id": "141", "name": "Shai Pilosof", "gender": "M", "spouse_id": "142", "parent_ids": ["194", "195"], "children_ids": ["38", "39", "40"], "birth_year": null, "death_year": null },
+            { "id": "141", "name": "Shai Pilosof", "gender": "M", "spouse_ids": ["142"], "parent_ids": ["194", "195"], "children_ids": ["38", "39", "40"], "birth_year": null, "death_year": null },
             { "id": "142", "name": "Ms. Unknown", "gender": "F", "spouse_id": "141", "children_ids": ["38", "39", "40"], "birth_year": null, "death_year": null },
             { "id": "37", "name": "Ayala Pilosof", "gender": "F", "parent_ids": ["139", "140"], "birth_year": null, "death_year": null },
             { "id": "38", "name": "Ofek Pilosof", "gender": "F", "parent_ids": ["141", "142"], "birth_year": null, "death_year": null },
             { "id": "39", "name": "Gal Pilosof", "gender": "M", "parent_ids": ["141", "142"], "birth_year": null, "death_year": null },
             { "id": "40", "name": "Agam Pilosof", "gender": "F", "parent_ids": ["141", "142"], "birth_year": null, "death_year": null },
-            { "id": "143", "name": "Eran Junger", "gender": "M", "spouse_id": "144", "parent_ids": ["196", "197"], "children_ids": ["41", "42", "43", "44", "45", "46"], "birth_year": null, "death_year": null },
+            { "id": "143", "name": "Eran Junger", "gender": "M", "spouse_ids": ["144"], "parent_ids": ["196", "197"], "children_ids": ["41", "42", "43", "44", "45", "46"], "birth_year": null, "death_year": null },
             { "id": "144", "name": "Anat Unknown", "gender": "F", "spouse_id": "143", "children_ids": ["41", "42", "43", "44", "45", "46"], "birth_year": null, "death_year": null },
-            { "id": "145", "name": "Ohad Junger", "gender": "M", "spouse_id": "146", "parent_ids": ["196", "197"], "children_ids": ["50", "51", "53", "54", "55"], "birth_year": null, "death_year": null },
+            { "id": "145", "name": "Ohad Junger", "gender": "M", "spouse_ids": ["146"], "parent_ids": ["196", "197"], "children_ids": ["50", "51", "53", "54", "55"], "birth_year": null, "death_year": null },
             { "id": "146", "name": "Yael Unknown", "gender": "F", "spouse_id": "145", "children_ids": ["50", "51", "53", "54", "55"], "birth_year": null, "death_year": null },
-            { "id": "147", "name": "Alon Junger", "gender": "M", "spouse_id": "148", "parent_ids": ["196", "197"], "children_ids": ["56", "57"], "birth_year": null, "death_year": null },
+            { "id": "147", "name": "Alon Junger", "gender": "M", "spouse_ids": ["148"], "parent_ids": ["196", "197"], "children_ids": ["56", "57"], "birth_year": null, "death_year": null },
             { "id": "148", "name": "Sivan Unknown", "gender": "F", "spouse_id": "147", "children_ids": ["56", "57"], "birth_year": null, "death_year": null },
-            { "id": "149", "name": "Michal Junger", "gender": "F", "spouse_id": "150", "parent_ids": ["196", "197"], "children_ids": ["58", "60", "61", "62", "63", "64", "65", "66", "68", "69"], "birth_year": null, "death_year": null },
+            { "id": "149", "name": "Michal Junger", "gender": "F", "spouse_ids": ["150"], "parent_ids": ["196", "197"], "children_ids": ["58", "60", "61", "62", "63", "64", "65", "66", "68", "69"], "birth_year": null, "death_year": null },
             { "id": "150", "name": "Natti Ben Moshe", "gender": "M", "spouse_id": "149", "children_ids": ["58", "60", "61", "62", "63", "64", "65", "66", "68", "69"], "birth_year": null, "death_year": null },
             { "id": "151", "name": "Yael Junger", "gender": "F", "parent_ids": ["196", "197"], "birth_year": null, "death_year": null },
             { "id": "41", "name": "Moshe Eitan Junger", "gender": "M", "parent_ids": ["143", "144"], "birth_year": null, "death_year": null },
@@ -349,11 +351,11 @@
             { "id": "66", "name": "Noam Ben Moshe", "gender": "M", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
             { "id": "68", "name": "Arie Ben Moshe", "gender": "M", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
             { "id": "69", "name": "Tamar Ben Moshe", "gender": "F", "parent_ids": ["149", "150"], "birth_year": null, "death_year": null },
-            { "id": "152", "name": "Noga Bromberg", "gender": "F", "spouse_id": "153", "parent_ids": ["198", "199"], "children_ids": ["70", "71", "72", "73", "74"], "birth_year": null, "death_year": null },
+            { "id": "152", "name": "Noga Bromberg", "gender": "F", "spouse_ids": ["153"], "parent_ids": ["198", "199"], "children_ids": ["70", "71", "72", "73", "74"], "birth_year": null, "death_year": null },
             { "id": "153", "name": "Avi Grossman", "gender": "F", "spouse_id": "152", "children_ids": ["70", "71", "72", "73", "74"], "birth_year": null, "death_year": null },
-            { "id": "154", "name": "Merav Bromberg", "gender": "F", "spouse_id": "155", "parent_ids": ["198", "199"], "children_ids": ["75", "76", "77", "78"], "birth_year": null, "death_year": null },
+            { "id": "154", "name": "Merav Bromberg", "gender": "F", "spouse_ids": ["155"], "parent_ids": ["198", "199"], "children_ids": ["75", "76", "77", "78", "79", "80"], "birth_year": null, "death_year": null },
             { "id": "155", "name": "Yanai Ben Abou", "gender": "M", "spouse_id": "154", "children_ids": ["75", "76", "77", "78", "79", "80"], "birth_year": null, "death_year": null },
-            { "id": "156", "name": "Amitai Bromberg", "gender": "M", "spouse_id": "157", "parent_ids": ["198", "199"], "children_ids": ["79","80","81"], "birth_year": null, "death_year": null },
+            { "id": "156", "name": "Amitai Bromberg", "gender": "M", "spouse_ids": ["157"], "parent_ids": ["198", "199"], "children_ids": ["79","80","81"], "birth_year": null, "death_year": null },
             { "id": "157", "name": "Noga Amran", "gender": "F", "spouse_id": "156", "children_ids": ["79","80","81"], "birth_year": null, "death_year": null },
             { "id": "70", "name": "Roi Grossman", "gender": "M", "parent_ids": ["152", "153"], "birth_year": null, "death_year": null },
             { "id": "71", "name": "Ma'ayan Grossman", "gender": "F", "parent_ids": ["152", "153"], "birth_year": null, "death_year": null },
@@ -388,8 +390,11 @@
             const card = document.createElement('div');
             card.className = `person-card gender-${person.gender} w-full`;
             card.setAttribute('data-id', person.id);
+            
             // Only the main lineage person should have the click event to prevent double-toggling
-            if (!isSpouse) { 
+            // If the person has children and is not just a spouse card, allow toggle
+            if (!isSpouse || (person.children_ids && person.children_ids.length > 0)) { 
+                 // Ensure only one click handler exists if this person is part of the main lineage
                 card.onclick = toggleChildren;
             }
 
@@ -399,15 +404,18 @@
             else if (person.gender === 'F') icon = '♀️';
             else icon = '👤';
             
+            // Determine the arrow/icon for the children toggle, only show if children exist
+            const childrenIndicator = person.children_ids && person.children_ids.length > 0 ? 
+                    '<div class="text-xs mt-1 font-bold text-gray-700">⬇️</div>' : 
+                    '<div class="text-xs mt-1 font-bold text-gray-400">⚫</div>';
+
             card.innerHTML = `
                 <div class="text-xl mb-1">${icon}</div>
                 <div class="font-semibold text-sm leading-tight">${person.name}</div>
                 <div class="text-xs font-mono text-gray-700">${person.id}</div>
                 ${dates}
                 ${person.note ? `<div class="text-xs mt-1 text-pink-700 font-medium">${person.note}</div>` : ''}
-                ${person.children_ids && person.children_ids.length > 0 ? 
-                    '<div class="text-xs mt-1 font-bold text-gray-700">⬇️</div>' : 
-                    '<div class="text-xs mt-1 font-bold text-gray-400">⚫</div>'}
+                ${childrenIndicator}
             `;
             return card;
         }
@@ -441,22 +449,35 @@
             const coupleCardWrapper = document.createElement('div');
             coupleCardWrapper.className = 'couple-card-wrapper';
 
-            // Main person card
+            // Main person card (always displayed first)
             const personCard = createPersonCard(person, false);
             coupleCardWrapper.appendChild(personCard);
             
-            // Spouse card
-            if (person.spouse_id && peopleMap[person.spouse_id]) {
-                const spouse = peopleMap[person.spouse_id];
-                const spouseLine = document.createElement('div');
-                spouseLine.className = 'spouse-line';
-                coupleCardWrapper.appendChild(spouseLine);
-                coupleCardWrapper.appendChild(createPersonCard(spouse, true));
+            // --- Handle Multiple Spouses (using spouse_ids array) ---
+            let spousesToRender = [];
+            
+            // Prioritize spouse_ids (array) if it exists and is an array
+            if (person.spouse_ids && Array.isArray(person.spouse_ids)) {
+                spousesToRender = person.spouse_ids;
+            } else if (person.spouse_id) { // Fallback/compatibility check for old single-string property
+                spousesToRender = [person.spouse_id];
             }
+
+            spousesToRender.forEach(spouseId => {
+                const spouse = peopleMap[spouseId];
+                if (spouse) {
+                    const spouseLine = document.createElement('div');
+                    spouseLine.className = 'spouse-line';
+                    coupleCardWrapper.appendChild(spouseLine);
+                    // Pass true for isSpouse. They do not trigger the children toggle themselves.
+                    coupleCardWrapper.appendChild(createPersonCard(spouse, true));
+                }
+            });
             
             coupleNode.appendChild(coupleCardWrapper);
 
             // 2. Children Connection (Vertical Line)
+            // This line connects the couple/multiple spouses group to the children's horizontal line
             if (person.children_ids && person.children_ids.length > 0) {
                 const vertLine = document.createElement('div');
                 vertLine.className = 'children-line-vertical';
@@ -518,9 +539,14 @@
             }
 
             // Manually expand the root node for visibility on load
-            const rootDescendants = document.getElementById(rootId)?.closest('.couple-node')?.querySelector('.descendants-container');
-            if (rootDescendants) {
-                rootDescendants.style.display = 'flex';
+            const rootNodeElement = document.querySelector(`.person-card[data-id="${rootId}"]`);
+            const rootCoupleNode = rootNodeElement ? rootNodeElement.closest('.couple-node') : null;
+
+            if (rootCoupleNode) {
+                const rootDescendants = rootCoupleNode.querySelector('.descendants-container');
+                if (rootDescendants) {
+                    rootDescendants.style.display = 'flex';
+                }
             }
         }
 
