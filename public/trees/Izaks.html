@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Tree: Descendants of Izaks (Multi-Spouse)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+        }
+        /* Card Styles */
+        .person-card {
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            min-width: 150px;
+            max-width: 200px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .person-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+        /* Gender Colors */
+        .gender-M { background-color: #DBEAFE; border: 2px solid #3B82F6; } /* Blue for Male */
+        .gender-F { background-color: #FCE7F3; border: 2px solid #EC4899; } /* Pink for Female */
+        .gender-U { background-color: #E5E7EB; border: 2px solid #6B7280; } /* Grey for Unknown */
+
+        /* Tree Structure */
+        .tree-container {
+            display: inline-block;
+            white-space: nowrap;
+            padding: 2rem;
+            min-width: 100%;
+        }
+        .couple-node {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        /* Wrapper for the person/spouse cards */
+        .couple-card-wrapper {
+            display: flex;
+            align-items: stretch;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+        /* Line connecting two partners or a partner to the main person */
+        .spouse-line {
+            height: 2px;
+            width: 10px; /* Reduced width for multiple connections */
+            background-color: #1F2937;
+            align-self: center;
+        }
+        /* Vertical line connecting couple/multiple spouses to children */
+        .children-line-vertical {
+            position: relative;
+            width: 2px;
+            background-color: #1F2937;
+            height: 20px;
+            margin-bottom: 0;
+        }
+
+        /* Container for all children of a couple */
+        .descendants-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 0;
+            width: 100%;
+            /* Initially collapsed, handled by JS */
+        }
+
+        /* Horizontal line connecting all siblings */
+        .children-horizontal-connector {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            padding-top: 0;
+            margin-top: 0;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .children-horizontal-line {
+            position: absolute;
+            top: 0;
+            height: 2px;
+            background-color: #1F2937;
+            width: 100%;
+        }
+
+        /* Container for each child node, positioned horizontally */
+        .child-node-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 0 15px; /* Spacing between siblings */
+        }
+
+        /* Vertical line from horizontal connector to the child's couple node */
+        .child-vertical-line {
+            width: 2px;
+            height: 20px;
+            background-color: #1F2937;
+            position: relative;
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .tree-container {
+                overflow-x: scroll;
+            }
+            .person-card {
+                min-width: 100px;
+                max-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 p-4 md:p-8">
+    <header class="text-center mb-8">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800">🌳 Bromberg Family Tree</h1>
+        <p class="text-lg text-gray-600 mt-2">הצגת דורות מרובים עם תמיכה במספר בני זוג.</p>
+        <p class="text-sm text-green-700 mt-2 font-bold">The tree is updated to October 2025- 7/5785</p>
+    </header>
+
+    <div class="overflow-x-auto shadow-lg bg-white rounded-xl p-4">
+        <div id="familyTree" class="tree-container">
+            <!-- עץ המשפחה יוצג כאן באמצעות JavaScript -->
+        </div>
+    </div>
+
+    <div class="mt-8 p-6 bg-gray-100 rounded-xl shadow-md max-w-4xl mx-auto">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Key and instructions:</h2>
+        <div class="flex flex-col sm:flex-row justify-around gap-4 text-sm">
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-M mr-2"></div><span>Male (זכר)</span></div>
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-F mr-2"></div><span>Female (נקבה)</span></div>
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-U mr-2"></div><span>Unknown (לא ידוע)</span></div>
+        </div>
+        <p class="mt-4 text-gray-600 text-sm">Click on a person's card to **show/hide their descendants**.</p>
+        <p class="text-xs mt-2 text-gray-500 font-bold">Please note: A person with multiple partner cards linked  is a person who has had multiple documented partners.</p>
+    </div>
+
+    <script>
+        // Data containing all family members
+        // NOTE: The 'spouse_id' property has been replaced with 'spouse_ids' (an array) for all primary lineage members.
+        const peopleData = [
+      
+        ];
+
+        // Create a map for quick lookup
+        const peopleMap = peopleData.reduce((map, person) => {
+            map[person.id] = person;
+            return map;
+        }, {});
+
+        const rootId = '231';
+        const rootPerson = peopleMap[rootId];
+
+        // Function to create the HTML for a single person card
+        function createPersonCard(person, isSpouse) {
+            const status = person.death_year === 'Alive' ? ' (Alive)' : (person.death_year ? ` (d. ${person.death_year})` : '');
+            const dates = (person.birth_year || person.death_year) ?
+                `<div class="text-xs text-gray-500 mt-1">${person.birth_year ? `b. ${person.birth_year}` : ''}${person.birth_year && person.death_year ? ' - ' : ''}${person.death_year || ''}</div>` :
+                '';
+            
+            const card = document.createElement('div');
+            card.className = `person-card gender-${person.gender} w-full`;
+            card.setAttribute('data-id', person.id);
+            
+            // Only the main lineage person should have the click event to prevent double-toggling
+            // If the person has children and is not just a spouse card, allow toggle
+            if (!isSpouse || (person.children_ids && person.children_ids.length > 0)) { 
+                 // Ensure only one click handler exists if this person is part of the main lineage
+                card.onclick = toggleChildren;
+            }
+
+            // Create an icon based on gender/status
+            let icon = '';
+            if (person.gender === 'M') icon = '♂️';
+            else if (person.gender === 'F') icon = '♀️';
+            else icon = '👤';
+            
+            // Determine the arrow/icon for the children toggle, only show if children exist
+            const childrenIndicator = person.children_ids && person.children_ids.length > 0 ? 
+                    '<div class="text-xs mt-1 font-bold text-gray-700">⬇️</div>' : 
+                    '<div class="text-xs mt-1 font-bold text-gray-400">⚫</div>';
+
+            card.innerHTML = `
+                <div class="text-xl mb-1">${icon}</div>
+                <div class="font-semibold text-sm leading-tight">${person.name}</div>
+                <div class="text-xs font-mono text-gray-700">${person.id}</div>
+                ${dates}
+                ${person.note ? `<div class="text-xs mt-1 text-pink-700 font-medium">${person.note}</div>` : ''}
+                ${childrenIndicator}
+            `;
+            return card;
+        }
+
+        // Toggles the visibility of the descendants container
+        function toggleChildren(event) {
+            // Find the immediate parent couple-node
+            const coupleNode = event.currentTarget.closest('.couple-node');
+            if (!coupleNode) return;
+
+            // The descendants container is the second child of couple-node
+            const descendantsContainer = coupleNode.querySelector('.descendants-container');
+            if (descendantsContainer) {
+                if (descendantsContainer.style.display === 'none' || descendantsContainer.style.display === '') {
+                    descendantsContainer.style.display = 'flex';
+                } else {
+                    descendantsContainer.style.display = 'none';
+                }
+            }
+        }
+
+        // Recursively renders a single person/couple node and its descendants
+        function renderNode(personId) {
+            const person = peopleMap[personId];
+            if (!person) return null;
+
+            const coupleNode = document.createElement('div');
+            coupleNode.className = 'couple-node';
+            
+            // 1. Couple Card Wrapper
+            const coupleCardWrapper = document.createElement('div');
+            coupleCardWrapper.className = 'couple-card-wrapper';
+
+            // Main person card (always displayed first)
+            const personCard = createPersonCard(person, false);
+            coupleCardWrapper.appendChild(personCard);
+            
+            // --- Handle Multiple Spouses (using spouse_ids array) ---
+            let spousesToRender = [];
+            
+            // Prioritize spouse_ids (array) if it exists and is an array
+            if (person.spouse_ids && Array.isArray(person.spouse_ids)) {
+                spousesToRender = person.spouse_ids;
+            } else if (person.spouse_id) { // Fallback/compatibility check for old single-string property
+                spousesToRender = [person.spouse_id];
+            }
+
+            spousesToRender.forEach(spouseId => {
+                const spouse = peopleMap[spouseId];
+                if (spouse) {
+                    const spouseLine = document.createElement('div');
+                    spouseLine.className = 'spouse-line';
+                    coupleCardWrapper.appendChild(spouseLine);
+                    // Pass true for isSpouse. They do not trigger the children toggle themselves.
+                    coupleCardWrapper.appendChild(createPersonCard(spouse, true));
+                }
+            });
+            
+            coupleNode.appendChild(coupleCardWrapper);
+
+            // 2. Children Connection (Vertical Line)
+            // This line connects the couple/multiple spouses group to the children's horizontal line
+            if (person.children_ids && person.children_ids.length > 0) {
+                const vertLine = document.createElement('div');
+                vertLine.className = 'children-line-vertical';
+                coupleNode.appendChild(vertLine);
+
+                // 3. Descendants Container (Horizontal line + children nodes)
+                const descendantsContainer = document.createElement('div');
+                descendantsContainer.className = 'descendants-container';
+                descendantsContainer.style.display = 'none'; // Initially collapsed
+
+                const childNodes = renderDescendants(person.children_ids);
+                descendantsContainer.appendChild(childNodes);
+                coupleNode.appendChild(descendantsContainer);
+            }
+
+            return coupleNode;
+        }
+
+        // Renders the list of siblings and the horizontal connector
+        function renderDescendants(childrenIds) {
+            const childrenHorizontalConnector = document.createElement('div');
+            childrenHorizontalConnector.className = 'children-horizontal-connector';
+
+            // Add horizontal line connecting all children
+            const horizontalLine = document.createElement('div');
+            horizontalLine.className = 'children-horizontal-line';
+            childrenHorizontalConnector.appendChild(horizontalLine);
+
+            // Render each child node recursively
+            childrenIds.forEach(childId => {
+                const childNodeWrapper = document.createElement('div');
+                childNodeWrapper.className = 'child-node-wrapper';
+
+                // Vertical line from horizontal connector to the child node
+                const childVertLine = document.createElement('div');
+                childVertLine.className = 'child-vertical-line';
+                childNodeWrapper.appendChild(childVertLine);
+
+                // The recursive call to render the child's own couple-node
+                const childNode = renderNode(childId);
+                if (childNode) {
+                    childNodeWrapper.appendChild(childNode);
+                }
+                
+                childrenHorizontalConnector.appendChild(childNodeWrapper);
+            });
+
+            return childrenHorizontalConnector;
+        }
+
+        // Main function to start rendering the tree
+        function initFamilyTree() {
+            const treeContainer = document.getElementById('familyTree');
+            if (treeContainer && rootPerson) {
+                const rootNode = renderNode(rootId);
+                if (rootNode) {
+                    treeContainer.appendChild(rootNode);
+                }
+            }
+
+            // Manually expand the root node for visibility on load
+            const rootNodeElement = document.querySelector(`.person-card[data-id="${rootId}"]`);
+            const rootCoupleNode = rootNodeElement ? rootNodeElement.closest('.couple-node') : null;
+
+            if (rootCoupleNode) {
+                const rootDescendants = rootCoupleNode.querySelector('.descendants-container');
+                if (rootDescendants) {
+                    rootDescendants.style.display = 'flex';
+                }
+            }
+        }
+
+        window.onload = initFamilyTree;
+    </script>
+</body>
+</html>
