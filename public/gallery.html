@@ -16,6 +16,36 @@ import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp, deleteDo
 
 window.firebase = { initializeApp, getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged, getFirestore, collection, onSnapshot, addDoc, serverTimestamp, deleteDoc, doc, updateDoc, query, orderBy };
 </script>
+    <script>
+        const { S3Client, PutObjectCommand, GetObjectCommand, ListObjectsV2Command } = require('@aws-sdk/client-s3');
+  const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
+
+  const s3 = new S3Client({
+    region: process.env.R2_REGION || 'auto',
+    endpoint: process.env.R2_ENDPOINT, // Example: https://<accountid>.r2.cloudflarestorage.com
+    credentials: {
+      accessKeyId: process.env.R2_ACCESS_KEY_ID,
+      secretAccessKey: process.env.R2_SECRET_ACCESS_KEY
+    }
+  });
+
+  async function upload(pathKey, body, contentType) {
+    const cmd = new PutObjectCommand({ Bucket: process.env.R2_BUCKET, Key: pathKey, Body: body, ContentType: contentType });
+    return await s3.send(cmd);
+  }
+
+  async function getSignedUrlForPath(pathKey, expires = 3600) {
+    const cmd = new GetObjectCommand({ Bucket: process.env.R2_BUCKET, Key: pathKey });
+    return await getSignedUrl(s3, cmd, { expiresIn: expires });
+  }
+
+  async function listPrefix(prefix) {
+    const cmd = new ListObjectsV2Command({ Bucket: process.env.R2_BUCKET, Prefix: prefix });
+    return await s3.send(cmd);
+  }
+
+  module.exports = { upload, getSignedUrlForPath, listPrefix };
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap');
         body {
