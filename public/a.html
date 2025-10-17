@@ -1,218 +1,244 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>📊 סטטיסטיקות משפחתיות</title>
-  
-  <!-- Tailwind CSS CDN for styling -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Heebo Font link -->
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;800&display=swap" rel="stylesheet">
-  
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <style>
-    /* הגדרת הפונט הראשי לכל הדף */
-    body { font-family: 'Heebo', sans-serif; }
-    /* כדי שהתרשימים יהיו רספונסיביים בתוך הכרטיסים */
-    canvas { max-width: 100%; height: auto; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📊 סטטיסטיקות משפחתיות</title>
+  
+  <!-- Tailwind CSS CDN for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Heebo Font link -->
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;800&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <style>
+    /* הגדרת הפונט הראשי לכל הדף */
+    body { font-family: 'Heebo', sans-serif; }
+    /* כדי שהתרשימים יהיו רספונסיביים בתוך הכרטיסים */
+    canvas { max-width: 100%; height: auto; }
+  </style>
 </head>
 <body class="bg-gray-50 min-h-screen text-right p-4 sm:p-8">
-  <div class="max-w-6xl mx-auto">
+  <div class="max-w-6xl mx-auto">
 
-    <!-- כותרת ראשית והודעת סטטוס -->
-    <header class="mb-10 text-center">
-        <h1 id="main-title" class="text-6xl font-extrabold text-blue-800 mb-3 flex items-center justify-center gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-10 h-10 text-yellow-500">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125l3-3m0 0l-3-3m3 3h12.75M3 17.25h12.75M3 21h12.75" />
-            </svg>
-            סטטיסטיקות עץ משפחתי
-        </h1>
-        <p class="status-message text-lg text-gray-600 font-medium" id="family-info">טוען צד משפחה...</p>
-    </header>
+    <!-- כותרת ראשית והודעת סטטוס -->
+    <header class="mb-10 text-center">
+        <h1 id="main-title" class="text-6xl font-extrabold text-blue-800 mb-3 flex items-center justify-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-10 h-10 text-yellow-500">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125l3-3m0 0l-3-3m3 3h12.75M3 17.25h12.75M3 21h12.75" />
+            </svg>
+            סטטיסטיקות עץ משפחתי
+        </h1>
+        <p class="status-message text-lg text-gray-600 font-medium" id="family-info">טוען צד משפחה...</p>
+    </header>
 
-    <!-- מסך טעינה -->
-    <div id="loading" class="flex justify-center items-center h-40">
-        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
-        <span class="text-xl text-gray-700 mr-4">טוען נתונים... אנא המתן.</span>
-    </div>
-    
-    <!-- תוכן ראשי: יוצג לאחר הטעינה -->
-    <div id="main-content" class="space-y-10" style="display: none;">
-      
-      <!-- קונטיינר לתרשימים - רשת רספונסיבית: טור אחד בטלפון, שני טורים במסך גדול -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        
-        <!-- כרטיס תרשים מגדר -->
-        <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
-          <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-3">
-             👤 התפלגות לפי מגדר (זכרים מול נקבות)
-          </h2>
-          <canvas id="genderChart"></canvas>
-        </div>
-        
-        <!-- כרטיס תרשים דורות -->
-        <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
-          <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-3">
-            📅 התפלגות לפי דור (כל 25 שנה)
-          </h2>
-          <canvas id="generationChart"></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
+    <!-- מסך טעינה -->
+    <div id="loading" class="flex justify-center items-center h-40">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
+        <span class="text-xl text-gray-700 mr-4">טוען נתונים... אנא המתן.</span>
+    </div>
+    
+    <!-- תוכן ראשי: יוצג לאחר הטעינה -->
+    <div id="main-content" class="space-y-10" style="display: none;">
+      
+      <!-- קונטיינר לתרשימים - רשת רספונסיבית: טור אחד בטלפון, שני טורים במסך גדול -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- כרטיס תרשים מגדר -->
+        <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-3">
+             👤 התפלגות לפי מגדר (זכרים מול נקבות)
+          </h2>
+          <canvas id="genderChart"></canvas>
+        </div>
+        
+        <!-- כרטיס תרשים דורות -->
+        <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-3">
+            📅 התפלגות לפי דור (כל 25 שנה)
+          </h2>
+          <canvas id="generationChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <script>
-    // פונקציית עזר להמרת שגיאה להצגה למשתמש
-    function displayError(message) {
-      document.getElementById("loading").style.display = "none";
-      const mainContent = document.getElementById("main-content");
-      mainContent.style.display = "block";
-      
-      const familyInfoElement = document.getElementById("family-info");
-      familyInfoElement.innerHTML = `<span class="text-red-600 font-bold bg-red-100 p-2 rounded">${message}</span>`;
-      
-      // הסתרת התרשימים הריקים
-      document.querySelectorAll('.chart-container').forEach(el => el.style.display = 'none');
-      document.getElementById("main-title").style.display = "none";
-    }
+  <script>
+    // פונקציית עזר להמרת שגיאה להצגה למשתמש
+    function displayError(message) {
+      document.getElementById("loading").style.display = "none";
+      const mainContent = document.getElementById("main-content");
+      mainContent.style.display = "block";
+      
+      const familyInfoElement = document.getElementById("family-info");
+      familyInfoElement.innerHTML = `<span class="text-red-600 font-bold bg-red-100 p-2 rounded">${message}</span>`;
+      
+      // הסתרת התרשימים הריקים
+      document.querySelectorAll('.chart-container').forEach(el => el.style.display = 'none');
+      document.getElementById("main-title").style.display = "none";
+    }
 
-    // פונקציה ראשית לטעינת נתונים והצגת תרשימים
-    async function loadFamilyStats() {
-      const familyInfoElement = document.getElementById("family-info");
-      
-      try {
-        // --- שלב 1: שליפת פרטי משתמש וצד משפחה (familySide) ---
-        familyInfoElement.textContent = "שולף פרטי משתמש...";
-        
-        // עמידות רבה יותר לטיפול בשגיאות רשת
-        const userResponse = await fetch('/api/user');
-        if (!userResponse.ok) {
-          throw new Error(`שגיאה ${userResponse.status}: לא ניתן לטעון פרטי משתמש.`);
-        }
-        
-        const userData = await userResponse.json();
-        
-        // גישה ל-familySide דרך אובייקט 'user'
-        const familySide = userData.user?.familySide; 
+    /**
+     * פונקציה ראשית לטעינת נתונים, ניקוי, עיבוד והצגת תרשימים.
+     * **הדגש כאן הוא על בדיקת תקינות חזקה של הנתונים הנכנסים.**
+     */
+    async function loadFamilyStats() {
+      const familyInfoElement = document.getElementById("family-info");
+      
+      try {
+        // --- שלב 1: שליפת פרטי משתמש וצד משפחה (familySide) ---
+        familyInfoElement.textContent = "שולף פרטי משתמש...";
+        
+        const userResponse = await fetch('/api/user');
+        if (!userResponse.ok) {
+          throw new Error(`שגיאה ${userResponse.status}: לא ניתן לטעון פרטי משתמש.`);
+        }
+        
+        const userData = await userResponse.json();
+        const familySide = userData.user?.familySide; 
 
-        if (!familySide || typeof familySide !== 'string' || familySide === 'לא מוגדר') {
-          throw new Error("שדה 'familySide' חסר, לא תקין או לא מוגדר בפרטי המשתמש.");
-        }
+        if (!familySide || typeof familySide !== 'string' || familySide === 'לא מוגדר') {
+          throw new Error("שדה 'familySide' חסר, לא תקין או לא מוגדר בפרטי המשתמש.");
+        }
 
-        // --- שלב 2: בניית נתיב דינמי ושליפת נתוני העץ ---
-        // **עדכון נתיב לפי בקשת המשתמש:** מחפש נתונים בנתיב trees/{familySide}.html
-        const dataUrl = `/trees/${familySide}.html`;
-        familyInfoElement.textContent = `טוען נתונים עבור המשפחה: ${familySide} מ: ${dataUrl}...`;
-        
-        const dataResponse = await fetch(dataUrl);
-        if (!dataResponse.ok) {
-          throw new Error(`שגיאה ${dataResponse.status}: קובץ הנתונים ${familySide}.html לא נמצא בשרת.`);
-        }
-        
-        // הערה: נדרש שכתובת ה-URL הזו תחזיר תוכן בפורמט JSON תקין (הפונקציה .json() מעבדת את הנתונים).
-        const data = await dataResponse.json();
-        
-        if (!Array.isArray(data)) {
-          throw new Error("קובץ הנתונים אינו מכיל מערך תקין להצגה.");
-        }
-        
-        // --- שלב 3: עיבוד והצגת התרשימים ---
-        
-        // 1. נתוני מגדר (Pie Chart)
-        const males = data.filter(p => p.gender === "M").length;
-        const females = data.filter(p => p.gender === "F").length;
-        
-        // פלטת צבעים משופרת: כחול מודרני וירוק מנטה
-        const GENDER_COLORS = ["#3b82f6", "#10b981"]; // Blue-500, Emerald-500
+        // --- שלב 2: בניית נתיב דינמי ושליפת נתוני העץ ---
+        const dataUrl = `/trees/${familySide}.html`;
+        familyInfoElement.textContent = `טוען נתונים עבור המשפחה: ${familySide} מ: ${dataUrl}...`;
+        
+        const dataResponse = await fetch(dataUrl);
+        if (!dataResponse.ok) {
+          throw new Error(`שגיאה ${dataResponse.status}: קובץ הנתונים ${familySide}.html לא נמצא בשרת.`);
+        }
+        
+        // נתונים גולמיים
+        const rawData = await dataResponse.json();
+        
+        if (!Array.isArray(rawData)) {
+          throw new Error("קובץ הנתונים אינו מכיל מערך תקין להצגה.");
+        }
+        
+        // --- שלב 3: סינון וניקוי נתונים קפדני (Data Validation) ---
+        const cleanedData = rawData.filter(p => {
+          // ודא שאנחנו עובדים עם אובייקט תקין
+          if (!p || typeof p !== 'object') return false;
+          
+          // בדיקת תקינות שדה מגדר
+          const hasValidGender = p.gender && (p.gender === "M" || p.gender === "F");
+          
+          // בדיקת תקינות שדה תאריך לידה (נדרש לסטטיסטיקת דורות)
+          // מספיק שהוא מחרוזת כלשהי, ה-parseInt יטפל בחלק השנה.
+          const hasValidBirthDate = typeof p.birthDate === 'string' && p.birthDate.length >= 4;
 
-        const ctxGender = document.getElementById("genderChart").getContext("2d");
-        new Chart(ctxGender, {
-          type: "pie",
-          data: {
-            labels: ["זכרים", "נקבות"],
-            datasets: [{
-              data: [males, females],
-              backgroundColor: GENDER_COLORS,
-              borderColor: '#ffffff',
-              borderWidth: 2,
-              hoverOffset: 15
-            }]
-          },
-          options: {
-             responsive: true,
-             plugins: {
-                legend: { position: 'bottom' },
-                tooltip: { rtl: true }
-             }
-          }
-        });
+          // רשומה נחשבת תקינה אם יש לה לפחות מגדר, או תאריך לידה.
+          return hasValidGender || hasValidBirthDate;
+        });
 
-        // 2. נתוני דורות (Bar Chart)
-        const generations = {};
-        const BASE_YEAR = 1800;
-        const GENERATION_SPAN = 25;
-        
-        data.forEach(p => {
-          if (!p.birthDate) return;
-          const year = parseInt(p.birthDate.split("-")[0]);
-          const genIndex = Math.floor((year - BASE_YEAR) / GENERATION_SPAN); 
-          generations[genIndex] = (generations[genIndex] || 0) + 1;
-        });
-        
-        const sortedGenerations = Object.entries(generations).sort((a, b) => +a[0] - +b[0]);
+        if (cleanedData.length === 0) {
+          throw new Error("לא נמצאו נתונים תקינים לעיבוד סטטיסטי לאחר ניקוי הנתונים.");
+        }
 
-        const genLabels = sortedGenerations.map(([index, count]) => {
-            const startYear = BASE_YEAR + (+index * GENERATION_SPAN);
-            const endYear = startYear + GENERATION_SPAN - 1;
-            return `${startYear} - ${endYear}`;
-        });
-        const genValues = sortedGenerations.map(([index, count]) => count);
+        // --- שלב 4: עיבוד והצגת התרשימים, באמצעות הנתונים הנקיים ---
+        
+        // 1. נתוני מגדר (Pie Chart)
+        const males = cleanedData.filter(p => p.gender === "M").length;
+        const females = cleanedData.filter(p => p.gender === "F").length;
+        
+        const GENDER_COLORS = ["#3b82f6", "#10b981"]; // Blue-500, Emerald-500
 
-        // צבע אחיד יותר עמוק לתרשים הבר
-        const BAR_COLOR = "#4f46e5"; // Indigo-600
+        const ctxGender = document.getElementById("genderChart").getContext("2d");
+        new Chart(ctxGender, {
+          type: "pie",
+          data: {
+            labels: ["זכרים", "נקבות"],
+            datasets: [{
+              data: [males, females],
+              backgroundColor: GENDER_COLORS,
+              borderColor: '#ffffff',
+              borderWidth: 2,
+              hoverOffset: 15
+            }]
+          },
+          options: {
+             responsive: true,
+             plugins: {
+                legend: { position: 'bottom' },
+                tooltip: { rtl: true }
+             }
+          }
+        });
 
-        const ctxGeneration = document.getElementById("generationChart").getContext("2d");
-        new Chart(ctxGeneration, {
-          type: "bar",
-          data: {
-            labels: genLabels,
-            datasets: [{
-              label: "מספר אנשים",
-              data: genValues,
-              backgroundColor: BAR_COLOR,
-              borderColor: BAR_COLOR,
-              borderWidth: 1
-            }]
-          },
-          options: {
-            responsive: true,
-            scales: {
-              y: { beginAtZero: true },
-              x: { reverse: false } // ודא שציר X מתחיל משמאל (למרות כיוון RTL)
-            },
-            plugins: {
-              tooltip: { rtl: true }
-            }
-          }
-        });
+        // 2. נתוני דורות (Bar Chart)
+        const generations = {};
+        const BASE_YEAR = 1800; // שנת בסיס לחישוב דורות
+        const GENERATION_SPAN = 25; // טווח דור (25 שנה)
+        
+        cleanedData.forEach(p => {
+          // ודא שיש תאריך לידה תקין כפי שנקבע בשלב הסינון
+          if (typeof p.birthDate !== 'string') return;
 
-        // סיום טעינה: הצגת התוכן והסתרת הטעינה
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("main-content").style.display = "block";
-        familyInfoElement.innerHTML = `<span class="text-green-700 font-semibold">הנתונים נטענו בהצלחה עבור המשפחה: <b>${familySide}</b></span>`;
+          const yearPart = p.birthDate.split("-")[0];
+          const year = parseInt(yearPart);
+          
+          // בדיקה נוספת לשנה תקינה ולוגית
+          if (isNaN(year) || year < BASE_YEAR || year > new Date().getFullYear()) return;
+
+          const genIndex = Math.floor((year - BASE_YEAR) / GENERATION_SPAN); 
+          generations[genIndex] = (generations[genIndex] || 0) + 1;
+        });
+        
+        const sortedGenerations = Object.entries(generations).sort((a, b) => +a[0] - +b[0]);
+
+        const genLabels = sortedGenerations.map(([index, count]) => {
+            const startYear = BASE_YEAR + (+index * GENERATION_SPAN);
+            const endYear = startYear + GENERATION_SPAN - 1;
+            return `${startYear} - ${endYear}`;
+        });
+        const genValues = sortedGenerations.map(([index, count]) => count);
+
+        // צבע אחיד יותר עמוק לתרשים הבר
+        const BAR_COLOR = "#4f46e5"; // Indigo-600
+
+        const ctxGeneration = document.getElementById("generationChart").getContext("2d");
+        new Chart(ctxGeneration, {
+          type: "bar",
+          data: {
+            labels: genLabels,
+            datasets: [{
+              label: "מספר אנשים",
+              data: genValues,
+              backgroundColor: BAR_COLOR,
+              borderColor: BAR_COLOR,
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: { beginAtZero: true },
+              // הגדרת כיוון ציר X כך שיתאים לכיוון RTL
+              x: { reverse: true } 
+            },
+            plugins: {
+              tooltip: { rtl: true }
+            }
+          }
+        });
+
+        // סיום טעינה: הצגת התוכן והסתרת הטעינה
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("main-content").style.display = "block";
+        familyInfoElement.innerHTML = `<span class="text-green-700 font-semibold">הנתונים נטענו בהצלחה עבור המשפחה: <b>${familySide}</b>. סך אנשים: ${cleanedData.length}</span>`;
 
 
-      } catch (error) {
-        console.error("שגיאה קריטית:", error);
-        displayError(`אירעה שגיאה בטעינת הנתונים: ${error.message}`);
-      }
-    }
+      } catch (error) {
+        console.error("שגיאה קריטית:", error);
+        displayError(`אירעה שגיאה בטעינת הנתונים: ${error.message}`);
+      }
+    }
 
-    // הפעלת הפונקציה לאחר טעינת הדף
-    window.onload = loadFamilyStats;
-  </script>
+    // הפעלת הפונקציה לאחר טעינת הדף
+    window.onload = loadFamilyStats;
+  </script>
 </body>
 </html>
