@@ -1,963 +1,1223 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>גלריית תמונות משפחתית</title>
+    <title data-i18n="pageTitle">גלריית תמונות משפחתית</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <!-- Firebase Imports -->
-    <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getAuth,getStroage,signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp, deleteDoc, doc, updateDoc, query, orderBy} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-window.firebase = { initializeApp, getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged, getFirestore, collection, onSnapshot, addDoc, serverTimestamp, deleteDoc, doc, updateDoc, query, orderBy };
-</script>
     <script>
-        const { S3Client, PutObjectCommand, GetObjectCommand, ListObjectsV2Command } = require('@aws-sdk/client-s3');
-  const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
-
-  const s3 = new S3Client({
-    region: process.env.R2_REGION || 'auto',
-    endpoint: process.env.R2_ENDPOINT, // Example: https://<accountid>.r2.cloudflarestorage.com
-    credentials: {
-      accessKeyId: process.env.R2_ACCESS_KEY_ID,
-      secretAccessKey: process.env.R2_SECRET_ACCESS_KEY
-    }
-  });
-
-  async function upload(pathKey, body, contentType) {
-    const cmd = new PutObjectCommand({ Bucket: process.env.R2_BUCKET, Key: pathKey, Body: body, ContentType: contentType });
-    return await s3.send(cmd);
-  }
-
-  async function getSignedUrlForPath(pathKey, expires = 3600) {
-    const cmd = new GetObjectCommand({ Bucket: process.env.R2_BUCKET, Key: pathKey });
-    return await getSignedUrl(s3, cmd, { expiresIn: expires });
-  }
-
-  async function listPrefix(prefix) {
-    const cmd = new ListObjectsV2Command({ Bucket: process.env.R2_BUCKET, Prefix: prefix });
-    return await s3.send(cmd);
-  }
-
-  module.exports = { upload, getSignedUrlForPath, listPrefix };
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#4CAF50', // ירוק מרענן
+                        'secondary': '#8BC34A', // ירוק בהיר
+                        'accent': '#FFC107', // צהוב-כתום
+                        'translate': '#03A9F4', // כחול לתרגום
+                        'background': '#F9FAFB', // רקע בהיר מאוד
+                        'card': '#FFFFFF',
+                    },
+                    fontFamily: {
+                        sans: ['Heebo', 'Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&display=swap');
+        /* Yiddish/Hebrew/RTL font and direction */
         body {
             font-family: 'Heebo', sans-serif;
-            background-color: #f0f4f8;
-            direction: rtl;
-            text-align: right;
+            background-color: #F9FAFB;
         }
-        .animate-fade-in {
-            animation: fadeIn 0.5s ease-in-out;
+        
+        /* LTR adjustments for non-Hebrew languages */
+        [dir="ltr"] .flex-row-reverse-on-ltr {
+             flex-direction: row; /* Reverses the flex order */
         }
-        .animate-scale-in {
-            animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        
+        /* Grid setup */
+        .gallery-grid {
+            column-count: 1;
+            column-gap: 1rem;
         }
-        .animate-spin-slow {
-            animation: spin 3s linear infinite;
+        @media (min-width: 640px) {
+            .gallery-grid {
+                column-count: 2;
+            }
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @media (min-width: 1024px) {
+            .gallery-grid {
+                column-count: 3;
+            }
         }
-        @keyframes scaleIn {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        .image-card {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        .image-card:hover {
+            transform: translateY(-5px);
+        }
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #4CAF50;
+            animation: spin 1s ease infinite;
         }
         @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .tab-button.active {
+            border-color: #4CAF50;
+            color: #4CAF50;
+        }
+        .tab-button {
+            transition: all 0.2s ease;
         }
     </style>
 </head>
-<body class="bg-gray-50 p-4 sm:p-8">
+<body class="p-4 sm:p-8">
 
-<div id="root"></div>
+    <div id="loading-spinner" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p class="mr-3 text-lg text-primary" data-i18n="uploadingStart">...מתחיל העלאה</p>
+    </div>
+    
+    <!-- Language Selector and Header -->
+    <header class="text-center mb-8 relative">
+        <!-- NEW: Language Selector -->
+        <div class="absolute top-0 left-0">
+            <label for="language-select" class="text-sm font-medium text-gray-700 ml-2" data-i18n="languageSelect">Switch Language:</label>
+            <select id="language-select" class="border border-gray-300 p-2 rounded-lg text-sm focus:ring-primary focus:border-primary">
+                <option value="he">עברית (Hebrew)</option>
+                <option value="en">English</option>
+                <option value="fr">Français (French)</option>
+                <option value="nl">Nederlands (Dutch)</option>
+                <option value="yi">יידיש (Yiddish)</option>
+            </select>
+        </div>
 
-<script type="text/babel">
-    const { useState, useEffect, useRef } = React;
+        <h1 class="text-4xl font-bold text-gray-800 mb-2" data-i18n="mainHeader">🖼️ גלריה משפחתית משותפת</h1>
+        <p class="text-gray-600">
+            <span data-i18n="userIdLabel">מזהה המשתמש שלך:</span> 
+            <span id="user-id" class="font-mono text-sm bg-gray-200 px-2 py-1 rounded">...</span>
+        </p>
+    </header>
 
-    // Manual icon definitions
-    const UploadCloud = ({ className }) => (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242M12 12v9M8 17l4 4 4-4"/>
-        </svg>
-    );
-    const X = ({ className }) => (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-            <path d="M18 6L6 18M6 6l12 12"/>
-        </svg>
-    );
-    const Pencil = ({ className }) => (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-            <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
-        </svg>
-    );
-    const Search = ({ className }) => (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-            <circle cx="11" cy="11" r="8"/>
-            <path d="M21 21l-4.35-4.35"/>
-        </svg>
-    );
-    const Trash2 = ({ className }) => (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-            <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/>
-        </svg>
-    );
-    const User = ({ className }) => (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2M12 7a4 4 0 1 0 0 8a4 4 0 0 0 0-8z"/>
-        </svg>
-    );
-    const Users = ({ className }) => (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M7 11a4 4 0 1 0 0-8a4 4 0 0 0 0 8zM19 19V17a4 4 0 0 0-4-4h-2M18 7a4 4 0 1 0 0-8a4 4 0 0 0 0 8z"/>
-        </svg>
-    );
-    const Loader2 = ({ className }) => (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-        <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
-      </svg>
-    );
-    const Sparkles = ({ className }) => (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-        <path d="M14.5 2l3 3m1-3l-3 3m3 3L16.5 9m-1-3l-3 3M17 19l-1-1m-4 4l-4-4m-3 3l-3-3m3 3L8.5 21m-2.5-3l-3-3m3 3L6.5 21M7 9l-1 1m-2 2l-2-2m-3 3l-3-3m3 3L5.5 14"/>
-      </svg>
-    );
-    const Volume2 = ({ className }) => (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-        <path d="M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
-      </svg>
-    );
+    <!-- Upload Section -->
+    <section class="mb-10 p-6 bg-card rounded-xl shadow-lg border border-gray-100">
+        <h2 class="text-2xl font-semibold mb-4 text-primary" data-i18n="uploadHeader">העלאת תמונה חדשה</h2>
+        
+        <!-- Family Branch Selection -->
+        <div class="mb-4">
+            <label for="upload-branch-select" class="block text-sm font-medium text-gray-700 mb-2" data-i18n="branchLabel">שייכות משפחתית (חובה)</label>
+            <select id="upload-branch-select" class="w-full border border-gray-300 p-2 rounded-lg focus:ring-primary focus:border-primary">
+                <option value="" disabled selected data-i18n="branchPlaceholder">בחר ענף משפחתי...</option>
+                <!-- Options populated by JS -->
+            </select>
+        </div>
 
-    function App() {
-        const [db, setDb] = useState(null);
-        const [auth, setAuth] = useState(null);
-        const [storage, setStorage] = useState(null);
-        const [userId, setUserId] = useState(null);
-        const [photos, setPhotos] = useState([]);
-        const [selectedPhoto, setSelectedPhoto] = useState(null);
-        const [isInitializing, setIsInitializing] = useState(true);
-        const [isUploadLoading, setIsUploadLoading] = useState(false);
-        const [isLoading, setIsLoading] = useState(true);
-        const [error, setError] = useState(null);
-        const [selectedFamily, setSelectedFamily] = useState('all');
-        const [language, setLanguage] = useState('he');
-        const [showImageModal, setShowImageModal] = useState(false);
-        const [showStoryModal, setShowStoryModal] = useState(false);
-        const [currentStory, setCurrentStory] = useState("");
-        const [showEditModal, setShowEditModal] = useState(false);
-        const [photoToEdit, setPhotoToEdit] = useState(null);
-        const [showDeleteModal, setShowDeleteModal] = useState(false);
-        const [photoToDelete, setPhotoToDelete] = useState(null);
-        const [isGeminiLoading, setIsGeminiLoading] = useState(false);
-        const fileInputRef = useRef(null);
-        const peopleInputRef = useRef(null);
+        <!-- People Tagging Input -->
+        <div class="mb-4">
+            <label for="people-tags-input" class="block text-sm font-medium text-gray-700 mb-2" data-i18n="peopleLabel">אנשים בתמונה (מופרדים בפסיקים)</label>
+            <input type="text" id="people-tags-input" data-i18n-placeholder="peoplePlaceholder" placeholder="לדוגמה: דוד, שרה, יוסף" class="w-full border border-gray-300 p-2 rounded-lg focus:ring-primary focus:border-primary" />
+        </div>
+        
+        <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 md:space-x-reverse flex-row-reverse-on-ltr">
+            <button id="upload-button" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-md flex items-center justify-center">
+                <span data-i18n="uploadButton">בחר והעלה תמונה</span>
+            </button>
+            <p id="upload-status" class="text-gray-500 italic" data-i18n="uploadStatusInitial">לחץ על הכפתור כדי לבחור קובץ.</p>
+        </div>
+    </section>
 
-        const families = [
-            'Ben Abou', 'Elharrar', 'Malka', 'Ben David', 'Bromberg', 'Barenbaum', 'Fass-Schneck',
-            'Weinberger', 'Leibner', 'van der Velde', 'Behr', 'de Vries', 'Italiaander', 'Izaks',
-            'Chapon', 'Elook', 'Groenstad'
-        ];
+    <!-- Gallery Section -->
+    <main>
+        <!-- Filter Controls Container -->
+        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-6">
+            <!-- Tab Switch -->
+            <div class="flex justify-center lg:justify-start mb-4 lg:mb-0 border-b lg:border-b-0 border-gray-200 lg:w-3/5">
+                <button id="tab-public" class="tab-button px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-lg font-semibold border-b-4 border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 transition duration-300 active" data-i18n="tabPublic">
+                    גלריה משפחתית (שיתוף)
+                </button>
+                <button id="tab-private" class="tab-button px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-lg font-semibold border-b-4 border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 transition duration-300 mr-4" data-i18n="tabPrivate">
+                    התמונות שלי (פרטי)
+                </button>
+            </div>
 
-        const translations = {
-            he: {
-                title: 'גלריית תמונות משפחתית',
-                subtitle: 'שתפו רגעים יקרים וצרו סיפורים משותפים עם בני משפחה וחברים.',
-                userIdLabel: 'מזהה משתמש:',
-                uploadTitle: 'העלאת תמונה חדשה',
-                chooseFile: 'בחר קובץ',
-                peopleInPhoto: 'אנשים בתמונה (אופציונלי)',
-                peoplePlaceholder: 'הפרד שמות בפסיק (לדוגמה: אבא, אמא)',
-                uploadBtn: 'העלאה',
-                uploading: 'מעלה...',
-                allFamilies: 'כל המשפחות',
-                noPhotos: 'אין עדיין תמונות בגלריה.',
-                uploadFirst: 'העלה את התמונה הראשונה שלך כדי להתחיל.',
-                showStory: 'הצג סיפור',
-                editStory: 'ערוך סיפור',
-                delete: 'מחק',
-                imageModalTitle: 'תמונה מוגדלת',
-                storyTitle: 'סיפור',
-                storyModalTitle: 'סיפור התמונה',
-                editStoryModalTitle: 'ערוך סיפור',
-                saveBtn: 'שמור',
-                cancelBtn: 'ביטול',
-                deleteConfirmTitle: 'אישור מחיקה',
-                deleteConfirmText: 'האם אתה בטוח שברצונך למחוק תמונה זו?',
-                loading: 'טוען תמונות...',
-                noStory: 'אין סיפור זמין.',
-                errorAuth: 'שגיאה בהתחברות למערכת.',
-                errorInit: 'שגיאה באתחול Firebase.',
-                errorFetch: 'שגיאה בטעינת התמונות.',
-                errorNoFile: 'אנא בחר קובץ להעלאה.',
-                errorUpload: 'שגיאה בהעלאת התמונה.',
-                errorDelete: 'שגיאה במחיקת התמונה.',
-                errorEdit: 'שגיאה בעריכת הסיפור.',
-                chooseFamily: 'בחר משפחה',
-                generateStory: 'צור סיפור',
-                storyGenerated: 'הסיפור נוצר בהצלחה!',
-                errorGenerateStory: 'שגיאה ביצירת הסיפור. נסה שוב.',
-                playStory: 'הקרא סיפור',
-                playingAudio: 'מנגן...',
-                errorPlayAudio: 'שגיאה בהשמעת הסיפור.',
-                generatingStory: 'יוצר סיפור...',
-                generatingAudio: 'מכין אודיו...',
-                peopleLabel: 'אנשים:'
-            },
-            en: {
-                title: 'Family Photo Gallery',
-                subtitle: 'Share precious moments and create shared stories with family and friends.',
-                userIdLabel: 'User ID:',
-                uploadTitle: 'Upload a new photo',
-                chooseFile: 'Choose file',
-                peopleInPhoto: 'People in photo (optional)',
-                peoplePlaceholder: 'Separate names with commas (e.g., Dad, Mom)',
-                uploadBtn: 'Upload',
-                uploading: 'Uploading...',
-                allFamilies: 'All Families',
-                noPhotos: 'There are no photos in the gallery yet.',
-                uploadFirst: 'Upload your first photo to get started.',
-                showStory: 'Show Story',
-                editStory: 'Edit Story',
-                delete: 'Delete',
-                imageModalTitle: 'Enlarged Photo',
-                storyTitle: 'Story',
-                storyModalTitle: 'Photo Story',
-                editStoryModalTitle: 'Edit Story',
-                saveBtn: 'Save',
-                cancelBtn: 'Cancel',
-                deleteConfirmTitle: 'Confirm Deletion',
-                deleteConfirmText: 'Are you sure you want to delete this photo?',
-                loading: 'Loading photos...',
-                noStory: 'No story available.',
-                errorAuth: 'Error logging in to the system.',
-                errorInit: 'Error initializing Firebase.',
-                errorFetch: 'Error loading photos.',
-                errorNoFile: 'Please select a file to upload.',
-                errorUpload: 'Error uploading the photo.',
-                errorDelete: 'Error deleting the photo.',
-                errorEdit: 'Error editing the story.',
-                chooseFamily: 'Choose a family',
-                generateStory: 'Generate Story',
-                storyGenerated: 'Story generated successfully!',
-                errorGenerateStory: 'Error generating story. Please try again.',
-                playStory: 'Play Story',
-                playingAudio: 'Playing...',
-                errorPlayAudio: 'Error playing story.',
-                generatingStory: 'Generating story...',
-                generatingAudio: 'Preparing audio...',
-                peopleLabel: 'People:'
-            }
-        };
+            <!-- Family Branch Filter -->
+            <div id="branch-filter-container" class="flex items-center justify-center lg:justify-end lg:w-2/5">
+                <label for="filter-branch-select" class="text-sm font-medium text-gray-700 ml-2 whitespace-nowrap" data-i18n="filterLabel">סינון משפחה:</label>
+                <select id="filter-branch-select" class="border border-gray-300 p-2 rounded-lg text-sm focus:ring-primary focus:border-primary max-w-xs w-full lg:w-auto">
+                    <!-- Options populated by JS -->
+                </select>
+            </div>
+        </div>
+        
+        <div id="gallery-container" class="gallery-grid">
+            <p id="empty-message" class="text-center text-gray-500 text-lg hidden col-span-full" data-i18n="emptyMessageInitial">
+                אין עדיין תמונות בגלריה. העלה את התמונה הראשונה שלך!
+            </p>
+            <!-- Images will be injected here -->
+        </div>
+    </main>
 
-        const t = translations[language];
+    <!-- Translation Dropdown UI (Template, hidden by default) -->
+    <div id="translation-dropdown-template" class="hidden">
+        <div class="absolute left-2 bottom-12 bg-card border border-gray-200 rounded-lg shadow-xl p-2 z-10 w-32" data-translation-menu>
+            <!-- Buttons dynamically generated -->
+        </div>
+    </div>
+    
+    <!-- Custom Modal for Confirmation (replacing confirm()) -->
+    <div id="custom-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-card rounded-lg shadow-2xl p-6 w-full max-w-sm mx-4">
+            <h3 class="text-lg font-semibold mb-4 text-gray-800" id="modal-title" data-i18n="modalTitle">אישור פעולה</h3>
+            <p class="text-gray-600 mb-6" id="modal-message">האם אתה בטוח שברצונך למחוק תמונה זו?</p>
+            <div class="flex justify-end space-x-3 space-x-reverse flex-row-reverse-on-ltr">
+                <button id="modal-cancel-btn" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition duration-150" data-i18n="modalCancel">ביטול</button>
+                <button id="modal-confirm-btn" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-150" data-i18n="modalDelete">מחק</button>
+            </div>
+        </div>
+    </div>
 
-        // Firebase globals
+    <script type="module">
+        // Global variables for Canvas environment
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-            apiKey: "AIzaSyB99bQpokjpcuXilwu3usXoOFLmegkVnb4",
-            authDomain: "family-gallery-d707d.firebaseapp.com",
-            projectId: "family-gallery-d707d",
-            storageBucket: "family-gallery-d707d.appspot.com",
-            messagingSenderId: "227810040631",
-            appId: "1:227810040631:web:6bc0dc9a983fac04e4d8b2",
-            measurementId: "G-84CYX5S1F3"
-        };
+        const firebaseConfig = {
+  apiKey: "AIzaSyB99bQpokjpcuXilwu3usXoOFLmegkVnb4",
+  authDomain: "family-gallery-d707d.firebaseapp.com",
+  projectId: "family-gallery-d707d",
+  storageBucket: "family-gallery-d707d.firebasestorage.app",
+  messagingSenderId: "227810040631",
+  appId: "1:227810040631:web:6bc0dc9a983fac04e4d8b2",
+  measurementId: "G-84CYX5S1F3"
+};
         const authToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
-        // Firebase initialization
-        useEffect(() => {
-            try {
-                const firebaseApp = window.firebase.initializeApp(firebaseConfig);
-                const firestoreDb = window.firebase.getFirestore(firebaseApp);
-                const firebaseAuth = window.firebase.getAuth(firebaseApp);
-                const firebaseStorage = window.firebase.getStorage(firebaseApp);
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, query, where, onSnapshot, doc, addDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-                setDb(firestoreDb);
-                setAuth(firebaseAuth);
-                setStorage(firebaseStorage);
+        // Enable Firebase debug logging
+        setLogLevel('debug');
+        
+        // --- Gemini API Configuration ---
+        const GEMINI_API_KEY = "";
+        const GEMINI_MODEL = "gemini-2.5-flash-preview-09-2025";
+        const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+        
+        // --- Family Branches List ---
+        const familyBranches = [
+            "כל המשפחות", 
+            "Ben Abou", "Elharrar", "Malka", "Ben David", 
+            "Bromberg", "Barenbaum", "Fass-Schneck", "Weinberger", 
+            "Leibner", "van der Velde", "Behr", "Izaks"
+        ];
+        
+        // Language mapping for translation (Language Code -> Display Name)
+        const LANGUAGES = {
+            'he': 'עברית 🇮🇱',
+            'en': 'English 🇬🇧',
+            'fr': 'Français 🇫🇷',
+            'nl': 'Nederlands 🇳🇱',
+            'yi': 'יידיש ✡️', 
+            'ru': 'Русский 🇷🇺' // Only used for caption translation, not UI
+        };
 
-                const signIn = async () => {
-                    try {
-                        if (authToken) {
-                            await window.firebase.signInWithCustomToken(firebaseAuth, authToken);
-                        } else {
-                            await window.firebase.signInAnonymously(firebaseAuth);
-                        }
-                    } catch (e) {
-                        console.error("Firebase Auth Error: ", e);
-                        setError(t.errorAuth);
-                    } finally {
-                        setIsInitializing(false);
-                    }
-                };
-                signIn();
-
-            } catch (e) {
-                console.error("Firebase Initialization Error: ", e);
-                setError(t.errorInit);
-                setIsInitializing(false);
+        // --- Internationalization Strings ---
+        const translations = {
+            'he': {
+                pageTitle: 'גלריית תמונות משפחתית',
+                mainHeader: '🖼️ גלריה משפחתית משותפת',
+                userIdLabel: 'מזהה המשתמש שלך:',
+                languageSelect: 'שנה שפה:',
+                uploadHeader: 'העלאת תמונה חדשה',
+                branchLabel: 'שייכות משפחתית (חובה)',
+                branchPlaceholder: 'בחר ענף משפחתי...',
+                peopleLabel: 'אנשים בתמונה (מופרדים בפסיקים)',
+                peoplePlaceholder: 'לדוגמה: דוד, שרה, יוסף',
+                uploadButton: 'בחר והעלה תמונה',
+                uploadStatusInitial: 'לחץ על הכפתור כדי לבחור קובץ.',
+                tabPublic: 'גלריה משפחתית (שיתוף)',
+                tabPrivate: 'התמונות שלי (פרטי)',
+                filterLabel: 'סינון משפחה:',
+                emptyMessageInitial: 'אין עדיין תמונות בגלריה. העלה את התמונה הראשונה שלך!',
+                emptyMessagePublic: 'אין עדיין תמונות בגלריה המשותפת.',
+                emptyMessagePrivate: 'לא העלית עדיין תמונות. לחץ על "גלריה משפחתית" או העלה תמונה חדשה!',
+                allFamilies: 'כל המשפחות',
+                modalTitle: 'אישור פעולה',
+                modalCancel: 'ביטול',
+                modalDelete: 'מחק',
+                withUs: 'איתנו:',
+                captionPlaceholder: 'לחץ על ✨ ליצירת כיתוב',
+                translateTitle: 'תרגם את הכיתוב לשפה אחרת',
+                geminiTitle: 'צור כיתוב יצירתי באמצעות Gemini',
+                uploadedBy: 'הועלה ע"י:',
+                generatingCaption: '...יוצר כיתוב יצירתי ✨',
+                errorCaption: 'שגיאה ביצירת כיתוב.',
+                errorNoCaption: 'שגיאה: לא התקבל כיתוב מהמודל.',
+                errorNoBranch: 'שגיאה: יש לבחור שיוך משפחתי לפני ההעלאה.',
+                uploadingStart: 'מתחיל העלאה...',
+                uploadCanceled: 'העלאה בוטלה או נסגרה.',
+                uploadFailed: 'העלאה נכשלה. נסה שוב.',
+                deleteSuccess: 'התמונה נמחקה בהצלחה.',
+                translationError: 'שגיאת תרגום:',
+                uploadError: 'שגיאה בהעלאת תמונה.',
+                uploading: 'מעלה תמונה...'
+            },
+            'en': {
+                pageTitle: 'Family Photo Gallery',
+                mainHeader: '🖼️ Shared Family Gallery',
+                userIdLabel: 'Your User ID:',
+                languageSelect: 'Switch Language:',
+                uploadHeader: 'Upload New Image',
+                branchLabel: 'Family Branch (Required)',
+                branchPlaceholder: 'Select a family branch...',
+                peopleLabel: 'People in Photo (Comma Separated)',
+                peoplePlaceholder: 'Example: David, Sarah, Yosef',
+                uploadButton: 'Select and Upload Image',
+                uploadStatusInitial: 'Click the button to select a file.',
+                tabPublic: 'Family Gallery (Shared)',
+                tabPrivate: 'My Photos (Private)',
+                filterLabel: 'Filter Family:',
+                emptyMessageInitial: 'No images in the gallery yet. Upload your first picture!',
+                emptyMessagePublic: 'There are no images in the shared gallery yet.',
+                emptyMessagePrivate: 'You have not uploaded any images yet. Click "Family Gallery" or upload a new image!',
+                allFamilies: 'All Families',
+                modalTitle: 'Confirm Action',
+                modalCancel: 'Cancel',
+                modalDelete: 'Delete',
+                withUs: 'With us:',
+                captionPlaceholder: 'Click ✨ to generate a caption',
+                translateTitle: 'Translate the caption to another language',
+                geminiTitle: 'Create a creative caption using Gemini',
+                uploadedBy: 'Uploaded by:',
+                generatingCaption: '...Generating creative caption ✨',
+                errorCaption: 'Error generating caption.',
+                errorNoCaption: 'Error: No caption received from the model.',
+                errorNoBranch: 'Error: Must select a family branch before uploading.',
+                uploadingStart: 'Starting upload...',
+                uploadCanceled: 'Upload canceled or closed.',
+                uploadFailed: 'Upload failed. Try again.',
+                deleteSuccess: 'Image deleted successfully.',
+                translationError: 'Translation Error:',
+                uploadError: 'Error uploading image.',
+                uploading: 'Uploading image...'
+            },
+            'fr': {
+                pageTitle: 'Galerie de Photos de Famille',
+                mainHeader: '🖼️ Galerie Familiale Partagée',
+                userIdLabel: 'Votre ID Utilisateur:',
+                languageSelect: 'Changer la langue:',
+                uploadHeader: 'Télécharger une Nouvelle Image',
+                branchLabel: 'Branche Familiale (Obligatoire)',
+                branchPlaceholder: 'Sélectionner une branche familiale...',
+                peopleLabel: 'Personnes sur la photo (Séparées par des virgules)',
+                peoplePlaceholder: 'Exemple: David, Sarah, Joseph',
+                uploadButton: 'Sélectionner et Télécharger l\'Image',
+                uploadStatusInitial: 'Cliquez sur le bouton pour sélectionner un fichier.',
+                tabPublic: 'Galerie Familiale (Partagée)',
+                tabPrivate: 'Mes Photos (Privées)',
+                filterLabel: 'Filtrer Famille:',
+                emptyMessageInitial: 'Pas encore d\'images dans la galerie. Téléchargez votre première photo !',
+                emptyMessagePublic: 'Il n\'y a pas encore d\'images dans la galerie partagée.',
+                emptyMessagePrivate: 'Vous n\'avez pas encore téléchargé d\'images. Cliquez sur "Galerie Familiale" ou téléchargez une nouvelle image !',
+                allFamilies: 'Toutes les familles',
+                modalTitle: 'Confirmer l\'Action',
+                modalCancel: 'Annuler',
+                modalDelete: 'Supprimer',
+                withUs: 'Avec nous:',
+                captionPlaceholder: 'Cliquez sur ✨ pour générer une légende',
+                translateTitle: 'Traduire la légende dans une autre langue',
+                geminiTitle: 'Créer une légende créative avec Gemini',
+                uploadedBy: 'Téléchargé par:',
+                generatingCaption: '...Génération de la légende créative ✨',
+                errorCaption: 'Erreur de génération de légende.',
+                errorNoCaption: 'Erreur: Aucune légende reçue du modèle.',
+                errorNoBranch: 'Erreur: Doit sélectionner une branche familiale avant de télécharger.',
+                uploadingStart: 'Démarrage du téléchargement...',
+                uploadCanceled: 'Téléchargement annulé ou fermé.',
+                uploadFailed: 'Échec du téléchargement. Veuillez réessayer.',
+                deleteSuccess: 'Image supprimée avec succès.',
+                translationError: 'Erreur de traduction:',
+                uploadError: 'Erreur lors du téléchargement de l\'image.',
+                uploading: 'Téléchargement de l\'image...'
+            },
+            'nl': {
+                pageTitle: 'Familie Fotogalerij',
+                mainHeader: '🖼️ Gedeelde Familiegalerij',
+                userIdLabel: 'Uw Gebruikers-ID:',
+                languageSelect: 'Wissel taal:',
+                uploadHeader: 'Nieuwe Afbeelding Uploaden',
+                branchLabel: 'Familietak (Verplicht)',
+                branchPlaceholder: 'Selecteer een familietak...',
+                peopleLabel: 'Mensen op foto (Kommagescheiden)',
+                peoplePlaceholder: 'Voorbeeld: David, Sara, Jozef',
+                uploadButton: 'Selecteer en Upload Afbeelding',
+                uploadStatusInitial: 'Klik op de knop om een bestand te selecteren.',
+                tabPublic: 'Familiegalerij (Gedeeld)',
+                tabPrivate: 'Mijn Foto\'s (Privé)',
+                filterLabel: 'Filter Familie:',
+                emptyMessageInitial: 'Nog geen afbeeldingen in de galerij. Upload uw eerste foto!',
+                emptyMessagePublic: 'Er zijn nog geen afbeeldingen in de gedeelde galerij.',
+                emptyMessagePrivate: 'U heeft nog geen afbeeldingen geüpload. Klik op "Familiegalerij" of upload een nieuwe afbeelding!',
+                allFamilies: 'Alle Families',
+                modalTitle: 'Actie Bevestigen',
+                modalCancel: 'Annuleren',
+                modalDelete: 'Verwijderen',
+                withUs: 'Bij ons:',
+                captionPlaceholder: 'Klik op ✨ om een bijschrift te genereren',
+                translateTitle: 'Vertaal het bijschrift naar een andere taal',
+                geminiTitle: 'Maak een creatief bijschrift met Gemini',
+                uploadedBy: 'Geüpload door:',
+                generatingCaption: '...Genereren creatief bijschrift ✨',
+                errorCaption: 'Fout bij genereren bijschrift.',
+                errorNoCaption: 'Fout: Geen bijschrift ontvangen van het model.',
+                errorNoBranch: 'Fout: U moet een familietak selecteren voordat u uploadt.',
+                uploadingStart: 'Start uploaden...',
+                uploadCanceled: 'Upload geannuleerd of gesloten.',
+                uploadFailed: 'Upload mislukt. Probeer het opnieuw.',
+                deleteSuccess: 'Afbeelding succesvol verwijderd.',
+                translationError: 'Vertaalfout:',
+                uploadError: 'Fout bij het uploaden van de afbeelding.',
+                uploading: 'Afbeelding uploaden...'
+            },
+            'yi': {
+                pageTitle: 'פאַמיליע פֿאָטאָ גאַלעריע',
+                mainHeader: '🖼️ שותּפֿותדיקע פֿאַמיליע גאַלעריע',
+                userIdLabel: 'דיין באַניצער אידענטיפֿיקאַציע:',
+                languageSelect: 'באַשטימען שפּראַך:',
+                uploadHeader: 'אַרײַנלייגן אַ נײַע בילד',
+                branchLabel: 'פֿאַמיליע צווייַג (מוז)',
+                branchPlaceholder: 'קלויבן אַ פֿאַמיליע צווייַג...',
+                peopleLabel: 'מענטשן אין דער בילד (צעטיילט מיט קאָמאַס)',
+                peoplePlaceholder: 'צום בײַשפּיל: דוד, שרה, יוסף',
+                uploadButton: 'קלויב און אַרײַנלייגן אַ בילד',
+                uploadStatusInitial: 'קליקט דעם קנעפּל צו קלויבן אַ טעקע.',
+                tabPublic: 'פֿאַמיליע גאַלעריע (טיילן)',
+                tabPrivate: 'מייַנע בילדער (פּריוואַט)',
+                filterLabel: 'פֿילטרירן פֿאַמיליע:',
+                emptyMessageInitial: 'נאָך קיין בילדער אין גאַלעריע. אַרײַנלייגן דיין ערשטן בילד!',
+                emptyMessagePublic: 'נאָך קיין בילדער אין דער שותּפֿותדיקער גאַלעריע.',
+                emptyMessagePrivate: 'איר האָט נאָך ניט אַרײַנגעלייגט קיין בילדער. קליקט "פֿאַמיליע גאַלעריע" אָדער אַרײַנלייגן אַ נײַע בילד!',
+                allFamilies: 'אַלע פֿאַמיליעס',
+                modalTitle: 'באַשטעטיקן אַקציע',
+                modalCancel: 'אַניולירן',
+                modalDelete: 'אויסמעקן',
+                withUs: 'מיט אונדז:',
+                captionPlaceholder: 'קליקט ✨ צו שאַפֿן אַ כּתב',
+                translateTitle: 'איבערזעצן די כּתבֿה צו אַן אַנדער שפּראַך',
+                geminiTitle: 'שאַפֿן אַ שעפֿערישע כּתבֿה דורך Gemini',
+                uploadedBy: 'אַרײַנגעלייגט דורך:',
+                generatingCaption: '...שאַפֿט אַ שעפֿערישע כּתבֿה ✨',
+                errorCaption: 'טעות בשאַפֿן כּתבֿה.',
+                errorNoCaption: 'טעות: קיין כּתבֿה איז ניט באַקומען פֿון דעם מאָדעל.',
+                errorNoBranch: 'טעות: מוז קלויבן אַ פֿאַמיליע צווייַג איידער אַרײַנלייגן.',
+                uploadingStart: 'הייבט אָן אַרײַנלייגן...',
+                uploadCanceled: 'אַרײַנלייגן איז אַניולירט אָדער פֿאַרמאַכט.',
+                uploadFailed: 'אַרײַנלייגן איז דורכגעפֿאַלן. פּרוּווט נאָך אַ מאָל.',
+                deleteSuccess: 'בילד אויסגעמעקט מיט הצלחה.',
+                translationError: 'איבערזעצונג טעות:',
+                uploadError: 'טעות בייַם אַרײַנלייגן דעם בילד.',
+                uploading: 'בילד אַרײַנלייגן...'
             }
-        }, [t.errorAuth, t.errorInit, authToken, firebaseConfig]);
+        };
 
-        // Listen for auth state changes
-        useEffect(() => {
-            if (auth) {
-                const unsubscribe = window.firebase.onAuthStateChanged(auth, user => {
-                    if (user) {
-                        setUserId(user.uid);
-                    } else {
-                        setUserId(null);
-                    }
-                });
-                return () => unsubscribe();
-            }
-        }, [auth]);
+        let currentLang = 'he'; // Default language
 
-        // Fetch photos from Firestore
-        useEffect(() => {
-            if (db && userId) {
-                setIsLoading(true);
-                const photosRef = window.firebase.collection(db, `/artifacts/${appId}/public/data/photos`);
-                
-                // Fetch all photos and sort them on the client-side to avoid index errors.
-                const q = window.firebase.query(photosRef, window.firebase.orderBy("createdAt", "desc"));
-                
-                const unsubscribe = window.firebase.onSnapshot(q, (snapshot) => {
-                    const allPhotos = snapshot.docs.map(doc => ({
-                        id: doc.id,
-                        ...doc.data(),
-                        url: doc.data().url || 'https://placehold.co/600x400/ece9e9/78716c?text=No+Image' 
-                    }));
+        /**
+         * Sets the current language of the UI by updating elements with data-i18n attributes.
+         * @param {string} langCode - The language code (e.g., 'en', 'he').
+         */
+        function setLanguage(langCode) {
+            currentLang = langCode;
+            const langStrings = translations[langCode];
+            if (!langStrings) return;
 
-                    // Filter photos based on the selected family on the client side.
-                    const filteredPhotos = selectedFamily === 'all'
-                        ? allPhotos
-                        : allPhotos.filter(photo => photo.family === selectedFamily);
-
-                    setPhotos(filteredPhotos);
-                    setIsLoading(false);
-                }, (e) => {
-                    console.error("Firestore Error: ", e);
-                    setError(t.errorFetch);
-                    setIsLoading(false);
-                });
-
-                return () => unsubscribe();
-            }
-        }, [db, userId, appId, selectedFamily, t.errorFetch]);
-
-        const handleUpload = async (event) => {
-            event.preventDefault();
-            const file = fileInputRef.current.files[0];
-            const family = event.target.familySelect.value;
-            const people = peopleInputRef.current.value.split(',').map(p => p.trim()).filter(p => p);
+            // 1. Update HTML directionality
+            const isRTL = (langCode === 'he' || langCode === 'yi');
+            document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+            document.body.dir = isRTL ? 'rtl' : 'ltr';
             
-            if (!file) {
-                setError(t.errorNoFile);
-                return;
-            }
-            if (!family) {
-                setError(t.chooseFamily);
-                return;
-            }
-
-            try {
-                setIsUploadLoading(true);
-                const filePath = `/images/${family}/${Date.now()}_${file.name}`;
-                const storageRef = window.firebase.ref(storage, filePath);
-                const snapshot = await window.firebase.uploadBytes(storageRef, file);
-                const downloadURL = await window.firebase.getDownloadURL(snapshot.ref);
-
-                await window.firebase.addDoc(window.firebase.collection(db, `/artifacts/${appId}/public/data/photos`), {
-                    userId,
-                    url: downloadURL,
-                    filePath: filePath,
-                    family,
-                    people,
-                    createdAt: window.firebase.serverTimestamp(),
-                    story: ""
-                });
-                
-                fileInputRef.current.value = "";
-                peopleInputRef.current.value = "";
-                setIsUploadLoading(false);
-            } catch (e) {
-                console.error("Upload Error: ", e);
-                setError(t.errorUpload);
-                setIsUploadLoading(false);
-            }
-        };
-
-        const confirmDelete = (photo) => {
-            setPhotoToDelete(photo);
-            setShowDeleteModal(true);
-        };
-
-        const handleDelete = async () => {
-            if (!photoToDelete) return;
-
-            try {
-                setIsLoading(true);
-                setShowDeleteModal(false);
-
-                const storageRef = window.firebase.ref(storage, photoToDelete.filePath);
-                await window.firebase.deleteObject(storageRef);
-
-                await window.firebase.deleteDoc(window.firebase.doc(db, `/artifacts/${appId}/public/data/photos`, photoToDelete.id));
-
-                setPhotoToDelete(null); 
-                setIsLoading(false);
-            } catch (e) {
-                console.error("Delete Error: ", e);
-                setError(t.errorDelete);
-                setIsLoading(false);
-            }
-        };
-
-        const openEditModal = (photo) => {
-            setPhotoToEdit(photo);
-            setCurrentStory(photo.story || "");
-            setShowEditModal(true);
-        };
-
-        const handleEditStory = async () => {
-            if (!photoToEdit) return;
-            try {
-                setShowEditModal(false);
-                await window.firebase.updateDoc(window.firebase.doc(db, `/artifacts/${appId}/public/data/photos`, photoToEdit.id), {
-                    story: currentStory,
-                });
-            } catch (e) {
-                console.error("Edit Story Error: ", e);
-                setError(t.errorEdit);
-            }
-        };
-
-        const openImageModal = (photo) => {
-            setSelectedPhoto(photo);
-            setShowImageModal(true);
-        };
-
-        const openStoryModal = (story) => {
-            setCurrentStory(story);
-            setShowStoryModal(true);
-        };
-
-        // LLM features
-        const generateStoryWithGemini = async (photo) => {
-            setIsGeminiLoading(true);
-            try {
-                const response = await fetch(photo.url);
-                if (!response.ok) throw new Error('Failed to fetch image');
-                const imageBlob = await response.blob();
-                const reader = new FileReader();
-                reader.readAsDataURL(imageBlob);
-                reader.onloadend = async () => {
-                    const base64data = reader.result.split(',')[1];
-                    const prompt = `Based on this photo, create a short, emotional and creative story in the ${language === 'he' ? 'Hebrew' : 'English'} language. The story should be no more than three sentences.`;
-
-                    const payload = {
-                        contents: [{
-                            parts: [
-                                { text: prompt },
-                                { inlineData: { mimeType: "image/jpeg", data: base64data } }
-                            ]
-                        }]
-                    };
-
-                    let responseText = '';
-                    let retries = 0;
-                    const maxRetries = 5;
-                    const delay = 1000;
-
-                    while (retries < maxRetries) {
-                        try {
-                            const geminiResponse = await fetch(
-                                `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=`, {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(payload)
-                            });
-
-                            if (!geminiResponse.ok) {
-                                if (geminiResponse.status === 429) { // Too Many Requests
-                                    retries++;
-                                    await new Promise(res => setTimeout(res, delay * Math.pow(2, retries)));
-                                    continue;
-                                } else {
-                                    throw new Error(`API error: ${geminiResponse.statusText}`);
-                                }
-                            }
-
-                            const result = await geminiResponse.json();
-                            responseText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
-                            if (responseText) {
-                                break;
-                            } else {
-                                throw new Error("No text generated from Gemini.");
-                            }
-                        } catch (e) {
-                            console.error(`Gemini API call failed (retry ${retries + 1}):`, e);
-                            retries++;
-                            if (retries < maxRetries) {
-                                await new Promise(res => setTimeout(res, delay * Math.pow(2, retries)));
-                            } else {
-                                throw e;
-                            }
-                        }
-                    }
-
-                    if (responseText) {
-                        setCurrentStory(responseText);
-                        await window.firebase.updateDoc(window.firebase.doc(db, `/artifacts/${appId}/public/data/photos`, photo.id), {
-                            story: responseText,
-                        });
-                        setError(t.storyGenerated);
-                        setShowEditModal(false);
-                    } else {
-                        throw new Error("Failed to generate story after multiple attempts.");
-                    }
-
-                };
-            } catch (e) {
-                console.error("Gemini Generate Story Error: ", e);
-                setError(t.errorGenerateStory);
-            } finally {
-                setIsGeminiLoading(false);
-            }
-        };
-
-        const playStoryWithGemini = async (story) => {
-            if (!story) {
-                setError(t.noStory);
-                return;
-            }
-
-            setIsGeminiLoading(true);
-            try {
-                const payload = {
-                    contents: [{
-                        parts: [{ text: story }]
-                    }],
-                    generationConfig: {
-                        responseModalities: ["AUDIO"],
-                        speechConfig: {
-                            voiceConfig: {
-                                prebuiltVoiceConfig: { voiceName: "Puck" }
-                            }
-                        }
-                    }
-                };
-                
-                let audioData = null;
-                let retries = 0;
-                const maxRetries = 5;
-                const delay = 1000;
-
-                while (retries < maxRetries) {
-                    try {
-                        const geminiResponse = await fetch(
-                            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-
-                        if (!geminiResponse.ok) {
-                            if (geminiResponse.status === 429) {
-                                retries++;
-                                await new Promise(res => setTimeout(res, delay * Math.pow(2, retries)));
-                                continue;
-                            } else {
-                                throw new Error(`API error: ${geminiResponse.statusText}`);
-                            }
-                        }
-
-                        const result = await geminiResponse.json();
-                        audioData = result?.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-                        if (audioData) {
-                            break;
-                        } else {
-                            throw new Error("No audio generated from Gemini.");
-                        }
-                    } catch (e) {
-                        console.error(`Gemini TTS call failed (retry ${retries + 1}):`, e);
-                        retries++;
-                        if (retries < maxRetries) {
-                            await new Promise(res => setTimeout(res, delay * Math.pow(2, retries)));
-                        } else {
-                            throw e;
-                        }
-                    }
+            // 2. Update text content
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (langStrings[key]) {
+                    el.textContent = langStrings[key];
                 }
+            });
+
+            // 3. Update placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (langStrings[key]) {
+                    el.placeholder = langStrings[key];
+                }
+            });
+            
+            // 4. Update the page title
+            document.title = langStrings.pageTitle;
+            
+            // 5. Update initial upload status if it's not currently showing an active message
+            const uploadStatus = document.getElementById('upload-status');
+            if (uploadStatus.textContent.includes('לחץ') || uploadStatus.textContent.includes('Click') || uploadStatus.textContent.includes('Klik')) {
+                uploadStatus.textContent = langStrings.uploadStatusInitial;
+            }
+
+            // 6. Force gallery re-render to update dynamic tooltips
+            if (isAuthReady) {
+                listenForImages();
+            }
+        }
+        
+        // --- Global State & Initialization ---
+        let db, auth;
+        let userId = null;
+        let isAuthReady = false;
+        let currentView = 'public'; // 'public' or 'private'
+        let currentModalResolver = null; 
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            console.log("Firebase services initialized.");
+        } catch (error) {
+            console.error("Error initializing Firebase:", error);
+            document.getElementById('upload-status').textContent = `Firebase Init Error: ${error.message}`;
+        }
+        
+        // --- Custom Confirmation Modal ---
+        function customConfirm(message) {
+            return new Promise((resolve) => {
+                currentModalResolver = resolve;
+                const modal = document.getElementById('custom-modal');
+                const title = document.getElementById('modal-title');
+                const msg = document.getElementById('modal-message');
+                const confirmBtn = document.getElementById('modal-confirm-btn');
+                const langStrings = translations[currentLang];
                 
-                if (audioData) {
-                    // Utility function to convert Base64 to ArrayBuffer
-                    const base64ToArrayBuffer = (base64) => {
-                        const binaryString = window.atob(base64);
-                        const len = binaryString.length;
-                        const bytes = new Uint8Array(len);
-                        for (let i = 0; i < len; i++) {
-                            bytes[i] = binaryString.charCodeAt(i);
-                        }
-                        return bytes.buffer;
-                    };
+                title.textContent = langStrings.modalTitle;
+                msg.textContent = message;
+                confirmBtn.textContent = langStrings.modalDelete;
+                
+                // Set initial styling for Delete
+                confirmBtn.classList.remove('bg-primary', 'hover:bg-secondary');
+                confirmBtn.classList.add('bg-red-500', 'hover:bg-red-600');
 
-                    // Utility function to create a WAV blob from PCM data
-                    const pcmToWav = (pcm16, sampleRate) => {
-                        const buffer = new ArrayBuffer(44 + pcm16.length * 2);
-                        const view = new DataView(buffer);
-                        
-                        // RIFF identifier
-                        writeString(view, 0, 'RIFF');
-                        // file length
-                        view.setUint32(4, 36 + pcm16.length * 2, true);
-                        // RIFF type
-                        writeString(view, 8, 'WAVE');
-                        // format chunk identifier
-                        writeString(view, 12, 'fmt ');
-                        // format chunk length
-                        view.setUint32(16, 16, true);
-                        // sample format (1 = PCM)
-                        view.setUint16(20, 1, true);
-                        // channel count
-                        view.setUint16(22, 1, true);
-                        // sample rate
-                        view.setUint32(24, sampleRate, true);
-                        // byte rate (sample rate * block align)
-                        view.setUint32(28, sampleRate * 2, true);
-                        // block align (bytes per sample)
-                        view.setUint16(32, 2, true);
-                        // bits per sample
-                        view.setUint16(34, 16, true);
-                        // data chunk identifier
-                        writeString(view, 36, 'data');
-                        // data chunk length
-                        view.setUint32(40, pcm16.length * 2, true);
-                        
-                        // write the PCM data
-                        let offset = 44;
-                        for (let i = 0; i < pcm16.length; i++, offset += 2) {
-                            view.setInt16(offset, pcm16[i], true);
-                        }
+                // Clear previous listeners and set new ones to handle resolution
+                const handleConfirm = () => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                    resolve(true);
+                    cleanupListeners();
+                };
 
-                        return new Blob([view], { type: 'audio/wav' });
-                    };
+                const handleCancel = () => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                    resolve(false);
+                    cleanupListeners();
+                };
+                
+                const confirmButton = document.getElementById('modal-confirm-btn');
+                const cancelButton = document.getElementById('modal-cancel-btn');
+                
+                const cleanupListeners = () => {
+                    confirmButton.removeEventListener('click', handleConfirm);
+                    cancelButton.removeEventListener('click', handleCancel);
+                };
 
-                    const writeString = (view, offset, string) => {
-                        for (let i = 0; i < string.length; i++) {
-                            view.setUint8(offset + i, string.charCodeAt(i));
-                        }
-                    };
-                    
-                    const pcmData = base64ToArrayBuffer(audioData);
-                    const pcm16 = new Int16Array(pcmData);
-                    const wavBlob = pcmToWav(pcm16, 16000); // Sample rate is 16kHz for gemini-2.5-flash-preview-tts
-                    const audioUrl = URL.createObjectURL(wavBlob);
-                    const audio = new Audio(audioUrl);
-                    audio.play();
+                confirmButton.addEventListener('click', handleConfirm);
+                cancelButton.addEventListener('click', handleCancel);
 
-                    audio.onended = () => {
-                        setIsGeminiLoading(false);
-                    };
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            });
+        }
 
+        async function authenticate() {
+            try {
+                if (authToken) {
+                    await signInWithCustomToken(auth, authToken);
                 } else {
-                    throw new Error("Failed to get audio data after multiple attempts.");
+                    await signInAnonymously(auth);
                 }
-
-            } catch (e) {
-                console.error("Gemini Play Story Error: ", e);
-                setError(t.errorPlayAudio);
-            } finally {
-                setIsGeminiLoading(false);
+            } catch (error) {
+                console.error("Authentication Error:", error);
+                document.getElementById('upload-status').textContent = `Authentication Error: ${error.message}`;
             }
+        }
+
+        // --- Authentication State Listener ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                userId = user.uid;
+                document.getElementById('user-id').textContent = userId;
+                isAuthReady = true;
+                console.log("User authenticated. UID:", userId);
+                setupLanguageSelector(); // Setup language selector after auth
+                setupUploadWidget();
+                setupBranchFilters();
+                setupTabs(); 
+            } else {
+                authenticate();
+            }
+        });
+        
+        // --- Language Selector Setup ---
+        function setupLanguageSelector() {
+             const select = document.getElementById('language-select');
+             select.addEventListener('change', (e) => {
+                 setLanguage(e.target.value);
+             });
+             // Initialize with default language
+             setLanguage('he');
+        }
+
+        // --- Firestore Reference Helper ---
+        const getCollectionRef = () => {
+            return collection(db, 'artifacts', appId, 'public', 'data', 'images');
         };
 
+        // --- Gallery Rendering ---
+        const galleryContainer = document.getElementById('gallery-container');
+        const emptyMessage = document.getElementById('empty-message');
 
-        const Modal = ({ children, onClose, title }) => (
-            <div className="fixed inset-0 bg-gray-900 bg-opacity-80 flex items-center justify-center z-50 p-4 animate-fade-in">
-                <div className="relative bg-white p-6 rounded-3xl shadow-2xl max-w-sm sm:max-w-lg md:max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-scale-in" onClick={e => e.stopPropagation()}>
-                    <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition">
-                        <X className="h-6 w-6" />
-                    </button>
-                    {title && <h3 className="text-2xl font-bold text-gray-800 mb-4">{title}</h3>}
-                    {children}
-                </div>
-            </div>
-        );
+        /**
+         * Renders the list of images in the gallery.
+         */
+        function renderGallery(images) {
+            galleryContainer.innerHTML = ''; 
+            const langStrings = translations[currentLang];
 
-        return (
-            <div dir={language === 'he' ? 'rtl' : 'ltr'} className="container mx-auto px-2 sm:px-4 py-8">
-                <div className="absolute top-4 left-4 z-50">
-                    <button
-                        onClick={() => setLanguage(language === 'he' ? 'en' : 'he')}
-                        className="px-4 py-2 bg-gray-200 text-gray-700 font-bold rounded-full shadow-lg hover:bg-gray-300 transition duration-300"
-                    >
-                        {language === 'he' ? 'English' : 'עברית'}
-                    </button>
-                </div>
-                <header className="text-center mb-10">
-                    <h1 className="text-5xl font-extrabold text-gray-800 mb-2">{t.title}</h1>
-                    {userId && (
-                        <p className="text-sm font-light text-gray-500 mb-4 flex items-center justify-center gap-2">
-                           <User className="h-4 w-4 inline-block text-gray-500" /> {t.userIdLabel} {userId}
-                        </p>
-                    )}
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">{t.subtitle}</p>
-                </header>
+            if (images.length === 0) {
+                emptyMessage.classList.remove('hidden');
+                let messageKey = 'emptyMessageInitial';
+                if (currentView === 'private') {
+                     messageKey = 'emptyMessagePrivate';
+                } else if (document.getElementById('filter-branch-select').value) {
+                     messageKey = 'emptyMessagePublic'; // Using public message when filtered 
+                }
+                emptyMessage.textContent = langStrings[messageKey];
+                return;
+            }
+            emptyMessage.classList.add('hidden');
 
-                <div className="bg-white p-6 rounded-3xl shadow-lg border border-gray-200 max-w-lg mx-auto mb-8">
-                    <h2 className="text-xl font-bold mb-4 text-center">{t.uploadTitle}</h2>
-                    <form onSubmit={handleUpload} className="space-y-4">
-                        <div className="flex flex-col items-center">
-                            <label htmlFor="file-upload" className="block text-sm font-medium text-gray-700 mb-2">
-                                {t.chooseFile}
-                            </label>
-                            <input
-                                id="file-upload"
-                                type="file"
-                                ref={fileInputRef}
-                                required
-                                className="block w-full text-sm text-gray-500
-                                file:mr-4 file:py-2 file:px-4
-                                file:rounded-full file:border-0
-                                file:text-sm file:font-semibold
-                                file:bg-sky-100 file:text-sky-700
-                                hover:file:bg-sky-200 transition-colors duration-200"
-                            />
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <label htmlFor="people-input" className="block text-sm font-medium text-gray-700 mb-2">
-                                {t.peopleInPhoto}
-                            </label>
-                            <input
-                                id="people-input"
-                                type="text"
-                                ref={peopleInputRef}
-                                placeholder={t.peoplePlaceholder}
-                                className="w-full px-4 py-2 rounded-full border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-                            />
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <label htmlFor="family-select" className="block text-sm font-medium text-gray-700 mb-2">
-                                {t.chooseFamily}
-                            </label>
-                            <select
-                                id="family-select"
-                                name="familySelect"
-                                required
-                                className="w-full px-4 py-2 rounded-full border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-                            >
-                                <option value="">{t.chooseFamily}...</option>
-                                {families.map(family => (
-                                    <option key={family} value={family}>{family}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="text-center">
-                            <button
-                                type="submit"
-                                disabled={isUploadLoading}
-                                className="w-full sm:w-auto px-8 py-3 bg-blue-600 text-white font-bold rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 flex items-center justify-center gap-2"
-                            >
-                                {isUploadLoading ? <Loader2 className="h-5 w-5 animate-spin-slow" /> : <UploadCloud className="h-5 w-5" />}
-                                {isUploadLoading ? t.uploading : t.uploadBtn}
-                            </button>
-                        </div>
-                    </form>
-                </div>
+            images.sort((a, b) => b.timestamp - a.timestamp);
+
+            images.forEach(image => {
+                const card = document.createElement('div');
+                card.className = 'image-card bg-card rounded-lg overflow-hidden shadow-md';
+                card.dataset.id = image.id;
+
+                const imageUrl = image.url;
+                const transformedUrl = imageUrl.replace('/upload/', '/upload/w_500,q_auto,f_auto/');
                 
-                <div className="flex flex-wrap justify-center gap-2 mb-8">
-                    <button
-                        onClick={() => setSelectedFamily('all')}
-                        className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${selectedFamily === 'all' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
-                    >
-                        {t.allFamilies}
-                    </button>
-                    {families.map(family => (
-                        <button
-                            key={family}
-                            onClick={() => setSelectedFamily(family)}
-                            className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${selectedFamily === family ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
-                        >
-                            {family}
-                        </button>
-                    ))}
-                </div>
-
-                {error && (
-                    <div className="text-center text-red-600 font-semibold mb-6 p-4 bg-red-50 rounded-lg shadow-sm border border-red-200">
-                        {error}
-                    </div>
-                )}
+                const initialCaption = image.caption 
+                    ? image.caption 
+                    : langStrings.captionPlaceholder;
                 
-                {isInitializing || isLoading ? (
-                    <div className="flex flex-col items-center justify-center text-gray-600 font-semibold mt-16">
-                         <Loader2 className="h-10 w-10 text-blue-600 animate-spin-slow" />
-                         <span className="mt-4">{t.loading}</span>
-                    </div>
-                ) : photos.length === 0 ? (
-                    <div className="text-center text-gray-500 mt-16 p-8 bg-gray-100 rounded-xl shadow-inner">
-                        <p className="text-xl font-semibold mb-2">{t.noPhotos}</p>
-                        <p>{t.uploadFirst}</p>
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                        {photos.map((photo) => (
-                            <div key={photo.id} className="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden transform hover:scale-[1.02] transition-all duration-300 group">
-                                <img
-                                    src={photo.url}
-                                    alt="Family Gallery Image"
-                                    className="w-full h-56 object-cover cursor-pointer group-hover:brightness-95 transition-all"
-                                    onClick={() => openImageModal(photo)}
-                                />
-                                <div className="p-5 flex flex-col items-center text-center">
-                                    <p className="text-xs text-gray-400 mb-1">{photo.family}</p>
-                                    <p className="text-sm text-gray-500 mb-3">{photo.createdAt ? new Date(photo.createdAt.seconds * 1000).toLocaleDateString(language === 'he' ? "he-IL" : "en-US") : ""}</p>
-                                    {photo.people && photo.people.length > 0 && (
-                                        <div className="flex items-center text-gray-600 mb-3 text-sm">
-                                            <Users className="h-4 w-4 ml-1" />
-                                            <p className="font-semibold">{t.peopleLabel} {photo.people.join(', ')}</p>
-                                        </div>
-                                    )}
-                                    <div className="flex flex-wrap justify-center gap-2 mt-auto">
-                                        {photo.story && (
-                                            <button
-                                                onClick={() => openStoryModal(photo.story || t.noStory)}
-                                                className="flex-1 min-w-[120px] py-2 px-4 bg-sky-100 text-sky-700 font-medium rounded-full text-sm hover:bg-sky-200 transition flex items-center justify-center gap-2 shadow-sm"
-                                            >
-                                                <Search className="h-4 w-4" />
-                                                {t.showStory}
-                                            </button>
-                                        )}
-                                        {photo.story && (
-                                             <button
-                                                onClick={() => playStoryWithGemini(photo.story)}
-                                                disabled={isGeminiLoading}
-                                                className="flex-1 min-w-[120px] py-2 px-4 bg-green-100 text-green-700 font-medium rounded-full text-sm hover:bg-green-200 transition flex items-center justify-center gap-2 shadow-sm"
-                                            >
-                                                {isGeminiLoading ? <Loader2 className="h-4 w-4 animate-spin-slow" /> : <Volume2 className="h-4 w-4" />}
-                                                {isGeminiLoading ? t.playingAudio : t.playStory}
-                                            </button>
-                                        )}
-                                        <button
-                                            onClick={() => openEditModal(photo)}
-                                            className="flex-1 min-w-[120px] py-2 px-4 bg-teal-100 text-teal-700 font-medium rounded-full text-sm hover:bg-teal-200 transition flex items-center justify-center gap-2 shadow-sm"
-                                        >
-                                            <Pencil className="h-4 w-4" />
-                                            {t.editStory}
-                                        </button>
-                                        <button
-                                            onClick={() => confirmDelete(photo)}
-                                            className="flex-1 min-w-[120px] py-2 px-4 bg-red-100 text-red-700 font-medium rounded-full text-sm hover:bg-red-200 transition flex items-center justify-center gap-2 shadow-sm"
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                            {t.delete}
-                                        </button>
-                                    </div>
+                const familyBranchDisplay = image.familyBranch ? 
+                    `<span class="text-xs font-semibold text-primary/80 bg-primary/10 px-2 py-0.5 rounded-full ml-2">${image.familyBranch}</span>` : 
+                    '';
+
+                // People tags display
+                const peopleTags = Array.isArray(image.peopleTags) && image.peopleTags.length > 0
+                    ? `<p class="text-xs text-gray-500 mt-1"><span class="font-medium">${langStrings.withUs}</span> ${image.peopleTags.join(', ')}</p>`
+                    : '';
+                
+                // Determine current translation display based on Firestore state
+                const currentTranslationCode = image.currentTranslationCode || 'he';
+                
+                let currentTranslationText;
+                let langDisplay = '';
+
+                if (currentTranslationCode === 'he' || !image.translations || !image.translations[currentTranslationCode]) {
+                    // Display original caption or placeholder
+                    currentTranslationText = initialCaption;
+                } else {
+                    // Display stored translation
+                    currentTranslationText = image.translations[currentTranslationCode];
+                    langDisplay = ` (${LANGUAGES[currentTranslationCode]})`;
+                }
+
+
+                card.innerHTML = `
+                    <img src="${transformedUrl}" alt="${image.displayName || 'Family Photo'}" class="w-full h-auto object-cover cursor-pointer" onclick="window.open('${imageUrl}', '_blank')">
+                    <div class="p-4">
+                        <div class="flex justify-between items-center mb-1">
+                            <p class="text-sm font-medium text-gray-700 truncate">${image.displayName}</p>
+                            ${familyBranchDisplay}
+                        </div>
+                        
+                        <!-- Caption Area with Translation Display -->
+                        <p data-id="${image.id}" id="caption-${image.id}" class="text-xs italic text-gray-600 mb-2 whitespace-pre-wrap">${currentTranslationText}${langDisplay}</p>
+                        ${peopleTags}
+                        <!-- End Caption Area -->
+
+                        <div class="flex justify-between items-center mt-2 relative">
+                            <span class="text-xs text-gray-500">${new Date(image.timestamp).toLocaleDateString(isRTL ? 'he-IL' : 'en-US')}</span>
+                            
+                            <div class="flex items-center space-x-2 space-x-reverse flex-row-reverse-on-ltr">
+                                <!-- Translation Button with Dropdown Trigger -->
+                                <div class="relative inline-block">
+                                    <button 
+                                        data-id="${image.id}"
+                                        class="translate-trigger-btn text-translate hover:text-blue-600 transition duration-150 p-1 rounded-full hover:bg-blue-50 disabled:opacity-50" 
+                                        title="${langStrings.translateTitle}"
+                                        ${!image.caption ? 'disabled' : ''}>
+                                        🌐
+                                    </button>
                                 </div>
+
+                                <!-- Gemini Button -->
+                                <button 
+                                    data-id="${image.id}" 
+                                    data-name="${image.displayName}" 
+                                    data-user="${image.userId}" 
+                                    class="gemini-btn text-accent hover:text-yellow-600 transition duration-150 p-1 rounded-full hover:bg-yellow-50 disabled:opacity-50" 
+                                    title="${langStrings.geminiTitle}"
+                                    ${image.caption ? 'disabled' : ''}>
+                                    ✨
+                                </button>
+                                
+                                ${image.userId === userId ? `
+                                    <button data-id="${image.id}" class="delete-btn text-red-500 hover:text-red-700 transition duration-150 p-1 rounded-full hover:bg-red-50">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-2 0v6a1 1 0 102 0V7z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                ` : `<span class="text-xs text-gray-400">${langStrings.uploadedBy} ${image.userId.substring(0, 5)}...</span>`}
                             </div>
-                        ))}
+                        </div>
                     </div>
-                )}
+                `;
+                
+                // Append card and setup translation listener
+                galleryContainer.appendChild(card);
+                setupTranslationDropdown(card, image);
+            });
 
-                {/* Image Modal */}
-                {showImageModal && (
-                    <Modal onClose={() => setShowImageModal(false)} title={t.imageModalTitle}>
-                        <img src={selectedPhoto.url} alt="תמונה מוגדלת" className="rounded-xl w-full h-auto max-h-[70vh] object-contain shadow-lg" />
-                        {selectedPhoto.people && selectedPhoto.people.length > 0 && (
-                             <div className="mt-4 p-4 bg-gray-100 rounded-xl text-gray-700">
-                                <h3 className="font-semibold text-lg mb-2">{t.peopleLabel}</h3>
-                                <p className="whitespace-pre-wrap leading-relaxed">{selectedPhoto.people.join(', ')}</p>
-                            </div>
-                        )}
-                        {selectedPhoto.story && (
-                            <div className="mt-4 p-4 bg-gray-100 rounded-xl text-gray-700">
-                                <h3 className="font-semibold text-lg mb-2">{t.storyTitle}</h3>
-                                <p className="whitespace-pre-wrap leading-relaxed">{selectedPhoto.story}</p>
-                            </div>
-                        )}
-                    </Modal>
-                )}
+            // Attach event listeners
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', handleDeleteImage);
+            });
+            
+            document.querySelectorAll('.gemini-btn').forEach(button => {
+                button.addEventListener('click', handleGeminiCaptionGeneration);
+            });
+        }
+        
+        // --- Translation Dropdown Logic ---
+        function setupTranslationDropdown(card, image) {
+            const trigger = card.querySelector('.translate-trigger-btn');
+            if (!trigger || !image.caption) return; 
 
-                {/* Story modal */}
-                {showStoryModal && (
-                    <Modal onClose={() => setShowStoryModal(false)} title={t.storyModalTitle}>
-                        <div className="prose max-w-none text-gray-700 whitespace-pre-wrap leading-relaxed">
-                            {currentStory}
-                        </div>
-                    </Modal>
-                )}
+            const originalCaption = image.caption;
+            
+            // Toggle dropdown visibility
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                
+                // Remove any existing dropdowns first
+                document.querySelectorAll('[data-translation-menu]').forEach(menu => menu.remove());
 
-                {/* Edit story modal */}
-                {showEditModal && (
-                    <Modal onClose={() => setShowEditModal(false)} title={t.editStoryModalTitle}>
-                        <textarea
-                            value={currentStory}
-                            onChange={(e) => setCurrentStory(e.target.value)}
-                            className="w-full h-40 p-4 rounded-xl border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                        />
-                         <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-4 mt-4">
-                            <button
-                                onClick={() => generateStoryWithGemini(photoToEdit)}
-                                disabled={isGeminiLoading}
-                                className="px-6 py-2 bg-purple-600 text-white font-bold rounded-full shadow-lg hover:bg-purple-700 transition duration-300 flex-1 sm:flex-none flex items-center justify-center gap-2"
-                            >
-                                {isGeminiLoading ? <Loader2 className="h-5 w-5 animate-spin-slow" /> : <Sparkles className="h-5 w-5" />}
-                                {isGeminiLoading ? t.generatingStory : t.generateStory}
-                            </button>
-                            <button
-                                onClick={handleEditStory}
-                                className="px-6 py-2 bg-blue-600 text-white font-bold rounded-full shadow-lg hover:bg-blue-700 transition duration-300 flex-1 sm:flex-none"
-                            >
-                                {t.saveBtn}
-                            </button>
-                            <button
-                                onClick={() => setShowEditModal(false)}
-                                className="px-6 py-2 bg-gray-200 text-gray-700 font-bold rounded-full shadow-lg hover:bg-gray-300 transition duration-300 flex-1 sm:flex-none"
-                            >
-                                {t.cancelBtn}
-                            </button>
-                        </div>
-                    </Modal>
-                )}
+                // Allowed languages for CAPTION translation (Gemini)
+                const allowedTranslationLangs = {'en': LANGUAGES.en, 'fr': LANGUAGES.fr, 'ru': LANGUAGES.ru};
+                
+                let menuHtml = '';
+                // Option to revert to original Hebrew caption
+                menuHtml += `<button class="w-full text-right text-sm px-2 py-1 hover:bg-gray-100 rounded" data-lang="he">${LANGUAGES['he']} (מקור)</button>`;
+                
+                // Add translation targets
+                Object.keys(allowedTranslationLangs).forEach(langCode => {
+                    menuHtml += `<button class="w-full text-right text-sm px-2 py-1 hover:bg-gray-100 rounded" data-lang="${langCode}">${allowedTranslationLangs[langCode]}</button>`;
+                });
+                
+                // Insert and position the menu
+                const menu = document.createElement('div');
+                menu.className = 'absolute left-2 bottom-12 bg-card border border-gray-200 rounded-lg shadow-xl p-2 z-10 w-32';
+                menu.setAttribute('data-translation-menu', '');
+                menu.innerHTML = menuHtml;
+                card.appendChild(menu);
 
-                {/* Delete confirmation modal */}
-                {showDeleteModal && (
-                    <Modal onClose={() => setShowDeleteModal(false)} title={t.deleteConfirmTitle}>
-                        <p className="text-gray-800 text-lg mb-6 text-center">{t.deleteConfirmText}</p>
-                        <div className="flex justify-center gap-4">
-                            <button
-                                onClick={handleDelete}
-                                className="px-6 py-2 bg-red-600 text-white font-bold rounded-full shadow-lg hover:bg-red-700 transition duration-300 transform hover:scale-105"
-                            >
-                                {t.delete}
-                            </button>
-                            <button
-                                onClick={() => setShowDeleteModal(false)}
-                                className="px-6 py-2 bg-gray-200 text-gray-700 font-bold rounded-full shadow-lg hover:bg-gray-300 transition duration-300 transform hover:scale-105"
-                            >
-                                {t.cancelBtn}
-                            </button>
-                        </div>
-                    </Modal>
-                )}
-            </div>
-        );
-    }
-    // Render the App component
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(React.createElement(App));
-</script>
+                // Add listeners to menu buttons
+                menu.querySelectorAll('button').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const langCode = btn.dataset.lang;
+                        menu.remove();
+                        
+                        // Check if translation is already cached (or if reverting to Hebrew)
+                        if (langCode === 'he' || (image.translations && image.translations[langCode])) {
+                            // Update display code in Firestore to trigger re-render
+                            updateCaptionDisplayCode(image.id, langCode);
+                        } else {
+                            // Generate new translation
+                            generateTranslation(image.id, originalCaption, langCode, card);
+                        }
+                    });
+                });
+            });
 
+            // Close dropdown on outside click
+            document.addEventListener('click', (e) => {
+                if (!trigger.contains(e.target)) {
+                    document.querySelectorAll('[data-translation-menu]').forEach(menu => menu.remove());
+                }
+            });
+        }
+        
+        let unsubscribeListener = null;
+
+        // --- Firestore Listener ---
+        function listenForImages() {
+            if (!isAuthReady || !db) {
+                console.warn("Firestore not ready. Skipping data listener.");
+                return;
+            }
+            
+            if (unsubscribeListener) {
+                unsubscribeListener();
+            }
+
+            const imagesRef = getCollectionRef();
+            let q = query(imagesRef);
+            
+            const selectedBranchFilter = document.getElementById('filter-branch-select').value;
+            const branchFilterContainer = document.getElementById('branch-filter-container');
+
+            // --- Apply Filtering Logic ---
+            if (currentView === 'private' && userId) {
+                q = query(imagesRef, where('userId', '==', userId));
+                branchFilterContainer.style.display = 'none'; 
+            } else if (currentView === 'public' && selectedBranchFilter) {
+                q = query(imagesRef, where('familyBranch', '==', selectedBranchFilter));
+                branchFilterContainer.style.display = 'flex'; 
+            } else {
+                branchFilterContainer.style.display = 'flex'; 
+            }
+
+            unsubscribeListener = onSnapshot(q, (snapshot) => {
+                const images = [];
+                snapshot.forEach(doc => {
+                    images.push({ id: doc.id, ...doc.data() });
+                });
+                renderGallery(images);
+            }, (error) => {
+                console.error("Error listening to Firestore:", error);
+                document.getElementById('upload-status').textContent = `${translations[currentLang].uploadError} (Listener): ${error.message}`;
+            });
+        }
+
+        // --- Branch Filter Setup ---
+        function setupBranchFilters() {
+            const uploadSelect = document.getElementById('upload-branch-select');
+            const filterSelect = document.getElementById('filter-branch-select');
+            
+            // Clear existing options
+            uploadSelect.innerHTML = `<option value="" disabled selected data-i18n="branchPlaceholder">${translations[currentLang].branchPlaceholder}</option>`;
+            filterSelect.innerHTML = '';
+
+
+            familyBranches.forEach(branch => {
+                const isAllFamilies = branch === "כל המשפחות";
+                
+                // Add to Upload select (if not "All Families")
+                if (!isAllFamilies) {
+                     const uploadOption = document.createElement('option');
+                     uploadOption.value = branch;
+                     uploadOption.textContent = branch;
+                     uploadSelect.appendChild(uploadOption);
+                }
+
+                // Add to Filter select
+                const filterOption = document.createElement('option');
+                filterOption.value = isAllFamilies ? "" : branch; 
+                filterOption.textContent = isAllFamilies ? translations[currentLang].allFamilies : branch;
+                filterSelect.appendChild(filterOption);
+            });
+
+            filterSelect.addEventListener('change', () => {
+                setActiveTab('public');
+            });
+        }
+        
+        // --- Tab Logic ---
+        function setupTabs() {
+            const tabPublic = document.getElementById('tab-public');
+            const tabPrivate = document.getElementById('tab-private');
+            const filterContainer = document.getElementById('branch-filter-container');
+
+            const setActiveTab = (view) => {
+                currentView = view;
+                
+                tabPublic.classList.remove('active', 'text-primary', 'border-primary');
+                tabPublic.classList.add('border-transparent', 'text-gray-500');
+                tabPrivate.classList.remove('active', 'text-primary', 'border-primary');
+                tabPrivate.classList.add('border-transparent', 'text-gray-500');
+
+                const activeElement = view === 'public' ? tabPublic : tabPrivate;
+                activeElement.classList.add('active', 'text-primary', 'border-primary');
+                activeElement.classList.remove('border-transparent', 'text-gray-500');
+                
+                filterContainer.style.display = (view === 'public') ? 'flex' : 'none';
+
+                listenForImages();
+            };
+
+            tabPublic.addEventListener('click', () => setActiveTab('public'));
+            tabPrivate.addEventListener('click', () => setActiveTab('private'));
+
+            setActiveTab(currentView);
+        }
+
+        // --- Data Manipulation ---
+        async function addImageToFirestore(data) {
+            const selectedBranch = document.getElementById('upload-branch-select').value;
+            const peopleTagsInput = document.getElementById('people-tags-input').value;
+            const langStrings = translations[currentLang];
+
+            if (!selectedBranch) {
+                document.getElementById('upload-status').textContent = langStrings.errorNoBranch;
+                document.getElementById('loading-spinner').classList.add('hidden');
+                return;
+            }
+            
+            // Process people tags into an array
+            const peopleTags = peopleTagsInput 
+                ? peopleTagsInput.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0) 
+                : [];
+            
+            try {
+                const imagesRef = getCollectionRef();
+                await addDoc(imagesRef, {
+                    publicId: data.public_id,
+                    url: data.secure_url,
+                    displayName: data.display_name || data.original_filename,
+                    userId: userId,
+                    familyBranch: selectedBranch,
+                    peopleTags: peopleTags, 
+                    timestamp: Date.now(),
+                    caption: null,
+                    translations: {}, 
+                    currentTranslationCode: 'he', 
+                });
+                console.log("Image reference added to Firestore successfully.");
+            } catch (error) {
+                console.error("Error adding document:", error);
+                document.getElementById('upload-status').textContent = `${langStrings.uploadError} (Firestore): ${error.message}`;
+            }
+        }
+        
+        // --- Caption / Translation Update ---
+        async function updateCaptionInFirestore(docId, caption) {
+            try {
+                const docRef = doc(db, getCollectionRef().path, docId);
+                await updateDoc(docRef, {
+                    caption: caption,
+                    captionTimestamp: Date.now(),
+                    currentTranslationCode: 'he', 
+                    translations: {} // Clear translations when original caption changes
+                });
+            } catch (error) {
+                console.error("Error updating caption:", error);
+            }
+        }
+        
+        async function updateTranslationInFirestore(docId, langCode, translatedText) {
+            try {
+                const docRef = doc(db, getCollectionRef().path, docId);
+                const updateObject = {};
+                updateObject[`translations.${langCode}`] = translatedText;
+                updateObject['currentTranslationCode'] = langCode;
+                
+                await updateDoc(docRef, updateObject);
+            } catch (error) {
+                console.error("Error updating translation:", error);
+            }
+        }
+        
+        async function updateCaptionDisplayCode(docId, langCode) {
+            try {
+                const docRef = doc(db, getCollectionRef().path, docId);
+                await updateDoc(docRef, {
+                    currentTranslationCode: langCode
+                });
+            } catch (error) {
+                console.error("Error updating current display code:", error);
+            }
+        }
+
+        async function handleDeleteImage(event) {
+            const docId = event.currentTarget.dataset.id;
+            const langStrings = translations[currentLang];
+            
+            const isConfirmed = await customConfirm('האם אתה בטוח שברצונך למחוק תמונה זו?');
+            
+            if (!docId || !isConfirmed) {
+                return;
+            }
+
+            try {
+                const imageDocRef = doc(db, getCollectionRef().path, docId);
+                await deleteDoc(imageDocRef);
+                document.getElementById('upload-status').textContent = langStrings.deleteSuccess;
+            } catch (error) {
+                console.error("Error deleting document:", error);
+                document.getElementById('upload-status').textContent = `${langStrings.uploadError} (Delete): ${error.message}`;
+            }
+        }
+
+        // --- Cloudinary Widget Setup ---
+        function setupUploadWidget() {
+            if (!isAuthReady) {
+                console.warn("Auth not ready yet for Cloudinary widget setup.");
+                return;
+            }
+            
+            const UPLOAD_PRESET = 'my_family_gallery_preset'; 
+            const CLOUD_NAME = firebaseConfig.projectId;
+
+            if (!CLOUD_NAME) {
+                 document.getElementById('upload-status').textContent = "Error: Cloudinary Cloud Name missing.";
+                 return;
+            }
+
+            if (typeof cloudinary === 'undefined') {
+                const script = document.createElement('script');
+                script.src = "https://widget.cloudinary.com/v2.0/global/all.js";
+                script.onload = () => initWidget();
+                document.head.appendChild(script);
+            } else {
+                initWidget();
+            }
+
+            function initWidget() {
+                const loadingSpinner = document.getElementById('loading-spinner');
+                const uploadStatus = document.getElementById('upload-status');
+                const uploadBranchSelect = document.getElementById('upload-branch-select');
+
+                const widget = cloudinary.createUploadWidget(
+                    {
+                        cloudName: CLOUD_NAME,
+                        uploadPreset: UPLOAD_PRESET,
+                        folder: 'family-gallery', 
+                        clientAllowedFormats: ["png", "gif", "jpeg", "webp"],
+                        multiple: false,
+                        resourceType: "image",
+                        language: currentLang === 'he' ? 'he' : 'en', // Cloudinary supports limited languages
+                        text: { /* ... custom text config ... */ }
+                    },
+                    (error, result) => {
+                        const langStrings = translations[currentLang];
+
+                        if (error) {
+                            loadingSpinner.classList.add('hidden');
+                            uploadStatus.textContent = `${langStrings.uploadError}: ${error.message}`;
+                            return;
+                        }
+
+                        if (result.event === "queue-start") {
+                             if (!uploadBranchSelect.value) {
+                                loadingSpinner.classList.add('hidden');
+                                uploadStatus.textContent = langStrings.errorNoBranch;
+                                widget.close(); 
+                                return;
+                            }
+                            loadingSpinner.classList.remove('hidden');
+                            loadingSpinner.querySelector('p').textContent = langStrings.uploading;
+                            uploadStatus.textContent = langStrings.uploadingStart;
+                        } else if (result.event === "success") {
+                            loadingSpinner.classList.add('hidden');
+                            uploadStatus.textContent = `${langStrings.uploadStatusInitial}: "${result.info.original_filename}"`;
+                            addImageToFirestore(result.info);
+                            
+                            // Reset input fields
+                            document.getElementById('people-tags-input').value = '';
+                            uploadBranchSelect.value = '';
+                            
+                            setTimeout(() => {
+                                const tabPrivate = document.getElementById('tab-private');
+                                if (tabPrivate) { tabPrivate.click(); }
+                            }, 500); 
+
+                        } else if (result.event === "abort" || result.event === "close") {
+                            loadingSpinner.classList.add('hidden');
+                            uploadStatus.textContent = langStrings.uploadCanceled;
+                        } else if (result.event === "upload-failed") {
+                            loadingSpinner.classList.add('hidden');
+                            uploadStatus.textContent = langStrings.uploadFailed;
+                        }
+                    }
+                );
+
+                document.getElementById('upload-button').addEventListener('click', () => {
+                    widget.open();
+                }, false);
+            }
+        }
+        
+        // --- Gemini Caption Generation Functions ---
+        function handleGeminiCaptionGeneration(event) {
+            const docId = event.currentTarget.dataset.id;
+            const displayName = event.currentTarget.dataset.name;
+            const uploaderId = event.currentTarget.dataset.user;
+            
+            const captionElement = document.getElementById(`caption-${docId}`);
+            
+            // Check if caption needs generation based on placeholder text
+            const langStrings = translations[currentLang];
+            if (captionElement.textContent === langStrings.captionPlaceholder) {
+                generateCaption(docId, displayName, uploaderId);
+            }
+        }
+
+        async function generateCaption(docId, displayName, uploaderId) {
+            const captionElement = document.getElementById(`caption-${docId}`);
+            const geminiButton = document.querySelector(`.gemini-btn[data-id="${docId}"]`);
+            const langStrings = translations[currentLang];
+
+            captionElement.textContent = langStrings.generatingCaption;
+            geminiButton.disabled = true;
+
+            const systemPrompt = "אתה כותב כיתובים יצירתיים, קצרים ומצחיקים לרשתות חברתיות בשימוש יומיומי. כתוב כיתוב אחד בלבד עבור התמונה. שמור על טון ידידותי וחם וכתוב אך ורק בעברית.";
+            const userQuery = `התמונה הזו קרויה "${displayName}". היא הועלתה על ידי משתמש עם המזהה החלקי "${uploaderId.substring(0, 5)}...". אנא כתוב כיתוב כיפי וקליט עבור התמונה.`;
+
+            let generatedCaption = langStrings.errorCaption;
+            const maxRetries = 5;
+            let delay = 1000;
+
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(GEMINI_API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 429 && i < maxRetries - 1) {
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                            delay *= 2;
+                            continue; 
+                        }
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                    if (text) {
+                        generatedCaption = text.trim();
+                        await updateCaptionInFirestore(docId, generatedCaption);
+                        // Firestore listener handles the final UI update
+                        return; 
+                    } else {
+                        generatedCaption = langStrings.errorNoCaption;
+                        break;
+                    }
+
+                } catch (error) {
+                    console.error("Gemini API Call Error:", error);
+                    generatedCaption = `${langStrings.errorCaption}: ${error.message}`;
+                    break; 
+                }
+            }
+
+            captionElement.textContent = generatedCaption;
+            geminiButton.disabled = false;
+        }
+        
+        // --- Gemini Translation Functions ---
+        async function generateTranslation(docId, captionText, langCode, card) {
+            const translateTrigger = card.querySelector(`.translate-trigger-btn[data-id="${docId}"]`);
+            const targetLangDisplayName = LANGUAGES[langCode];
+            const captionElement = card.querySelector(`#caption-${docId}`);
+            const langStrings = translations[currentLang];
+
+            const originalText = captionElement.textContent;
+            captionElement.textContent = `...${langStrings.translationError.replace(':', '')} ${targetLangDisplayName} 🌐`;
+            translateTrigger.disabled = true;
+
+            const systemPrompt = "You are a professional, accurate, and friendly translator. Translate the user's input text into the specified language. Provide only the translated text, without any additional explanations or formatting.";
+            const userQuery = `Translate the following Hebrew text to ${targetLangDisplayName}: "${captionText}"`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            let translatedText = originalText;
+            const maxRetries = 5;
+            let delay = 1000;
+
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(GEMINI_API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 429 && i < maxRetries - 1) {
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                            delay *= 2;
+                            continue;
+                        }
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                    if (text) {
+                        translatedText = text.trim();
+                        // Success: store translation and update display code
+                        await updateTranslationInFirestore(docId, langCode, translatedText);
+                        // Firestore listener handles the final UI update
+                        return;
+                    } else {
+                        translatedText = `${langStrings.translationError} - No model output.`;
+                        break;
+                    }
+
+                } catch (error) {
+                    console.error("Gemini Translation API Call Error:", error);
+                    translatedText = `${langStrings.translationError}: ${error.message}`;
+                    break;
+                }
+            }
+            
+            // Revert or show error on failure
+            captionElement.textContent = translatedText;
+            translateTrigger.disabled = false;
+        }
+    </script>
 </body>
 </html>
