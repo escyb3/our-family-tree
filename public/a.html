@@ -95,7 +95,7 @@
         
         const userData = await userResponse.json();
         
-        // **שינוי כאן:** גישה ל-familySide דרך אובייקט 'user' כפי שמוגדר בקוד השרת
+        // גישה ל-familySide דרך אובייקט 'user'
         const familySide = userData.user?.familySide; 
 
         if (!familySide || typeof familySide !== 'string' || familySide === 'לא מוגדר') {
@@ -103,14 +103,16 @@
         }
 
         // --- שלב 2: בניית נתיב דינמי ושליפת נתוני העץ ---
-        const dataUrl = `/data/${familySide}.json`;
-        familyInfoElement.textContent = `טוען נתונים עבור המשפחה: ${familySide}...`;
+        // **עדכון נתיב לפי בקשת המשתמש:** מחפש נתונים בנתיב trees/{familySide}.html
+        const dataUrl = `/trees/${familySide}.html`;
+        familyInfoElement.textContent = `טוען נתונים עבור המשפחה: ${familySide} מ: ${dataUrl}...`;
         
         const dataResponse = await fetch(dataUrl);
         if (!dataResponse.ok) {
-          throw new Error(`שגיאה ${dataResponse.status}: קובץ הנתונים ${familySide}.json לא נמצא בשרת.`);
+          throw new Error(`שגיאה ${dataResponse.status}: קובץ הנתונים ${familySide}.html לא נמצא בשרת.`);
         }
         
+        // הערה: נדרש שכתובת ה-URL הזו תחזיר תוכן בפורמט JSON תקין (הפונקציה .json() מעבדת את הנתונים).
         const data = await dataResponse.json();
         
         if (!Array.isArray(data)) {
