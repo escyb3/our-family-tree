@@ -65,7 +65,8 @@
   </div>
 
   <script>
-    // פונקציית עזר להמרת שגיאה להצגה למשתמש
+    // --- פונקציות עזר ---
+
     function displayError(message) {
       document.getElementById("loading").style.display = "none";
       const mainContent = document.getElementById("main-content");
@@ -74,22 +75,48 @@
       const familyInfoElement = document.getElementById("family-info");
       familyInfoElement.innerHTML = `<span class="text-red-600 font-bold bg-red-100 p-2 rounded">${message}</span>`;
       
-      // הסתרת התרשימים הריקים
       document.querySelectorAll('.chart-container').forEach(el => el.style.display = 'none');
       document.getElementById("main-title").style.display = "none";
     }
 
     /**
-     * פונקציה ראשית לטעינת נתונים, ניקוי, עיבוד והצגת תרשימים.
-     * **הדגש כאן הוא על בדיקת תקינות חזקה של הנתונים הנכנסים.**
+     * מחלץ מערך JSON של אנשים מתוך מחרוזת טקסט גדולה (כגון קובץ HTML או קוד).
+     * הוא מחפש מבנה שנראה כמו מערך JSON ([{...}]).
+     * @param {string} rawText - הטקסט הגולמי של הקובץ.
+     * @returns {Array<Object>} מערך האובייקטים של האנשים.
+     * @throws {Error} אם לא נמצא JSON תקין.
      */
+    function extractFamilyData(rawText) {
+      // ביטוי רגולרי לחיפוש מערך JSON ([...]) עם אובייקט בפנים (\{...\})
+      // מנסה למצוא את מערך הנתונים הגדול ביותר שנראה כמו JSON תקין.
+      const jsonMatch = rawText.match(/(\s*\[\s*\{[\s\S]*\}\s*\]\s*)/);
+
+      if (jsonMatch && jsonMatch[1]) {
+        try {
+          // מנקה רווחים ומנסה לנתח את המחרוזת שנמצאה כ-JSON
+          const data = JSON.parse(jsonMatch[1].trim());
+          
+          if (Array.isArray(data) && data.length > 0) {
+            return data;
+          }
+        } catch (e) {
+          console.warn("Extraction failed, trying fallback to partial parse...", e);
+          // נכשל ב-JSON מלא, ננסה אולי חילוץ גס יותר אם יש צורך (כאן נשמור על הגישה המחמירה).
+        }
+      }
+      
+      throw new Error("לא נמצא מבנה נתונים JSON תקין (מערך אנשים) בקובץ שנטען.");
+    }
+
+
+    // --- פונקציה ראשית ---
+
     async function loadFamilyStats() {
       const familyInfoElement = document.getElementById("family-info");
       
       try {
-        // --- שלב 1: שליפת פרטי משתמש וצד משפחה (familySide) ---
+        // 1. שליפת פרטי משתמש וצד משפחה (familySide)
         familyInfoElement.textContent = "שולף פרטי משתמש...";
-        
         const userResponse = await fetch('/api/user');
         if (!userResponse.ok) {
           throw new Error(`שגיאה ${userResponse.status}: לא ניתן לטעון פרטי משתמש.`);
@@ -102,7 +129,7 @@
           throw new Error("שדה 'familySide' חסר, לא תקין או לא מוגדר בפרטי המשתמש.");
         }
 
-        // --- שלב 2: בניית נתיב דינמי ושליפת נתוני העץ ---
+        // 2. שליפת קובץ הנתונים כטקסט
         const dataUrl = `/trees/${familySide}.html`;
         familyInfoElement.textContent = `טוען נתונים עבור המשפחה: ${familySide} מ: ${dataUrl}...`;
         
@@ -111,41 +138,35 @@
           throw new Error(`שגיאה ${dataResponse.status}: קובץ הנתונים ${familySide}.html לא נמצא בשרת.`);
         }
         
-        // נתונים גולמיים
-        const rawData = await dataResponse.json();
+        // טוען את כל הקובץ כטקסט (כדי שנוכל לחלץ ממנו את ה-JSON)
+        const rawText = await dataResponse.text();
         
-        if (!Array.isArray(rawData)) {
-          throw new Error("קובץ הנתונים אינו מכיל מערך תקין להצגה.");
-        }
-        
-        // --- שלב 3: סינון וניקוי נתונים קפדני (Data Validation) ---
+        // 3. חילוץ וניקוי נתונים
+        familyInfoElement.textContent = "מחלץ ומנקה נתונים...";
+        // כאן משתמשים בפונקציה החדשה לחילוץ JSON מתוך הטקסט
+        const rawData = extractFamilyData(rawText);
+
+        // סינון נתונים - מוודא שכל אדם כולל נתונים רלוונטיים (מגדר או שנת לידה)
         const cleanedData = rawData.filter(p => {
-          // ודא שאנחנו עובדים עם אובייקט תקין
           if (!p || typeof p !== 'object') return false;
           
-          // בדיקת תקינות שדה מגדר
           const hasValidGender = p.gender && (p.gender === "M" || p.gender === "F");
+          const hasValidBirthYear = typeof p.birth_year === 'number' && p.birth_year > 1500 && p.birth_year <= new Date().getFullYear();
           
-          // בדיקת תקינות שדה תאריך לידה (נדרש לסטטיסטיקת דורות)
-          // מספיק שהוא מחרוזת כלשהי, ה-parseInt יטפל בחלק השנה.
-          const hasValidBirthDate = typeof p.birthDate === 'string' && p.birthDate.length >= 4;
-
-          // רשומה נחשבת תקינה אם יש לה לפחות מגדר, או תאריך לידה.
-          return hasValidGender || hasValidBirthDate;
+          return hasValidGender || hasValidBirthYear;
         });
 
         if (cleanedData.length === 0) {
           throw new Error("לא נמצאו נתונים תקינים לעיבוד סטטיסטי לאחר ניקוי הנתונים.");
         }
 
-        // --- שלב 4: עיבוד והצגת התרשימים, באמצעות הנתונים הנקיים ---
+        // 4. עיבוד והצגת התרשימים
         
-        // 1. נתוני מגדר (Pie Chart)
+        // --- נתוני מגדר (Pie Chart) ---
         const males = cleanedData.filter(p => p.gender === "M").length;
         const females = cleanedData.filter(p => p.gender === "F").length;
         
-        const GENDER_COLORS = ["#3b82f6", "#10b981"]; // Blue-500, Emerald-500
-
+        const GENDER_COLORS = ["#3b82f6", "#10b981"];
         const ctxGender = document.getElementById("genderChart").getContext("2d");
         new Chart(ctxGender, {
           type: "pie",
@@ -168,20 +189,18 @@
           }
         });
 
-        // 2. נתוני דורות (Bar Chart)
+        // --- נתוני דורות (Bar Chart) - משתמש ב-birth_year ---
         const generations = {};
-        const BASE_YEAR = 1800; // שנת בסיס לחישוב דורות
-        const GENERATION_SPAN = 25; // טווח דור (25 שנה)
+        const BASE_YEAR = 1800; // שנת בסיס לדוגמה
+        const GENERATION_SPAN = 25; // טווח דור
         
         cleanedData.forEach(p => {
-          // ודא שיש תאריך לידה תקין כפי שנקבע בשלב הסינון
-          if (typeof p.birthDate !== 'string') return;
-
-          const yearPart = p.birthDate.split("-")[0];
-          const year = parseInt(yearPart);
+          const year = p.birth_year;
           
-          // בדיקה נוספת לשנה תקינה ולוגית
-          if (isNaN(year) || year < BASE_YEAR || year > new Date().getFullYear()) return;
+          // ודא שנת לידה תקינה
+          if (typeof year !== 'number' || year === null || year < BASE_YEAR || year > new Date().getFullYear()) {
+            return;
+          }
 
           const genIndex = Math.floor((year - BASE_YEAR) / GENERATION_SPAN); 
           generations[genIndex] = (generations[genIndex] || 0) + 1;
@@ -196,9 +215,7 @@
         });
         const genValues = sortedGenerations.map(([index, count]) => count);
 
-        // צבע אחיד יותר עמוק לתרשים הבר
-        const BAR_COLOR = "#4f46e5"; // Indigo-600
-
+        const BAR_COLOR = "#4f46e5";
         const ctxGeneration = document.getElementById("generationChart").getContext("2d");
         new Chart(ctxGeneration, {
           type: "bar",
@@ -216,7 +233,6 @@
             responsive: true,
             scales: {
               y: { beginAtZero: true },
-              // הגדרת כיוון ציר X כך שיתאים לכיוון RTL
               x: { reverse: true } 
             },
             plugins: {
@@ -225,10 +241,10 @@
           }
         });
 
-        // סיום טעינה: הצגת התוכן והסתרת הטעינה
+        // 5. סיום טעינה
         document.getElementById("loading").style.display = "none";
         document.getElementById("main-content").style.display = "block";
-        familyInfoElement.innerHTML = `<span class="text-green-700 font-semibold">הנתונים נטענו בהצלחה עבור המשפחה: <b>${familySide}</b>. סך אנשים: ${cleanedData.length}</span>`;
+        familyInfoElement.innerHTML = `<span class="text-green-700 font-semibold">הנתונים נטענו בהצלחה עבור המשפחה: <b>${familySide}</b>. סך אנשים מעובדים: ${cleanedData.length}</span>`;
 
 
       } catch (error) {
