@@ -94,10 +94,12 @@
         }
         
         const userData = await userResponse.json();
-        const familySide = userData.familySide;
+        
+        // **שינוי כאן:** גישה ל-familySide דרך אובייקט 'user' כפי שמוגדר בקוד השרת
+        const familySide = userData.user?.familySide; 
 
-        if (!familySide || typeof familySide !== 'string') {
-          throw new Error("שדה 'familySide' חסר או לא תקין בפרטי המשתמש.");
+        if (!familySide || typeof familySide !== 'string' || familySide === 'לא מוגדר') {
+          throw new Error("שדה 'familySide' חסר, לא תקין או לא מוגדר בפרטי המשתמש.");
         }
 
         // --- שלב 2: בניית נתיב דינמי ושליפת נתוני העץ ---
