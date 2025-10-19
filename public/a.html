@@ -80,32 +80,34 @@
     }
 
     /**
-     * מחלץ מערך JSON של אנשים מתוך מחרוזת טקסט גדולה (כגון קובץ HTML או קוד).
-     * הוא מחפש מבנה שנראה כמו מערך JSON ([{...}]).
-     * @param {string} rawText - הטקסט הגולמי של הקובץ.
+     * פונקציה משופרת לחילוץ מערך JSON של נתונים מתוך טקסט גולמי מעורב.
+     * הפונקציה מחפשת את המופע הגדול ביותר שנראה כמו מערך JSON ([{...}]).
+     * @param {string} rawText - הטקסט הגולמי של הקובץ (למשל, קובץ HTML).
      * @returns {Array<Object>} מערך האובייקטים של האנשים.
      * @throws {Error} אם לא נמצא JSON תקין.
      */
     function extractFamilyData(rawText) {
-      // ביטוי רגולרי לחיפוש מערך JSON ([...]) עם אובייקט בפנים (\{...\})
-      // מנסה למצוא את מערך הנתונים הגדול ביותר שנראה כמו JSON תקין.
-      const jsonMatch = rawText.match(/(\s*\[\s*\{[\s\S]*\}\s*\]\s*)/);
+      // ביטוי רגולרי לחיפוש מערך שמתחיל ב- '[' ואחריו לפחות אובייקט אחד שמתחיל ב- '{' ומסתיים ב- '}]'
+      // משתמש ב-[\s\S]* כדי להתאים לתווי שורה חדשה וכל תו אחר.
+      // החיפוש הוא 'רעב' (greedy) כדי לתפוס את המערך הגדול ביותר האפשרי.
+      const jsonRegex = /(\[\s*\{[\s\S]*?\}\s*\])/;
+      const match = rawText.match(jsonRegex);
 
-      if (jsonMatch && jsonMatch[1]) {
+      if (match && match[1]) {
         try {
-          // מנקה רווחים ומנסה לנתח את המחרוזת שנמצאה כ-JSON
-          const data = JSON.parse(jsonMatch[1].trim());
+          const jsonString = match[1].trim();
+          const data = JSON.parse(jsonString);
           
           if (Array.isArray(data) && data.length > 0) {
             return data;
           }
         } catch (e) {
-          console.warn("Extraction failed, trying fallback to partial parse...", e);
-          // נכשל ב-JSON מלא, ננסה אולי חילוץ גס יותר אם יש צורך (כאן נשמור על הגישה המחמירה).
+          console.error("שגיאת ניתוח JSON:", e);
+          throw new Error("הנתונים חולצו אך אינם במבנה JSON תקין.");
         }
       }
       
-      throw new Error("לא נמצא מבנה נתונים JSON תקין (מערך אנשים) בקובץ שנטען.");
+      throw new Error("לא נמצא מבנה נתונים JSON (מערך אנשים) בקובץ שנטען. ייתכן שהנתונים אינם במבנה: [{...}].");
     }
 
 
@@ -131,33 +133,36 @@
 
         // 2. שליפת קובץ הנתונים כטקסט
         const dataUrl = `/trees/${familySide}.html`;
-        familyInfoElement.textContent = `טוען נתונים עבור המשפחה: ${familySide} מ: ${dataUrl}...`;
+        familyInfoElement.textContent = `טוען קובץ גולמי עבור המשפחה: ${familySide} מ: ${dataUrl}...`;
         
         const dataResponse = await fetch(dataUrl);
         if (!dataResponse.ok) {
           throw new Error(`שגיאה ${dataResponse.status}: קובץ הנתונים ${familySide}.html לא נמצא בשרת.`);
         }
         
-        // טוען את כל הקובץ כטקסט (כדי שנוכל לחלץ ממנו את ה-JSON)
+        // טוען את כל הקובץ כטקסט (כדי לחלץ את ה-JSON מתוכו)
         const rawText = await dataResponse.text();
         
-        // 3. חילוץ וניקוי נתונים
+        // 3. חילוץ נתונים קפדני
         familyInfoElement.textContent = "מחלץ ומנקה נתונים...";
-        // כאן משתמשים בפונקציה החדשה לחילוץ JSON מתוך הטקסט
         const rawData = extractFamilyData(rawText);
 
-        // סינון נתונים - מוודא שכל אדם כולל נתונים רלוונטיים (מגדר או שנת לידה)
+        // סינון נתונים - ודא שיש שדה 'gender' או שדה 'birth_year'
         const cleanedData = rawData.filter(p => {
           if (!p || typeof p !== 'object') return false;
           
           const hasValidGender = p.gender && (p.gender === "M" || p.gender === "F");
-          const hasValidBirthYear = typeof p.birth_year === 'number' && p.birth_year > 1500 && p.birth_year <= new Date().getFullYear();
+          // birth_year נחשב תקין אם הוא מספר בין 1500 לשנה הנוכחית, או שהוא null (אם כי רק מספרים מעובדים)
+          const isBirthYearValid = typeof p.birth_year === 'number' && p.birth_year > 1500 && p.birth_year <= new Date().getFullYear();
           
-          return hasValidGender || hasValidBirthYear;
+          return hasValidGender || isBirthYearValid;
         });
 
-        if (cleanedData.length === 0) {
-          throw new Error("לא נמצאו נתונים תקינים לעיבוד סטטיסטי לאחר ניקוי הנתונים.");
+        if (cleanedData.length === 0 && rawData.length > 0) {
+          console.warn("Raw data length:", rawData.length);
+          throw new Error(`הנתונים חולצו בהצלחה, אך לא נמצאו רשומות תקינות לסטטיסטיקות (כנראה שדות מגדר/שנת לידה חסרים).`);
+        } else if (cleanedData.length === 0) {
+          throw new Error("לא נמצאו נתונים כלל לעיבוד סטטיסטי.");
         }
 
         // 4. עיבוד והצגת התרשימים
@@ -191,13 +196,13 @@
 
         // --- נתוני דורות (Bar Chart) - משתמש ב-birth_year ---
         const generations = {};
-        const BASE_YEAR = 1800; // שנת בסיס לדוגמה
-        const GENERATION_SPAN = 25; // טווח דור
+        const BASE_YEAR = 1800;
+        const GENERATION_SPAN = 25;
         
         cleanedData.forEach(p => {
           const year = p.birth_year;
           
-          // ודא שנת לידה תקינה
+          // רק אנשים עם שנת לידה מספרית תקינה נכנסים לסטטיסטיקת דורות
           if (typeof year !== 'number' || year === null || year < BASE_YEAR || year > new Date().getFullYear()) {
             return;
           }
