@@ -920,6 +920,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const email = $("#email").value.trim();
       const password = $("#password").value;
 
+     
       try {
         console.log("🔹 Start login...");
 
@@ -931,12 +932,15 @@ document.addEventListener("DOMContentLoaded", () => {
           if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
             console.log("🔹 User not found, creating...");
             userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            await setDoc(doc(db, `artifacts/${appId}/public/data/users`, userCredential.user.uid), {
-              username,
-              email,
-              createdAt: serverTimestamp(),
-              lastLogin: serverTimestamp(),
-            });
+            await setDoc(
+              doc(db, `artifacts/${appId}/public/data/users`, userCredential.user.uid),
+              {
+                username,
+                email,
+                createdAt: serverTimestamp(),
+                lastLogin: serverTimestamp(),
+              }
+            );
             console.log("✅ User created:", userCredential.user.uid);
           } else {
             console.error("❌ Error in login:", err);
@@ -950,7 +954,10 @@ document.addEventListener("DOMContentLoaded", () => {
           where("username", "==", username)
         );
         const userSnapshot = await getDocs(userQuery);
-        console.log("🔹 userSnapshot:", userSnapshot.empty ? "empty" : userSnapshot.docs.map(d => d.data()));
+        console.log(
+          "🔹 userSnapshot:",
+          userSnapshot.empty ? "empty" : userSnapshot.docs.map((d) => d.data())
+        );
 
         // Update state
         const uid = userCredential.user.uid;
@@ -962,24 +969,67 @@ document.addEventListener("DOMContentLoaded", () => {
         render();
 
         console.log("✅ Login finished for:", uid);
-
       } catch (err) {
         console.error("Login error:", err);
         if (loginStatus) {
           loginStatus.textContent = "Login error: " + (err.message || err.code);
-          loginStatus.classList.add('error');
+          loginStatus.classList.add("error");
         }
       } finally {
         if (loginBtn) loginBtn.disabled = false;
       }
+    });
+  }
 
-    }); // end loginForm.addEventListener
-  } // end if loginForm
+  // --- UI & Navigation ---
+  const btnCompose = $("#btnCompose");
+  const logoutBtn = $("#logoutBtn");
+  const closePopoverBtn = $("#closePopover");
+  const languageSelect = $("#languageSelect");
 
-  // --- Functions ---
+  $$(".nav-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const folder = btn.getAttribute("data-folder");
+      if (folder) {
+        state.currentFolder = folder;
+        state.selectedEmail = null;
+        state.showCompose = false;
+        state.searchQuery = "";
+        renderMain();
+      }
+    });
+  });
 
-  function handleLogout() {
-    signOut(auth).then(() => {
+  if (btnCompose) {
+    btnCompose.addEventListener("click", () => {
+      state.showCompose = true;
+      state.selectedEmail = null;
+      state.compose = { recipient: "", subject: "", body: "", imageFile: null, imageBase64: null, imageType: null };
+      renderCompose();
+    });
+  }
+
+  if (logoutBtn) logoutBtn.addEventListener("click", handleLogout);
+  if (closePopoverBtn) closePopoverBtn.addEventListener("click", closeMessage);
+  if (languageSelect) languageSelect.addEventListener("change", (e) => setLanguage(e.target.value));
+
+  // ---- Custom token login ----
+  const initialAuthToken = typeof __initial_auth_token !== "undefined" ? __initial_auth_token : null;
+  if (initialAuthToken) {
+    signInWithCustomToken(auth, initialAuthToken).catch((error) => {
+      console.error("Custom token sign-in failed:", error);
+      showMessage("Automatic login failed.", "error");
+    });
+  }
+
+  render();
+});
+
+// --- Functions ---
+
+function handleLogout() {
+  signOut(auth)
+    .then(() => {
       console.log("User signed out.");
       stopRealtimeSubscriptions();
       state.userId = null;
@@ -989,147 +1039,143 @@ document.addEventListener("DOMContentLoaded", () => {
       state.currentFolder = "inbox";
       state.selectedEmail = null;
       render();
-    }).catch(error => {
+    })
+    .catch((error) => {
       console.error("Logout error:", error);
-      showMessage("Logout failed.", 'error');
+      showMessage("Logout failed.", "error");
     });
+}
+
+async function handleSendEmail(e) {
+  e.preventDefault();
+  const btnSend = $("#btnSend");
+  if (btnSend) btnSend.disabled = true;
+
+  const recipient = state.compose.recipient.toLowerCase();
+  const subject = state.compose.subject;
+  const body = state.compose.body;
+  const image = state.compose.imageBase64 ? { data: state.compose.imageBase64, type: state.compose.imageType } : null;
+
+  if (!recipient || (!body && !image)) {
+    showMessage("Recipient and message/image are required.", "error");
+    if (btnSend) btnSend.disabled = false;
+    return;
   }
 
-  async function handleSendEmail(e) {
-    e.preventDefault();
-    const btnSend = $("#btnSend");
-    if (btnSend) btnSend.disabled = true;
+  try {
+    const userQuery = query(collection(db, `artifacts/${appId}/public/data/users`), where("username", "==", recipient));
+    const userSnapshot = await getDocs(userQuery);
 
-    const recipient = state.compose.recipient.toLowerCase();
-    const subject = state.compose.subject;
-    const body = state.compose.body;
-    const image = state.compose.imageBase64 ? { data: state.compose.imageBase64, type: state.compose.imageType } : null;
-
-    if (!recipient || (!body && !image)) {
-      showMessage("Recipient and message/image are required.", 'error');
+    if (userSnapshot.empty) {
+      showMessage(`Recipient "${recipient}" does not exist.`, "error");
       if (btnSend) btnSend.disabled = false;
       return;
     }
 
-    try {
-      const userQuery = query(collection(db, `artifacts/${appId}/public/data/users`), where("username", "==", recipient));
-      const userSnapshot = await getDocs(userQuery);
+    const recipientUid = userSnapshot.docs[0].id;
+    const recipientEmail = userSnapshot.docs[0].data().email;
 
-      if (userSnapshot.empty) {
-        showMessage(`Recipient "${recipient}" does not exist.`, 'error');
-        if (btnSend) btnSend.disabled = false;
-        return;
-      }
+    const newDocData = {
+      sender: state.emailAddress,
+      senderId: state.userId,
+      recipient: recipientEmail,
+      recipientId: recipientUid,
+      subject: subject || "No Subject",
+      body,
+      timestamp: serverTimestamp(),
+      read: false,
+    };
+    if (image) newDocData.image = image;
 
-      const recipientUid = userSnapshot.docs[0].id;
-      const recipientEmail = userSnapshot.docs[0].data().email;
+    await addDoc(collection(db, `artifacts/${appId}/public/data/emails`), newDocData);
 
-      const newDocData = {
-        sender: state.emailAddress,
-        senderId: state.userId,
-        recipient: recipientEmail,
-        recipientId: recipientUid,
-        subject: subject || "No Subject",
-        body,
-        timestamp: serverTimestamp(),
-        read: false,
-      };
-      if (image) newDocData.image = image;
+    showMessage(state.t.sendSuccess, "success");
+    state.compose = { recipient: "", subject: "", body: "", imageFile: null, imageBase64: null, imageType: null };
+    state.showCompose = false;
+    renderMain();
+  } catch (err) {
+    console.error("Failed to send email:", err);
+    showMessage(state.t.sendError, "error");
+  } finally {
+    if (btnSend) btnSend.disabled = false;
+  }
+}
 
-      await addDoc(collection(db, `artifacts/${appId}/public/data/emails`), newDocData);
+// --- Delete Email ---
+async function handleDeleteEmail(emailId) {
+  try {
+    if (!state.userId) return;
+    const emailRef = doc(db, `artifacts/${appId}/public/data/emails`, emailId);
+    await deleteDoc(emailRef);
+    console.log(`Email ${emailId} deleted.`);
+    state.selectedEmail = null;
+    renderMain();
+  } catch (err) {
+    console.error("Failed to delete email:", err);
+    showMessage(state.t.sendError, "error");
+  }
+}
 
-      showMessage(state.t.sendSuccess, 'success');
-      state.compose = { recipient: "", subject: "", body: "", imageFile: null, imageBase64: null, imageType: null };
-      state.showCompose = false;
-      renderMain();
+// --- Add Contact ---
+async function handleAddContact() {
+  const t = state.t;
+  const nameInput = $("#contactName");
+  const usernameInput = $("#contactUsername");
+  const statusDiv = $("#contactStatus");
+  const name = nameInput.value.trim();
+  const username = usernameInput.value.trim().toLowerCase();
 
-    } catch (err) {
-      console.error("Failed to send email:", err);
-      showMessage(state.t.sendError, 'error');
-    } finally {
-      if (btnSend) btnSend.disabled = false;
+  if (!name || !username) {
+    if (statusDiv) {
+      statusDiv.textContent = "Contact name and username are required.";
+      statusDiv.classList.add("error");
+      statusDiv.classList.remove("hidden");
     }
+    return;
   }
 
-        /** Handles deleting an email from the inbox. */
-        async function handleDeleteEmail(emailId) {
-            try {
-                if (!state.userId) return;
-                const emailRef = doc(db, `artifacts/${appId}/public/data/emails`, emailId);
-                await deleteDoc(emailRef);
-                console.log(`Email ${emailId} deleted.`);
-                state.selectedEmail = null;
-                renderMain();
-            } catch (err) {
-                console.error("Failed to delete email:", err);
-                showMessage(state.t.sendError, 'error');
-            }
-        }
-        
-        // Handle add contact
-        async function handleAddContact() {
-            const t = state.t;
-            const nameInput = $('#contactName');
-            const usernameInput = $('#contactUsername');
-            const statusDiv = $('#contactStatus');
-            const name = nameInput.value.trim();
-            const username = usernameInput.value.trim().toLowerCase();
+  try {
+    const existingContact = state.contacts.find((c) => c.username === username);
+    if (existingContact) {
+      if (statusDiv) {
+        statusDiv.textContent = "A contact with this username already exists.";
+        statusDiv.classList.add("error");
+        statusDiv.classList.remove("hidden");
+      }
+      return;
+    }
 
-            if (!name || !username) {
-                if (statusDiv) {
-                    statusDiv.textContent = 'Contact name and username are required.';
-                    statusDiv.classList.add('error');
-                    statusDiv.classList.remove('hidden');
-                }
-                return;
-            }
+    const userQuery = query(collection(db, `artifacts/${appId}/public/data/users`), where("username", "==", username));
+    const userSnapshot = await getDocs(userQuery);
 
-            try {
-                const existingContact = state.contacts.find(c => c.username === username);
-                if (existingContact) {
-                    if (statusDiv) {
-                        statusDiv.textContent = 'A contact with this username already exists.';
-                        statusDiv.classList.add('error');
-                        statusDiv.classList.remove('hidden');
-                    }
-                    return;
-                }
+    if (userSnapshot.empty) {
+      if (statusDiv) {
+        statusDiv.textContent = "Username does not exist in the system.";
+        statusDiv.classList.add("error");
+        statusDiv.classList.remove("hidden");
+      }
+      return;
+    }
 
-                const userQuery = query(collection(db, `artifacts/${appId}/public/data/users`), where("username", "==", username));
-                const userSnapshot = await getDocs(userQuery);
-                
-                if (userSnapshot.empty) {
-                    if (statusDiv) {
-                        statusDiv.textContent = 'Username does not exist in the system.';
-                        statusDiv.classList.add('error');
-                        statusDiv.classList.remove('hidden');
-                    }
-                    return;
-                }
+    const contactsCol = collection(db, `artifacts/${appId}/users/${state.userId}/contacts`);
+    await addDoc(contactsCol, { name, username, createdAt: serverTimestamp() });
 
-                const contactsCol = collection(db, `artifacts/${appId}/users/${state.userId}/contacts`);
-                await addDoc(contactsCol, {
-                    name,
-                    username,
-                    createdAt: serverTimestamp()
-                });
-
-                if (nameInput) nameInput.value = '';
-                if (usernameInput) usernameInput.value = '';
-                if (statusDiv) {
-                    statusDiv.textContent = t.contactAdded;
-                    statusDiv.classList.add('success');
-                    statusDiv.classList.remove('hidden');
-                }
-            } catch (e) {
-                console.error("Add contact error:", e);
-                if (statusDiv) {
-                     statusDiv.textContent = 'Error adding contact.';
-                     statusDiv.classList.add('error');
-                     statusDiv.classList.remove('hidden');
-                }
-            }
-        }
+    if (nameInput) nameInput.value = "";
+    if (usernameInput) usernameInput.value = "";
+    if (statusDiv) {
+      statusDiv.textContent = t.contactAdded;
+      statusDiv.classList.add("success");
+      statusDiv.classList.remove("hidden");
+    }
+  } catch (err) {
+    console.error("Add contact error:", err);
+    if (statusDiv) {
+      statusDiv.textContent = "Error adding contact.";
+      statusDiv.classList.add("error");
+      statusDiv.classList.remove("hidden");
+    }
+  }
+}
 
         // -------------------- Firestore subscriptions --------------------
         let unsubscribeInbox = null;
