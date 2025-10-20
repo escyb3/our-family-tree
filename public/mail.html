@@ -905,35 +905,48 @@
                      loginStatus.textContent = state.t.loginStatusConnecting;
                  }
             
-                 try {
-                     const userQuery = query(collection(db, `artifacts/${appId}/public/data/users`), where("username", "==", username));
-                     const userSnapshot = await getDocs(userQuery);
+               try {
+    console.log("🔹 Start login...");
+    const userQuery = query(
+      collection(db, `artifacts/${appId}/public/data/users`),
+      where("username", "==", username)
+    );
+    console.log("🔹 Running query:", userQuery);
+    const userSnapshot = await getDocs(userQuery);
+    console.log("🔹 userSnapshot:", userSnapshot.empty ? "empty" : userSnapshot.docs.map(d => d.data()));
 
-                     let userCredential;
-                     if (!userSnapshot.empty) {
-                         userCredential = await signInWithEmailAndPassword(auth, email, password);
-                     } else {
-                         try {
-                             userCredential = await signInWithEmailAndPassword(auth, email, password);
-                             await ensurePublicUserDoc(userCredential.user);
-                         } catch (err) {
-                             if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
-                                  userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                                  await setDoc(doc(db, `artifacts/${appId}/public/data/users`, userCredential.user.uid), {
-                                      username,
-                                      email,
-                                      createdAt: serverTimestamp(),
-                                      lastLogin: serverTimestamp(),
-                                  });
-                                  if (loginStatus) {
-                                      loginStatus.textContent = "Account created successfully 🎉";
-                                      loginStatus.classList.add('success');
-                                  }
-                              } else {
-                                  throw err;
-                              }
-                         }
-                     }
+    let userCredential;
+    if (!userSnapshot.empty) {
+        console.log("🔹 Signing in with:", email);
+        userCredential = await signInWithEmailAndPassword(auth, email, password);
+    } else {
+        console.log("🔹 No user found, trying create...");
+        try {
+            userCredential = await signInWithEmailAndPassword(auth, email, password);
+            await ensurePublicUserDoc(userCredential.user);
+        } catch (err) {
+            if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
+                console.log("🔹 Creating new user with email:", email);
+                userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                await setDoc(doc(db, `artifacts/${appId}/public/data/users`, userCredential.user.uid), {
+                    username,
+                    email,
+                    createdAt: serverTimestamp(),
+                    lastLogin: serverTimestamp(),
+                });
+                console.log("✅ User created:", userCredential.user.uid);
+            } else {
+                console.error("❌ Error in nested login/create:", err);
+                throw err;
+            }
+        }
+    }
+    console.log("✅ Final userCredential:", userCredential.user.uid);
+} catch (err) {
+    console.error("Login error:", err);
+    
+}
+
                 
                      const uid = userCredential.user.uid;
                      state.username = username;
