@@ -905,139 +905,152 @@
                      loginStatus.textContent = state.t.loginStatusConnecting;
                  }
             
-             try {
-  console.log("🔹 Start login...");
+           >
+document.addEventListener("DOMContentLoaded", () => {
 
-  let userCredential;
-  try {
-    // קודם מנסים להתחבר
-    console.log("🔹 Trying signInWithEmailAndPassword...");
-    userCredential = await signInWithEmailAndPassword(auth, email, password);
-  } catch (err) {
-    if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
-      console.log("🔹 User not found, creating...");
-      userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  const loginForm = $("#loginForm");
+  const loginBtn = $("#loginBtn");
+  const loginStatus = $("#loginStatus");
 
-      // יוצרים מסמך Firestore רק אחרי יצירת המשתמש
-      await setDoc(doc(db, `artifacts/${appId}/public/data/users`, userCredential.user.uid), {
-        username,
-        email,
-        createdAt: serverTimestamp(),
-        lastLogin: serverTimestamp(),
-      });
-      console.log("✅ User created:", userCredential.user.uid);
-    } else {
-      console.error("❌ Error in login:", err);
-      throw err;
+  if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (loginBtn) loginBtn.disabled = true;
+      
+      const username = $("#username").value.trim().toLowerCase();
+      const email = $("#email").value.trim();
+      const password = $("#password").value;
+
+      try {
+        console.log("🔹 Start login...");
+
+        let userCredential;
+        try {
+          console.log("🔹 Trying signInWithEmailAndPassword...");
+          userCredential = await signInWithEmailAndPassword(auth, email, password);
+        } catch (err) {
+          if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
+            console.log("🔹 User not found, creating...");
+            userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            await setDoc(doc(db, `artifacts/${appId}/public/data/users`, userCredential.user.uid), {
+              username,
+              email,
+              createdAt: serverTimestamp(),
+              lastLogin: serverTimestamp(),
+            });
+            console.log("✅ User created:", userCredential.user.uid);
+          } else {
+            console.error("❌ Error in login:", err);
+            throw err;
+          }
+        }
+
+        // Firestore query after login
+        const userQuery = query(
+          collection(db, `artifacts/${appId}/public/data/users`),
+          where("username", "==", username)
+        );
+        const userSnapshot = await getDocs(userQuery);
+        console.log("🔹 userSnapshot:", userSnapshot.empty ? "empty" : userSnapshot.docs.map(d => d.data()));
+
+        // Update state
+        const uid = userCredential.user.uid;
+        state.username = username;
+        state.emailAddress = email;
+        state.userId = uid;
+        state.currentView = "mailbox";
+        startRealtimeSubscriptions();
+        render();
+
+        console.log("✅ Login finished for:", uid);
+
+      } catch (err) {
+        console.error("Login error:", err);
+        if (loginStatus) {
+          loginStatus.textContent = "Login error: " + (err.message || err.code);
+          loginStatus.classList.add('error');
+        }
+      } finally {
+        if (loginBtn) loginBtn.disabled = false;
+      }
+
+    }); // end loginForm.addEventListener
+  } // end if loginForm
+
+  // --- Functions ---
+
+  function handleLogout() {
+    signOut(auth).then(() => {
+      console.log("User signed out.");
+      stopRealtimeSubscriptions();
+      state.userId = null;
+      state.username = "";
+      state.emailAddress = "";
+      state.currentView = "login";
+      state.currentFolder = "inbox";
+      state.selectedEmail = null;
+      render();
+    }).catch(error => {
+      console.error("Logout error:", error);
+      showMessage("Logout failed.", 'error');
+    });
+  }
+
+  async function handleSendEmail(e) {
+    e.preventDefault();
+    const btnSend = $("#btnSend");
+    if (btnSend) btnSend.disabled = true;
+
+    const recipient = state.compose.recipient.toLowerCase();
+    const subject = state.compose.subject;
+    const body = state.compose.body;
+    const image = state.compose.imageBase64 ? { data: state.compose.imageBase64, type: state.compose.imageType } : null;
+
+    if (!recipient || (!body && !image)) {
+      showMessage("Recipient and message/image are required.", 'error');
+      if (btnSend) btnSend.disabled = false;
+      return;
+    }
+
+    try {
+      const userQuery = query(collection(db, `artifacts/${appId}/public/data/users`), where("username", "==", recipient));
+      const userSnapshot = await getDocs(userQuery);
+
+      if (userSnapshot.empty) {
+        showMessage(`Recipient "${recipient}" does not exist.`, 'error');
+        if (btnSend) btnSend.disabled = false;
+        return;
+      }
+
+      const recipientUid = userSnapshot.docs[0].id;
+      const recipientEmail = userSnapshot.docs[0].data().email;
+
+      const newDocData = {
+        sender: state.emailAddress,
+        senderId: state.userId,
+        recipient: recipientEmail,
+        recipientId: recipientUid,
+        subject: subject || "No Subject",
+        body,
+        timestamp: serverTimestamp(),
+        read: false,
+      };
+      if (image) newDocData.image = image;
+
+      await addDoc(collection(db, `artifacts/${appId}/public/data/emails`), newDocData);
+
+      showMessage(state.t.sendSuccess, 'success');
+      state.compose = { recipient: "", subject: "", body: "", imageFile: null, imageBase64: null, imageType: null };
+      state.showCompose = false;
+      renderMain();
+
+    } catch (err) {
+      console.error("Failed to send email:", err);
+      showMessage(state.t.sendError, 'error');
+    } finally {
+      if (btnSend) btnSend.disabled = false;
     }
   }
-
-  // עכשיו כשהמשתמש מחובר → אפשר להריץ query ב־Firestore
-  const userQuery = query(
-    collection(db, `artifacts/${appId}/public/data/users`),
-    where("username", "==", username)
-  );
-  const userSnapshot = await getDocs(userQuery);
-  console.log("🔹 userSnapshot:", userSnapshot.empty ? "empty" : userSnapshot.docs.map(d => d.data()));
-
-  // עדכון state אחרי login מוצלח
-  const uid = userCredential.user.uid;
-  state.username = username;
-  state.emailAddress = email;
-  state.userId = uid;
-  state.currentView = "mailbox";
-  startRealtimeSubscriptions();
-  render();
-
-  console.log("✅ Login finished for:", uid);
-
-} catch (err) {
-  console.error("Login error:", err);
-  if (loginStatus) {
-    loginStatus.textContent = "Login error: " + (err.message || err.code);
-    loginStatus.classList.add('error');
-  }
-} finally {
-  if (loginBtn) loginBtn.disabled = false;
-}
-
-        
-        // Handle logout
-        function handleLogout() {
-            signOut(auth).then(() => {
-                console.log("User signed out.");
-                stopRealtimeSubscriptions();
-                state.userId = null;
-                state.username = "";
-                state.emailAddress = "";
-                state.currentView = "login";
-                state.currentFolder = "inbox";
-                state.selectedEmail = null;
-                render();
-            }).catch(error => {
-                console.error("Logout error:", error);
-                showMessage("Logout failed.", 'error');
-            });
-        }
-
-
-        // Handle send email
-        async function handleSendEmail(e) {
-            e.preventDefault();
-            const btnSend = $("#btnSend");
-            if (btnSend) btnSend.disabled = true;
-
-            const recipient = state.compose.recipient.toLowerCase();
-            const subject = state.compose.subject;
-            const body = state.compose.body;
-            const image = state.compose.imageBase64 ? { data: state.compose.imageBase64, type: state.compose.imageType } : null;
-
-            if (!recipient || (!body && !image)) {
-                showMessage("Recipient and message/image are required.", 'error');
-                if (btnSend) btnSend.disabled = false;
-                return;
-            }
-
-            try {
-                const userQuery = query(collection(db, `artifacts/${appId}/public/data/users`), where("username", "==", recipient));
-                const userSnapshot = await getDocs(userQuery);
-
-                if (userSnapshot.empty) {
-                    showMessage(`Recipient "${recipient}" does not exist.`, 'error');
-                    if (btnSend) btnSend.disabled = false;
-                    return;
-                }
-                const recipientUid = userSnapshot.docs[0].id;
-                const recipientEmail = userSnapshot.docs[0].data().email;
-                
-                const newDocData = {
-                    sender: state.emailAddress,
-                    senderId: state.userId,
-                    recipient: recipientEmail,
-                    recipientId: recipientUid,
-                    subject: subject || "No Subject",
-                    body,
-                    timestamp: serverTimestamp(),
-                    read: false,
-                };
-                if (image) {
-                    newDocData.image = image;
-                }
-
-                await addDoc(collection(db, `artifacts/${appId}/public/data/emails`), newDocData);
-
-                showMessage(state.t.sendSuccess, 'success');
-                state.compose = { recipient: "", subject: "", body: "", imageFile: null, imageBase64: null, imageType: null };
-                state.showCompose = false;
-                renderMain();
-
-            } catch (err) {
-                console.error("Failed to send email:", err);
-                showMessage(state.t.sendError, 'error');
-            } finally {
-                if (btnSend) btnSend.disabled = false;
-            }
-        }
 
         /** Handles deleting an email from the inbox. */
         async function handleDeleteEmail(emailId) {
