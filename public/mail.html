@@ -905,6 +905,7 @@
                      loginStatus.textContent = state.t.loginStatusConnecting;
                  }
             
+>
 document.addEventListener("DOMContentLoaded", () => {
 
   const loginForm = $("#loginForm");
@@ -915,12 +916,11 @@ document.addEventListener("DOMContentLoaded", () => {
     loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       if (loginBtn) loginBtn.disabled = true;
-      
+
       const username = $("#username").value.trim().toLowerCase();
       const email = $("#email").value.trim();
       const password = $("#password").value;
 
-     
       try {
         console.log("🔹 Start login...");
 
@@ -948,7 +948,6 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
 
-        // Firestore query after login
         const userQuery = query(
           collection(db, `artifacts/${appId}/public/data/users`),
           where("username", "==", username)
@@ -1023,7 +1022,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   render();
-});
+
+}); // <- כאן סוגרים את DOMContentLoaded
 
 // --- Functions ---
 
