@@ -905,67 +905,62 @@
                      loginStatus.textContent = state.t.loginStatusConnecting;
                  }
             
-               try {
-    console.log("🔹 Start login...");
-    const userQuery = query(
-      collection(db, `artifacts/${appId}/public/data/users`),
-      where("username", "==", username)
-    );
-    console.log("🔹 Running query:", userQuery);
-    const userSnapshot = await getDocs(userQuery);
-    console.log("🔹 userSnapshot:", userSnapshot.empty ? "empty" : userSnapshot.docs.map(d => d.data()));
+             try {
+  console.log("🔹 Start login...");
 
-    let userCredential;
-    if (!userSnapshot.empty) {
-        console.log("🔹 Signing in with:", email);
-        userCredential = await signInWithEmailAndPassword(auth, email, password);
+  let userCredential;
+  try {
+    // קודם מנסים להתחבר
+    console.log("🔹 Trying signInWithEmailAndPassword...");
+    userCredential = await signInWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
+      console.log("🔹 User not found, creating...");
+      userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+      // יוצרים מסמך Firestore רק אחרי יצירת המשתמש
+      await setDoc(doc(db, `artifacts/${appId}/public/data/users`, userCredential.user.uid), {
+        username,
+        email,
+        createdAt: serverTimestamp(),
+        lastLogin: serverTimestamp(),
+      });
+      console.log("✅ User created:", userCredential.user.uid);
     } else {
-        console.log("🔹 No user found, trying create...");
-        try {
-            userCredential = await signInWithEmailAndPassword(auth, email, password);
-            await ensurePublicUserDoc(userCredential.user);
-        } catch (err) {
-            if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
-                console.log("🔹 Creating new user with email:", email);
-                userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                await setDoc(doc(db, `artifacts/${appId}/public/data/users`, userCredential.user.uid), {
-                    username,
-                    email,
-                    createdAt: serverTimestamp(),
-                    lastLogin: serverTimestamp(),
-                });
-                console.log("✅ User created:", userCredential.user.uid);
-            } else {
-                console.error("❌ Error in nested login/create:", err);
-                throw err;
-            }
-        }
+      console.error("❌ Error in login:", err);
+      throw err;
     }
-    console.log("✅ Final userCredential:", userCredential.user.uid);
+  }
+
+  // עכשיו כשהמשתמש מחובר → אפשר להריץ query ב־Firestore
+  const userQuery = query(
+    collection(db, `artifacts/${appId}/public/data/users`),
+    where("username", "==", username)
+  );
+  const userSnapshot = await getDocs(userQuery);
+  console.log("🔹 userSnapshot:", userSnapshot.empty ? "empty" : userSnapshot.docs.map(d => d.data()));
+
+  // עדכון state אחרי login מוצלח
+  const uid = userCredential.user.uid;
+  state.username = username;
+  state.emailAddress = email;
+  state.userId = uid;
+  state.currentView = "mailbox";
+  startRealtimeSubscriptions();
+  render();
+
+  console.log("✅ Login finished for:", uid);
+
 } catch (err) {
-    console.error("Login error:", err);
-    
+  console.error("Login error:", err);
+  if (loginStatus) {
+    loginStatus.textContent = "Login error: " + (err.message || err.code);
+    loginStatus.classList.add('error');
+  }
+} finally {
+  if (loginBtn) loginBtn.disabled = false;
 }
 
-                
-                     const uid = userCredential.user.uid;
-                     state.username = username;
-                     state.emailAddress = email;
-                     state.userId = uid;
-                     state.currentView = "mailbox";
-                     startRealtimeSubscriptions();
-                     render();
-                 } catch (err) {
-                     console.error("Login error:", err);
-                     if (loginStatus) {
-                         loginStatus.textContent = "Login error: " + (err.message || err.code);
-                         loginStatus.classList.add('error');
-                     }
-                 } finally {
-                     if (loginBtn) loginBtn.disabled = false;
-                 }
-             });
-        }
         
         // Handle logout
         function handleLogout() {
