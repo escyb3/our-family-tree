@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ספר המשפחה</title>
+    <title>ספר המשפחה: סטטוס וקישורים</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* הגדרת גופן Inter כגופן הראשי */
@@ -46,40 +46,49 @@
     <!-- Container לתוכן הראשי של האפליקציה -->
     <div id="main-content" class="hidden flex items-center justify-center min-h-screen p-4">
         <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-2xl text-center">
-            <h1 class="text-4xl font-bold text-gray-800 mb-6">ספר המשפחה</h1>
+            <h1 class="text-4xl font-bold text-gray-800 mb-6">ספר המשפחה: סטטוס וקישורים</h1>
 
-            <!-- User Details Section -->
+            <!-- User Details Section (פרטי המשתמש שזוהו) -->
             <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-6 text-right">
                 <h2 class="text-2xl font-semibold text-gray-700 mb-4">פרטי המשתמש שלך:</h2>
                 <p id="userName" class="text-lg text-gray-600 mb-2"><strong>שם:</strong> <span class="font-medium"></span></p>
-                <p id="userFamilySide" class="text-lg text-gray-600"><strong>צד משפחתי:</strong> <span class="font-medium"></span></p>
+                <p id="userFamilySide" class="text-lg text-gray-600">
+                    <strong>צד משפחתי (ערך גולמי):</strong> 
+                    <span class="font-medium text-gray-800"></span>
+                </p>
             </div>
 
-            <!-- Family Book Content Section -->
-            <div id="familyBookContent" class="bg-gray-50 p-6 rounded-xl border border-gray-200 text-right min-h-[150px]">
-                <p class="text-gray-500">... תוכן הספר נטען כאן ...</p>
+            <!-- Family Book Content Section (מציג את סיכום הסטטוס המפורט) -->
+            <div id="familyBookContent" class="bg-white p-6 rounded-xl border border-gray-200 text-right min-h-[150px] shadow-lg">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 border-b pb-2">סיכום סטטוס טעינת גרסאות:</h3>
+                <p class="text-gray-500">ממתין לטעינת הנתונים...</p>
             </div>
             
-            <!-- Successful Links Area -->
-            <div id="successfulLinks" class="mt-4 text-sm text-center">
-                <!-- קישורים לגרסאות שנטענו בהצלחה יוצגו כאן -->
+            <!-- Successful Links Area (קישורים לגרסאות שנטענו בהצלחה) -->
+            <div id="successfulLinks" class="mt-8 text-sm text-center">
+                <!-- קישורים יוצגו כאן -->
             </div>
 
-            <!-- Status/Error Message Area -->
-            <div id="statusMessage" class="mt-4 text-sm text-center">
-                <!-- הודעות על כשלונות טעינה יוצגו כאן -->
+            <!-- Status/Error Message Area (הודעת סיכום/הנחיות) -->
+            <div id="statusMessage" class="mt-6 text-sm text-center">
+                <!-- הודעת סיכום על סיום התהליך תוצג כאן -->
             </div>
         </div>
     </div>
 
     <script>
-        // פונקציית עזר לטעינה מקבילית של גרסאות הספר
+        /**
+         * מנסה לטעון את גרסאות ספר המשפחה (V1, V2, ברירת מחדל) עבור צד משפחתי ספציפי.
+         * @param {string} familySide - שם הצד המשפחתי (לדוגמה: "Bromberg").
+         * @returns {Promise<{allAttempts: Array, successfulVersions: Array}>} - הבטחה לתוצאות הטעינה.
+         */
         async function tryLoadBookVersions(familySide) {
-            // הגדרת הגרסאות לטעינה בסדר עדיפות: גרסה רגילה, גרסה 2, ואז גרסת ברירת מחדל
+            // הגדרת הגרסאות לטעינה עבור הצד המשפחתי הנוכחי
             const versions = [
                 { id: 'V1', url: `books/${familySide}.html`, name: 'הגרסה הראשית' },
                 { id: 'V2', url: `books2/${familySide}.html`, name: 'גרסה 2' },
-                { id: 'V3', url: `books/default.html`, name: 'גרסת ברירת מחדל' }
+                // גרסת ברירת המחדל טוענת קובץ גנרי ולא קשור לצד ספציפי (אך רצוי לבדוק אותה תמיד)
+                { id: 'V3', url: `books/default.html`, name: 'גרסת ברירת מחדל (כללית)' }
             ];
 
             // יצירת מערך של הבטחות לטעינת התוכן של כל גרסה
@@ -88,49 +97,36 @@
                     .then(response => {
                         if (!response.ok) {
                             // זורק שגיאה עם מידע מפורט על הכשלון
-                            throw new Error(`שגיאה ${response.status} בטעינת ${v.name}`);
+                            throw new Error(`שגיאה ${response.status}`);
                         }
-                        return response.text();
+                        return response.text().then(content => ({ 
+                            status: 'fulfilled', 
+                            familySide: familySide, // שמירת הצד המשפחתי
+                            version: v.id, 
+                            name: v.name, 
+                            url: v.url, 
+                            content: content 
+                        }));
                     })
-                    .then(content => ({ status: 'fulfilled', version: v.id, content: content }))
-                    .catch(reason => ({ status: 'rejected', version: v.id, reason: reason.message }))
+                    .catch(reason => ({ 
+                        status: 'rejected', 
+                        familySide: familySide, // שמירת הצד המשפחתי גם בכשלון
+                        version: v.id, 
+                        name: v.name, 
+                        url: v.url, 
+                        reason: reason.message.replace('Failed to fetch', 'כשל ברשת/קובץ לא קיים') 
+                    }))
             );
 
             // הפעלת כל הבקשות במקביל
-            const results = await Promise.all(fetchPromises);
-            
-            let loadedContent = null;
-            let statusMessage = '';
-            const failures = [];
-            const successfulVersions = []; // מזהי הגרסאות שנטענו בהצלחה
+            const allAttempts = await Promise.all(fetchPromises);
 
-            // מעבר על התוצאות
-            for (const result of results) {
-                if (result.status === 'fulfilled') {
-                    successfulVersions.push(result.version); // הוספת מזהה הגרסה שהצליחה
-                    // אם תוכן נטען בהצלחה ועדיין אין תוכן ראשי, משתמשים בו
-                    if (!loadedContent) {
-                        loadedContent = result.content;
-                    }
-                } else {
-                    // תיעוד כל כשלון
-                    failures.push(result.reason);
-                }
-            }
+            const successfulVersions = allAttempts
+                .filter(r => r.status === 'fulfilled')
+                .map(r => ({ familySide: r.familySide, version: r.version, name: r.name, url: r.url }));
             
-            // יצירת הודעת סטטוס אם היו כשלונות
-            if (failures.length > 0) {
-                if (loadedContent) {
-                    // אם הצלחנו לטעון משהו, מדווחים על מה שנכשל באופן רגוע
-                    statusMessage = `הערה: ${failures.join(', ו-')}. הוצגה גרסה זמינה אחרת.`;
-                } else {
-                    // אם הכל נכשל, זו השגיאה הקריטית הראשית
-                    throw new Error(`כל ניסיונות הטעינה נכשלו: ${failures.join(' | ')}`);
-                }
-            }
-
-            // החזרת התוכן שנבחר, הודעת הסטטוס ורשימת הגרסאות המוצלחות
-            return { content: loadedContent, status: statusMessage, successfulVersions: successfulVersions };
+            // מחזיר את כל הניסיונות והרשימה המסוננת של ההצלחות
+            return { allAttempts: allAttempts, successfulVersions: successfulVersions };
         }
 
         // שימוש ב-window.onload כדי להבטיח שה-DOM נטען במלואו לפני הרצת הסקריפט
@@ -143,7 +139,9 @@
             const userFamilySideSpan = document.querySelector('#userFamilySide span');
             const familyBookContent = document.getElementById('familyBookContent');
             const statusMessageDiv = document.getElementById('statusMessage');
-            const successfulLinksDiv = document.getElementById('successfulLinks'); // קישור לאזור הקישורים החדש
+            const successfulLinksDiv = document.getElementById('successfulLinks');
+            
+            let rawFamilySide = "לא ידוע"; // משתנה לשמירת ערך גולמי
 
             try {
                 // שלב 1: קבלת נתוני המשתמש מהשרת
@@ -151,7 +149,7 @@
                 const response = await fetch('/api/user');
 
                 if (!response.ok) {
-                    throw new Error(`שגיאת HTTP: ${response.status}`);
+                    throw new Error(`שגיאת HTTP: ${response.status} בעת טעינת פרטי משתמש.`);
                 }
 
                 const data = await response.json();
@@ -160,77 +158,104 @@
                 if (!user || !user.familySide) {
                     throw new Error("נתונים לא תקינים מהשרת: המאפיין familySide חסר או לא מוגדר.");
                 }
-
-                // הצגת פרטי המשתמש
+                
+                rawFamilySide = user.familySide;
+                
+                // הצגת פרטי המשתמש (מציג את הערך הגולמי, כולל פסיקים)
                 userNameSpan.textContent = user.username || "לא זוהה";
-                userFamilySideSpan.textContent = user.familySide;
+                userFamilySideSpan.textContent = rawFamilySide;
 
-                // שלב 2: טעינת תוכן ספר המשפחה (מנסה את שלוש הגרסאות)
-                loadingMessage.textContent = "טוען את ספר המשפחה (מנסה שלוש גרסאות)...";
-                
-                const { content: bookContent, status: bookStatus, successfulVersions } = await tryLoadBookVersions(user.familySide);
+                // פיצול הערך הגולמי לצדדים משפחתיים בודדים
+                const familySides = rawFamilySide.split(',')
+                    .map(s => s.trim()) // הסרת רווחים
+                    .filter(s => s.length > 0); // סינון צדדים ריקים
 
-                if (!bookContent) {
-                     // אם bookContent ריק, זה אומר ש-tryLoadBookVersions זרקה שגיאה קריטית,
-                     // נטפל בה ב-catch.
-                     throw new Error('לא נמצא תוכן ספר זמין. בדוק את הודעת הסטטוס.');
+                if (familySides.length === 0) {
+                     throw new Error("לא זוהה אף צד משפחתי חוקי בערך שהתקבל.");
                 }
+
+                // שלב 2: טעינת תוכן ספר המשפחה עבור כל צד משפחתי
+                loadingMessage.textContent = `מבצע ניסיונות טעינה עבור ${familySides.length} צדדים משפחתיים...`;
                 
-                // הזרקת התוכן לעמוד הראשי
-                familyBookContent.innerHTML = bookContent;
+                // יצירת מערך הבטחות לטעינת כל הצדדים במקביל
+                const loadingPromises = familySides.map(side => tryLoadBookVersions(side));
+                
+                const allResults = await Promise.all(loadingPromises);
 
-                // --- הצגת קישורים לגרסאות שנטענו בהצלחה ---
-                const familySide = user.familySide; // נוחות
-                // הגדרת המיפוי מחדש כדי ליצור קישורים
-                const versionMap = {
-                    'V1': { url: `books/${familySide}.html`, name: 'הגרסה הראשית' },
-                    'V2': { url: `books2/${familySide}.html`, name: 'גרסה 2' },
-                    'V3': { url: `books/default.html`, name: 'גרסת ברירת מחדל' }
-                };
+                // איסוף כל הניסיונות והגרסאות המוצלחות מכל הצדדים
+                let allAttempts = [];
+                let successfulVersions = [];
+                allResults.forEach(result => {
+                    allAttempts = allAttempts.concat(result.allAttempts);
+                    successfulVersions = successfulVersions.concat(result.successfulVersions);
+                });
 
+
+                // --- 1. הצגת סיכום סטטוס מפורט בתוך familyBookContent ---
+                let statusHtml = '<ul class="space-y-3">';
+                allAttempts.forEach(attempt => {
+                    // קביעת סטטוס וסגנון לתצוגה
+                    const isFulfilled = attempt.status === 'fulfilled';
+                    const displayStatus = isFulfilled
+                        ? { text: 'זוהה בהצלחה', color: 'text-green-600', icon: '✅' }
+                        : { text: `כשלון: ${attempt.reason.split(' | ')[0]}`, color: 'text-red-600', icon: '❌' };
+                        
+                    const statusClass = isFulfilled ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200';
+                    
+                    statusHtml += `
+                        <li class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-3 rounded-xl border ${statusClass}">
+                            <span class="font-bold text-gray-700 mb-1 sm:mb-0">
+                                ${displayStatus.icon} ${attempt.familySide} - ${attempt.name}:
+                            </span>
+                            <span class="text-xs text-right text-gray-600 mt-1 sm:mt-0">
+                                ${displayStatus.text}
+                            </span>
+                        </li>
+                    `;
+                });
+                statusHtml += '</ul>';
+                familyBookContent.innerHTML = statusHtml;
+
+                // --- 2. הצגת קישורים לגרסאות שנטענו בהצלחה ---
                 if (successfulVersions.length > 0) {
-                    const linksHtml = successfulVersions.map(versionId => {
-                        const info = versionMap[versionId];
-                        // שימוש ב-target="_blank" כדי לפתוח את הקבצים בחלון חדש
-                        return `<a href="${info.url}" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium underline transition duration-150">${info.name}</a>`;
+                    const linksHtml = successfulVersions.map(info => {
+                        // הצגת הקישור עם שם הצד המשפחתי והגרסה
+                        const linkText = `${info.familySide}: ${info.name}`;
+                        return `<a href="${info.url}" target="_blank" class="text-blue-600 hover:text-blue-800 font-bold underline transition duration-150 p-2 rounded-lg bg-blue-50 hover:bg-blue-100 whitespace-nowrap">${linkText}</a>`;
                     }).join('<span class="mx-3 text-gray-400">|</span>');
 
                     successfulLinksDiv.innerHTML = `
-                        <div class="p-4 rounded-xl bg-green-50 border border-green-200 text-green-800 text-right">
-                            <p class="font-bold mb-2 text-base">גרסאות הספר הזמינות שנטענו בהצלחה:</p>
-                            <div class="flex flex-wrap items-center justify-center sm:justify-start text-sm">${linksHtml}</div>
+                        <div class="p-4 rounded-xl bg-blue-100 border border-blue-300 text-blue-900 text-right shadow-md">
+                            <p class="font-bold mb-3 text-lg text-center">לחץ על הקישור לפתיחת הגרסה הרלוונטית:</p>
+                            <div class="flex flex-wrap items-center justify-center gap-3">${linksHtml}</div>
                         </div>
                     `;
-                } else {
-                    // אם אין גרסאות מוצלחות (מצב לא סביר במקרה של הצלחה כוללת, אבל למקרה), מנקים את האזור
-                    successfulLinksDiv.innerHTML = '';
-                }
-                // ----------------------------------------------------
-
-                // הצגת הודעת סטטוס (אם קיימת)
-                if (bookStatus) {
-                    statusMessageDiv.innerHTML = `<div class="p-2 rounded-lg bg-yellow-100 text-yellow-800 border border-yellow-300">
-                        <p class="font-medium">${bookStatus}</p>
+                    // הודעת סיכום חיובית
+                    statusMessageDiv.innerHTML = `<div class="p-3 rounded-lg bg-green-100 text-green-800 border border-green-300">
+                        <p class="font-medium">✅ הנתונים נטענו בהצלחה. כל הגרסאות הזמינות מופיעות למעלה.</p>
                     </div>`;
                 } else {
-                    statusMessageDiv.innerHTML = '';
+                    // אם לא נמצאו גרסאות מוצלחות כלל
+                    successfulLinksDiv.innerHTML = '';
+                    statusMessageDiv.innerHTML = `<div class="p-3 rounded-lg bg-red-100 text-red-800 border border-red-300">
+                        <p class="font-medium">❌ לא נמצאה אף גרסת ספר זמינה באף אחד מהצדדים. בדוק את סיכום הסטטוס המפורט.</p>
+                    </div>`;
                 }
-
+                
                 // הסתרת מסך הטעינה והצגת התוכן הראשי
                 loadingContainer.classList.add('hidden');
                 mainContent.classList.remove('hidden');
 
             } catch (error) {
-                // טיפול בשגיאות שמתרחשות במהלך תהליך ה-fetch או הטעינה
-                console.error("שגיאה בטעינת הנתונים:", error);
+                // טיפול בשגיאות קריטיות (כשל ב-fetch הראשוני או בנתוני המשתמש)
+                console.error("שגיאה קריטית בטעינת הנתונים:", error);
                 loadingSpinner.classList.add('hidden');
                 
-                // עדכון הודעת השגיאה במסך הטעינה
-                const familySide = userFamilySideSpan.textContent;
+                // הצגת הודעת שגיאה קריטית במסך הטעינה
                 loadingContainer.innerHTML = `<div class="p-6 rounded-xl bg-red-100 text-red-700 border border-red-300 shadow-md max-w-lg mx-auto text-right">
                     <p class="font-bold text-xl mb-2">אירעה שגיאה קריטית</p>
-                    <p class="text-lg">${error.message.replace(/ | \| /g, '<br>')}</p>
-                    <p class="text-sm mt-3">אנא ודא שקובץ ספר אחד לפחות זמין בנתיב: books/${familySide}.html, books/${familySide}-v2.html, או books/default.html.</p>
+                    <p class="text-lg">${error.message}</p>
+                    <p class="text-sm mt-3">צד המשפחה הגולמי שניסיתי לנתח היה: "${rawFamilySide}"</p>
                 </div>`;
                 return; // עוצר את ההרצה
             }
