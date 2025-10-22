@@ -37,10 +37,9 @@
             background-color: var(--main-bg);
             color: var(--text-color);
             transition: background-color 0.5s, color 0.5s;
-            /* שינוי: רקע שיתפרש על כל העמוד */
             background-image: linear-gradient(135deg, #d1d5db 0%, #a5b4fc 50%, #f3f4f6 100%);
             min-height: 100vh; 
-            display: block; /* שינוי: כדי למנוע מרכיבי ה-body להתמרכז בעצמם */
+            display: block; 
         }
 
         .dark-mode body {
@@ -164,144 +163,146 @@
         .app-container {
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* הצמדת התוכן לחלק העליון */
+            align-items: flex-start;
             min-height: 100vh;
         }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
 
-    <!-- רכיב ראשי של האפליקציה - מכיל את התוכן או את מסך ההתחברות -->
-    <div class="app-container"> 
-        
-        <!-- מסך התחברות (יוצג אם המשתמש לא מחובר) -->
-        <!-- הסרנו את data-lang-key מהאלמנטים במסך זה כדי למנוע עדכון אוטומטי לעברית -->
-        <div id="loginScreen" class="hidden fixed inset-0 bg-gray-100 dark:bg-gray-900 flex flex-col items-center justify-center p-8 z-50 transition-opacity duration-500" style="background-image: linear-gradient(135deg, #d1d5db 0%, #a5b4fc 50%, #f3f4f6 100%);">
-            <div class="glassmorphism-container p-10 rounded-3xl text-center max-w-lg w-full">
-                <i class="fas fa-lock text-6xl text-indigo-500 mb-6"></i>
-                <!-- הוספנו ID כדי לעדכן את הטקסט ב-JS לאנגלית -->
-                <h2 id="loginTitle" class="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-200">Login Required</h2>
-                <p id="loginText" class="text-gray-600 dark:text-gray-400 mb-6">This family forum is private and only available to identified users.</p>
-                <a id="loginButtonLink" href="/login.html" class="gradient-btn text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 inline-block">
-                    Go to Login Page
-                </a>
-            </div>
-        </div>
-
-        <!-- Main Container (יוצג רק אם המשתמש מחובר) -->
-        <div id="appContent" class="hidden container mx-auto p-4 sm:p-8 max-w-4xl glassmorphism-container rounded-[2rem] shadow-2xl my-10 w-full">
-            
-            <!-- Header -->
-            <header class="text-center pb-8 border-b border-gray-200 dark:border-gray-700 mb-8">
-                <h1 class="text-4xl sm:text-5xl font-extrabold text-indigo-700 dark:text-indigo-400" data-lang-key="title">🗣️ פורום משפחתנו</h1>
-                <p class="text-gray-500 dark:text-gray-400 mt-2 text-lg" data-lang-key="subtitle">מקום להתעדכן, לשאול ולחלוק זיכרונות משפחתיים.</p>
-            </header>
-
-            <!-- User & App Info Section -->
-            <div class="flex items-center justify-between flex-wrap gap-4 mb-6 text-sm text-gray-500 dark:text-gray-400">
-                <span id="userIdDisplay" class="truncate flex items-center gap-1">
-                    <span class="font-mono text-gray-700 dark:text-gray-300 font-semibold text-lg" id="userIdValue">טוען...</span>
-                    <span id="userName" class="text-gray-600 dark:text-gray-400 font-medium"></span>
-                    <button id="copyUserIdBtn" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors duration-200" title="העתק מזהה משתמש">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg>
-                    </button>
-                </span>
-                <div id="copySuccessMsg" class="absolute bg-green-500 text-white text-xs px-3 py-1 rounded-md opacity-0 transition-opacity duration-300">הועתק!</div>
-                <div class="flex items-center gap-3">
-                    <button id="darkModeToggle" class="flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full text-sm font-medium transition-colors duration-200">
-                        <span id="darkModeIcon">🌓</span> <span data-lang-key="darkModeBtn">מצב כהה</span>
-                    </button>
-                    <button id="langToggle" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full text-sm font-medium transition-colors duration-200">
-                        English
-                    </button>
-                </div>
-            </div>
-            
-            <!-- User Name Section -->
-            <div class="glassmorphism-container rounded-2xl p-6 mb-8 flex flex-col sm:flex-row items-center gap-4 shadow-sm">
-                <h2 class="text-2xl font-bold text-gray-700 dark:text-gray-300 mb-2 sm:mb-0" data-lang-key="userNameSection">👤 שם המשתמש שלך</h2>
-                <div class="flex flex-grow gap-2 w-full">
-                    <input type="text" id="userNameInput" placeholder="הכנס את שמך" class="flex-grow px-4 py-2 border rounded-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200" data-lang-key="userNamePlaceholder">
-                    <button id="saveUserNameBtn" class="gradient-btn text-white font-bold py-2 px-6 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-lang-key="saveBtn">
-                        שמור
-                    </button>
-                </div>
-            </div>
-
-            <!-- Search & Filter Section -->
-            <div class="flex flex-col sm:flex-row gap-4 mb-8">
-                <input type="text" id="searchInput" placeholder="🔍 חפש שרשור..." class="w-full sm:w-2/3 px-4 py-2 border rounded-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200" data-lang-key="searchPlaceholder">
-                <select id="categoryFilter" class="w-full sm:w-1/3 px-4 py-2 border rounded-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200">
-                    <option value="all" data-lang-key="allCategories">כל הנושאים</option>
-                    <option value="היסטוריה משפחתית" data-lang-key="categoryHistory">היסטוריה משפחתית</option>
-                    <option value="שאלות" data-lang-key="categoryQuestions">שאלות</option>
-                    <option value="עדכונים" data-lang-key="categoryUpdates">עדכונים</option>
-                </select>
-            </div>
-
-            <!-- New Thread Form -->
-            <div class="glassmorphism-container rounded-[2rem] p-8 mb-8 shadow-sm">
-                <h2 class="text-2xl font-bold mb-4 text-gray-700 dark:text-gray-300" data-lang-key="newThreadHeader">✍️ פרסם שרשור חדש</h2>
-                <form id="newThreadForm" class="space-y-4">
-                    <input type="text" id="newThreadTitle" placeholder="כותרת השרשור" required class="w-full px-4 py-3 border rounded-xl focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="titlePlaceholder">
-                    <textarea id="newThreadContent" rows="4" placeholder="שתף את מחשבותיך..." required class="w-full px-4 py-3 border rounded-xl focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="contentPlaceholder"></textarea>
-                    <div class="flex flex-col sm:flex-row gap-2">
-                        <button type="button" id="improveTextBtn" class="w-full sm:w-1/2 outline-btn font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-lang-key="improveBtn">
-                            ✨ שפר את הניסוח
-                        </button>
-         <div class="relative w-full sm:w-1/2">
-      <button id="categoryDropdownBtn" type="button" aria-haspopup="listbox" aria-expanded="false"
-              class="w-full px-4 py-3 border rounded-lg text-left flex items-center justify-between bg-transparent focus:ring focus:ring-indigo-300">
-        <span id="selectedCategoryLabel" class="truncate">בחר קטגוריה...</span>
-        <i class="fas fa-chevron-down text-sm"></i>
-      </button>
-
-      <ul id="categoryDropdownList" role="listbox" tabindex="-1"
-          class="hidden absolute right-0 left-0 mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg z-50 overflow-auto max-h-48 text-right">
-        <li role="option" data-value="היסטוריה משפחתית" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">היסטוריה משפחתית</li>
-        <li role="option" data-value="שאלות" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">שאלות</li>
-        <li role="option" data-value="עדכונים" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">עדכונים</li>
-      </ul>
-
-      <!-- select נסתר לשמירה על התמיכה בקוד הקיים -->
-      <select id="newThreadCategory" class="sr-only" aria-hidden="true">
-        <option value="">בחר קטגוריה...</option>
-        <option value="היסטוריה משפחתית">היסטוריה משפחתית</option>
-        <option value="שאלות">שאלות</option>
-        <option value="עדכונים">עדכונים</option>
-      </select>
+    <!-- רכיב טעינה ראשוני עד שהשרת יחזיר תשובה -->
+    <div id="initialLoading" class="fixed inset-0 bg-gray-100 dark:bg-gray-900 flex flex-col items-center justify-center z-[100]">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-indigo-500"></div>
+        <p class="mt-4 text-indigo-500 font-semibold">בודק אימות שרת...</p>
     </div>
 
-
-    <button type="submit" id="submitThreadBtn" 
-            class="w-full gradient-btn text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled-btn" 
-            disabled>
-        <span id="submitBtnText" data-lang-key="submitBtn">📤 פרסם שרשור</span>
-        <div id="loadingSpinner" class="hidden animate-spin h-6 w-6 text-white mx-auto">
-            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" 
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                </path>
-                            </svg>
-                        </div>
-                    </button>
-                </form>
-            </div>
-
-            <!-- Threads Section -->
-            <div class="space-y-6">
-                <h2 class="text-2xl font-bold text-gray-700 dark:text-gray-300" data-lang-key="threadsHeader">🗂️ כל השרשורים</h2>
-                <div id="threadList" class="min-h-[200px]">
-                    <p id="loadingMessage" class="text-center text-gray-500 dark:text-gray-400 mt-10" data-lang-key="loadingMsg">טוען שרשורים...</p>
-                    <!-- Threads will be dynamically inserted here -->
-                </div>
-                <p id="noThreadsMessage" class="text-center text-gray-500 dark:text-gray-400 hidden" data-lang-key="noThreadsMsg">אין שרשורים עדיין. היה הראשון לפרסם!</p>
-            </div>
-
+    <!-- מסך התחברות (יוצג אם השרת יחזיר 401) -->
+    <div id="loginScreen" class="hidden fixed inset-0 bg-gray-100 dark:bg-gray-900 flex flex-col items-center justify-center p-8 z-50 transition-opacity duration-500" style="background-image: linear-gradient(135deg, #d1d5db 0%, #a5b4fc 50%, #f3f4f6 100%);" dir="ltr">
+        <div class="glassmorphism-container p-10 rounded-3xl text-center max-w-lg w-full">
+            <i class="fas fa-lock text-6xl text-indigo-500 mb-6"></i>
+            <!-- טקסט קבוע באנגלית בלבד -->
+            <h2 id="loginTitle" class="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-200">Login Required</h2>
+            <p id="loginText" class="text-gray-600 dark:text-gray-400 mb-6">This family forum is private and only available to identified users. Please log in to proceed.</p>
+            <a id="loginButtonLink" href="/login.html" class="gradient-btn text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 inline-block">
+                Go to Login Page
+            </a>
+            <p class="text-xs text-gray-400 mt-4">Status check failed: 401 Unauthorized from /api/user</p>
         </div>
+    </div>
+
+    <!-- Main Container (יוצג רק אם השרת יחזיר 200) -->
+    <div id="appContent" class="hidden container mx-auto p-4 sm:p-8 max-w-4xl glassmorphism-container rounded-[2rem] shadow-2xl my-10 w-full">
+        
+        <!-- Header -->
+        <header class="text-center pb-8 border-b border-gray-200 dark:border-gray-700 mb-8">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-indigo-700 dark:text-indigo-400" data-lang-key="title">🗣️ פורום משפחתנו</h1>
+            <p class="text-gray-500 dark:text-gray-400 mt-2 text-lg" data-lang-key="subtitle">מקום להתעדכן, לשאול ולחלוק זיכרונות משפחתיים.</p>
+        </header>
+
+        <!-- User & App Info Section -->
+        <div class="flex items-center justify-between flex-wrap gap-4 mb-6 text-sm text-gray-500 dark:text-gray-400">
+            <span id="userIdDisplay" class="truncate flex items-center gap-1">
+                <span class="font-mono text-gray-700 dark:text-gray-300 font-semibold text-lg" id="userIdValue">טוען...</span>
+                <span id="userName" class="text-gray-600 dark:text-gray-400 font-medium"></span>
+                <button id="copyUserIdBtn" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors duration-200" title="העתק מזהה משתמש">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                </button>
+            </span>
+            <div id="copySuccessMsg" class="absolute bg-green-500 text-white text-xs px-3 py-1 rounded-md opacity-0 transition-opacity duration-300">הועתק!</div>
+            <div class="flex items-center gap-3">
+                <button id="darkModeToggle" class="flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full text-sm font-medium transition-colors duration-200">
+                    <span id="darkModeIcon">🌓</span> <span data-lang-key="darkModeBtn">מצב כהה</span>
+                </button>
+                <button id="langToggle" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full text-sm font-medium transition-colors duration-200">
+                    English
+                </button>
+            </div>
+        </div>
+        
+        <!-- User Name Section -->
+        <div class="glassmorphism-container rounded-2xl p-6 mb-8 flex flex-col sm:flex-row items-center gap-4 shadow-sm">
+            <h2 class="text-2xl font-bold text-gray-700 dark:text-gray-300 mb-2 sm:mb-0" data-lang-key="userNameSection">👤 שם המשתמש שלך</h2>
+            <div class="flex flex-grow gap-2 w-full">
+                <input type="text" id="userNameInput" placeholder="הכנס את שמך" class="flex-grow px-4 py-2 border rounded-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200" data-lang-key="userNamePlaceholder">
+                <button id="saveUserNameBtn" class="gradient-btn text-white font-bold py-2 px-6 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-lang-key="saveBtn">
+                    שמור
+                </button>
+            </div>
+        </div>
+
+        <!-- Search & Filter Section -->
+        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+            <input type="text" id="searchInput" placeholder="🔍 חפש שרשור..." class="w-full sm:w-2/3 px-4 py-2 border rounded-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200" data-lang-key="searchPlaceholder">
+            <select id="categoryFilter" class="w-full sm:w-1/3 px-4 py-2 border rounded-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200">
+                <option value="all" data-lang-key="allCategories">כל הנושאים</option>
+                <option value="היסטוריה משפחתית" data-lang-key="categoryHistory">היסטוריה משפחתית</option>
+                <option value="שאלות" data-lang-key="categoryQuestions">שאלות</option>
+                <option value="עדכונים" data-lang-key="categoryUpdates">עדכונים</option>
+            </select>
+        </div>
+
+        <!-- New Thread Form -->
+        <div class="glassmorphism-container rounded-[2rem] p-8 mb-8 shadow-sm">
+            <h2 class="text-2xl font-bold mb-4 text-gray-700 dark:text-gray-300" data-lang-key="newThreadHeader">✍️ פרסם שרשור חדש</h2>
+            <form id="newThreadForm" class="space-y-4">
+                <input type="text" id="newThreadTitle" placeholder="כותרת השרשור" required class="w-full px-4 py-3 border rounded-xl focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="titlePlaceholder">
+                <textarea id="newThreadContent" rows="4" placeholder="שתף את מחשבותיך..." required class="w-full px-4 py-3 border rounded-xl focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="contentPlaceholder"></textarea>
+                <div class="flex flex-col sm:flex-row gap-2">
+                    <button type="button" id="improveTextBtn" class="w-full sm:w-1/2 outline-btn font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-lang-key="improveBtn">
+                        ✨ שפר את הניסוח
+                    </button>
+     <div class="relative w-full sm:w-1/2">
+  <button id="categoryDropdownBtn" type="button" aria-haspopup="listbox" aria-expanded="false"
+          class="w-full px-4 py-3 border rounded-lg text-left flex items-center justify-between bg-transparent focus:ring focus:ring-indigo-300">
+    <span id="selectedCategoryLabel" class="truncate">בחר קטגוריה...</span>
+    <i class="fas fa-chevron-down text-sm"></i>
+  </button>
+
+  <ul id="categoryDropdownList" role="listbox" tabindex="-1"
+      class="hidden absolute right-0 left-0 mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg z-50 overflow-auto max-h-48 text-right">
+    <li role="option" data-value="היסטוריה משפחתית" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">היסטוריה משפחתית</li>
+    <li role="option" data-value="שאלות" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">שאלות</li>
+    <li role="option" data-value="עדכונים" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">עדכונים</li>
+  </ul>
+
+  <!-- select נסתר לשמירה על התמיכה בקוד הקיים -->
+  <select id="newThreadCategory" class="sr-only" aria-hidden="true">
+    <option value="">בחר קטגוריה...</option>
+    <option value="היסטוריה משפחתית">היסטוריה משפחתית</option>
+    <option value="שאלות">שאלות</option>
+    <option value="עדכונים">עדכונים</option>
+  </select>
+</div>
+
+
+<button type="submit" id="submitThreadBtn" 
+        class="w-full gradient-btn text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled-btn" 
+        disabled>
+    <span id="submitBtnText" data-lang-key="submitBtn">📤 פרסם שרשור</span>
+    <div id="loadingSpinner" class="hidden animate-spin h-6 w-6 text-white mx-auto">
+        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" 
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+            </path>
+                        </svg>
+                    </div>
+                </button>
+            </form>
+        </div>
+
+        <!-- Threads Section -->
+        <div class="space-y-6">
+            <h2 class="text-2xl font-bold text-gray-700 dark:text-gray-300" data-lang-key="threadsHeader">🗂️ כל השרשורים</h2>
+            <div id="threadList" class="min-h-[200px]">
+                <p id="loadingMessage" class="text-center text-gray-500 dark:text-gray-400 mt-10" data-lang-key="loadingMsg">טוען שרשורים...</p>
+                <!-- Threads will be dynamically inserted here -->
+            </div>
+            <p id="noThreadsMessage" class="text-center text-gray-500 dark:text-gray-400 hidden" data-lang-key="noThreadsMsg">אין שרשורים עדיין. היה הראשון לפרסם!</p>
+        </div>
+
     </div>
 
     <!-- JavaScript and Firebase Logic -->
@@ -312,17 +313,8 @@
         import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, doc, updateDoc, arrayUnion, arrayRemove, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Global variables for Firebase configuration and app ID
-        const firebaseConfig = {
-            apiKey: "AIzaSyBw7yfBRTDFiMRlWfuekISDD3EHnmNAuDk",
-            authDomain: "family-forum-d088e.firebaseapp.com",
-            projectId: "family-forum-d088e",
-            storageBucket: "family-forum-d088e.firebasestorage.app",
-            messagingSenderId: "159839212196",
-            appId: "1:159839212196:web:20992695be32d2b14a8c31",
-            measurementId: "G-XX7T3N2X7C"
-        };
-        const appId = firebaseConfig.projectId;
-        // שימוש בגלובלי המוגדר בסביבת Canvas
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null; 
 
         // UI Elements
@@ -347,22 +339,132 @@
         const submitThreadBtn = document.getElementById('submitThreadBtn');
         const newThreadTitle = document.getElementById('newThreadTitle');
         const newThreadCategory = document.getElementById('newThreadCategory');
-        // אלמנטים חדשים למסך ההתחברות והתוכן
+        // אלמנטים למסך ההתחברות והתוכן
         const loginScreen = document.getElementById('loginScreen');
         const appContent = document.getElementById('appContent');
+        const initialLoading = document.getElementById('initialLoading'); // רכיב הטעינה
         
-        // ** חדש: אלמנטים ספציפיים למסך ההתחברות **
-        const loginTitle = document.getElementById('loginTitle');
-        const loginText = document.getElementById('loginText');
-        const loginButtonLink = document.getElementById('loginButtonLink');
-
-
-        // Firebase Initialization
+        // ** משתנים גלובליים ל-Firebase **
         let db, auth;
         let userId;
         let userName = 'Anonymous'; // Default user name
 
-        // Language Strings
+
+        // --- פונקציות להצגת תוכן ---
+        
+        /** מציג את מסך הפורום ומסתיר את מסך ההתחברות והטעינה. */
+        const showForum = () => {
+            initialLoading.classList.add('hidden');
+            loginScreen.classList.add('hidden');
+            appContent.classList.remove('hidden');
+            document.documentElement.setAttribute('dir', currentLang === 'he' ? 'rtl' : 'ltr');
+            updateUI(currentLang); // עדכון הטקסטים
+            fetchThreads();      // שליפת הנתונים
+        };
+
+        /** מציג את מסך ההתחברות ומסתיר את הפורום והטעינה. */
+        const showLogin = () => {
+            initialLoading.classList.add('hidden');
+            appContent.classList.add('hidden');
+            loginScreen.classList.remove('hidden');
+            // הגדרת כיוון הטקסט והטקסט לאנגלית בלבד (כנדרש)
+            loginScreen.setAttribute('dir', 'ltr');
+            document.documentElement.setAttribute('dir', 'ltr');
+        };
+
+        /**
+         * בודק את מצב האימות מול השרת באמצעות הקריאה ל- /api/user.
+         * בהתאם לתגובת השרת (200 או 401) מוצג המסך המתאים.
+         */
+        const checkServerAuth = async () => {
+            console.log("Checking server authentication via /api/user...");
+            try {
+                // קריאה לנתיב השרת שלך
+                const response = await fetch('/api/user', {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (response.ok) {
+                    // Status 200: המשתמש מזוהה בסשן השרת
+                    const data = await response.json();
+                    console.log("Server auth successful. User data:", data.user.uid);
+                    
+                    // נשתמש ב-UID של השרת ל-Firestore אם קיים, אחרת נשאר עם ה-UID האנונימי
+                    userId = data.user.uid || userId; 
+                    userIdDisplay.textContent = userId;
+                    
+                    // טעינת שם משתמש מ-Firestore (או שימוש בשם מהסשן אם קיים)
+                    const sessionUserName = data.user.username;
+                    if (sessionUserName && sessionUserName !== "משתמש לא ידוע") {
+                        userName = sessionUserName;
+                        userNameInput.value = userName;
+                    } else {
+                        // אם השרת לא סיפק שם משתמש, ננסה לטעון מ-Firestore לפי ה-UID החדש
+                        const userDocRef = doc(db, `artifacts/${appId}/public/data/users`, userId);
+                        const userDocSnap = await getDoc(userDocRef);
+                        if (userDocSnap.exists() && userDocSnap.data().name) {
+                            userName = userDocSnap.data().name;
+                            userNameInput.value = userName;
+                        } else {
+                             userName = languageStrings[currentLang].anonymousUser;
+                        }
+                    }
+                    userNameDisplay.textContent = `(${languageStrings[currentLang].welcomeMsg} ${userName})`;
+
+                    showForum();
+
+                } else if (response.status === 401) {
+                    // Status 401: המשתמש לא מחובר בסשן
+                    console.warn("Server responded 401. User is not authenticated by server session.");
+                    showLogin();
+                } else {
+                    // כל שגיאה אחרת (500, וכו')
+                    console.error(`Server status check failed with status: ${response.status}`);
+                    showLogin();
+                }
+
+            } catch (err) {
+                // שגיאת רשת או שרת לא זמין
+                console.error('Network or server error during /api/user check:', err);
+                showLogin();
+            }
+        };
+
+        const initializeFirebase = async () => {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
+                // שלב 1: ניסיון התחברות או יצירת משתמש אנונימי לגישה ל-Firestore.
+                // זה נותן לנו UID שמיש עבור נתוני Firestore פרטיים או ציבוריים,
+                // גם אם השרת עדיין לא אימת את המשתמש בסשן שלו.
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth); 
+                }
+
+                // onAuthStateChanged משמש כעת רק להגדרת ה-userId ל-Firestore
+                // ואינו קובע את זרימת התצוגה.
+                onAuthStateChanged(auth, (user) => {
+                    // userId: משתמשים ב-UID של Firebase אם קיים, אחרת מזהה רנדומלי (למשתמש אנונימי/לא מחובר)
+                    userId = user ? user.uid : crypto.randomUUID();
+                    userIdDisplay.textContent = userId;
+                });
+
+                // שלב 2: בדיקת האימות מול השרת
+                await checkServerAuth();
+
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+                // במקרה של שגיאת אתחול קשה, מציגים את מסך ההתחברות
+                showLogin();
+            }
+        };
+        
+        // Language Strings (שאר קוד השפה ופונקציות העזר נשארים זהים)
         const languageStrings = {
             'he': {
                 'title': '🗣️ פורום משפחתנו',
@@ -397,10 +499,6 @@
                 'replyPlaceholder': 'הוסף תגובה...',
                 'loadingText': 'טוען...',
                 'nameSaveSuccess': 'השם נשמר בהצלחה!',
-                // מחרוזות חדשות למסך ההתחברות
-                'loginRequiredTitle': 'כניסה נדרשת',
-                'loginRequiredText': 'פורום משפחתי זה פרטי וזמין רק למשתמשים שזוהו.',
-                'loginButton': 'עבור לדף ההתחברות'
             },
             'en': {
                 'title': '🗣️ Our Family Forum',
@@ -435,104 +533,18 @@
                 'replyPlaceholder': 'Add a reply...',
                 'loadingText': 'Loading...',
                 'nameSaveSuccess': 'Name saved successfully!',
-                // New strings for login screen
-                'loginRequiredTitle': 'Login Required',
-                'loginRequiredText': 'This family forum is private and only available to identified users.',
-                'loginButton': 'Go to Login Page'
             }
         };
 
         let currentLang = localStorage.getItem('lang') || 'he';
-        langToggle.textContent = currentLang === 'he' ? 'English' : 'עברית';
-        document.documentElement.setAttribute('dir', currentLang === 'he' ? 'rtl' : 'ltr');
-
-        const initializeFirebase = async () => {
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-                
-                // שלב 1: ניסיון התחברות או יצירת משתמש אנונימי לגישה ל-Firestore
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    // עדיין נכנסים אנונימית כדי שיהיה UID לשימוש ב-Firestore
-                    await signInAnonymously(auth); 
-                }
-
-                // שלב 2: בדיקת מצב האימות בפועל
-                onAuthStateChanged(auth, async (user) => {
-                    let isAuthenticated = false;
-
-                    // הגדרת userId בכל מקרה (או ה-UID האמיתי, או אנונימי, או ID רנדומלי)
-                    if (user) {
-                        userId = user.uid;
-                        // בדיקה האם המשתמש אינו אנונימי - זה הכלל שלנו ל"מחובר"
-                        if (!user.isAnonymous) {
-                            isAuthenticated = true;
-                        }
-                    } else {
-                        userId = crypto.randomUUID(); // מקרה קצה אם אין בכלל User
-                    }
-                    
-                    userIdDisplay.textContent = userId;
-
-                    if (isAuthenticated) {
-                        // הראה את תוכן האפליקציה (שבעברית או בשפה שנבחרה)
-                        loginScreen.classList.add('hidden');
-                        appContent.classList.remove('hidden');
-                        document.documentElement.setAttribute('dir', currentLang === 'he' ? 'rtl' : 'ltr');
-
-
-                        // טעינת שם משתמש
-                        const userDocRef = doc(db, `artifacts/${appId}/public/data/users`, userId);
-                        const userDocSnap = await getDoc(userDocRef);
-                        
-                        if (userDocSnap.exists() && userDocSnap.data().name) {
-                            userName = userDocSnap.data().name;
-                            userNameInput.value = userName;
-                        } else {
-                             userName = languageStrings[currentLang].anonymousUser;
-                        }
-                        userNameDisplay.textContent = `(${languageStrings[currentLang].welcomeMsg} ${userName})`;
-
-
-                        // עדכון ממשק המשתמש ושליפת שרשורים
-                        updateUI(currentLang);
-                        fetchThreads();
-
-                    } else {
-                        // הראה את מסך ההתחברות (באנגלית בלבד)
-                        appContent.classList.add('hidden');
-                        loginScreen.classList.remove('hidden');
-                        loadingMessage.classList.add('hidden');
-                        
-                        // ** שינוי: הגדרת הטקסט באנגלית באופן מפורש **
-                        loginTitle.textContent = languageStrings.en.loginRequiredTitle;
-                        loginText.textContent = languageStrings.en.loginRequiredText;
-                        loginButtonLink.textContent = languageStrings.en.loginButton;
-                        
-                        // הגדרת כיוון הטקסט ל-LTR עבור אנגלית
-                        loginScreen.setAttribute('dir', 'ltr');
-                        document.documentElement.setAttribute('dir', 'ltr'); // מגדיר את כיוון הכללי של העמוד כל עוד מסך ההתחברות מוצג
-                    }
-                });
-            } catch (error) {
-                console.error("Error initializing Firebase:", error);
-                loadingMessage.textContent = languageStrings[currentLang].loadingMsg;
-                // במקרה של שגיאה קשה ב-Firebase, מציגים את מסך ההתחברות
-                appContent.classList.add('hidden');
-                loginScreen.classList.remove('hidden');
-            }
-        };
-
+        
         const updateUI = (lang) => {
             currentLang = lang;
             localStorage.setItem('lang', lang);
             
-            // עדכון כיוון הטקסט הכללי רק אם התוכן מוצג (כי אם לא, הוא נקבע ל-LTR למסך ההתחברות)
+            // עדכון כיוון הטקסט הכללי רק אם התוכן מוצג
             if (!loginScreen.classList.contains('hidden')) {
-                document.documentElement.setAttribute('dir', 'ltr'); // Keep LTR for English login screen
+                document.documentElement.setAttribute('dir', 'ltr'); 
             } else {
                 document.documentElement.setAttribute('dir', lang === 'he' ? 'rtl' : 'ltr');
             }
@@ -555,11 +567,6 @@
             langToggle.textContent = lang === 'he' ? 'English' : 'עברית';
             copySuccessMsg.textContent = languageStrings[lang].copySuccessMsg;
             userNameDisplay.textContent = `(${languageStrings[currentLang].welcomeMsg} ${userName})`;
-            
-            // Re-render threads to update dynamic content, if appContent is visible
-            if (!appContent.classList.contains('hidden')) {
-                fetchThreads();
-            }
         };
         
         // --- Gemini API Functionality ---
@@ -678,17 +685,15 @@
         langToggle.addEventListener('click', () => {
             const newLang = currentLang === 'he' ? 'en' : 'he';
             updateUI(newLang);
+            fetchThreads(); // Re-render threads to update language
         });
         
         // Function to check if all form fields are valid and enable/disable the submit button
         const updateSubmitButtonState = () => {
-            // Get the trimmed values of the input fields and the selected category.
             const title = newThreadTitle.value.trim();
             const content = newThreadContent.value.trim();
             const category = newThreadCategory.value;
 
-            // The button is only enabled when all three fields have valid input.
-            // An empty string in JavaScript is "falsy", so this condition works well.
             if (title && content && category) {
                 submitThreadBtn.disabled = false;
                 submitThreadBtn.classList.remove('disabled-btn');
@@ -770,6 +775,7 @@
         const fetchThreads = () => {
             const threadsCol = collection(db, `artifacts/${appId}/public/data/threads`);
             
+            // Note: Firebase security rules (not shown here) must allow read access only to authenticated users.
             onSnapshot(threadsCol, (querySnapshot) => {
                 const threads = [];
                 querySnapshot.forEach(doc => threads.push(doc));
@@ -854,7 +860,7 @@
                 const threadId = favoriteBtn.dataset.threadId;
                 const threadRef = doc(db, `artifacts/${appId}/public/data/threads`, threadId);
                 
-                // FIX: Check if the user ID exists in the favorites array before adding/removing
+                // Check if the user ID exists in the favorites array before adding/removing
                 const threadDoc = await getDoc(threadRef);
                 const favorites = threadDoc.data().favorites || [];
                 const isFavorited = favorites.includes(userId);
@@ -951,4 +957,3 @@ document.addEventListener('click', (e) => {
     </script>
 </body>
 </html>
-
