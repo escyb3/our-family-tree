@@ -375,6 +375,7 @@
         /**
          * בודק את מצב האימות מול השרת באמצעות הקריאה ל- /api/user.
          * בהתאם לתגובת השרת (200 או 401) מוצג המסך המתאים.
+         * הפונקציה קולטת את UID ושם המשתמש ישירות מהשרת.
          */
         const checkServerAuth = async () => {
             console.log("Checking server authentication via /api/user...");
@@ -388,30 +389,33 @@
                 if (response.ok) {
                     // Status 200: המשתמש מזוהה בסשן השרת
                     const data = await response.json();
-                    console.log("Server auth successful. User data:", data.user.uid);
                     
-                    // נשתמש ב-UID של השרת ל-Firestore אם קיים, אחרת נשאר עם ה-UID האנונימי
-                    userId = data.user.uid || userId; 
-                    userIdDisplay.textContent = userId;
-                    
-                    // טעינת שם משתמש מ-Firestore (או שימוש בשם מהסשן אם קיים)
-                    const sessionUserName = data.user.username;
-                    if (sessionUserName && sessionUserName !== "משתמש לא ידוע") {
-                        userName = sessionUserName;
-                        userNameInput.value = userName;
-                    } else {
-                        // אם השרת לא סיפק שם משתמש, ננסה לטעון מ-Firestore לפי ה-UID החדש
-                        const userDocRef = doc(db, `artifacts/${appId}/public/data/users`, userId);
-                        const userDocSnap = await getDoc(userDocRef);
-                        if (userDocSnap.exists() && userDocSnap.data().name) {
-                            userName = userDocSnap.data().name;
-                            userNameInput.value = userName;
-                        } else {
-                             userName = languageStrings[currentLang].anonymousUser;
-                        }
+                    // --- שינוי מרכזי: קליטת נתונים מהשרת ---
+                    const serverUid = data.user.uid;
+                    const serverUsername = data.user.username;
+
+                    if (!serverUid) {
+                         console.error("Server returned status 200 but missing UID. Falling back to login.");
+                         showLogin();
+                         return;
                     }
+                    
+                    // עדכון המשתנים הגלובליים בנתונים שהתקבלו מהשרת
+                    userId = serverUid;
+                    // אם השרת החזיר את ערך ברירת המחדל "משתמש לא ידוע", נשתמש בטקסט האנונימי המתורגם
+                    userName = serverUsername && serverUsername !== "משתמש לא ידוע" 
+                               ? serverUsername 
+                               : languageStrings[currentLang].anonymousUser;
+
+                    // עדכון ממשק המשתמש
+                    userIdDisplay.textContent = userId;
+                    userNameInput.value = userName === languageStrings[currentLang].anonymousUser ? '' : userName;
+
                     userNameDisplay.textContent = `(${languageStrings[currentLang].welcomeMsg} ${userName})`;
 
+                    console.log(`Server auth successful. UID: ${userId}, Username: ${userName}`);
+                    // --- סוף שינוי מרכזי ---
+                    
                     showForum();
 
                 } else if (response.status === 401) {
@@ -438,20 +442,16 @@
                 auth = getAuth(app);
                 
                 // שלב 1: ניסיון התחברות או יצירת משתמש אנונימי לגישה ל-Firestore.
-                // זה נותן לנו UID שמיש עבור נתוני Firestore פרטיים או ציבוריים,
-                // גם אם השרת עדיין לא אימת את המשתמש בסשן שלו.
+                // זה חיוני כדי לאפשר קריאה וכתיבה ל-Firestore עם הרשאות בסיסיות
                 if (initialAuthToken) {
                     await signInWithCustomToken(auth, initialAuthToken);
                 } else {
                     await signInAnonymously(auth); 
                 }
 
-                // onAuthStateChanged משמש כעת רק להגדרת ה-userId ל-Firestore
-                // ואינו קובע את זרימת התצוגה.
                 onAuthStateChanged(auth, (user) => {
-                    // userId: משתמשים ב-UID של Firebase אם קיים, אחרת מזהה רנדומלי (למשתמש אנונימי/לא מחובר)
+                    // קביעת userId לפי Firebase Auth (ברירת המחדל לפני קבלת נתוני השרת)
                     userId = user ? user.uid : crypto.randomUUID();
-                    userIdDisplay.textContent = userId;
                 });
 
                 // שלב 2: בדיקת האימות מול השרת
@@ -653,8 +653,9 @@
             if (newName === '') return;
 
             try {
+                // שומרים את השם ב-Firestore בנתיב הציבורי, כדי שהשרת יוכל לשלוף אותו בבדיקת הפרופיל.
                 const userDocRef = doc(db, `artifacts/${appId}/public/data/users`, userId);
-                await setDoc(userDocRef, { name: newName });
+                await setDoc(userDocRef, { name: newName }, { merge: true });
                 userName = newName;
                 userNameDisplay.textContent = `(${languageStrings[currentLang].welcomeMsg} ${userName})`;
                 console.log('User name saved successfully!');
