@@ -158,14 +158,14 @@
         emptyState: "בחר אימייל לצפייה או צור הודעה חדשה.", newMessageTitle: "הודעה חדשה", send: "שלח", saveDraft: "שמור טיוטה",
         cancel: "בטל", translate: "תרגם", noSubject: "(ללא נושא)", to: "אל", from: "מאת", noEmails: "תיקייה זו ריקה.",
         deleteDraftConfirm: "האם למחוק טיוטה זו?", errorLogin: "שגיאת התחברות: נדרש אסימון אימות תקף.", errorTitle: "שגיאת כניסה",
-        errorEmailFetch: "שגיאה: לא ניתן לאחזר אימייל ממקור מאומת."
+        errorEmailFetch: "שגיאה: לא ניתן לאחזר אימייל ממקור מאומת.", errorFetchStatus: "שגיאת שרת או אימות: לא ניתן לאחזר פרטי משתמש."
       },
       en: {
         mailboxTitle: "Mailbox", newEmail: "New Message", inbox: "Inbox", sent: "Sent", drafts: "Drafts", trash: "Trash",
         emptyState: "Select an email to view or create a new one.", newMessageTitle: "New Message", send: "Send", saveDraft: "Save Draft",
-        cancel: "Cancel", translate: "Translate", noSubject: "(No Subject)", to: "To", from: "From", noEmails: "This folder is empty.",
+        cancel: "Cancel", translate: "Translate", noSubject: "(No Subject)", to: "To", "from": "From", noEmails: "This folder is empty.",
         deleteDraftConfirm: "Delete this draft?", errorLogin: "Login Error: Requires a valid authentication token.", errorTitle: "Login Error",
-        errorEmailFetch: "Error: Could not retrieve email from authenticated source."
+        errorEmailFetch: "Error: Could not retrieve email from authenticated source.", errorFetchStatus: "Server or authentication error: Could not fetch user details."
       }
     };
     
@@ -231,32 +231,36 @@
         
         // 1. Check if the user object even has an email 
         if (!user.email) {
-            // This should ideally never happen with a correctly generated custom token
             throw new Error(t.errorEmailFetch); 
         }
 
         try {
-            console.log(`[API Call] Attempting to fetch user data from /api/user...`);
-            // Attempt a real fetch to the specified endpoint /api/user
-            const response = await fetch('/api/user');
+            console.log(`[API Call] Attempting to fetch user data from /api/user with credentials...`);
+            
+            // --- CRITICAL FIX: Add credentials: 'include' to ensure session cookie is sent ---
+            const response = await fetch('/api/user', {
+                credentials: 'include' 
+            });
 
             if (response.ok) {
                 const userData = await response.json();
                 
-                // --- FIX APPLIED HERE: Check the nested structure userData.user.email ---
+                // Check the nested structure userData.user.email (Fix from previous turn)
                 if (userData.user && userData.user.email) { 
                     baseEmail = userData.user.email;
                     console.log(`[API Call] Success: Retrieved email from /api/user: ${baseEmail}`);
                 } else {
                     console.warn("[API Call] Warning: /api/user returned OK but email field was not found at 'user.email'. Using Firebase Auth email as fallback.");
                 }
-                // --------------------------------------------------------------------------
 
             } else {
-                 console.warn(`[API Call] Warning: /api/user returned status ${response.status}. Using Firebase Auth email as fallback.`);
+                 console.warn(`[API Call] Warning: /api/user returned status ${response.status}. Message: ${t.errorFetchStatus}. Using Firebase Auth email as fallback.`);
+                 if (response.status === 401) {
+                      console.error("Authentication failed on /api/user: Server reported 'לא מחובר'. Check server session setup.");
+                 }
             }
         } catch (e) {
-            // Handle network errors (e.g., 404, CORS, connectivity issues)
+            // Handle network errors (e.g., 404, connectivity issues)
             console.error("[API Call] Error during fetch to /api/user. Using Firebase Auth email as fallback:", e);
         }
         
