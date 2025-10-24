@@ -242,12 +242,16 @@
 
             if (response.ok) {
                 const userData = await response.json();
-                if (userData.email) {
-                    baseEmail = userData.email;
+                
+                // --- FIX APPLIED HERE: Check the nested structure userData.user.email ---
+                if (userData.user && userData.user.email) { 
+                    baseEmail = userData.user.email;
                     console.log(`[API Call] Success: Retrieved email from /api/user: ${baseEmail}`);
                 } else {
-                    console.warn("[API Call] Warning: /api/user returned OK but no 'email' field. Using Firebase Auth email as fallback.");
+                    console.warn("[API Call] Warning: /api/user returned OK but email field was not found at 'user.email'. Using Firebase Auth email as fallback.");
                 }
+                // --------------------------------------------------------------------------
+
             } else {
                  console.warn(`[API Call] Warning: /api/user returned status ${response.status}. Using Firebase Auth email as fallback.`);
             }
