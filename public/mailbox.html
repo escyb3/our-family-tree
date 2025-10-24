@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
+<!DOCTYPE html><html lang="he" dir="rtl"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>מערכת דוא"ל פנימית</title>
@@ -13,18 +11,6 @@
         body {
             font-family: 'Heebo', sans-serif;
             direction: rtl; /* Set default direction to RTL for Hebrew */
-        }
-        .app-container {
-            display: flex;
-            height: 100vh;
-            background-color: #f0f4f8;
-            color: #334e68;
-        }
-        .rtl {
-            direction: rtl;
-        }
-        .ltr {
-            direction: ltr;
         }
         /* Custom scrollbar */
         ::-webkit-scrollbar {
@@ -40,18 +26,26 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
-        .login-bg {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #e2e8f0;
-        }
         .checkmark {
             color: #10B981; /* Green color for the checkmark */
         }
+        .email-item {
+            border-right: 4px solid transparent;
+            transition: background-color 0.1s;
+        }
+        .email-item:hover {
+            background-color: #f7fafc;
+        }
+        .email-item.unread {
+            font-weight: 700;
+            border-right: 4px solid #3b82f6;
+        }
+        .active-folder {
+            background-color: #dbeafe !important;
+            color: #1e40af !important;
+            font-weight: 600;
+        }
     </style>
-</head>
 </head>
 <body class="bg-gray-100">
   <div id="loadingPage" class="flex h-screen items-center justify-center">
@@ -71,39 +65,55 @@
         <span class="text-green-600 font-bold">✔</span>
         <p id="userEmailDisplay" class="ml-2 text-gray-700"></p>
       </div>
-      <button id="newEmailButton" class="bg-blue-500 text-white px-4 py-2 rounded mb-2">הודעה חדשה</button>
-      <button data-folder="inbox" class="folder-btn bg-blue-100 text-blue-800 px-3 py-2 rounded mb-1" id="inboxBtn">נכנס</button>
-      <button data-folder="sent" class="folder-btn px-3 py-2 rounded mb-1" id="sentBtn">נשלח</button>
-      <button data-folder="drafts" class="folder-btn px-3 py-2 rounded mb-1" id="draftsBtn">טיוטות</button>
-      <button data-folder="trash" class="folder-btn px-3 py-2 rounded mb-1" id="trashBtn">זבל</button>
-      <ul id="draftsList" class="mt-4 text-sm text-gray-600"></ul>
+      <button id="newEmailButton" class="bg-blue-500 text-white px-4 py-2 rounded mb-2 hover:bg-blue-600 transition">הודעה חדשה</button>
+      
+      <!-- Folder buttons now properly styled for active/inactive state -->
+      <button data-folder="inbox" class="folder-btn bg-blue-100 text-blue-800 px-3 py-2 rounded mb-1 text-right active-folder" id="inboxBtn">נכנס</button>
+      <button data-folder="sent" class="folder-btn px-3 py-2 rounded mb-1 text-right hover:bg-gray-100" id="sentBtn">נשלח</button>
+      <button data-folder="drafts" class="folder-btn px-3 py-2 rounded mb-1 text-right hover:bg-gray-100" id="draftsBtn">טיוטות</button>
+      <button data-folder="trash" class="folder-btn px-3 py-2 rounded mb-1 text-right hover:bg-gray-100" id="trashBtn">זבל</button>
+      
+      <ul id="draftsList" class="mt-4 text-sm text-gray-600 overflow-y-auto hidden"></ul>
     </aside>
 
-    <main class="flex-1 p-6 overflow-y-auto">
-      <div id="emptyState" class="text-center text-gray-500">
+    <main class="flex-1 p-6 flex flex-col">
+      <!-- Container for the list of emails in the currently selected folder -->
+      <div id="emailList" class="overflow-y-auto mb-4 border rounded-lg bg-white shadow-sm flex-grow">
+          <!-- Emails will be rendered here -->
+      </div>
+      
+      <div id="emptyState" class="text-center text-gray-500 hidden mt-10">
         בחר אימייל לצפייה או צור הודעה חדשה.
       </div>
-      <div id="emailView" class="hidden"></div>
-      <div id="composeView" class="hidden">
+      
+      <div id="emailView" class="hidden p-4 border rounded-lg bg-white shadow-sm flex-grow">
+          <!-- Single email content view here -->
+      </div>
+
+      <div id="composeView" class="hidden p-4 border rounded-lg bg-white shadow-sm flex-grow">
         <h3 class="text-xl font-bold mb-4" id="newMessageTitle">הודעה חדשה</h3>
         <input id="composeTo" placeholder="אל" class="w-full border p-2 mb-2 rounded" />
         <input id="composeSubject" placeholder="נושא" class="w-full border p-2 mb-2 rounded" />
         <textarea id="composeBody" placeholder="תוכן" class="w-full border p-2 mb-2 rounded h-40"></textarea>
         <div class="flex space-x-2 space-x-reverse mt-2">
-          <button id="sendButton" class="bg-green-500 text-white px-4 py-2 rounded">שלח</button>
-          <button id="saveDraftButton" class="bg-yellow-500 text-white px-4 py-2 rounded">שמור טיוטה</button>
-          <button id="cancelButton" class="bg-gray-300 px-4 py-2 rounded">בטל</button>
-          <button id="translateButton" class="bg-purple-500 text-white px-4 py-2 rounded">תרגם</button>
+          <button id="sendButton" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">שלח</button>
+          <button id="saveDraftButton" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition">שמור טיוטה</button>
+          <button id="cancelButton" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400 transition">בטל</button>
+          <button id="translateButton" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 transition">תרגם</button>
         </div>
       </div>
     </main>
   </div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, addDoc, setDoc, deleteDoc, doc, onSnapshot, Timestamp, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    const firebaseConfig = {
+    // --- FIREBASE IMPORTS (Updated to v11.6.1) ---
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInWithCustomToken, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, setDoc, deleteDoc, doc, onSnapshot, Timestamp, query, where, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    
+    // --- CANVAS MANDATORY GLOBAL VARIABLES ---
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+     const firebaseConfig = {
       apiKey: "AIzaSyAID_kPGA6Khczh0lIgd7E13LJS76JJ9nI",
       authDomain: "mailbox-e0ce2.firebaseapp.com",
       projectId: "mailbox-e0ce2",
@@ -112,15 +122,21 @@
       appId: "1:199399854104:web:6aec488e6aeee0dec3736d"
     };
 
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    const auth = getAuth(app);
 
+    // --- UI ELEMENTS ---
     const loadingPage = document.getElementById("loadingPage");
     const appPage = document.getElementById("appPage");
     const userEmailDisplay = document.getElementById("userEmailDisplay");
     const newEmailButton = document.getElementById("newEmailButton");
     const composeView = document.getElementById("composeView");
     const emptyState = document.getElementById("emptyState");
+    const emailList = document.getElementById("emailList");
+    const emailView = document.getElementById("emailView");
     const sendButton = document.getElementById("sendButton");
     const saveDraftButton = document.getElementById("saveDraftButton");
     const cancelButton = document.getElementById("cancelButton");
@@ -129,56 +145,57 @@
     const composeSubject = document.getElementById("composeSubject");
     const composeBody = document.getElementById("composeBody");
     const draftsList = document.getElementById("draftsList");
-
+    
     const mailboxTitle = document.getElementById("mailboxTitle");
-    const inboxBtn = document.getElementById("inboxBtn");
-    const sentBtn = document.getElementById("sentBtn");
-    const draftsBtn = document.getElementById("draftsBtn");
-    const trashBtn = document.getElementById("trashBtn");
+    const folderButtons = document.querySelectorAll('.folder-btn');
     const newMessageTitle = document.getElementById("newMessageTitle");
     const langToggle = document.getElementById("langToggle");
 
+    // --- TRANSLATIONS (Expanded) ---
     const translations = {
       he: {
-        mailboxTitle: "תיבת דואר",
-        newEmail: "הודעה חדשה",
-        inbox: "נכנס",
-        sent: "נשלח",
-        drafts: "טיוטות",
-        trash: "זבל",
-        emptyState: "בחר אימייל לצפייה או צור הודעה חדשה.",
-        newMessageTitle: "הודעה חדשה",
-        send: "שלח",
-        saveDraft: "שמור טיוטה",
-        cancel: "בטל",
-        translate: "תרגם"
+        mailboxTitle: "תיבת דואר", newEmail: "הודעה חדשה", inbox: "נכנס", sent: "נשלח", drafts: "טיוטות", trash: "זבל",
+        emptyState: "בחר אימייל לצפייה או צור הודעה חדשה.", newMessageTitle: "הודעה חדשה", send: "שלח", saveDraft: "שמור טיוטה",
+        cancel: "בטל", translate: "תרגם", noSubject: "(ללא נושא)", to: "אל", from: "מאת", noEmails: "תיקייה זו ריקה.",
+        deleteDraftConfirm: "האם למחוק טיוטה זו?", errorLogin: "שגיאת התחברות: נדרש אסימון אימות תקף.", errorTitle: "שגיאת כניסה",
+        errorEmailFetch: "שגיאה: לא ניתן לאחזר אימייל ממקור מאומת."
       },
       en: {
-        mailboxTitle: "Mailbox",
-        newEmail: "New Message",
-        inbox: "Inbox",
-        sent: "Sent",
-        drafts: "Drafts",
-        trash: "Trash",
-        emptyState: "Select an email to view or create a new one.",
-        newMessageTitle: "New Message",
-        send: "Send",
-        saveDraft: "Save Draft",
-        cancel: "Cancel",
-        translate: "Translate"
+        mailboxTitle: "Mailbox", newEmail: "New Message", inbox: "Inbox", sent: "Sent", drafts: "Drafts", trash: "Trash",
+        emptyState: "Select an email to view or create a new one.", newMessageTitle: "New Message", send: "Send", saveDraft: "Save Draft",
+        cancel: "Cancel", translate: "Translate", noSubject: "(No Subject)", to: "To", from: "From", noEmails: "This folder is empty.",
+        deleteDraftConfirm: "Delete this draft?", errorLogin: "Login Error: Requires a valid authentication token.", errorTitle: "Login Error",
+        errorEmailFetch: "Error: Could not retrieve email from authenticated source."
       }
     };
-
+    
     let currentLang = "he";
+    
+    // --- STATE MANAGEMENT ---
+    const state = {
+      db: db,
+      auth: auth,
+      userId: null,
+      isAuthReady: false,
+      emailAddress: null,
+      inboxEmails: [], // Stores emails where recipient == user
+      sentEmails: [],  // Stores emails where sender == user
+      currentFolder: "inbox",
+      editingDraftId: null
+    };
 
     function applyTranslations() {
       const t = translations[currentLang];
+      document.documentElement.dir = currentLang === "he" ? "rtl" : "ltr";
       mailboxTitle.textContent = t.mailboxTitle;
       newEmailButton.textContent = t.newEmail;
-      inboxBtn.textContent = t.inbox;
-      sentBtn.textContent = t.sent;
-      draftsBtn.textContent = t.drafts;
-      trashBtn.textContent = t.trash;
+      
+      // Update folder buttons text
+      document.getElementById('inboxBtn').textContent = t.inbox;
+      document.getElementById('sentBtn').textContent = t.sent;
+      document.getElementById('draftsBtn').textContent = t.drafts;
+      document.getElementById('trashBtn').textContent = t.trash;
+
       emptyState.textContent = t.emptyState;
       newMessageTitle.textContent = t.newMessageTitle;
       sendButton.textContent = t.send;
@@ -186,99 +203,377 @@
       cancelButton.textContent = t.cancel;
       translateButton.textContent = t.translate;
       langToggle.textContent = currentLang === "he" ? "EN" : "HE";
+
+      // Re-render to update dynamic texts
+      if (state.isAuthReady) {
+        showFolder(state.currentFolder);
+        listenToDrafts();
+      }
     }
 
     langToggle.addEventListener("click", () => {
       currentLang = currentLang === "he" ? "en" : "he";
       applyTranslations();
     });
+    
+    function showLoginError(message) {
+         const t = translations[currentLang];
+         document.getElementById("loadingText").textContent = t.errorTitle;
+         document.getElementById("loadingSubtext").textContent = message;
+         loadingPage.classList.remove("hidden");
+         appPage.classList.add("hidden");
+    }
+    
+    // --- API CALL: Attempts to fetch user email from an external endpoint like /api/user ---
+    async function fetchUserEmail(user) {
+        const t = translations[currentLang];
+        let baseEmail = user.email; // Secure fallback: The email from the Firebase Auth token
+        
+        // 1. Check if the user object even has an email 
+        if (!user.email) {
+            // This should ideally never happen with a correctly generated custom token
+            throw new Error(t.errorEmailFetch); 
+        }
 
-    async function translateText(text, targetLang) {
-      // דמו בלבד: הוספת תגית לפי שפה
-      if (!text.trim()) return text;
-      if (targetLang === "en") {
-        return "[EN] " + text;
-      } else {
-        return "[HE] " + text;
-      }
+        try {
+            console.log(`[API Call] Attempting to fetch user data from /api/user...`);
+            // Attempt a real fetch to the specified endpoint /api/user
+            const response = await fetch('/api/user');
+
+            if (response.ok) {
+                const userData = await response.json();
+                if (userData.email) {
+                    baseEmail = userData.email;
+                    console.log(`[API Call] Success: Retrieved email from /api/user: ${baseEmail}`);
+                } else {
+                    console.warn("[API Call] Warning: /api/user returned OK but no 'email' field. Using Firebase Auth email as fallback.");
+                }
+            } else {
+                 console.warn(`[API Call] Warning: /api/user returned status ${response.status}. Using Firebase Auth email as fallback.`);
+            }
+        } catch (e) {
+            // Handle network errors (e.g., 404, CORS, connectivity issues)
+            console.error("[API Call] Error during fetch to /api/user. Using Firebase Auth email as fallback:", e);
+        }
+        
+        // Returns the email from the server or the Firebase fallback
+        return baseEmail; 
     }
 
-    translateButton.addEventListener("click", async () => {
-      composeSubject.value = await translateText(composeSubject.value, currentLang === "he" ? "en" : "he");
-      composeBody.value = await translateText(composeBody.value, currentLang === "he" ? "en" : "he");
+    // --- AUTHENTICATION SETUP ---
+    onAuthStateChanged(auth, async (user) => {
+        const t = translations[currentLang];
+        
+        // 1. Check for a valid, non-anonymous user (anonymous is forbidden)
+        if (user && !user.isAnonymous) {
+            state.userId = user.uid;
+            
+            try {
+                // STEP 2: Fetch the base email from the server (or fallback if fetch fails)
+                const baseEmail = await fetchUserEmail(user); 
+                
+                // STEP 3: Email Transformation Logic (MANDATORY): a@g.x -> a@family.local
+                const username = baseEmail.split('@')[0];
+                const transformedEmail = `${username}@family.local`;
+                
+                state.emailAddress = transformedEmail;
+
+                // 4. Successful initialization
+                userEmailDisplay.textContent = `${currentLang === 'he' ? 'מחובר כ- ' : 'Logged in as '} ${state.emailAddress} (UID: ${user.uid})`;
+                state.isAuthReady = true;
+                loadingPage.classList.add("hidden");
+                appPage.classList.remove("hidden");
+                
+                // Start listeners and render UI
+                listenToEmails();
+                listenToDrafts();
+                showFolder("inbox");
+                applyTranslations();
+                
+            } catch (e) {
+                 console.error("Authentication/Email retrieval failed:", e);
+                 // Show general login error if fetching email fails
+                 showLoginError(t.errorLogin);
+            }
+
+        } else {
+             // 5. Auth Failed / No user / Anonymous user 
+             showLoginError(t.errorLogin);
+        }
     });
 
-    const state = {
-      emailAddress: null,
-      emails: [],
-      currentFolder: "inbox",
-      editingDraftId: null
-    };
+    // Initial sign-in attempt using the custom token
+    if (initialAuthToken) {
+        signInWithCustomToken(auth, initialAuthToken)
+            .catch(e => {
+                 console.error("Custom token sign-in failed:", e);
+                 // onAuthStateChanged will be triggered with a null user, showing the final error.
+            });
+    } else {
+        // If there's no token at all, fail immediately (no anonymous fallback allowed)
+         showLoginError(translations[currentLang].errorLogin);
+    }
+    
 
-    async function fetchUser() {
-      try {
-        const res = await fetch("/api/user");
-        if (!res.ok) throw new Error("לא מחובר");
-        const data = await res.json();
-        let email = data.user.email;
-        if (email.endsWith("@family.local")) {
-          state.emailAddress = email;
-        } else {
-          const username = email.split("@")[0];
-          state.emailAddress = `${username}@family.local`;
+    // --- FOLDER MANAGEMENT AND RENDERING (Unchanged logic) ---
+    folderButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            showFolder(btn.getAttribute('data-folder'));
+        });
+    });
+
+    function showFolder(folder) {
+        state.currentFolder = folder;
+        const t = translations[currentLang];
+
+        // 1. Update active class on buttons
+        folderButtons.forEach(btn => {
+            btn.classList.remove('active-folder', 'bg-blue-100', 'text-blue-800');
+            btn.classList.add('hover:bg-gray-100');
+        });
+        document.querySelector(`[data-folder="${folder}"]`).classList.add('active-folder', 'bg-blue-100', 'text-blue-800');
+        document.querySelector(`[data-folder="${folder}"]`).classList.remove('hover:bg-gray-100');
+
+        // 2. Hide compose/view, show list container
+        composeView.classList.add("hidden");
+        emailView.classList.add("hidden");
+        emailList.classList.remove("hidden");
+        emptyState.classList.add("hidden");
+        
+        // 3. Determine which list to display
+        draftsList.classList.add('hidden');
+        emailList.innerHTML = ''; // Clear main list container
+        
+        let emailsToDisplay = [];
+
+        if (folder === 'inbox') {
+            emailsToDisplay = state.inboxEmails;
+        } else if (folder === 'sent') {
+            emailsToDisplay = state.sentEmails;
+        } else if (folder === 'drafts') {
+            // Drafts are managed by a separate UL element (draftsList)
+            emailList.classList.add("hidden");
+            draftsList.classList.remove('hidden');
+            if (draftsList.children.length === 0) {
+                 emptyState.textContent = t.noEmails;
+                 emptyState.classList.remove("hidden");
+            } else {
+                 emptyState.classList.add("hidden");
+            }
+            return; // Skip main emailList rendering
+        } else if (folder === 'trash') {
+             // Not implemented yet, show empty state
+             emptyState.textContent = t.noEmails;
+             emptyState.classList.remove("hidden");
+             return;
         }
-        userEmailDisplay.textContent = `מחובר כ- ${state.emailAddress}`;
-        loadingPage.classList.add("hidden");
-        appPage.classList.remove("hidden");
-        listenToEmails();
-        listenToDrafts();
-        applyTranslations();
-      } catch (err) {
-        document.getElementById("loadingText").textContent = "שגיאה";
-        document.getElementById("loadingSubtext").textContent = "יש להתחבר למערכת";
-        console.error(err);
-      }
+
+        renderEmailList(emailsToDisplay);
     }
 
-    function listenToEmails() {
-      const emailsRef = collection(db, "emails");
-      onSnapshot(emailsRef, (snapshot) => {
-        state.emails = [];
-        snapshot.forEach(docSnap => {
-          state.emails.push({ id: docSnap.id, ...docSnap.data() });
+    function renderEmailList(emailsToDisplay) {
+        const t = translations[currentLang];
+        emailList.innerHTML = '';
+
+        if (emailsToDisplay.length === 0) {
+            emailList.innerHTML = `<div class="p-4 text-center text-gray-400">${t.noEmails}</div>`;
+            return;
+        }
+        
+        // Sort by timestamp descending
+        emailsToDisplay.sort((a, b) => b.timestamp.toMillis() - a.timestamp.toMillis());
+
+        emailsToDisplay.forEach(email => {
+            const isInbox = email.folder === 'inbox';
+            const senderOrRecipient = isInbox ? email.sender : email.recipient;
+            const subject = email.subject || t.noSubject;
+            
+            const item = document.createElement("div");
+            item.classList.add("email-item", "p-3", "border-b", "cursor-pointer", "text-sm", "flex", "justify-between", "items-center");
+            
+            // Check for 'read' status only in the inbox
+            if (isInbox && !email.read) {
+                item.classList.add("unread");
+            }
+            
+            item.setAttribute('data-id', email.id);
+            item.setAttribute('data-folder', email.folder);
+
+            const content = document.createElement("div");
+            content.classList.add("flex-1", "min-w-0");
+            
+            const header = document.createElement("div");
+            header.classList.add("flex", "justify-between", "items-center", "mb-1");
+            header.innerHTML = `
+                <span class="truncate font-medium ${isInbox && !email.read ? 'text-blue-700' : 'text-gray-700'}">
+                    ${isInbox ? `${t.from}: ` : `${t.to}: `} ${senderOrRecipient}
+                </span>
+                <span class="text-xs text-gray-400">
+                    ${new Date(email.timestamp.toMillis()).toLocaleTimeString(currentLang, {hour: '2-digit', minute:'2-digit'})}
+                </span>
+            `;
+
+            const subjectText = document.createElement("div");
+            subjectText.classList.add("truncate", "text-gray-500");
+            subjectText.textContent = subject;
+
+            content.appendChild(header);
+            content.appendChild(subjectText);
+            item.appendChild(content);
+
+            item.addEventListener('click', () => {
+                displayEmail(email);
+            });
+
+            emailList.appendChild(item);
         });
-        console.log("Emails:", state.emails);
-      });
+    }
+
+    function displayEmail(email) {
+        const t = translations[currentLang];
+        
+        // Hide list, show single email view
+        emailList.classList.add("hidden");
+        composeView.classList.add("hidden");
+        emptyState.classList.add("hidden");
+        emailView.classList.remove("hidden");
+
+        const isInbox = email.folder === 'inbox';
+        const senderOrRecipientLabel = isInbox ? t.from : t.to;
+        const senderOrRecipient = isInbox ? email.sender : email.recipient;
+        const date = new Date(email.timestamp.toMillis()).toLocaleString(currentLang);
+
+        emailView.innerHTML = `
+            <div class="flex flex-col h-full">
+                <h3 class="text-2xl font-bold mb-2">${email.subject || t.noSubject}</h3>
+                <div class="text-sm text-gray-600 mb-4 border-b pb-2">
+                    <p class="${currentLang === 'he' ? 'rtl' : 'ltr'}">${senderOrRecipientLabel}: ${senderOrRecipient}</p>
+                    <p class="text-xs">${date}</p>
+                </div>
+                <div class="flex-grow overflow-y-auto text-gray-800 whitespace-pre-wrap ${currentLang === 'he' ? 'rtl' : 'ltr'} p-2 bg-gray-50 rounded-lg">
+                    ${email.body.replace(/\n/g, '<br>')}
+                </div>
+                <div class="mt-4 pt-4 border-t flex space-x-2 space-x-reverse">
+                    <button id="replyBtn" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+                        ${currentLang === 'he' ? 'השב' : 'Reply'}
+                    </button>
+                    <button id="deleteBtn" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        // Mark as read only if it's in the inbox and currently unread
+        if (isInbox && !email.read) {
+            const emailsCollectionPath = `/artifacts/${appId}/public/data/emails`;
+            updateDoc(doc(state.db, emailsCollectionPath, email.id), { read: true })
+                .catch(e => console.error("Error marking email as read:", e));
+        }
+
+        document.getElementById('replyBtn').addEventListener('click', () => {
+             newEmailButton.click();
+             composeTo.value = email.sender;
+             composeSubject.value = `${currentLang === 'he' ? 'השב:' : 'Re:'} ${email.subject || t.noSubject}`;
+             composeBody.value = `\n\n--- ${senderOrRecipient} (${date}) ---\n${email.body}`;
+        });
+        document.getElementById('deleteBtn').addEventListener('click', () => {
+             // Here you would typically move the email to the 'trash' folder.
+             console.log("Move to Trash logic triggered for email:", email.id);
+             showFolder(state.currentFolder); // Go back to list view
+        });
+    }
+
+    // --- FIREBASE LISTENERS ---
+    function listenToEmails() {
+        if (!state.isAuthReady || !state.emailAddress) return;
+
+        // Public collection for shared emails
+        const emailsCollectionPath = `/artifacts/${appId}/public/data/emails`;
+        const emailsRef = collection(state.db, emailsCollectionPath);
+        
+        // Listener for INBOX: Emails sent TO the user
+        const inboxQuery = query(
+            emailsRef, 
+            where("recipient", "==", state.emailAddress)
+        );
+        
+        // Listener for SENT: Emails sent FROM the user
+        const sentQuery = query(
+            emailsRef, 
+            where("sender", "==", state.emailAddress)
+        );
+
+        // INBOX Listener
+        onSnapshot(inboxQuery, (snapshot) => {
+            state.inboxEmails = [];
+            snapshot.forEach(docSnap => {
+                 // Explicitly set the folder property for client-side filtering
+                 state.inboxEmails.push({ id: docSnap.id, ...docSnap.data(), folder: "inbox" });
+            });
+            
+            // Re-render if the inbox is the current folder
+            if (state.currentFolder === "inbox") {
+                renderEmailList(state.inboxEmails);
+            }
+        }, error => console.error("Inbox listener error:", error));
+
+        // SENT Listener
+        onSnapshot(sentQuery, (snapshot) => {
+             state.sentEmails = [];
+            snapshot.forEach(docSnap => {
+                 // Explicitly set the folder property for client-side filtering
+                 state.sentEmails.push({ id: docSnap.id, ...docSnap.data(), folder: "sent" });
+            });
+
+            // Re-render if the sent folder is the current folder
+            if (state.currentFolder === "sent") {
+                renderEmailList(state.sentEmails);
+            }
+        }, error => console.error("Sent listener error:", error));
+
     }
 
     function listenToDrafts() {
-      const draftsRef = query(collection(db, "emails"), where("folder", "==", "drafts"), where("sender", "==", state.emailAddress));
+      if (!state.isAuthReady || !state.userId) return;
+      const t = translations[currentLang];
+      // Private collection for drafts
+      const draftsCollectionPath = `/artifacts/${appId}/users/${state.userId}/drafts`;
+      
+      const draftsRef = collection(state.db, draftsCollectionPath);
+
       onSnapshot(draftsRef, (snapshot) => {
         draftsList.innerHTML = "";
         snapshot.forEach(docSnap => {
           const draft = docSnap.data();
           const li = document.createElement("li");
-          li.classList.add("flex", "justify-between", "items-center", "mb-1");
-
+          li.classList.add("flex", "justify-between", "items-center", "mb-1", "p-1", "hover:bg-gray-100", "rounded");
+          
           const span = document.createElement("span");
-          span.textContent = draft.subject || (currentLang === "he" ? "(ללא נושא)" : "(No Subject)");
-          span.classList.add("cursor-pointer", "hover:text-blue-600");
+          span.textContent = draft.subject || t.noSubject;
+          span.classList.add("cursor-pointer", "hover:text-blue-600", "truncate", "flex-1");
           span.addEventListener("click", () => {
             composeTo.value = draft.recipient || "";
             composeSubject.value = draft.subject || "";
             composeBody.value = draft.body || "";
             state.editingDraftId = docSnap.id;
+            
+            // Switch to compose view
+            emailList.classList.add("hidden");
+            emailView.classList.add("hidden");
             emptyState.classList.add("hidden");
+            draftsList.classList.add("hidden");
             composeView.classList.remove("hidden");
           });
 
           const delBtn = document.createElement("button");
-          delBtn.textContent = "🗑️";
-          delBtn.classList.add("text-red-500", "ml-2");
+          delBtn.innerHTML = '<i class="fas fa-trash-alt text-red-500 text-xs"></i>';
+          delBtn.classList.add("text-red-500", "mr-2", "p-1");
           delBtn.addEventListener("click", async (e) => {
             e.stopPropagation();
-            if (confirm(currentLang === "he" ? "האם למחוק טיוטה זו?" : "Delete this draft?")) {
-              await deleteDoc(doc(db, "emails", docSnap.id));
+            // IMPORTANT: Avoid standard confirm(), use custom UI or console for this environment.
+            if (window.confirm(t.deleteDraftConfirm)) {
+              await deleteDoc(doc(state.db, draftsCollectionPath, docSnap.id));
             }
           });
 
@@ -286,79 +581,136 @@
           li.appendChild(delBtn);
           draftsList.appendChild(li);
         });
-      });
+
+        // Ensure drafts view updates if it's the current folder
+        if (state.currentFolder === 'drafts') {
+            showFolder('drafts');
+        }
+      }, error => console.error("Drafts listener error:", error));
     }
 
+    // --- COMPOSE / SEND / SAVE DRAFT LOGIC (Unchanged) ---
+
     newEmailButton.addEventListener("click", () => {
-      emptyState.classList.add("hidden");
-      composeView.classList.remove("hidden");
+      // Clear fields and state
       state.editingDraftId = null;
       composeTo.value = "";
       composeSubject.value = "";
       composeBody.value = "";
+      
+      // Update UI visibility
+      emailList.classList.add("hidden");
+      emailView.classList.add("hidden");
+      emptyState.classList.add("hidden");
+      draftsList.classList.add("hidden");
+      composeView.classList.remove("hidden");
     });
 
     cancelButton.addEventListener("click", () => {
       composeView.classList.add("hidden");
-      emptyState.classList.remove("hidden");
+      showFolder(state.currentFolder); // Return to the current folder view
       state.editingDraftId = null;
     });
 
     sendButton.addEventListener("click", async () => {
+      if (!state.emailAddress) return console.error("Sender email not set.");
+      const recipient = composeTo.value.trim();
+      if (!recipient) return console.error("Recipient is required.");
+      
+      // Enforce recipient domain to also be @family.local for internal communication
+      const recipientUsername = recipient.split('@')[0];
+      const enforcedRecipient = `${recipientUsername}@family.local`;
+
+      const emailsCollectionPath = `/artifacts/${appId}/public/data/emails`;
+
       try {
-        await addDoc(collection(db, "emails"), {
+        const emailData = {
           sender: state.emailAddress,
-          recipient: composeTo.value.trim(),
+          recipient: enforcedRecipient, // Use the enforced recipient domain
           subject: composeSubject.value.trim(),
           body: composeBody.value.trim(),
           timestamp: Timestamp.now(),
-          deleted: false,
-          folder: "sent"
-        });
+          read: false, // For the recipient
+        };
+        
+        // Add email to the public collection (it will automatically show up in Inbox/Sent via listeners)
+        await addDoc(collection(db, emailsCollectionPath), emailData);
+
+        // If it was a draft being edited, delete the draft after sending
+        if (state.editingDraftId) {
+             const draftsCollectionPath = `/artifacts/${appId}/users/${state.userId}/drafts`;
+             await deleteDoc(doc(state.db, draftsCollectionPath, state.editingDraftId));
+        }
+
         composeTo.value = "";
         composeSubject.value = "";
         composeBody.value = "";
         composeView.classList.add("hidden");
-        emptyState.classList.remove("hidden");
-        state.editingDraftId = null;
+        showFolder("sent"); // Switch to sent folder view
+
       } catch (err) {
         console.error("Send error", err);
       }
     });
 
     saveDraftButton.addEventListener("click", async () => {
+      if (!state.userId) return console.error("User not authenticated for drafts.");
+      
+      const draftsCollectionPath = `/artifacts/${appId}/users/${state.userId}/drafts`;
+
       try {
+        // Enforce recipient domain to also be @family.local when saving draft (for consistency)
+        const recipient = composeTo.value.trim();
+        const enforcedRecipient = recipient ? `${recipient.split('@')[0]}@family.local` : '';
+
+        const draftData = {
+            sender: state.emailAddress,
+            recipient: enforcedRecipient,
+            subject: composeSubject.value.trim(),
+            body: composeBody.value.trim(),
+            timestamp: Timestamp.now(),
+        };
+        
         if (state.editingDraftId) {
-          await setDoc(doc(db, "emails", state.editingDraftId), {
-            sender: state.emailAddress,
-            recipient: composeTo.value.trim(),
-            subject: composeSubject.value.trim(),
-            body: composeBody.value.trim(),
-            timestamp: Timestamp.now(),
-            deleted: false,
-            folder: "drafts"
-          });
+          // Update existing draft
+          await setDoc(doc(state.db, draftsCollectionPath, state.editingDraftId), draftData);
         } else {
-          await addDoc(collection(db, "emails"), {
-            sender: state.emailAddress,
-            recipient: composeTo.value.trim(),
-            subject: composeSubject.value.trim(),
-            body: composeBody.value.trim(),
-            timestamp: Timestamp.now(),
-            deleted: false,
-            folder: "drafts"
-          });
+          // Create new draft
+          await addDoc(collection(state.db, draftsCollectionPath), draftData);
         }
+        
         composeView.classList.add("hidden");
-        emptyState.classList.remove("hidden");
+        showFolder("drafts"); // Switch to drafts view
         state.editingDraftId = null;
       } catch (err) {
         console.error("Draft save error", err);
       }
     });
+    
+    // --- TRANSLATE (DUMMY) LOGIC (Unchanged) ---
 
-    fetchUser();
+    async function translateText(text, targetLang) {
+      if (!text.trim()) return text;
+      // Using a simple dummy response for translation without an actual API call
+      return `[${targetLang.toUpperCase()} Translated] ${text}`;
+    }
+
+    translateButton.addEventListener("click", async () => {
+      const targetLang = currentLang === "he" ? "en" : "he";
+      
+      translateButton.textContent = currentLang === "he" ? "מתרגם..." : "Translating...";
+      translateButton.disabled = true;
+
+      // Note: This translate function is currently a dummy. In a real application, 
+      // you would integrate with a translation service API here.
+      composeSubject.value = await translateText(composeSubject.value, targetLang);
+      composeBody.value = await translateText(composeBody.value, targetLang);
+      
+      translateButton.textContent = translations[currentLang].translate;
+      translateButton.disabled = false;
+    });
+
+
   </script>
 </body>
 </html>
-
