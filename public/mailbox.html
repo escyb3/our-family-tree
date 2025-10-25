@@ -113,7 +113,7 @@
     
     // --- CANVAS MANDATORY GLOBAL VARIABLES ---
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-       const firebaseConfig = {
+           const firebaseConfig = {
       apiKey: "AIzaSyAID_kPGA6Khczh0lIgd7E13LJS76JJ9nI",
       authDomain: "mailbox-e0ce2.firebaseapp.com",
       projectId: "mailbox-e0ce2",
@@ -121,8 +121,15 @@
       messagingSenderId: "199399854104",
       appId: "1:199399854104:web:6aec488e6aeee0dec3736d"
     };
-    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? initialAuthToken : null; // corrected typo: initialAuthToken was missing from LHS
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null; 
 
+    // --- CRITICAL DEBUG LOGGING (Please check the Console for these messages) ---
+    console.log(`[DEBUG] __app_id status: ${typeof __app_id}`);
+    console.log(`[DEBUG] __firebase_config status: ${typeof __firebase_config}`);
+    console.log(`[DEBUG] __initial_auth_token status: ${typeof __initial_auth_token}`);
+    console.log(`[DEBUG] initialAuthToken is ${initialAuthToken ? 'DEFINED and has length ' + initialAuthToken.length : 'NULL/MISSING'}`);
+    // --------------------------------------------------------------------------
+    
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const auth = getAuth(app);
@@ -158,7 +165,7 @@
         cancel: "בטל", translate: "תרגם", noSubject: "(ללא נושא)", to: "אל", from: "מאת", noEmails: "תיקייה זו ריקה.",
         deleteDraftConfirm: "האם למחוק טיוטה זו?", errorLogin: "שגיאת התחברות: נדרשת התחברות מאומתת.", errorTitle: "שגיאת כניסה",
         errorEmailFetch: "שגיאה: API המשתמש החזיר נתונים חסרים (אימייל או UID).", errorFetchStatus: "שגיאת שרת או אימות: לא ניתן לאחזר פרטי משתמש.",
-        errorAnon: "נדרשת התחברות מאומתת (לא אנונימית)." // New specific error for anonymous users
+        errorAnon: "נדרשת התחברות מאומתת (לא אנונימית)." 
       },
       en: {
         mailboxTitle: "Mailbox", newEmail: "New Message", inbox: "Inbox", sent: "Sent", drafts: "Drafts", trash: "Trash",
@@ -223,6 +230,7 @@
          document.getElementById("loadingSubtext").textContent = message;
          loadingPage.classList.remove("hidden");
          appPage.classList.add("hidden");
+         console.error(`[FATAL ERROR] Displaying: ${message}`);
     }
     
     // --- API CALL: Fetches REAL user identity (UID and Email) from the /api/user endpoint ---
@@ -275,6 +283,7 @@
         
         // 1. Check if Firebase Auth is ready and has a valid token (user object exists)
         if (user) {
+            console.log(`[AUTH STATUS] User exists (UID: ${user.uid}). Attempting API validation.`);
             
             // NEW CHECK: Ensure the user is not anonymous
             if (user.isAnonymous) {
@@ -285,7 +294,6 @@
 
             try {
                 // STEP 2: Fetch the REAL user identity (UID and Email) from the server API
-                // This is the single source of truth for the user's identity.
                 const userData = await fetchUserDetails(); 
                 
                 // Set state based on API response (No fallback to user.email/UID)
@@ -317,6 +325,7 @@
             }
 
         } else {
+             console.log("[AUTH STATUS] User is NULL. Authentication failed via token.");
              // 5. Auth Failed / No user - fail immediately
              showLoginError(t.errorLogin);
         }
@@ -326,7 +335,7 @@
     if (initialAuthToken) {
         signInWithCustomToken(auth, initialAuthToken)
             .catch(e => {
-                 console.error("Custom token sign-in failed:", e);
+                 console.error("Custom token sign-in failed (Firebase error):", e);
                  // onAuthStateChanged will be triggered with a null user, showing the final error.
             });
     } else {
