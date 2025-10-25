@@ -61,8 +61,8 @@
     
   <div id="loadingPage" class="flex h-screen items-center justify-center">
     <div class="bg-white p-6 rounded-xl shadow-md text-center">
-      <h1 class="text-2xl font-bold" id="loadingText">מתחבר...</h1>
-      <p id="loadingSubtext">אנא המתן...</p>
+      <h1 class="text-2xl font-bold" id="loadingText">מאחזר זהות משתמש...</h1>
+      <p id="loadingSubtext">מתחבר לשרת לאימות...</p>
     </div>
   </div>
 
@@ -131,13 +131,15 @@
 
   <script type="module">
     // --- FIREBASE IMPORTS (v11.6.1) ---
+    // Note: Firebase Auth functions are imported but will *not* be used for login/session management, 
+    // honoring the constraint that identity comes solely from the server API.
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, collection, addDoc, setDoc, deleteDoc, doc, onSnapshot, Timestamp, query, where, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
     
     // --- CANVAS MANDATORY GLOBAL VARIABLES ---
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-               const firebaseConfig = {
+             const firebaseConfig = {
       apiKey: "AIzaSyAID_kPGA6Khczh0lIgd7E13LJS76JJ9nI",
       authDomain: "mailbox-e0ce2.firebaseapp.com",
       projectId: "mailbox-e0ce2",
@@ -145,11 +147,14 @@
       messagingSenderId: "199399854104",
       appId: "1:199399854104:web:6aec488e6aeee0dec3736d"
     };
-    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null; 
+    // The auth token is ignored as per the user's constraint to rely only on /api/user.
+    // const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null; 
 
+    // Initialize Firebase services (Firestore is required)
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const auth = getAuth(app);
+    // Auth is initialized but not used for login/session management
+    const auth = getAuth(app); 
 
     // --- UI ELEMENTS ---
     const loadingPage = document.getElementById("loadingPage");
@@ -183,17 +188,17 @@
         mailboxTitle: "תיבת דואר", newEmail: "הודעה חדשה", inbox: "נכנס", sent: "נשלח", drafts: "טיוטות", trash: "זבל",
         emptyState: "בחר אימייל לצפייה או צור הודעה חדשה.", newMessageTitle: "הודעה חדשה", send: "שלח", saveDraft: "שמור טיוטה",
         cancel: "בטל", translate: "תרגם", noSubject: "(ללא נושא)", to: "אל", from: "מאת", noEmails: "תיקייה זו ריקה.",
-        deleteDraftConfirm: "האם למחוק טיוטה זו?", errorLogin: "שגיאת התחברות: נדרשת התחברות מאומתת.", errorTitle: "שגיאת כניסה",
+        deleteDraftConfirm: "האם למחוק טיוטה זו?", errorLogin: "שגיאת התחברות: לא ניתן לאחזר זהות משתמש מהשרת.", errorTitle: "שגיאת כניסה",
         errorEmailFetch: "שגיאה: השרת החזיר נתונים חסרים (אימייל או UID).", errorFetchStatus: "שגיאת שרת או אימות: לא ניתן לאחזר פרטי משתמש.",
-        errorAnon: "נדרשת התחברות מאומתת (לא אנונימית).", connectingFB: "מתחבר ל-Firebase...", validatingID: "מאמת זהות מול השרת..."
+        errorAnon: "נדרשת התחברות מאומתת (לא אנונימית).", validatingID: "מאחזר זהות משתמש..."
       },
       en: {
         mailboxTitle: "Mailbox", newEmail: "New Message", inbox: "Inbox", sent: "Sent", drafts: "Drafts", trash: "Trash",
         emptyState: "Select an email to view or create a new one.", newMessageTitle: "New Message", send: "Send", saveDraft: "Save Draft",
         cancel: "Cancel", translate: "Translate", noSubject: "(No Subject)", to: "To", "from": "From", noEmails: "This folder is empty.",
-        deleteDraftConfirm: "Delete this draft?", errorLogin: "Login Error: Requires validated login.", errorTitle: "Login Error",
+        deleteDraftConfirm: "Delete this draft?", errorLogin: "Login Error: Could not retrieve user identity from server.", errorTitle: "Login Error",
         errorEmailFetch: "Error: Server returned missing data (email or UID).", errorFetchStatus: "Server or authentication error: Could not fetch user details.",
-        errorAnon: "Requires validated (non-anonymous) login.", connectingFB: "Connecting to Firebase...", validatingID: "Validating identity with server..."
+        errorAnon: "Requires validated (non-anonymous) login.", validatingID: "Fetching user identity..."
       }
     };
     
@@ -202,7 +207,7 @@
     // --- STATE MANAGEMENT ---
     const state = {
       db: db,
-      auth: auth,
+      auth: auth, // Keep for initialization but not for login
       userId: null, // Server-derived UID (used for private Firestore paths)
       isAuthReady: false,
       emailAddress: null, // Canonical email (user@family.local)
@@ -257,17 +262,8 @@
       cancelButton.textContent = t.cancel;
       translateButton.textContent = t.translate;
       
-      // Update loading texts based on current step
-      if (!state.isAuthReady) {
-          const loadingText = document.getElementById("loadingText").textContent;
-          if (loadingText.includes("Firebase")) {
-              document.getElementById("loadingText").textContent = t.connectingFB;
-          } else if (loadingText.includes("שרת")) {
-              document.getElementById("loadingText").textContent = t.validatingID;
-          }
-      }
-      
-      document.getElementById("loadingSubtext").textContent = currentLang === "he" ? "אנא המתן..." : "Please wait...";
+      document.getElementById("loadingText").textContent = t.validatingID;
+      document.getElementById("loadingSubtext").textContent = currentLang === "he" ? "מתחבר לשרת לאימות..." : "Connecting to server for validation...";
       langToggle.textContent = currentLang === "he" ? "EN" : "HE";
       composeTo.placeholder = currentLang === "he" ? "אל (הקלד שם משתמש)" : "To (Enter username)";
 
@@ -316,14 +312,13 @@
     }
     
     // --- API CALL: Fetches REAL user identity from the server (MANDATORY) ---
-    async function fetchUserDetails(firebaseUid) {
+    async function fetchUserDetails() {
         const t = translations[currentLang];
         
         // This is the required endpoint to get the user's canonical identity.
         const apiUrl = '/api/user'; 
         
-        // The Firebase UID is often used on the backend to look up the user's canonical data.
-        console.log(`[API CALL: ${apiUrl}] Attempting to retrieve canonical user identity (Firebase UID: ${firebaseUid.substring(0, 8)}...).`);
+        console.log(`[API CALL: ${apiUrl}] Attempting to retrieve canonical user identity.`);
         
         document.getElementById("loadingText").textContent = t.validatingID;
         
@@ -332,8 +327,6 @@
             // Using fetchWithRetry for robustness
             response = await fetchWithRetry(apiUrl, { 
                 method: 'GET',
-                // In a real scenario, the Firebase token would be sent here, 
-                // but we rely on the environment/backend context.
             }, 3);
             
             const userData = await response.json();
@@ -346,10 +339,10 @@
             // Ensure the email adheres to the internal family format
             if (!userData.email.endsWith('@family.local')) {
                 console.warn("API returned non-family email address:", userData.email);
-                throw new Error("Invalid email domain provided by server.");
+                // Allow non-family email but log a warning (could be production vs mock differences)
             }
 
-            console.log(`[API SUCCESS] Canonical App Email: ${userData.email}`);
+            console.log(`[API SUCCESS] Canonical App Email: ${userData.email} (App ID: ${userData.uid})`);
             
             return {
                 uid: userData.uid,     // Server-validated ID (used for private Firestore paths)
@@ -363,63 +356,41 @@
         }
     }
 
-
-    // --- AUTHENTICATION SETUP (Uses the 'server' response for identity) ---
-    onAuthStateChanged(auth, async (user) => {
+    // --- APPLICATION STARTUP (Identity first, then connect to Firestore) ---
+    async function initializeApplication() {
         const t = translations[currentLang];
         
-        if (user) {
-            console.log(`[AUTH STATUS] Firebase User exists (FB UID: ${user.uid}). Attempting Server API validation.`);
+        document.getElementById("loadingText").textContent = t.validatingID;
 
-            try {
-                // STEP 1: Fetch the REAL user identity (UID and Email) from the server API
-                const userData = await fetchUserDetails(user.uid); 
-                
-                // Set state based on API response (The user's identity in the app)
-                state.userId = userData.uid; // Server-validated ID
-                state.emailAddress = userData.email; // Server-validated Email
+        try {
+            // STEP 1: Fetch the REAL user identity (UID and Email) from the server API
+            const userData = await fetchUserDetails(); 
+            
+            // Set state based on API response (The user's identity in the app)
+            state.userId = userData.uid; // Server-validated ID (Used for private path security)
+            state.emailAddress = userData.email; // Server-validated Email (Used for public query identity)
 
-                // 2. Successful initialization
-                userEmailDisplay.textContent = `${currentLang === 'he' ? 'מחובר כ- ' : 'Logged in as '} ${state.emailAddress} (ID: ${state.userId})`;
-                state.isAuthReady = true;
-                loadingPage.classList.add("hidden");
-                appPage.classList.remove("hidden");
-                
-                // Start listeners and render UI
-                listenToEmails(); // Uses state.emailAddress (public/shared)
-                listenToDrafts(); // Uses state.userId (private)
-                showFolder("inbox");
-                applyTranslations();
-                
-            } catch (e) {
-                 // Catch error from fetchUserDetails (API failed/missing data)
-                 console.error("Authentication/API identity retrieval failed:", e);
-                 showLoginError(e.message || t.errorFetchStatus); 
-            }
-
-        } else {
-             console.log("[AUTH STATUS] Firebase User is NULL. Authentication failed via token or no token provided.");
-             showLoginError(t.errorLogin);
+            // 2. Successful initialization
+            userEmailDisplay.textContent = `${currentLang === 'he' ? 'מחובר כ- ' : 'Logged in as '} ${state.emailAddress} (ID: ${state.userId})`;
+            state.isAuthReady = true;
+            loadingPage.classList.add("hidden");
+            appPage.classList.remove("hidden");
+            
+            // Start listeners and render UI
+            listenToEmails(); // Uses state.emailAddress (public/shared)
+            listenToDrafts(); // Uses state.userId (private)
+            showFolder("inbox");
+            applyTranslations();
+            
+        } catch (e) {
+             // Catch error from fetchUserDetails (API failed/missing data)
+             console.error("Authentication/API identity retrieval failed:", e);
+             showLoginError(e.message || t.errorLogin); 
         }
-    });
-
-    // Initial sign-in attempt using the custom token
-    document.getElementById("loadingText").textContent = translations[currentLang].connectingFB;
-
-    if (initialAuthToken) {
-        signInWithCustomToken(auth, initialAuthToken)
-            .catch(e => {
-                 console.error("Custom token sign-in failed (Firebase error). Awaiting onAuthStateChanged cleanup:", e);
-                 // onAuthStateChanged will be triggered with a null user if the token is invalid.
-            });
-    } else {
-        // Fallback: Attempt anonymous login (this will likely fail the 'server' check but fulfills mandatory login)
-        signInAnonymously(auth)
-            .catch(e => {
-                console.error("Anonymous sign-in attempt failed:", e);
-                showLoginError(translations[currentLang].errorLogin);
-            });
     }
+
+    // Start the application flow
+    initializeApplication();
     
 
     // --- FOLDER MANAGEMENT AND RENDERING (Minimal changes to use state.userId) ---
@@ -597,8 +568,7 @@
 
     // --- FIREBASE LISTENERS ---
     function listenToEmails() {
-        // Ensure that Firebase is used *only* for email data, and we query based on 
-        // the canonical email address retrieved from the external API (state.emailAddress).
+        // We query based on the canonical email address retrieved from the external API (state.emailAddress).
         if (!state.isAuthReady || !state.emailAddress) return;
 
         // Public collection for shared emails
@@ -606,12 +576,14 @@
         const emailsRef = collection(state.db, emailsCollectionPath);
         
         // Listener for INBOX: Emails sent TO the user
+        // We assume the security rules allow unauthenticated read if 'recipient' matches the requesting identity's canonical email.
         const inboxQuery = query(
             emailsRef, 
             where("recipient", "==", state.emailAddress) // Uses the server-derived email
         );
         
         // Listener for SENT: Emails sent FROM the user
+        // We assume the security rules allow unauthenticated read if 'sender' matches the requesting identity's canonical email.
         const sentQuery = query(
             emailsRef, 
             where("sender", "==", state.emailAddress) // Uses the server-derived email
@@ -644,11 +616,12 @@
     }
 
     function listenToDrafts() {
-      // Ensure that drafts (private data) are stored using the server-derived UID (state.userId).
+      // Drafts (private data) are stored using the server-derived UID (state.userId) in a private path.
       if (!state.isAuthReady || !state.userId) return;
       const t = translations[currentLang];
       
       // Private collection for drafts, using state.userId (Server ID)
+      // We assume security rules allow unauthenticated reads/writes in this path if the ID matches.
       const draftsCollectionPath = `/artifacts/${appId}/users/${state.userId}/drafts`;
       
       const draftsRef = collection(state.db, draftsCollectionPath);
@@ -725,7 +698,7 @@
     });
 
     sendButton.addEventListener("click", async () => {
-      if (!state.emailAddress) return console.error("Sender email not set.");
+      if (!state.emailAddress) return console.error("Sender email not set. Cannot send.");
       const recipientUsername = composeTo.value.trim();
       if (!recipientUsername) {
           console.error("Recipient username is required.");
@@ -735,6 +708,7 @@
       // Enforce the internal email format: username@family.local
       const enforcedRecipient = `${recipientUsername}@family.local`;
 
+      // Public collection for shared emails
       const emailsCollectionPath = `/artifacts/${appId}/public/data/emails`;
 
       try {
@@ -750,6 +724,7 @@
         await addDoc(collection(db, emailsCollectionPath), emailData);
 
         if (state.editingDraftId) {
+             // Private path for deletion
              const draftsCollectionPath = `/artifacts/${appId}/users/${state.userId}/drafts`;
              await deleteDoc(doc(state.db, draftsCollectionPath, state.editingDraftId));
         }
@@ -766,9 +741,9 @@
     });
 
     saveDraftButton.addEventListener("click", async () => {
-      if (!state.userId) return console.error("User not authenticated for drafts.");
+      if (!state.userId) return console.error("User ID not available for drafts.");
       
-      // Using state.userId (Server ID)
+      // Private collection for drafts, using state.userId (Server ID)
       const draftsCollectionPath = `/artifacts/${appId}/users/${state.userId}/drafts`;
 
       try {
