@@ -113,7 +113,14 @@
     
     // --- CANVAS MANDATORY GLOBAL VARIABLES ---
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { /* Mock config */ };
+       const firebaseConfig = {
+      apiKey: "AIzaSyAID_kPGA6Khczh0lIgd7E13LJS76JJ9nI",
+      authDomain: "mailbox-e0ce2.firebaseapp.com",
+      projectId: "mailbox-e0ce2",
+      storageBucket: "mailbox-e0ce2.appspot.com",
+      messagingSenderId: "199399854104",
+      appId: "1:199399854104:web:6aec488e6aeee0dec3736d"
+    };
     const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? initialAuthToken : null; // corrected typo: initialAuthToken was missing from LHS
 
     const app = initializeApp(firebaseConfig);
