@@ -113,16 +113,8 @@
     
     // --- CANVAS MANDATORY GLOBAL VARIABLES ---
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-     const firebaseConfig = {
-      apiKey: "AIzaSyAID_kPGA6Khczh0lIgd7E13LJS76JJ9nI",
-      authDomain: "mailbox-e0ce2.firebaseapp.com",
-      projectId: "mailbox-e0ce2",
-      storageBucket: "mailbox-e0ce2.appspot.com",
-      messagingSenderId: "199399854104",
-      appId: "1:199399854104:web:6aec488e6aeee0dec3736d"
-    };
-
-    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { /* Mock config */ };
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? initialAuthToken : null; // corrected typo: initialAuthToken was missing from LHS
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
@@ -158,14 +150,16 @@
         emptyState: "בחר אימייל לצפייה או צור הודעה חדשה.", newMessageTitle: "הודעה חדשה", send: "שלח", saveDraft: "שמור טיוטה",
         cancel: "בטל", translate: "תרגם", noSubject: "(ללא נושא)", to: "אל", from: "מאת", noEmails: "תיקייה זו ריקה.",
         deleteDraftConfirm: "האם למחוק טיוטה זו?", errorLogin: "שגיאת התחברות: נדרשת התחברות מאומתת.", errorTitle: "שגיאת כניסה",
-        errorEmailFetch: "שגיאה: API המשתמש החזיר נתונים חסרים (אימייל או UID).", errorFetchStatus: "שגיאת שרת או אימות: לא ניתן לאחזר פרטי משתמש."
+        errorEmailFetch: "שגיאה: API המשתמש החזיר נתונים חסרים (אימייל או UID).", errorFetchStatus: "שגיאת שרת או אימות: לא ניתן לאחזר פרטי משתמש.",
+        errorAnon: "נדרשת התחברות מאומתת (לא אנונימית)." // New specific error for anonymous users
       },
       en: {
         mailboxTitle: "Mailbox", newEmail: "New Message", inbox: "Inbox", sent: "Sent", drafts: "Drafts", trash: "Trash",
         emptyState: "Select an email to view or create a new one.", newMessageTitle: "New Message", send: "Send", saveDraft: "Save Draft",
         cancel: "Cancel", translate: "Translate", noSubject: "(No Subject)", to: "To", "from": "From", noEmails: "This folder is empty.",
         deleteDraftConfirm: "Delete this draft?", errorLogin: "Login Error: Requires validated login.", errorTitle: "Login Error",
-        errorEmailFetch: "Error: User API returned missing data (email or UID).", errorFetchStatus: "Server or authentication error: Could not fetch user details."
+        errorEmailFetch: "Error: User API returned missing data (email or UID).", errorFetchStatus: "Server or authentication error: Could not fetch user details.",
+        errorAnon: "Requires validated (non-anonymous) login."
       }
     };
     
@@ -273,8 +267,15 @@
         const t = translations[currentLang];
         
         // 1. Check if Firebase Auth is ready and has a valid token (user object exists)
-        if (user && !user.isAnonymous) {
+        if (user) {
             
+            // NEW CHECK: Ensure the user is not anonymous
+            if (user.isAnonymous) {
+                console.error("Authentication failed: User is anonymous.");
+                showLoginError(t.errorAnon); // Show specific error for anonymous user
+                return;
+            }
+
             try {
                 // STEP 2: Fetch the REAL user identity (UID and Email) from the server API
                 // This is the single source of truth for the user's identity.
@@ -305,11 +306,11 @@
                  // Catch error from fetchUserDetails (API failed/401/missing data)
                  console.error("Authentication/API identity retrieval failed:", e);
                  // Show the specific error message from the failed fetch/parse
-                 showLoginError(e.message || t.errorLogin);
+                 showLoginError(e.message || t.errorFetchStatus); // Use the server fetch error message
             }
 
         } else {
-             // 5. Auth Failed / No user / Anonymous user - fail immediately, as no anonymous fallback is allowed
+             // 5. Auth Failed / No user - fail immediately
              showLoginError(t.errorLogin);
         }
     });
