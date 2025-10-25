@@ -331,22 +331,24 @@
             
             const userData = await response.json();
             
-            // Expected structure: { uid: "server_id_1234", email: "user@family.local" }
-            if (!userData || !userData.uid || !userData.email) {
+            // --- FIX: Accessing the nested 'user' object from the server response ---
+            const userDetails = userData.user;
+            
+            // Expected structure: { user: { uid: "server_id_1234", email: "user@family.local" } }
+            if (!userData || !userDetails || !userDetails.uid || !userDetails.email) {
                 throw new Error(t.errorEmailFetch); 
             }
 
-            // Ensure the email adheres to the internal family format
-            if (!userData.email.endsWith('@family.local')) {
-                console.warn("API returned non-family email address:", userData.email);
-                // Allow non-family email but log a warning (could be production vs mock differences)
+            // Ensure the email adheres to the internal family format (for warning)
+            if (!userDetails.email.endsWith('@family.local') && userDetails.email !== "לא מוגדר") {
+                console.warn("API returned non-family email address or 'לא מוגדר':", userDetails.email);
             }
 
-            console.log(`[API SUCCESS] Canonical App Email: ${userData.email} (App ID: ${userData.uid})`);
+            console.log(`[API SUCCESS] Canonical App Email: ${userDetails.email} (App ID: ${userDetails.uid})`);
             
             return {
-                uid: userData.uid,     // Server-validated ID (used for private Firestore paths)
-                email: userData.email  // Canonical email (used for public Firestore queries)
+                uid: userDetails.uid,     // Server-validated ID (Used for private Firestore paths)
+                email: userDetails.email  // Server-validated Email (Used for public query identity)
             };
 
         } catch (error) {
@@ -369,6 +371,11 @@
             // Set state based on API response (The user's identity in the app)
             state.userId = userData.uid; // Server-validated ID (Used for private path security)
             state.emailAddress = userData.email; // Server-validated Email (Used for public query identity)
+            
+            // Check for the "לא מוגדר" safety value and treat it as a failure to authenticate validly
+            if (state.emailAddress === "לא מוגדר" || state.userId === "לא מוגדר") {
+                throw new Error(t.errorEmailFetch); 
+            }
 
             // 2. Successful initialization
             userEmailDisplay.textContent = `${currentLang === 'he' ? 'מחובר כ- ' : 'Logged in as '} ${state.emailAddress} (ID: ${state.userId})`;
