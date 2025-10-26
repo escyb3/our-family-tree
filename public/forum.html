@@ -1,3 +1,4 @@
+
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -50,18 +51,19 @@
             font-weight: 700;
         }
 
+        /* שינוי: הסרת צללים וגבולות מעוגלים כדי שישתלב על הרקע הכללי */
         .glassmorphism-container {
             background-color: var(--card-bg-light);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border-color);
-            box-shadow: 0 12px 40px 0 var(--shadow-color);
+            border: none; /* הסרת הגבול */
+            box-shadow: none; /* הסרת הצל */
             transition: background-color 0.5s, border-color 0.5s;
         }
 
         .dark-mode .glassmorphism-container {
             background-color: var(--card-bg-dark);
-            border: 1px solid var(--dark-border-color);
+            border: none;
         }
 
         input, textarea, select {
@@ -190,118 +192,129 @@
         </div>
     </div>
 
-    <!-- Main Container (יוצג רק אם השרת יחזיר 200) -->
-    <div id="appContent" class="hidden container mx-auto p-4 sm:p-8 max-w-4xl glassmorphism-container rounded-[2rem] shadow-2xl my-10 w-full">
+    <!-- 
+        Main Container - שינוי קריטי: 
+        הסרנו את מגבלות הרוחב (max-w-4xl), את השוליים (my-10), ואת העיגול/צל (rounded/shadow) 
+        כדי שיתפרש על 100% רוחב וגובה המסך (min-h-screen).
+        השתמשנו במיכל פנימי (max-w-5xl mx-auto) כדי לשמור על קריאות התוכן.
+    -->
+    <div id="appContent" class="hidden w-full min-h-screen p-4 sm:p-8 glassmorphism-container my-0 rounded-none shadow-none">
         
-        <!-- Header -->
-        <header class="text-center pb-8 border-b border-gray-200 dark:border-gray-700 mb-8">
-            <h1 class="text-4xl sm:text-5xl font-extrabold text-indigo-700 dark:text-indigo-400" data-lang-key="title">🗣️ פורום משפחתנו</h1>
-            <p class="text-gray-500 dark:text-gray-400 mt-2 text-lg" data-lang-key="subtitle">מקום להתעדכן, לשאול ולחלוק זיכרונות משפחתיים.</p>
-        </header>
-
-        <!-- User & App Info Section -->
-        <div class="flex items-center justify-between flex-wrap gap-4 mb-6 text-sm text-gray-500 dark:text-gray-400">
-            <span id="userIdDisplay" class="truncate flex items-center gap-1">
-                <span class="font-mono text-gray-700 dark:text-gray-300 font-semibold text-lg" id="userIdValue">טוען...</span>
-                <span id="userName" class="text-gray-600 dark:text-gray-400 font-medium"></span>
-                <button id="copyUserIdBtn" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors duration-200" title="העתק מזהה משתמש">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                    </svg>
-                </button>
-            </span>
-            <div id="copySuccessMsg" class="absolute bg-green-500 text-white text-xs px-3 py-1 rounded-md opacity-0 transition-opacity duration-300">הועתק!</div>
-            <div class="flex items-center gap-3">
-                <button id="darkModeToggle" class="flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full text-sm font-medium transition-colors duration-200">
-                    <span id="darkModeIcon">🌓</span> <span data-lang-key="darkModeBtn">מצב כהה</span>
-                </button>
-                <button id="langToggle" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full text-sm font-medium transition-colors duration-200">
-                    English
-                </button>
-            </div>
-        </div>
+        <!-- מיכל פנימי לשמירת רוחב קריא וממורכז, בתוך המיכל הראשי שנמתח למסך מלא -->
+        <div class="mx-auto max-w-5xl w-full"> 
         
-        <!-- User Name Section -->
-        <div class="glassmorphism-container rounded-2xl p-6 mb-8 flex flex-col sm:flex-row items-center gap-4 shadow-sm">
-            <h2 class="text-2xl font-bold text-gray-700 dark:text-gray-300 mb-2 sm:mb-0" data-lang-key="userNameSection">👤 שם המשתמש שלך</h2>
-            <div class="flex flex-grow gap-2 w-full">
-                <input type="text" id="userNameInput" placeholder="הכנס את שמך" class="flex-grow px-4 py-2 border rounded-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200" data-lang-key="userNamePlaceholder">
-                <button id="saveUserNameBtn" class="gradient-btn text-white font-bold py-2 px-6 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-lang-key="saveBtn">
-                    שמור
-                </button>
-            </div>
-        </div>
+            <!-- Header -->
+            <header class="text-center pb-8 border-b border-gray-200 dark:border-gray-700 mb-8">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-indigo-700 dark:text-indigo-400" data-lang-key="title">🗣️ פורום משפחתנו</h1>
+                <p class="text-gray-500 dark:text-gray-400 mt-2 text-lg" data-lang-key="subtitle">מקום להתעדכן, לשאול ולחלוק זיכרונות משפחתיים.</p>
+            </header>
 
-        <!-- Search & Filter Section -->
-        <div class="flex flex-col sm:flex-row gap-4 mb-8">
-            <input type="text" id="searchInput" placeholder="🔍 חפש שרשור..." class="w-full sm:w-2/3 px-4 py-2 border rounded-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200" data-lang-key="searchPlaceholder">
-            <select id="categoryFilter" class="w-full sm:w-1/3 px-4 py-2 border rounded-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200">
-                <option value="all" data-lang-key="allCategories">כל הנושאים</option>
-                <option value="היסטוריה משפחתית" data-lang-key="categoryHistory">היסטוריה משפחתית</option>
-                <option value="שאלות" data-lang-key="categoryQuestions">שאלות</option>
-                <option value="עדכונים" data-lang-key="categoryUpdates">עדכונים</option>
-            </select>
-        </div>
-
-        <!-- New Thread Form -->
-        <div class="glassmorphism-container rounded-[2rem] p-8 mb-8 shadow-sm">
-            <h2 class="text-2xl font-bold mb-4 text-gray-700 dark:text-gray-300" data-lang-key="newThreadHeader">✍️ פרסם שרשור חדש</h2>
-            <form id="newThreadForm" class="space-y-4">
-                <input type="text" id="newThreadTitle" placeholder="כותרת השרשור" required class="w-full px-4 py-3 border rounded-xl focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="titlePlaceholder">
-                <textarea id="newThreadContent" rows="4" placeholder="שתף את מחשבותיך..." required class="w-full px-4 py-3 border rounded-xl focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="contentPlaceholder"></textarea>
-                <div class="flex flex-col sm:flex-row gap-2">
-                    <button type="button" id="improveTextBtn" class="w-full sm:w-1/2 outline-btn font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-lang-key="improveBtn">
-                        ✨ שפר את הניסוח
-                    </button>
-     <div class="relative w-full sm:w-1/2">
-  <button id="categoryDropdownBtn" type="button" aria-haspopup="listbox" aria-expanded="false"
-          class="w-full px-4 py-3 border rounded-lg text-left flex items-center justify-between bg-transparent focus:ring focus:ring-indigo-300">
-    <span id="selectedCategoryLabel" class="truncate">בחר קטגוריה...</span>
-    <i class="fas fa-chevron-down text-sm"></i>
-  </button>
-
-  <ul id="categoryDropdownList" role="listbox" tabindex="-1"
-      class="hidden absolute right-0 left-0 mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg z-50 overflow-auto max-h-48 text-right">
-    <li role="option" data-value="היסטוריה משפחתית" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">היסטוריה משפחתית</li>
-    <li role="option" data-value="שאלות" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">שאלות</li>
-    <li role="option" data-value="עדכונים" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">עדכונים</li>
-  </ul>
-
-  <!-- select נסתר לשמירה על התמיכה בקוד הקיים -->
-  <select id="newThreadCategory" class="sr-only" aria-hidden="true">
-    <option value="">בחר קטגוריה...</option>
-    <option value="היסטוריה משפחתית">היסטוריה משפחתית</option>
-    <option value="שאלות">שאלות</option>
-    <option value="עדכונים">עדכונים</option>
-  </select>
-</div>
-
-
-<button type="submit" id="submitThreadBtn" 
-        class="w-full gradient-btn text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled-btn" 
-        disabled>
-    <span id="submitBtnText" data-lang-key="submitBtn">📤 פרסם שרשור</span>
-    <div id="loadingSpinner" class="hidden animate-spin h-6 w-6 text-white mx-auto">
-        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" 
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-            </path>
+            <!-- User & App Info Section -->
+            <div class="flex items-center justify-between flex-wrap gap-4 mb-6 text-sm text-gray-500 dark:text-gray-400">
+                <span id="userIdDisplay" class="truncate flex items-center gap-1">
+                    <span class="font-mono text-gray-700 dark:text-gray-300 font-semibold text-lg" id="userIdValue">טוען...</span>
+                    <span id="userName" class="text-gray-600 dark:text-gray-400 font-medium"></span>
+                    <button id="copyUserIdBtn" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full p-2 transition-colors duration-200" title="העתק מזהה משתמש">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                         </svg>
-                    </div>
-                </button>
-            </form>
-        </div>
-
-        <!-- Threads Section -->
-        <div class="space-y-6">
-            <h2 class="text-2xl font-bold text-gray-700 dark:text-gray-300" data-lang-key="threadsHeader">🗂️ כל השרשורים</h2>
-            <div id="threadList" class="min-h-[200px]">
-                <p id="loadingMessage" class="text-center text-gray-500 dark:text-gray-400 mt-10" data-lang-key="loadingMsg">טוען שרשורים...</p>
-                <!-- Threads will be dynamically inserted here -->
+                    </button>
+                </span>
+                <div id="copySuccessMsg" class="absolute bg-green-500 text-white text-xs px-3 py-1 rounded-md opacity-0 transition-opacity duration-300">הועתק!</div>
+                <div class="flex items-center gap-3">
+                    <button id="darkModeToggle" class="flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full text-sm font-medium transition-colors duration-200">
+                        <span id="darkModeIcon">🌓</span> <span data-lang-key="darkModeBtn">מצב כהה</span>
+                    </button>
+                    <button id="langToggle" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full text-sm font-medium transition-colors duration-200">
+                        English
+                    </button>
+                </div>
             </div>
-            <p id="noThreadsMessage" class="text-center text-gray-500 dark:text-gray-400 hidden" data-lang-key="noThreadsMsg">אין שרשורים עדיין. היה הראשון לפרסם!</p>
-        </div>
+            
+            <!-- User Name Section -->
+            <div class="glassmorphism-container rounded-2xl p-6 mb-8 flex flex-col sm:flex-row items-center gap-4 shadow-sm">
+                <h2 class="text-2xl font-bold text-gray-700 dark:text-gray-300 mb-2 sm:mb-0" data-lang-key="userNameSection">👤 שם המשתמש שלך</h2>
+                <div class="flex flex-grow gap-2 w-full">
+                    <input type="text" id="userNameInput" placeholder="הכנס את שמך" class="flex-grow px-4 py-2 border rounded-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200" data-lang-key="userNamePlaceholder">
+                    <button id="saveUserNameBtn" class="gradient-btn text-white font-bold py-2 px-6 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-lang-key="saveBtn">
+                        שמור
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search & Filter Section -->
+            <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                <input type="text" id="searchInput" placeholder="🔍 חפש שרשור..." class="w-full sm:w-2/3 px-4 py-2 border rounded-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200" data-lang-key="searchPlaceholder">
+                <select id="categoryFilter" class="w-full sm:w-1/3 px-4 py-2 border rounded-full focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-200">
+                    <option value="all" data-lang-key="allCategories">כל הנושאים</option>
+                    <option value="היסטוריה משפחתית" data-lang-key="categoryHistory">היסטוריה משפחתית</option>
+                    <option value="שאלות" data-lang-key="categoryQuestions">שאלות</option>
+                    <option value="עדכונים" data-lang-key="categoryUpdates">עדכונים</option>
+                </select>
+            </div>
+
+            <!-- New Thread Form -->
+            <div class="glassmorphism-container rounded-2xl p-8 mb-8 shadow-sm">
+                <h2 class="text-2xl font-bold mb-4 text-gray-700 dark:text-gray-300" data-lang-key="newThreadHeader">✍️ פרסם שרשור חדש</h2>
+                <form id="newThreadForm" class="space-y-4">
+                    <input type="text" id="newThreadTitle" placeholder="כותרת השרשור" required class="w-full px-4 py-3 border rounded-xl focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="titlePlaceholder">
+                    <textarea id="newThreadContent" rows="4" placeholder="שתף את מחשבותיך..." required class="w-full px-4 py-3 border rounded-xl focus:ring focus:ring-indigo-300 focus:outline-none" data-lang-key="contentPlaceholder"></textarea>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <button type="button" id="improveTextBtn" class="w-full sm:w-1/2 outline-btn font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500" data-lang-key="improveBtn">
+                            ✨ שפר את הניסוח
+                        </button>
+                        <div class="relative w-full sm:w-1/2">
+                            <button id="categoryDropdownBtn" type="button" aria-haspopup="listbox" aria-expanded="false"
+                                    class="w-full px-4 py-3 border rounded-lg text-left flex items-center justify-between bg-transparent focus:ring focus:ring-indigo-300">
+                                <span id="selectedCategoryLabel" class="truncate">בחר קטגוריה...</span>
+                                <i class="fas fa-chevron-down text-sm"></i>
+                            </button>
+
+                            <ul id="categoryDropdownList" role="listbox" tabindex="-1"
+                                class="hidden absolute right-0 left-0 mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg z-50 overflow-auto max-h-48 text-right">
+                                <li role="option" data-value="היסטוריה משפחתית" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">היסטוריה משפחתית</li>
+                                <li role="option" data-value="שאלות" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">שאלות</li>
+                                <li role="option" data-value="עדכונים" class="px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">עדכונים</li>
+                            </ul>
+
+                            <!-- select נסתר לשמירה על התמיכה בקוד הקיים -->
+                            <select id="newThreadCategory" class="sr-only" aria-hidden="true">
+                                <option value="">בחר קטגוריה...</option>
+                                <option value="היסטוריה משפחתית">היסטוריה משפחתית</option>
+                                <option value="שאלות">שאלות</option>
+                                <option value="עדכונים">עדכונים</option>
+                            </select>
+                        </div>
+
+
+                        <button type="submit" id="submitThreadBtn" 
+                                class="w-full gradient-btn text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled-btn" 
+                                disabled>
+                            <span id="submitBtnText" data-lang-key="submitBtn">📤 פרסם שרשור</span>
+                            <div id="loadingSpinner" class="hidden animate-spin h-6 w-6 text-white mx-auto">
+                                <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" 
+                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Threads Section -->
+            <div class="space-y-6">
+                <h2 class="text-2xl font-bold text-gray-700 dark:text-gray-300" data-lang-key="threadsHeader">🗂️ כל השרשורים</h2>
+                <div id="threadList" class="min-h-[200px]">
+                    <p id="loadingMessage" class="text-center text-gray-500 dark:text-gray-400 mt-10" data-lang-key="loadingMsg">טוען שרשורים...</p>
+                    <!-- Threads will be dynamically inserted here -->
+                </div>
+                <p id="noThreadsMessage" class="text-center text-gray-500 dark:text-gray-400 hidden" data-lang-key="noThreadsMsg">אין שרשורים עדיין. היה הראשון לפרסם!</p>
+            </div>
+
+        </div> <!-- סגירת המיכל הפנימי -->
 
     </div>
 
@@ -313,17 +326,16 @@
         import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, doc, updateDoc, arrayUnion, arrayRemove, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Global variables for Firebase configuration and app ID
-        const firebaseConfig = {
-  apiKey: "AIzaSyB99bQpokjpcuXilwu3usXoOFLmegkVnb4",
-  authDomain: "family-gallery-d707d.firebaseapp.com",
-  projectId: "family-gallery-d707d",
-  storageBucket: "family-gallery-d707d.firebasestorage.app",
-  messagingSenderId: "227810040631",
-  appId: "1:227810040631:web:6bc0dc9a983fac04e4d8b2",
-  measurementId: "G-84CYX5S1F3"
-};
-
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = {
+  apiKey: "AIzaSyACnXDX1fcnaonBQgeT35oBLA5cAse7ekY",
+  authDomain: "forum-5e87a.firebaseapp.com",
+  projectId: "forum-5e87a",
+  storageBucket: "forum-5e87a.firebasestorage.app",
+  messagingSenderId: "1016957490060",
+  appId: "1:1016957490060:web:3551e41dda7fd59e7afca9",
+  measurementId: "G-XY37108JGV"
+};
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null; 
 
         // UI Elements
