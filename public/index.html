@@ -282,8 +282,17 @@
               };
 
 const updateContent = (lang, isLoggedIn, user) => {
-            const texts = translations[lang];
-            if (!texts) return;
+  console.log("🔍 updateContent called with:", lang);
+
+  // נבדוק אם השפה קיימת באובייקט התרגומים
+  console.log("🌐 translation found:", translations[lang]);
+  
+  const texts = translations[lang];
+  if (!texts) {
+    console.warn("⚠️ No translation found for language:", lang);
+    return;
+  }
+
             // עדכון HTML, dir ו-title
 
             document.documentElement.lang = lang;
