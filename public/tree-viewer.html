@@ -88,7 +88,7 @@
                                                  focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
                     data-he="English" data-en="עברית">English</button>
             <div class="flex flex-col items-center flex-grow">
-                <h1 class="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2" data-he="מציג נתוני משפחה" data-en="Family Data Viewer">מציג נתוני משפחה</h1>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2" data-he="אילן היוחסין" data-en="Family Data Viewer">The Family Tree</h1>
                 <p id="status-message" class="text-lg md:text-xl text-gray-500 text-center"></p>
             </div>
         </header>
@@ -109,36 +109,45 @@
             'he': {
                 'loading_user': 'בודק חיבור משתמש...',
                 'loading_family': (family) => `טוען נתונים עבור משפחת ${family}`,
-                'success': 'הנתונים נטענו בהצלחה!',
-                'success_fallback': 'הנתונים נטענו בהצלחה! (מקור חלופי)',
-                'no_user_family': 'שגיאה: לא ניתן לזהות את משפחת המשתמש. יש לוודא שהינך מחובר.',
+                'success_summary': (loaded, total) => `הנתונים נטענו בהצלחה! (${loaded} מתוך ${total} משפחות)`,
+                'success_single': 'הנתונים נטענו בהצלחה!', // Keep for context
+                'success_fallback': 'הנתונים נטענו בהצלחה! (מקור חלופי)', // Keep for context
+                'no_user_family': 'שגיאה: לא ניתן לזהות את צד/צדדי המשפחה. יש לוודא שהינך מחובר.',
                 'network_error': 'שגיאת רשת או שהמשתמש לא מחובר',
                 'no_user_details': 'לא ניתן לטעון את פרטי המשתמש. אנא התחבר/י ונסה/י שוב.',
-                'no_family_data_message': 'לא ניתן לטעון את נתוני המשפחה מאף מקור.',
+                'no_family_data_message': 'לא ניתן לטעון את נתוני המשפחה מאף מקור',
                 'origin': 'מוצא',
                 'members': 'חברי משפחה',
                 'toggle_to_en': 'English',
                 'toggle_to_he': 'עברית',
-                'link_prefix': 'קישור לקובץ: ' // New text for the link prefix
+                'link_prefix': 'קישורים לקבצים: ', // Updated text
+                'and_more': '(ועוד)' // New text
             },
             'en': {
                 'loading_user': 'Checking user connection...',
                 'loading_family': (family) => `Loading data for the ${family} family`,
-                'success': 'Data loaded successfully!',
-                'success_fallback': 'Data loaded successfully! (Fallback source)',
-                'no_user_family': 'Error: Could not identify user\'s family. Please ensure you are logged in.',
+                'success_summary': (loaded, total) => `Data loaded successfully! (${loaded} out of ${total} families)`,
+                'success_single': 'Data loaded successfully!', // Keep for context
+                'success_fallback': 'Data loaded successfully! (Fallback source)', // Keep for context
+                'no_user_family': 'Error: Could not identify user\'s family side(s). Please ensure you are logged in.',
                 'network_error': 'Network error or user is not logged in',
                 'no_user_details': 'Could not load user details. Please log in and try again.',
-                'no_family_data_message': 'Could not load family data from any source.',
+                'no_family_data_message': 'Could not load family data from any source',
                 'origin': 'Origin',
                 'members': 'Family Members',
                 'toggle_to_en': 'English',
                 'toggle_to_he': 'עברית',
-                'link_prefix': 'Link to file: ' // New text for the link prefix
+                'link_prefix': 'Links to files: ', // Updated text
+                'and_more': '(and more)' // New text
             }
         };
 
         let currentLang = 'he';
+
+        /**
+         * מעדכן את כל מחרוזות הממשק בהתאם לשפה הנוכחית.
+         * הפונקציה גם מפעילה מחדש את רינדור הנתונים אם כבר נטענו.
+         */
         const updateUIStrings = () => {
             document.body.dir = currentLang === 'he' ? 'rtl' : 'ltr';
             appContainerEl.dir = currentLang === 'he' ? 'rtl' : 'ltr';
@@ -155,21 +164,11 @@
             langToggleButton.textContent = currentLang === 'he' ? heBtnText : enBtnText;
 
             // Re-render data and status message if data is already on screen
-            const familyUrl = contentContainerEl.dataset.familyUrl;
-            if (contentContainerEl.dataset.familyData) {
-                renderData(JSON.parse(contentContainerEl.dataset.familyData));
-                
-                const successText = i18n[currentLang]['success']; 
-                const linkPrefix = i18n[currentLang]['link_prefix'];
-                const linkHtml = `<a href="${familyUrl}" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold underline break-all">${familyUrl}</a>`;
-                statusMessageEl.innerHTML = `<span>${successText}</span><br class="hidden sm:inline" /><span>${linkPrefix}${linkHtml}</span>`;
-
-            } else if (familyUrl) {
-                // Handle HTML fallback case (where familyData is not set but URL is)
-                const successText = i18n[currentLang]['success_fallback']; 
-                const linkPrefix = i18n[currentLang]['link_prefix'];
-                const linkHtml = `<a href="${familyUrl}" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold underline break-all">${familyUrl}</a>`;
-                statusMessageEl.innerHTML = `<span>${successText}</span><br class="hidden sm:inline" /><span>${linkPrefix}${linkHtml}</span>`;
+            const familyResultsRaw = contentContainerEl.dataset.familyResults;
+            if (familyResultsRaw) {
+                const results = JSON.parse(familyResultsRaw);
+                const totalAttempted = parseInt(contentContainerEl.dataset.totalAttempted || results.length);
+                renderCombinedData(results, totalAttempted);
             }
         };
 
@@ -177,6 +176,10 @@
             currentLang = currentLang === 'he' ? 'en' : 'he';
             updateUIStrings();
         });
+
+        // ---------------------------------------------------------------------
+        // CORE DATA FETCHING
+        // ---------------------------------------------------------------------
 
         const fetchUserData = async () => {
             statusMessageEl.textContent = i18n[currentLang]['loading_user'];
@@ -196,120 +199,62 @@
         };
 
         /**
-         * מנסה לטעון נתונים כ-JSON, ואם נכשל, מנסה לטעון כ-HTML גיבוי.
+         * מנסה לטעון נתונים עבור צד משפחה בודד, כ-JSON, ואם נכשל, כ-HTML גיבוי.
          * @param {string} familySide - שם צד המשפחה לטעינה.
-         * @returns {Promise<{type: 'json', data: Object, url: string} | {type: 'html', content: string, url: string}>}
+         * @returns {Promise<{side: string, type: 'json'|'html', data: Object|string, url: string}>}
          */
-        const fetchFamilyData = async (familySide) => {
+        const loadFamilySide = async (familySide) => {
             const jsonPath = `data/${familySide}.json`;
             const htmlPath = `trees/${familySide}.html`;
             
             // 1. Try JSON
-            statusMessageEl.textContent = i18n[currentLang]['loading_family'](familySide) + ' (JSON)';
             try {
                 const jsonResponse = await fetch(jsonPath);
-                
                 if (jsonResponse.ok) {
                     const data = await jsonResponse.json();
-                    console.log(`Successfully loaded JSON from: ${jsonPath}`);
-                    return { type: 'json', data: data, url: jsonPath }; // החזרת הנתיב
+                    return { side: familySide, type: 'json', data: data, url: jsonPath };
                 }
-
                 // If response is not OK (e.g., 404), proceed to fallback
                 throw new Error(`JSON failed with status ${jsonResponse.status}`);
-
             } catch (jsonError) {
                 // 2. JSON failed, attempt HTML fallback
-                console.warn(`JSON failed (${jsonPath}). Trying HTML fallback (${htmlPath}). Error:`, jsonError);
-                statusMessageEl.textContent = i18n[currentLang]['loading_family'](familySide) + ' (HTML Fallback)';
-                
+                console.warn(`JSON failed for ${familySide}. Trying HTML fallback. Error:`, jsonError);
                 try {
                     const htmlResponse = await fetch(htmlPath);
-
                     if (htmlResponse.ok) {
                         const content = await htmlResponse.text();
-                        console.log(`Successfully loaded HTML fallback from: ${htmlPath}`);
-                        return { type: 'html', content: content, url: htmlPath }; // החזרת הנתיב
+                        return { side: familySide, type: 'html', content: content, url: htmlPath };
                     }
-                    
                     // HTML also failed
                     throw new Error(`HTML fallback failed with status ${htmlResponse.status}`);
-
                 } catch (htmlError) {
-                    // 3. Both failed - throw a combined error
-                    console.error("Critical Error: Both JSON and HTML loading failed.", htmlError);
-                    // Throw a generic error message for the user
-                    throw new Error(i18n[currentLang]['no_family_data_message'] + `: ${htmlError.message}`);
+                    // 3. Both failed - throw a specific error for this side
+                    console.error(`Failed to load data for ${familySide} from both sources.`, htmlError);
+                    throw new Error(`${i18n[currentLang]['no_family_data_message']} עבור ${familySide}`);
                 }
             }
         };
 
-        // פונקציה חדשה להצגת תוכן HTML כחלופה
-        const renderHtmlFallback = (htmlContent) => {
-            const fallbackHtml = `
-                <div class="bg-yellow-50 p-8 rounded-xl shadow-md border-2 border-yellow-300 transition-transform transform hover:scale-[1.02]">
-                    <h2 class="text-3xl font-bold text-yellow-800 mb-4">⚠️ נתונים חלופיים נטענו (HTML)</h2>
-                    <p class="text-gray-700 mb-4">
-                        קובץ ה-JSON הסטנדרטי לא היה זמין. התוכן המוצג נטען מנתיב הגיבוי.
-                    </p>
-                    <div class="border border-yellow-400 p-4 rounded-lg bg-white overflow-x-auto" dir="rtl">
-                        ${htmlContent}
-                    </div>
-                </div>
-            `;
-            contentContainerEl.innerHTML = fallbackHtml;
-        };
+        // ---------------------------------------------------------------------
+        // CORE DATA RENDERING
+        // ---------------------------------------------------------------------
 
-
-        const loadAndDisplayData = async (familySide) => {
-            contentContainerEl.innerHTML = '';
-            errorMessageEl.classList.add('hidden');
-            try {
-                const result = await fetchFamilyData(familySide);
-                
-                // 1. הגדרת הודעת הסטטוס והקישור
-                const isJson = result.type === 'json';
-                const successText = isJson 
-                    ? i18n[currentLang]['success'] 
-                    : i18n[currentLang]['success_fallback'];
-                
-                const linkPrefix = i18n[currentLang]['link_prefix'];
-                // יצירת קישור עם הנתיב המלא
-                const linkHtml = `<a href="${result.url}" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold underline break-all">${result.url}</a>`;
-                
-                // עדכון הודעת הסטטוס להצגת ההודעה והקישור בשתי שורות (במקום אחד)
-                statusMessageEl.innerHTML = `<span>${successText}</span><br class="hidden sm:inline" /><span>${linkPrefix}${linkHtml}</span>`;
-
-                // 2. שמירת URL ב-dataset לצורך עדכון שפה
-                contentContainerEl.dataset.familyUrl = result.url;
-
-                if (isJson) {
-                    // JSON Success - use existing rendering logic
-                    contentContainerEl.dataset.familyData = JSON.stringify(result.data); // Store data for language toggle
-                    renderData(result.data);
-                } else {
-                    // HTML Fallback Success - use new HTML rendering logic
-                    delete contentContainerEl.dataset.familyData; // Remove old JSON data
-                    renderHtmlFallback(result.content);
-                }
-            } catch (error) {
-                statusMessageEl.textContent = '';
-                errorMessageEl.classList.remove('hidden');
-                errorMessageEl.innerHTML = `<p class="font-bold text-xl mb-2">${i18n[currentLang]['no_family_data_message']}</p><p>${error.message}</p>`;
-            }
-        };
-
-        // Recursive function to generate HTML for the family tree
-        const generateTreeHtml = (member) => {
+        /**
+         * פונקציה רקורסיבית ליצירת HTML עבור עץ משפחה.
+         * @param {Object} member - חבר משפחה.
+         * @param {string} lang - השפה הנוכחית ('he'/'en').
+         * @returns {string} - מחרוזת HTML של ענף העץ.
+         */
+        const generateTreeHtml = (member, lang) => {
             if (!member) return '';
-            const memberName = currentLang === 'he' ? member.name_he : member.name_en;
-            const memberRole = currentLang === 'he' ? member.role_he : member.role_en;
+            const memberName = lang === 'he' ? member.name_he : member.name_en;
+            const memberRole = lang === 'he' ? member.role_he : member.role_en;
 
             let childrenHtml = '';
             if (member.children && member.children.length > 0) {
                 const childrenContent = member.children.map(child => `
                     <div>
-                        ${generateTreeHtml(child)}
+                        ${generateTreeHtml(child, lang)}
                     </div>
                 `).join('');
                 childrenHtml = `<div class="tree-children">${childrenContent}</div>`;
@@ -326,33 +271,163 @@
             `;
         };
 
-        const renderData = (data) => {
-            const familyName = currentLang === 'he' ? data.name_he : data.name_en;
-            const origin = currentLang === 'he' ? data.origin_he : data.origin_en;
-            const summary = currentLang === 'he' ? data.history_summary_he : data.history_summary_en;
-
+        /**
+         * מרנדר נתונים בפורמט JSON ל-HTML ומחזיר את המחרוזת.
+         * @param {Object} data - אובייקט נתוני המשפחה.
+         * @param {string} lang - השפה הנוכחית.
+         * @returns {string} - מחרוזת HTML של פרטי משפחה ועץ.
+         */
+        const renderSingleData = (data, lang) => {
+            const familyName = lang === 'he' ? data.name_he : data.name_en;
+            const origin = lang === 'he' ? data.origin_he : data.origin_en;
+            const summary = lang === 'he' ? data.history_summary_he : data.history_summary_en;
+            
+            // Note: mb-8 added to separate sections when combined
             const html = `
-                <div class="bg-white p-8 rounded-xl shadow-md transition-transform transform hover:scale-[1.02] border border-gray-200">
-                    <h2 class="text-3xl md:text-4xl font-bold text-blue-600 mb-4">${familyName}</h2>
-                    <p class="text-gray-600 mb-6">${i18n[currentLang]['origin']}: <span class="text-orange-500 font-semibold">${origin}</span></p>
+                <div class="bg-white p-8 rounded-xl shadow-md transition-transform transform hover:scale-[1.02] border border-gray-200 mb-8">
+                    <h3 class="text-3xl font-bold text-blue-600 mb-4">${familyName}</h3>
+                    <p class="text-gray-600 mb-6">${i18n[lang]['origin']}: <span class="text-orange-500 font-semibold">${origin}</span></p>
                     <p class="text-gray-700 mb-8 leading-relaxed">${summary}</p>
                 </div>
-                <div class="mt-8 flex justify-center">
-                    ${generateTreeHtml(data.root_member)}
+                <div class="mt-8 flex justify-center pb-8">
+                    ${generateTreeHtml(data.root_member, lang)}
                 </div>
             `;
-            contentContainerEl.innerHTML = html;
+            return html;
         };
+        
+        /**
+         * מרנדר תוכן HTML כחלופה ומחזיר את המחרוזת.
+         * @param {string} htmlContent - תוכן ה-HTML שנטען כגיבוי.
+         * @returns {string} - מחרוזת HTML של עטיפת הגיבוי.
+         */
+        const renderSingleHtmlFallback = (htmlContent) => {
+            const fallbackHtml = `
+                <div class="bg-yellow-50 p-8 rounded-xl shadow-md border-2 border-yellow-300 transition-transform transform hover:scale-[1.02] mb-8">
+                    <h3 class="text-3xl font-bold text-yellow-800 mb-4">⚠️ נתונים חלופיים נטענו (HTML)</h3>
+                    <p class="text-gray-700 mb-4">
+                        קובץ ה-JSON הסטנדרטי לא היה זמין. התוכן המוצג נטען מנתיב הגיבוי.
+                    </p>
+                    <div class="border border-yellow-400 p-4 rounded-lg bg-white overflow-x-auto" dir="rtl">
+                        ${htmlContent}
+                    </div>
+                </div>
+            `;
+            return fallbackHtml;
+        };
+
+        /**
+         * מרנדר את כל הנתונים שנטענו בהצלחה ומעדכן את הודעת הסטטוס עם סיכום.
+         * @param {Array<Object>} results - מערך של תוצאות טעינה מוצלחות.
+         * @param {number} totalAttempted - מספר צדדי המשפחה הכולל שניסינו לטעון.
+         */
+        const renderCombinedData = (results, totalAttempted) => {
+            const successfulCount = results.length;
+            
+            // 1. עדכון הודעת הסטטוס הראשית עם סיכום הטעינה
+            const summaryText = i18n[currentLang]['success_summary'](successfulCount, totalAttempted);
+            
+            // יצירת רשימת קישורים לכל התוצאות שנטענו בהצלחה
+            const linkPrefix = i18n[currentLang]['link_prefix'];
+            
+            const allLinksHtml = results.map(result => {
+                // הצגת שם המשפחה בקישור במקום ה-URL המלא
+                const linkTitle = currentLang === 'he' ? `משפחת ${result.side}` : `${result.side} Family`; 
+                return `<a href="${result.url}" title="${result.url}" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold underline whitespace-nowrap">${linkTitle}</a>`;
+            }).join('<span class="mx-2 text-gray-400">|</span>'); // הפרדה בין הקישורים בקו אנכי
+
+            // עדכון ה-statusMessageEl להצגת הסיכום ורשימת הקישורים
+            statusMessageEl.innerHTML = `
+                <span>${summaryText}</span>
+                <br class="hidden sm:inline" />
+                <span class="text-base mt-1 block">
+                    <span class="font-bold">${linkPrefix}</span>
+                    <span class="flex flex-wrap justify-center items-center mt-1">
+                        ${allLinksHtml}
+                    </span>
+                </span>
+            `;
+            
+            // 2. שמירת הנתונים ב-dataset לצורך עדכון שפה
+            contentContainerEl.dataset.familyResults = JSON.stringify(results);
+            contentContainerEl.dataset.totalAttempted = totalAttempted;
+
+            // 3. רינדור כל התוכן
+            contentContainerEl.innerHTML = ''; 
+
+            results.forEach((result) => {
+                const headerHtml = `
+                    <div class="mt-12 mb-4 p-4 rounded-lg bg-blue-50 border border-blue-200 shadow-sm sticky top-0 z-10">
+                        <h2 class="text-2xl font-bold text-blue-700" dir="rtl">
+                            ${currentLang === 'he' ? 'משפחת' : 'Family'} ${result.side} 
+                            <span class="text-sm font-normal text-gray-600">(${result.type === 'json' ? 'JSON' : 'HTML Fallback'})</span>
+                        </h2>
+                    </div>
+                `;
+
+                contentContainerEl.insertAdjacentHTML('beforeend', headerHtml);
+                
+                if (result.type === 'json') {
+                    const singleDataHtml = renderSingleData(result.data, currentLang);
+                    contentContainerEl.insertAdjacentHTML('beforeend', singleDataHtml);
+                } else if (result.type === 'html') {
+                    const fallbackHtml = renderSingleHtmlFallback(result.content);
+                    contentContainerEl.insertAdjacentHTML('beforeend', fallbackHtml);
+                }
+            });
+        };
+        
+        // ---------------------------------------------------------------------
+        // INITIALIZATION
+        // ---------------------------------------------------------------------
 
         const initApp = async () => {
             errorMessageEl.classList.add('hidden');
+            contentContainerEl.innerHTML = ''; 
+            statusMessageEl.textContent = i18n[currentLang]['loading_user'];
+            
             try {
-                // הסרנו את המוק. קוראים ל-fetchUserData() כדי לקבל את familySide מהמשתמש המחובר.
                 const user = await fetchUserData(); 
-
+                
                 if (user && user.familySide) {
-                    await loadAndDisplayData(user.familySide);
+                    // הפיצול החדש של צדדי המשפחה לפי פסיקים
+                    const familySidesRaw = user.familySide;
+                    const familySides = familySidesRaw.split(',')
+                                                      .map(s => s.trim())
+                                                      .filter(s => s); // פיצול, ניקוי רווחים וסינון ריקים
+                    
+                    if (familySides.length === 0) {
+                         throw new Error(i18n[currentLang]['no_user_family']);
+                    }
+                    
+                    const results = [];
+                    let loadedCount = 0;
+                    const totalCount = familySides.length;
+
+                    for (const side of familySides) {
+                        // עדכון סטטוס טעינה לצד הנוכחי
+                        statusMessageEl.textContent = i18n[currentLang]['loading_family'](side) + ` (${loadedCount}/${totalCount})`;
+                        try {
+                            const result = await loadFamilySide(side);
+                            results.push(result);
+                            loadedCount++;
+                        } catch (sideError) {
+                            console.error(`Could not load side: ${side}. Error: ${sideError.message}`);
+                            // ממשיכים לצד הבא למרות השגיאה
+                        }
+                    }
+
+                    // לאחר שניסינו לטעון את כל הצדדים
+                    if (results.length > 0) {
+                        // רינדור כל התוצאות שהצליחו
+                        renderCombinedData(results, totalCount);
+                    } else {
+                        // אם אף צד לא נטען בהצלחה
+                        throw new Error(`${i18n[currentLang]['no_family_data_message']}. (ניסינו לטעון ${totalCount} צדדים)`);
+                    }
+                    
                 } else {
+                    // אין familySide באובייקט המשתמש
                     statusMessageEl.textContent = '';
                     errorMessageEl.classList.remove('hidden');
                     errorMessageEl.innerHTML = `<p class="font-bold">${i18n[currentLang]['no_user_family']}</p>`;
@@ -360,7 +435,7 @@
             } catch (error) {
                 statusMessageEl.textContent = '';
                 errorMessageEl.classList.remove('hidden');
-                errorMessageEl.innerHTML = `<p class="font-bold">${i18n[currentLang]['no_family_data_message']}: ${error.message}</p>`;
+                errorMessageEl.innerHTML = `<p class="font-bold">${i18n[currentLang]['no_family_data_message']}</p><p>${error.message}</p>`;
             }
         };
 
