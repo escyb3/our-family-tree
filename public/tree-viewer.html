@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Tree</title>
+    <title>Family Tree Status</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -15,143 +15,139 @@
             box-shadow: 0 0 15px rgba(59, 130, 246, 0.5), 0 0 30px rgba(59, 130, 246, 0.3);
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
-        .glowing-border:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2), 0 0 40px rgba(59, 130, 246, 0.4);
+        .success-badge {
+            transition: all 0.2s ease-in-out;
         }
-        /* Tree Node Styles */
-        .tree-node {
-            position: relative;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            border: 1px solid #e5e7eb;
-            background-color: #f9fafb;
-            text-align: center;
-        }
-        .tree-node-connector::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 1px;
-            height: 20px;
-            background-color: #d1d5db;
-            transform: translateX(-50%);
-        }
-        .tree-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .tree-children {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 2rem;
-            position: relative;
-            padding-top: 2rem;
-        }
-        .tree-children::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background-color: #d1d5db;
-        }
-        .tree-children > div {
-            padding-top: 2rem;
-            position: relative;
-        }
-        .tree-children > div::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 1px;
-            height: 2rem;
-            background-color: #d1d5db;
-            transform: translateX(-50%);
-        }
-        /* RTL specific styles */
-        [dir="rtl"] .tree-children {
-            direction: rtl;
+        .success-badge:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transform: scale(1.03);
         }
     </style>
 </head>
-<body class="bg-white text-gray-800 min-h-screen">
-    <div id="app-container" class="w-full" dir="rtl">
-        <header class="p-8 md:p-12 mb-12 flex items-start justify-between">
-            <button id="lang-toggle-button" class="px-6 py-2 rounded-full font-bold transition-colors duration-300
-                                                 bg-blue-600 hover:bg-blue-700 text-white shadow-lg
-                                                 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
-                    data-he="English" data-en="עברית">English</button>
-            <div class="flex flex-col items-center flex-grow">
-                <h1 class="text-4xl md:text-5xl font-extrabold text-blue-600 mb-2" data-he="אילן היוחסין" data-en="Family Data Viewer">The Family Tree</h1>
-                <p id="status-message" class="text-lg md:text-xl text-gray-500 text-center"></p>
+<body class="bg-gray-50 text-gray-800 min-h-screen">
+    <div id="app-container" class="w-full max-w-6xl mx-auto py-8 px-4" dir="rtl">
+        <header class="p-4 md:p-8 bg-white shadow-xl rounded-xl mb-12">
+            <div class="flex items-start justify-between">
+                <button id="lang-toggle-button" class="px-5 py-2 rounded-lg font-semibold text-sm transition-colors duration-300
+                                                     bg-blue-600 hover:bg-blue-700 text-white shadow-md
+                                                     focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
+                        data-he="English" data-en="עברית">English</button>
+                <div class="flex flex-col items-center flex-grow text-center">
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-blue-800 mb-2" data-he="אילן היוחסין" data-en="Family Tree">אילן היוחסין</h1>
+                    <p id="status-message" class="text-lg md:text-xl text-gray-600 font-medium mb-4"></p>
+                </div>
+                <div class="w-24"></div> <!-- Spacer for alignment -->
+            </div>
+            
+            <!-- NEW: Container for successfully loaded family badges -->
+            <div id="loaded-families-badges" class="mt-6 pt-4 border-t border-gray-200 flex flex-wrap justify-center gap-3">
+                <!-- Badges will be injected here -->
             </div>
         </header>
-        <main id="content-container" class="w-full overflow-x-auto p-4"></main>
-        <div id="error-message" class="hidden text-center mt-10 p-6 bg-red-200 text-red-800 rounded-lg glowing-border">
+
+        <!-- content-container is now used only for the placeholder/success message -->
+        <main id="content-container" class="w-full text-center p-8"></main>
+        
+        <div id="error-message" class="hidden text-center mt-10 p-6 bg-red-100 text-red-800 rounded-lg shadow-lg border-2 border-red-300">
             <p class="font-bold text-xl mb-2" data-he="שגיאה: לא ניתן לטעון את הנתונים." data-en="Error: Could not load data.">שגיאה: לא ניתן לטעון את הנתונים.</p>
-            <p data-he="אנא ודא שהינך מחובר ונסה שוב מאוחר יותר." data-en="Please ensure you are logged in and try again later.">אנא ודא שהינך מחובר ונסה שוב מאוחר יותר.</p>
+            <p id="error-main-desc" data-he="אנא ודא שהינך מחובר ונסה שוב מאוחר יותר." data-en="Please ensure you are logged in and try again later.">אנא ודא שהינך מחובר ונסה שוב מאוחר יותר.</p>
+            <!-- Dedicated element for dynamic error details/messages -->
+            <p id="error-dynamic-message" class="mt-3 text-sm font-mono p-2 bg-red-50 rounded-md border border-red-200"></p> 
         </div>
     </div>
     <script>
         const statusMessageEl = document.getElementById('status-message');
         const contentContainerEl = document.getElementById('content-container');
         const errorMessageEl = document.getElementById('error-message');
+        const errorDynamicMessageEl = document.getElementById('error-dynamic-message');
+        const errorMainDescEl = document.getElementById('error-main-desc'); // Added ID for dynamic main error message
         const langToggleButton = document.getElementById('lang-toggle-button');
         const appContainerEl = document.getElementById('app-container');
+        const loadedFamiliesBadgesEl = document.getElementById('loaded-families-badges');
+
+        // Global state object
+        let appState = {
+            error: null, // { titleKey: string, detail: string | null }
+            familyResults: null,
+            totalAttempted: 0
+        };
 
         const i18n = {
             'he': {
                 'loading_user': 'בודק חיבור משתמש...',
                 'loading_family': (family) => `טוען נתונים עבור משפחת ${family}`,
-                'success_summary': (loaded, total) => `הנתונים נטענו בהצלחה! (${loaded} מתוך ${total} משפחות)`,
-                'success_single': 'הנתונים נטענו בהצלחה!', // Keep for context
-                'success_fallback': 'הנתונים נטענו בהצלחה! (מקור חלופי)', // Keep for context
+                'success_summary': (loaded, total) => `סיכום טעינה: ${loaded} מתוך ${total} משפחות נטענו בהצלחה!`,
+                'success_message': 'הטעינה הושלמה בהצלחה.',
+                'success_details': 'כל הצדדים שנטענו מפורטים למעלה עם קישורים ישירים לקבצים המקוריים.',
                 'no_user_family': 'שגיאה: לא ניתן לזהות את צד/צדדי המשפחה. יש לוודא שהינך מחובר.',
                 'network_error': 'שגיאת רשת או שהמשתמש לא מחובר',
                 'no_user_details': 'לא ניתן לטעון את פרטי המשתמש. אנא התחבר/י ונסה/י שוב.',
                 'no_family_data_message': 'לא ניתן לטעון את נתוני המשפחה מאף מקור',
-                'origin': 'מוצא',
-                'members': 'חברי משפחה',
                 'toggle_to_en': 'English',
                 'toggle_to_he': 'עברית',
-                'link_prefix': 'קישורים לקבצים: ', // Updated text
-                'and_more': '(ועוד)' // New text
+                'link_prefix': 'קישורים לקבצים שנטענו: ', 
+                // Error description keys (used in renderErrorUI)
+                'desc_no_user_family': 'יש לוודא שהינך מחובר ושהמערכת מזהה את צד המשפחה שלך.',
+                'desc_general_error': 'אנא ודא שהינך מחובר ונסה שוב מאוחר יותר.'
             },
             'en': {
                 'loading_user': 'Checking user connection...',
                 'loading_family': (family) => `Loading data for the ${family} family`,
-                'success_summary': (loaded, total) => `Data loaded successfully! (${loaded} out of ${total} families)`,
-                'success_single': 'Data loaded successfully!', // Keep for context
-                'success_fallback': 'Data loaded successfully! (Fallback source)', // Keep for context
+                'success_summary': (loaded, total) => `Loading Summary: ${loaded} out of ${total} families loaded successfully!`,
+                'success_message': 'Loading completed successfully.',
+                'success_details': 'All loaded family sides are listed above with direct links to the original files.',
                 'no_user_family': 'Error: Could not identify user\'s family side(s). Please ensure you are logged in.',
                 'network_error': 'Network error or user is not logged in',
                 'no_user_details': 'Could not load user details. Please log in and try again.',
                 'no_family_data_message': 'Could not load family data from any source',
-                'origin': 'Origin',
-                'members': 'Family Members',
                 'toggle_to_en': 'English',
                 'toggle_to_he': 'עברית',
-                'link_prefix': 'Links to files: ', // Updated text
-                'and_more': '(and more)' // New text
+                'link_prefix': 'Links to loaded files: ',
+                // Error description keys (used in renderErrorUI)
+                'desc_no_user_family': 'Please ensure you are logged in and the system identifies your family side.',
+                'desc_general_error': 'Please ensure you are logged in and try again later.'
             }
         };
 
         let currentLang = 'he';
 
         /**
+         * מרנדר את ממשק השגיאה בהתאם למצב הנוכחי.
+         */
+        const renderErrorUI = () => {
+            if (!appState.error) return;
+
+            // 1. הסתר תוכן רגיל והצג שגיאה
+            contentContainerEl.classList.add('hidden');
+            loadedFamiliesBadgesEl.classList.add('hidden');
+            statusMessageEl.textContent = '';
+            errorMessageEl.classList.remove('hidden');
+
+            // 2. עדכן את הכותרת הראשית של השגיאה (משתמש ב data-he/data-en)
+            // ודא שהשגיאה הראשית מתורגמת כראוי
+            document.querySelectorAll('[data-he]').forEach(el => {
+                const heText = el.getAttribute('data-he');
+                const enText = el.getAttribute('data-en');
+                el.textContent = currentLang === 'he' ? heText : enText;
+            });
+            
+            // 3. עדכן את התיאור הראשי של השגיאה בהתבסס על המפתח
+            const descKey = appState.error.titleKey === 'no_user_family' ? 'desc_no_user_family' : 'desc_general_error';
+            errorMainDescEl.textContent = i18n[currentLang][descKey];
+
+            // 4. עדכן את פרטי השגיאה הדינמיים
+            errorDynamicMessageEl.textContent = appState.error.detail || '';
+        };
+
+        /**
          * מעדכן את כל מחרוזות הממשק בהתאם לשפה הנוכחית.
-         * הפונקציה גם מפעילה מחדש את רינדור הנתונים אם כבר נטענו.
+         * הפונקציה גם מפעילה מחדש את רינדור הנתונים או השגיאה.
          */
         const updateUIStrings = () => {
             document.body.dir = currentLang === 'he' ? 'rtl' : 'ltr';
             appContainerEl.dir = currentLang === 'he' ? 'rtl' : 'ltr';
 
+            // עדכון כל הרכיבים הסטטיים
             document.querySelectorAll('[data-he]').forEach(el => {
                 const heText = el.getAttribute('data-he');
                 const enText = el.getAttribute('data-en');
@@ -163,12 +159,12 @@
             const enBtnText = langToggleButton.getAttribute('data-en');
             langToggleButton.textContent = currentLang === 'he' ? heBtnText : enBtnText;
 
-            // Re-render data and status message if data is already on screen
-            const familyResultsRaw = contentContainerEl.dataset.familyResults;
-            if (familyResultsRaw) {
-                const results = JSON.parse(familyResultsRaw);
-                const totalAttempted = parseInt(contentContainerEl.dataset.totalAttempted || results.length);
-                renderCombinedData(results, totalAttempted);
+            // Re-render state
+            if (appState.error) {
+                renderErrorUI(); // רינדור השגיאה מחדש בשפה החדשה
+            } else if (appState.familyResults) {
+                // Re-render success state
+                renderCombinedData(appState.familyResults, appState.totalAttempted);
             }
         };
 
@@ -184,24 +180,21 @@
         const fetchUserData = async () => {
             statusMessageEl.textContent = i18n[currentLang]['loading_user'];
             try {
-                // קריאה אמיתית ל-API לקבלת פרטי משתמש
                 const response = await fetch('/api/user');
                 if (!response.ok) {
                     throw new Error(i18n[currentLang]['network_error']);
                 }
                 const user = await response.json();
-                // מניחים שאובייקט המשתמש נמצא תחת user.user
                 return user.user; 
             } catch (error) {
                 console.error("Error fetching user data:", error);
-                throw new Error(i18n[currentLang]['no_user_details']);
+                // זריקת שגיאה עם הודעת רשת / פרטי משתמש
+                throw new Error(error.message);
             }
         };
 
         /**
-         * מנסה לטעון נתונים עבור צד משפחה בודד, כ-JSON, ואם נכשל, כ-HTML גיבוי.
-         * @param {string} familySide - שם צד המשפחה לטעינה.
-         * @returns {Promise<{side: string, type: 'json'|'html', data: Object|string, url: string}>}
+         * מנסה לטעון נתונים עבור צד משפחה בודד.
          */
         const loadFamilySide = async (familySide) => {
             const jsonPath = `data/${familySide}.json`;
@@ -214,167 +207,75 @@
                     const data = await jsonResponse.json();
                     return { side: familySide, type: 'json', data: data, url: jsonPath };
                 }
-                // If response is not OK (e.g., 404), proceed to fallback
                 throw new Error(`JSON failed with status ${jsonResponse.status}`);
             } catch (jsonError) {
                 // 2. JSON failed, attempt HTML fallback
-                console.warn(`JSON failed for ${familySide}. Trying HTML fallback. Error:`, jsonError);
                 try {
                     const htmlResponse = await fetch(htmlPath);
                     if (htmlResponse.ok) {
                         const content = await htmlResponse.text();
                         return { side: familySide, type: 'html', content: content, url: htmlPath };
                     }
-                    // HTML also failed
+                    // 3. Both failed - throw a specific error for this side
                     throw new Error(`HTML fallback failed with status ${htmlResponse.status}`);
                 } catch (htmlError) {
-                    // 3. Both failed - throw a specific error for this side
-                    console.error(`Failed to load data for ${familySide} from both sources.`, htmlError);
-                    throw new Error(`${i18n[currentLang]['no_family_data_message']} עבור ${familySide}`);
+                    throw new Error(`${i18n[currentLang]['no_family_data_message']} עבור ${familySide} (${htmlError.message})`);
                 }
             }
         };
 
         // ---------------------------------------------------------------------
-        // CORE DATA RENDERING
+        // CORE DATA RENDERING (Simplified)
         // ---------------------------------------------------------------------
-
-        /**
-         * פונקציה רקורסיבית ליצירת HTML עבור עץ משפחה.
-         * @param {Object} member - חבר משפחה.
-         * @param {string} lang - השפה הנוכחית ('he'/'en').
-         * @returns {string} - מחרוזת HTML של ענף העץ.
-         */
-        const generateTreeHtml = (member, lang) => {
-            if (!member) return '';
-            const memberName = lang === 'he' ? member.name_he : member.name_en;
-            const memberRole = lang === 'he' ? member.role_he : member.role_en;
-
-            let childrenHtml = '';
-            if (member.children && member.children.length > 0) {
-                const childrenContent = member.children.map(child => `
-                    <div>
-                        ${generateTreeHtml(child, lang)}
-                    </div>
-                `).join('');
-                childrenHtml = `<div class="tree-children">${childrenContent}</div>`;
-            }
-
-            return `
-                <div class="tree-container">
-                    <div class="tree-node border border-gray-300 bg-white shadow-md rounded-lg p-4">
-                        <div class="font-bold text-lg text-blue-600">${memberName}</div>
-                        <div class="text-gray-600 text-sm">${memberRole}</div>
-                    </div>
-                    ${childrenHtml}
-                </div>
-            `;
-        };
-
-        /**
-         * מרנדר נתונים בפורמט JSON ל-HTML ומחזיר את המחרוזת.
-         * @param {Object} data - אובייקט נתוני המשפחה.
-         * @param {string} lang - השפה הנוכחית.
-         * @returns {string} - מחרוזת HTML של פרטי משפחה ועץ.
-         */
-        const renderSingleData = (data, lang) => {
-            const familyName = lang === 'he' ? data.name_he : data.name_en;
-            const origin = lang === 'he' ? data.origin_he : data.origin_en;
-            const summary = lang === 'he' ? data.history_summary_he : data.history_summary_en;
-            
-            // Note: mb-8 added to separate sections when combined
-            const html = `
-                <div class="bg-white p-8 rounded-xl shadow-md transition-transform transform hover:scale-[1.02] border border-gray-200 mb-8">
-                    <h3 class="text-3xl font-bold text-blue-600 mb-4">${familyName}</h3>
-                    <p class="text-gray-600 mb-6">${i18n[lang]['origin']}: <span class="text-orange-500 font-semibold">${origin}</span></p>
-                    <p class="text-gray-700 mb-8 leading-relaxed">${summary}</p>
-                </div>
-                <div class="mt-8 flex justify-center pb-8">
-                    ${generateTreeHtml(data.root_member, lang)}
-                </div>
-            `;
-            return html;
-        };
         
         /**
-         * מרנדר תוכן HTML כחלופה ומחזיר את המחרוזת.
-         * @param {string} htmlContent - תוכן ה-HTML שנטען כגיבוי.
-         * @returns {string} - מחרוזת HTML של עטיפת הגיבוי.
-         */
-        const renderSingleHtmlFallback = (htmlContent) => {
-            const fallbackHtml = `
-                <div class="bg-yellow-50 p-8 rounded-xl shadow-md border-2 border-yellow-300 transition-transform transform hover:scale-[1.02] mb-8">
-                    <h3 class="text-3xl font-bold text-yellow-800 mb-4">⚠️ נתונים חלופיים נטענו (HTML)</h3>
-                    <p class="text-gray-700 mb-4">
-                        קובץ ה-JSON הסטנדרטי לא היה זמין. התוכן המוצג נטען מנתיב הגיבוי.
-                    </p>
-                    <div class="border border-yellow-400 p-4 rounded-lg bg-white overflow-x-auto" dir="rtl">
-                        ${htmlContent}
-                    </div>
-                </div>
-            `;
-            return fallbackHtml;
-        };
-
-        /**
          * מרנדר את כל הנתונים שנטענו בהצלחה ומעדכן את הודעת הסטטוס עם סיכום.
-         * @param {Array<Object>} results - מערך של תוצאות טעינה מוצלחות.
-         * @param {number} totalAttempted - מספר צדדי המשפחה הכולל שניסינו לטעון.
          */
         const renderCombinedData = (results, totalAttempted) => {
+            // הסתר שגיאות והצג תוכן רגיל
+            errorMessageEl.classList.add('hidden');
+            contentContainerEl.classList.remove('hidden');
+            loadedFamiliesBadgesEl.classList.remove('hidden');
+
             const successfulCount = results.length;
             
             // 1. עדכון הודעת הסטטוס הראשית עם סיכום הטעינה
             const summaryText = i18n[currentLang]['success_summary'](successfulCount, totalAttempted);
+            statusMessageEl.textContent = summaryText;
             
-            // יצירת רשימת קישורים לכל התוצאות שנטענו בהצלחה
+            // 2. שמירת הנתונים ב-dataset לצורך עדכון שפה (כבר נעשה)
+
+            // 3. רינדור הקישורים
             const linkPrefix = i18n[currentLang]['link_prefix'];
             
             const allLinksHtml = results.map(result => {
-                // הצגת שם המשפחה בקישור במקום ה-URL המלא
                 const linkTitle = currentLang === 'he' ? `משפחת ${result.side}` : `${result.side} Family`; 
-                return `<a href="${result.url}" title="${result.url}" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold underline whitespace-nowrap">${linkTitle}</a>`;
-            }).join('<span class="mx-2 text-gray-400">|</span>'); // הפרדה בין הקישורים בקו אנכי
+                return `
+                    <a href="${result.url}" title="${result.url}" target="_blank" 
+                       class="text-blue-500 hover:text-blue-700 font-semibold underline transition duration-150 ease-in-out px-1">
+                        ${linkTitle}
+                    </a>
+                `;
+            }).join('<span class="text-gray-400">|</span>');
 
-            // עדכון ה-statusMessageEl להצגת הסיכום ורשימת הקישורים
-            statusMessageEl.innerHTML = `
-                <span>${summaryText}</span>
-                <br class="hidden sm:inline" />
-                <span class="text-base mt-1 block">
-                    <span class="font-bold">${linkPrefix}</span>
-                    <span class="flex flex-wrap justify-center items-center mt-1">
+            loadedFamiliesBadgesEl.innerHTML = `
+                <div class="w-full text-center p-4 bg-gray-100 rounded-lg shadow-inner">
+                    <p class="font-bold text-gray-700 mb-2 text-base">${linkPrefix}</p>
+                    <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-2 text-sm">
                         ${allLinksHtml}
-                    </span>
-                </span>
+                    </div>
+                </div>
             `;
             
-            // 2. שמירת הנתונים ב-dataset לצורך עדכון שפה
-            contentContainerEl.dataset.familyResults = JSON.stringify(results);
-            contentContainerEl.dataset.totalAttempted = totalAttempted;
+            // 4. רינדור הודעת ההצלחה הכללית
+            const successDetails = i18n[currentLang]['success_details'];
 
-            // 3. רינדור כל התוכן
-            contentContainerEl.innerHTML = ''; 
-
-            results.forEach((result) => {
-                const headerHtml = `
-                    <div class="mt-12 mb-4 p-4 rounded-lg bg-blue-50 border border-blue-200 shadow-sm sticky top-0 z-10">
-                        <h2 class="text-2xl font-bold text-blue-700" dir="rtl">
-                            ${currentLang === 'he' ? 'משפחת' : 'Family'} ${result.side} 
-                            <span class="text-sm font-normal text-gray-600">(${result.type === 'json' ? 'JSON' : 'HTML Fallback'})</span>
-                        </h2>
-                    </div>
-                `;
-
-                contentContainerEl.insertAdjacentHTML('beforeend', headerHtml);
-                
-                if (result.type === 'json') {
-                    const singleDataHtml = renderSingleData(result.data, currentLang);
-                    contentContainerEl.insertAdjacentHTML('beforeend', singleDataHtml);
-                } else if (result.type === 'html') {
-                    const fallbackHtml = renderSingleHtmlFallback(result.content);
-                    contentContainerEl.insertAdjacentHTML('beforeend', fallbackHtml);
-                }
-            });
+            contentContainerEl.innerHTML = `
+                <div class="p-6 bg-green-100 text-green-800 rounded-xl shadow-lg border border-green-300">
+                    <p class="text-xl font-bold">${i18n[currentLang]['success_message']}</p>
+                    <p class="mt-2 text-sm text-green-700">${successDetails}</p>
+                </div>
+            `;
         };
         
         // ---------------------------------------------------------------------
@@ -382,22 +283,30 @@
         // ---------------------------------------------------------------------
 
         const initApp = async () => {
+            // Reset state
+            appState.error = null;
+            appState.familyResults = null;
+            appState.totalAttempted = 0;
+            
             errorMessageEl.classList.add('hidden');
             contentContainerEl.innerHTML = ''; 
+            loadedFamiliesBadgesEl.innerHTML = ''; 
             statusMessageEl.textContent = i18n[currentLang]['loading_user'];
             
             try {
                 const user = await fetchUserData(); 
                 
                 if (user && user.familySide) {
-                    // הפיצול החדש של צדדי המשפחה לפי פסיקים
                     const familySidesRaw = user.familySide;
-                    const familySides = familySidesRaw.split(',')
-                                                      .map(s => s.trim())
-                                                      .filter(s => s); // פיצול, ניקוי רווחים וסינון ריקים
+                    const familySides = familySidesRaw.split(',').map(s => s.trim()).filter(s => s);
                     
                     if (familySides.length === 0) {
-                         throw new Error(i18n[currentLang]['no_user_family']);
+                        // Set specific error state for missing familySide
+                        appState.error = {
+                            titleKey: 'no_user_family',
+                            detail: i18n[currentLang]['no_user_family'] 
+                        };
+                         throw new Error("No family sides found in user data.");
                     }
                     
                     const results = [];
@@ -405,7 +314,6 @@
                     const totalCount = familySides.length;
 
                     for (const side of familySides) {
-                        // עדכון סטטוס טעינה לצד הנוכחי
                         statusMessageEl.textContent = i18n[currentLang]['loading_family'](side) + ` (${loadedCount}/${totalCount})`;
                         try {
                             const result = await loadFamilySide(side);
@@ -413,29 +321,40 @@
                             loadedCount++;
                         } catch (sideError) {
                             console.error(`Could not load side: ${side}. Error: ${sideError.message}`);
-                            // ממשיכים לצד הבא למרות השגיאה
+                            // Log the error but continue to the next side
                         }
                     }
 
-                    // לאחר שניסינו לטעון את כל הצדדים
                     if (results.length > 0) {
-                        // רינדור כל התוצאות שהצליחו
+                        appState.familyResults = results;
+                        appState.totalAttempted = totalCount;
                         renderCombinedData(results, totalCount);
                     } else {
-                        // אם אף צד לא נטען בהצלחה
-                        throw new Error(`${i18n[currentLang]['no_family_data_message']}. (ניסינו לטעון ${totalCount} צדדים)`);
+                        // All sides failed to load
+                        appState.error = {
+                            titleKey: 'no_family_data_message',
+                            detail: `${i18n[currentLang]['no_family_data_message']}. (ניסינו לטעון ${totalCount} צדדים)`
+                        };
+                        throw new Error("No family data loaded successfully.");
                     }
                     
                 } else {
-                    // אין familySide באובייקט המשתמש
-                    statusMessageEl.textContent = '';
-                    errorMessageEl.classList.remove('hidden');
-                    errorMessageEl.innerHTML = `<p class="font-bold">${i18n[currentLang]['no_user_family']}</p>`;
+                    // familySide is missing or empty
+                    appState.error = {
+                        titleKey: 'no_user_family',
+                        detail: i18n[currentLang]['no_user_family'] 
+                    };
+                    throw new Error("Family side missing from user object.");
                 }
             } catch (error) {
-                statusMessageEl.textContent = '';
-                errorMessageEl.classList.remove('hidden');
-                errorMessageEl.innerHTML = `<p class="font-bold">${i18n[currentLang]['no_family_data_message']}</p><p>${error.message}</p>`;
+                // Handle general errors and fall back to stored error state if none was set specifically
+                if (!appState.error) {
+                    appState.error = {
+                        titleKey: 'no_family_data_message', // General message
+                        detail: error.message || "An unknown error occurred during initialization."
+                    };
+                }
+                renderErrorUI();
             }
         };
 
