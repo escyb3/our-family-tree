@@ -227,12 +227,12 @@
         const GEMINI_MODEL = "gemini-2.5-flash-preview-09-2025";
         const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
         
-        // --- Family Branches List ---
+        // --- Family Branches List (UPDATED) ---
         const familyBranches = [
             "כל המשפחות", 
             "Ben Abou", "Elharrar", "Malka", "Ben David", 
             "Bromberg", "Barenbaum", "Fass-Schneck", "Weinberger", 
-            "Leibner", "van der Velde", "Behr", "Izaks"
+            "Leibner", "van der Velde", "Izaks"
         ];
         
         // Language mapping for translation (Language Code -> Display Name)
@@ -404,7 +404,7 @@
                 uploading: 'Afbeelding uploaden...'
             },
             'yi': {
-                pageTitle: 'פאַמיליע פֿאָטאָ גאַלעריע',
+                pageTitle: 'פֿאַמיליע פֿאָטאָ גאַלעריע',
                 mainHeader: '🖼️ שותּפֿותדיקע פֿאַמיליע גאַלעריע',
                 userIdLabel: 'דיין באַניצער אידענטיפֿיקאַציע:',
                 languageSelect: 'באַשטימען שפּראַך:',
@@ -625,6 +625,7 @@
             }
             emptyMessage.classList.add('hidden');
 
+            // Sorting is done client-side since Firestore doesn't support orderBy without index
             images.sort((a, b) => b.timestamp - a.timestamp);
 
             images.forEach(image => {
@@ -998,8 +999,10 @@
                 return;
             }
             
-            const UPLOAD_PRESET = 'my_family_gallery_preset'; 
-            const CLOUD_NAME = firebaseConfig.projectId;
+            // --- UPDATED CLOUDINARY CONFIG ---
+            const UPLOAD_PRESET = 'family-gallery'; 
+            const CLOUD_NAME = 'dvjgfyrp4'; // Updated Cloud Name
+            // ----------------------------------
 
             if (!CLOUD_NAME) {
                  document.getElementById('upload-status').textContent = "Error: Cloudinary Cloud Name missing.";
@@ -1059,11 +1062,7 @@
                             document.getElementById('people-tags-input').value = '';
                             uploadBranchSelect.value = '';
                             
-                            setTimeout(() => {
-                                const tabPrivate = document.getElementById('tab-private');
-                                if (tabPrivate) { tabPrivate.click(); }
-                            }, 500); 
-
+                            // נשארים על לשונית "גלריה משפחתית" (public) כדי שהתמונה תופיע מיד לכולם.
                         } else if (result.event === "abort" || result.event === "close") {
                             loadingSpinner.classList.add('hidden');
                             uploadStatus.textContent = langStrings.uploadCanceled;
@@ -1106,6 +1105,15 @@
             const systemPrompt = "אתה כותב כיתובים יצירתיים, קצרים ומצחיקים לרשתות חברתיות בשימוש יומיומי. כתוב כיתוב אחד בלבד עבור התמונה. שמור על טון ידידותי וחם וכתוב אך ורק בעברית.";
             const userQuery = `התמונה הזו קרויה "${displayName}". היא הועלתה על ידי משתמש עם המזהה החלקי "${uploaderId.substring(0, 5)}...". אנא כתוב כיתוב כיפי וקליט עבור התמונה.`;
 
+            // --- הגדרת ה-payload ---
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+            // ----------------------------------------
+            
             let generatedCaption = langStrings.errorCaption;
             const maxRetries = 5;
             let delay = 1000;
