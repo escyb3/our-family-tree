@@ -1226,6 +1226,9 @@
             captionElement.textContent = translatedText;
             translateTrigger.disabled = false;
         }
+         const isRTL = document.documentElement.dir === 'rtl' ||
+                document.body.dir === 'rtl' ||
+                document.body.classList.contains('rtl');
     </script>
 </body>
 </html>
