@@ -73,7 +73,6 @@
       mainContent.style.display = "block";
       
       const familyInfoElement = document.getElementById("family-info");
-        // תוקן: שימוש בשרשור מחרוזות במקום Template Literal
       familyInfoElement.innerHTML = '<span class="text-red-600 font-bold bg-red-100 p-2 rounded">' + message + '</span>';
       
       document.querySelectorAll('.chart-container').forEach(el => el.style.display = 'none');
@@ -82,22 +81,16 @@
 
     /**
      * פונקציה משופרת לחילוץ מערך JSON של נתונים מתוך טקסט גולמי מעורב.
-     * כוללת ניקוי של "פסיקים מיותרים" (Trailing Commas) שאינם חוקיים ב-JSON
-     * @param {string} rawText - הטקסט הגולמי של הקובץ (למשל, קובץ HTML).
-     * @returns {Array<Object>} מערך האובייקטים של האנשים.
-     * @throws {Error} אם לא נמצא JSON תקין.
+     * (ללא שינוי מהקובץ המקורי)
      */
     function extractFamilyData(rawText) {
-      // 1. ביטוי רגולרי גרידי לחיפוש מערך שמתחיל ב- '[' ואחריו לפחות אובייקט אחד שמתחיל ב- '{' ומסתיים ב- '}]'
-      // [[\s\S]*] - מחפש את הבלוק הגדול ביותר בין הסוגריים המרובעים החיצוניים.
       const jsonRegex = /(\[\s*\{[\s\S]*\}\s*\])/; 
       const match = rawText.match(jsonRegex);
 
       if (match && match[1]) {
         let jsonString = match[1].trim();
 
-        // 2. ניקוי: הסרת פסיקים מיותרים (Trailing Commas) הנפוצים ב-JS אך לא חוקיים ב-JSON.
-        // מחפש פסיק ואחריו רווחים ואז סוגר מסולסל/מרובע.
+        // ניקוי: הסרת פסיקים מיותרים (Trailing Commas)
         jsonString = jsonString.replace(/,\s*([\]}])/g, '$1');
 
         try {
@@ -108,7 +101,6 @@
           }
         } catch (e) {
           console.error("שגיאת ניתוח JSON לאחר חילוץ וניקוי:", e);
-          // תוקן: שימוש בשרשור מחרוזות במקום Template Literal
           throw new Error("הנתונים חולצו אך עדיין אינם במבנה JSON תקין, גם לאחר ניקוי פסיקים מיותרים. בדוק את מבנה הקובץ המקורי.");
         }
       }
@@ -117,66 +109,89 @@
     }
 
 
-    // --- פונקציה ראשית ---
+    // --- פונקציה ראשית (עם לוגיקה חדשה לריבוי קבצים) ---
 
     async function loadFamilyStats() {
       const familyInfoElement = document.getElementById("family-info");
       
       try {
-        // 1. שליפת פרטי משתמש וצד משפחה (familySide)
+        // 1. שליפת פרטי משתמש וקבלת צד משפחה גולמי
         familyInfoElement.textContent = "שולף פרטי משתמש...";
         const userResponse = await fetch('/api/user');
         if (!userResponse.ok) {
-            // תוקן: שימוש בשרשור מחרוזות במקום Template Literal
           throw new Error('שגיאה ' + userResponse.status + ': לא ניתן לטעון פרטי משתמש.');
         }
         
         const userData = await userResponse.json();
-        const familySide = userData.user?.familySide; 
+        const rawFamilySide = userData.user?.familySide; 
 
-        if (!familySide || typeof familySide !== 'string' || familySide === 'לא מוגדר') {
-          throw new Error("שדה 'familySide' חסר, לא תקין או לא מוגדר בפרטי המשתמש.");
+        if (!rawFamilySide || typeof rawFamilySide !== 'string' || rawFamilySide === 'לא מוגדר') {
+          throw new Error("שדה 'familySide' חסר, לא תקין או לא מוגדר בפרטי המשתמש. (נדרש שם משפחה אחד או יותר, מופרדים בפסיקים).");
+        }
+        
+        // פיצול שמות המשפחה וניקוי רווחים
+        const familyNames = rawFamilySide.split(',')
+            .map(name => name.trim())
+            .filter(name => name.length > 0);
+
+        if (familyNames.length === 0) {
+          throw new Error("שדה 'familySide' מכיל תווים, אך לא נמצאו שמות משפחה תקינים לעיבוד לאחר ניקוי.");
         }
 
-        // 2. שליפת קובץ הנתונים כטקסט
-        // תוקן: שימוש בשרשור מחרוזות במקום Template Literal
-        const dataUrl = '/trees/' + familySide + '.html';
-        // תוקן: שימוש בשרשור מחרוזות במקום Template Literal
-        familyInfoElement.textContent = 'טוען קובץ גולמי עבור המשפחה: ' + familySide + ' מ: ' + dataUrl + '...';
-        
-        const dataResponse = await fetch(dataUrl);
-        if (!dataResponse.ok) {
-            // תוקן: שימוש בשרשור מחרוזות במקום Template Literal
-          throw new Error('שגיאה ' + dataResponse.status + ': קובץ הנתונים ' + familySide + '.html לא נמצא בשרת.');
-        }
-        
-        // טוען את כל הקובץ כטקסט (כדי לחלץ את ה-JSON מתוכו)
-        const rawText = await dataResponse.text();
-        
-        // 3. חילוץ נתונים קפדני
+        // 2. שליפת קבצים, צבירה וטיפול בשגיאות
+        const allFamilyData = [];
+        const loadedFamilies = [];
+        const failedFamilies = [];
+
+        for (const familySide of familyNames) {
+            const dataUrl = '/trees/' + familySide + '.html';
+            familyInfoElement.textContent = 'טוען נתונים עבור: ' + familySide + '...';
+
+            try {
+                const dataResponse = await fetch(dataUrl);
+                if (!dataResponse.ok) {
+                    // מדובר בשגיאה בקובץ ספציפי, לא נזרוק Error כדי לאפשר טעינת קבצים אחרים
+                    throw new Error('שגיאת שרת: ' + dataResponse.status);
+                }
+
+                const rawText = await dataResponse.text();
+                const rawData = extractFamilyData(rawText);
+
+                // צבירת הנתונים
+                allFamilyData.push(...rawData);
+                loadedFamilies.push(familySide);
+
+            } catch (error) {
+                console.warn('כשל בטעינת ' + familySide + ': ' + error.message);
+                failedFamilies.push({ name: familySide, message: error.message });
+            }
+        }
+
+        if (allFamilyData.length === 0) {
+             let errorMsg = "לא נמצאו נתונים כלל לעיבוד סטטיסטי מכל הקבצים שניסיתי לטעון.";
+             if (failedFamilies.length > 0) {
+                 errorMsg += " (נכשלו: " + failedFamilies.map(f => f.name).join(', ') + ")";
+             }
+             throw new Error(errorMsg);
+        }
+
+        // 3. ניקוי וסינון נתונים - מבוצע על המערך המאוחד (allFamilyData)
         familyInfoElement.textContent = "מחלץ ומנקה נתונים...";
-        const rawData = extractFamilyData(rawText);
-
-        // סינון נתונים - ודא שיש שדה 'gender' או שדה 'birth_year'
-        const cleanedData = rawData.filter(p => {
+        
+        const cleanedData = allFamilyData.filter(p => {
           if (!p || typeof p !== 'object') return false;
           
           const hasValidGender = p.gender && (p.gender === "M" || p.gender === "F");
-          // birth_year נחשב תקין אם הוא מספר בין 1500 לשנה הנוכחית.
           const isBirthYearValid = typeof p.birth_year === 'number' && p.birth_year > 1500 && p.birth_year <= new Date().getFullYear();
           
           return hasValidGender || isBirthYearValid;
         });
 
-        if (cleanedData.length === 0 && rawData.length > 0) {
-          console.warn("Raw data length:", rawData.length);
-            // תוקן: שימוש בשרשור מחרוזות במקום Template Literal
-          throw new Error('הנתונים חולצו בהצלחה, אך לא נמצאו רשומות תקינות לסטטיסטיקות (כנראה שדות מגדר/שנת לידה חסרים).');
-        } else if (cleanedData.length === 0) {
-          throw new Error("לא נמצאו נתונים כלל לעיבוד סטטיסטי.");
+        if (cleanedData.length === 0) {
+            throw new Error('הנתונים חולצו בהצלחה, אך לא נמצאו רשומות תקינות לסטטיסטיקות (כנראה שדות מגדר/שנת לידה חסרים) מתוך ' + allFamilyData.length + ' רשומות גולמיות.');
         }
 
-        // 4. עיבוד והצגת התרשימים
+        // 4. עיבוד והצגת התרשימים (משתמש ב-cleanedData המאוחד)
         
         // --- נתוני מגדר (Pie Chart) ---
         const males = cleanedData.filter(p => p.gender === "M").length;
@@ -205,7 +220,7 @@
           }
         });
 
-        // --- נתוני דורות (Bar Chart) - משתמש ב-birth_year ---
+        // --- נתוני דורות (Bar Chart) ---
         const generations = {};
         const BASE_YEAR = 1800;
         const GENERATION_SPAN = 25;
@@ -213,7 +228,6 @@
         cleanedData.forEach(p => {
           const year = p.birth_year;
           
-          // רק אנשים עם שנת לידה מספרית תקינה נכנסים לסטטיסטיקת דורות
           if (typeof year !== 'number' || year === null || year < BASE_YEAR || year > new Date().getFullYear()) {
             return;
           }
@@ -227,7 +241,6 @@
         const genLabels = sortedGenerations.map(([index, count]) => {
             const startYear = BASE_YEAR + (+index * GENERATION_SPAN);
             const endYear = startYear + GENERATION_SPAN - 1;
-            // תוקן: שימוש בשרשור מחרוזות במקום Template Literal
             return startYear + ' - ' + endYear;
         });
         const genValues = sortedGenerations.map(([index, count]) => count);
@@ -261,13 +274,18 @@
         // 5. סיום טעינה
         document.getElementById("loading").style.display = "none";
         document.getElementById("main-content").style.display = "block";
-        // תוקן: שימוש בשרשור מחרוזות במקום Template Literal
-        familyInfoElement.innerHTML = '<span class="text-green-700 font-semibold">הנתונים נטענו בהצלחה עבור המשפחה: <b>' + familySide + '</b>. סך אנשים מעובדים: ' + cleanedData.length + '</span>';
+        
+        let statusMessage = 'הנתונים נטענו בהצלחה עבור המשפחות: <b>' + loadedFamilies.join(', ') + '</b>. סך אנשים מעובדים: ' + cleanedData.length;
+        
+        if (failedFamilies.length > 0) {
+            statusMessage += '. <br><span class="text-yellow-600 font-bold">שימו לב: נכשלה טעינה עבור: ' + failedFamilies.map(f => f.name).join(', ') + '.</span>';
+        }
+
+        familyInfoElement.innerHTML = '<span class="text-green-700 font-semibold">' + statusMessage + '</span>';
 
 
       } catch (error) {
         console.error("שגיאה קריטית:", error);
-        // תוקן: שימוש בשרשור מחרוזות במקום Template Literal
         displayError('אירעה שגיאה בטעינת הנתונים: ' + error.message);
       }
     }
