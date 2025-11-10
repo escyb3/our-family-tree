@@ -103,11 +103,19 @@
       // 2. חילוץ המחרוזת בין הגבולות
       let jsonString = rawText.substring(start, end + 1).trim();
 
-      // 3. ניקוי: הסרת פסיקים מיותרים (Trailing Commas)
-      // זהו ניקוי חשוב להפיכת JSON לא תקין (עם פסיק בסוף אובייקט או מערך) לתקין
+      // 3. ניקוי ראשוני: הסרת תגובות HTML ו-JavaScript בתוך המחרוזת
+      // הסרת תגובות HTML (<!-- ... -->)
+      jsonString = jsonString.replace(/<!--[\s\S]*?-->/g, '');
+      // הסרת תגובות JavaScript חד-שורה (// ...), תוך זהירות לא לפגוע ב-http://
+      // מחליף תגובה חד-שורה (//...) בסוף שורה לנקודת סיום שורה נקייה
+      jsonString = jsonString.replace(/\/\/[^\n]*\n/g, '\n'); 
+      // טיפול בתגובה בשורה האחרונה
+      jsonString = jsonString.replace(/\/\/[^\n]*$/, ''); 
+
+      // 4. ניקוי: הסרת פסיקים מיותרים (Trailing Commas) - חשוב ל-JSON לא תקני
       jsonString = jsonString.replace(/,\s*([\]}])/g, '$1');
 
-      // 4. ניסיון ניתוח JSON
+      // 5. ניסיון ניתוח JSON
       try {
         const data = JSON.parse(jsonString);
         
@@ -120,8 +128,9 @@
         }
       } catch (e) {
         console.error("שגיאת ניתוח JSON לאחר חילוץ וניקוי:", e);
-        // מציג את תחילת המחרוזת שגרמה לשגיאה כדי לסייע בזיהוי הבעיה בקובץ המקור
-        const errorSnippet = jsonString.substring(0, 50).replace(/\n/g, ' ') + '...';
+        // מציג את תחילת המחרוזת שגרמה לשגיאה (הגדלתי ל-200 תווים)
+        // ניקוי רווחים ושורות חדשות כדי להפוך את הקטע לקריא בשורת שגיאה אחת
+        const errorSnippet = jsonString.substring(0, 200).replace(/(\n|\r|\t)/g, ' ').trim() + '...';
         throw new Error(`שגיאת JSON.parse: המחרוזת שחולצה ("${errorSnippet}") אינה JSON תקין. בדוק את מבנה הקובץ המקורי.`);
       }
       
