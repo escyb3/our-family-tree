@@ -81,41 +81,36 @@
 
     /**
      * פונקציה חזקה לחילוץ מערך JSON של נתונים מתוך טקסט גולמי (כגון קובץ HTML).
-     * מחפשת את הגבולות ([...]) של מערך הנתונים הראשי בתוך הקובץ, תוך דגש על מבנה תקין ({...}).
+     * מחפשת את הבלוק "[...]" המכיל אובייקטים ומתעלמת מכל תו נוסף מחוץ לגבולות ה-JSON.
      */
     function extractFamilyData(rawText) {
-      // 1. חיפוש הגבולות החזקים ביותר של מערך המכיל אובייקטים
       
-      // חיפוש ה-`[` הפותח שמיד אחריו מופיע '{' (למשל, `[{`), מה שמסמן תחילת מערך נתונים
-      const startMatch = rawText.match(/\[\s*\{/);
-      if (!startMatch) {
-        throw new Error("לא נמצאה תחילת מערך נתונים תקינה: '[' ואחריו '{' (למשל, `[{`).");
-      }
-      const start = startMatch.index; // האינדקס של ה-`[` הפותח
+      // 1. חיפוש ומציאת ה-JSON באמצעות Regular Expression
+      // מחפש מערך ([...]) המכיל לפחות אובייקט פתוח ({)
+      // s - מאפשר נקודה שתתאים לכל תו כולל שורות חדשות
+      // ? - הופך את ה-* ללא-חמדן (non-greedy), כלומר יתאים ל-[...] הקצר ביותר
+      // Trim: מסיר רווחים לפני ואחרי.
+      const jsonMatch = rawText.match(/(\s*\[\s*\{[\s\S]*\}\s*\]\s*)/);
 
-      // חיפוש ה-`]` הסוגר (האחרון בקובץ)
-      const end = rawText.lastIndexOf(']');
+      if (!jsonMatch) {
+        throw new Error("לא נמצא בלוק JSON תקין (מערך פתוח הכולל אובייקט אחד לפחות) בתוך הקובץ.");
+      }
       
-      if (end === -1 || start >= end) {
-        throw new Error("לא נמצאה סגירת מערך JSON תקינה (']') או שהתחום לא חוקי.");
-      }
+      // תופס את התוצאה המלאה של הקבוצה הראשונה (שכוללת את כל הרווחים מסביב לגבולות [])
+      let jsonString = jsonMatch[1].trim(); 
 
-      // 2. חילוץ המחרוזת בין הגבולות
-      let jsonString = rawText.substring(start, end + 1).trim();
-
-      // 3. ניקוי ראשוני: הסרת תגובות HTML ו-JavaScript בתוך המחרוזת
+      // 2. ניקוי: הסרת תגובות קוד שעלולות להיות כלואות בתוך הבלוק שחולץ (בגלל שהבלוק נחתך מתוך HTML)
       // הסרת תגובות HTML (<!-- ... -->)
       jsonString = jsonString.replace(/<!--[\s\S]*?-->/g, '');
-      // הסרת תגובות JavaScript חד-שורה (// ...), תוך זהירות לא לפגוע ב-http://
-      // מחליף תגובה חד-שורה (//...) בסוף שורה לנקודת סיום שורה נקייה
+      // הסרת תגובות JavaScript חד-שורה (// ...), תוך ניקוי קו חדש
       jsonString = jsonString.replace(/\/\/[^\n]*\n/g, '\n'); 
       // טיפול בתגובה בשורה האחרונה
       jsonString = jsonString.replace(/\/\/[^\n]*$/, ''); 
 
-      // 4. ניקוי: הסרת פסיקים מיותרים (Trailing Commas) - חשוב ל-JSON לא תקני
+      // 3. ניקוי: הסרת פסיקים מיותרים (Trailing Commas) - חשוב ל-JSON לא תקני
       jsonString = jsonString.replace(/,\s*([\]}])/g, '$1');
 
-      // 5. ניסיון ניתוח JSON
+      // 4. ניסיון ניתוח JSON
       try {
         const data = JSON.parse(jsonString);
         
@@ -128,8 +123,7 @@
         }
       } catch (e) {
         console.error("שגיאת ניתוח JSON לאחר חילוץ וניקוי:", e);
-        // מציג את תחילת המחרוזת שגרמה לשגיאה (הגדלתי ל-200 תווים)
-        // ניקוי רווחים ושורות חדשות כדי להפוך את הקטע לקריא בשורת שגיאה אחת
+        // מציג את תחילת המחרוזת שגרמה לשגיאה (200 תווים)
         const errorSnippet = jsonString.substring(0, 200).replace(/(\n|\r|\t)/g, ' ').trim() + '...';
         throw new Error(`שגיאת JSON.parse: המחרוזת שחולצה ("${errorSnippet}") אינה JSON תקין. בדוק את מבנה הקובץ המקורי.`);
       }
@@ -213,7 +207,16 @@
           const hasValidGender = p.gender && (p.gender === "M" || p.gender === "F");
           const isBirthYearValid = typeof p.birth_year === 'number' && p.birth_year > 1500 && p.birth_year <= new Date().getFullYear();
           
-          return hasValidGender || isBirthYearValid;
+          // אנחנו מקבלים שנת לידה כמחרוזת "c. 1850", אז ננסה לנקות את הנתון הזה
+          let birthYear = p.birth_year;
+          if (typeof birthYear === 'string') {
+            // מנסה להפוך מחרוזת שמכילה תווים לא חוקיים למספר
+            birthYear = parseInt(birthYear.replace(/[^0-9]/g, ''), 10);
+          }
+          
+          p.birth_year = birthYear; // מעדכן את האובייקט המקורי עם הנתון המספרי הנקי
+          
+          return hasValidGender || (typeof birthYear === 'number' && birthYear > 1500);
         });
 
         if (cleanedData.length === 0) {
