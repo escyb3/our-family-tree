@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>📊 סטטיסטיקות משפחתיות</title>
+  <title>📊 סטטיסטיקות משפחתיות מורחבות</title>
   
   <!-- Tailwind CSS CDN for styling -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -28,7 +28,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-10 h-10 text-yellow-500">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125l3-3m0 0l-3-3m3 3h12.75M3 17.25h12.75M3 21h12.75" />
             </svg>
-            סטטיסטיקות עץ משפחתי
+            סטטיסטיקות עץ משפחתי מורחבות
         </h1>
         <p class="status-message text-lg text-gray-600 font-medium" id="family-info">טוען צד משפחה...</p>
     </header>
@@ -42,7 +42,7 @@
     <!-- תוכן ראשי: יוצג לאחר הטעינה -->
     <div id="main-content" class="space-y-10" style="display: none;">
       
-      <!-- קונטיינר לתרשימים - רשת רספונסיבית: טור אחד בטלפון, שני טורים במסך גדול -->
+      <!-- שורה 1: מגדר ודורות -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
         <!-- כרטיס תרשים מגדר -->
@@ -61,6 +61,39 @@
           <canvas id="generationChart"></canvas>
         </div>
       </div>
+      
+      <!-- שורה 2: אורך חיים ממוצע ולידות לפי עשור -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <!-- כרטיס ממוצע אורך חיים -->
+        <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-green-100 pb-3">
+            💖 ממוצע אורך חיים לפי תקופת לידה (שנים)
+          </h2>
+          <canvas id="lifeExpectancyChart"></canvas>
+        </div>
+
+        <!-- כרטיס מגמת לידות -->
+        <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-green-100 pb-3">
+            📈 מגמת לידות לפי עשור
+          </h2>
+          <canvas id="birthTrendChart"></canvas>
+        </div>
+      </div>
+      
+      <!-- שורה 3: ממוצע ילדים -->
+      <div class="grid grid-cols-1">
+        <!-- כרטיס ממוצע ילדים -->
+        <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-red-100 pb-3">
+            👨‍👩‍👧 ממוצע ילדים לאדם (לפי דור לידה)
+            <span class="text-sm font-normal text-gray-500">(כולל רק דורות שהגיעו לבגרות)</span>
+          </h2>
+          <canvas id="avgChildrenChart"></canvas>
+        </div>
+      </div>
+      
     </div>
   </div>
 
@@ -81,22 +114,17 @@
 
     /**
      * פונקציה חזקה לחילוץ מערך JSON של נתונים מתוך טקסט גולמי (כגון קובץ HTML).
-     * מחפשת את הבלוק "[...]" המכיל אובייקטים ומתעלמת מכל תו נוסף מחוץ לגבולות ה-JSON.
      */
     function extractFamilyData(rawText) {
       
       // 1. חיפוש ומציאת ה-JSON באמצעות Regular Expression
-      // מחפש מערך ([...]) המכיל לפחות אובייקט פתוח ({)
-      // s - מאפשר נקודה שתתאים לכל תו כולל שורות חדשות
-      // ? - הופך את ה-* ללא-חמדן (non-greedy), כלומר יתאים ל-[...] הקצר ביותר
-      // Trim: מסיר רווחים לפני ואחרי.
+      // מחפש מערך ([...]) המכיל לפחות אובייקט פתוח ({), ומוודא שהוא תופס את הבלוק כולו.
       const jsonMatch = rawText.match(/(\s*\[\s*\{[\s\S]*\}\s*\]\s*)/);
 
       if (!jsonMatch) {
         throw new Error("לא נמצא בלוק JSON תקין (מערך פתוח הכולל אובייקט אחד לפחות) בתוך הקובץ.");
       }
       
-      // תופס את התוצאה המלאה של הקבוצה הראשונה (שכוללת את כל הרווחים מסביב לגבולות [])
       let jsonString = jsonMatch[1].trim(); 
 
       // 2. ניקוי: הסרת תגובות קוד שעלולות להיות כלואות בתוך הבלוק שחולץ (בגלל שהבלוק נחתך מתוך HTML)
@@ -130,9 +158,21 @@
       
       throw new Error("נתונים חולצו אך לא עברו את בדיקת המערך התקינה.");
     }
+    
+    /**
+     * פונקציית עזר לטיפול בשנות לידה/מוות כמספר.
+     */
+    function normalizeYear(year) {
+        if (typeof year === 'number') return year;
+        if (typeof year === 'string') {
+            const num = parseInt(year.replace(/[^0-9]/g, ''), 10);
+            return isNaN(num) ? null : num;
+        }
+        return null;
+    }
 
 
-    // --- פונקציה ראשית (עם לוגיקה חדשה לריבוי קבצים) ---
+    // --- פונקציה ראשית ---
 
     async function loadFamilyStats() {
       const familyInfoElement = document.getElementById("family-info");
@@ -173,7 +213,6 @@
             try {
                 const dataResponse = await fetch(dataUrl);
                 if (!dataResponse.ok) {
-                    // מדובר בשגיאה בקובץ ספציפי, לא נזרוק Error כדי לאפשר טעינת קבצים אחרים
                     throw new Error('שגיאת שרת: ' + dataResponse.status);
                 }
 
@@ -198,34 +237,29 @@
              throw new Error(errorMsg);
         }
 
-        // 3. ניקוי וסינון נתונים - מבוצע על המערך המאוחד (allFamilyData)
+        // 3. ניקוי וסינון נתונים והכנה לתרשימים
         familyInfoElement.textContent = "מחלץ ומנקה נתונים...";
-        
-        const cleanedData = allFamilyData.filter(p => {
-          if (!p || typeof p !== 'object') return false;
-          
-          const hasValidGender = p.gender && (p.gender === "M" || p.gender === "F");
-          const isBirthYearValid = typeof p.birth_year === 'number' && p.birth_year > 1500 && p.birth_year <= new Date().getFullYear();
-          
-          // אנחנו מקבלים שנת לידה כמחרוזת "c. 1850", אז ננסה לנקות את הנתון הזה
-          let birthYear = p.birth_year;
-          if (typeof birthYear === 'string') {
-            // מנסה להפוך מחרוזת שמכילה תווים לא חוקיים למספר
-            birthYear = parseInt(birthYear.replace(/[^0-9]/g, ''), 10);
-          }
-          
-          p.birth_year = birthYear; // מעדכן את האובייקט המקורי עם הנתון המספרי הנקי
-          
-          return hasValidGender || (typeof birthYear === 'number' && birthYear > 1500);
-        });
+       
+        // הכנת נתונים - נירמול שנות לידה/מוות
+        const cleanedData = allFamilyData
+            .map(p => ({
+                ...p,
+                birth_year: normalizeYear(p.birth_year),
+                death_year: normalizeYear(p.death_year),
+                children_count: Array.isArray(p.children_ids) ? p.children_ids.length : 0,
+                // לטובת ממוצע ילדים, מניחים שאדם נחשב "בוגר" אם נולד לפני 1970
+                is_adult_for_children_avg: normalizeYear(p.birth_year) !== null && normalizeYear(p.birth_year) < 1970 
+            }))
+            // סינון רק של רשומות שיש בהן לפחות מידע אחד רלוונטי
+            .filter(p => p.gender || p.birth_year); 
 
         if (cleanedData.length === 0) {
             throw new Error('הנתונים חולצו בהצלחה, אך לא נמצאו רשומות תקינות לסטטיסטיקות (כנראה שדות מגדר/שנת לידה חסרים) מתוך ' + allFamilyData.length + ' רשומות גולמיות.');
         }
 
-        // 4. עיבוד והצגת התרשימים (משתמש ב-cleanedData המאוחד)
-        
-        // --- נתוני מגדר (Pie Chart) ---
+        // 4. יצירת התרשימים
+
+        // 4.1. --- נתוני מגדר (Pie Chart) ---
         const males = cleanedData.filter(p => p.gender === "M").length;
         const females = cleanedData.filter(p => p.gender === "F").length;
         
@@ -252,7 +286,7 @@
           }
         });
 
-        // --- נתוני דורות (Bar Chart) ---
+        // 4.2. --- נתוני דורות (Bar Chart) - לפי חלוקה של 25 שנה ---
         const generations = {};
         const BASE_YEAR = 1800;
         const GENERATION_SPAN = 25;
@@ -294,14 +328,150 @@
           options: {
             responsive: true,
             scales: {
-              y: { beginAtZero: true },
-              x: { reverse: true } 
+              y: { beginAtZero: true, title: { display: true, text: 'כמות אנשים' } },
+              x: { reverse: true, title: { display: true, text: 'שנות לידה' } } 
             },
             plugins: {
               tooltip: { rtl: true }
             }
           }
         });
+
+        // 4.3. --- ממוצע אורך חיים (Bar Chart) ---
+        const lifeSpanData = cleanedData.filter(p => p.birth_year && p.death_year && p.death_year > p.birth_year);
+        const lifeSpansByDecade = {};
+
+        lifeSpanData.forEach(p => {
+            const decade = Math.floor(p.birth_year / 10) * 10;
+            const lifeSpan = p.death_year - p.birth_year;
+            if (!lifeSpansByDecade[decade]) {
+                lifeSpansByDecade[decade] = { total: 0, count: 0 };
+            }
+            lifeSpansByDecade[decade].total += lifeSpan;
+            lifeSpansByDecade[decade].count++;
+        });
+
+        const sortedLifeSpans = Object.entries(lifeSpansByDecade).sort((a, b) => +a[0] - +b[0]);
+
+        const lifeSpanLabels = sortedLifeSpans.map(([decade, data]) => `${decade} - ${+decade + 9}`);
+        const avgLifeSpans = sortedLifeSpans.map(([decade, data]) => (data.total / data.count).toFixed(1));
+
+        const LIFESPAN_COLOR = "#059669";
+        const ctxLifeExpectancy = document.getElementById("lifeExpectancyChart").getContext("2d");
+        new Chart(ctxLifeExpectancy, {
+            type: "bar",
+            data: {
+                labels: lifeSpanLabels,
+                datasets: [{
+                    label: "אורך חיים ממוצע",
+                    data: avgLifeSpans,
+                    backgroundColor: LIFESPAN_COLOR,
+                    borderColor: LIFESPAN_COLOR,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true, title: { display: true, text: 'שנים' } },
+                    x: { reverse: true, title: { display: true, text: 'עשור לידה' } } 
+                },
+                plugins: {
+                    tooltip: { rtl: true }
+                }
+            }
+        });
+        
+        // 4.4. --- מגמת לידות לפי עשור (Line Chart) ---
+        const birthTrend = {};
+        cleanedData.forEach(p => {
+            if (p.birth_year) {
+                const decade = Math.floor(p.birth_year / 10) * 10;
+                birthTrend[decade] = (birthTrend[decade] || 0) + 1;
+            }
+        });
+
+        const sortedBirthTrend = Object.entries(birthTrend).sort((a, b) => +a[0] - +b[0]);
+        const trendLabels = sortedBirthTrend.map(([decade, count]) => decade);
+        const trendValues = sortedBirthTrend.map(([decade, count]) => count);
+        
+        const TREND_COLOR = "#f59e0b";
+        const ctxBirthTrend = document.getElementById("birthTrendChart").getContext("2d");
+        new Chart(ctxBirthTrend, {
+            type: "line",
+            data: {
+                labels: trendLabels,
+                datasets: [{
+                    label: "מספר לידות",
+                    data: trendValues,
+                    backgroundColor: 'rgba(245, 158, 11, 0.2)',
+                    borderColor: TREND_COLOR,
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true, title: { display: true, text: 'כמות לידות' } },
+                    x: { reverse: true, title: { display: true, text: 'עשור' } } 
+                },
+                plugins: {
+                    tooltip: { rtl: true }
+                }
+            }
+        });
+        
+        // 4.5. --- ממוצע ילדים לאדם (Bar Chart) ---
+        const childrenAvg = {};
+        let totalChildrenCount = 0;
+        let totalAdultsCount = 0;
+        
+        cleanedData.filter(p => p.is_adult_for_children_avg).forEach(p => {
+            const genIndex = Math.floor(p.birth_year / GENERATION_SPAN); // השתמש בחלוקה של 25 שנה שוב
+            const generationStartYear = genIndex * GENERATION_SPAN;
+            
+            if (!childrenAvg[generationStartYear]) {
+                childrenAvg[generationStartYear] = { totalChildren: 0, adultCount: 0 };
+            }
+            
+            childrenAvg[generationStartYear].totalChildren += p.children_count;
+            childrenAvg[generationStartYear].adultCount++;
+        });
+
+        const sortedChildrenAvg = Object.entries(childrenAvg).sort((a, b) => +a[0] - +b[0]);
+
+        const avgChildrenLabels = sortedChildrenAvg.map(([year, data]) => `${year} - ${+year + GENERATION_SPAN - 1}`);
+        const avgChildrenValues = sortedChildrenAvg.map(([year, data]) => (data.totalChildren / data.adultCount).toFixed(1));
+
+        const CHILDREN_COLOR = "#ef4444";
+        const ctxAvgChildren = document.getElementById("avgChildrenChart").getContext("2d");
+        new Chart(ctxAvgChildren, {
+            type: "bar",
+            data: {
+                labels: avgChildrenLabels,
+                datasets: [{
+                    label: "ממוצע ילדים",
+                    data: avgChildrenValues,
+                    backgroundColor: CHILDREN_COLOR,
+                    borderColor: CHILDREN_COLOR,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true, title: { display: true, text: 'ממוצע ילדים לאדם' } },
+                    x: { reverse: true, title: { display: true, text: 'דור לידה' } } 
+                },
+                plugins: {
+                    tooltip: { rtl: true }
+                }
+            }
+        });
+
 
         // 5. סיום טעינה
         document.getElementById("loading").style.display = "none";
