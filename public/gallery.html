@@ -153,7 +153,7 @@
 
     <!-- Gallery Section -->
     <main>
-        <!-- Filter Controls Container -->
+        <!-- Filter & Sort Controls Container -->
         <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-6">
             <!-- Tab Switch -->
             <div class="flex justify-center lg:justify-start mb-4 lg:mb-0 border-b lg:border-b-0 border-gray-200 lg:w-3/5">
@@ -165,12 +165,26 @@
                 </button>
             </div>
 
-            <!-- Family Branch Filter -->
-            <div id="branch-filter-container" class="flex items-center justify-center lg:justify-end lg:w-2/5">
-                <label for="filter-branch-select" class="text-sm font-medium text-gray-700 ml-2 whitespace-nowrap" data-i18n="filterLabel">סינון משפחה:</label>
-                <select id="filter-branch-select" class="border border-gray-300 p-2 rounded-lg text-sm focus:ring-primary focus:border-primary max-w-xs w-full lg:w-auto">
-                    <!-- Options populated by JS -->
-                </select>
+            <!-- Right-side Controls (Filter + Sort) -->
+            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-end lg:w-2/5 space-y-3 sm:space-y-0 sm:space-x-3 sm:space-x-reverse flex-row-reverse-on-ltr">
+                <!-- Family Branch Filter -->
+                <div id="branch-filter-container" class="flex items-center justify-center">
+                    <label for="filter-branch-select" class="text-sm font-medium text-gray-700 ml-2 whitespace-nowrap" data-i18n="filterLabel">סינון משפחה:</label>
+                    <select id="filter-branch-select" class="border border-gray-300 p-2 rounded-lg text-sm focus:ring-primary focus:border-primary max-w-xs w-full sm:w-auto">
+                        <!-- Options populated by JS -->
+                    </select>
+                </div>
+
+                <!-- NEW: Sort By Control -->
+                <div class="flex items-center justify-center">
+                    <label for="sort-select" class="text-sm font-medium text-gray-700 ml-2 whitespace-nowrap" data-i18n="sortLabel">מיין לפי:</label>
+                    <select id="sort-select" class="border border-gray-300 p-2 rounded-lg text-sm focus:ring-primary focus:border-primary max-w-xs w-full sm:w-auto">
+                        <option value="timestamp_desc" data-i18n="sortDateNew">תאריך (חדש -> ישן)</option>
+                        <option value="timestamp_asc" data-i18n="sortDateOld">תאריך (ישן -> חדש)</option>
+                        <option value="branch_asc" data-i18n="sortBranchAlpha">צד משפחתי (א-ת)</option>
+                        <option value="branch_desc" data-i18n="sortBranchReverse">צד משפחתי (ת-א)</option>
+                    </select>
+                </div>
             </div>
         </div>
         
@@ -263,6 +277,11 @@
                 tabPublic: 'גלריה משפחתית (שיתוף)',
                 tabPrivate: 'התמונות שלי (פרטי)',
                 filterLabel: 'סינון משפחה:',
+                sortLabel: 'מיין לפי:', // NEW
+                sortDateNew: 'תאריך (חדש -> ישן)', // NEW
+                sortDateOld: 'תאריך (ישן -> חדש)', // NEW
+                sortBranchAlpha: 'צד משפחתי (א-ת)', // NEW
+                sortBranchReverse: 'צד משפחתי (ת-א)', // NEW
                 emptyMessageInitial: 'אין עדיין תמונות בגלריה. העלה את התמונה הראשונה שלך!',
                 emptyMessagePublic: 'אין עדיין תמונות בגלריה המשותפת.',
                 emptyMessagePrivate: 'לא העלית עדיין תמונות. לחץ על "גלריה משפחתית" או העלה תמונה חדשה!',
@@ -302,6 +321,11 @@
                 tabPublic: 'Family Gallery (Shared)',
                 tabPrivate: 'My Photos (Private)',
                 filterLabel: 'Filter Family:',
+                sortLabel: 'Sort By:', // NEW
+                sortDateNew: 'Date (Newest -> Oldest)', // NEW
+                sortDateOld: 'Date (Oldest -> Newest)', // NEW
+                sortBranchAlpha: 'Family Branch (A-Z)', // NEW
+                sortBranchReverse: 'Family Branch (Z-A)', // NEW
                 emptyMessageInitial: 'No images in the gallery yet. Upload your first picture!',
                 emptyMessagePublic: 'There are no images in the shared gallery yet.',
                 emptyMessagePrivate: 'You have not uploaded any images yet. Click "Family Gallery" or upload a new image!',
@@ -341,6 +365,11 @@
                 tabPublic: 'Galerie Familiale (Partagée)',
                 tabPrivate: 'Mes Photos (Privées)',
                 filterLabel: 'Filtrer Famille:',
+                sortLabel: 'Trier par:', // NEW
+                sortDateNew: 'Date (Plus Récent -> Plus Ancien)', // NEW
+                sortDateOld: 'Date (Plus Ancien -> Plus Récent)', // NEW
+                sortBranchAlpha: 'Branche Familiale (A-Z)', // NEW
+                sortBranchReverse: 'Branche Familiale (Z-A)', // NEW
                 emptyMessageInitial: 'Pas encore d\'images dans la galerie. Téléchargez votre première photo !',
                 emptyMessagePublic: 'Il n\'y a pas encore d\'images dans la galerie partagée.',
                 emptyMessagePrivate: 'Vous n\'avez pas encore téléchargé d\'images. Cliquez sur "Galerie Familiale" ou téléchargez une nouvelle image !',
@@ -380,6 +409,11 @@
                 tabPublic: 'Familiegalerij (Gedeeld)',
                 tabPrivate: 'Mijn Foto\'s (Privé)',
                 filterLabel: 'Filter Familie:',
+                sortLabel: 'Sorteren op:', // NEW
+                sortDateNew: 'Datum (Nieuwste -> Oudste)', // NEW
+                sortDateOld: 'Datum (Oudste -> Nieuwste)', // NEW
+                sortBranchAlpha: 'Familietak (A-Z)', // NEW
+                sortBranchReverse: 'Familietak (Z-A)', // NEW
                 emptyMessageInitial: 'Nog geen afbeeldingen in de galerij. Upload uw eerste foto!',
                 emptyMessagePublic: 'Er zijn nog geen afbeeldingen in de gedeelde galerij.',
                 emptyMessagePrivate: 'U heeft nog geen afbeeldingen geüpload. Klik op "Familiegalerij" of upload een nieuwe afbeelding!',
@@ -419,6 +453,11 @@
                 tabPublic: 'פֿאַמיליע גאַלעריע (טיילן)',
                 tabPrivate: 'מייַנע בילדער (פּריוואַט)',
                 filterLabel: 'פֿילטרירן פֿאַמיליע:',
+                sortLabel: 'סאָרטירן נאָך:', // NEW
+                sortDateNew: 'דאַטע (נײַסטער -> אַלטסטער)', // NEW
+                sortDateOld: 'דאַטע (אַלטסטער -> נײַסטער)', // NEW
+                sortBranchAlpha: 'פֿאַמיליע צווייַג (א-ת)', // NEW
+                sortBranchReverse: 'פֿאַמיליע צווייַג (ת-א)', // NEW
                 emptyMessageInitial: 'נאָך קיין בילדער אין גאַלעריע. אַרײַנלייגן דיין ערשטן בילד!',
                 emptyMessagePublic: 'נאָך קיין בילדער אין דער שותּפֿותדיקער גאַלעריע.',
                 emptyMessagePrivate: 'איר האָט נאָך ניט אַרײַנגעלייגט קיין בילדער. קליקט "פֿאַמיליע גאַלעריע" אָדער אַרײַנלייגן אַ נײַע בילד!',
@@ -498,6 +537,7 @@
         let isAuthReady = false;
         let currentView = 'public'; // 'public' or 'private'
         let currentModalResolver = null; 
+        let currentSortCriteria = 'timestamp_desc'; // NEW: Default sorting by date (newest first)
 
         try {
             const app = initializeApp(firebaseConfig);
@@ -582,6 +622,7 @@
                 setupUploadWidget();
                 setupBranchFilters();
                 setupTabs(); 
+                setupSortControls(); // NEW: Setup sort controls
             } else {
                 authenticate();
             }
@@ -626,8 +667,29 @@
             }
             emptyMessage.classList.add('hidden');
 
-            // Sorting is done client-side since Firestore doesn't support orderBy without index
-            images.sort((a, b) => b.timestamp - a.timestamp);
+            // --- Apply Sorting Logic based on currentSortCriteria (NEW) ---
+            if (currentSortCriteria === 'timestamp_desc') {
+                // Default sort: Newest first
+                images.sort((a, b) => b.timestamp - a.timestamp);
+            } else if (currentSortCriteria === 'timestamp_asc') {
+                // Oldest first
+                images.sort((a, b) => a.timestamp - b.timestamp);
+            } else if (currentSortCriteria === 'branch_asc') {
+                // Family Branch A-Z (Alphabetical)
+                images.sort((a, b) => {
+                    const branchA = a.familyBranch || '';
+                    const branchB = b.familyBranch || '';
+                    return branchA.localeCompare(branchB, 'he', { sensitivity: 'base' });
+                });
+            } else if (currentSortCriteria === 'branch_desc') {
+                // Family Branch Z-A (Reverse Alphabetical)
+                images.sort((a, b) => {
+                    const branchA = a.familyBranch || '';
+                    const branchB = b.familyBranch || '';
+                    return branchB.localeCompare(branchA, 'he', { sensitivity: 'base' });
+                });
+            }
+            // --- End Sorting Logic ---
 
             images.forEach(image => {
                 const card = document.createElement('div');
@@ -810,23 +872,31 @@
             
             const selectedBranchFilter = document.getElementById('filter-branch-select').value;
             const branchFilterContainer = document.getElementById('branch-filter-container');
+            const sortSelect = document.getElementById('sort-select'); // Get the sort select element
 
             // --- Apply Filtering Logic ---
             if (currentView === 'private' && userId) {
                 q = query(imagesRef, where('userId', '==', userId));
                 branchFilterContainer.style.display = 'none'; 
+                sortSelect.style.display = 'none'; // Hide sort when viewing private only
             } else if (currentView === 'public' && selectedBranchFilter) {
                 q = query(imagesRef, where('familyBranch', '==', selectedBranchFilter));
                 branchFilterContainer.style.display = 'flex'; 
+                sortSelect.style.display = 'inline-flex'; 
             } else {
                 branchFilterContainer.style.display = 'flex'; 
+                sortSelect.style.display = 'inline-flex'; 
             }
+            
+            // Fix for mobile layout visibility: ensure the entire container is visible
+            document.getElementById('branch-filter-container').parentElement.style.display = 'flex';
 
             unsubscribeListener = onSnapshot(q, (snapshot) => {
                 const images = [];
                 snapshot.forEach(doc => {
                     images.push({ id: doc.id, ...doc.data() });
                 });
+                // Sort images client-side before rendering
                 renderGallery(images);
             }, (error) => {
                 console.error("Error listening to Firestore:", error);
@@ -866,12 +936,25 @@
                 setActiveTab('public');
             });
         }
+
+        // --- Sort Control Logic (NEW) ---
+        function setupSortControls() {
+            const sortSelect = document.getElementById('sort-select');
+            sortSelect.value = currentSortCriteria; // Set initial value
+
+            sortSelect.addEventListener('change', (e) => {
+                currentSortCriteria = e.target.value;
+                // Since the sorting happens client-side in renderGallery, 
+                // we call listenForImages to force a fresh data snapshot and re-render.
+                listenForImages(); 
+            });
+        }
         
         // --- Tab Logic ---
         function setupTabs() {
             const tabPublic = document.getElementById('tab-public');
             const tabPrivate = document.getElementById('tab-private');
-            const filterContainer = document.getElementById('branch-filter-container');
+            const controlsContainer = document.getElementById('branch-filter-container').parentElement; // Parent contains both filter and sort
 
             const setActiveTab = (view) => {
                 currentView = view;
@@ -885,7 +968,7 @@
                 activeElement.classList.add('active', 'text-primary', 'border-primary');
                 activeElement.classList.remove('border-transparent', 'text-gray-500');
                 
-                filterContainer.style.display = (view === 'public') ? 'flex' : 'none';
+                controlsContainer.style.display = (view === 'public') ? 'flex' : 'none';
 
                 listenForImages();
             };
