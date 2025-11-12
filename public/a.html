@@ -369,7 +369,10 @@
             if (summaryCardsElement) summaryCardsElement.style.display = 'none';
         }
 
-    
+        /**
+         * פונקציה חזקה לחילוץ מערך JSON של נתונים מתוך טקסט גולמי (של קובץ HTML חיצוני).
+         * @param {string} rawText - כל הטקסט של קובץ ה-HTML שנטען.
+         */
         function extractFamilyData(rawText) {
             // 1. חיפוש ומציאת ה-JSON באמצעות Regular Expression
             // מחפש מערך JSON פתוח ( [ { ) וסגור ( } ] )
@@ -384,11 +387,19 @@
                 jsonString = rawText.trim();
             }
 
-            // 2. ניקוי: הסרת תגובות (כדי להתמודד עם JSON בתוך הערות HTML)
-            jsonString = jsonString.replace(/<!--[\s\S]*?-->/g, ''); // הסרת הערות HTML
-            jsonString = jsonString.replace(/\/\/[^\n]*\n/g, '\n'); // הסרת הערות JS חד-שורה
-            jsonString = jsonString.replace(/\/\/[^\n]*$/, ''); // הסרת הערת JS אחרונה
-            jsonString = jsonString.replace(/\/\*[\s\S]*?\*\//g, ''); // הסרת הערות מרובות-שורות
+            // 2. ניקוי: הסרת תגובות וקומנטים
+            
+            // הסרת הערות HTML: <!-- ... -->
+            jsonString = jsonString.replace(/<!--[\s\S]*?-->/g, ''); 
+            
+            // הסרת הערות JS מרובות-שורות: /* ... */
+            jsonString = jsonString.replace(/\/\*[\s\S]*?\*\//g, ''); 
+            
+            // FIX: הסרת הערות JS חד-שורה: //...
+            // הביטוי הרגולרי הזה הוא בטוח יותר ומונע את שגיאת הסינטקס הקודמת.
+            // הוא מוצא כל // ומסיר את כל התוכן עד למעבר שורה (או סוף מחרוזת), תוך שמירת מעבר השורה.
+            jsonString = jsonString.replace(/\/\/[^\r\n]*(\r?\n|$)/g, '$1'); 
+
 
             // 3. ניקוי: הסרת פסיקים מיותרים (כדי לאפשר JSON גמיש יותר)
             jsonString = jsonString.replace(/,\s*([\]}])/g, '$1');
@@ -496,25 +507,17 @@
         
         // --- פונקציות לוגיקת טעינת רשת (NETWORK LOADING LOGIC) ---
         
-      
         async function fetchUserFamilySides() {
+            // --- שימו לב: זה החלק שיש לשנות לטעינת נתונים אמיתית אצלכם בשרת ---
             
             // הקריאה האמיתית:
-             const response = await fetch('/api/user');
+            const response = await fetch('/api/user');
              if (!response.ok) throw new Error('Failed to fetch user data');
              const userData = await response.json();
-             return userData.familySide || ""; // userData.familySide should be a string like "כהן, לוי"
+           return userData.familySide || ""; // userData.familySide should be a string like "כהן, לוי"
 
-            // --- סימולציה כדי שהקוד יהיה רץ ---
-            console.log("מדמה קריאה ל- /api/user...");
-            await new Promise(resolve => setTimeout(resolve, 500)); 
-            
-            // מחרוזת לדוגמה המדמה משפחות נטענות ומשפחה אחת כושלת
-            return "כהן, לוי, שגיאה-טעינה";
-        }
         
-
-    
+        
         async function loadFamilyFile(familySide) {
             const filePath = `trees/${familySide}.html`;
             let responseText = null;
@@ -552,7 +555,7 @@
             }
         }
         
-     
+    
         async function loadFamilyStats() {
             try {
                 // 1. קבלת צדדי המשפחה מהשרת (/api/user)
