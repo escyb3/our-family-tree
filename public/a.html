@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title-display">📊 סטטיסטיקות עץ משפחתי מורחבות</title>
-  
-  <!-- Tailwind CSS CDN for styling -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Heebo Font link -->
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;800&display=swap" rel="stylesheet">
-  
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <style>
-    /* הגדרת הפונט הראשי לכל הדף */
-    body { font-family: 'Heebo', sans-serif; }
-    /* כדי שהתרשימים יהיו רספונסיביים בתוך הכרטיסים */
-    canvas { max-width: 100%; height: auto; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title-display">📊סטטיסטיקות עץ משפחתי</title>
+    
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Heebo Font link -->
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* הגדרת הפונט הראשי לכל הדף */
+        body { font-family: 'Heebo', sans-serif; }
+        /* כדי שהתרשימים יהיו רספונסיביים בתוך הכרטיסים */
+        canvas { max-width: 100%; height: auto; }
+    </style>
 </head>
 <body class="bg-gray-50 min-h-screen text-right p-4 sm:p-8">
-    
+    
     <!-- כפתור החלפת שפה (קבוע למעלה מימין או משמאל לפי כיוון) -->
     <div class="fixed top-4 right-4 z-10">
         <button id="lang-toggle-button" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300">
@@ -28,702 +28,849 @@
         </button>
     </div>
     
-  <div class="max-w-6xl mx-auto">
+    <div class="max-w-6xl mx-auto">
 
-    <!-- כותרת ראשית והודעת סטטוס -->
-    <header class="mb-10 text-center">
-        <h1 id="main-title" class="text-6xl font-extrabold text-blue-800 mb-3 flex items-center justify-center gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-10 h-10 text-yellow-500">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125l3-3m0 0l-3-3m3 3h12.75M3 17.25h12.75M3 21h12.75" />
-            </svg>
-            <span id="main-title-text">סטטיסטיקות עץ משפחתי מורחבות</span>
-        </h1>
-        <p class="status-message text-lg text-gray-600 font-medium" id="family-info">טוען צד משפחה...</p>
-    </header>
+        <!-- כותרת ראשית והודעת סטטוס -->
+        <header class="mb-10 text-center">
+            <h1 id="main-title" class="text-6xl font-extrabold text-blue-800 mb-3 flex items-center justify-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-10 h-10 text-yellow-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125l3-3m0 0l-3-3m3 3h12.75M3 17.25h12.75M3 21h12.75" />
+                </svg>
+                <span id="main-title-text">סטטיסטיקות עץ משפחתי מורחבות</span>
+            </h1>
+            <p class="status-message text-lg text-gray-600 font-medium" id="family-info">טוען צד משפחה...</p>
+        </header>
 
-    <!-- מסך טעינה -->
-    <div id="loading" class="flex justify-center items-center h-40">
-        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
-        <span class="text-xl text-gray-700 mr-4" id="loading-text">טוען נתונים... אנא המתן.</span>
-    </div>
-    
-    <!-- תוכן ראשי: יוצג לאחר הטעינה -->
-    <div id="main-content" class="space-y-10" style="display: none;">
-      
-      <!-- שורה 1: מגדר ודורות -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        
-        <!-- כרטיס תרשים מגדר -->
-        <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
-          <h2 id="chartGenderTitle" class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-3">
-             👤 התפלגות לפי מגדר (זכרים מול נקבות)
-          </h2>
-          <canvas id="genderChart"></canvas>
-        </div>
-        
-        <!-- כרטיס תרשים דורות -->
-        <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
-          <h2 id="chartGenerationTitle" class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-3">
-            📅 התפלגות לפי דור (כל 25 שנה)
-          </h2>
-          <canvas id="generationChart"></canvas>
-        </div>
-      </div>
-      
-      <!-- שורה 2: אורך חיים ממוצע ולידות לפי עשור -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-        <!-- כרטיס ממוצע אורך חיים -->
-        <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
-          <h2 id="chartLifeExpectancyTitle" class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-green-100 pb-3">
-            💖 ממוצע אורך חיים לפי תקופת לידה (שנים)
-          </h2>
-          <canvas id="lifeExpectancyChart"></canvas>
-        </div>
-
-        <!-- כרטיס מגמת לידות -->
-        <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
-          <h2 id="chartBirthTrendTitle" class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-green-100 pb-3">
-            📈 מגמת לידות לפי עשור
-          </h2>
-          <canvas id="birthTrendChart"></canvas>
-        </div>
-      </div>
-      
-      <!-- שורה 3: ממוצע ילדים והתפלגות גילאים -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <!-- כרטיס ממוצע ילדים -->
-        <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
-          <h2 id="chartAvgChildrenTitle" class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-red-100 pb-3">
-            👨‍👩‍👧 ממוצע ילדים לאדם (לפי דור לידה)
-            <span id="adults-note" class="text-sm font-normal text-gray-500">(כולל רק דורות שהגיעו לבגרות)</span>
-          </h2>
-          <canvas id="avgChildrenChart"></canvas>
-        </div>
+        <!-- מסך טעינה -->
+        <div id="loading" class="flex justify-center items-center h-40">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
+            <span class="text-xl text-gray-700 mr-4" id="loading-text">טוען נתונים... אנא המתן.</span>
+        </div>
         
-        <!-- כרטיס התפלגות גילאים (חדש) -->
-        <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
-          <h2 id="chartAgeDistributionTitle" class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-purple-100 pb-3">
-            👶 התפלגות גילאים נוכחית וגיל מוות
-          </h2>
-          <canvas id="ageDistributionChart"></canvas>
-        </div>
+        <!-- תוכן ראשי: יוצג לאחר הטעינה -->
+        <div id="main-content" class="space-y-10" style="display: none;">
+            
+            <!-- שורה 1: מגדר ודורות -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- כרטיס תרשים מגדר -->
+                <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
+                    <h2 id="chartGenderTitle" class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-3">
+                        👤 התפלגות לפי מגדר (זכרים מול נקבות)
+                    </h2>
+                    <canvas id="genderChart"></canvas>
+                </div>
+                
+                <!-- כרטיס תרשים דורות -->
+                <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
+                    <h2 id="chartGenerationTitle" class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-blue-100 pb-3">
+                        📅 התפלגות לפי דור (כל 25 שנה)
+                    </h2>
+                    <canvas id="generationChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- שורה 2: אורך חיים ממוצע ולידות לפי עשור -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-      </div>
-      
-    </div>
-  </div>
+                <!-- כרטיס ממוצע אורך חיים -->
+                <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
+                    <h2 id="chartLifeExpectancyTitle" class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-green-100 pb-3">
+                        💖 ממוצע אורך חיים לפי תקופת לידה (שנים)
+                    </h2>
+                    <canvas id="lifeExpectancyChart"></canvas>
+                </div>
 
-  <script>
-    // --- הגדרות ושפת ממשק ---
-    let currentLang = 'HE'; // מצב ברירת מחדל: עברית
-    let cleanedData = []; // אחסון הנתונים המנוקים
+                <!-- כרטיס מגמת לידות -->
+                <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
+                    <h2 id="chartBirthTrendTitle" class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-green-100 pb-3">
+                        📈 מגמת לידות לפי עשור
+                    </h2>
+                    <canvas id="birthTrendChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- שורה 3: ממוצע ילדים והתפלגות גילאים -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- כרטיס ממוצע ילדים -->
+                <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
+                    <h2 id="chartAvgChildrenTitle" class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-red-100 pb-3">
+                        👨‍👩‍👧 ממוצע ילדים לאדם (לפי דור לידה)
+                        <span id="adults-note" class="text-sm font-normal text-gray-500">(כולל רק דורות שהגיעו לבגרות)</span>
+                    </h2>
+                    <canvas id="avgChildrenChart"></canvas>
+                </div>
+                
+                <!-- כרטיס התפלגות גילאים (חדש) -->
+                <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
+                    <h2 id="chartAgeDistributionTitle" class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-purple-100 pb-3">
+                        👶 התפלגות גילאים נוכחית וגיל מוות
+                    </h2>
+                    <canvas id="ageDistributionChart"></canvas>
+                </div>
+            </div>
 
-    const translations = {
-        'HE': {
-            // כותרות
-            'pageTitle': 'סטטיסטיקות עץ משפחתי מורחבות',
-            'mainTitle': 'סטטיסטיקות עץ משפחתי מורחבות',
-            'statusLoading': 'טוען צד משפחה...',
-            'loadingText': 'טוען נתונים... אנא המתן.',
-            'chartGenderTitle': '👤 התפלגות לפי מגדר (זכרים מול נקבות)',
-            'chartGenerationTitle': '📅 התפלגות לפי דור (כל 25 שנה)',
-            'chartLifeExpectancyTitle': '💖 ממוצע אורך חיים לפי תקופת לידה (שנים)',
-            'chartBirthTrendTitle': '📈 מגמת לידות לפי עשור',
-            'chartAvgChildrenTitle': '👨‍👩‍👧 ממוצע ילדים לאדם (לפי דור לידה)',
-            'chartAgeDistributionTitle': '👶 התפלגות גילאים נוכחית וגיל מוות',
-            'adultsNote': '(כולל רק דורות שהגיעו לבגרות)',
-            // לייבלים וצירים
-            'genderMale': 'זכרים',
-            'genderFemale': 'נקבות',
-            'peopleCount': 'מספר אנשים',
-            'birthYears': 'שנות לידה',
-            'avgLifeSpan': 'אורך חיים ממוצע',
-            'years': 'שנים',
-            'birthDecade': 'עשור לידה',
-            'birthCount': 'כמות לידות',
-            'decade': 'עשור',
-            'avgChildren': 'ממוצע ילדים',
-            'generation': 'דור לידה',
-            'currentAge': 'גיל נוכחי (חיים)',
-            'ageAtDeath': 'גיל מוות (נפטרים)',
-            'ageBins': 'טווח גילאים',
-            'langButton': 'English' 
-        },
-        'EN': {
-            'pageTitle': 'Extended Family Tree Statistics',
-            'mainTitle': 'Extended Family Tree Statistics',
-            'statusLoading': 'Loading family side...',
-            'loadingText': 'Loading data... Please wait.',
-            'chartGenderTitle': '👤 Gender Distribution (Male vs. Female)',
-            'chartGenerationTitle': '📅 Distribution by Generation (25-year span)',
-            'chartLifeExpectancyTitle': '💖 Average Life Expectancy by Birth Period (Years)',
-            'chartBirthTrendTitle': '📈 Birth Trend by Decade',
-            'chartAvgChildrenTitle': '👨‍👩‍👧 Average Children Per Person (by Birth Generation)',
-            'chartAgeDistributionTitle': '👶 Current Age and Age at Death Distribution',
-            'adultsNote': '(Includes only generations who reached adulthood)',
-            // לייבלים וצירים
-            'genderMale': 'Males',
-            'genderFemale': 'Females',
-            'peopleCount': 'Number of People',
-            'birthYears': 'Birth Years',
-            'avgLifeSpan': 'Average Life Span',
-            'years': 'Years',
-            'birthDecade': 'Birth Decade',
-            'birthCount': 'Birth Count',
-            'decade': 'Decade',
-            'avgChildren': 'Average Children',
-            'generation': 'Birth Generation',
-            'currentAge': 'Current Age (Living)',
-            'ageAtDeath': 'Age at Death (Deceased)',
-            'ageBins': 'Age Bins',
-            'langButton': 'עברית' 
-        }
-    };
+            <!-- שורה 4: סטטיסטיקות חדשות - מצב משפחתי ושמות נפוצים -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- כרטיס התפלגות מצב משפחתי (חדש) -->
+                <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
+                    <h2 id="chartMaritalStatusTitle" class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-pink-100 pb-3">
+                        💍 התפלגות לפי מצב משפחתי
+                    </h2>
+                    <canvas id="maritalStatusChart"></canvas>
+                </div>
 
-    // --- פונקציות עזר ---
-    
-    /**
-     * פונקציה לשליפת טקסט מתורגם
-     */
-    function T(key) {
-        return translations[currentLang][key] || key;
-    }
-    
-    /**
-     * פונקציה לעדכון כל הטקסטים הסטטיים בהתאם לשפה הנוכחית
-     */
-    function updateUI() {
-        const texts = translations[currentLang];
-        document.getElementById('page-title-display').textContent = texts.pageTitle;
-        document.getElementById('main-title-text').textContent = texts.mainTitle;
-        document.getElementById('loading-text').textContent = texts.loadingText;
-        
-        document.getElementById('chartGenderTitle').textContent = texts.chartGenderTitle;
-        document.getElementById('chartGenerationTitle').textContent = texts.chartGenerationTitle;
-        document.getElementById('chartLifeExpectancyTitle').textContent = texts.chartLifeExpectancyTitle;
-        document.getElementById('chartBirthTrendTitle').textContent = texts.chartBirthTrendTitle;
-        document.getElementById('chartAvgChildrenTitle').textContent = texts.chartAvgChildrenTitle;
-        document.getElementById('chartAgeDistributionTitle').textContent = texts.chartAgeDistributionTitle;
-        
-        document.getElementById('adults-note').textContent = texts.adultsNote;
-        document.getElementById('lang-toggle-button').textContent = texts.langButton;
-        
-        // עדכון כיווניות הדף
-        document.documentElement.setAttribute('dir', currentLang === 'HE' ? 'rtl' : 'ltr');
-        document.body.classList.toggle('text-right', currentLang === 'HE');
-        document.body.classList.toggle('text-left', currentLang === 'EN');
-        
-        // ציור מחדש של כל התרשימים
-        if (cleanedData.length > 0) {
-            renderAllCharts(cleanedData, currentLang);
-        }
-    }
-    
-    function displayError(message) {
-      document.getElementById("loading").style.display = "none";
-      const mainContent = document.getElementById("main-content");
-      mainContent.style.display = "block";
-      
-      const familyInfoElement = document.getElementById("family-info");
-      familyInfoElement.innerHTML = '<span class="text-red-600 font-bold bg-red-100 p-2 rounded">' + message + '</span>';
-      
-      document.querySelectorAll('.chart-container').forEach(el => el.style.display = 'none');
-      document.getElementById("main-title").style.display = "none";
-    }
+                <!-- כרטיס 10 השמות הנפוצים ביותר (חדש) -->
+                <div class="chart-container bg-white p-6 rounded-xl shadow-lg border border-gray-100 transition duration-300 hover:shadow-2xl">
+                    <h2 id="chartMostCommonNamesTitle" class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-indigo-100 pb-3">
+                        📛 10 השמות הפרטיים הנפוצים ביותר
+                    </h2>
+                    <canvas id="mostCommonNamesChart"></canvas>
+                </div>
+            </div>
+            
+        </div>
+    </div>
 
-    /**
-     * פונקציה חזקה לחילוץ מערך JSON של נתונים מתוך טקסט גולמי (כגון קובץ HTML).
-     */
-    function extractFamilyData(rawText) {
-      
-      // 1. חיפוש ומציאת ה-JSON באמצעות Regular Expression
-      const jsonMatch = rawText.match(/(\s*\[\s*\{[\s\S]*\}\s*\]\s*)/);
+    <script>
+        // --- הגדרות ושפת ממשק ---
+        let currentLang = 'HE'; // מצב ברירת מחדל: עברית
+        let cleanedData = []; // אחסון הנתונים המנוקים
 
-      if (!jsonMatch) {
-        throw new Error(T('errorNoJsonBlock')); // שימוש בפונקציית תרגום (נניח שיש Error key)
-      }
-      
-      let jsonString = jsonMatch[1].trim(); 
-
-      // 2. ניקוי: הסרת תגובות
-      jsonString = jsonString.replace(/<!--[\s\S]*?-->/g, '');
-      jsonString = jsonString.replace(/\/\/[^\n]*\n/g, '\n'); 
-      jsonString = jsonString.replace(/\/\/[^\n]*$/, ''); 
-
-      // 3. ניקוי: הסרת פסיקים מיותרים 
-      jsonString = jsonString.replace(/,\s*([\]}])/g, '$1');
-
-      // 4. ניסיון ניתוח JSON
-      try {
-        const data = JSON.parse(jsonString);
-        
-        if (Array.isArray(data) && data.length > 0) {
-          return data;
-        }
-        
-        if (Array.isArray(data) && data.length === 0) {
-            throw new Error("מבנה ה-JSON נמצא תקין, אך הוא מערך ריק. (אין נתונים)");
-        }
-      } catch (e) {
-        console.error("שגיאת ניתוח JSON לאחר חילוץ וניקוי:", e);
-        const errorSnippet = jsonString.substring(0, 200).replace(/(\n|\r|\t)/g, ' ').trim() + '...';
-        throw new Error(`שגיאת JSON.parse: המחרוזת שחולצה ("${errorSnippet}") אינה JSON תקין. בדוק את מבנה הקובץ המקורי.`);
-      }
-      
-      throw new Error("נתונים חולצו אך לא עברו את בדיקת המערך התקינה.");
-    }
-    
-    /**
-     * פונקציית עזר לטיפול בשנות לידה/מוות כמספר.
-     */
-    function normalizeYear(year) {
-        if (typeof year === 'number') return year;
-        if (typeof year === 'string') {
-            const num = parseInt(year.replace(/[^0-9]/g, ''), 10);
-            return isNaN(num) ? null : num;
-        }
-        return null;
-    }
-    
-    // --- פונקציות יצירת תרשים ---
-    
-    let chartInstances = {}; // אחסון מופעי תרשימים לטובת עדכון/מחיקה
-
-    function renderGenderChart(data, lang) {
-        const texts = translations[lang];
-        const males = data.filter(p => p.gender === "M").length;
-        const females = data.filter(p => p.gender === "F").length;
-        const GENDER_COLORS = ["#3b82f6", "#10b981"];
-
-        if (chartInstances.gender) chartInstances.gender.destroy();
-        const ctx = document.getElementById("genderChart").getContext("2d");
-        chartInstances.gender = new Chart(ctx, {
-            type: "pie",
-            data: {
-                labels: [texts.genderMale, texts.genderFemale],
-                datasets: [{
-                    data: [males, females],
-                    backgroundColor: GENDER_COLORS,
-                    borderColor: '#ffffff',
-                    borderWidth: 2,
-                    hoverOffset: 15
-                }]
+        const translations = {
+            'HE': {
+                // כותרות
+                'pageTitle': 'סטטיסטיקות עץ משפחתי מורחבות',
+                'mainTitle': 'סטטיסטיקות עץ משפחתי מורחבות',
+                'statusLoading': 'טוען צד משפחה...',
+                'loadingText': 'טוען נתונים... אנא המתן.',
+                'chartGenderTitle': '👤 התפלגות לפי מגדר (זכרים מול נקבות)',
+                'chartGenerationTitle': '📅 התפלגות לפי דור (כל 25 שנה)',
+                'chartLifeExpectancyTitle': '💖 ממוצע אורך חיים לפי תקופת לידה (שנים)',
+                'chartBirthTrendTitle': '📈 מגמת לידות לפי עשור',
+                'chartAvgChildrenTitle': '👨‍👩‍👧 ממוצע ילדים לאדם (לפי דור לידה)',
+                'chartAgeDistributionTitle': '👶 התפלגות גילאים נוכחית וגיל מוות',
+                'chartMaritalStatusTitle': '💍 התפלגות לפי מצב משפחתי', // חדש
+                'chartMostCommonNamesTitle': '📛 10 השמות הפרטיים הנפוצים ביותר', // חדש
+                'adultsNote': '(כולל רק דורות שהגיעו לבגרות)',
+                // לייבלים וצירים
+                'genderMale': 'זכרים',
+                'genderFemale': 'נקבות',
+                'peopleCount': 'מספר אנשים',
+                'birthYears': 'שנות לידה',
+                'avgLifeSpan': 'אורך חיים ממוצע',
+                'years': 'שנים',
+                'birthDecade': 'עשור לידה',
+                'birthCount': 'כמות לידות',
+                'decade': 'עשור',
+                'avgChildren': 'ממוצע ילדים',
+                'generation': 'דור לידה',
+                'currentAge': 'גיל נוכחי (חיים)',
+                'ageAtDeath': 'גיל מוות (נפטרים)',
+                'ageBins': 'טווח גילאים',
+                // לייבלים למצב משפחתי (חדש)
+                'statusM': 'נשוי/ה',
+                'statusS': 'רווק/ה',
+                'statusD': 'גרוש/ה',
+                'statusW': 'אלמן/ה',
+                'statusU': 'אחר/לא ידוע',
+                'firstName': 'שם פרטי',
+                'langButton': 'English'    
             },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { position: 'bottom', rtl: lang === 'HE' },
-                    tooltip: { rtl: lang === 'HE' }
+            'EN': {
+                'pageTitle': 'Extended Family Tree Statistics',
+                'mainTitle': 'Extended Family Tree Statistics',
+                'statusLoading': 'Loading family side...',
+                'loadingText': 'Loading data... Please wait.',
+                'chartGenderTitle': '👤 Gender Distribution (Male vs. Female)',
+                'chartGenerationTitle': '📅 Distribution by Generation (25-year span)',
+                'chartLifeExpectancyTitle': '💖 Average Life Expectancy by Birth Period (Years)',
+                'chartBirthTrendTitle': '📈 Birth Trend by Decade',
+                'chartAvgChildrenTitle': '👨‍👩‍👧 Average Children Per Person (by Birth Generation)',
+                'chartAgeDistributionTitle': '👶 Current Age and Age at Death Distribution',
+                'chartMaritalStatusTitle': '💍 Marital Status Distribution', // New
+                'chartMostCommonNamesTitle': '📛 Top 10 Most Common First Names', // New
+                'adultsNote': '(Includes only generations who reached adulthood)',
+                // לייבלים וצירים
+                'genderMale': 'Males',
+                'genderFemale': 'Females',
+                'peopleCount': 'Number of People',
+                'birthYears': 'Birth Years',
+                'avgLifeSpan': 'Average Life Span',
+                'years': 'Years',
+                'birthDecade': 'Birth Decade',
+                'birthCount': 'Birth Count',
+                'decade': 'Decade',
+                'avgChildren': 'Average Children',
+                'generation': 'Birth Generation',
+                'currentAge': 'Current Age (Living)',
+                'ageAtDeath': 'Age at Death (Deceased)',
+                'ageBins': 'Age Bins',
+                // לייבלים למצב משפחתי (חדש)
+                'statusM': 'Married',
+                'statusS': 'Single',
+                'statusD': 'Divorced',
+                'statusW': 'Widowed',
+                'statusU': 'Other/Unknown',
+                'firstName': 'First Name',
+                'langButton': 'עברית'    
+            }
+        };
+
+        // --- פונקציות עזר ---
+        
+        /**
+         * פונקציה לשליפת טקסט מתורגם
+         */
+        function T(key) {
+            return translations[currentLang][key] || key;
+        }
+        
+        /**
+         * פונקציה לעדכון כל הטקסטים הסטטיים בהתאם לשפה הנוכחית
+         */
+        function updateUI() {
+            const texts = translations[currentLang];
+            document.getElementById('page-title-display').textContent = texts.pageTitle;
+            document.getElementById('main-title-text').textContent = texts.mainTitle;
+            document.getElementById('loading-text').textContent = texts.loadingText;
+            
+            document.getElementById('chartGenderTitle').textContent = texts.chartGenderTitle;
+            document.getElementById('chartGenerationTitle').textContent = texts.chartGenerationTitle;
+            document.getElementById('chartLifeExpectancyTitle').textContent = texts.chartLifeExpectancyTitle;
+            document.getElementById('chartBirthTrendTitle').textContent = texts.chartBirthTrendTitle;
+            document.getElementById('chartAvgChildrenTitle').textContent = texts.chartAvgChildrenTitle;
+            document.getElementById('chartAgeDistributionTitle').textContent = texts.chartAgeDistributionTitle;
+            document.getElementById('chartMaritalStatusTitle').textContent = texts.chartMaritalStatusTitle; // חדש
+            document.getElementById('chartMostCommonNamesTitle').textContent = texts.chartMostCommonNamesTitle; // חדש
+            
+            document.getElementById('adults-note').textContent = texts.adultsNote;
+            document.getElementById('lang-toggle-button').textContent = texts.langButton;
+            
+            // עדכון כיווניות הדף
+            document.documentElement.setAttribute('dir', currentLang === 'HE' ? 'rtl' : 'ltr');
+            document.body.classList.toggle('text-right', currentLang === 'HE');
+            document.body.classList.toggle('text-left', currentLang === 'EN');
+            
+            // ציור מחדש של כל התרשימים
+            if (cleanedData.length > 0) {
+                renderAllCharts(cleanedData, currentLang);
+            }
+        }
+        
+        function displayError(message) {
+            document.getElementById("loading").style.display = "none";
+            const mainContent = document.getElementById("main-content");
+            mainContent.style.display = "block";
+            
+            const familyInfoElement = document.getElementById("family-info");
+            familyInfoElement.innerHTML = '<span class="text-red-600 font-bold bg-red-100 p-2 rounded">' + message + '</span>';
+            
+            document.querySelectorAll('.chart-container').forEach(el => el.style.display = 'none');
+            document.getElementById("main-title").style.display = "none";
+        }
+
+        /**
+         * פונקציה חזקה לחילוץ מערך JSON של נתונים מתוך טקסט גולמי (כגון קובץ HTML).
+         */
+        function extractFamilyData(rawText) {
+            
+            // 1. חיפוש ומציאת ה-JSON באמצעות Regular Expression
+            const jsonMatch = rawText.match(/(\s*\[\s*\{[\s\S]*\}\s*\]\s*)/);
+
+            if (!jsonMatch) {
+                throw new Error("לא נמצא בלוק נתונים (מערך JSON) בטקסט שחולץ.");
+            }
+            
+            let jsonString = jsonMatch[1].trim(); 
+
+            // 2. ניקוי: הסרת תגובות
+            jsonString = jsonString.replace(/<!--[\s\S]*?-->/g, '');
+            jsonString = jsonString.replace(/\/\/[^\n]*\n/g, '\n'); 
+            jsonString = jsonString.replace(/\/\/[^\n]*$/, ''); 
+
+            // 3. ניקוי: הסרת פסיקים מיותרים 
+            jsonString = jsonString.replace(/,\s*([\]}])/g, '$1');
+
+            // 4. ניסיון ניתוח JSON
+            try {
+                const data = JSON.parse(jsonString);
+                
+                if (Array.isArray(data) && data.length > 0) {
+                    return data;
                 }
+                
+                if (Array.isArray(data) && data.length === 0) {
+                    throw new Error("מבנה ה-JSON נמצא תקין, אך הוא מערך ריק. (אין נתונים)");
+                }
+            } catch (e) {
+                console.error("שגיאת ניתוח JSON לאחר חילוץ וניקוי:", e);
+                const errorSnippet = jsonString.substring(0, 200).replace(/(\n|\r|\t)/g, ' ').trim() + '...';
+                throw new Error(`שגיאת JSON.parse: המחרוזת שחולצה ("${errorSnippet}") אינה JSON תקין. בדוק את מבנה הקובץ המקורי.`);
             }
-        });
-    }
-
-    function renderGenerationChart(data, lang) {
-        const texts = translations[lang];
-        const generations = {};
-        const BASE_YEAR = 1800;
-        const GENERATION_SPAN = 25;
-
-        data.forEach(p => {
-            const year = p.birth_year;
-            if (typeof year !== 'number' || year === null || year < BASE_YEAR || year > new Date().getFullYear()) {
-                return;
-            }
-            const genIndex = Math.floor((year - BASE_YEAR) / GENERATION_SPAN); 
-            generations[genIndex] = (generations[genIndex] || 0) + 1;
-        });
+            
+            throw new Error("נתונים חולצו אך לא עברו את בדיקת המערך התקינה.");
+        }
         
-        const sortedGenerations = Object.entries(generations).sort((a, b) => +a[0] - +b[0]);
-        const genLabels = sortedGenerations.map(([index]) => {
-            const startYear = BASE_YEAR + (+index * GENERATION_SPAN);
-            const endYear = startYear + GENERATION_SPAN - 1;
-            return startYear + ' - ' + endYear;
-        });
-        const genValues = sortedGenerations.map(([, count]) => count);
-        const BAR_COLOR = "#4f46e5";
+        /**
+         * פונקציית עזר לטיפול בשנות לידה/מוות כמספר.
+         */
+        function normalizeYear(year) {
+            if (typeof year === 'number') return year;
+            if (typeof year === 'string') {
+                const num = parseInt(year.replace(/[^0-9]/g, ''), 10);
+                return isNaN(num) ? null : num;
+            }
+            return null;
+        }
+        
+        // --- פונקציות יצירת תרשים ---
+        
+        let chartInstances = {}; // אחסון מופעי תרשימים לטובת עדכון/מחיקה
 
-        if (chartInstances.generation) chartInstances.generation.destroy();
-        const ctx = document.getElementById("generationChart").getContext("2d");
-        chartInstances.generation = new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: genLabels,
-                datasets: [{
-                    label: texts.peopleCount,
-                    data: genValues,
-                    backgroundColor: BAR_COLOR,
-                    borderColor: BAR_COLOR,
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: { beginAtZero: true, title: { display: true, text: texts.peopleCount } },
-                    x: { reverse: true, title: { display: true, text: texts.birthYears } } 
+        function renderGenderChart(data, lang) {
+            const texts = translations[lang];
+            const males = data.filter(p => p.gender === "M").length;
+            const females = data.filter(p => p.gender === "F").length;
+            const GENDER_COLORS = ["#3b82f6", "#10b981"];
+
+            if (chartInstances.gender) chartInstances.gender.destroy();
+            const ctx = document.getElementById("genderChart").getContext("2d");
+            chartInstances.gender = new Chart(ctx, {
+                type: "pie",
+                data: {
+                    labels: [texts.genderMale, texts.genderFemale],
+                    datasets: [{
+                        data: [males, females],
+                        backgroundColor: GENDER_COLORS,
+                        borderColor: '#ffffff',
+                        borderWidth: 2,
+                        hoverOffset: 15
+                    }]
                 },
-                plugins: { tooltip: { rtl: lang === 'HE' } }
-            }
-        });
-    }
-    
-    function renderLifeExpectancyChart(data, lang) {
-        const texts = translations[lang];
-        const lifeSpanData = data.filter(p => p.birth_year && p.death_year && p.death_year > p.birth_year);
-        const lifeSpansByDecade = {};
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom', rtl: lang === 'HE' },
+                        tooltip: { rtl: lang === 'HE' }
+                    }
+                }
+            });
+        }
 
-        lifeSpanData.forEach(p => {
-            const decade = Math.floor(p.birth_year / 10) * 10;
-            const lifeSpan = p.death_year - p.birth_year;
-            if (!lifeSpansByDecade[decade]) {
-                lifeSpansByDecade[decade] = { total: 0, count: 0 };
-            }
-            lifeSpansByDecade[decade].total += lifeSpan;
-            lifeSpansByDecade[decade].count++;
-        });
+        function renderGenerationChart(data, lang) {
+            const texts = translations[lang];
+            const generations = {};
+            const BASE_YEAR = 1800;
+            const GENERATION_SPAN = 25;
 
-        const sortedLifeSpans = Object.entries(lifeSpansByDecade).sort((a, b) => +a[0] - +b[0]);
-        const lifeSpanLabels = sortedLifeSpans.map(([decade]) => `${decade} - ${+decade + 9}`);
-        const avgLifeSpans = sortedLifeSpans.map(([, data]) => (data.total / data.count).toFixed(1));
-        const LIFESPAN_COLOR = "#059669";
+            data.forEach(p => {
+                const year = p.birth_year;
+                if (typeof year !== 'number' || year === null || year < BASE_YEAR || year > new Date().getFullYear()) {
+                    return;
+                }
+                const genIndex = Math.floor((year - BASE_YEAR) / GENERATION_SPAN); 
+                generations[genIndex] = (generations[genIndex] || 0) + 1;
+            });
+            
+            const sortedGenerations = Object.entries(generations).sort((a, b) => +a[0] - +b[0]);
+            const genLabels = sortedGenerations.map(([index]) => {
+                const startYear = BASE_YEAR + (+index * GENERATION_SPAN);
+                const endYear = startYear + GENERATION_SPAN - 1;
+                return startYear + ' - ' + endYear;
+            });
+            const genValues = sortedGenerations.map(([, count]) => count);
+            const BAR_COLOR = "#4f46e5";
 
-        if (chartInstances.lifeExpectancy) chartInstances.lifeExpectancy.destroy();
-        const ctx = document.getElementById("lifeExpectancyChart").getContext("2d");
-        chartInstances.lifeExpectancy = new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: lifeSpanLabels,
-                datasets: [{
-                    label: texts.avgLifeSpan,
-                    data: avgLifeSpans,
-                    backgroundColor: LIFESPAN_COLOR,
-                    borderColor: LIFESPAN_COLOR,
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: { beginAtZero: true, title: { display: true, text: texts.years } },
-                    x: { reverse: true, title: { display: true, text: texts.birthDecade } } 
+            if (chartInstances.generation) chartInstances.generation.destroy();
+            const ctx = document.getElementById("generationChart").getContext("2d");
+            chartInstances.generation = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: genLabels,
+                    datasets: [{
+                        label: texts.peopleCount,
+                        data: genValues,
+                        backgroundColor: BAR_COLOR,
+                        borderColor: BAR_COLOR,
+                        borderWidth: 1
+                    }]
                 },
-                plugins: { tooltip: { rtl: lang === 'HE' } }
-            }
-        });
-    }
-    
-    function renderBirthTrendChart(data, lang) {
-        const texts = translations[lang];
-        const birthTrend = {};
-        data.forEach(p => {
-            if (p.birth_year) {
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: texts.peopleCount } },
+                        x: { reverse: true, title: { display: true, text: texts.birthYears } } 
+                    },
+                    plugins: { tooltip: { rtl: lang === 'HE' } }
+                }
+            });
+        }
+        
+        function renderLifeExpectancyChart(data, lang) {
+            const texts = translations[lang];
+            const lifeSpanData = data.filter(p => p.birth_year && p.death_year && p.death_year > p.birth_year);
+            const lifeSpansByDecade = {};
+
+            lifeSpanData.forEach(p => {
                 const decade = Math.floor(p.birth_year / 10) * 10;
-                birthTrend[decade] = (birthTrend[decade] || 0) + 1;
-            }
-        });
-
-        const sortedBirthTrend = Object.entries(birthTrend).sort((a, b) => +a[0] - +b[0]);
-        const trendLabels = sortedBirthTrend.map(([decade]) => decade);
-        const trendValues = sortedBirthTrend.map(([, count]) => count);
-        const TREND_COLOR = "#f59e0b";
-
-        if (chartInstances.birthTrend) chartInstances.birthTrend.destroy();
-        const ctx = document.getElementById("birthTrendChart").getContext("2d");
-        chartInstances.birthTrend = new Chart(ctx, {
-            type: "line",
-            data: {
-                labels: trendLabels,
-                datasets: [{
-                    label: texts.birthCount,
-                    data: trendValues,
-                    backgroundColor: 'rgba(245, 158, 11, 0.2)',
-                    borderColor: TREND_COLOR,
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.3,
-                    pointRadius: 5
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: { beginAtZero: true, title: { display: true, text: texts.birthCount } },
-                    x: { reverse: true, title: { display: true, text: texts.decade } } 
-                },
-                plugins: { tooltip: { rtl: lang === 'HE' } }
-            }
-        });
-    }
-    
-    function renderAvgChildrenChart(data, lang) {
-        const texts = translations[lang];
-        const childrenAvg = {};
-        const GENERATION_SPAN = 25;
-
-        data.filter(p => p.is_adult_for_children_avg).forEach(p => {
-            const genIndex = Math.floor(p.birth_year / GENERATION_SPAN); 
-            const generationStartYear = genIndex * GENERATION_SPAN;
-            
-            if (!childrenAvg[generationStartYear]) {
-                childrenAvg[generationStartYear] = { totalChildren: 0, adultCount: 0 };
-            }
-            childrenAvg[generationStartYear].totalChildren += p.children_count;
-            childrenAvg[generationStartYear].adultCount++;
-        });
-
-        const sortedChildrenAvg = Object.entries(childrenAvg).sort((a, b) => +a[0] - +b[0]);
-        const avgChildrenLabels = sortedChildrenAvg.map(([year]) => `${year} - ${+year + GENERATION_SPAN - 1}`);
-        const avgChildrenValues = sortedChildrenAvg.map(([, data]) => (data.totalChildren / data.adultCount).toFixed(1));
-        const CHILDREN_COLOR = "#ef4444";
-
-        if (chartInstances.avgChildren) chartInstances.avgChildren.destroy();
-        const ctx = document.getElementById("avgChildrenChart").getContext("2d");
-        chartInstances.avgChildren = new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: avgChildrenLabels,
-                datasets: [{
-                    label: texts.avgChildren,
-                    data: avgChildrenValues,
-                    backgroundColor: CHILDREN_COLOR,
-                    borderColor: CHILDREN_COLOR,
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: { beginAtZero: true, title: { display: true, text: texts.avgChildren } },
-                    x: { reverse: true, title: { display: true, text: texts.generation } } 
-                },
-                plugins: { tooltip: { rtl: lang === 'HE' } }
-            }
-        });
-    }
-
-    // --- פונקציה חדשה: התפלגות גילאים נוכחית וגיל מוות ---
-    function renderAgeDistributionChart(data, lang) {
-        const texts = translations[lang];
-        // הגדרת טווחי גילאים
-        const BINS = [0, 20, 40, 60, 80]; 
-        const binLabels = BINS.map((start, i) => 
-            i === BINS.length - 1 ? `${start}+` : `${start}-${BINS[i+1]-1}`
-        ).reverse(); // הצגה מהגילאים המבוגרים לצעירים לשם אחידות עם צירים אחרים
-        
-        const currentAgeCounts = Array(BINS.length).fill(0);
-        const ageAtDeathCounts = Array(BINS.length).fill(0);
-
-        data.forEach(p => {
-            let binIndex;
-            // Current Age (Living)
-            if (p.current_age !== undefined && p.current_age >= 0) {
-                binIndex = BINS.findIndex((start, i) => 
-                    i === BINS.length - 1 ? p.current_age >= start : p.current_age >= start && p.current_age < BINS[i+1]
-                );
-                if (binIndex !== -1) currentAgeCounts[binIndex]++;
-            }
-            
-            // Age at Death (Deceased)
-            if (p.age_at_death !== undefined && p.age_at_death >= 0) {
-                binIndex = BINS.findIndex((start, i) => 
-                    i === BINS.length - 1 ? p.age_at_death >= start : p.age_at_death >= start && p.age_at_death < BINS[i+1]
-                );
-                if (binIndex !== -1) ageAtDeathCounts[binIndex]++;
-            }
-        });
-        
-        // היפוך סדר הנתונים כדי שיתאים לתוויות ההפוכות
-        currentAgeCounts.reverse();
-        ageAtDeathCounts.reverse();
-
-        if (chartInstances.ageDistribution) chartInstances.ageDistribution.destroy();
-        const ctx = document.getElementById("ageDistributionChart").getContext("2d");
-        chartInstances.ageDistribution = new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: binLabels,
-                datasets: [
-                    {
-                        label: texts.currentAge,
-                        data: currentAgeCounts,
-                        backgroundColor: '#8b5cf6', // Purple
-                        stack: 'stack0',
-                    },
-                    {
-                        label: texts.ageAtDeath,
-                        data: ageAtDeathCounts,
-                        backgroundColor: '#f97316', // Orange
-                        stack: 'stack0',
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: { 
-                        beginAtZero: true, 
-                        title: { display: true, text: texts.peopleCount } 
-                    },
-                    x: { 
-                        title: { display: true, text: texts.ageBins } 
-                    }
-                },
-                plugins: {
-                    tooltip: { rtl: lang === 'HE' }
+                const lifeSpan = p.death_year - p.birth_year;
+                if (!lifeSpansByDecade[decade]) {
+                    lifeSpansByDecade[decade] = { total: 0, count: 0 };
                 }
-            }
-        });
-    }
+                lifeSpansByDecade[decade].total += lifeSpan;
+                lifeSpansByDecade[decade].count++;
+            });
 
-    function renderAllCharts(data, lang) {
-        renderGenderChart(data, lang);
-        renderGenerationChart(data, lang);
-        renderLifeExpectancyChart(data, lang);
-        renderBirthTrendChart(data, lang);
-        renderAvgChildrenChart(data, lang);
-        renderAgeDistributionChart(data, lang); // התרשים החדש
-    }
+            const sortedLifeSpans = Object.entries(lifeSpansByDecade).sort((a, b) => +a[0] - +b[0]);
+            const lifeSpanLabels = sortedLifeSpans.map(([decade]) => `${decade} - ${+decade + 9}`);
+            const avgLifeSpans = sortedLifeSpans.map(([, data]) => (data.total / data.count).toFixed(1));
+            const LIFESPAN_COLOR = "#059669";
 
-
-    // --- פונקציה ראשית ---
-
-    async function loadFamilyStats() {
-        updateUI(); // עדכון UI ראשוני
-        
-        const familyInfoElement = document.getElementById("family-info");
-        const allFamilyData = [];
-        const loadedFamilies = [];
-        const failedFamilies = [];
-      
-      try {
-        // 1. שליפת פרטי משתמש וקבלת צד משפחה גולמי
-        familyInfoElement.textContent = T('statusLoadingUser'); // נניח שיש מפתח כזה
-        const userResponse = await fetch('/api/user');
-        if (!userResponse.ok) {
-          throw new Error('שגיאה ' + userResponse.status + ': לא ניתן לטעון פרטי משתמש.');
-        }
-        
-        const userData = await userResponse.json();
-        const rawFamilySide = userData.user?.familySide; 
-
-        if (!rawFamilySide || typeof rawFamilySide !== 'string' || rawFamilySide === 'לא מוגדר') {
-          throw new Error("שדה 'familySide' חסר, לא תקין או לא מוגדר בפרטי המשתמש. (נדרש שם משפחה אחד או יותר, מופרדים בפסיקים).");
-        }
+            if (chartInstances.lifeExpectancy) chartInstances.lifeExpectancy.destroy();
+            const ctx = document.getElementById("lifeExpectancyChart").getContext("2d");
+            chartInstances.lifeExpectancy = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: lifeSpanLabels,
+                    datasets: [{
+                        label: texts.avgLifeSpan,
+                        data: avgLifeSpans,
+                        backgroundColor: LIFESPAN_COLOR,
+                        borderColor: LIFESPAN_COLOR,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: texts.years } },
+                        x: { reverse: true, title: { display: true, text: texts.birthDecade } } 
+                    },
+                    plugins: { tooltip: { rtl: lang === 'HE' } }
+                }
+            });
+        }
         
-        // פיצול שמות המשפחה וניקוי רווחים
-        const familyNames = rawFamilySide.split(',')
-            .map(name => name.trim())
-            .filter(name => name.length > 0);
+        function renderBirthTrendChart(data, lang) {
+            const texts = translations[lang];
+            const birthTrend = {};
+            data.forEach(p => {
+                if (p.birth_year) {
+                    const decade = Math.floor(p.birth_year / 10) * 10;
+                    birthTrend[decade] = (birthTrend[decade] || 0) + 1;
+                }
+            });
 
-        if (familyNames.length === 0) {
-          throw new Error("שדה 'familySide' מכיל תווים, אך לא נמצאו שמות משפחה תקינים לעיבוד לאחר ניקוי.");
-        }
+            const sortedBirthTrend = Object.entries(birthTrend).sort((a, b) => +a[0] - +b[0]);
+            const trendLabels = sortedBirthTrend.map(([decade]) => decade);
+            const trendValues = sortedBirthTrend.map(([, count]) => count);
+            const TREND_COLOR = "#f59e0b";
 
-        // 2. שליפת קבצים, צבירה וטיפול בשגיאות
-        for (const familySide of familyNames) {
-            const dataUrl = '/trees/' + familySide + '.html';
-            familyInfoElement.textContent = `טוען נתונים עבור: ${familySide}...`;
+            if (chartInstances.birthTrend) chartInstances.birthTrend.destroy();
+            const ctx = document.getElementById("birthTrendChart").getContext("2d");
+            chartInstances.birthTrend = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: trendLabels,
+                    datasets: [{
+                        label: texts.birthCount,
+                        data: trendValues,
+                        backgroundColor: 'rgba(245, 158, 11, 0.2)',
+                        borderColor: TREND_COLOR,
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: texts.birthCount } },
+                        x: { reverse: true, title: { display: true, text: texts.decade } } 
+                    },
+                    plugins: { tooltip: { rtl: lang === 'HE' } }
+                }
+            });
+        }
+        
+        function renderAvgChildrenChart(data, lang) {
+            const texts = translations[lang];
+            const childrenAvg = {};
+            const GENERATION_SPAN = 25;
 
-            try {
-                const dataResponse = await fetch(dataUrl);
-                if (!dataResponse.ok) {
-                    throw new Error('שגיאת שרת: ' + dataResponse.status);
-                }
+            data.filter(p => p.is_adult_for_children_avg).forEach(p => {
+                const genIndex = Math.floor(p.birth_year / GENERATION_SPAN); 
+                const generationStartYear = genIndex * GENERATION_SPAN;
+                
+                if (!childrenAvg[generationStartYear]) {
+                    childrenAvg[generationStartYear] = { totalChildren: 0, adultCount: 0 };
+                }
+                childrenAvg[generationStartYear].totalChildren += p.children_count;
+                childrenAvg[generationStartYear].adultCount++;
+            });
 
-                const rawText = await dataResponse.text();
-                const rawData = extractFamilyData(rawText);
+            const sortedChildrenAvg = Object.entries(childrenAvg).sort((a, b) => +a[0] - +b[0]);
+            const avgChildrenLabels = sortedChildrenAvg.map(([year]) => `${year} - ${+year + GENERATION_SPAN - 1}`);
+            const avgChildrenValues = sortedChildrenAvg.map(([, data]) => (data.totalChildren / data.adultCount).toFixed(1));
+            const CHILDREN_COLOR = "#ef4444";
 
-                // צבירת הנתונים
-                allFamilyData.push(...rawData);
-                loadedFamilies.push(familySide);
-
-            } catch (error) {
-                console.warn('כשל בטעינת ' + familySide + ': ' + error.message);
-                failedFamilies.push({ name: familySide, message: error.message });
-            }
+            if (chartInstances.avgChildren) chartInstances.avgChildren.destroy();
+            const ctx = document.getElementById("avgChildrenChart").getContext("2d");
+            chartInstances.avgChildren = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: avgChildrenLabels,
+                    datasets: [{
+                        label: texts.avgChildren,
+                        data: avgChildrenValues,
+                        backgroundColor: CHILDREN_COLOR,
+                        borderColor: CHILDREN_COLOR,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: texts.avgChildren } },
+                        x: { reverse: true, title: { display: true, text: texts.generation } } 
+                    },
+                    plugins: { tooltip: { rtl: lang === 'HE' } }
+                }
+            });
         }
 
-        if (allFamilyData.length === 0) {
-             let errorMsg = "לא נמצאו נתונים כלל לעיבוד סטטיסטי מכל הקבצים שניסיתי לטעון.";
-             if (failedFamilies.length > 0) {
-                 errorMsg += " (נכשלו: " + failedFamilies.map(f => f.name).join(', ') + ")";
-             }
-             throw new Error(errorMsg);
-        }
+        function renderAgeDistributionChart(data, lang) {
+            const texts = translations[lang];
+            // הגדרת טווחי גילאים
+            const BINS = [0, 20, 40, 60, 80]; 
+            const binLabels = BINS.map((start, i) => 
+                i === BINS.length - 1 ? `${start}+` : `${start}-${BINS[i+1]-1}`
+            ).reverse(); // הצגה מהגילאים המבוגרים לצעירים לשם אחידות עם צירים אחרים
+            
+            const currentAgeCounts = Array(BINS.length).fill(0);
+            const ageAtDeathCounts = Array(BINS.length).fill(0);
 
-        // 3. ניקוי וסינון נתונים והכנה לתרשימים
-        familyInfoElement.textContent = "מחלץ ומנקה נתונים...";
-       
-        const CURRENT_YEAR = new Date().getFullYear();
-        // הכנת נתונים - נירמול שנות לידה/מוות והוספת שדות גיל חדשים
-        cleanedData = allFamilyData
-            .map(p => {
-                const birth_year = normalizeYear(p.birth_year);
-                const death_year = normalizeYear(p.death_year);
+            data.forEach(p => {
+                let binIndex;
+                // Current Age (Living)
+                if (p.current_age !== undefined && p.current_age >= 0) {
+                    binIndex = BINS.findIndex((start, i) => 
+                        i === BINS.length - 1 ? p.current_age >= start : p.current_age >= start && p.current_age < BINS[i+1]
+                    );
+                    if (binIndex !== -1) currentAgeCounts[binIndex]++;
+                }
                 
-                const processed = {
-                    ...p,
-                    birth_year: birth_year,
-                    death_year: death_year,
-                    children_count: Array.isArray(p.children_ids) ? p.children_ids.length : 0,
-                    is_adult_for_children_avg: birth_year !== null && birth_year < 1970 
-                };
-                
-                // חישוב גיל במוות וגיל נוכחי (לצורך התרשים החדש)
-                if (birth_year) {
-                    if (death_year && death_year > birth_year) {
-                        processed.age_at_death = death_year - birth_year;
-                    }
-                    if (!death_year || death_year >= CURRENT_YEAR) {
-                        processed.current_age = CURRENT_YEAR - birth_year;
+                // Age at Death (Deceased)
+                if (p.age_at_death !== undefined && p.age_at_death >= 0) {
+                    binIndex = BINS.findIndex((start, i) => 
+                        i === BINS.length - 1 ? p.age_at_death >= start : p.age_at_death >= start && p.age_at_death < BINS[i+1]
+                    );
+                    if (binIndex !== -1) ageAtDeathCounts[binIndex]++;
+                }
+            });
+            
+            // היפוך סדר הנתונים כדי שיתאים לתוויות ההפוכות
+            currentAgeCounts.reverse();
+            ageAtDeathCounts.reverse();
+
+            if (chartInstances.ageDistribution) chartInstances.ageDistribution.destroy();
+            const ctx = document.getElementById("ageDistributionChart").getContext("2d");
+            chartInstances.ageDistribution = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: binLabels,
+                    datasets: [
+                        {
+                            label: texts.currentAge,
+                            data: currentAgeCounts,
+                            backgroundColor: '#8b5cf6', // Purple
+                            stack: 'stack0',
+                        },
+                        {
+                            label: texts.ageAtDeath,
+                            data: ageAtDeathCounts,
+                            backgroundColor: '#f97316', // Orange
+                            stack: 'stack0',
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { 
+                            beginAtZero: true, 
+                            title: { display: true, text: texts.peopleCount } 
+                        },
+                        x: { 
+                            title: { display: true, text: texts.ageBins } 
+                        }
+                    },
+                    plugins: {
+                        tooltip: { rtl: lang === 'HE' }
                     }
                 }
-                return processed;
-            })
-            // סינון רק של רשומות שיש בהן לפחות מידע אחד רלוונטי
-            .filter(p => p.gender || p.birth_year); 
-
-        if (cleanedData.length === 0) {
-            throw new Error('הנתונים חולצו בהצלחה, אך לא נמצאו רשומות תקינות לסטטיסטיקות (כנראה שדות מגדר/שנת לידה חסרים) מתוך ' + allFamilyData.length + ' רשומות גולמיות.');
-        }
-
-        // 4. יצירת התרשימים
-        renderAllCharts(cleanedData, currentLang);
-
-
-        // 5. סיום טעינה
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("main-content").style.display = "block";
-        
-        let statusMessage = 'הנתונים נטענו בהצלחה עבור המשפחות: <b>' + loadedFamilies.join(', ') + '</b>. סך אנשים מעובדים: ' + cleanedData.length;
-        
-        if (failedFamilies.length > 0) {
-            statusMessage += '. <br><span class="text-yellow-600 font-bold">שימו לב: נכשלה טעינה עבור: ' + failedFamilies.map(f => f.name).join(', ') + '.</span>';
+            });
         }
 
-        familyInfoElement.innerHTML = '<span class="text-green-700 font-semibold">' + statusMessage + '</span>';
+        // --- פונקציה חדשה: התפלגות מצב משפחתי ---
+        function renderMaritalStatusChart(data, lang) {
+            const texts = translations[lang];
+            const maritalStatuses = { 'M': 0, 'S': 0, 'D': 0, 'W': 0, 'U': 0 };
+            const STATUS_COLORS = ["#ec4899", "#34d399", "#f97316", "#6b7280", "#9ca3af"]; // Pink, Green, Orange, Gray
+
+            data.forEach(p => {
+                const status = p.marital_status ? p.marital_status.toUpperCase() : 'U';
+                if (maritalStatuses.hasOwnProperty(status)) {
+                    maritalStatuses[status]++;
+                } else {
+                    maritalStatuses['U']++;
+                }
+            });
+
+            const statusLabels = [
+                texts.statusM, texts.statusS, texts.statusD, texts.statusW, texts.statusU
+            ];
+            const statusValues = [
+                maritalStatuses.M, maritalStatuses.S, maritalStatuses.D, maritalStatuses.W, maritalStatuses.U
+            ];
+            
+            // סינון אפסים מטעמי קריאות
+            const filteredLabels = statusLabels.filter((_, i) => statusValues[i] > 0);
+            const filteredValues = statusValues.filter(v => v > 0);
+            const filteredColors = STATUS_COLORS.filter((_, i) => statusValues[i] > 0);
 
 
-      } catch (error) {
-        console.error("שגיאה קריטית:", error);
-        displayError('אירעה שגיאה בטעינת הנתונים: ' + error.message);
-      }
-    }
-    
-    // --- איתחול והחלפת שפה ---
-    
-    document.addEventListener('DOMContentLoaded', () => {
-        // הוספת Listener לכפתור החלפת השפה
-        document.getElementById('lang-toggle-button').addEventListener('click', () => {
-            currentLang = currentLang === 'HE' ? 'EN' : 'HE';
-            updateUI();
-        });
+            if (chartInstances.maritalStatus) chartInstances.maritalStatus.destroy();
+            const ctx = document.getElementById("maritalStatusChart").getContext("2d");
+            chartInstances.maritalStatus = new Chart(ctx, {
+                type: "doughnut",
+                data: {
+                    labels: filteredLabels,
+                    datasets: [{
+                        data: filteredValues,
+                        backgroundColor: filteredColors,
+                        borderColor: '#ffffff',
+                        borderWidth: 2,
+                        hoverOffset: 15
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom', rtl: lang === 'HE' },
+                        tooltip: { rtl: lang === 'HE' }
+                    }
+                }
+            });
+        }
+
+        // --- פונקציה חדשה: 10 השמות הנפוצים ביותר ---
+        function renderMostCommonNamesChart(data, lang) {
+            const texts = translations[lang];
+            const nameCounts = {};
+
+            data.forEach(p => {
+                if (p.first_name) {
+                    const name = p.first_name.trim().toLowerCase();
+                    nameCounts[name] = (nameCounts[name] || 0) + 1;
+                }
+            });
+
+            const sortedNames = Object.entries(nameCounts)
+                .sort((a, b) => b[1] - a[1]) // Sort descending by count
+                .slice(0, 10); // Take top 10
+
+            const nameLabels = sortedNames.map(([name]) => {
+                // נרמול להצגה: הפיכת האות הראשונה לגדולה
+                return name.charAt(0).toUpperCase() + name.slice(1);
+            }).reverse(); // Reverse for Chart.js display order (highest at top)
+
+            const nameValues = sortedNames.map(([, count]) => count).reverse();
+            const NAME_COLOR = "#4338ca"; // Indigo dark
+
+            if (chartInstances.mostCommonNames) chartInstances.mostCommonNames.destroy();
+            const ctx = document.getElementById("mostCommonNamesChart").getContext("2d");
+            chartInstances.mostCommonNames = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: nameLabels,
+                    datasets: [{
+                        label: texts.peopleCount,
+                        data: nameValues,
+                        backgroundColor: NAME_COLOR,
+                        borderColor: NAME_COLOR,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', // Horizontal bars
+                    responsive: true,
+                    scales: {
+                        x: { beginAtZero: true, title: { display: true, text: texts.peopleCount } },
+                        y: { title: { display: true, text: texts.firstName } }
+                    },
+                    plugins: { tooltip: { rtl: lang === 'HE' } }
+                }
+            });
+        }
+
+
+        function renderAllCharts(data, lang) {
+            // תרשימים קיימים
+            renderGenderChart(data, lang);
+            renderGenerationChart(data, lang);
+            renderLifeExpectancyChart(data, lang);
+            renderBirthTrendChart(data, lang);
+            renderAvgChildrenChart(data, lang);
+            renderAgeDistributionChart(data, lang); 
+
+            // תרשימים חדשים
+            renderMaritalStatusChart(data, lang);
+            renderMostCommonNamesChart(data, lang);
+        }
+
+
+        // --- פונקציה ראשית ---
+
+        async function loadFamilyStats() {
+            updateUI(); // עדכון UI ראשוני
+            
+            const familyInfoElement = document.getElementById("family-info");
+            const allFamilyData = [];
+            const loadedFamilies = [];
+            const failedFamilies = [];
+            
+            try {
+                // 1. שליפת פרטי משתמש וקבלת צד משפחה גולמי
+                familyInfoElement.textContent = T('statusLoading');
+                const userResponse = await fetch('/api/user');
+                if (!userResponse.ok) {
+                    throw new Error('שגיאה ' + userResponse.status + ': לא ניתן לטעון פרטי משתמש.');
+                }
+                
+                const userData = await userResponse.json();
+                const rawFamilySide = userData.user?.familySide; 
+
+                if (!rawFamilySide || typeof rawFamilySide !== 'string' || rawFamilySide === 'לא מוגדר') {
+                    throw new Error("שדה 'familySide' חסר, לא תקין או לא מוגדר בפרטי המשתמש. (נדרש שם משפחה אחד או יותר, מופרדים בפסיקים).");
+                }
+                
+                // פיצול שמות המשפחה וניקוי רווחים
+                const familyNames = rawFamilySide.split(',')
+                    .map(name => name.trim())
+                    .filter(name => name.length > 0);
+
+                if (familyNames.length === 0) {
+                    throw new Error("שדה 'familySide' מכיל תווים, אך לא נמצאו שמות משפחה תקינים לעיבוד לאחר ניקוי.");
+                }
+
+                // 2. שליפת קבצים, צבירה וטיפול בשגיאות
+                for (const familySide of familyNames) {
+                    const dataUrl = '/trees/' + familySide + '.html';
+                    familyInfoElement.textContent = `טוען נתונים עבור: ${familySide}...`;
+
+                    try {
+                        const dataResponse = await fetch(dataUrl);
+                        if (!dataResponse.ok) {
+                            throw new Error('שגיאת שרת: ' + dataResponse.status);
+                        }
+
+                        const rawText = await dataResponse.text();
+                        const rawData = extractFamilyData(rawText);
+
+                        // צבירת הנתונים
+                        allFamilyData.push(...rawData);
+                        loadedFamilies.push(familySide);
+
+                    } catch (error) {
+                        console.warn('כשל בטעינת ' + familySide + ': ' + error.message);
+                        failedFamilies.push({ name: familySide, message: error.message });
+                    }
+                }
+
+                if (allFamilyData.length === 0) {
+                    let errorMsg = "לא נמצאו נתונים כלל לעיבוד סטטיסטי מכל הקבצים שניסיתי לטעון.";
+                    if (failedFamilies.length > 0) {
+                        errorMsg += " (נכשלו: " + failedFamilies.map(f => f.name).join(', ') + ")";
+                    }
+                    throw new Error(errorMsg);
+                }
+
+                // 3. ניקוי וסינון נתונים והכנה לתרשימים
+                familyInfoElement.textContent = "מחלץ ומנקה נתונים...";
+                
+                const CURRENT_YEAR = new Date().getFullYear();
+                // הכנת נתונים - נירמול שנות לידה/מוות והוספת שדות גיל חדשים
+                cleanedData = allFamilyData
+                    .map(p => {
+                        const birth_year = normalizeYear(p.birth_year);
+                        const death_year = normalizeYear(p.death_year);
+                        
+                        const processed = {
+                            ...p,
+                            birth_year: birth_year,
+                            death_year: death_year,
+                            children_count: Array.isArray(p.children_ids) ? p.children_ids.length : 0,
+                            // is_adult_for_children_avg: כל מי שנולד לפני 1970 נחשב כמבוגר פוטנציאלי לילדים
+                            is_adult_for_children_avg: birth_year !== null && birth_year < 1970 
+                        };
+                        
+                        // חישוב גיל במוות וגיל נוכחי (לצורך התרשים החדש)
+                        if (birth_year) {
+                            if (death_year && death_year > birth_year) {
+                                processed.age_at_death = death_year - birth_year;
+                            }
+                            if (!death_year || death_year >= CURRENT_YEAR) {
+                                processed.current_age = CURRENT_YEAR - birth_year;
+                            }
+                        }
+                        return processed;
+                    })
+                    // סינון רק של רשומות שיש בהן לפחות מידע אחד רלוונטי
+                    .filter(p => p.gender || p.birth_year || p.marital_status || p.first_name); 
+
+                if (cleanedData.length === 0) {
+                    throw new Error('הנתונים חולצו בהצלחה, אך לא נמצאו רשומות תקינות לסטטיסטיקות (כנראה שדות מגדר/שנת לידה/מצב משפחתי/שם פרטי חסרים) מתוך ' + allFamilyData.length + ' רשומות גולמיות.');
+                }
+
+                // 4. יצירת התרשימים
+                renderAllCharts(cleanedData, currentLang);
+
+
+                // 5. סיום טעינה
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("main-content").style.display = "block";
+                
+                let statusMessage = 'הנתונים נטענו בהצלחה עבור המשפחות: <b>' + loadedFamilies.join(', ') + '</b>. סך אנשים מעובדים: ' + cleanedData.length;
+                
+                if (failedFamilies.length > 0) {
+                    statusMessage += '. <br><span class="text-yellow-600 font-bold">שימו לב: נכשלה טעינה עבור: ' + failedFamilies.map(f => f.name).join(', ') + '.</span>';
+                }
+
+                familyInfoElement.innerHTML = '<span class="text-green-700 font-semibold">' + statusMessage + '</span>';
+
+
+            } catch (error) {
+                console.error("שגיאה קריטית:", error);
+                displayError('אירעה שגיאה בטעינת הנתונים: ' + error.message);
+            }
+        }
         
-        loadFamilyStats();
-    });
+        // --- איתחול והחלפת שפה ---
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // הוספת Listener לכפתור החלפת השפה
+            document.getElementById('lang-toggle-button').addEventListener('click', () => {
+                currentLang = currentLang === 'HE' ? 'EN' : 'HE';
+                updateUI();
+            });
+            
+            loadFamilyStats();
+        });
 
-  </script>
+    </script>
 </body>
 </html>
