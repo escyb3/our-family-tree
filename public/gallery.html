@@ -449,7 +449,6 @@
                 peopleLabel: 'מענטשן אין דער בילד (צעטיילט מיט קאָמאַס)',
                 peoplePlaceholder: 'צום בײַשפּיל: דוד, שרה, יוסף',
                 uploadButton: 'קלויב און אַרײַנלייגן אַ בילד',
-                uploadStatusInitial: 'קליקט דעם קנעפּל צו קלויבן אַ טעקע.',
                 tabPublic: 'פֿאַמיליע גאַלעריע (טיילן)',
                 tabPrivate: 'מייַנע בילדער (פּריוואַט)',
                 filterLabel: 'פֿילטרירן פֿאַמיליע:',
@@ -537,7 +536,8 @@
         let isAuthReady = false;
         let currentView = 'public'; // 'public' or 'private'
         let currentModalResolver = null; 
-        let currentSortCriteria = 'timestamp_desc'; // NEW: Default sorting by date (newest first)
+        let currentSortCriteria = 'timestamp_desc'; // Default sorting by date (newest first)
+        let currentImages = []; // ADDED: Array to hold the latest snapshot data for client-side sorting
 
         try {
             const app = initializeApp(firebaseConfig);
@@ -622,7 +622,7 @@
                 setupUploadWidget();
                 setupBranchFilters();
                 setupTabs(); 
-                setupSortControls(); // NEW: Setup sort controls
+                setupSortControls(); // Setup sort controls
             } else {
                 authenticate();
             }
@@ -649,49 +649,55 @@
 
         /**
          * Renders the list of images in the gallery.
+         * @param {Array} images - The array of image documents to render.
          */
         function renderGallery(images) {
             galleryContainer.innerHTML = ''; 
             const langStrings = translations[currentLang];
+            
+            // IMPORTANT: Create a copy of the array before sorting to avoid mutating the source
+            const sortedImages = [...images];
 
-            if (images.length === 0) {
+            if (sortedImages.length === 0) {
                 emptyMessage.classList.remove('hidden');
                 let messageKey = 'emptyMessageInitial';
                 if (currentView === 'private') {
                      messageKey = 'emptyMessagePrivate';
                 } else if (document.getElementById('filter-branch-select').value) {
-                     messageKey = 'emptyMessagePublic'; // Using public message when filtered 
+                     messageKey = 'emptyMessagePublic'; 
                 }
                 emptyMessage.textContent = langStrings[messageKey];
                 return;
             }
             emptyMessage.classList.add('hidden');
 
-            // --- Apply Sorting Logic based on currentSortCriteria (NEW) ---
+            // --- Apply Sorting Logic based on currentSortCriteria ---
             if (currentSortCriteria === 'timestamp_desc') {
                 // Default sort: Newest first
-                images.sort((a, b) => b.timestamp - a.timestamp);
+                sortedImages.sort((a, b) => b.timestamp - a.timestamp);
             } else if (currentSortCriteria === 'timestamp_asc') {
                 // Oldest first
-                images.sort((a, b) => a.timestamp - b.timestamp);
+                sortedImages.sort((a, b) => a.timestamp - b.timestamp);
             } else if (currentSortCriteria === 'branch_asc') {
                 // Family Branch A-Z (Alphabetical)
-                images.sort((a, b) => {
+                sortedImages.sort((a, b) => {
                     const branchA = a.familyBranch || '';
                     const branchB = b.familyBranch || '';
-                    return branchA.localeCompare(branchB, 'he', { sensitivity: 'base' });
+                    // Use localeCompare for correct alphabetical sorting (Hebrew/English)
+                    return branchA.localeCompare(branchB, currentLang, { sensitivity: 'base' });
                 });
             } else if (currentSortCriteria === 'branch_desc') {
                 // Family Branch Z-A (Reverse Alphabetical)
-                images.sort((a, b) => {
+                sortedImages.sort((a, b) => {
                     const branchA = a.familyBranch || '';
                     const branchB = b.familyBranch || '';
-                    return branchB.localeCompare(branchA, 'he', { sensitivity: 'base' });
+                    // Use localeCompare for correct alphabetical sorting (Hebrew/English)
+                    return branchB.localeCompare(branchA, currentLang, { sensitivity: 'base' });
                 });
             }
             // --- End Sorting Logic ---
 
-            images.forEach(image => {
+            sortedImages.forEach(image => {
                 const card = document.createElement('div');
                 card.className = 'image-card bg-card rounded-lg overflow-hidden shadow-md';
                 card.dataset.id = image.id;
@@ -872,23 +878,23 @@
             
             const selectedBranchFilter = document.getElementById('filter-branch-select').value;
             const branchFilterContainer = document.getElementById('branch-filter-container');
-            const sortSelect = document.getElementById('sort-select'); // Get the sort select element
+            const sortSelect = document.getElementById('sort-select'); 
 
-            // --- Apply Filtering Logic ---
+            // --- Apply Filtering Logic (Query Firestore) ---
             if (currentView === 'private' && userId) {
                 q = query(imagesRef, where('userId', '==', userId));
                 branchFilterContainer.style.display = 'none'; 
-                sortSelect.style.display = 'none'; // Hide sort when viewing private only
+                sortSelect.style.display = 'none'; 
             } else if (currentView === 'public' && selectedBranchFilter) {
                 q = query(imagesRef, where('familyBranch', '==', selectedBranchFilter));
                 branchFilterContainer.style.display = 'flex'; 
                 sortSelect.style.display = 'inline-flex'; 
             } else {
+                // Public view, no specific filter
                 branchFilterContainer.style.display = 'flex'; 
                 sortSelect.style.display = 'inline-flex'; 
             }
             
-            // Fix for mobile layout visibility: ensure the entire container is visible
             document.getElementById('branch-filter-container').parentElement.style.display = 'flex';
 
             unsubscribeListener = onSnapshot(q, (snapshot) => {
@@ -896,8 +902,12 @@
                 snapshot.forEach(doc => {
                     images.push({ id: doc.id, ...doc.data() });
                 });
-                // Sort images client-side before rendering
-                renderGallery(images);
+                
+                // Store the raw, unsorted data from the current view/filter
+                currentImages = images; 
+                
+                // Sort and render the stored data
+                renderGallery(currentImages);
             }, (error) => {
                 console.error("Error listening to Firestore:", error);
                 document.getElementById('upload-status').textContent = `${translations[currentLang].uploadError} (Listener): ${error.message}`;
@@ -937,16 +947,16 @@
             });
         }
 
-        // --- Sort Control Logic (NEW) ---
+        // --- Sort Control Logic (FIXED) ---
         function setupSortControls() {
             const sortSelect = document.getElementById('sort-select');
             sortSelect.value = currentSortCriteria; // Set initial value
 
             sortSelect.addEventListener('change', (e) => {
                 currentSortCriteria = e.target.value;
-                // Since the sorting happens client-side in renderGallery, 
-                // we call listenForImages to force a fresh data snapshot and re-render.
-                listenForImages(); 
+                // Now, we simply re-render the existing data in the currentImages array, 
+                // which triggers the sorting logic inside renderGallery.
+                renderGallery(currentImages); 
             });
         }
         
@@ -956,7 +966,7 @@
             const tabPrivate = document.getElementById('tab-private');
             const controlsContainer = document.getElementById('branch-filter-container').parentElement; // Parent contains both filter and sort
 
-            const setActiveTab = (view) => {
+            window.setActiveTab = (view) => { // Made global to be accessible by filter listener
                 currentView = view;
                 
                 tabPublic.classList.remove('active', 'text-primary', 'border-primary');
