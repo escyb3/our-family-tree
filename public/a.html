@@ -369,10 +369,7 @@
             if (summaryCardsElement) summaryCardsElement.style.display = 'none';
         }
 
-        /**
-         * פונקציה חזקה לחילוץ מערך JSON של נתונים מתוך טקסט גולמי (של קובץ HTML חיצוני).
-         * @param {string} rawText - כל הטקסט של קובץ ה-HTML שנטען.
-         */
+    
         function extractFamilyData(rawText) {
             // 1. חיפוש ומציאת ה-JSON באמצעות Regular Expression
             // מחפש מערך JSON פתוח ( [ { ) וסגור ( } ] )
@@ -499,9 +496,7 @@
         
         // --- פונקציות לוגיקת טעינת רשת (NETWORK LOADING LOGIC) ---
         
-        /**
-         * פונקציה מדומה לקבלת צדדי המשפחה של המשתמש מהשרת
-         */
+      
         async function fetchUserFamilySides() {
             
             // הקריאה האמיתית:
@@ -557,9 +552,7 @@
             }
         }
         
-        /**
-         * פונקציית טעינת הנתונים הראשית
-         */
+     
         async function loadFamilyStats() {
             try {
                 // 1. קבלת צדדי המשפחה מהשרת (/api/user)
