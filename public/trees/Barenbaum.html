@@ -158,12 +158,12 @@
         // Data containing all family members
         // NOTE: The 'spouse_id' property has been replaced with 'spouse_ids' (an array) for all primary lineage members.
         const peopleData = [
-         { "id": "231", "name": "Moshe Barenbaum", "gender": "M", "spouse_ids": ["232"], "parent_ids": [], "children_ids": ["225", "227", "229"], "birth_year": "c. 1850", "death_year": null },
-            { "id": "232", "name": "Rachel Barenbaum", "gender": "F", "spouse_ids": ["232"], "parent_ids": [], "children_ids": ["225", "227", "229"], "birth_year": "c. 1850", "death_year": null },
-         { "id": "225", "name": "Szejwa Barenbaum", "gender": "F", "spouse_ids": ["226"], "parent_ids": ["231","232"], "children_ids": [], "birth_year": "c. 1870", "death_year": null },
-              { "id": "226", "name": "Aaron Galler", "gender": "M", "spouse_ids": ["225"], "parent_ids": [], "children_ids": [], "birth_year": "c. 1880", "death_year": null },
-            { "id": "227", "name": "Rivka Barenbaum", "gender": "F", "spouse_ids": ["228"], "parent_ids": ["231","232"], "children_ids": ["229","233","235","236","237"], "birth_year": "c. 1880", "death_year": null },
-              { "id": "228", "name": "Shmuel Bromberg", "gender": "M", "spouse_ids": ["227"], "parent_ids": [], "children_ids": ["229","233","235","236","237"], "birth_year": "c. 1880", "death_year": null },
+         { "id": "1", "name": "Moshe Barenbaum", "gender": "M", "spouse_ids": ["2"], "parent_ids": [], "children_ids": ["225", "227", "229"], "birth_year": "c. 1850", "death_year": null },
+            { "id": "2", "name": "Rachel Barenbaum", "gender": "F", "spouse_ids": ["1"], "parent_ids": [], "children_ids": ["3", "5", "229"], "birth_year": "c. 1850", "death_year": null },
+         { "id": "3", "name": "Szejwa Barenbaum", "gender": "F", "spouse_ids": ["226"], "parent_ids": ["231","232"], "children_ids": [], "birth_year": "c. 1870", "death_year": null },
+              { "id": "4", "name": "Aaron Galler", "gender": "M", "spouse_ids": ["225"], "parent_ids": [], "children_ids": [], "birth_year": "c. 1880", "death_year": null },
+            { "id": "5", "name": "Rivka Barenbaum", "gender": "F", "spouse_ids": ["6"], "parent_ids": ["231","232"], "children_ids": ["229","233","235","236","237"], "birth_year": "c. 1880", "death_year": null },
+              { "id": "6", "name": "Shmuel Bromberg", "gender": "M", "spouse_ids": ["5"], "parent_ids": [], "children_ids": ["229","233","235","236","237"], "birth_year": "c. 1880", "death_year": null },
              { "id": "229", "name": "Molly Bromberg", "gender": "F", "spouse_ids": ["230"], "parent_ids": ["228","227"], "children_ids": [], "birth_year": "1912", "death_year": null },
             { "id": "230", "name": "Hymie Myers", "gender": "M", "spouse_ids": ["229"], "parent_ids": [], "children_ids": [], "birth_year": "1907", "death_year": null },
              { "id": "233", "name": "Moshe Bromberg", "gender": "M", "spouse_ids": ["234"], "parent_ids": ["227","228"], "children_ids": [], "birth_year": "1913", "death_year": null },
