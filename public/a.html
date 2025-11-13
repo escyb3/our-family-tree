@@ -8,185 +8,137 @@
     <!-- Tailwind CSS CDN for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Heebo Font link -->
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Chart.js V4.x -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <!-- Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
         /* הגדרת הפונט הראשי לכל הדף */
         body { font-family: 'Heebo', sans-serif; }
         /* כדי שהתרשימים יהיו רספונסיביים בתוך הכרטיסים */
         canvas { max-width: 100%; height: auto; }
-        
-        /* סגנון למסך הטעינה החדש - מרכז את הכל ומבטיח מראה נקי */
-        #loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.95);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 50;
-            transition: opacity 0.5s ease;
-        }
-
-        /* עיצוב ספינר (Spinner) מותאם */
-        .loading-animation {
-            border: 6px solid #e0e7ff; /* Light indigo */
-            border-top: 6px solid #4f46e5; /* Main indigo */
+        /* סגנון כללי לתוויות התרשימים */
+        .chartjs-tooltip-key { 
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin-left: 5px;
             border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* הוספת כיווניות טקסט כללית, נדרשת במיוחד לטקסט אנגלית בסביבה עברית */
-        .ltr { direction: ltr; }
-        .rtl { direction: rtl; }
-
-        /* סגנון לכרטיסי התרשים */
-        .chart-container {
-            border-radius: 1.5rem; /* rounded-3xl */
-            transition: all 0.3s ease-in-out;
-            border: 1px solid #f3f4f6;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
-        }
-        .chart-container:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-        }
-        
-        /* סגנון לכותרות התרשימים */
-        .chart-container h2 {
-            font-size: 1.75rem; /* text-3xl */
-            font-weight: 800; /* font-extrabold */
-            line-height: 1.2;
-            padding-bottom: 0.75rem;
-            margin-bottom: 1rem;
         }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen text-right rtl">
+<body class="bg-gray-50 min-h-screen p-4 sm:p-8">
     
-    <!-- מסך טעינה - מופיע ראשון ומכסה את כל המסך -->
-    <div id="loading">
-        <div class="loading-animation mb-6"></div>
-        <span class="text-2xl font-semibold text-gray-700" id="loading-text">טוען נתונים... אנא המתן.</span>
+    <!-- אזור כותרת דביק (Sticky Header) וכפתור החלפת שפה -->
+    <div class="sticky top-0 bg-gray-50 z-10 p-4 pt-8 md:pt-10 shadow-md sm:shadow-none">
+        <div class="max-w-6xl mx-auto flex justify-between items-start">
+            
+            <!-- כפתור החלפת שפה (משמאל ב-RTL) -->
+            <button id="lang-toggle-button" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-1.5 px-4 rounded-lg shadow-md transition duration-300 text-sm order-2 sm:order-1">
+                English
+            </button>
+            
+            <!-- כותרת ראשית והודעת סטטוס -->
+            <header class="flex-grow text-center order-1 sm:order-2 mb-8 sm:mb-0">
+                <h1 class="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-l from-blue-700 to-indigo-600 mb-2 flex items-center justify-center gap-3 transition duration-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-10 h-10 text-yellow-500">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125l3-3m0 0l-3-3m3 3h12.75M3 17.25h12.75M3 21h12.75" />
+                    </svg>
+                    <span id="main-title-text" class="text-right">סטטיסטיקות עץ משפחתי מורחבות</span>
+                </h1>
+                <p class="status-message text-lg text-gray-600 font-medium mt-1" id="family-info" dir="rtl">טוען צד משפחה...</p>
+            </header>
+            <div class="w-16 order-3 hidden sm:block"></div> <!-- Spacer to balance the button on wider screens -->
+        </div>
     </div>
 
-    <!-- כפתור החלפת שפה (קבוע למעלה מימין או משמאל לפי כיוון) -->
-    <div class="fixed top-4 right-4 z-20">
-        <button id="lang-toggle-button" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
-            English
-        </button>
-    </div>
     
-    <div class="max-w-7xl mx-auto p-4 sm:p-8">
+    <div class="max-w-6xl mx-auto mt-4">
 
-        <!-- כותרת ראשית והודעת סטטוס -->
-        <header class="mb-12 text-center bg-white p-6 md:p-10 rounded-3xl shadow-xl">
-            <h1 id="main-title" class="text-6xl font-extrabold text-indigo-900 mb-4 flex items-center justify-center gap-4">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-10 h-10 text-yellow-500">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125l3-3m0 0l-3-3m3 3h12.75M3 17.25h12.75M3 21h12.75" />
-                </svg>
-                <span id="main-title-text">סטטיסטיקות עץ משפחתי מורחבות</span>
-            </h1>
-            <p class="status-message text-xl text-gray-700 font-medium" id="family-info">טוען צד משפחה...</p>
-        </header>
-
+        <!-- מסך טעינה -->
+        <div id="loading" class="flex flex-col justify-center items-center h-40">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-indigo-500"></div>
+            <span class="text-xl text-gray-700 mt-4" id="loading-text">טוען נתונים... אנא המתן.</span>
+        </div>
         
         <!-- תוכן ראשי: יוצג לאחר הטעינה -->
-        <div id="main-content" class="space-y-12" style="display: none;">
+        <div id="main-content" class="space-y-10 transition duration-500 ease-in-out transform" style="display: none;">
             
-            <!-- שורה חדשה: סיכום נתונים כללי (Data Summary) -->
-            <div id="summary-cards" class="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
-                <!-- הכרטיסים ימולאו ע"י JS -->
-            </div>
-            
-            <!-- שורה 1: מגדר ודורות -->
+            <!-- שורה 1: מגדר ודורות (צבעי דמוגרפיה - כחול/סגול) -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 
                 <!-- כרטיס תרשים מגדר -->
-                <div class="chart-container bg-white p-6 shadow-xl">
-                    <h2 id="chartGenderTitle" class="text-3xl font-extrabold text-gray-800 border-b-4 border-indigo-200">
+                <div class="chart-container bg-white p-6 rounded-2xl shadow-xl border border-gray-50 transition duration-300 hover:shadow-2xl hover:ring-2 hover:ring-indigo-200">
+                    <h2 id="chartGenderTitle" class="text-2xl font-extrabold text-gray-800 mb-6 border-b-4 border-opacity-70 border-blue-500 pb-2">
                         👤 התפלגות לפי מגדר (זכרים מול נקבות)
                     </h2>
                     <canvas id="genderChart"></canvas>
                 </div>
                 
                 <!-- כרטיס תרשים דורות -->
-                <div class="chart-container bg-white p-6 shadow-xl">
-                    <h2 id="chartGenerationTitle" class="text-3xl font-extrabold text-gray-800 border-b-4 border-indigo-200">
+                <div class="chart-container bg-white p-6 rounded-2xl shadow-xl border border-gray-50 transition duration-300 hover:shadow-2xl hover:ring-2 hover:ring-indigo-200">
+                    <h2 id="chartGenerationTitle" class="text-2xl font-extrabold text-gray-800 mb-6 border-b-4 border-opacity-70 border-indigo-500 pb-2">
                         📅 התפלגות לפי דור (כל 25 שנה)
                     </h2>
                     <canvas id="generationChart"></canvas>
                 </div>
             </div>
             
-            <!-- שורה 2: אורך חיים ממוצע ולידות לפי עשור -->
+            <!-- שורה 2: אורך חיים ממוצע ולידות לפי עשור (צבעי זמן/מחזור חיים - ירוק/כתום) -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
                 <!-- כרטיס ממוצע אורך חיים -->
-                <div class="chart-container bg-white p-6 shadow-xl">
-                    <h2 id="chartLifeExpectancyTitle" class="text-3xl font-extrabold text-gray-800 border-b-4 border-green-200">
+                <div class="chart-container bg-white p-6 rounded-2xl shadow-xl border border-gray-50 transition duration-300 hover:shadow-2xl hover:ring-2 hover:ring-emerald-200">
+                    <h2 id="chartLifeExpectancyTitle" class="text-2xl font-extrabold text-gray-800 mb-6 border-b-4 border-opacity-70 border-emerald-500 pb-2">
                         💖 ממוצע אורך חיים לפי תקופת לידה (שנים)
                     </h2>
                     <canvas id="lifeExpectancyChart"></canvas>
                 </div>
 
                 <!-- כרטיס מגמת לידות -->
-                <div class="chart-container bg-white p-6 shadow-xl">
-                    <h2 id="chartBirthTrendTitle" class="text-3xl font-extrabold text-gray-800 border-b-4 border-green-200">
+                <div class="chart-container bg-white p-6 rounded-2xl shadow-xl border border-gray-50 transition duration-300 hover:shadow-2xl hover:ring-2 hover:ring-amber-200">
+                    <h2 id="chartBirthTrendTitle" class="text-2xl font-extrabold text-gray-800 mb-6 border-b-4 border-opacity-70 border-amber-500 pb-2">
                         📈 מגמת לידות לפי עשור
                     </h2>
                     <canvas id="birthTrendChart"></canvas>
                 </div>
             </div>
             
-            <!-- שורה 3: ממוצע ילדים והתפלגות גילאים -->
+            <!-- שורה 3: ממוצע ילדים והתפלגות גילאים (צבעי משפחה/מבנה - אדום/סגול) -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- כרטיס ממוצע ילדים -->
-                <div class="chart-container bg-white p-6 shadow-xl">
-                    <h2 id="chartAvgChildrenTitle" class="text-3xl font-extrabold text-gray-800 border-b-4 border-red-200">
+                <div class="chart-container bg-white p-6 rounded-2xl shadow-xl border border-gray-50 transition duration-300 hover:shadow-2xl hover:ring-2 hover:ring-red-200">
+                    <h2 id="chartAvgChildrenTitle" class="text-2xl font-extrabold text-gray-800 mb-6 border-b-4 border-opacity-70 border-red-500 pb-2">
                         👨‍👩‍👧 ממוצע ילדים לאדם (לפי דור לידה)
-                        <span id="adults-note" class="text-sm font-normal text-gray-500 block mt-1">(כולל רק דורות שהגיעו לבגרות)</span>
+                        <span id="adults-note" class="text-sm font-normal text-gray-500 mr-2">(כולל רק דורות שהגיעו לבגרות)</span>
                     </h2>
                     <canvas id="avgChildrenChart"></canvas>
                 </div>
                 
-                <!-- כרטיס התפלגות גילאים (חדש) -->
-                <div class="chart-container bg-white p-6 shadow-xl">
-                    <h2 id="chartAgeDistributionTitle" class="text-3xl font-extrabold text-gray-800 border-b-4 border-purple-200">
+                <!-- כרטיס התפלגות גילאים -->
+                <div class="chart-container bg-white p-6 rounded-2xl shadow-xl border border-gray-50 transition duration-300 hover:shadow-2xl hover:ring-2 hover:ring-purple-200">
+                    <h2 id="chartAgeDistributionTitle" class="text-2xl font-extrabold text-gray-800 mb-6 border-b-4 border-opacity-70 border-purple-500 pb-2">
                         👶 התפלגות גילאים נוכחית וגיל מוות
                     </h2>
                     <canvas id="ageDistributionChart"></canvas>
                 </div>
             </div>
 
-            <!-- שורה 4: סטטיסטיקות חדשות - מצב משפחתי ושמות נפוצים -->
+            <!-- שורה 4: מצב משפחתי ושמות נפוצים (צבעי פרט/זוגיות - ורוד/אינדיגו) -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 
                 <!-- כרטיס התפלגות מצב משפחתי (חדש) -->
-                <div class="chart-container bg-white p-6 shadow-xl">
-                    <h2 id="chartMaritalStatusTitle" class="text-3xl font-extrabold text-gray-800 border-b-4 border-pink-200">
+                <div class="chart-container bg-white p-6 rounded-2xl shadow-xl border border-gray-50 transition duration-300 hover:shadow-2xl hover:ring-2 hover:ring-pink-200">
+                    <h2 id="chartMaritalStatusTitle" class="text-2xl font-extrabold text-gray-800 mb-6 border-b-4 border-opacity-70 border-pink-500 pb-2">
                         💍 התפלגות לפי מצב משפחתי
                     </h2>
                     <canvas id="maritalStatusChart"></canvas>
                 </div>
 
                 <!-- כרטיס 10 השמות הנפוצים ביותר (חדש) -->
-                <div class="chart-container bg-white p-6 shadow-xl">
-                    <h2 id="chartMostCommonNamesTitle" class="text-3xl font-extrabold text-gray-800 border-b-4 border-yellow-200">
+                <div class="chart-container bg-white p-6 rounded-2xl shadow-xl border border-gray-50 transition duration-300 hover:shadow-2xl hover:ring-2 hover:ring-indigo-200">
+                    <h2 id="chartMostCommonNamesTitle" class="text-2xl font-extrabold text-gray-800 mb-6 border-b-4 border-opacity-70 border-indigo-600 pb-2">
                         📛 10 השמות הפרטיים הנפוצים ביותר
                     </h2>
                     <canvas id="mostCommonNamesChart"></canvas>
@@ -195,31 +147,44 @@
             
         </div>
     </div>
-    
+
     <script>
         // --- הגדרות ושפת ממשק ---
         let currentLang = 'HE'; // מצב ברירת מחדל: עברית
         let cleanedData = []; // אחסון הנתונים המנוקים
-        let summaryData = {}; // אחסון נתוני סיכום כלליים
-        let chartInstances = {}; // אחסון מופעי תרשימים לטובת עדכון/מחיקה
-
         
-        // פלטת צבעים גנרית מותאמת ל-Tailwind
-        const COLOR_PALETTE = {
-            PRIMARY: '#4f46e5', // Indigo-600
-            SECONDARY: '#10b981', // Emerald-500 (Green)
-            TERTIARY: '#ef4444', // Red-500
-            ACCENT: '#f59e0b', // Amber-500 (Orange/Yellow)
-            PIE_MALE: '#3b82f6', // Blue-500
-            PIE_FEMALE: '#ec4899', // Pink-500
-            PIE_DIVORCED: '#f97316', // Orange-500
-            PIE_WIDOWED: '#6b7280', // Gray-500
-            PIE_OTHER: '#9ca3af', // Gray-400
-            PIE_MARRIED: '#4f46e5', // Indigo-600
-            PIE_SINGLE: '#10b981', // Emerald-500
-            AGE_CURRENT: '#8b5cf6', // Violet-500
-            AGE_DEATH: '#f87171', // Red-400
-            NAME_BARS: ['#4f46e5', '#10b981', '#ef4444', '#f59e0b', '#3b82f6', '#ec4899', '#f97316', '#6b7280', '#8b5cf6', '#f87171']
+        // הגדרות כלליות לתרשימי Chart.js (מראה נקי ומודרני)
+        const CHART_GLOBAL_OPTIONS = {
+            responsive: true,
+            maintainAspectRatio: true,
+            animation: {
+                duration: 800, // אנימציה חלקה יותר
+                easing: 'easeInOutQuad'
+            },
+            layout: {
+                padding: { top: 10 }
+            },
+            plugins: {
+                legend: { position: 'bottom' },
+                tooltip: { 
+                    rtl: true, 
+                    backgroundColor: 'rgba(30, 41, 59, 0.9)', // כחול כהה (Slate)
+                    titleFont: { weight: 'bold' },
+                    bodyFont: { weight: 'normal' },
+                    padding: 12,
+                    displayColors: true,
+                },
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(200, 200, 200, 0.2)', drawBorder: false },
+                    ticks: { color: '#6b7280' }
+                },
+                x: {
+                    grid: { color: 'rgba(200, 200, 200, 0.2)', drawBorder: false },
+                    ticks: { color: '#6b7280' }
+                }
+            }
         };
 
         const translations = {
@@ -235,8 +200,8 @@
                 'chartBirthTrendTitle': '📈 מגמת לידות לפי עשור',
                 'chartAvgChildrenTitle': '👨‍👩‍👧 ממוצע ילדים לאדם (לפי דור לידה)',
                 'chartAgeDistributionTitle': '👶 התפלגות גילאים נוכחית וגיל מוות',
-                'chartMaritalStatusTitle': '💍 התפלגות לפי מצב משפחתי', 
-                'chartMostCommonNamesTitle': '📛 10 השמות הפרטיים הנפוצים ביותר', 
+                'chartMaritalStatusTitle': '💍 התפלגות לפי מצב משפחתי',
+                'chartMostCommonNamesTitle': '📛 10 השמות הפרטיים הנפוצים ביותר',
                 'adultsNote': '(כולל רק דורות שהגיעו לבגרות)',
                 // לייבלים וצירים
                 'genderMale': 'זכרים',
@@ -260,12 +225,7 @@
                 'statusW': 'אלמן/ה',
                 'statusU': 'אחר/לא ידוע',
                 'firstName': 'שם פרטי',
-                'langButton': 'English',
-                // סיכום נתונים כללי
-                'sumTotalPeople': 'סך אנשים',
-                'sumAvgCurrentAge': 'גיל ממוצע נוכחי',
-                'sumAvgDeathAge': 'גיל ממוצע במוות',
-                'sumPercentFemale': 'אחוז נקבות'
+                'langButton': 'English'    
             },
             'EN': {
                 'pageTitle': 'Extended Family Tree Statistics',
@@ -278,8 +238,8 @@
                 'chartBirthTrendTitle': '📈 Birth Trend by Decade',
                 'chartAvgChildrenTitle': '👨‍👩‍👧 Average Children Per Person (by Birth Generation)',
                 'chartAgeDistributionTitle': '👶 Current Age and Age at Death Distribution',
-                'chartMaritalStatusTitle': '💍 Marital Status Distribution', 
-                'chartMostCommonNamesTitle': '📛 Top 10 Most Common First Names', 
+                'chartMaritalStatusTitle': '💍 Marital Status Distribution',
+                'chartMostCommonNamesTitle': '📛 Top 10 Most Common First Names',
                 'adultsNote': '(Includes only generations who reached adulthood)',
                 // לייבלים וצירים
                 'genderMale': 'Males',
@@ -303,105 +263,131 @@
                 'statusW': 'Widowed',
                 'statusU': 'Other/Unknown',
                 'firstName': 'First Name',
-                'langButton': 'עברית',
-                // סיכום נתונים כללי
-                'sumTotalPeople': 'Total People',
-                'sumAvgCurrentAge': 'Avg Current Age',
-                'sumAvgDeathAge': 'Avg Age at Death',
-                'sumPercentFemale': 'Percent Female'
+                'langButton': 'עברית'    
             }
         };
 
-        // --- פונקציות עזר ו-UI ---
+        // --- פונקציות עזר ---
         
-        function T(key) { return translations[currentLang][key] || key; }
+        /**
+         * פונקציה לשליפת טקסט מתורגם
+         */
+        function T(key) {
+            return translations[currentLang][key] || key;
+        }
         
+        /**
+         * פונקציה לעדכון כל הטקסטים הסטטיים בהתאם לשפה הנוכחית
+         */
         function updateUI() {
             const texts = translations[currentLang];
-            // עדכון טקסטים קבועים
-            if (document.getElementById('page-title-display')) document.getElementById('page-title-display').textContent = texts.pageTitle;
-            if (document.getElementById('main-title-text')) document.getElementById('main-title-text').textContent = texts.mainTitle;
-            if (document.getElementById('loading-text')) document.getElementById('loading-text').textContent = texts.loadingText;
             
-            // עדכון כותרות תרשימים (פחות רלוונטי אבל טוב לשמירה)
-            if (document.getElementById('chartGenderTitle')) document.getElementById('chartGenderTitle').textContent = texts.chartGenderTitle;
-            if (document.getElementById('chartGenerationTitle')) document.getElementById('chartGenerationTitle').textContent = texts.chartGenerationTitle;
-            if (document.getElementById('chartLifeExpectancyTitle')) document.getElementById('chartLifeExpectancyTitle').textContent = texts.chartLifeExpectancyTitle;
-            if (document.getElementById('chartBirthTrendTitle')) document.getElementById('chartBirthTrendTitle').textContent = texts.chartBirthTrendTitle;
-            if (document.getElementById('chartAvgChildrenTitle')) document.getElementById('chartAvgChildrenTitle').textContent = texts.chartAvgChildrenTitle;
-            if (document.getElementById('chartAgeDistributionTitle')) document.getElementById('chartAgeDistributionTitle').textContent = texts.chartAgeDistributionTitle;
-            if (document.getElementById('chartMaritalStatusTitle')) document.getElementById('chartMaritalStatusTitle').textContent = texts.chartMaritalStatusTitle; 
-            if (document.getElementById('chartMostCommonNamesTitle')) document.getElementById('chartMostCommonNamesTitle').textContent = texts.chartMostCommonNamesTitle; 
+            // הגנה מפני null על כל האלמנטים הנקראים
+            if (document.getElementById('page-title-display')) {
+                document.getElementById('page-title-display').textContent = texts.pageTitle;
+            }
+            if (document.getElementById('main-title-text')) {
+                document.getElementById('main-title-text').textContent = texts.mainTitle;
+            }
+            if (document.getElementById('loading-text')) {
+                document.getElementById('loading-text').textContent = texts.loadingText;
+            }
             
-            if (document.getElementById('adults-note')) document.getElementById('adults-note').textContent = texts.adultsNote;
-            if (document.getElementById('lang-toggle-button')) document.getElementById('lang-toggle-button').textContent = texts.langButton;
+            if (document.getElementById('chartGenderTitle')) {
+                document.getElementById('chartGenderTitle').textContent = texts.chartGenderTitle;
+            }
+            if (document.getElementById('chartGenerationTitle')) {
+                document.getElementById('chartGenerationTitle').textContent = texts.chartGenerationTitle;
+            }
+            if (document.getElementById('chartLifeExpectancyTitle')) {
+                document.getElementById('chartLifeExpectancyTitle').textContent = texts.chartLifeExpectancyTitle;
+            }
+            if (document.getElementById('chartBirthTrendTitle')) {
+                document.getElementById('chartBirthTrendTitle').textContent = texts.chartBirthTrendTitle;
+            }
+            if (document.getElementById('chartAvgChildrenTitle')) {
+                document.getElementById('chartAvgChildrenTitle').textContent = texts.chartAvgChildrenTitle;
+            }
+            if (document.getElementById('chartAgeDistributionTitle')) {
+                document.getElementById('chartAgeDistributionTitle').textContent = texts.chartAgeDistributionTitle;
+            }
+            if (document.getElementById('chartMaritalStatusTitle')) {
+                document.getElementById('chartMaritalStatusTitle').textContent = texts.chartMaritalStatusTitle;
+            }
+            if (document.getElementById('chartMostCommonNamesTitle')) {
+                document.getElementById('chartMostCommonNamesTitle').textContent = texts.chartMostCommonNamesTitle;
+            }
+            
+            if (document.getElementById('adults-note')) {
+                document.getElementById('adults-note').textContent = texts.adultsNote;
+            }
+            if (document.getElementById('lang-toggle-button')) {
+                document.getElementById('lang-toggle-button').textContent = texts.langButton;
+            }
             
             // עדכון כיווניות הדף
-            const dir = currentLang === 'HE' ? 'rtl' : 'ltr';
-            document.documentElement.setAttribute('dir', dir);
-            document.body.classList.remove('rtl', 'ltr');
-            document.body.classList.add(dir);
-            document.body.classList.toggle('text-right', currentLang === 'HE');
-            document.body.classList.toggle('text-left', currentLang === 'EN');
+            const isRTL = currentLang === 'HE';
+            document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+            document.body.classList.toggle('text-right', isRTL);
+            document.body.classList.toggle('text-left', !isRTL);
             
-            // ציור מחדש של כל התרשימים ועדכון כרטיסי הסיכום
+            // עדכון כיווניות של הודעת הסטטוס הספציפית
+            const familyInfoElement = document.getElementById("family-info");
+            if (familyInfoElement) {
+                familyInfoElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+            }
+            
+            // ציור מחדש של כל התרשימים
             if (cleanedData.length > 0) {
-                renderSummaryCards(summaryData, currentLang); // עדכון כרטיסי הסיכום
                 renderAllCharts(cleanedData, currentLang);
             }
         }
         
         function displayError(message) {
             const loadingElement = document.getElementById("loading");
-            if (loadingElement) loadingElement.style.display = "none";
-            
+            if (loadingElement) {
+                loadingElement.style.display = "none";
+            }
             const mainContent = document.getElementById("main-content");
-            if (mainContent) mainContent.style.display = "block";
+            if (mainContent) {
+                mainContent.style.display = "block";
+            }
             
             const familyInfoElement = document.getElementById("family-info");
-            if (familyInfoElement) familyInfoElement.innerHTML = '<span class="text-red-600 font-bold bg-red-100 p-3 rounded-xl shadow-inner inline-block">' + message + '</span>';
+            if (familyInfoElement) {
+                familyInfoElement.innerHTML = '<span class="text-red-600 font-bold bg-red-100 p-2 rounded">' + message + '</span>';
+            }
             
-            const mainTitleElement = document.getElementById("main-title");
-            if (mainTitleElement) mainTitleElement.style.display = "none";
-
             document.querySelectorAll('.chart-container').forEach(el => el.style.display = 'none');
-            const summaryCardsElement = document.getElementById('summary-cards');
-            if (summaryCardsElement) summaryCardsElement.style.display = 'none';
+            
+            const mainTitle = document.querySelector('header h1'); 
+            if (mainTitle) {
+                mainTitle.style.display = "none";
+            }
         }
 
         /**
-         * פונקציה חזקה לחילוץ מערך JSON של נתונים מתוך טקסט גולמי (של קובץ HTML חיצוני).
-         * @param {string} rawText - כל הטקסט של קובץ ה-HTML שנטען.
+         * פונקציה חזקה לחילוץ מערך JSON של נתונים מתוך טקסט גולמי (כגון קובץ HTML).
+         * נתוני ה-JSON חייבים להיות מופיעים כ-`[...]` בטקסט.
          */
         function extractFamilyData(rawText) {
+            
             // 1. חיפוש ומציאת ה-JSON באמצעות Regular Expression
-            // מחפש מערך JSON פתוח ( [ { ) וסגור ( } ] )
-            const jsonMatch = rawText.match(/(\[\s*\{[\s\S]*\}\s*\])/);
-            
-            let jsonString;
-            
-            if (jsonMatch) {
-                jsonString = jsonMatch[1].trim(); 
-            } else {
-                // אם לא נמצא בלוק, נניח שהקובץ כולו הוא JSON טהור (ניסיון חילוץ נוסף)
-                jsonString = rawText.trim();
+            // מחפש מערך JSON שמתחיל ב-[ ונגמר ב-], ומכיל אובייקטים {}.
+            const jsonMatch = rawText.match(/(\s*\[\s*\{[\s\S]*\}\s*\]\s*)/);
+
+            if (!jsonMatch) {
+                throw new Error("לא נמצא בלוק נתונים (מערך JSON) בטקסט שחולץ.");
             }
-
-            // 2. ניקוי: הסרת תגובות וקומנטים
             
-            // הסרת הערות HTML: <!-- ... -->
-            jsonString = jsonString.replace(/<!--[\s\S]*?-->/g, ''); 
-            
-            // הסרת הערות JS מרובות-שורות: /* ... */
-            jsonString = jsonString.replace(/\/\*[\s\S]*?\*\//g, ''); 
-            
-            // FIX: הסרת הערות JS חד-שורה: //...
-            // הביטוי הרגולרי הזה הוא בטוח יותר ומונע את שגיאת הסינטקס הקודמת.
-            // הוא מוצא כל // ומסיר את כל התוכן עד למעבר שורה (או סוף מחרוזת), תוך שמירת מעבר השורה.
-            jsonString = jsonString.replace(/\/\/[^\r\n]*(\r?\n|$)/g, '$1'); 
+            let jsonString = jsonMatch[1].trim(); 
 
+            // 2. ניקוי: הסרת תגובות
+            jsonString = jsonString.replace(/<!--[\s\S]*?-->/g, '');
+            jsonString = jsonString.replace(/\/\/[^\n]*\n/g, '\n'); 
+            jsonString = jsonString.replace(/\/\/[^\n]*$/, ''); 
 
-            // 3. ניקוי: הסרת פסיקים מיותרים (כדי לאפשר JSON גמיש יותר)
+            // 3. ניקוי: הסרת פסיקים מיותרים (שעשויים להופיע לפני סוגר סוגר מרובע)
             jsonString = jsonString.replace(/,\s*([\]}])/g, '$1');
 
             // 4. ניסיון ניתוח JSON
@@ -413,309 +399,45 @@
                 }
                 
                 if (Array.isArray(data) && data.length === 0) {
-                    return []; // מערך JSON ריק הוא תקין, רק שאין נתונים
+                    throw new Error("מבנה ה-JSON נמצא תקין, אך הוא מערך ריק. (אין נתונים)");
                 }
             } catch (e) {
                 console.error("שגיאת ניתוח JSON לאחר חילוץ וניקוי:", e);
                 const errorSnippet = jsonString.substring(0, 200).replace(/(\n|\r|\t)/g, ' ').trim() + '...';
-                throw new Error(`שגיאת JSON.parse: ודא שהנתונים הם בפורמט JSON תקין. החל מ: "${errorSnippet}"`);
+                throw new Error(`שגיאת JSON.parse: המחרוזת שחולצה ("${errorSnippet}") אינה JSON תקין. בדוק את מבנה הקובץ המקורי.`);
             }
             
-            throw new Error("הנתונים חולצו אך לא עברו את בדיקת המערך התקינה. אולי מדובר ב-JSON לא נכון.");
+            throw new Error("נתונים חולצו אך לא עברו את בדיקת המערך התקינה.");
         }
         
+        /**
+         * פונקציית עזר לטיפול בשנות לידה/מוות כמספר.
+         */
         function normalizeYear(year) {
             if (typeof year === 'number') return year;
             if (typeof year === 'string') {
                 const num = parseInt(year.replace(/[^0-9]/g, ''), 10);
-                const CURRENT_YEAR = new Date().getFullYear();
-                if (isNaN(num) || num < 1000 || num > (CURRENT_YEAR + 1)) {
-                    return null;
-                }
-                return num;
+                return isNaN(num) ? null : num;
             }
             return null;
         }
         
-        function cleanAndEnrichData(data) {
-            const CURRENT_YEAR = new Date().getFullYear();
-            
-            return data.map(p => {
-                const birthYear = normalizeYear(p.birth_year);
-                const deathYear = normalizeYear(p.death_year);
-                let currentAge = null;
-                let ageAtDeath = null;
-
-                if (birthYear) {
-                    if (deathYear) {
-                        ageAtDeath = deathYear - birthYear;
-                    } else {
-                        currentAge = CURRENT_YEAR - birthYear;
-                    }
-                }
-
-                // ניקוי והשלמת מידע
-                const maritalStatus = (p.marital_status || 'U').toUpperCase().charAt(0); // U/S/M/D/W
-                const firstName = (p.name || '').split(' ')[0] || '';
-                
-                return {
-                    id: p.id,
-                    name: p.name || 'Unknown',
-                    gender: (p.gender || 'U').toUpperCase().charAt(0), // M/F/U
-                    birth_year: birthYear,
-                    death_year: deathYear,
-                    current_age: currentAge,
-                    age_at_death: ageAtDeath,
-                    children_count: Array.isArray(p.children_ids) ? p.children_ids.length : 0,
-                    marital_status: ['M', 'S', 'D', 'W'].includes(maritalStatus) ? maritalStatus : 'U',
-                    first_name: firstName
-                };
-            }).filter(p => p.birth_year !== null); // מסננים החוצה אנשים ללא שנת לידה חוקית
-        }
-
-        function calculateSummaryData(data) {
-            // ... (חישוב נתונים נשאר זהה)
-            const totalPeople = data.length;
-            const males = data.filter(p => p.gender === "M").length;
-            const females = data.filter(p => p.gender === "F").length;
-            
-            const livingAges = data
-                .map(p => p.current_age)
-                .filter(age => typeof age === 'number' && age > 0);
-            
-            const deathAges = data
-                .map(p => p.age_at_death)
-                .filter(age => typeof age === 'number' && age > 0);
-                
-            const avgCurrentAge = livingAges.length > 0 
-                ? (livingAges.reduce((sum, age) => sum + age, 0) / livingAges.length).toFixed(1) 
-                : 'N/A';
-            
-            const avgDeathAge = deathAges.length > 0 
-                ? (deathAges.reduce((sum, age) => sum + age, 0) / deathAges.length).toFixed(1) 
-                : 'N/A';
-                
-            const percentFemale = totalPeople > 0 
-                ? ((females / totalPeople) * 100).toFixed(1) 
-                : 'N/A';
-            
-            summaryData = {
-                totalPeople, avgCurrentAge, avgDeathAge, percentFemale, females, males
-            };
-            return summaryData;
-        }
+        // --- פונקציות יצירת תרשים ---
         
-        // --- פונקציות לוגיקת טעינת רשת (NETWORK LOADING LOGIC) ---
-        
-        async function fetchUserFamilySides() {
-            // --- שימו לב: זה החלק שיש לשנות לטעינת נתונים אמיתית אצלכם בשרת ---
-            
-            // הקריאה האמיתית:
-            const response = await fetch('/api/user');
-             if (!response.ok) throw new Error('Failed to fetch user data');
-             const userData = await response.json();
-           return userData.familySide || ""; // userData.familySide should be a string like "כהן, לוי"
-
-        
-        
-        async function loadFamilyFile(familySide) {
-            const filePath = `trees/${familySide}.html`;
-            let responseText = null;
-
-            try {
-                // --- לוגיקת טעינת קובץ אמיתית ---
-                
-                // ביישום אמיתי, נשתמש רק ב-fetch:
-                const response = await fetch(filePath);
-                
-                // אם הקריאה האמיתית נכשלה, נשתמש בסימולציה כברירת מחדל
-                if (!response.ok) {
-                    // --- לוגיקת הסימולציה להפיכת הקוד לָרָץ ---
-                    const mockContent = getMockFamilyFileContent(familySide);
-                    if (mockContent) {
-                        responseText = mockContent;
-                    } else if (familySide === 'שגיאה-טעינה') {
-                        throw new Error("קובץ לא קיים (404/שגיאת שרת).");
-                    } else {
-                        throw new Error(`שגיאת HTTP: ${response.status} עבור ${filePath}. אין תוכן מדומה.`);
-                    }
-                    // --- סוף לוגיקת הסימולציה ---
-                } else {
-                    responseText = await response.text();
-                }
-
-                // ניתוח ה-JSON מתוך תוכן ה-HTML
-                const rawData = extractFamilyData(responseText);
-                
-                return { name: familySide, data: rawData, status: 'success' };
-                
-            } catch (e) {
-                console.warn(`שגיאה בטעינת ${familySide} מ: ${filePath}: ${e.message}`);
-                return { name: familySide, data: [], status: 'fail', error: e.message };
-            }
-        }
-        
-    
-        async function loadFamilyStats() {
-            try {
-                // 1. קבלת צדדי המשפחה מהשרת (/api/user)
-                const familySidesString = await fetchUserFamilySides();
-                const familySides = familySidesString.split(',').map(s => s.trim()).filter(s => s.length > 0);
-                
-                if (familySides.length === 0) {
-                    throw new Error("השרת לא החזיר צדדי משפחה לעיבוד. (familySide is empty)");
-                }
-                
-                let allFamilyData = [];
-                let loadedFamilies = [];
-                let failedFamilies = [];
-                
-                // 2. טעינת הנתונים לכל צד משפחה במקביל
-                const loadPromises = familySides.map(side => loadFamilyFile(side));
-                const results = await Promise.all(loadPromises);
-
-                results.forEach(res => {
-                    if (res.status === 'success') {
-                        allFamilyData.push(...res.data); // מיזוג נתונים
-                        loadedFamilies.push(res.name);
-                    } else {
-                        failedFamilies.push(res);
-                    }
-                });
-                
-                if (allFamilyData.length === 0) {
-                     throw new Error("לא נטענו נתונים מאף קובץ משפחה. ודא נתיבים ותוכן תקינים.");
-                }
-
-                // 3. עיבוד וציור
-                cleanedData = cleanAndEnrichData(allFamilyData);
-                calculateSummaryData(cleanedData);
-                renderSummaryCards(summaryData, currentLang);
-                updateUI(); 
-
-                // 4. סיום טעינה ועדכון סטטוס
-                const loadingElement = document.getElementById("loading");
-                if (loadingElement) {
-                    loadingElement.style.opacity = '0';
-                    setTimeout(() => {
-                        loadingElement.style.display = "none";
-                        const mainContent = document.getElementById("main-content");
-                        if (mainContent) mainContent.style.display = "grid"; 
-                    }, 500); 
-                }
-                
-                let statusMessage = `הנתונים נטענו בהצלחה עבור המשפחות: <b>${loadedFamilies.join(', ')}</b>. סך אנשים מעובדים: ${cleanedData.length}.`;
-                
-                if (failedFamilies.length > 0) {
-                    statusMessage += `. <br><span class="text-yellow-600 font-bold">שימו לב: נכשלה טעינה עבור: ${failedFamilies.map(f => f.name).join(', ')}.</span>`;
-                }
-
-                const familyInfoElement = document.getElementById("family-info");
-                if (familyInfoElement) familyInfoElement.innerHTML = `<span class="text-green-700 font-semibold">${statusMessage}</span>`;
-
-
-            } catch (error) {
-                console.error("שגיאה קריטית:", error);
-                displayError('אירעה שגיאה קריטית בטעינת הנתונים: ' + error.message);
-            }
-        }
-        
-        // --- פונקציות יצירת תרשים (Chart.js V4) ---
-        
-        function createChart(id, config) {
-            if (chartInstances[id]) { chartInstances[id].destroy(); }
-            const ctx = document.getElementById(id)?.getContext("2d");
-            if (ctx) { chartInstances[id] = new Chart(ctx, config); }
-        }
-        
-        function getChartOptions(type, lang, overrides = {}) {
-            // ... (הגדרות Chart.js נשארות זהות)
-            const isRTL = lang === 'HE';
-            
-            const baseOptions = {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        rtl: isRTL,
-                        labels: {
-                            font: { size: 14, family: 'Heebo, sans-serif' },
-                            padding: 20, 
-                            usePointStyle: true 
-                        }
-                    },
-                    tooltip: {
-                        rtl: isRTL,
-                        bodyFont: { family: 'Heebo, sans-serif' },
-                        titleFont: { family: 'Heebo, sans-serif' },
-                        padding: 12,
-                        cornerRadius: 8,
-                        displayColors: type !== 'pie' && type !== 'doughnut'
-                    }
-                },
-                scales: type.includes('bar') || type.includes('line') ? {
-                    x: {
-                        reverse: isRTL, 
-                        ticks: { font: { family: 'Heebo, sans-serif', size: 12 } },
-                        title: { display: false } 
-                    },
-                    y: {
-                        ticks: { font: { family: 'Heebo, sans-serif', size: 12 } },
-                        title: { display: false }, 
-                        grid: { color: '#f3f4f6' } 
-                    }
-                } : {},
-                ...overrides
-            };
-            
-            if (isRTL && (type === 'bar' || type === 'line')) {
-                if (baseOptions.scales && baseOptions.scales.x) {
-                    baseOptions.scales.x.reverse = false; 
-                }
-            }
-            
-            return baseOptions;
-        }
-
-        function renderSummaryCards(summary, lang) {
-            // ... (פונקציית כרטיסי סיכום נשארת זהה)
-            const texts = translations[lang];
-            const summaryContainer = document.getElementById('summary-cards');
-            if (!summaryContainer) return;
-
-            summaryContainer.innerHTML = ''; // ניקוי
-
-            const cards = [
-                { title: texts.sumTotalPeople, value: summary.totalPeople || 0, icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-indigo-600"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>', color: 'indigo' },
-                { title: texts.sumAvgCurrentAge, value: summary.avgCurrentAge, icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-blue-600"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>', color: 'blue' },
-                { title: texts.sumAvgDeathAge, value: summary.avgDeathAge, icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-red-600"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.055-4.393 2.502a4.496 4.496 0 00-1.077 1.838A4.5 4.5 0 003.75 8.25c0 2.485 2.099 4.5 4.688 4.5h.374a2.25 2.25 0 012.238 2.35L12 18.75m0 0l3.75-3.75M12 18.75V11.25" /></svg>', color: 'red' },
-                { title: texts.sumPercentFemale, value: summary.percentFemale + (summary.percentFemale !== 'N/A' ? '%' : ''), icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 text-pink-600"><path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v2.25m-18 0v-2.25M10.5 7.5L9.75 3 7.5 7.5m3 0l.75-4.5M10.5 7.5h6.75M4.5 9h15" /></svg>', color: 'pink' }
-            ];
-            
-            cards.forEach(card => {
-                const html = `
-                    <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 flex flex-col items-center justify-center transition duration-300 hover:shadow-2xl transform hover:scale-[1.02] cursor-default">
-                        <div class="p-3 mb-2 rounded-xl bg-${card.color}-100">
-                            ${card.icon}
-                        </div>
-                        <p class="text-sm font-semibold text-gray-500 mb-1 whitespace-nowrap">${card.title}</p>
-                        <p class="text-4xl font-extrabold text-gray-800">${card.value}</p>
-                    </div>
-                `;
-                summaryContainer.insertAdjacentHTML('beforeend', html);
-            });
-        }
-
-        // --- פונקציות ציור תרשימים (נשארות כמעט זהות) ---
+        let chartInstances = {}; // אחסון מופעי תרשימים לטובת עדכון/מחיקה
 
         function renderGenderChart(data, lang) {
             const texts = translations[lang];
             const males = data.filter(p => p.gender === "M").length;
             const females = data.filter(p => p.gender === "F").length;
-            const GENDER_COLORS = [COLOR_PALETTE.PIE_MALE, COLOR_PALETTE.PIE_FEMALE];
+            
+            // צבעים מעודכנים: אינדיגו ואמרלד
+            const GENDER_COLORS = ["#4f46e5", "#10b981"]; 
 
-            createChart("genderChart", {
+            if (chartInstances.gender) chartInstances.gender.destroy();
+            const ctx = document.getElementById("genderChart")?.getContext("2d");
+            if (!ctx) return;
+            chartInstances.gender = new Chart(ctx, {
                 type: "pie",
                 data: {
                     labels: [texts.genderMale, texts.genderFemale],
@@ -723,19 +445,21 @@
                         data: [males, females],
                         backgroundColor: GENDER_COLORS,
                         borderColor: '#ffffff',
-                        borderWidth: 4,
-                        hoverOffset: 20
+                        borderWidth: 3, // עבה יותר
+                        hoverOffset: 15
                     }]
                 },
-                options: getChartOptions('pie', lang, { 
-                    plugins: { 
+                options: {
+                    ...CHART_GLOBAL_OPTIONS,
+                    plugins: {
+                        ...CHART_GLOBAL_OPTIONS.plugins,
+                        legend: { position: 'bottom', rtl: lang === 'HE' },
                         tooltip: { 
-                            callbacks: { 
-                                label: (context) => `${context.label}: ${context.formattedValue} (${(context.dataset.data[context.dataIndex] / data.length * 100).toFixed(1)}%)`
-                            } 
-                        } 
-                    } 
-                })
+                            ...CHART_GLOBAL_OPTIONS.plugins.tooltip,
+                            rtl: lang === 'HE',
+                        }
+                    }
+                }
             });
         }
 
@@ -747,318 +471,607 @@
 
             data.forEach(p => {
                 const year = p.birth_year;
-                if (typeof year === 'number') {
-                    const startYear = Math.floor((year - BASE_YEAR) / GENERATION_SPAN) * GENERATION_SPAN + BASE_YEAR;
-                    const endYear = startYear + GENERATION_SPAN - 1;
-                    const label = `${startYear}-${endYear}`;
-                    generations[label] = (generations[label] || 0) + 1;
+                if (typeof year !== 'number' || year === null || year < BASE_YEAR || year > new Date().getFullYear()) {
+                    return;
                 }
+                const genIndex = Math.floor((year - BASE_YEAR) / GENERATION_SPAN); 
+                generations[genIndex] = (generations[genIndex] || 0) + 1;
             });
+            
+            const sortedGenerations = Object.entries(generations).sort((a, b) => +a[0] - +b[0]);
+            const genLabels = sortedGenerations.map(([index]) => {
+                const startYear = BASE_YEAR + (+index * GENERATION_SPAN);
+                const endYear = startYear + GENERATION_SPAN - 1;
+                return startYear + ' - ' + endYear;
+            });
+            const genValues = sortedGenerations.map(([, count]) => count);
+            const BAR_COLOR = "#6366f1"; // Indigo 500
 
-            const sortedLabels = Object.keys(generations).sort();
-            const counts = sortedLabels.map(label => generations[label]);
-
-            createChart("generationChart", {
+            if (chartInstances.generation) chartInstances.generation.destroy();
+            const ctx = document.getElementById("generationChart")?.getContext("2d");
+            if (!ctx) return;
+            chartInstances.generation = new Chart(ctx, {
                 type: "bar",
                 data: {
-                    labels: sortedLabels,
+                    labels: genLabels,
                     datasets: [{
                         label: texts.peopleCount,
-                        data: counts,
-                        backgroundColor: COLOR_PALETTE.PRIMARY,
-                        borderColor: COLOR_PALETTE.PRIMARY,
-                        borderWidth: 1,
-                        borderRadius: 6, 
+                        data: genValues,
+                        backgroundColor: BAR_COLOR,
+                        borderColor: BAR_COLOR,
+                        borderWidth: 0,
+                        borderRadius: 4 // מוטות מעוגלים
                     }]
                 },
-                options: getChartOptions('bar', lang, {
+                options: {
+                    ...CHART_GLOBAL_OPTIONS,
                     scales: {
-                        x: { title: { display: true, text: texts.birthYears, font: { size: 14 } } },
-                        y: { title: { display: true, text: texts.peopleCount, font: { size: 14 } }, beginAtZero: true }
+                        y: { 
+                            ...CHART_GLOBAL_OPTIONS.scales.y,
+                            beginAtZero: true, 
+                            title: { display: true, text: texts.peopleCount, color: '#4b5563' } 
+                        },
+                        x: { 
+                            ...CHART_GLOBAL_OPTIONS.scales.x,
+                            reverse: true, 
+                            title: { display: true, text: texts.birthYears, color: '#4b5563' } 
+                        } 
+                    },
+                    plugins: { 
+                        ...CHART_GLOBAL_OPTIONS.plugins,
+                        tooltip: { ...CHART_GLOBAL_OPTIONS.plugins.tooltip, rtl: lang === 'HE' } 
                     }
-                })
+                }
             });
         }
 
         function renderLifeExpectancyChart(data, lang) {
             const texts = translations[lang];
-            const deceased = data.filter(p => p.age_at_death !== null && p.birth_year !== null);
-            const lifeSpanByDecade = {};
+            const lifeSpanData = data.filter(p => p.birth_year && p.death_year && p.death_year > p.birth_year);
+            const lifeSpansByDecade = {};
 
-            deceased.forEach(p => {
+            lifeSpanData.forEach(p => {
                 const decade = Math.floor(p.birth_year / 10) * 10;
-                lifeSpanByDecade[decade] = lifeSpanByDecade[decade] || { totalAge: 0, count: 0 };
-                lifeSpanByDecade[decade].totalAge += p.age_at_death;
-                lifeSpanByDecade[decade].count++;
+                const lifeSpan = p.death_year - p.birth_year;
+                if (!lifeSpansByDecade[decade]) {
+                    lifeSpansByDecade[decade] = { total: 0, count: 0 };
+                }
+                lifeSpansByDecade[decade].total += lifeSpan;
+                lifeSpansByDecade[decade].count++;
             });
 
-            const sortedDecades = Object.keys(lifeSpanByDecade)
-                .map(Number)
-                .sort((a, b) => a - b);
+            const sortedLifeSpans = Object.entries(lifeSpansByDecade).sort((a, b) => +a[0] - +b[0]);
+            const lifeSpanLabels = sortedLifeSpans.map(([decade]) => `${decade} - ${+decade + 9}`);
+            const avgLifeSpans = sortedLifeSpans.map(([, data]) => (data.total / data.count).toFixed(1));
+            const LIFESPAN_COLOR = "#059669"; // Emerald 600
 
-            const avgLifeSpans = sortedDecades.map(decade => 
-                (lifeSpanByDecade[decade].totalAge / lifeSpanByDecade[decade].count).toFixed(1)
-            );
-
-            createChart("lifeExpectancyChart", {
-                type: "line",
+            if (chartInstances.lifeExpectancy) chartInstances.lifeExpectancy.destroy();
+            const ctx = document.getElementById("lifeExpectancyChart")?.getContext("2d");
+            if (!ctx) return;
+            chartInstances.lifeExpectancy = new Chart(ctx, {
+                type: "bar",
                 data: {
-                    labels: sortedDecades.map(d => `${d}s`),
+                    labels: lifeSpanLabels,
                     datasets: [{
                         label: texts.avgLifeSpan,
                         data: avgLifeSpans,
-                        borderColor: COLOR_PALETTE.SECONDARY,
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)', 
-                        borderWidth: 3,
-                        tension: 0.3,
-                        fill: true,
-                        pointBackgroundColor: COLOR_PALETTE.SECONDARY, 
-                        pointBorderColor: '#fff',
-                        pointRadius: 5,
-                        pointHoverRadius: 7
+                        backgroundColor: LIFESPAN_COLOR,
+                        borderColor: LIFESPAN_COLOR,
+                        borderWidth: 0,
+                        borderRadius: 4
                     }]
                 },
-                options: getChartOptions('line', lang, {
+                options: {
+                    ...CHART_GLOBAL_OPTIONS,
                     scales: {
-                        x: { title: { display: true, text: texts.birthDecade, font: { size: 14 } } },
-                        y: { title: { display: true, text: texts.years, font: { size: 14 } }, beginAtZero: false }
+                        y: { 
+                            ...CHART_GLOBAL_OPTIONS.scales.y,
+                            beginAtZero: true, 
+                            title: { display: true, text: texts.years, color: '#4b5563' } 
+                        },
+                        x: { 
+                            ...CHART_GLOBAL_OPTIONS.scales.x,
+                            reverse: true, 
+                            title: { display: true, text: texts.birthDecade, color: '#4b5563' } 
+                        } 
+                    },
+                    plugins: { 
+                        ...CHART_GLOBAL_OPTIONS.plugins,
+                        tooltip: { ...CHART_GLOBAL_OPTIONS.plugins.tooltip, rtl: lang === 'HE' } 
                     }
-                })
+                }
             });
         }
-
+        
         function renderBirthTrendChart(data, lang) {
             const texts = translations[lang];
-            const birthByDecade = {};
-            
-            data.filter(p => p.birth_year !== null).forEach(p => {
-                const decade = Math.floor(p.birth_year / 10) * 10;
-                birthByDecade[decade] = (birthByDecade[decade] || 0) + 1;
+            const birthTrend = {};
+            data.forEach(p => {
+                if (p.birth_year) {
+                    const decade = Math.floor(p.birth_year / 10) * 10;
+                    birthTrend[decade] = (birthTrend[decade] || 0) + 1;
+                }
             });
 
-            const sortedDecades = Object.keys(birthByDecade)
-                .map(Number)
-                .sort((a, b) => a - b)
-                .filter(d => d >= 1900); 
+            const sortedBirthTrend = Object.entries(birthTrend).sort((a, b) => +a[0] - +b[0]);
+            const trendLabels = sortedBirthTrend.map(([decade]) => decade);
+            const trendValues = sortedBirthTrend.map(([, count]) => count);
+            const TREND_COLOR = "#f59e0b"; // Amber 500
 
-            const counts = sortedDecades.map(d => birthByDecade[d]);
-
-            createChart("birthTrendChart", {
-                type: "bar",
+            if (chartInstances.birthTrend) chartInstances.birthTrend.destroy();
+            const ctx = document.getElementById("birthTrendChart")?.getContext("2d");
+            if (!ctx) return;
+            chartInstances.birthTrend = new Chart(ctx, {
+                type: "line",
                 data: {
-                    labels: sortedDecades.map(d => texts.decade + ' ' + d),
+                    labels: trendLabels,
                     datasets: [{
                         label: texts.birthCount,
-                        data: counts,
-                        backgroundColor: COLOR_PALETTE.TERTIARY,
-                        borderColor: COLOR_PALETTE.TERTIARY,
-                        borderWidth: 1,
-                        borderRadius: 6,
+                        data: trendValues,
+                        backgroundColor: 'rgba(245, 158, 11, 0.2)',
+                        borderColor: TREND_COLOR,
+                        borderWidth: 3, // עבה יותר
+                        fill: true,
+                        tension: 0.4, // קו חלק יותר
+                        pointRadius: 5,
+                        pointBackgroundColor: TREND_COLOR,
+                        pointBorderColor: '#fff'
                     }]
                 },
-                options: getChartOptions('bar', lang, {
+                options: {
+                    ...CHART_GLOBAL_OPTIONS,
                     scales: {
-                        x: { title: { display: true, text: texts.decade, font: { size: 14 } } },
-                        y: { title: { display: true, text: texts.birthCount, font: { size: 14 } }, beginAtZero: true }
+                        y: { 
+                            ...CHART_GLOBAL_OPTIONS.scales.y,
+                            beginAtZero: true, 
+                            title: { display: true, text: texts.birthCount, color: '#4b5563' } 
+                        },
+                        x: { 
+                            ...CHART_GLOBAL_OPTIONS.scales.x,
+                            reverse: true, 
+                            title: { display: true, text: texts.decade, color: '#4b5563' } 
+                        } 
+                    },
+                    plugins: { 
+                        ...CHART_GLOBAL_OPTIONS.plugins,
+                        tooltip: { ...CHART_GLOBAL_OPTIONS.plugins.tooltip, rtl: lang === 'HE' } 
                     }
-                })
+                }
             });
         }
         
         function renderAvgChildrenChart(data, lang) {
             const texts = translations[lang];
-            const childrenByGeneration = {};
-            const BASE_YEAR = 1800;
+            const childrenAvg = {};
             const GENERATION_SPAN = 25;
-            const ADULT_AGE = 18;
-            const CURRENT_YEAR = new Date().getFullYear();
 
-            data
-                .filter(p => p.birth_year && p.birth_year <= (CURRENT_YEAR - ADULT_AGE)) 
-                .forEach(p => {
-                    const year = p.birth_year;
-                    const startYear = Math.floor((year - BASE_YEAR) / GENERATION_SPAN) * GENERATION_SPAN + BASE_YEAR;
-                    const endYear = startYear + GENERATION_SPAN - 1;
-                    const label = `${startYear}-${endYear}`;
+            data.filter(p => p.is_adult_for_children_avg).forEach(p => {
+                const genIndex = Math.floor(p.birth_year / GENERATION_SPAN); 
+                const generationStartYear = genIndex * GENERATION_SPAN;
+                
+                if (!childrenAvg[generationStartYear]) {
+                    childrenAvg[generationStartYear] = { totalChildren: 0, adultCount: 0 };
+                }
+                childrenAvg[generationStartYear].totalChildren += p.children_count;
+                childrenAvg[generationStartYear].adultCount++;
+            });
 
-                    childrenByGeneration[label] = childrenByGeneration[label] || { totalChildren: 0, count: 0 };
-                    childrenByGeneration[label].totalChildren += p.children_count;
-                    childrenByGeneration[label].count++;
-                });
+            const sortedChildrenAvg = Object.entries(childrenAvg).sort((a, b) => +a[0] - +b[0]);
+            const avgChildrenLabels = sortedChildrenAvg.map(([year]) => `${year} - ${+year + GENERATION_SPAN - 1}`);
+            const avgChildrenValues = sortedChildrenAvg.map(([, data]) => (data.totalChildren / data.adultCount).toFixed(1));
+            const CHILDREN_COLOR = "#ef4444"; // Red 500
 
-            const sortedLabels = Object.keys(childrenByGeneration).sort();
-            const avgChildren = sortedLabels.map(label => 
-                (childrenByGeneration[label].totalChildren / childrenByGeneration[label].count).toFixed(2)
-            );
-
-            createChart("avgChildrenChart", {
+            if (chartInstances.avgChildren) chartInstances.avgChildren.destroy();
+            const ctx = document.getElementById("avgChildrenChart")?.getContext("2d");
+            if (!ctx) return;
+            chartInstances.avgChildren = new Chart(ctx, {
                 type: "bar",
                 data: {
-                    labels: sortedLabels,
+                    labels: avgChildrenLabels,
                     datasets: [{
                         label: texts.avgChildren,
-                        data: avgChildren,
-                        backgroundColor: COLOR_PALETTE.ACCENT,
-                        borderColor: COLOR_PALETTE.ACCENT,
-                        borderWidth: 1,
-                        borderRadius: 6,
+                        data: avgChildrenValues,
+                        backgroundColor: CHILDREN_COLOR,
+                        borderColor: CHILDREN_COLOR,
+                        borderWidth: 0,
+                        borderRadius: 4
                     }]
                 },
-                options: getChartOptions('bar', lang, {
+                options: {
+                    ...CHART_GLOBAL_OPTIONS,
                     scales: {
-                        x: { title: { display: true, text: texts.generation, font: { size: 14 } } },
-                        y: { title: { display: true, text: texts.avgChildren, font: { size: 14 } }, beginAtZero: true }
+                        y: { 
+                            ...CHART_GLOBAL_OPTIONS.scales.y,
+                            beginAtZero: true, 
+                            title: { display: true, text: texts.avgChildren, color: '#4b5563' } 
+                        },
+                        x: { 
+                            ...CHART_GLOBAL_OPTIONS.scales.x,
+                            reverse: true, 
+                            title: { display: true, text: texts.generation, color: '#4b5563' } 
+                        } 
+                    },
+                    plugins: { 
+                        ...CHART_GLOBAL_OPTIONS.plugins,
+                        tooltip: { ...CHART_GLOBAL_OPTIONS.plugins.tooltip, rtl: lang === 'HE' } 
                     }
-                })
+                }
             });
         }
-        
+
         function renderAgeDistributionChart(data, lang) {
             const texts = translations[lang];
-            const ageBins = Array.from({ length: 11 }, (_, i) => i * 10); 
-            const currentAgeCounts = new Array(ageBins.length).fill(0);
-            const deathAgeCounts = new Array(ageBins.length).fill(0);
+            // הגדרת טווחי גילאים
+            const BINS = [0, 20, 40, 60, 80, 100]; 
+            const binLabels = BINS.map((start, i) => 
+                i === BINS.length - 1 ? `${start}+` : `${start}-${BINS[i+1]-1}`
+            ).reverse(); 
+            
+            const currentAgeCounts = Array(BINS.length).fill(0);
+            const ageAtDeathCounts = Array(BINS.length).fill(0);
 
             data.forEach(p => {
-                if (p.current_age !== null) {
-                    const binIndex = Math.min(Math.floor(p.current_age / 10), ageBins.length - 1);
-                    currentAgeCounts[binIndex]++;
+                let binIndex;
+                // Current Age (Living)
+                if (p.current_age !== undefined && p.current_age >= 0) {
+                    binIndex = BINS.findIndex((start, i) => 
+                        i === BINS.length - 1 ? p.current_age >= start : p.current_age >= start && p.current_age < BINS[i+1]
+                    );
+                    // שימוש באינדקס האחרון אם הוא לא נמצא
+                    const finalIndex = binIndex !== -1 ? binIndex : BINS.length - 1;
+                    if (p.current_age >= 0) currentAgeCounts[finalIndex]++;
                 }
-                if (p.age_at_death !== null) {
-                    const binIndex = Math.min(Math.floor(p.age_at_death / 10), ageBins.length - 1);
-                    deathAgeCounts[binIndex]++;
+                
+                // Age at Death (Deceased)
+                if (p.age_at_death !== undefined && p.age_at_death >= 0) {
+                    binIndex = BINS.findIndex((start, i) => 
+                        i === BINS.length - 1 ? p.age_at_death >= start : p.age_at_death >= start && p.age_at_death < BINS[i+1]
+                    );
+                    const finalIndex = binIndex !== -1 ? binIndex : BINS.length - 1;
+                    if (p.age_at_death >= 0) ageAtDeathCounts[finalIndex]++;
                 }
             });
-
-            const labels = ageBins.slice(0, -1).map((bin, i) => i === ageBins.length - 2 ? `${bin}+` : `${bin}-${bin + 9}`);
             
-            createChart("ageDistributionChart", {
+            // היפוך סדר הנתונים כדי שיתאים לתוויות ההפוכות
+            currentAgeCounts.reverse();
+            ageAtDeathCounts.reverse();
+            
+            // צבעים מעודכנים: סגול וכתום
+            const CURRENT_AGE_COLOR = '#a855f7'; // Purple 500
+            const AGE_AT_DEATH_COLOR = '#f97316'; // Orange 500
+
+            if (chartInstances.ageDistribution) chartInstances.ageDistribution.destroy();
+            const ctx = document.getElementById("ageDistributionChart")?.getContext("2d");
+            if (!ctx) return;
+            chartInstances.ageDistribution = new Chart(ctx, {
                 type: "bar",
                 data: {
-                    labels: labels,
+                    labels: binLabels,
                     datasets: [
                         {
                             label: texts.currentAge,
-                            data: currentAgeCounts.slice(0, -1),
-                            backgroundColor: COLOR_PALETTE.AGE_CURRENT,
-                            borderColor: COLOR_PALETTE.AGE_CURRENT,
-                            borderWidth: 1,
-                            borderRadius: 6,
+                            data: currentAgeCounts,
+                            backgroundColor: CURRENT_AGE_COLOR, 
+                            stack: 'stack0',
+                            borderRadius: 4
                         },
                         {
                             label: texts.ageAtDeath,
-                            data: deathAgeCounts.slice(0, -1),
-                            backgroundColor: COLOR_PALETTE.AGE_DEATH,
-                            borderColor: COLOR_PALETTE.AGE_DEATH,
-                            borderWidth: 1,
-                            borderRadius: 6,
+                            data: ageAtDeathCounts,
+                            backgroundColor: AGE_AT_DEATH_COLOR,
+                            stack: 'stack0',
+                            borderRadius: 4
                         }
                     ]
                 },
-                options: getChartOptions('bar', lang, {
+                options: {
+                    ...CHART_GLOBAL_OPTIONS,
                     scales: {
-                        x: { title: { display: true, text: texts.ageBins, font: { size: 14 } } },
-                        y: { title: { display: true, text: texts.peopleCount, font: { size: 14 } }, beginAtZero: true }
+                        y: { 
+                            ...CHART_GLOBAL_OPTIONS.scales.y,
+                            beginAtZero: true, 
+                            stacked: true,
+                            title: { display: true, text: texts.peopleCount, color: '#4b5563' } 
+                        },
+                        x: { 
+                            ...CHART_GLOBAL_OPTIONS.scales.x,
+                            stacked: true,
+                            title: { display: true, text: texts.ageBins, color: '#4b5563' } 
+                        }
+                    },
+                    plugins: {
+                        ...CHART_GLOBAL_OPTIONS.plugins,
+                        tooltip: { ...CHART_GLOBAL_OPTIONS.plugins.tooltip, rtl: lang === 'HE' }
                     }
-                })
+                }
             });
         }
-        
+
+        // --- פונקציה חדשה: התפלגות מצב משפחתי ---
         function renderMaritalStatusChart(data, lang) {
             const texts = translations[lang];
-            const statusCounts = {};
-            const livingAdults = data.filter(p => p.current_age !== null && p.current_age >= 18);
+            const maritalStatuses = { 'M': 0, 'S': 0, 'D': 0, 'W': 0, 'U': 0 };
             
-            livingAdults.forEach(p => {
-                statusCounts[p.marital_status] = (statusCounts[p.marital_status] || 0) + 1;
+            // צבעים מעודכנים: ורוד, ירוק, כתום, אפור כהה, אפור בהיר
+            const STATUS_COLORS = ["#ec4899", "#34d399", "#f97316", "#4b5563", "#9ca3af"]; 
+
+            data.forEach(p => {
+                const status = p.marital_status ? p.marital_status.toUpperCase() : 'U';
+                if (maritalStatuses.hasOwnProperty(status)) {
+                    maritalStatuses[status]++;
+                } else {
+                    maritalStatuses['U']++;
+                }
             });
+
+            const statusLabels = [
+                texts.statusM, texts.statusS, texts.statusD, texts.statusW, texts.statusU
+            ];
+            const statusValues = [
+                maritalStatuses.M, maritalStatuses.S, maritalStatuses.D, maritalStatuses.W, maritalStatuses.U
+            ];
             
-            const labels = ['M', 'S', 'D', 'W', 'U'].map(key => texts['status' + key]);
-            const statusMap = { 'M': 0, 'S': 1, 'D': 2, 'W': 3, 'U': 4 };
-            const counts = labels.map((_, i) => statusCounts[Object.keys(statusMap)[i]] || 0);
+            // סינון אפסים מטעמי קריאות
+            const filteredLabels = statusLabels.filter((_, i) => statusValues[i] > 0);
+            const filteredValues = statusValues.filter(v => v > 0);
+            const filteredColors = STATUS_COLORS.filter((_, i) => statusValues[i] > 0);
 
-            const MARITAL_COLORS = [COLOR_PALETTE.PIE_MARRIED, COLOR_PALETTE.PIE_SINGLE, COLOR_PALETTE.PIE_DIVORCED, COLOR_PALETTE.PIE_WIDOWED, COLOR_PALETTE.PIE_OTHER];
 
-            createChart("maritalStatusChart", {
+            if (chartInstances.maritalStatus) chartInstances.maritalStatus.destroy();
+            const ctx = document.getElementById("maritalStatusChart")?.getContext("2d");
+            if (!ctx) return;
+            chartInstances.maritalStatus = new Chart(ctx, {
                 type: "doughnut",
                 data: {
-                    labels: labels,
+                    labels: filteredLabels,
                     datasets: [{
-                        data: counts,
-                        backgroundColor: MARITAL_COLORS,
+                        data: filteredValues,
+                        backgroundColor: filteredColors,
                         borderColor: '#ffffff',
-                        borderWidth: 4,
-                        hoverOffset: 20
+                        borderWidth: 3,
+                        hoverOffset: 15
                     }]
                 },
-                options: getChartOptions('doughnut', lang, { 
-                    cutout: '70%', 
-                    plugins: { 
-                        tooltip: { 
-                            callbacks: { 
-                                label: (context) => `${context.label}: ${context.formattedValue} (${(context.dataset.data[context.dataIndex] / livingAdults.length * 100).toFixed(1)}%)`
-                            } 
-                        } 
-                    } 
-                })
+                options: {
+                    ...CHART_GLOBAL_OPTIONS,
+                    plugins: {
+                        ...CHART_GLOBAL_OPTIONS.plugins,
+                        legend: { position: 'bottom', rtl: lang === 'HE' },
+                        tooltip: { ...CHART_GLOBAL_OPTIONS.plugins.tooltip, rtl: lang === 'HE' }
+                    }
+                }
             });
         }
 
+        // --- פונקציה חדשה: 10 השמות הנפוצים ביותר ---
         function renderMostCommonNamesChart(data, lang) {
             const texts = translations[lang];
             const nameCounts = {};
-            
+
             data.forEach(p => {
                 if (p.first_name) {
-                    const name = p.first_name;
+                    const name = p.first_name.trim().toLowerCase();
                     nameCounts[name] = (nameCounts[name] || 0) + 1;
                 }
             });
 
             const sortedNames = Object.entries(nameCounts)
-                .sort(([, a], [, b]) => b - a)
-                .slice(0, 10); 
+                .sort((a, b) => b[1] - a[1]) // Sort descending by count
+                .slice(0, 10); // Take top 10
 
-            const labels = sortedNames.map(([name]) => name);
-            const counts = sortedNames.map(([, count]) => count);
+            const nameLabels = sortedNames.map(([name]) => {
+                // נרמול להצגה: הפיכת האות הראשונה לגדולה
+                return name.charAt(0).toUpperCase() + name.slice(1);
+            }).reverse(); // Reverse for Chart.js display order (highest at top)
 
-            createChart("mostCommonNamesChart", {
+            const nameValues = sortedNames.map(([, count]) => count).reverse();
+            const NAME_COLOR = "#3730a3"; // Indigo 700
+
+            if (chartInstances.mostCommonNames) chartInstances.mostCommonNames.destroy();
+            const ctx = document.getElementById("mostCommonNamesChart")?.getContext("2d");
+            if (!ctx) return;
+            chartInstances.mostCommonNames = new Chart(ctx, {
                 type: "bar",
                 data: {
-                    labels: labels,
+                    labels: nameLabels,
                     datasets: [{
                         label: texts.peopleCount,
-                        data: counts,
-                        backgroundColor: COLOR_PALETTE.NAME_BARS,
-                        borderColor: COLOR_PALETTE.NAME_BARS,
-                        borderWidth: 1,
-                        borderRadius: 6,
+                        data: nameValues,
+                        backgroundColor: NAME_COLOR,
+                        borderColor: NAME_COLOR,
+                        borderWidth: 0,
+                        borderRadius: 4
                     }]
                 },
-                options: getChartOptions('bar', lang, {
+                options: {
+                    ...CHART_GLOBAL_OPTIONS,
+                    indexAxis: 'y', // Horizontal bars
                     scales: {
-                        x: { title: { display: true, text: texts.firstName, font: { size: 14 } } },
-                        y: { title: { display: true, text: texts.peopleCount, font: { size: 14 } }, beginAtZero: true }
-                    }
-                })
+                        x: { 
+                            ...CHART_GLOBAL_OPTIONS.scales.x,
+                            beginAtZero: true, 
+                            title: { display: true, text: texts.peopleCount, color: '#4b5563' } 
+                        },
+                        y: { 
+                            ...CHART_GLOBAL_OPTIONS.scales.y,
+                            title: { display: true, text: texts.firstName, color: '#4b5563' } 
+                        }
+                    },
+                    plugins: { ...CHART_GLOBAL_OPTIONS.plugins, tooltip: { ...CHART_GLOBAL_OPTIONS.plugins.tooltip, rtl: lang === 'HE' } }
+                }
             });
         }
-        
+
+
         function renderAllCharts(data, lang) {
-            // ... (קריאה לכל פונקציות הציור)
+            // עדכון כיווניות הגלובלית של התרשימים
+            CHART_GLOBAL_OPTIONS.plugins.tooltip.rtl = lang === 'HE';
+            CHART_GLOBAL_OPTIONS.plugins.legend.rtl = lang === 'HE';
+
+            // תרשימים קיימים
             renderGenderChart(data, lang);
             renderGenerationChart(data, lang);
             renderLifeExpectancyChart(data, lang);
             renderBirthTrendChart(data, lang);
             renderAvgChildrenChart(data, lang);
-            renderAgeDistributionChart(data, lang);
+            renderAgeDistributionChart(data, lang); 
+
+            // תרשימים חדשים
             renderMaritalStatusChart(data, lang);
             renderMostCommonNamesChart(data, lang);
+        }
+
+
+        // --- פונקציה ראשית לארגון טעינת הנתונים מהשרת ---
+
+        async function loadFamilyStats() {
+            updateUI(); // עדכון UI ראשוני לשפה
+            
+            const familyInfoElement = document.getElementById("family-info");
+            const allFamilyData = [];
+            const loadedFamilies = [];
+            const failedFamilies = [];
+            
+            try {
+                // 1. שליפת פרטי משתמש וקבלת צד משפחה גולמי מ- /api/user
+                if (familyInfoElement) {
+                    familyInfoElement.textContent = T('statusLoading');
+                }
+                
+                // קריאת רשת אמיתית לשרת לאימות וקבלת שמות המשפחה
+                const userResponse = await fetch('/api/user');
+                if (!userResponse.ok) {
+                    throw new Error(`שגיאת שרת (${userResponse.status}): לא ניתן לטעון פרטי משתמש. ודא שהנתיב /api/user מחזיר JSON תקין.`);
+                }
+                const userData = await userResponse.json();
+                
+                // ההנחה היא שהנתונים חוזרים במבנה { user: { familySide: "FamilyA,FamilyB" } }
+                const rawFamilySide = userData.user?.familySide; 
+
+                if (!rawFamilySide || typeof rawFamilySide !== 'string' || rawFamilySide.length === 0) {
+                    throw new Error("שדה 'familySide' חסר, לא תקין או לא מוגדר בפרטי המשתמש. (נדרש שם משפחה אחד או יותר, מופרדים בפסיקים).");
+                }
+                
+                // פיצול שמות המשפחה וניקוי רווחים
+                const familyNames = rawFamilySide.split(',')
+                    .map(name => name.trim())
+                    .filter(name => name.length > 0);
+
+                if (familyNames.length === 0) {
+                    throw new Error("שדה 'familySide' מכיל תווים, אך לא נמצאו שמות משפחה תקינים לעיבוד לאחר ניקוי.");
+                }
+
+                // 2. שליפת קבצים, צבירה וטיפול בשגיאות
+                for (const familySide of familyNames) {
+                    const dataUrl = '/trees/' + familySide + '.html';
+                    if (familyInfoElement) {
+                        familyInfoElement.textContent = `טוען נתונים עבור: ${familySide}...`;
+                    }
+
+                    try {
+                        // קריאת רשת אמיתית לטעינת קובץ ה-HTML שמכיל את נתוני ה-JSON
+                        const dataResponse = await fetch(dataUrl);
+                        if (!dataResponse.ok) {
+                            throw new Error(`שגיאת שרת (${dataResponse.status}): ודא שקובץ ${dataUrl} קיים ומחזיר נתונים.`);
+                        }
+                        const rawText = await dataResponse.text();
+                        
+                        // חילוץ מערך ה-JSON מתוך הטקסט (קובץ HTML או גולמי)
+                        const rawData = extractFamilyData(rawText); 
+
+                        // צבירת הנתונים
+                        allFamilyData.push(...rawData);
+                        loadedFamilies.push(familySide);
+
+                    } catch (error) {
+                        console.warn('כשל בטעינת ' + familySide + ': ' + error.message);
+                        failedFamilies.push({ name: familySide, message: error.message });
+                    }
+                }
+
+                if (allFamilyData.length === 0) {
+                    let errorMsg = "לא נמצאו נתונים כלל לעיבוד סטטיסטי מכל הקבצים שניסיתי לטעון.";
+                    if (failedFamilies.length > 0) {
+                        errorMsg += " (נכשלו: " + failedFamilies.map(f => f.name).join(', ') + ")";
+                    }
+                    throw new Error(errorMsg);
+                }
+
+                // 3. ניקוי וסינון נתונים והכנה לתרשימים
+                if (familyInfoElement) {
+                    familyInfoElement.textContent = "מחלץ ומנקה נתונים...";
+                }
+                
+                const CURRENT_YEAR = new Date().getFullYear();
+                // הכנת נתונים - נירמול שנות לידה/מוות והוספת שדות גיל חדשים
+                cleanedData = allFamilyData
+                    .map(p => {
+                        const birth_year = normalizeYear(p.birth_year);
+                        const death_year = normalizeYear(p.death_year);
+                        
+                        const processed = {
+                            ...p,
+                            birth_year: birth_year,
+                            death_year: death_year,
+                            children_count: Array.isArray(p.children_ids) ? p.children_ids.length : 0,
+                            // is_adult_for_children_avg: כל מי שנולד לפני 1970 נחשב כמבוגר פוטנציאלי לילדים
+                            is_adult_for_children_avg: birth_year !== null && birth_year < 1970 
+                        };
+                        
+                        // חישוב גיל במוות וגיל נוכחי (לצורך התרשים החדש)
+                        if (birth_year) {
+                            if (death_year && death_year > birth_year) {
+                                processed.age_at_death = death_year - birth_year;
+                            }
+                            if (!death_year || death_year >= CURRENT_YEAR) {
+                                processed.current_age = CURRENT_YEAR - birth_year;
+                            }
+                        }
+                        return processed;
+                    })
+                    // סינון רק של רשומות שיש בהן לפחות מידע אחד רלוונטי
+                    .filter(p => p.gender || p.birth_year || p.marital_status || p.first_name); 
+
+                if (cleanedData.length === 0) {
+                    throw new Error('הנתונים חולצו בהצלחה, אך לא נמצאו רשומות תקינות לסטטיסטיקות (כנראה שדות מגדר/שנת לידה/מצב משפחתי/שם פרטי חסרים) מתוך ' + allFamilyData.length + ' רשומות גולמיות.');
+                }
+
+                // 4. יצירת התרשימים
+                renderAllCharts(cleanedData, currentLang);
+
+
+                // 5. סיום טעינה
+                const loadingElement = document.getElementById("loading");
+                const mainContentElement = document.getElementById("main-content");
+                
+                if (loadingElement) {
+                    loadingElement.style.display = "none";
+                }
+                if (mainContentElement) {
+                    mainContentElement.style.display = "block";
+                }
+                
+                let statusMessage = 'הנתונים נטענו בהצלחה עבור המשפחות: <b>' + loadedFamilies.join(', ') + '</b>. סך אנשים מעובדים: ' + cleanedData.length;
+                
+                if (failedFamilies.length > 0) {
+                    statusMessage += '. <br><span class="text-yellow-600 font-bold">שימו לב: נכשלה טעינה עבור: ' + failedFamilies.map(f => f.name).join(', ') + '.</span>';
+                }
+
+                if (familyInfoElement) {
+                    familyInfoElement.innerHTML = '<span class="text-green-700 font-semibold">' + statusMessage + '</span>';
+                }
+
+
+            } catch (error) {
+                console.error("שגיאה קריטית:", error);
+                displayError('אירעה שגיאה בטעינת הנתונים: ' + error.message);
+            }
         }
         
         // --- איתחול והחלפת שפה ---
         
         document.addEventListener('DOMContentLoaded', () => {
+            // הוספת Listener לכפתור החלפת השפה
             const langButton = document.getElementById('lang-toggle-button');
             if (langButton) {
                 langButton.addEventListener('click', () => {
