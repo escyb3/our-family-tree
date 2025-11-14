@@ -158,25 +158,23 @@
         // Data containing all family members
         // NOTE: The 'spouse_id' property has been replaced with 'spouse_ids' (an array) for all primary lineage members.
         const peopleData = [
-         { "id": "1", "name": "Moshe Barenbaum", "gender": "M", "spouse_ids": ["2"], "parent_ids": [], "children_ids": ["225", "227", "229"], "birth_year": "c. 1850", "death_year": null },
-            { "id": "2", "name": "Rachel Barenbaum", "gender": "F", "spouse_ids": ["1"], "parent_ids": [], "children_ids": ["3", "5", "229"], "birth_year": "c. 1850", "death_year": null },
-         { "id": "3", "name": "Szejwa Barenbaum", "gender": "F", "spouse_ids": ["226"], "parent_ids": ["231","232"], "children_ids": [], "birth_year": "c. 1870", "death_year": null },
-              { "id": "4", "name": "Aaron Galler", "gender": "M", "spouse_ids": ["225"], "parent_ids": [], "children_ids": [], "birth_year": "c. 1880", "death_year": null },
-            { "id": "5", "name": "Rivka Barenbaum", "gender": "F", "spouse_ids": ["6"], "parent_ids": ["231","232"], "children_ids": ["229","233","235","236","237"], "birth_year": "c. 1880", "death_year": null },
-              { "id": "6", "name": "Shmuel Bromberg", "gender": "M", "spouse_ids": ["5"], "parent_ids": [], "children_ids": ["229","233","235","236","237"], "birth_year": "c. 1880", "death_year": null },
-             { "id": "229", "name": "Molly Bromberg", "gender": "F", "spouse_ids": ["230"], "parent_ids": ["228","227"], "children_ids": [], "birth_year": "1912", "death_year": null },
-            { "id": "230", "name": "Hymie Myers", "gender": "M", "spouse_ids": ["229"], "parent_ids": [], "children_ids": [], "birth_year": "1907", "death_year": null },
-             { "id": "233", "name": "Moshe Bromberg", "gender": "M", "spouse_ids": ["234"], "parent_ids": ["227","228"], "children_ids": [], "birth_year": "1913", "death_year": null },
-             { "id": "234", "name": "Rachel Weinberger", "gender": "F", "spouse_ids": ["233"], "parent_ids": [], "children_ids": [], "birth_year": "1923", "death_year": null },
-             { "id": "235", "name": "David Bromberg", "gender": "M", "spouse_ids": [], "parent_ids": ["227","228"], "children_ids": [], "birth_year": "1918", "death_year": null },
-              { "id": "236", "name": "Rachel Bromberg", "gender": "F", "spouse_ids": [], "parent_ids": ["227","228"], "children_ids": [], "birth_year": "1920", "death_year": null },
-             { "id": "237", "name": "Abba Bromberg", "gender": "M", "spouse_ids": [], "parent_ids": ["227","228"], "children_ids": [], "birth_year": "1922", "death_year": null },
-            
-
-            { "id": "238", "name": "Unknown Barenbaum", "gender": "F", "spouse_ids": ["239"], "parent_ids": ["231","232"], "children_ids": [], "birth_year": "c. 1880", "death_year": null },
-                       { "id": "239", "name": "Moshe ?", "gender": "M", "spouse_ids": ["238"], "parent_ids": [], "children_ids": [], "birth_year": "c. 1880", "death_year": null },
-                        { "id": "240", "name": "Esther ?", "gender": "F", "spouse_ids": ["241"], "parent_ids": ["238","239"], "children_ids": [], "birth_year": "c. 1900", "death_year": "1982"},
-                        { "id": "241", "name": "Yesha'ayahu Hazan", "gender": "M", "spouse_ids": ["240"], "parent_ids": [], "children_ids": [], "birth_year": "c.1900", "death_year": "1989"},
+         { "id": "1", "name": "Moshe Barenbaum", "gender": "M", "spouse_ids": ["2"], "parent_ids": [], "children_ids": ["3", "5", "14"], "birth_year": "c. 1850", "death_year": null },
+            { "id": "2", "name": "Rachel Barenbaum", "gender": "F", "spouse_ids": ["1"], "parent_ids": [], "children_ids": ["3", "5", "14"], "birth_year": "c. 1850", "death_year": null },
+         { "id": "3", "name": "Szejwa Barenbaum", "gender": "F", "spouse_ids": ["4"], "parent_ids": ["1","2"], "children_ids": [], "birth_year": "c. 1870", "death_year": null },
+              { "id": "4", "name": "Aaron Galler", "gender": "M", "spouse_ids": ["3"], "parent_ids": [], "children_ids": [], "birth_year": "c. 1880", "death_year": null },
+            { "id": "5", "name": "Rivka Barenbaum", "gender": "F", "spouse_ids": ["6"], "parent_ids": ["1","2"], "children_ids": ["7","9","11","12","13"], "birth_year": "c. 1880", "death_year": null },
+              { "id": "6", "name": "Shmuel Bromberg", "gender": "M", "spouse_ids": ["5"], "parent_ids": [], "children_ids": ["7","9","11","12","13"], "birth_year": "c. 1880", "death_year": null },
+             { "id": "7", "name": "Molly Bromberg", "gender": "F", "spouse_ids": ["8"], "parent_ids": "[5","6"], "children_ids": [], "birth_year": "1912", "death_year": null },
+            { "id": "8", "name": "Hymie Myers", "gender": "M", "spouse_ids": ["7"], "parent_ids": [], "children_ids": [], "birth_year": "1907", "death_year": null },
+             { "id": "9", "name": "Moshe Bromberg", "gender": "M", "spouse_ids": ["10"], "parent_ids": ["5","6"], "children_ids": [], "birth_year": "1913", "death_year": null },
+             { "id": "10", "name": "Rachel Weinberger", "gender": "F", "spouse_ids": ["9"], "parent_ids": [], "children_ids": [], "birth_year": "1923", "death_year": null },
+             { "id": "11", "name": "David Bromberg", "gender": "M", "spouse_ids": [], "parent_ids": ["5","6"], "children_ids": [], "birth_year": "1918", "death_year": null },
+              { "id": "12", "name": "Rachel Bromberg", "gender": "F", "spouse_ids": [], "parent_ids": ["5","6"], "children_ids": [], "birth_year": "1920", "death_year": null },
+             { "id": "13", "name": "Abba Bromberg", "gender": "M", "spouse_ids": [], "parent_ids": ["5","6"], "children_ids": [], "birth_year": "1922", "death_year": null },
+            { "id": "14", "name": "Unknown Barenbaum", "gender": "F", "spouse_ids": ["15"], "parent_ids": ["1","2"], "children_ids": [], "birth_year": "c. 1880", "death_year": null },
+             { "id": "15", "name": "Moshe ?", "gender": "M", "spouse_ids": ["14"], "parent_ids": [], "children_ids": [], "birth_year": "c. 1880", "death_year": null },
+              { "id": "16", "name": "Esther ?", "gender": "F", "spouse_ids": ["17"], "parent_ids": ["14","15"], "children_ids": [], "birth_year": "c. 1900", "death_year": "1982"},
+              { "id": "17", "name": "Yesha'ayahu Hazan", "gender": "M", "spouse_ids": ["16"], "parent_ids": [], "children_ids": [], "birth_year": "c.1900", "death_year": "1989"},
 
 
 
@@ -193,7 +191,7 @@
             return map;
         }, {});
 
-        const rootId = '231';
+        const rootId = '1';
         const rootPerson = peopleMap[rootId];
 
         // Function to create the HTML for a single person card
