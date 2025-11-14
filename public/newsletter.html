@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>עלון המשפחה</title>
+  <title>עלון המשפחה עם Firestore</title>
   <!-- Load Tailwind CSS from CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Load Heebo font from Google Fonts -->
@@ -15,6 +15,16 @@
       font-family: 'Heebo', sans-serif;
       background-color: #f3f4f6;
     }
+    /* סגנון למצב עריכה */
+    [contenteditable="true"] {
+        transition: background-color 0.2s;
+        min-height: 1.5em; /* למניעת התמוטטות אלמנטים ריקים */
+    }
+    [contenteditable="true"]:focus {
+        background-color: #fef9e7; /* רקע צהבהב קל בעת עריכה */
+        outline: 2px dashed #ff9800; /* הדגשה של המסגרת */
+        outline-offset: 4px;
+    }
   </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -23,12 +33,22 @@
     <!-- Main Newsletter Header -->
     <header class="text-center mb-10 w-full max-w-4xl relative">
       <div class="bg-white rounded-3xl shadow-xl p-6 relative">
+        <!-- Language Toggle -->
         <button id="lang-toggle" class="absolute top-4 left-4 p-2 bg-indigo-500 text-white rounded-full shadow-md text-sm transition-transform duration-200 hover:scale-105">
             <span id="lang-text" class="hidden sm:inline-block">Switch to English</span>
             <span class="sm:hidden">🌍</span>
         </button>
-        <h1 id="mainTitle" class="text-5xl font-bold text-gray-900 mb-2">עלון המשפחה</h1>
-        <p id="mainSubtitle" class="text-lg text-gray-500">מהדורה חודשית - אוקטובר 2025</p>
+        
+        <!-- Admin/Logout Button (Dynamic) -->
+        <button id="adminToggleBtn" class="absolute top-4 right-4 p-2 rounded-full shadow-md text-sm transition-all duration-200 bg-gray-200 text-gray-700 hover:bg-gray-300" title="כניסת מנהל">
+            <span id="adminButtonText">כניסת מנהל ⚙️</span>
+        </button>
+        
+        <h1 id="mainTitle" class="text-5xl font-bold text-gray-900 mb-2">טוען...</h1>
+        <p id="mainSubtitle" class="text-lg text-gray-500">טוען נתונים ממסד הנתונים</p>
+        <!-- Admin Mode Indicator (Hidden by default) -->
+        <span id="adminIndicator" class="hidden absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">מצב מנהל פעיל: ניתן לערוך!</span>
+        <span id="loadingStatus" class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-sm text-gray-500"></span>
       </div>
     </header>
 
@@ -37,10 +57,10 @@
       <section class="bg-white rounded-3xl shadow-xl overflow-hidden">
         <div class="p-6">
           <h2 id="websiteTitle" class="text-3xl font-bold text-indigo-600 mb-4 flex items-center">
-            <span class="mr-2">🎉</span> פתחנו אתר משפחתי חדש!
+            <span class="mr-2">🎉</span>
           </h2>
           <p id="websiteText" class="text-gray-700 leading-relaxed">
-            אנחנו נרגשים להכריז שהאתר המשפחתי החדש שלנו כבר באוויר! האתר הוא מרכז אחד לכל הדברים המשפחתיים: גלריית תמונות, לוח אירועים, צ'אט AI משפחתי שיעזור לכם לפתור כל בעיה משפחתית (טוב, כמעט), ועוד. היכנסו לבקר, להתעדכן ולשתף.
+            
           </p>
         </div>
       </section>
@@ -54,52 +74,41 @@
       <!-- In Loving Memory Section -->
       <section class="bg-gray-800 rounded-3xl shadow-xl overflow-hidden text-center p-6 text-white">
         <h2 id="inMemoryTitle" class="text-3xl font-bold mb-4 flex items-center justify-center">
-          <span class="ml-2">🕯️</span> לזכר יקירנו
+          <span class="ml-2">🕯️</span> 
         </h2>
-        <p id="inMemoryText1" class="text-gray-300">
-          אנו זוכרים את כל אלה שכבר אינם איתנו, ומוקירים את הזיכרונות שהשאירו.
-        </p>
-        <p id="inMemoryName" class="mt-2 text-xl font-semibold text-gray-200">
-          באהבה, פרנק ון דר ולדה ז"ל
-        </p>
-        <p id="inMemoryDate" class="text-sm text-gray-400">נפטר ב-6 ביולי 2025, בקייפטאון.</p>
-        <p id="inMemoryText2" class="text-gray-400 mt-4">יהי זכרו ברוך.</p>
+        <p id="inMemoryText1" class="text-gray-300"></p>
+        <p id="inMemoryName" class="mt-2 text-xl font-semibold text-gray-200"></p>
+        <p id="inMemoryDate" class="text-sm text-gray-400"></p>
+        <p id="inMemoryText2" class="text-gray-400 mt-4"></p>
       </section>
 
       <!-- Good News Section -->
       <section class="bg-white rounded-3xl shadow-xl p-6">
         <h2 id="goodNewsTitle" class="text-3xl font-bold text-teal-600 mb-4 flex items-center">
-          <span class="ml-2">🌟</span> חדשות טובות!
+          <span class="ml-2">🌟</span> 
         </h2>
         <p id="goodNewsText" class="text-gray-700 leading-relaxed">
-          עדכונים טובים יגיעו בקרוב! מחכים לשמוע את החדשות שלכם.
         </p>
       </section>
 
       <!-- Recommendations Section -->
       <section class="bg-white rounded-3xl shadow-xl p-6">
         <h2 id="recommendationsTitle" class="text-3xl font-bold text-orange-600 mb-4 flex items-center">
-          <span class="ml-2">💡</span> פינת ההמלצות
+          <span class="ml-2">💡</span> 
         </h2>
         <div class="space-y-4">
-          <div id="recommendation1">
-            <strong class="font-semibold text-gray-900">ספר:</strong> <span class="text-gray-700">סדרת הארי פוטר - סדרת הספרים האהובה על כל המשפחה. קסם ודמיון בכל עמוד!</span>
-          </div>
-          <div id="recommendation2">
-            <strong class="font-semibold text-gray-900">סרט:</strong> <span class="text-700">הקול בראש (Inside Out) - סרט אנימציה של דיסני/פיקסאר שמרגש ומצחיק גם ילדים וגם מבוגרים.</span>
-          </div>
-          <div id="recommendation3">
-            <strong class="font-semibold text-gray-900">מקום לבקר בו:</strong> <span class="text-gray-700">גן החיות התנ"כי בירושלים - חוויה לימודית וכיפית לכל הגילאים.</span>
-          </div>
+          <div id="recommendation1"></div>
+          <div id="recommendation2"></div>
+          <div id="recommendation3"></div>
         </div>
       </section>
 
       <!-- Family Photos Section -->
       <section class="bg-white rounded-3xl shadow-xl p-6">
         <h2 id="photosTitle" class="text-3xl font-bold text-pink-600 mb-4 flex items-center">
-          <span class="ml-2">📸</span> רגעי הקיץ שלנו
+          <span class="ml-2">📸</span> 
         </h2>
-        <p id="photosText" class="text-gray-700 mb-6">כמה תמונות שצולמו לאחרונה, כדי להזכיר לכולנו את הרגעים היפים שאנו חולקים יחד.</p>
+        <p id="photosText" class="text-gray-700 mb-6"></p>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           <img src="https://placehold.co/300x300/e9d5ff/8b5cf6?text=תמונה+1" alt="תמונה משפחתית" class="w-full h-auto rounded-lg shadow-md">
           <img src="https://placehold.co/300x300/fecaca/ef4444?text=תמונה+2" alt="תמונה משפחתית" class="w-full h-auto rounded-lg shadow-md">
@@ -111,150 +120,99 @@
       <!-- Birthdays and Events Section -->
       <section class="bg-white rounded-3xl shadow-xl p-6">
         <h2 id="eventsTitle" class="text-3xl font-bold text-purple-600 mb-4 flex items-center">
-          <span class="ml-2">🎂</span> ימי הולדת ואירועים קרובים
+          <span class="ml-2">🎂</span> 
         </h2>
         <ul id="eventsList" class="space-y-3 text-gray-700">
-          <!-- This content is dynamically loaded from the JS 'translations' object -->
+          <!-- Content loaded from Firestore/Default -->
         </ul>
       </section>
       
       <!-- Contact Section -->
       <section class="bg-white rounded-3xl shadow-xl p-6 text-center">
         <h2 id="contactTitle" class="text-3xl font-bold text-gray-900 mb-4 flex items-center justify-center">
-          <span class="ml-2">✍️</span> רוצים לשתף?
+          <span class="ml-2">✍️</span> 
         </h2>
         <p id="contactText" class="text-gray-700 leading-relaxed">
-          יש לכם חדשות מרגשות, המלצות או תמונות מהטיול המשפחתי?
-          פשוט שלחו לנו את העדכונים שלכם למייל: <strong>[כתובת המייל שלכם כאן]</strong>.
         </p>
       </section>
 
       <!-- Footer Section -->
       <footer class="text-center mt-10 text-gray-500">
-        <p id="footerText1">תודה שקראתם! נתראה במהדורה הבאה.</p>
-        <p id="footerText2" class="mt-2 text-sm">&copy; 2025 עלון המשפחה. כל הזכויות שמורות.</p>
+        <p id="footerText1"></p>
+        <p id="footerText2" class="mt-2 text-sm"></p>
+        <p id="userIdDisplay" class="mt-4 text-xs text-gray-400"></p>
       </footer>
     </main>
   </div>
 
-  <script>
-    // Get current date and time
-    const now = new Date();
+  <!-- Modal Overlay -->
+  <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 transition-opacity duration-300 items-center justify-center p-4">
+    
+    <!-- Password Prompt Modal -->
+    <div id="passwordModal" class="bg-white rounded-xl shadow-2xl w-full max-w-sm p-6 transform transition-transform duration-300 scale-95" role="dialog" aria-modal="true" aria-labelledby="modalTitle" style="display: none;">
+      <h3 id="modalTitle" class="text-xl font-bold text-gray-800 mb-4 text-right">כניסת מנהלים</h3>
+      <p class="text-gray-600 mb-4 text-right">הכנס סיסמה לעריכת העלון:</p>
+      <input type="password" id="adminPasswordInput" class="w-full p-3 mb-4 border border-gray-300 rounded-lg text-right focus:ring-indigo-500 focus:border-indigo-500" placeholder="הקלד סיסמה כאן">
+      <div class="flex justify-between space-x-2">
+        <button id="submitPasswordBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-xl transition-colors duration-200 flex-1">כניסה</button>
+        <button id="closePasswordModalBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-xl transition-colors duration-200">ביטול</button>
+      </div>
+    </div>
 
-    // Define holiday data
-    const holidays = [
-      {
-        id: 'roshHashanah',
-        name: { he: 'ראש השנה', en: 'Rosh Hashanah' },
-        message: { he: '🍎 שנה טובה!', en: '🍎 Happy New Year!' },
-        detailed_message: { he: 'אנו רוצים לאחל לכל משפחתנו שנה טובה ומבורכת. שתהא זו שנה של התחלות חדשות, בריאות, אושר ושגשוג. מי ייתן וכל משאלותינו הטובות יתגשמו.', en: 'We want to wish our entire family a good and blessed year. May this be a year of new beginnings, health, happiness, and prosperity. May all our good wishes come true.' },
-        startDate: new Date('2025-09-22T00:00:00'),
-        endDate: new Date('2025-10-04T23:59:59') 
-      },
-      {
-        id: 'sukkot',
-        name: { he: 'סוכות', en: 'Sukkot' },
-        message: { he: '🌾 חג סוכות שמח!', en: '🌾 Happy Sukkot!' },
-        detailed_message: { he: 'חג סוכות שמח לכל המשפחה! אנו מאחלים לכם שתזכו לשבת בסוכה, ליהנות מהאוויר הנעים ומהזמן איכות משותף. מי ייתן וכל משאלותיכם יתגשמו. חג שמח!', en: 'Happy Sukkot to the whole family! We wish you to sit in the Sukkah, enjoy the pleasant weather, and quality time together. May all your wishes come true. Happy Holiday!' },
-        startDate: new Date('2025-10-16T00:00:00'),
-        endDate: new Date('2025-10-25T23:59:59')
-      },
-      {
-        id: 'hanukkah',
-        name: { he: 'חנוכה', en: 'Hanukkah' },
-        message: { he: '🕯️ חנוכה שמח!', en: '🕯️ Happy Hanukkah!' },
-        detailed_message: { he: 'חג חנוכה שמח ומלא באור! שיהיה לכם חג של ניסים, הדלקת נרות משותפת, סופגניות חמות וזמן איכות משפחתי. מי ייתן והאור יאיר את דרככם תמיד.', en: 'Happy and light-filled Hanukkah! May you have a holiday of miracles, shared candle lighting, warm sufganiyot, and quality family time. May the light always shine on your path.' },
-        startDate: new Date('2025-12-15T00:00:00'),
-        endDate: new Date('2025-12-23T23:59:59')
-      },
-      {
-        id: 'tuBishvat',
-        name: { he: 'ט"ו בשבט', en: 'Tu B\'Shvat' },
-        message: { he: '🌳 ט"ו בשבט שמח!', en: '🌳 Happy Tu B\'Shvat!' },
-        detailed_message: { he: 'חג ט"ו בשבט שמח לכל המשפחה! זהו ראש השנה לאילנות, זמן לזכור את חשיבות הטבע והצמיחה. אנו מאחלים לכם שתהיה לכם שנה של פריחה והגשמה, ושנמשיך לשתול זרעים של אהבה ותקווה בעולמנו.', en: 'Happy Tu B\'Shvat to the whole family! It\'s the New Year for trees, a time to remember the importance of nature and growth. We wish you a year of blooming and fulfillment, and that we continue to plant seeds of love and hope in our world.' },
-        startDate: new Date('2026-02-02T00:00:00'),
-        endDate: new Date('2026-02-03T23:59:59')
-      },
-      {
-        id: 'purim',
-        name: { he: 'פורים', en: 'Purim' },
-        message: { he: '🎭 חג פורים שמח!', en: '🎭 Happy Purim!' },
-        detailed_message: { he: 'פורים שמח לכל המשפחה! שיהיה לכם חג מלא בשמחה, תחפושות יצירתיות, משלוחי מנות טעימים ואווירה של התחדשות. בואו נחגוג יחד את שמחת החיים ואת כוחה של האחדות.', en: 'Happy Purim to the whole family! May you have a holiday full of joy, creative costumes, delicious mishloach manot, and a spirit of renewal. Let\'s celebrate the joy of life and the power of unity together.' },
-        startDate: new Date('2026-03-14T00:00:00'),
-        endDate: new Date('2026-03-15T23:59:59')
-      },
-      {
-        id: 'passover',
-        name: { he: 'פסח', en: 'Passover' },
-        message: { he: '🍷 חג פסח שמח!', en: '🍷 Happy Passover!' },
-        detailed_message: { he: 'חג פסח כשר ושמח לכל המשפחה! אנו מאחלים לכם חג של חירות, של סיפורים מההגדה ושל ארוחות משפחתיות בלתי נשכחות. מי ייתן ותזכו ליהנות מכל רגע יחד.', en: 'A kosher and happy Passover to the entire family! We wish you a holiday of freedom, stories from the Haggadah, and unforgettable family meals. May you enjoy every moment together.' },
-        startDate: new Date('2026-04-02T00:00:00'),
-        endDate: new Date('2026-04-10T23:59:59')
-      },
-      {
-        id: 'israeliIndependenceDay',
-        name: { he: 'יום העצמאות', en: 'Israeli Independence Day' },
-        message: { he: '🇮🇱 יום העצמאות שמח!', en: '🇮🇱 Happy Independence Day!' },
-        detailed_message: { he: 'יום העצמאות שמח! זהו יום של חגיגה, של גאווה ושל הוקרה למדינה שלנו. בואו נזכור את כל מי שהקריב למענה ונמשיך לבנות יחד עתיד טוב יותר.', en: 'Happy Independence Day! This is a day of celebration, pride, and appreciation for our country. Let\'s remember all those who sacrificed for it and continue to build a better future together.' },
-        startDate: new Date('2026-05-02T00:00:00'),
-        endDate: new Date('2026-05-03T23:59:59')
-      },
-      {
-        id: 'lagBaOmer',
-        name: { he: 'ל"ג בעומר', en: 'Lag BaOmer' },
-        message: { he: '🔥 ל"ג בעומר שמח!', en: '🔥 Happy Lag BaOmer!' },
-        detailed_message: { he: 'חג ל"ג בעומר שמח! זהו זמן של התחדשות ושל שמחה, של הדלקת מדורות משותפות ושל שירים. אנו מאחלים לכם חג מלא באור וחום, ושהשנה תהיה מוארת ופורייה עבור כולנו.', en: 'Happy Lag BaOmer! This is a time of renewal and joy, of shared bonfires and songs. We wish you a holiday full of light and warmth, and that the year will be bright and fruitful for us all.' },
-        startDate: new Date('2026-05-23T00:00:00'),
-        endDate: new Date('2026-05-24T23:59:59')
-      },
-      {
-        id: 'shavuot',
-        name: { he: 'שבועות', en: 'Shavuot' },
-        message: { he: '🧀 חג שבועות שמח!', en: '🧀 Happy Shavuot!' },
-        detailed_message: { he: 'חג שבועות שמח ומלא בגבינות! אנו מאחלים לכם חג של לימוד, של קבלת התורה ושל ארוחות חלביות טעימות. מי ייתן ותזכו ליהנות מכל רגע עם בני המשפחה.', en: 'Happy and cheese-filled Shavuot! We wish you a holiday of learning, receiving the Torah, and delicious dairy meals. May you enjoy every moment with your family.' },
-        startDate: new Date('2026-06-21T00:00:00'),
-        endDate: new Date('2026-06-22T23:59:59')
-      },
-      {
-        id: 'tishaBAv',
-        name: { he: 'ט׳ באב', en: 'Tisha B\'Av' },
-        message: { he: '😔 צום קל', en: '😔 Easy Fast' },
-        detailed_message: { he: 'צום קל וגמר חתימה טובה. יום זה הוא יום של אבל על חורבן בית המקדש. אנו זוכרים ומקווים לימים טובים יותר.', en: 'An easy fast and a good final signing. This day is a day of mourning for the destruction of the Temple. We remember and hope for better days.' },
-        startDate: new Date('2026-07-23T00:00:00'),
-        endDate: new Date('2026-07-24T23:59:59')
-      }
-    ];
+    <!-- Message Modal (for errors/success) -->
+    <div id="messageModal" class="bg-white rounded-xl shadow-2xl w-full max-w-sm p-6 transform transition-transform duration-300 scale-95" role="alert" aria-live="assertive" style="display: none;">
+      <h3 id="messageTitle" class="text-xl font-bold text-gray-800 mb-4 text-right">הודעה</h3>
+      <p id="messageContent" class="text-gray-600 mb-4 text-right"></p>
+      <button id="closeMessageModalBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-xl transition-colors duration-200 w-full">סגור</button>
+    </div>
 
-    // Function to update the holiday section
-    function updateHolidaySection() {
-      const holidaySection = document.getElementById('holidaySection');
-      const holidayTitle = document.getElementById('holidayTitle');
-      const holidayText = document.getElementById('holidayText');
-      let currentHoliday = null;
+  </div>
 
-      // Find the current holiday
-      for (const holiday of holidays) {
-        if (now >= holiday.startDate && now <= holiday.endDate) {
-          currentHoliday = holiday;
-          break;
-        }
-      }
+  <!-- Firebase SDKs -->
+  <script type="module">
+    // ----------------------------------------------------
+    // 1. הגדרות וייבוא ספריות Firebase
+    // ----------------------------------------------------
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, onSnapshot, setDoc, serverTimestamp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    
+    // הגדרת משתנים גלובליים נדרשים מהסביבה
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+    
+    // קונפיגורציית Firebase (שימוש בקונפיגורציה הסביבתית או בקונפיגורציה שסופקה כ-fallback)
+    const fallbackConfig = {
+        apiKey: "AIzaSyBvWl8wHsBX3HkAeIToQd5S4sPIeav0ahQ",
+        authDomain: "newslatter-1c248.firebaseapp.com",
+        projectId: "newslatter-1c248",
+        storageBucket: "newslatter-1c248.firebasestorage.app",
+        messagingSenderId: "809234374222",
+        appId: "1:809234374222:web:7fccaea62d23eaab60ed1f",
+        measurementId: "G-PZEBM6WG8Z"
+    };
+    const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' && __firebase_config ? __firebase_config : JSON.stringify(fallbackConfig));
+    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
-      // Update the content and visibility
-      if (currentHoliday) {
-        holidayTitle.textContent = currentHoliday.message.he;
-        holidayText.textContent = currentHoliday.detailed_message.he;
-        holidaySection.style.display = 'block';
-      } else {
-        holidaySection.style.display = 'none';
-      }
-    }
+    // הגדרת משתני Firebase גלובליים
+    let db = null;
+    let auth = null;
+    let isAuthReady = false;
+    let userId = null;
+    let isFirestoreReady = false;
+    let unsubscribe = null; // for the snapshot listener
+    
+    // הגדרת רמת לוגים לצורך דיבאג
+    setLogLevel('debug');
 
-    // Set up translations for all text content
-    const translations = {
+    // ----------------------------------------------------
+    // 2. נתוני ברירת מחדל ונתונים חיים
+    // ----------------------------------------------------
+    
+    // נתוני ברירת מחדל אם אין נתונים ב-Firestore
+    const defaultContent = {
       'he': {
         'mainTitle': 'עלון המשפחה',
-        'mainSubtitle': 'מהדורה חודשית - אוקטובר 2025',
+        'mainSubtitle': 'מהדורה חודשית - נובמבר 2025',
         'websiteTitle': '🎉 פתחנו אתר משפחתי חדש!',
         'websiteText': 'אנחנו נרגשים להכריז שהאתר המשפחתי החדש שלנו כבר באוויר! האתר הוא מרכז אחד לכל הדברים המשפחתיים: גלריית תמונות, לוח אירועים, צ\'אט AI משפחתי שיעזור לכם לפתור כל בעיה משפחתית (טוב, כמעט), ועוד. היכנסו לבקר, להתעדכן ולשתף.',
         'inMemoryTitle': '🕯️ לזכר יקירנו',
@@ -265,31 +223,43 @@
         'goodNewsTitle': '🌟 חדשות טובות!',
         'goodNewsText': 'עדכונים טובים יגיעו בקרוב! מחכים לשמוע את החדשות שלכם.',
         'recommendationsTitle': '💡 פינת ההמלצות',
-        'recommendation1': '<strong>ספר:</strong> סדרת הארי פוטר - סדרת הספרים האהובה על כל המשפחה. קסם ודמיון בכל עמוד!',
-        'recommendation2': '<strong>סרט:</strong> הקול בראש (Inside Out) - סרט אנימציה של דיסני/פיקסאר שמרגש ומצחיק גם ילדים וגם מבוגרים.',
-        'recommendation3': '<strong>מקום לבקר בו:</strong> גן החיות התנ"כי בירושלים - חוויה לימודית וכיפית לכל הגילאים.',
+        'recommendation1': '<strong class="font-semibold text-gray-900">ספר:</strong> <span class="text-gray-700">סדרת הארי פוטר - סדרת הספרים האהובה על כל המשפחה. קסם ודמיון בכל עמוד!</span>',
+        'recommendation2': '<strong class="font-semibold text-gray-900">סרט:</strong> <span class="text-700">הקול בראש (Inside Out) - סרט אנימציה של דיסני/פיקסאר שמרגש ומצחיק גם ילדים וגם מבוגרים.</span>',
+        'recommendation3': '<strong class="font-semibold text-gray-900">מקום לבקר בו:</strong> <span class="text-gray-700">גן החיות התנ"כי בירושלים - חוויה לימודית וכיפית לכל הגילאים.</span>',
         'photosTitle': '📸 רגעי הקיץ שלנו',
         'photosText': 'כמה תמונות שצולמו לאחרונה, כדי להזכיר לכולנו את הרגעים היפים שאנו חולקים יחד.',
         'eventsTitle': '🎂 ימי הולדת ואירועים קרובים',
         'eventsList': `
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">3 באוקטובר:</strong> יום הולדת 78 לג'ודית מ. בראון!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">5 באוקטובר:</strong> יום הולדת 43 לאביגיל כספי!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">5 באוקטובר:</strong> יום הולדת 58 לנטלי גל!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">6 באוקטובר:</strong> יום הולדת 91 לעזרא יעקב דוידס!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">6 באוקטובר:</strong> יום הולדת 73 למייקל ג'פרי זאבין!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">6 באוקטובר:</strong> יום הולדת 20 לטליה יונגר!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">6 באוקטובר:</strong> יום הולדת 89 לסטנלי מוסס!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">7 באוקטובר:</strong> יום הולדת 73 ללוי יצחק ברנדווין!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">15 בנובמבר:</strong> יום הולדת 12 להלל כספי!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">15 בנובמבר:</strong> יום הולדת 21 לאנליז ג'ין ג'ונסון!</li>
+            <li class="flex items-center"><span class="ml-2">💍</span><strong class="font-semibold">15 בנובמבר:</strong> יום נישואין 38 לאלן ובאני מרלין פישר!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">19 בנובמבר:</strong> יום הולדת 85 לאניטה בסקין!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">20 בנובמבר:</strong> יום הולדת 39 ללורה ברוקוויי פרגוסון!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">21 בנובמבר:</strong> יום הולדת 61 לפול גולדמן!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">21 בנובמבר:</strong> יום הולדת 76 לבאט זומר!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">22 בנובמבר:</strong> יום הולדת 46 לאבי גרוסמן!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">22 בנובמבר:</strong> יום הולדת 9 לצ'ארלי נגלבלט!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">22 בנובמבר:</strong> יום הולדת 4 ליצחק מאיר נגלבלט!</li>
         `,
         'contactTitle': '✍️ רוצים לשתף?',
         'contactText': 'יש לכם חדשות מרגשות, המלצות או תמונות מהטיול המשפחתי? פשוט שלחו לנו את העדכונים שלכם למייל: <strong>[כתובת המייל שלכם כאן]</strong>.',
         'footerText1': 'תודה שקראתם! נתראה במהדורה הבאה.',
         'footerText2': '&copy; 2025 עלון המשפחה. כל הזכויות שמורות.',
-        'buttonText': 'Switch to English'
+        'buttonText': 'Switch to English',
+        'adminLoginText': 'כניסת מנהל ⚙️',
+        'adminLogoutText': 'יציאה ממנהל 🔓',
+        'adminIndicator': 'מצב מנהל פעיל: ניתן לערוך! (נשמר ב-DB)',
+        'loginSuccess': 'נכנסת למצב מנהל. ניתן לערוך את התוכן ישירות. שימו לב: העריכות נשמרות באופן מיידי ב-Firestore.',
+        'loginError': 'הסיסמה שהוזנה שגויה. נסה שוב.',
+        'logoutSuccess': 'יצאת ממצב מנהל בהצלחה.',
+        'savingStatus': 'שומר...',
+        'savedStatus': 'נשמר',
+        'loadingStatus': 'טוען נתונים...',
+        'loadedStatus': 'העלון טעון.'
       },
       'en': {
         'mainTitle': 'The Family Newsletter',
-        'mainSubtitle': 'Monthly Edition - October 2025',
+        'mainSubtitle': 'Monthly Edition - November 2025',
         'websiteTitle': '🎉 New Family Website is Live!',
         'websiteText': 'We are excited to announce that our new family website is now live! The site is a central hub for all things family: a photo gallery, an events calendar, a family AI chat to help with any family issue (well, almost), and more. Come visit, get updated, and share!',
         'inMemoryTitle': '🕯️ In Loving Memory',
@@ -300,32 +270,56 @@
         'goodNewsTitle': '🌟 Good News!',
         'goodNewsText': 'Good news coming soon! We are waiting to hear your updates.',
         'recommendationsTitle': '💡 Recommendations Corner',
-        'recommendation1': '<strong>Book:</strong> The Harry Potter series - The beloved book series for the whole family. Magic and imagination on every page!',
-        'recommendation2': '<strong>Movie:</strong> Inside Out - A Disney/Pixar animated film that is both touching and funny for kids and adults alike.',
-        'recommendation3': '<strong>Place to Visit:</strong> The Biblical Zoo in Jerusalem - A fun and educational experience for all ages.',
+        'recommendation1': '<strong class="font-semibold text-gray-900">Book:</strong> <span class="text-gray-700">The Harry Potter series - The beloved book series for the whole family. Magic and imagination on every page!</span>',
+        'recommendation2': '<strong class="font-semibold text-gray-900">Movie:</strong> <span class="text-700">Inside Out - A Disney/Pixar animated film that is both touching and funny for kids and adults alike.</span>',
+        'recommendation3': '<strong class="font-semibold text-gray-900">Place to Visit:</strong> <span class="text-gray-700">The Biblical Zoo in Jerusalem - A fun and educational experience for all ages.</span>',
         'photosTitle': '📸 Our Summer Moments',
         'photosText': 'A few recent photos, to remind us all of the beautiful moments we share together.',
         'eventsTitle': '🎂 Upcoming Birthdays & Events',
         'eventsList': `
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">October 3:</strong> 78th birthday of Judith M Browne!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">October 5:</strong> 43rd birthday of Avigal Caspi!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">October 5:</strong> 58th birthday of Nathalie Gal!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">October 6:</strong> 91st birthday of Ezra Jacob Davids!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">October 6:</strong> 73rd birthday of Michael Jeffrey Zeavin!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">October 6:</strong> 20th birthday of Talya Junger!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">October 6:</strong> 89th birthday of Stanley Moses!</li>
-            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">October 7:</strong> 73rd birthday of Levi Yitzchak Brandwein!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">November 15:</strong> 12th birthday of Halel Caspi!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">November 15:</strong> 21st birthday of Analise Jean Johnson!</li>
+            <li class="flex items-center"><span class="ml-2">💍</span><strong class="font-semibold">November 15:</strong> 38th wedding anniversary of Alan and Bunny Marlene Fisher!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">November 19:</strong> 85th birthday of Anita Baskin!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">November 20:</strong> 39th birthday of Laura Brockway Ferguson!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">November 21:</strong> 61st birthday of Paul Goldman!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">November 21:</strong> 76th birthday of Beth Sommer!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">November 22:</strong> 46th birthday of Avi Grossman!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">November 22:</strong> 9th birthday of Charlie Nagelblatt!</li>
+            <li class="flex items-center"><span class="ml-2">🎉</span><strong class="font-semibold">November 22:</strong> 4th birthday of Yitzchok Meir Nagelblatt!</li>
         `,
         'contactTitle': '✍️ Want to Share?',
         'contactText': 'Have exciting news, recommendations, or photos from a family trip? Simply send us your updates to this email: <strong>[Your Email Here]</strong>.',
         'footerText1': 'Thanks for reading! See you in the next edition.',
         'footerText2': '&copy; 2025 The Family Newsletter. All rights reserved.',
-        'buttonText': 'החלפה לעברית'
+        'buttonText': 'החלפה לעברית',
+        'adminLoginText': 'Admin Login ⚙️',
+        'adminLogoutText': 'Exit Admin Mode 🔓',
+        'adminIndicator': 'Admin Mode Active: Editable! (Saved to DB)',
+        'loginSuccess': 'Login Successful. Content is now editable and changes are saved immediately to Firestore.',
+        'loginError': 'Incorrect password. Please try again.',
+        'logoutSuccess': 'Exited Admin Mode successfully.',
+        'savingStatus': 'Saving...',
+        'savedStatus': 'Saved',
+        'loadingStatus': 'Loading data...',
+        'loadedStatus': 'Newsletter loaded.'
       }
     };
-
+    
+    // הנתונים החיים שיטענו מ-Firestore
+    let newsletterData = JSON.parse(JSON.stringify(defaultContent));
+    
+    // ----------------------------------------------------
+    // 3. לוגיקת האפליקציה ושליטה בממשק המשתמש
+    // ----------------------------------------------------
+    
+    // הגדרות כלליות
+    const ADMIN_PASSWORD = 'admin2025';
     let currentLang = 'he';
-
+    let isAdminMode = false;
+    const now = new Date();
+    
+    // מפתחי האלמנטים של הממשק
     const elementsToTranslate = {
       'mainTitle': document.getElementById('mainTitle'),
       'mainSubtitle': document.getElementById('mainSubtitle'),
@@ -355,46 +349,233 @@
       'holidayText': document.getElementById('holidayText')
     };
 
-    // Function to handle language change and update all elements
+    const adminIndicator = document.getElementById('adminIndicator');
+    const loadingStatus = document.getElementById('loadingStatus');
+    const adminToggleBtn = document.getElementById('adminToggleBtn');
+    const adminButtonText = document.getElementById('adminButtonText');
+
+
+    // נתוני חגים (קודמים מהבקשה הקודמת)
+    const holidays = [
+      { id: 'roshHashanah', name: { he: 'ראש השנה', en: 'Rosh Hashanah' }, message: { he: '🍎 שנה טובה!', en: '🍎 Happy New Year!' }, detailed_message: { he: 'אנו רוצים לאחל לכל משפחתנו שנה טובה ומבורכת. שתהא זו שנה של התחלות חדשות, בריאות, אושר ושגשוג. מי ייתן וכל משאלותינו הטובות יתגשמו.', en: 'We want to wish our entire family a good and blessed year. May this be a year of new beginnings, health, happiness, and prosperity. May all our good wishes come true.' }, startDate: new Date('2025-09-22T00:00:00'), endDate: new Date('2025-10-04T23:59:59') },
+      { id: 'sukkot', name: { he: 'סוכות', en: 'Sukkot' }, message: { he: '🌾 חג סוכות שמח!', en: '🌾 Happy Sukkot!' }, detailed_message: { he: 'חג סוכות שמח לכל המשפחה! אנו מאחלים לכם שתזכו לשבת בסוכה, ליהנות מהאוויר הנעים ומהזמן איכות משותף. מי ייתן וכל משאלותיכם יתגשמו. חג שמח!', en: 'Happy Sukkot to the whole family! We wish you to sit in the Sukkah, enjoy the pleasant weather, and quality time together. May all your wishes come true. Happy Holiday!' }, startDate: new Date('2025-10-16T00:00:00'), endDate: new Date('2025-10-25T23:59:59')},
+      { id: 'hanukkah', name: { he: 'חנוכה', en: 'Hanukkah' }, message: { he: '🕯️ חנוכה שמח!', en: '🕯️ Happy Hanukkah!' }, detailed_message: { he: 'חג חנוכה שמח ומלא באור! שיהיה לכם חג של ניסים, הדלקת נרות משותפת, סופגניות חמות וזמן איכות משפחתי. מי ייתן והאור יאיר את דרככם תמיד.', en: 'Happy and light-filled Hanukkah! May you have a holiday of miracles, shared candle lighting, warm sufganiyot, and quality family time. May the light always shine on your path.' }, startDate: new Date('2025-12-15T00:00:00'), endDate: new Date('2025-12-23T23:59:59')},
+      { id: 'tuBishvat', name: { he: 'ט"ו בשבט', en: 'Tu B\'Shvat' }, message: { he: '🌳 ט"ו בשבט שמח!', en: '🌳 Happy Tu B\'Shvat!' }, detailed_message: { he: 'חג ט"ו בשבט שמח לכל המשפחה! זהו ראש השנה לאילנות, זמן לזכור את חשיבות הטבע והצמיחה. אנו מאחלים לכם שתהיה לכם שנה של פריחה והגשמה, ושנמשיך לשתול זרעים של אהבה ותקווה בעולמנו.', en: 'Happy Tu B\'Shvat to the whole family! It\'s the New Year for trees, a time to remember the importance of nature and growth. We wish you a year of blooming and fulfillment, and that we continue to plant seeds of love and hope in our world.' }, startDate: new Date('2026-02-02T00:00:00'), endDate: new Date('2026-02-03T23:59:59') },
+      { id: 'purim', name: { he: 'פורים', en: 'Purim' }, message: { he: '🎭 חג פורים שמח!', en: '🎭 Happy Purim!' }, detailed_message: { he: 'פורים שמח לכל המשפחה! שיהיה לכם חג מלא בשמחה, תחפושות יצירתיות, משלוחי מנות טעימים ואווירה של התחדשות. בואו נחגוג יחד את שמחת החיים ואת כוחה של האחדות.', en: 'Happy Purim to the whole family! May you have a holiday full of joy, creative costumes, delicious mishloach manot, and a spirit of renewal. Let\'s celebrate the joy of life and the power of unity together.' }, startDate: new Date('2026-03-14T00:00:00'), endDate: new Date('2026-03-15T23:59:59')},
+      { id: 'passover', name: { he: 'פסח', en: 'Passover' }, message: { he: '🍷 חג פסח שמח!', en: '🍷 Happy Passover!' }, detailed_message: { he: 'חג פסח כשר ושמח לכל המשפחה! אנו מאחלים לכם חג של חירות, של סיפורים מההגדה ושל ארוחות משפחתיות בלתי נשכחות. מי ייתן ותזכו ליהנות מכל רגע יחד.', en: 'A kosher and happy Passover to the entire family! We wish you a holiday of freedom, stories from the Haggadah, and unforgettable family meals. May you enjoy every moment together.' }, startDate: new Date('2026-04-02T00:00:00'), endDate: new Date('2026-04-10T23:59:59')},
+      { id: 'israeliIndependenceDay', name: { he: 'יום העצמאות', en: 'Israeli Independence Day' }, message: { he: '🇮🇱 יום העצמאות שמח!', en: '🇮🇱 Happy Independence Day!' }, detailed_message: { he: 'יום העצמאות שמח! זהו יום של חגיגה, של גאווה ושל הוקרה למדינה שלנו. בואו נזכור את כל מי שהקריב למענה ונמשיך לבנות יחד עתיד טוב יותר.', en: 'Happy Independence Day! This is a day of celebration, pride, and appreciation for our country. Let\'s remember all those who sacrificed for it and continue to build a better future together.' }, startDate: new Date('2026-05-02T00:00:00'), endDate: new Date('2026-05-03T23:59:59')},
+      { id: 'lagBaOmer', name: { he: 'ל"ג בעומר', en: 'Lag BaOmer' }, message: { he: '🔥 ל"ג בעומר שמח!', en: '🔥 Happy Lag BaOmer!' }, detailed_message: { he: 'חג ל"ג בעומר שמח! זהו זמן של התחדשות ושל שמחה, של הדלקת מדורות משותפות ושל שירים. אנו מאחלים לכם חג מלא באור וחום, ושהשנה תהיה מוארת ופורייה עבור כולנו.', en: 'Happy Lag BaOmer! This is a time of renewal and joy, of shared bonfires and songs. We wish you a holiday full of light and warmth, and that the year will be bright and fruitful for us all.' }, startDate: new Date('2026-05-23T00:00:00'), endDate: new Date('2026-05-24T23:59:59')},
+      { id: 'shavuot', name: { he: 'שבועות', en: 'Shavuot' }, message: { he: '🧀 חג שבועות שמח!', en: '🧀 Happy Shavuot!' }, detailed_message: { he: 'חג שבועות שמח ומלא בגבינות! אנו מאחלים לכם חג של לימוד, של קבלת התורה ושל ארוחות חלביות טעימות. מי ייתן ותזכו ליהנות מכל רגע עם בני המשפחה.', en: 'Happy and cheese-filled Shavuot! We wish you a holiday of learning, receiving the Torah, and delicious dairy meals. May you enjoy every moment with your family.' }, startDate: new Date('2026-06-21T00:00:00'), endDate: new Date('2026-06-22T23:59:59')},
+      { id: 'tishaBAv', name: { he: 'ט׳ באב', en: 'Tisha B\'Av' }, message: { he: '😔 צום קל', en: '😔 Easy Fast' }, detailed_message: { he: 'צום קל וגמר חתימה טובה. יום זה הוא יום של אבל על חורבן בית המקדש. אנו זוכרים ומקווים לימים טובים יותר.', en: 'An easy fast and a good final signing. This day is a day of mourning for the destruction of the Temple. We remember and hope for better days.' }, startDate: new Date('2026-07-23T00:00:00'), endDate: new Date('2026-07-24T23:59:59')}
+    ];
+
+    // ----------------------------------------------------
+    // 4. פונקציות שמירה וטעינה מ-Firestore
+    // ----------------------------------------------------
+
+    /**
+     * מחזירה את הנתיב למסמך ה-Firestore הציבורי של העלון.
+     * @returns {object} DocRef
+     */
+    function getNewsletterDocRef() {
+        if (!db) return null;
+        // נתיב ציבורי לאפליקציה: /artifacts/{appId}/public/data/newsletter/content
+        return doc(db, 'artifacts', appId, 'public', 'data', 'newsletter', 'content');
+    }
+
+    /**
+     * טוענת נתונים מ-Firestore ומאזינה לעדכונים בזמן אמת.
+     */
+    function loadContentFromFirestore() {
+        if (!isAuthReady || !db) return;
+
+        const docRef = getNewsletterDocRef();
+        if (!docRef) return;
+        
+        loadingStatus.textContent = defaultContent[currentLang].loadingStatus;
+
+        if (unsubscribe) {
+            unsubscribe();
+        }
+
+        unsubscribe = onSnapshot(docRef, (docSnap) => {
+            if (docSnap.exists()) {
+                // עדכון הנתונים החיים מ-Firestore
+                const data = docSnap.data();
+                console.log("Firestore data received:", data);
+                if (data.he && data.en) {
+                    // עדכון התוכן הראשי תוך שמירה על נתוני ברירת המחדל למקרה שחסר משהו
+                    newsletterData.he = { ...defaultContent.he, ...data.he };
+                    newsletterData.en = { ...defaultContent.en, ...data.en };
+                } else {
+                    console.warn("Firestore document found, but structure is missing 'he' or 'en'. Using default content.");
+                }
+            } else {
+                console.log("No initial newsletter data found in Firestore. Saving default content.");
+                // אם אין נתונים, שמור את נתוני ברירת המחדל
+                saveContentToFirestore(defaultContent);
+            }
+            // עדכון הממשק עם הנתונים החדשים/ברירת המחדל
+            updateLanguage();
+            loadingStatus.textContent = defaultContent[currentLang].loadedStatus;
+        }, (error) => {
+            console.error("Error listening to Firestore:", error);
+            loadingStatus.textContent = `Error: ${error.message}`;
+            showMessage('שגיאה', `שגיאה בטעינת הנתונים: ${error.message}`);
+        });
+        isFirestoreReady = true;
+    }
+
+    /**
+     * שומר את התוכן הנוכחי של העלון ל-Firestore.
+     * @param {object} [dataToSave=newsletterData] - הנתונים לשמירה. אם לא סופק, ישמור את המצב הנוכחי.
+     */
+    async function saveContentToFirestore(dataToSave = newsletterData) {
+        if (!isAdminMode || !db) {
+            console.warn("Save attempted, but not in Admin Mode or Firestore not initialized.");
+            return;
+        }
+
+        const docRef = getNewsletterDocRef();
+        if (!docRef) return;
+
+        // עדכון סטטוס השמירה
+        adminIndicator.textContent = defaultContent[currentLang].savingStatus;
+        adminIndicator.classList.add('bg-yellow-500');
+        adminIndicator.classList.remove('bg-red-600');
+
+        try {
+            await setDoc(docRef, {
+                he: dataToSave.he,
+                en: dataToSave.en,
+                lastUpdated: serverTimestamp(),
+                userId: userId // מי ששמר אחרון
+            }, { merge: true });
+
+            console.log("Document successfully written!");
+            // עדכון סטטוס השמירה להצלחה
+            adminIndicator.textContent = defaultContent[currentLang].savedStatus;
+            adminIndicator.classList.add('bg-green-500');
+            adminIndicator.classList.remove('bg-yellow-500');
+            setTimeout(() => {
+                adminIndicator.textContent = defaultContent[currentLang].adminIndicator;
+                adminIndicator.classList.remove('bg-green-500');
+                adminIndicator.classList.add('bg-red-600');
+            }, 2000);
+
+        } catch (e) {
+            console.error("Error writing document: ", e);
+            adminIndicator.textContent = `שגיאת שמירה: ${e.code}`;
+            adminIndicator.classList.add('bg-red-600');
+            adminIndicator.classList.remove('bg-yellow-500');
+        }
+    }
+
+    /**
+     * פונקציית שמירה כללית המעדכנת את ה-JS ומפעילה שמירה ל-Firestore.
+     * @param {HTMLElement} element - האלמנט שעבר עריכה.
+     */
+    function handleContentUpdate(element) {
+        if (!isAdminMode) return;
+
+        const key = element.id;
+        const langKey = currentLang;
+
+        // אם האלמנט הוא חלק מהרשימה
+        if (element.parentElement.id === 'eventsList') {
+            // עבור רשימות, שמור את ה-innerHTML המלא של הרשימה
+            const listContent = element.parentElement.innerHTML;
+            newsletterData[langKey]['eventsList'] = listContent;
+        } else {
+            // עבור אלמנטים רגילים, שמור את ה-innerHTML
+            newsletterData[langKey][key] = element.innerHTML;
+        }
+
+        // הפעלת שמירה ל-Firestore
+        saveContentToFirestore();
+    }
+
+    // ----------------------------------------------------
+    // 5. לוגיקת הממשק (UI)
+    // ----------------------------------------------------
+
+    /**
+     * מעדכנת את תצוגת החג הנוכחית.
+     */
+    function updateHolidaySection() {
+      const holidaySection = document.getElementById('holidaySection');
+      const holidayTitle = document.getElementById('holidayTitle');
+      const holidayText = document.getElementById('holidayText');
+      let currentHoliday = null;
+
+      for (const holiday of holidays) {
+        if (now >= holiday.startDate && now <= holiday.endDate) {
+          currentHoliday = holiday;
+          break;
+        }
+      }
+
+      const langData = newsletterData[currentLang]; // Use live data for strings
+      
+      if (currentHoliday) {
+        holidayTitle.innerHTML = currentHoliday.message[currentLang];
+        holidayText.textContent = currentHoliday.detailed_message[currentLang];
+        holidaySection.style.display = 'block';
+      } else {
+        holidaySection.style.display = 'none';
+      }
+    }
+
+    /**
+     * מעדכנת את כל הטקסטים בהתאם לשפה הנוכחית ולנתונים החיים.
+     */
     function updateLanguage() {
-      const langData = translations[currentLang];
+      const langData = newsletterData[currentLang];
+      const defaultLangData = defaultContent[currentLang];
+
       document.documentElement.lang = currentLang;
       document.documentElement.dir = currentLang === 'he' ? 'rtl' : 'ltr';
 
-      // Update all elements with static text
-      elementsToTranslate.mainTitle.textContent = langData.mainTitle;
-      elementsToTranslate.mainSubtitle.textContent = langData.mainSubtitle;
-      elementsToTranslate.websiteTitle.innerHTML = langData.websiteTitle;
-      elementsToTranslate.websiteText.textContent = langData.websiteText;
-      elementsToTranslate.inMemoryTitle.innerHTML = langData.inMemoryTitle;
-      elementsToTranslate.inMemoryText1.textContent = langData.inMemoryText1;
-      elementsToTranslate.inMemoryName.textContent = langData.inMemoryName;
-      elementsToTranslate.inMemoryDate.textContent = langData.inMemoryDate;
-      elementsToTranslate.inMemoryText2.textContent = langData.inMemoryText2;
-      elementsToTranslate.goodNewsTitle.innerHTML = langData.goodNewsTitle;
-      elementsToTranslate.goodNewsText.textContent = langData.goodNewsText;
-      elementsToTranslate.recommendationsTitle.innerHTML = langData.recommendationsTitle;
-      elementsToTranslate.recommendation1.innerHTML = langData.recommendation1;
-      elementsToTranslate.recommendation2.innerHTML = langData.recommendation2;
-      elementsToTranslate.recommendation3.innerHTML = langData.recommendation3;
-      elementsToTranslate.photosTitle.innerHTML = langData.photosTitle;
-      elementsToTranslate.photosText.textContent = langData.photosText;
-      elementsToTranslate.eventsTitle.innerHTML = langData.eventsTitle;
+      // עדכון כל האלמנטים
+      for (const key in elementsToTranslate) {
+          const element = elementsToTranslate[key];
+          if (element) {
+              // קבלת התוכן מהנתונים החיים (או ברירת מחדל אם חסר)
+              const content = langData[key] || defaultContent[currentLang][key] || defaultContent['he'][key] || defaultContent['en'][key];
+              
+              if (key === 'eventsList' || key.includes('recommendation')) {
+                  element.innerHTML = content;
+              } else if (key !== 'lang-text') {
+                  element.textContent = content;
+              }
+          }
+      }
       
-      // Update the birthdays list
-      elementsToTranslate.eventsList.innerHTML = langData.eventsList;
+      // עדכון כפתור השפה וסטטוס
+      elementsToTranslate['lang-text'].textContent = defaultContent[currentLang].buttonText;
+      loadingStatus.textContent = isFirestoreReady ? defaultLangData.loadedStatus : defaultLangData.loadingStatus;
+      
+      // עדכון כפתור מנהל
+      if (isAdminMode) {
+          adminButtonText.textContent = langData.adminLogoutText;
+          adminToggleBtn.title = 'יציאה ממנהל';
+          adminToggleBtn.classList.remove('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+          adminToggleBtn.classList.add('bg-red-600', 'text-white', 'hover:bg-red-700');
+      } else {
+          adminButtonText.textContent = langData.adminLoginText;
+          adminToggleBtn.title = 'כניסת מנהל';
+          adminToggleBtn.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+          adminToggleBtn.classList.remove('bg-red-600', 'text-white', 'hover:bg-red-700');
+      }
 
-      elementsToTranslate.contactTitle.innerHTML = langData.contactTitle;
-      elementsToTranslate.contactText.innerHTML = langData.contactText;
-      elementsToTranslate.footerText1.textContent = langData.footerText1;
-      elementsToTranslate.footerText2.textContent = langData.footerText2;
-      elementsToTranslate['lang-text'].textContent = langData.buttonText;
+      // עדכון תצוגת החג
+      updateHolidaySection();
       
-      // Update holiday section content based on the current holiday and language
-      const currentHoliday = holidays.find(holiday => now >= holiday.startDate && now <= holiday.endDate);
-      if (currentHoliday) {
-        elementsToTranslate.holidayTitle.innerHTML = currentHoliday.message[currentLang];
-        elementsToTranslate.holidayText.textContent = currentHoliday.detailed_message[currentLang];
+      // החלת מצב עריכה מחדש (אם נדרש)
+      if (isAdminMode) {
+          toggleEditMode(true);
+      } else {
+          toggleEditMode(false);
       }
     }
     
@@ -402,10 +583,185 @@
       currentLang = currentLang === 'he' ? 'en' : 'he';
       updateLanguage();
     });
+    
+    // --- Modal Logic ---
 
-    // Run functions on page load
-    updateHolidaySection();
-    updateLanguage();
+    function showModal(modalId) {
+      document.getElementById('modalOverlay').style.display = 'flex';
+      document.getElementById(modalId).style.display = 'block';
+      document.getElementById(modalId).classList.add('scale-100');
+      document.getElementById(modalId).classList.remove('scale-95');
+    }
+
+    function hideModal(modalId) {
+      document.getElementById(modalId).classList.add('scale-95');
+      document.getElementById(modalId).classList.remove('scale-100');
+      setTimeout(() => {
+        document.getElementById(modalId).style.display = 'none';
+        document.getElementById('modalOverlay').style.display = 'none';
+      }, 300); // Match transition duration
+    }
+
+    function showMessage(title, content) {
+      document.getElementById('messageTitle').textContent = title;
+      document.getElementById('messageContent').textContent = content;
+      showModal('messageModal');
+    }
+
+    // --- Admin/Edit Mode Logic ---
+
+    function toggleEditMode(isEnabled) {
+        isAdminMode = isEnabled;
+        const editableKeys = Object.keys(elementsToTranslate).filter(key => key !== 'lang-text'); 
+        const langData = defaultContent[currentLang];
+
+        // 1. הגדרת עריכה והוספת מאזינים
+        editableKeys.forEach(key => {
+            const element = elementsToTranslate[key];
+            if (!element) return;
+
+            // הסרת מאזיני שמירה קודמים כדי למנוע כפילויות
+            element.onblur = null;
+
+            if (key === 'eventsList') {
+                // טיפול מיוחד ברשימת אירועים (UL) - הפיכת הילדים לעריכים
+                Array.from(element.children).forEach(child => {
+                    child.contentEditable = isEnabled ? 'true' : 'false';
+                    child.onblur = isEnabled ? () => handleContentUpdate(element) : null;
+                });
+            } else {
+                // טיפול באלמנטים רגילים
+                element.contentEditable = isEnabled ? 'true' : 'false';
+                element.onblur = isEnabled ? () => handleContentUpdate(element) : null;
+            }
+        });
+
+        // 2. ויזואליזציה של מצב מנהל והגדרת כפתור
+        if (isEnabled) {
+            adminIndicator.classList.remove('hidden');
+            adminIndicator.classList.add('bg-red-600');
+            adminIndicator.textContent = langData.adminIndicator;
+        } else {
+            adminIndicator.classList.add('hidden');
+        }
+        
+        // עדכון מצב הכפתור
+        updateLanguage();
+    }
+    
+    /**
+     * פונקציה להתנתקות ממצב מנהל.
+     */
+    function logoutAdmin() {
+        if (!isAdminMode) return;
+        const langData = defaultContent[currentLang];
+
+        // 1. ביטול מצב עריכה
+        toggleEditMode(false);
+        
+        // 2. עדכון מצב גלובלי
+        isAdminMode = false;
+        
+        // 3. הצגת הודעה
+        showMessage('יציאה', langData.logoutSuccess);
+    }
+    
+    // --- Admin Button Event Listener ---
+    document.getElementById('adminToggleBtn').addEventListener('click', () => {
+        if (isAdminMode) {
+            // אם כבר מנהל, לחיצה משמעותה יציאה
+            logoutAdmin();
+        } else {
+            // אם לא מנהל, לחיצה משמעותה הצגת חלון כניסה
+            showModal('passwordModal');
+            document.getElementById('adminPasswordInput').value = '';
+        }
+    });
+
+    // --- Submit Password Listener ---
+    document.getElementById('submitPasswordBtn').addEventListener('click', () => {
+      const input = document.getElementById('adminPasswordInput').value;
+      const langData = defaultContent[currentLang];
+
+      hideModal('passwordModal');
+      
+      if (input === ADMIN_PASSWORD) {
+        isAdminMode = true; // Set state first
+        toggleEditMode(true); // Apply editing and UI changes
+        showMessage('התחברות הצליחה', langData.loginSuccess);
+      } else {
+        toggleEditMode(false); 
+        showMessage('שגיאה', langData.loginError);
+      }
+    });
+
+
+    // Event Listeners for Modals
+    document.getElementById('closePasswordModalBtn').addEventListener('click', () => {
+      hideModal('passwordModal');
+    });
+    
+    document.getElementById('closeMessageModalBtn').addEventListener('click', () => {
+      hideModal('messageModal');
+    });
+
+    // ----------------------------------------------------
+    // 6. אתחול Firebase והתחברות
+    // ----------------------------------------------------
+    
+    function initializeFirebaseAndAuth() {
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+
+            document.getElementById('userIdDisplay').textContent = `App ID: ${appId}`;
+        } catch (error) {
+            console.error("Firebase Initialization Error:", error);
+            showMessage('שגיאת אתחול', 'לא ניתן להתחבר ל-Firebase.');
+            return;
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                userId = user.uid;
+                document.getElementById('userIdDisplay').textContent += ` | User ID: ${userId}`;
+                isAuthReady = true;
+                loadContentFromFirestore(); // טען נתונים לאחר האימות
+            } else {
+                // אם אין משתמש, נסה להיכנס כאנונימי אם אין אסימון
+                if (!initialAuthToken) {
+                    try {
+                        await signInAnonymously(auth);
+                    } catch (e) {
+                        console.error("Anonymous Sign-In Error:", e);
+                        showMessage('שגיאת אימות', 'לא ניתן להיכנס אנונימית. הפונקציונליות מוגבלת.');
+                        isAuthReady = true; // נמשיך לטעון גם אם נכשל
+                        loadContentFromFirestore();
+                    }
+                } else {
+                     // אם יש אסימון, הוא ייטען אוטומטית ע"י onAuthStateChanged בדרך כלל
+                     isAuthReady = true;
+                     loadContentFromFirestore();
+                }
+            }
+        });
+        
+        // כניסה באמצעות אסימון מותאם אישית אם קיים
+        if (initialAuthToken && !auth.currentUser) {
+             signInWithCustomToken(auth, initialAuthToken).catch(error => {
+                console.error("Custom Token Sign-In Error:", error);
+                // אם הכניסה עם האסימון נכשלת, נסה כניסה אנונימית כגיבוי
+                signInAnonymously(auth).catch(e => {
+                    console.error("Fallback Anonymous Sign-In Error:", e);
+                });
+             });
+        }
+    }
+
+    // הפעלת האתחול
+    initializeFirebaseAndAuth();
+
   </script>
 
 </body>
