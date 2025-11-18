@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>⏳ ציר זמן משפחתי</title>
+  <title>⏳ ציר זמן משפחתי משופר</title>
   <!-- טעינת Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -237,12 +237,15 @@
                     const errorText = await response.text();
                     if (response.status === 404) {
                         console.warn(`API /api/user not found (404). Using mock data for familySide.`);
+                        // ה-Mock Data מחזיר אובייקט שטוח, שמוחזר ישירות במקרה 404
                         return { familySide: "BenAbo,BenHamo", name: "יוסי כהן (סימולציה)" };
                     }
                     throw new Error(`API Error ${response.status}: ${errorText || response.statusText}`);
                 }
 
+                // אם התגובה תקינה (200), נחזיר את כל אובייקט התשובה
                 return await response.json();
+
             } catch (error) {
                 console.error(`Attempt ${i + 1} failed to fetch user data:`, error.message);
                 if (i === maxRetries - 1) {
@@ -348,11 +351,16 @@
     async function init() {
         try {
             updateUI(false); // Set initial language strings without toast
-            let userData = null;
-            
+            let rawResponseData = null; // תגובת ה-JSON המלאה מהשרת (או Mock Data)
+            let userData = null; // האובייקט המכיל את familySide ו-name
+
             try {
                 // 1. טעינת נתוני משתמש מ-API
-                userData = await fetchUserData();
+                rawResponseData = await fetchUserData();
+                
+                // תיקון: נרמול הנתונים. אם קיים שדה 'user' (כמו בתגובת שרת מוצלחת), נשתמש בו.
+                // אחרת, נניח שהתשובה היא כבר האובייקט השטוח (כמו ב-Mock Data 404).
+                userData = rawResponseData.user || rawResponseData;
                 
                 if(!userData || !userData.familySide) {
                     throw new Error("User data retrieved but 'familySide' is missing.");
@@ -362,6 +370,7 @@
                 // אם טעינת הנתונים נכשלה
                 console.error("Failed to load user data from API:", error);
                 const t = translations[currentLang];
+                // אם לא הצלחנו לחלץ את familySide, נציג שגיאה
                 document.getElementById('user-info').textContent = `${t.loadingError} ${userId}`;
                 return; 
             }
