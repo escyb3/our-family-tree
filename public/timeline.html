@@ -2,21 +2,418 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>⏳ ציר זמן משפחתי</title>
-  <link rel="stylesheet" href="/style.css">
+  <!-- טעינת Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* הגדרת גופן היברו כברירת מחדל */
+    @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&display=swap');
+    :root {
+      --font-heebo: 'Heebo', sans-serif;
+    }
+    body {
+      font-family: var(--font-heebo);
+      min-height: 100vh;
+    }
+
+    /* סגנונות מותאמים לציר הזמן */
+    .timeline {
+      position: relative;
+      padding: 0;
+      list-style: none;
+    }
+    .timeline li {
+      position: relative;
+      margin-bottom: 40px; 
+      /* הכיוון ישתנה אוטומטית על ידי dir:rtl/ltr */
+      padding-right: 30px; 
+      border-right: 2px solid #cbd5e1; /* קו מרכזי אפור בהיר */
+      padding-bottom: 20px; 
+    }
+    /* הנקודה בציר הזמן */
+    .timeline li:before {
+      content: '';
+      position: absolute;
+      right: -8px; 
+      top: 0;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #0ea5e9; /* כחול בולט (Sky-500) */
+      border: 4px solid #f8fafc; /* גבול בצבע הרקע הראשי להדגשה */
+      z-index: 10;
+      box-shadow: 0 0 0 2px #0ea5e9; /* הוספת הילה קטנה */
+      transition: all 0.3s ease;
+    }
+    /* הנקודה לאירוע אחרון/סיום */
+    .timeline li:last-child {
+        border-right: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    .timeline li:last-child:before {
+        background: #f97316; /* כתום בולט לסיום */
+        box-shadow: 0 0 0 2px #f97316;
+    }
+
+    /* אפקט ריחוף על כל פריט ברשימה */
+    .timeline li:hover:before {
+        transform: scale(1.2);
+    }
+
+    /* התאמות ל-LTR (אנגלית) */
+    html[dir="ltr"] .timeline li {
+        padding-left: 30px;
+        padding-right: 0;
+        border-left: 2px solid #cbd5e1;
+        border-right: none;
+    }
+    html[dir="ltr"] .timeline li:before {
+        left: -8px;
+        right: auto;
+    }
+    html[dir="ltr"] .timeline li:last-child {
+        border-left: none;
+    }
+
+  </style>
+  <script>
+    // הגדרות Tailwind להתאמה אישית
+    tailwind.config = {
+      // הסרת dark mode
+      theme: {
+        extend: {
+          colors: {
+            'primary-bg': '#f8fafc', // אפור בהיר מאוד (Slate-50)
+            'primary-text': '#1e293b', // כחול כהה (Slate-900)
+            'secondary-bg': '#f1f5f9', // אפור בהיר לכותרת וכרטיסים (Slate-100)
+            'accent': '#0ea5e9', // כחול בולט (Sky-500)
+          }
+        },
+        fontFamily: {
+          heebo: ['Heebo', 'sans-serif'],
+        }
+      }
+    }
+  </script>
 </head>
-<body>
-  <header>
-    <h1>ציר זמן משפחתי</h1>
+<body class="bg-primary-bg text-primary-text" dir="rtl">
+
+  <script type="module">
+    // הגדרת משתנים גלובליים
+    let userId = crypto.randomUUID(); 
+    const APP_ID = 'default-timeline-app-id';
+
+    // --- START: Translation Logic ---
+    let currentLang = 'he';
+
+    const translations = {
+        'he': {
+            title: '⏳ ציר זמן משפחתי',
+            userInfoLoading: 'טוען פרטי משתמש...',
+            familyInfoLoading: 'צדדי משפחה נטענים: ...',
+            historyHeader: 'אירועים היסטוריים',
+            loadingData: 'טוען נתונים...',
+            noEvents: 'אין אירועים לטעינה עבור צדדי המשפחה המוגדרים.',
+            connectedUser: 'משתמש מחובר:',
+            loadedSides: 'צדדי משפחה נטענו:',
+            loadingError: 'שגיאת טעינה. משתמש במזהה:',
+            languageButton: 'English',
+            langCode: 'en',
+            languageMessageSuccess: "שפת הממשק שונתה לעברית. שימו לב: תוכן האירועים עצמם אינו מתורגם אוטומטית.",
+        },
+        'en': {
+            title: '⏳ Family Timeline',
+            userInfoLoading: 'Loading user details...',
+            familyInfoLoading: 'Family sides are loading: ...',
+            historyHeader: 'Historical Events',
+            loadingData: 'Loading data...',
+            noEvents: 'No events to load for the defined family sides.',
+            connectedUser: 'Connected User:',
+            loadedSides: 'Loaded Family Sides:',
+            loadingError: 'Loading error. Using ID:',
+            languageButton: 'עברית',
+            langCode: 'he',
+            languageMessageSuccess: "Interface language changed to English. Note: The event content itself is not automatically translated.",
+        }
+    };
+
+    function updateUI(showToast = true) {
+        const lang = currentLang;
+        const t = translations[lang];
+
+        // Update document and body direction/language
+        document.body.dir = (lang === 'he' ? 'rtl' : 'ltr');
+        document.documentElement.lang = lang;
+        
+        // Update main texts
+        document.getElementById('main-title').textContent = t.title;
+        document.getElementById('timeline-title').textContent = t.historyHeader;
+
+        // Update button
+        const langBtn = document.getElementById('lang-toggle');
+        langBtn.textContent = t.languageButton;
+        langBtn.setAttribute('data-target-lang', t.langCode);
+
+        // Update dynamic headers (preserve data if already loaded)
+        document.getElementById('user-info').textContent = document.getElementById('user-info').textContent.includes('UID') 
+            ? `${t.connectedUser} ${document.getElementById('user-info').textContent.split(': ')[1]}` // Keeps the name/UID but updates prefix
+            : t.userInfoLoading;
+
+        document.getElementById('family-info').textContent = document.getElementById('family-info').textContent.includes(' | ')
+            ? `${t.loadedSides} ${document.getElementById('family-info').textContent.split(': ')[1]}` // Keeps the sides but updates prefix
+            : t.familyInfoLoading;
+
+
+        // Update initial loading state if visible
+        const timelineList = document.getElementById('timeline-list');
+        if (timelineList.children.length === 1 && timelineList.children[0].textContent.includes(translations['he'].loadingData) || timelineList.children[0].textContent.includes(translations['en'].loadingData)) {
+            timelineList.children[0].textContent = t.loadingData;
+        }
+
+        if (showToast) {
+            displayMessage(t.languageMessageSuccess, 'info');
+        }
+    }
+
+    function toggleLanguage() {
+        currentLang = currentLang === 'he' ? 'en' : 'he';
+        updateUI();
+    }
+    window.toggleLanguage = toggleLanguage; // Make accessible from inline HTML
+    // --- END: Translation Logic ---
+
+
+    // נתוני דוגמה לשימוש במקרה שקובץ ה-JSON לא נמצא (404)
+    const MOCK_FALLBACK_DATA = {
+        "BenAbo": [
+            { year: 1920, description: "לידת שלום בן אבו, מייסד המשפחה", familySide: "BenAbo" },
+            { year: 1965, description: "נישואי שלום בן אבו ורחל בן-חמו", familySide: "BenAbo" },
+        ],
+        "BenHamo": [
+            { year: 1925, description: "לידת רחל בן-חמו", familySide: "BenHamo" },
+            { year: 1970, description: "לידת דוד בן-חמו (הדור הבא)", familySide: "BenHamo" },
+        ]
+    };
+
+    // פונקציה להצגת הודעות למשתמש (במקום alert)
+    function displayMessage(message, type = 'info') {
+      const messagesContainer = document.getElementById('messages');
+      const baseClasses = "p-3 mb-4 rounded-lg text-sm";
+      let colorClasses = '';
+      const isLightMode = true; // במקרה זה, אנחנו במצב בהיר
+
+      if (type === 'error') {
+        colorClasses = 'bg-red-200 text-red-800 border border-red-400';
+      } else if (type === 'success') {
+        colorClasses = 'bg-green-200 text-green-800 border border-green-400'; 
+      } else {
+        colorClasses = 'bg-blue-200 text-blue-800 border border-blue-400';
+      }
+
+      const messageElement = document.createElement('div');
+      messageElement.className = `${baseClasses} ${colorClasses}`;
+      messageElement.textContent = message;
+      messagesContainer.appendChild(messageElement);
+
+      // הסתרת ההודעה לאחר 5 שניות
+      setTimeout(() => messageElement.remove(), 5000);
+    }
+    
+    // פונקציה לטעינת נתוני משתמש מ-API עם ניסיון חוזר (Exponential Backoff)
+    async function fetchUserData(url = '/api/user', maxRetries = 5) {
+        const t = translations[currentLang];
+        document.getElementById('user-info').textContent = t.userInfoLoading;
+
+        for (let i = 0; i < maxRetries; i++) {
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    if (response.status === 404) {
+                        console.warn(`API /api/user not found (404). Using mock data for familySide.`);
+                        return { familySide: "BenAbo,BenHamo", name: "יוסי כהן (סימולציה)" };
+                    }
+                    throw new Error(`API Error ${response.status}: ${errorText || response.statusText}`);
+                }
+
+                return await response.json();
+            } catch (error) {
+                console.error(`Attempt ${i + 1} failed to fetch user data:`, error.message);
+                if (i === maxRetries - 1) {
+                    displayMessage(`Critical error: Failed to fetch user data from /api/user after ${maxRetries} retries.`, 'error');
+                    throw error;
+                }
+                const delay = Math.pow(2, i) * 1000;
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+        }
+        throw new Error("Failed to fetch user data after all retries.");
+    }
+
+    // פונקציה להמרת מערך נתונים ל-HTML של ציר זמן
+    function renderTimeline(events) {
+      const timelineList = document.getElementById('timeline-list');
+      timelineList.innerHTML = '';
+      const t = translations[currentLang];
+      
+      if (!events || events.length === 0) {
+        timelineList.innerHTML = `<li class="text-gray-500 border-none">${t.noEvents}</li>`;
+        return;
+      }
+      
+      // מיון האירועים לפי שנה
+      events.sort((a, b) => a.year - b.year);
+
+      events.forEach(event => {
+        if (!event.year || !event.description || !event.familySide) return;
+
+        const li = document.createElement('li');
+        // עיצוב כרטיס למצב בהיר
+        li.className = 'p-4 rounded-xl bg-white hover:bg-slate-50 transition duration-300 shadow-lg border border-slate-200';
+        
+        li.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <!-- שנת האירוע -->
+            <div class="font-black text-2xl text-accent mb-1 sm:mb-0 tracking-wider">
+              ${event.year}
+            </div>
+            <!-- תגית צד משפחה -->
+            <div class="text-xs font-semibold text-sky-800 bg-sky-100 px-3 py-1 rounded-full border border-sky-300">
+              ${event.familySide}
+            </div>
+          </div>
+          <!-- תיאור האירוע (התוכן הדינמי) -->
+          <p class="text-gray-700 mt-1">
+            ${event.description}
+          </p>
+        `;
+        timelineList.appendChild(li);
+      });
+    }
+
+    // פונקציה לטעינת נתונים מקבצי JSON והצגתם
+    async function fetchAndRenderTimeline(familySides, userData) {
+        const t = translations[currentLang];
+
+        if (familySides.length === 0) {
+            document.getElementById('family-info').textContent = t.noEvents;
+            renderTimeline(null);
+            return;
+        }
+
+        const fetchPromises = familySides.map(side => {
+            const url = `/trees/${side}.html`;
+            document.getElementById('family-info').textContent = `${t.loadedSides} ${familySides.join(' | ')}`;
+
+            return fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            displayMessage(`File ${url} not found. Using mock data for ${side}.`, 'info');
+                            return MOCK_FALLBACK_DATA[side] || [];
+                        }
+                        throw new Error(`HTTP Error: ${response.status} for ${url}`);
+                    }
+                    return response.json();
+                })
+                .catch(error => {
+                    console.error(`Error loading or processing data from ${url}:`, error);
+                    displayMessage(`Error loading file: ${error.message}`, 'error');
+                    return []; 
+                });
+        });
+
+        const results = await Promise.all(fetchPromises);
+        const allEvents = results.flat().filter(event => event && event.year && event.description);
+
+        if (allEvents.length === 0) {
+            displayMessage(`Failed to load events from any of the defined family files.`, 'error');
+        } else {
+            displayMessage(`Successfully loaded ${allEvents.length} events from ${familySides.length} family sides.`, 'success');
+        }
+
+        document.getElementById('user-info').textContent = `${t.connectedUser} ${userData.name || 'Anonymous User'} (UID: ${userId})`;
+        document.getElementById('family-info').textContent = `${t.loadedSides} ${familySides.join(' | ')}`;
+        renderTimeline(allEvents);
+    }
+
+
+    // פונקציית אתחול עיקרית
+    async function init() {
+        try {
+            updateUI(false); // Set initial language strings without toast
+            let userData = null;
+            
+            try {
+                // 1. טעינת נתוני משתמש מ-API
+                userData = await fetchUserData();
+                
+                if(!userData || !userData.familySide) {
+                    throw new Error("User data retrieved but 'familySide' is missing.");
+                }
+
+            } catch (error) {
+                // אם טעינת הנתונים נכשלה
+                console.error("Failed to load user data from API:", error);
+                const t = translations[currentLang];
+                document.getElementById('user-info').textContent = `${t.loadingError} ${userId}`;
+                return; 
+            }
+
+            // 2. פיצול familySide
+            const familySides = userData.familySide 
+                ? userData.familySide.split(',').map(side => side.trim()).filter(side => side.length > 0)
+                : [];
+            
+            // 3. טעינה והצגת ציר הזמן
+            await fetchAndRenderTimeline(familySides, userData);
+
+        } catch (error) {
+            console.error("Global Initialization Error:", error);
+            displayMessage(`Global Initialization Error: ${error.message}`, 'error');
+        }
+    }
+
+    window.onload = init;
+  </script>
+
+  <!-- הכותרת שונתה לצבעים בהירים -->
+  <header class="p-6 border-b border-slate-200 shadow-md bg-secondary-bg relative">
+    <div class="max-w-4xl mx-auto flex justify-between items-start">
+        <div>
+            <h1 id="main-title" class="text-4xl font-extrabold text-accent">⏳ ציר זמן משפחתי</h1>
+            <p id="user-info" class="text-sm text-slate-600 mt-2">טוען פרטי משתמש...</p>
+            <p id="family-info" class="text-xs text-slate-500">צדדי משפחה נטענים: ...</p>
+        </div>
+        
+        <!-- כפתור החלפת שפה -->
+        <button id="lang-toggle" onclick="toggleLanguage()" 
+                class="mt-2 text-primary-text font-semibold py-1 px-3 rounded-full 
+                       bg-slate-300 hover:bg-slate-400 transition duration-150 border border-slate-400 shadow-sm">
+            English
+        </button>
+    </div>
   </header>
-  <main>
-    <ul class="timeline">
-      <li><strong>1920:</strong> לידת שלום בן אבו</li>
-      <li><strong>1925:</strong>לידת רחל בן-חמו</li>
-      <li><strong>1943:</strong> לידת פרנק ון דר ולדה בקייפטאון</li>
-      <li><strong>2025:</strong> פטירת פרנק ון דר ולדה, 🕯️ זכרו לברכה</li>
-      <!-- ניתן להוסיף אירועים נוספים -->
-    </ul>
+
+  <main class="max-w-4xl mx-auto p-6">
+    
+    <!-- מיכל להודעות מערכת -->
+    <div id="messages"></div>
+
+    <section class="mt-8">
+        <h2 id="timeline-title" class="text-2xl font-bold mb-8 border-b border-slate-300 pb-2 text-primary-text">אירועים היסטוריים</h2>
+        
+        <!-- מיכל ציר הזמן - נטען על ידי JS -->
+        <ul id="timeline-list" class="timeline">
+            <li class="p-3 rounded-xl bg-secondary-bg">טוען נתונים...</li>
+        </ul>
+    </section>
   </main>
 </body>
 </html>
