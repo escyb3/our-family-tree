@@ -160,14 +160,14 @@
         const peopleData = [
          { "id": "1", "name": "Moshe Barenbaum", "gender": "M", "spouse_ids": ["2"], "parent_ids": [], "children_ids": ["3", "5", "14"], "birth_year": "c. 1850", "death_year": null },
             { "id": "2", "name": "Rachel Barenbaum", "gender": "F", "spouse_ids": ["1"], "parent_ids": [], "children_ids": ["3", "5", "14"], "birth_year": "c. 1850", "death_year": null },
-         { "id": "3", "name": "Szejwa Barenbaum", "gender": "F", "spouse_ids": ["4"], "parent_ids": ["1","2"], "children_ids": [], "birth_year": "c. 1870", "death_year": null },
-              { "id": "4", "name": "Aaron Galler", "gender": "M", "spouse_ids": ["3"], "parent_ids": [], "children_ids": [], "birth_year": "c. 1880", "death_year": null },
+         { "id": "3", "name": "Szejwa Barenbaum", "gender": "F", "spouse_ids": ["4"], "parent_ids": ["1","2"], "children_ids": ["90","94"], "birth_year": "c. 1870", "death_year": null },
+              { "id": "4", "name": "Aaron Galler", "gender": "M", "spouse_ids": ["3"], "parent_ids": [], "children_ids": ["90","94"], "birth_year": "c. 1880", "death_year": null },
             { "id": "5", "name": "Rivka Barenbaum", "gender": "F", "spouse_ids": ["6"], "parent_ids": ["1","2"], "children_ids": ["7","9","11","12","13"], "birth_year": "c. 1880", "death_year": null },
               { "id": "6", "name": "Shmuel Bromberg", "gender": "M", "spouse_ids": ["5"], "parent_ids": [], "children_ids": ["7","9","11","12","13"], "birth_year": "c. 1880", "death_year": null },
              { "id": "7", "name": "Molly Bromberg", "gender": "F", "spouse_ids": ["8"], "parent_ids": ["5","6"], "children_ids": ["27","30"], "birth_year": "1912", "death_year": null },
             { "id": "8", "name": "Hymie Myers", "gender": "M", "spouse_ids": ["7"], "parent_ids": [], "children_ids": ["27","30"], "birth_year": "1907", "death_year": null },
-             { "id": "9", "name": "Moshe Bromberg", "gender": "M", "spouse_ids": ["10"], "parent_ids": ["5","6"], "children_ids": ["40"], "birth_year": "1913", "death_year": null },
-             { "id": "10", "name": "Rachel Weinberger", "gender": "F", "spouse_ids": ["9"], "parent_ids": [], "children_ids": ["40"], "birth_year": "1923", "death_year": null },
+             { "id": "9", "name": "Moshe Bromberg", "gender": "M", "spouse_ids": ["10"], "parent_ids": ["5","6"], "children_ids": ["40","51"], "birth_year": "1913", "death_year": null },
+             { "id": "10", "name": "Rachel Weinberger", "gender": "F", "spouse_ids": ["9"], "parent_ids": [], "children_ids": ["40","51"], "birth_year": "1923", "death_year": null },
              { "id": "11", "name": "David Bromberg", "gender": "M", "spouse_ids": [], "parent_ids": ["5","6"], "children_ids": [], "birth_year": "1918", "death_year": null },
               { "id": "12", "name": "Rachel Bromberg", "gender": "F", "spouse_ids": [], "parent_ids": ["5","6"], "children_ids": [], "birth_year": "1920", "death_year": null },
              { "id": "13", "name": "Abba Bromberg", "gender": "M", "spouse_ids": [], "parent_ids": ["5","6"], "children_ids": [], "birth_year": "1922", "death_year": null },
@@ -198,17 +198,29 @@
                                       { "id": "38", "name": "Maren Labby", "gender": "F", "spouse_ids": [], "parent_ids": ["34","37"], "children_ids": [], "birth_year": null, "death_year": null },
                                          { "id": "39", "name": "Aaron Yukich", "gender": "M", "spouse_ids": [], "parent_ids": ["30","31"], "children_ids": [], "birth_year": null, "death_year": null },
             //-Third Generation-Moshe Yosef Bromberg-//
-                         { "id": "40", "name": "Rivka Bromberg", "gender": "F", "spouse_ids": ["41"], "parent_ids": ["9","10"], "children_ids": [], "birth_year": null, "death_year": null },
-                         { "id": "41", "name": "Nissim Pilosof", "gender": "M", "spouse_ids": ["40"], "parent_ids": [], "children_ids": [], "birth_year": null, "death_year": null },
-                         { "id": "42", "name": "Shai Pilosof", "gender": "M", "spouse_ids": [], "parent_ids": ["41","40"], "children_ids": [], "birth_year": "1913", "death_year": null },
-                         { "id": "9", "name": "Oren Pilosof", "gender": "M", "spouse_ids": [], "parent_ids": ["41","40"], "children_ids": [], "birth_year": "1913", "death_year": null },
+                         { "id": "40", "name": "Rivka Bromberg", "gender": "F", "spouse_ids": ["41"], "parent_ids": ["9","10"], "children_ids": ["42","47","50"], "birth_year": null, "death_year": null },
+                         { "id": "41", "name": "Nissim Pilosof", "gender": "M", "spouse_ids": ["40"], "parent_ids": [], "children_ids": ["42","47","50"], "birth_year": null, "death_year": null },
+                         { "id": "42", "name": "Shai Pilosof", "gender": "M", "spouse_ids": ["43"], "parent_ids": ["41","40"], "children_ids": ["44","45","46"], "birth_year": null, "death_year": null },
+                          { "id": "43", "name": "Unkown", "gender": "F", "spouse_ids": ["42"], "parent_ids": [], "children_ids": ["44","45","46"], "birth_year": null", "death_year": null },
+                            { "id": "44", "name": "Gal Pilosof", "gender": "M", "spouse_ids": [], "parent_ids": ["42","43"], "children_ids": [], "birth_year": null, "death_year": null },
+                         { "id": "45", "name": "Ofek Pilosof", "gender": "F", "spouse_ids": [], "parent_ids": ["42","43"], "children_ids": [], "birth_year": null, "death_year": null },
+                         { "id": "46", "name": "Agam Pilosof", "gender": "F", "spouse_ids": [], "parent_ids": ["42","43"], "children_ids": [], "birth_year": null, "death_year": null },
+                         { "id": "47", "name": "Oren Pilosof", "gender": "M", "spouse_ids": ["48"], "parent_ids": ["41","40"], "children_ids": ["49"], "birth_year": null, "death_year": null },
+                        { "id": "48", "name": "Aya Pilosof", "gender": "F", "spouse_ids": ["47"], "parent_ids": [], "children_ids": ["49"], "birth_year": null, "death_year": null },
+                         { "id": "49", "name": "Ayala Pilosof", "gender": "F", "spouse_ids": [], "parent_ids": ["47","48"], "children_ids": [], "birth_year": null, "death_year": null },
+                         { "id": "50", "name": "Noah Pilosof", "gender": "F", "spouse_ids": [], "parent_ids": ["41","40"], "children_ids": [], "birth_year": null, "death_year": null},
+                          { "id": "51", "name": "Nesya Bromberg", "gender": "F", "spouse_ids": [], "parent_ids": ["9","10"], "children_ids": [], "birth_year": null, "death_year": null },
 
-
-
-            
-
-    
             //-Second Generation-Galler Family-//
+                 { "id": "90", "name": "Malka Galler", "gender": "F", "spouse_ids": ["91"], "parent_ids": ["3","4"], "children_ids": ["92","93"], "birth_year": null, "death_year": null},
+                 { "id": "91", "name": "Husband of Malke nee Galler", "gender": "M", "spouse_ids": ["90"], "parent_ids": ["3","4"], "children_ids": [], "birth_year": null, "death_year": null},
+                  { "id": "92", "name": "Daughter of Malke Galler", "gender": "F", "spouse_ids": [], "parent_ids": ["90","91"], "children_ids": [], "birth_year": null, "death_year": null},
+                 { "id": "93", "name": "Son of Malke Galler", "gender": "F", "spouse_ids": [], "parent_ids": ["90","91"], "children_ids": [], "birth_year": null, "death_year": null},
+                 { "id": "94", "name": "Chava Galler-Treiger", "gender": "F", "spouse_ids": [], "parent_ids": ["3","4"], "children_ids": [], "birth_year": null, "death_year": null},
+
+                  
+
+
 
 
             
