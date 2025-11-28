@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Portal</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Import Map for Modules -->
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+        "firebase/auth": "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js",
+        "firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js",
+        "lucide-react": "https://esm.sh/lucide-react@0.344.0?external=react"
+      }
+    }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap');
+        body { font-family: 'Rubik', sans-serif; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel" data-type="module">
+        import React, { useState, useEffect, useCallback, useMemo, createContext, useContext } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import { initializeApp } from 'firebase/app';
+        import { 
+            getAuth, 
+            signInWithCustomToken, 
+            onAuthStateChanged,
+            signOut,
+            signInWithEmailAndPassword,
+            createUserWithEmailAndPassword,
+        } from 'firebase/auth';
+        import { 
+            getFirestore, 
+            doc, 
+            collection, 
+            query, 
+            where, 
+            addDoc, 
+            setDoc,
+            getDoc, 
+            onSnapshot, 
+            serverTimestamp,
+            getDocs,
+            updateDoc,
+            deleteDoc,
+            arrayUnion,
+            arrayRemove,
+        } from 'firebase/firestore';
+        import { 
+            Home, Calendar, GalleryHorizontal, Users, BookOpen, Mail, Clock, LogOut,
+            Plus, X, MessageSquare, Send, Eye, Trash2, Settings, UserCheck, MailPlus,
+            Link2, List, Shield, Lock, LogIn, AlertTriangle, UserPlus, Loader2, Globe, Check
+        } from 'lucide-react';
+
+        // --- Global Variables & Initialization ---
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'family-tree-default';
+        const firebaseConfig = {
+  apiKey: "AIzaSyCYWnBQwUaDG0cNhOM4tSeAkZjTGRdFI58",
+  authDomain: "familyapp-86698.firebaseapp.com",
+  projectId: "familyapp-86698",
+  storageBucket: "familyapp-86698.firebasestorage.app",
+  messagingSenderId: "826660810162",
+  appId: "1:826660810162:web:06a94aefca4799936988ab",
+  measurementId: "G-7K25Z446WF"
+};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // The designated admin username
+        const SYSTEM_ADMIN_USERNAME = 'yair';
+
+        // Helper to convert email to username (part before @)
+        const emailToUsername = (email) => (email ? email.split('@')[0].toLowerCase() : null);
+
+        // Base paths for Firestore security rules
+        const getPublicCollectionPath = (name) => `artifacts/${appId}/public/data/${name}`;
+
+        // Initialize Firebase services
+        let app, db, auth;
+        try {
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+        } catch (e) {
+            console.error("Firebase Initialization Error:", e);
+        }
+
+        // --- 1. Multilingual Setup (i18n) ---
+        const translations = {
+            en: { // English (Primary, LTR)
+                dir: 'ltr',
+                portalTitle: 'Family Center',
+                welcome: 'Welcome,',
+                adminLabel: 'Admin Panel',
+                signOut: 'Sign Out',
+                // Navigation
+                navTree: 'Family Tree',
+                navGallery: 'Photo Gallery',
+                navCalendar: 'Events Calendar',
+                navTimeline: 'Family Timeline',
+                navBook: 'Family Book',
+                navMailbox: 'Mailbox',
+                // Auth
+                authSignInTitle: 'Portal Sign In',
+                authSignUpTitle: 'Create Account',
+                authEmail: 'Email Address',
+                authPassword: 'Password (min 6 characters)',
+                authSignInBtn: 'Sign In',
+                authSignUpBtn: 'Sign Up',
+                authNeedAccount: 'Don\'t have an account? Click to register',
+                authHaveAccount: 'Already have an account? Click to sign in',
+                authErrorDefault: 'Authentication error. Please check your email and password.',
+                authErrorWeakPass: 'Password is too weak. Please use at least 6 characters.',
+                authErrorEmailInUse: 'This email is already registered. Please sign in or use another email.',
+                authErrorNotFound: 'Incorrect username or password.',
+                authErrorInvalidEmail: 'Invalid email format.',
+                authInitializing: 'Initializing session...',
+                // Content
+                selectSide: 'Select Family Side:',
+                sideSelectorPlaceholder: 'Please select a family side to view content.',
+                noSidesFound: '*Note: No family sides found. The admin must add sides.',
+                // Gallery
+                galleryTitle: 'Family Photo Gallery',
+                galleryAddBtn: 'Add New Item',
+                galleryCancelBtn: 'Cancel',
+                galleryAddTitle: 'Add New Photo',
+                galleryCaption: 'Enter Caption (max 100 chars)',
+                galleryUploadNote: '*Note: Image uploads are simulated using placeholders due to environment limitations.',
+                gallerySendBtn: 'Send Item',
+                galleryEmpty: 'No photos yet. Be the first to add one!',
+                // Calendar
+                calendarTitle: 'Family Events Calendar',
+                calendarAddBtn: 'Add Event',
+                calendarNewTitle: 'New Event',
+                calendarEventTitle: 'Event Title',
+                calendarDate: 'Date',
+                calendarDescription: 'Description (Optional)',
+                calendarCreateBtn: 'Create Event',
+                calendarEmpty: 'No events scheduled for this family side ({sideId}).',
+                // Content List (Timeline/Book)
+                timelineTitle: 'Family Timeline',
+                bookTitle: 'Family Book',
+                contentAddEvent: 'Add Event',
+                contentAddChapter: 'Add Chapter',
+                contentTitle: 'Title',
+                contentYear: 'Year (e.g., 1985)',
+                contentStory: 'Write your story or family narrative here...',
+                contentSaveBtn: 'Save',
+                contentBackBtn: 'Back to List',
+                contentEmpty: 'No content available for this family side ({sideId}).',
+                // Mailbox
+                mailboxTitle: 'Mailbox ({count})',
+                mailboxYourUsername: 'Your Username:',
+                mailboxComposeBtn: 'Compose Message',
+                mailboxCancelCompose: 'Cancel Composition',
+                mailboxNewMessage: 'Send New Message',
+                mailboxRecipient: 'Recipient Username (e.g., \'david\')',
+                mailboxContent: 'Your message content...',
+                mailboxSendBtn: 'Send Message',
+                mailboxEmpty: 'Your mailbox is empty. Start a conversation!',
+                mailboxSentBy: 'Sent by:',
+                mailboxNew: 'New',
+                mailboxToggleRead: 'Mark as Read/Unread',
+                mailboxDelete: 'Delete',
+                mailboxErrorRequired: 'Recipient username and message content are required.',
+                mailboxErrorSelf: 'You cannot message yourself.',
+                mailboxErrorUserNotFound: 'User "{username}" not found. Please check the username.',
+                // Admin
+                adminTitle: 'Administrative Panel',
+                adminDesc: 'Manage access, sides, and roles for the entire portal.',
+                adminSidesTitle: 'Family Sides Management',
+                adminSidePlaceholder: 'e.g., Father\'s Side',
+                adminSideAddBtn: 'Add New Side',
+                adminSideExisting: 'Existing Sides ({count})',
+                adminSideNameRequired: 'Family side name cannot be empty.',
+                adminSideExists: 'This family side already exists.',
+                adminSideFail: 'Failed to add side. Check console.',
+                adminAccessTitle: 'Assign Side Access',
+                adminAccessUserList: 'Registered Users ({count})',
+                adminAccessPlaceholder: 'Select users who can view this side',
+                adminUsersTitle: 'Registered Profiles ({count})',
+                adminUserMember: 'Member',
+                adminUserAdmin: 'Admin',
+                adminSystemAdmin: 'System Admin',
+                adminToggleAdmin: 'Toggle Admin Status',
+                // Tree
+                treeTitle: 'Family Tree Structure',
+                treeDesc: 'Visual representation of the family tree for side:',
+                treePlaceholderTitle: 'Reserved for the Graphical Tree Viewer',
+                treePlaceholderDesc: 'This area is reserved for the interactive graphical tree viewer. Tree data will be uploaded and built by the admin.',
+            },
+            he: { // Hebrew (RTL)
+                dir: 'rtl',
+                portalTitle: 'המרכז המשפחתי',
+                welcome: 'ברוך הבא,',
+                adminLabel: 'פאנל אדמין',
+                signOut: 'יציאה',
+                // Navigation
+                navTree: 'עץ משפחה',
+                navGallery: 'גלריית תמונות',
+                navCalendar: 'לוח אירועים',
+                navTimeline: 'ציר זמן משפחתי',
+                navBook: 'ספר המשפחה',
+                navMailbox: 'תיבת דואר',
+                // Auth
+                authSignInTitle: 'כניסה לפורטל',
+                authSignUpTitle: 'יצירת חשבון',
+                authEmail: 'כתובת אימייל',
+                authPassword: 'סיסמה (6 תווים לפחות)',
+                authSignInBtn: 'כניסה',
+                authSignUpBtn: 'הרשמה',
+                authNeedAccount: 'אין לי חשבון? לחץ להרשמה',
+                authHaveAccount: 'יש לי כבר חשבון? לחץ להתחברות',
+                authErrorDefault: 'שגיאה באישורים. אנא בדוק את האימייל והסיסמה שלך.',
+                authErrorWeakPass: 'הסיסמה חלשה מדי. אנא השתמש ב-6 תווים לפחות.',
+                authErrorEmailInUse: 'אימייל זה כבר רשום במערכת. אנא היכנס או השתמש באימייל אחר.',
+                authErrorNotFound: 'שם משתמש או סיסמה שגויים.',
+                authErrorInvalidEmail: 'פורמט האימייל אינו תקין.',
+                authInitializing: 'מאתחל סשן קיים...',
+                // Content
+                selectSide: 'בחר ענף משפחה:',
+                sideSelectorPlaceholder: 'אנא בחר ענף משפחה לצפייה בתוכן.',
+                noSidesFound: '*הערה: לא נמצאו ענפים. המנהל צריך להוסיף ענפים.',
+                // Gallery
+                galleryTitle: 'גלריית תמונות משפחתית',
+                galleryAddBtn: 'הוספת פריט חדש',
+                galleryCancelBtn: 'ביטול',
+                galleryAddTitle: 'הוספת תמונה חדשה',
+                galleryCaption: 'הכנס כיתוב (מקסימום 100 תווים)',
+                galleryUploadNote: '*הערה: העלאות תמונה מדומות באמצעות תמונות Placeholder בשל מגבלות סביבת העבודה.',
+                gallerySendBtn: 'שליחת פריט',
+                galleryEmpty: 'אין עדיין תמונות. היה הראשון להוסיף!',
+                // Calendar
+                calendarTitle: 'לוח אירועים משפחתי',
+                calendarAddBtn: 'הוספת אירוע',
+                calendarNewTitle: 'אירוע חדש',
+                calendarEventTitle: 'כותרת האירוע',
+                calendarDate: 'תאריך',
+                calendarDescription: 'תיאור (אופציונלי)',
+                calendarCreateBtn: 'יצירת אירוע',
+                calendarEmpty: 'לא נקבעו אירועים לענף משפחה זה ({sideId}).',
+                // Content List (Timeline/Book)
+                timelineTitle: 'ציר זמן משפחתי',
+                bookTitle: 'ספר המשפחה',
+                contentAddEvent: 'הוספת אירוע',
+                contentAddChapter: 'הוספת פרק',
+                contentTitle: 'כותרת',
+                contentYear: 'שנה (לדוגמה, 1985)',
+                contentStory: 'כתוב את הסיפור או הנרטיב המשפחתי כאן...',
+                contentSaveBtn: 'שמירה',
+                contentBackBtn: 'חזרה לרשימה',
+                contentEmpty: 'אין תוכן זמין לענף משפחה זה ({sideId}).',
+                // Mailbox
+                mailboxTitle: 'תיבת דואר ({count})',
+                mailboxYourUsername: 'שם המשתמש שלך:',
+                mailboxComposeBtn: 'כתוב הודעה',
+                mailboxCancelCompose: 'בטל כתיבה',
+                mailboxNewMessage: 'שלח הודעה חדשה',
+                mailboxRecipient: 'שם משתמש נמען (לדוגמה, \'david\')',
+                mailboxContent: 'תוכן ההודעה שלך...',
+                mailboxSendBtn: 'שלח הודעה',
+                mailboxEmpty: 'תיבת הדואר שלך ריקה. התחל שיחה!',
+                mailboxSentBy: ':מאת',
+                mailboxNew: 'חדש',
+                mailboxToggleRead: 'סמן כנקרא/לא נקרא',
+                mailboxDelete: 'מחק',
+                mailboxErrorRequired: 'שם משתמש נמען ותוכן ההודעה נדרשים.',
+                mailboxErrorSelf: 'אינך יכול לשלוח הודעה לעצמך.',
+                mailboxErrorUserNotFound: 'המשתמש "{username}" לא נמצא. אנא בדוק את שם המשתמש.',
+                // Admin
+                adminTitle: 'פאנל ניהול אדמיניסטרטיבי',
+                adminDesc: 'נהל גישה, ענפים ותפקידים עבור הפורטל כולו.',
+                adminSidesTitle: 'ניהול ענפי משפחה',
+                adminSidePlaceholder: 'לדוגמה, ענף אבא',
+                adminSideAddBtn: 'הוספת ענף חדש',
+                adminSideExisting: 'ענפים קיימים ({count})',
+                adminSideNameRequired: 'שם ענף המשפחה אינו יכול להיות ריק.',
+                adminSideExists: 'ענף משפחה זה כבר קיים.',
+                adminSideFail: 'הוספת הענף נכשלה. בדוק את הקונסול.',
+                adminAccessTitle: 'שיוך משתמשים לענף',
+                adminAccessUserList: 'משתמשים רשומים ({count})',
+                adminAccessPlaceholder: 'בחר משתמשים שיוכלו לצפות בענף זה',
+                adminUsersTitle: 'פרופילים רשומים ({count})',
+                adminUserMember: 'חבר',
+                adminUserAdmin: 'מנהל',
+                adminSystemAdmin: 'מנהל מערכת',
+                adminToggleAdmin: 'החלפת סטטוס ניהול',
+                // Tree
+                treeTitle: 'מבנה עץ משפחה',
+                treeDesc: 'ייצוג ויזואלי של עץ המשפחה עבור הענף:',
+                treePlaceholderTitle: 'מקום שמור לתצוגת העץ הגרפי',
+                treePlaceholderDesc: 'אזור זה שמור למציג העץ הגרפי האינטראקטיבי. נתוני העץ יועלו ויבנו על ידי המנהל.',
+            },
+            fr: { // French (LTR)
+                dir: 'ltr',
+                portalTitle: 'Centre Familial',
+                welcome: 'Bienvenue,',
+                adminLabel: 'Panneau Admin',
+                signOut: 'Déconnexion',
+                // Navigation
+                navTree: 'Arbre Généalogique',
+                navGallery: 'Galerie Photos',
+                navCalendar: 'Calendrier des Événements',
+                navTimeline: 'Ligne du Temps',
+                navBook: 'Livre de Famille',
+                navMailbox: 'Boîte aux lettres',
+                // Auth
+                authSignInTitle: 'Connexion au Portail',
+                authSignUpTitle: 'Créer un Compte',
+                authEmail: 'Adresse E-mail',
+                authPassword: 'Mot de passe (min 6 caractères)',
+                authSignInBtn: 'Se connecter',
+                authSignUpBtn: 'S\'inscrire',
+                authNeedAccount: 'Pas de compte? Cliquez pour vous inscrire',
+                authHaveAccount: 'Déjà un compte? Cliquez pour vous connecter',
+                authErrorDefault: 'Erreur d\'authentification. Veuillez vérifier votre email et mot de passe.',
+                authErrorWeakPass: 'Mot de passe trop faible. Utilisez au moins 6 caractères.',
+                authErrorEmailInUse: 'Cet email est déjà enregistré. Veuillez vous connecter ou utiliser un autre email.',
+                authErrorNotFound: 'Nom d\'utilisateur ou mot de passe incorrect.',
+                authErrorInvalidEmail: 'Format d\'email invalide.',
+                authInitializing: 'Initialisation de la session...',
+                // Content
+                selectSide: 'Sélectionner la Branche:',
+                sideSelectorPlaceholder: 'Veuillez sélectionner une branche familiale pour voir le contenu.',
+                noSidesFound: '*Remarque: Aucune branche trouvée. L\'administrateur doit en ajouter.',
+                // Gallery
+                galleryTitle: 'Galerie de Photos Familiales',
+                galleryAddBtn: 'Ajouter un Nouvel Élément',
+                galleryCancelBtn: 'Annuler',
+                galleryAddTitle: 'Ajouter une Nouvelle Photo',
+                galleryCaption: 'Entrer une Légende (max 100 caractères)',
+                galleryUploadNote: '*Remarque: Les téléchargements d\'images sont simulés avec des espaces réservés en raison des limitations de l\'environnement.',
+                gallerySendBtn: 'Envoyer l\'Élément',
+                galleryEmpty: 'Pas encore de photos. Soyez le premier à en ajouter!',
+                // Calendar
+                calendarTitle: 'Calendrier des Événements Familiaux',
+                calendarAddBtn: 'Ajouter un Événement',
+                calendarNewTitle: 'Nouvel Événement',
+                calendarEventTitle: 'Titre de l\'Événement',
+                calendarDate: 'Date',
+                calendarDescription: 'Description (Optionnel)',
+                calendarCreateBtn: 'Créer l\'Événement',
+                calendarEmpty: 'Aucun événement prévu pour cette branche ({sideId}).',
+                // Content List (Timeline/Book)
+                timelineTitle: 'Ligne du Temps Familiale',
+                bookTitle: 'Livre de Famille',
+                contentAddEvent: 'Ajouter un Événement',
+                contentAddChapter: 'Ajouter un Chapitre',
+                contentTitle: 'Titre',
+                contentYear: 'Année (ex. 1985)',
+                contentStory: 'Écrivez votre histoire ou récit familial ici...',
+                contentSaveBtn: 'Sauvegarder',
+                contentBackBtn: 'Retour à la Liste',
+                contentEmpty: 'Aucun contenu disponible pour cette branche ({sideId}).',
+                // Mailbox
+                mailboxTitle: 'Boîte aux lettres ({count})',
+                mailboxYourUsername: 'Votre Nom d\'utilisateur:',
+                mailboxComposeBtn: 'Composer un Message',
+                mailboxCancelCompose: 'Annuler la Composition',
+                mailboxNewMessage: 'Envoyer un Nouveau Message',
+                mailboxRecipient: 'Nom d\'utilisateur du destinataire (ex. \'david\')',
+                mailboxContent: 'Votre contenu de message...',
+                mailboxSendBtn: 'Envoyer le Message',
+                mailboxEmpty: 'Votre boîte aux lettres est vide. Commencez une conversation!',
+                mailboxSentBy: 'Envoyé par:',
+                mailboxNew: 'Nouveau',
+                mailboxToggleRead: 'Marquer lu/non lu',
+                mailboxDelete: 'Supprimer',
+                mailboxErrorRequired: 'Le nom d\'utilisateur du destinataire et le contenu sont requis.',
+                mailboxErrorSelf: 'Vous ne pouvez pas vous envoyer de message.',
+                mailboxErrorUserNotFound: 'L\'utilisateur "{username}" est introuvable. Veuillez vérifier le nom.',
+                // Admin
+                adminTitle: 'Panneau Administratif',
+                adminDesc: 'Gérer l\'accès, les branches et les rôles pour l\'ensemble du portail.',
+                adminSidesTitle: 'Gestion des Branches Familiales',
+                adminSidePlaceholder: 'ex. Côté du Père',
+                adminSideAddBtn: 'Ajouter une Nouvelle Branche',
+                adminSideExisting: 'Branches Existantes ({count})',
+                adminSideNameRequired: 'Le nom de la branche ne peut être vide.',
+                adminSideExists: 'Cette branche familiale existe déjà.',
+                adminSideFail: 'Échec de l\'ajout de la branche. Vérifiez la console.',
+                adminAccessTitle: 'Attribuer l\'Accès à la Branche',
+                adminAccessUserList: 'Utilisateurs Enregistrés ({count})',
+                adminAccessPlaceholder: 'Sélectionner les utilisateurs qui peuvent voir cette branche',
+                adminUsersTitle: 'Profils Enregistrés ({count})',
+                adminUserMember: 'Membre',
+                adminUserAdmin: 'Admin',
+                adminSystemAdmin: 'Admin Système',
+                adminToggleAdmin: 'Basculer le Statut Admin',
+                // Tree
+                treeTitle: 'Structure de l\'Arbre Généalogique',
+                treeDesc: 'Représentation visuelle de l\'arbre généalogique pour la branche:',
+                treePlaceholderTitle: 'Réservé pour le Visualiseur d\'Arbre Graphique',
+                treePlaceholderDesc: 'Cette zone est réservée au visualiseur d\'arbre graphique interactif. Les données de l\'arbre seront téléchargées et construites par l\'administrateur.',
+            },
+            yi: { // Yiddish (RTL)
+                dir: 'rtl',
+                portalTitle: 'פאַמיליע צענטער',
+                welcome: 'ברוך הבא,',
+                adminLabel: 'אַדמין פּאַנעל',
+                signOut: 'אַרויסגיין',
+                // Navigation
+                navTree: 'פאַמיליע בוים',
+                navGallery: 'פֿאָטאָ גאַלעריע',
+                navCalendar: 'געשעענישן קאַלענדאַר',
+                navTimeline: 'פאַמיליע צײַטליין',
+                navBook: 'פאַמיליע בוך',
+                navMailbox: 'בריװקאַסטן',
+                // Auth
+                authSignInTitle: 'פּאָרטאַל אַרײַנגאַנג',
+                authSignUpTitle: 'שאַפֿן אַ חשבון',
+                authEmail: 'אימעיל אַדרעס',
+                authPassword: 'פּאַראָל (מינימום 6 כאַראַקטערן)',
+                authSignInBtn: 'אַרײַנגיין',
+                authSignUpBtn: 'רעגיסטרירן',
+                authNeedAccount: 'נישטאָ קײן חשבון? קליקט צו רעגיסטרירן',
+                authHaveAccount: 'שוין דאָ אַ חשבון? קליקט צו אַרײַנגיין',
+                authErrorDefault: 'אויטענטיקאַציע טעות. ביטע קאָנטראָלירן אימעיל און פּאַראָל.',
+                authErrorWeakPass: 'פּאַראָל איז צו שוואַך. ניצט כאָטש 6 כאַראַקטערן.',
+                authErrorEmailInUse: 'דער אימעיל איז שױן רעגיסטרירט. ביטע אַרײַנגיין אָדער ניצן אַן אַנדער אימעיל.',
+                authErrorNotFound: 'פאַלשער באַניצער נאָמען אָדער פּאַראָל.',
+                authErrorInvalidEmail: 'אומגילטיק אימעיל פֿאָרמאַט.',
+                authInitializing: 'אַנישיאַליזירן סעסיע...',
+                // Content
+                selectSide: 'קלײַבט פאַמיליע צד:',
+                sideSelectorPlaceholder: 'ביטע קלײַבט אַ פאַמיליע צד צו זען אינהאַלט.',
+                noSidesFound: '*הערה: קײן פאַמיליע צדדים ניט געפֿונען. דער אַדמין מוז צוגעבן צדדים.',
+                // Gallery
+                galleryTitle: 'פאַמיליע פֿאָטאָ גאַלעריע',
+                galleryAddBtn: 'צוגעבן אַ נײַעם פּריט',
+                galleryCancelBtn: 'אַנולירן',
+                galleryAddTitle: 'צוגעבן אַ נײַע פֿאָטאָ',
+                galleryCaption: 'אַרײַנשרײַבן אַן אונטערשריפֿט (מאַקס 100 כאַראַקטערן)',
+                galleryUploadNote: '*הערה: בילד אַפּלאָודז זענען סימולירט מיט פּלייסכאָולדער בילדער צוליב לימיטאַציעס פֿון דער סביבה.',
+                gallerySendBtn: 'שיקן פּריט',
+                galleryEmpty: 'נאָך קײן פֿאָטאָס נישטאָ. זײַט דער ערשטער צו צוגעבן!',
+                // Calendar
+                calendarTitle: 'פאַמיליע געשעענישן קאַלענדאַר',
+                calendarAddBtn: 'צוגעבן געשעעניש',
+                calendarNewTitle: 'נײַע געשעעניש',
+                calendarEventTitle: 'געשעעניש טיטל',
+                calendarDate: 'דאַטע',
+                calendarDescription: 'באַשרײַבונג (אָפּציאָנעל)',
+                calendarCreateBtn: 'שאַפֿן געשעעניש',
+                calendarEmpty: 'קײן געשעענישן ניט באַשטימט פֿאַר דעם פאַמיליע צד ({sideId}).',
+                // Content List (Timeline/Book)
+                timelineTitle: 'פאַמיליע צײַטליין',
+                bookTitle: 'פאַמיליע בוך',
+                contentAddEvent: 'צוגעבן געשעעניש',
+                contentAddChapter: 'צוגעבן קאַפּיטל',
+                contentTitle: 'טיטל',
+                contentYear: 'יאָר (למשל, 1985)',
+                contentStory: 'שרײַבט אײַער געשיכטע אָדער פאַמיליע נאַראַטיוו דאָ...',
+                contentSaveBtn: 'היטן',
+                contentBackBtn: 'צוריק צו דער רשימה',
+                contentEmpty: 'קײן אינהאַלט ניט פֿאַראַן פֿאַר דעם פאַמיליע צד ({sideId}).',
+                // Mailbox
+                mailboxTitle: 'בריװקאַסטן ({count})',
+                mailboxYourUsername: 'אײַער באַניצער נאָמען:',
+                mailboxComposeBtn: 'שרײַבן אַ בריוו',
+                mailboxCancelCompose: 'אַנולירן שרײַבן',
+                mailboxNewMessage: 'שיקן אַ נײַעם בריוו',
+                mailboxRecipient: 'אָפּנעמער באַניצער נאָמען (למשל, \'david\')',
+                mailboxContent: 'דער אינהאַלט פֿון אײַער בריוו...',
+                mailboxSendBtn: 'שיקן בריוו',
+                mailboxEmpty: 'אײַער בריװקאַסטן איז לײדיק. אָנהײבן אַ שמועס!',
+                mailboxSentBy: ':געשיקט דורך',
+                mailboxNew: 'נײַ',
+                mailboxToggleRead: 'מאַרקירן געלײענט/ניט געלײענט',
+                mailboxDelete: 'מעקן',
+                mailboxErrorRequired: 'אָפּנעמער באַניצער נאָמען און בריוו אינהאַלט זענען נויטיק.',
+                mailboxErrorSelf: 'איר קענט זיך ניט שיקן אַ בריוו.',
+                mailboxErrorUserNotFound: 'באַניצער "{username}" ניט געפֿונען. ביטע קאָנטראָלירן דעם נאָמען.',
+                // Admin
+                adminTitle: 'אַדמיניסטראַטיווער פּאַנעל',
+                adminDesc: 'פֿירן צוטריט, צדדים און ראָלעס פֿאַר דעם גאַנצן פּאָרטאַל.',
+                adminSidesTitle: 'פאַמיליע צדדים פֿירונג',
+                adminSidePlaceholder: 'למשל, טאַטעס צד',
+                adminSideAddBtn: 'צוגעבן אַ נײַעם צד',
+                adminSideExisting: 'עקזיסטירנדיקע צדדים ({count})',
+                adminSideNameRequired: 'פאַמיליע צד נאָמען קען ניט זײַן לײדיק.',
+                adminSideExists: 'דער פאַמיליע צד עקזיסטירט שוין.',
+                adminSideFail: 'ניט געראָטן צו צוגעבן צד. קאָנטראָלירן קאָנסאָל.',
+                adminAccessTitle: 'באַשטימען צד צוטריט',
+                adminAccessUserList: 'רעגיסטרירטע באַניצערס ({count})',
+                adminAccessPlaceholder: 'קלײַבט באַניצערס װאָס קענען זען דעם צד',
+                adminUsersTitle: 'רעגיסטרירטע פּראָפֿילן ({count})',
+                adminUserMember: 'מיטגליד',
+                adminUserAdmin: 'אַדמין',
+                adminSystemAdmin: 'סיסטעם אַדמין',
+                adminToggleAdmin: 'בײַטן אַדמין סטאַטוס',
+                // Tree
+                treeTitle: 'פאַמיליע בוים סטרוקטור',
+                treeDesc: 'וויזועל פאָרשטעלונג פון דעם פאַמיליע בוים פֿאַר צד:',
+                treePlaceholderTitle: 'רעזערווירט פֿאַר דעם גראַפֿישן בוים ווײַזער',
+                treePlaceholderDesc: 'דער געגנט איז רעזערווירט פֿאַר דעם אינטעראַקטיוון גראַפֿישן בוים ווײַזער. בוים דאַטן וועלן זײַן אַפּלאָודירט און געבױט דורך דעם אַדמין.',
+            },
+            nl: { // Dutch (LTR)
+                dir: 'ltr',
+                portalTitle: 'Familie Centrum',
+                welcome: 'Welkom,',
+                adminLabel: 'Admin Paneel',
+                signOut: 'Afmelden',
+                // Navigation
+                navTree: 'Stamboom',
+                navGallery: 'Foto Galerij',
+                navCalendar: 'Evenementen Kalender',
+                navTimeline: 'Familietijdlijn',
+                navBook: 'Familieboek',
+                navMailbox: 'Brievenbus',
+                // Auth
+                authSignInTitle: 'Portaal Aanmelden',
+                authSignUpTitle: 'Account Aanmaken',
+                authEmail: 'E-mailadres',
+                authPassword: 'Wachtwoord (min 6 tekens)',
+                authSignInBtn: 'Aanmelden',
+                authSignUpBtn: 'Registreren',
+                authNeedAccount: 'Nog geen account? Klik om te registreren',
+                authHaveAccount: 'Al een account? Klik om aan te melden',
+                authErrorDefault: 'Authenticatie fout. Controleer uw e-mail en wachtwoord.',
+                authErrorWeakPass: 'Wachtwoord is te zwak. Gebruik minimaal 6 tekens.',
+                authErrorEmailInUse: 'Dit e-mailadres is al geregistreerd. Meld u aan of gebruik een ander e-mailadres.',
+                authErrorNotFound: 'Onjuiste gebruikersnaam of wachtwoord.',
+                authErrorInvalidEmail: 'Ongeldig e-mailformaat.',
+                authInitializing: 'Sessie initialiseren...',
+                // Content
+                selectSide: 'Selecteer Familiekant:',
+                sideSelectorPlaceholder: 'Selecteer een familiekant om de inhoud te bekijken.',
+                noSidesFound: '*Opmerking: Geen familiekanten gevonden. De beheerder moet kanten toevoegen.',
+                // Gallery
+                galleryTitle: 'Familie Fotogalerij',
+                galleryAddBtn: 'Nieuw Item Toevoegen',
+                galleryCancelBtn: 'Annuleren',
+                galleryAddTitle: 'Nieuwe Foto Toevoegen',
+                galleryCaption: 'Voer Onderschrift In (max 100 tekens)',
+                galleryUploadNote: '*Opmerking: Afbeelding uploads worden gesimuleerd met placeholders vanwege omgevingsbeperkingen.',
+                gallerySendBtn: 'Item Verzenden',
+                galleryEmpty: 'Nog geen foto\'s. Wees de eerste om er een toe te voegen!',
+                // Calendar
+                calendarTitle: 'Familie Evenementen Kalender',
+                calendarAddBtn: 'Evenement Toevoegen',
+                calendarNewTitle: 'Nieuw Evenement',
+                calendarEventTitle: 'Titel van Evenement',
+                calendarDate: 'Datum',
+                calendarDescription: 'Beschrijving (Optioneel)',
+                calendarCreateBtn: 'Evenement Creëren',
+                calendarEmpty: 'Geen evenementen gepland voor deze familiekant ({sideId}).',
+                // Content List (Timeline/Book)
+                timelineTitle: 'Familietijdlijn',
+                bookTitle: 'Familieboek',
+                contentAddEvent: 'Evenement Toevoegen',
+                contentAddChapter: 'Hoofdstuk Toevoegen',
+                contentTitle: 'Titel',
+                contentYear: 'Jaar (bv. 1985)',
+                contentStory: 'Schrijf hier uw verhaal of familielijk verhaal...',
+                contentSaveBtn: 'Opslaan',
+                contentBackBtn: 'Terug naar Lijst',
+                contentEmpty: 'Geen inhoud beschikbaar voor deze familiekant ({sideId}).',
+                // Mailbox
+                mailboxTitle: 'Brievenbus ({count})',
+                mailboxYourUsername: 'Uw Gebruikersnaam:',
+                mailboxComposeBtn: 'Bericht Opstellen',
+                mailboxCancelCompose: 'Compositie Annuleren',
+                mailboxNewMessage: 'Nieuw Bericht Verzenden',
+                mailboxRecipient: 'Gebruikersnaam Ontvanger (bv. \'david\')',
+                mailboxContent: 'Uw berichtinhoud...',
+                mailboxSendBtn: 'Bericht Verzenden',
+                mailboxEmpty: 'Uw brievenbus is leeg. Start een gesprek!',
+                mailboxSentBy: 'Verzonden door:',
+                mailboxNew: 'Nieuw',
+                mailboxToggleRead: 'Markeer gelezen/ongelezen',
+                mailboxDelete: 'Verwijderen',
+                mailboxErrorRequired: 'Gebruikersnaam ontvanger en berichtinhoud zijn vereist.',
+                mailboxErrorSelf: 'U kunt uzelf geen bericht sturen.',
+                mailboxErrorUserNotFound: 'Gebruiker "{username}" niet gevonden. Controleer de gebruikersnaam.',
+                // Admin
+                adminTitle: 'Administratief Paneel',
+                adminDesc: 'Beheer toegang, kanten en rollen voor het gehele portaal.',
+                adminSidesTitle: 'Beheer Familiekanten',
+                adminSidePlaceholder: 'bv. Vader\'s Kant',
+                adminSideAddBtn: 'Nieuwe Kant Toevoegen',
+                adminSideExisting: 'Bestaande Kanten ({count})',
+                adminSideNameRequired: 'De naam van de familiekant mag niet leeg zijn.',
+                adminSideExists: 'Deze familiekant bestaat al.',
+                adminSideFail: 'Fout bij het toevoegen van de kant. Controleer de console.',
+                adminAccessTitle: 'Toegang Tot Kant Toewijzen',
+                adminAccessUserList: 'Geregistreerde Gebruikers ({count})',
+                adminAccessPlaceholder: 'Selecteer gebruikers die deze kant kunnen bekijken',
+                adminUsersTitle: 'Geregistreerde Profielen ({count})',
+                adminUserMember: 'Lid',
+                adminUserAdmin: 'Beheerder',
+                adminSystemAdmin: 'Systeembeheerder',
+                adminToggleAdmin: 'Admin Status Omschakelen',
+                // Tree
+                treeTitle: 'Stamboom Structuur',
+                treeDesc: 'Visuele weergave van de stamboom voor kant:',
+                treePlaceholderTitle: 'Gereserveerd voor de Grafische Boomviewer',
+                treePlaceholderDesc: 'Dit gebied is gereserveerd voor de interactieve grafische boomviewer. Boomgegevens worden geüpload en gebouwd door de beheerder.',
+            },
+        };
+
+        const LanguageContext = createContext();
+
+        // Hook to use translations
+        const useTranslation = () => {
+            const context = useContext(LanguageContext);
+            if (!context) {
+                throw new Error('useTranslation must be used within a LanguageProvider');
+            }
+            const { lang, setLang } = context;
+            const t = useCallback((key, params = {}) => {
+                let text = translations[lang][key] || translations['en'][key] || `MISSING_KEY:${key}`;
+                // Simple string replacement for dynamic values like {sideId} or {count}
+                Object.keys(params).forEach(pKey => {
+                    text = text.replace(`{${pKey}}`, params[pKey]);
+                });
+                return text;
+            }, [lang]);
+            
+            const isRTL = translations[lang].dir === 'rtl';
+
+            return { t, lang, setLang, isRTL };
+        };
+
+        // --- Firebase and Auth Hooks ---
+
+        const useFirebase = () => {
+            const [userId, setUserId] = useState(null);
+            const [username, setUsername] = useState(null);
+            const [isAdmin, setIsAdmin] = useState(false);
+            const [isAuthReady, setIsAuthReady] = useState(false);
+
+            useEffect(() => {
+                if (!auth || !db) return;
+                
+                const unsubscribe = onAuthStateChanged(auth, async (user) => {
+                    if (user && user.uid) { 
+                        const currentUsername = emailToUsername(user.email);
+                        setUserId(user.uid);
+                        setUsername(currentUsername);
+
+                        // Check for system admin
+                        let userIsAdmin = currentUsername === SYSTEM_ADMIN_USERNAME;
+
+                        // Fetch and update profile data
+                        const profileDocRef = doc(db, getPublicCollectionPath('profiles'), user.uid);
+                        const profileSnap = await getDoc(profileDocRef);
+                        const profileData = profileSnap.exists() ? profileSnap.data() : {};
+                        
+                        // If not system admin, check the isAdmin flag from Firestore
+                        if (!userIsAdmin) {
+                            userIsAdmin = profileData.isAdmin || false;
+                        }
+                        
+                        setIsAdmin(userIsAdmin);
+
+                        const updateData = {
+                            uid: user.uid,
+                            username: currentUsername,
+                            email: user.email,
+                            lastLogin: serverTimestamp(),
+                            isAdmin: userIsAdmin, 
+                        };
+                        
+                        await setDoc(profileDocRef, updateData, { merge: true });
+                        
+                    } else {
+                        setUserId(null);
+                        setUsername(null);
+                        setIsAdmin(false);
+                    }
+                    setIsAuthReady(true);
+                });
+
+                const signInWithToken = async () => {
+                    if (initialAuthToken && !auth.currentUser) {
+                        try {
+                            await signInWithCustomToken(auth, initialAuthToken);
+                        } catch (error) {
+                            console.error("Error signing in with custom token:", error.message);
+                            setIsAuthReady(true); 
+                        }
+                    } else if (!auth.currentUser) {
+                        setIsAuthReady(true);
+                    }
+                };
+                
+                if (!auth.currentUser) {
+                    signInWithToken();
+                }
+
+                return () => unsubscribe();
+            }, []);
+
+            return { db, auth, userId, username, isAdmin, isAuthReady };
+        };
+
+
+        // --- Core UI Components ---
+
+        // Shared Button
+        const ActionButton = ({ children, icon: Icon, onClick, className = '', disabled = false, type = 'button', isRTL }) => {
+            return (
+                <button
+                    type={type}
+                    onClick={onClick}
+                    disabled={disabled}
+                    className={`flex items-center justify-center space-x-2 px-4 py-3 font-semibold rounded-xl shadow-lg transition duration-150 ease-in-out transform active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-indigo-500/50
+                        ${disabled
+                            ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
+                            : 'bg-indigo-600 text-white hover:bg-indigo-700 hover:scale-[1.01] ' + (isRTL ? 'flex-row-reverse space-x-reverse' : 'flex-row')
+                        }
+                        ${className}`}
+                >
+                    {Icon && <Icon className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />}
+                    <span>{children}</span>
+                </button>
+            );
+        };
+
+        // Generic Card component
+        const Card = ({ title, children, className = '', isRTL }) => (
+            <div className={`bg-white p-6 rounded-xl shadow-2xl transition duration-300 transform hover:shadow-indigo-300/50 ${className}`} dir={isRTL ? 'rtl' : 'ltr'}>
+                <h2 className={`text-2xl font-bold text-gray-800 mb-4 border-b pb-2 ${isRTL ? 'text-right' : 'text-left'}`}>{title}</h2>
+                {children}
+            </div>
+        );
+
+
+        // --- Authentication Screen ---
+
+        const AuthScreen = ({ auth, isAuthReady }) => {
+            const { t, isRTL } = useTranslation();
+            const [email, setEmail] = useState('');
+            const [password, setPassword] = useState('');
+            const [error, setError] = useState(null);
+            const [loading, setLoading] = useState(false);
+            const [isSigningUp, setIsSigningUp] = useState(false);
+
+            const handleAuthAction = async (isSignup) => {
+                setError(null);
+                setLoading(true);
+
+                try {
+                    if (isSignup) {
+                        // Check if email is authorized before sign up
+                        const emailDocRef = doc(db, getPublicCollectionPath('authorizedEmails'), email.toLowerCase());
+                        const emailSnap = await getDoc(emailDocRef);
+                        
+                        if (!emailSnap.exists()) {
+                            setError('This email is not authorized to register for this portal. Please contact the administrator.');
+                            setLoading(false);
+                            return;
+                        }
+
+                        await createUserWithEmailAndPassword(auth, email, password);
+                    } else {
+                        await signInWithEmailAndPassword(auth, email, password);
+                    }
+                } catch (err) {
+                    console.error("Authentication Error:", err.code, err.message);
+                    let errorMessage = t('authErrorDefault');
+                    if (err.code === 'auth/email-already-in-use') {
+                        errorMessage = t('authErrorEmailInUse');
+                    } else if (err.code === 'auth/invalid-email') {
+                        errorMessage = t('authErrorInvalidEmail');
+                    } else if (err.code === 'auth/weak-password') {
+                        errorMessage = t('authErrorWeakPass');
+                    } else if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
+                        errorMessage = t('authErrorNotFound');
+                    }
+                    setError(errorMessage);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                if (email && password) {
+                    handleAuthAction(isSigningUp);
+                }
+            };
+            
+            const loginStyle = {
+                backgroundImage: 'radial-gradient(at 0% 0%, #a5b4fc, #e0e7ff), radial-gradient(at 100% 100%, #374151, #e0e7ff)',
+                backgroundSize: 'cover',
+            };
+
+
+            return (
+                <div className="min-h-screen flex items-center justify-center p-4" style={loginStyle} dir={isRTL ? 'rtl' : 'ltr'}>
+                    <div className="max-w-md w-full bg-white/95 p-8 md:p-10 rounded-3xl shadow-4xl text-center border-t-8 border-indigo-600 backdrop-blur-sm">
+                        <Lock className="w-14 h-14 mx-auto text-indigo-600 mb-6" />
+                        <h1 className="text-3xl font-extrabold text-gray-800 mb-2">
+                            {isSigningUp ? t('authSignUpTitle') : t('authSignInTitle')}
+                        </h1>
+                        <p className="text-md text-gray-600 mb-8">
+                            {t('authInitializing')}
+                        </p>
+
+                        {/* Loading State */}
+                        {!isAuthReady || loading && (
+                            <div className="flex flex-col items-center p-6 bg-indigo-50 rounded-lg shadow-inner mb-6">
+                                <Loader2 className="w-8 h-8 text-indigo-600 animate-spin mb-3" />
+                                <p className="text-indigo-700 font-semibold">{loading ? 'Processing...' : t('authInitializing')}</p>
+                            </div>
+                        )}
+                        
+                        {/* Auth Form */}
+                        {isAuthReady && !loading && (
+                            <form onSubmit={handleSubmit} className="space-y-5">
+                                <input
+                                    type="email"
+                                    placeholder={t('authEmail')}
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                    dir="ltr" // Email is always LTR
+                                    className={`w-full p-4 border border-gray-300 rounded-xl shadow-inner focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ${isRTL ? 'text-right' : 'text-left'}`}
+                                />
+                                <input
+                                    type="password"
+                                    placeholder={t('authPassword')}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                    dir="ltr" // Password is always LTR
+                                    className={`w-full p-4 border border-gray-300 rounded-xl shadow-inner focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ${isRTL ? 'text-right' : 'text-left'}`}
+                                />
+                                
+                                {error && (
+                                    <div className="p-3 text-sm text-red-700 bg-red-100 rounded-lg flex items-start" dir={isRTL ? 'rtl' : 'ltr'}>
+                                        <AlertTriangle className={`w-5 h-5 flex-shrink-0 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+                                        <span className="font-medium">{error}</span>
+                                    </div>
+                                )}
+                                
+                                <ActionButton type="submit" icon={isSigningUp ? UserPlus : LogIn} className="w-full" isRTL={isRTL}>
+                                    {isSigningUp ? t('authSignUpBtn') : t('authSignInBtn')}
+                                </ActionButton>
+                            </form>
+                        )}
+                        
+                        {isAuthReady && !loading && (
+                            <div className="mt-6 text-sm">
+                                <button 
+                                    onClick={() => setIsSigningUp(!isSigningUp)} 
+                                    className="text-indigo-600 hover:text-indigo-800 font-medium transition duration-150"
+                                >
+                                    {isSigningUp ? t('authHaveAccount') : t('authNeedAccount')}
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        // Navigation Item
+        const NavItem = ({ icon: Icon, label, isActive, onClick, className = '', isRTL }) => (
+            <button
+                onClick={onClick}
+                className={`flex items-center w-full px-4 py-3 rounded-xl transition duration-150 ease-in-out 
+                    ${isRTL ? 'justify-end' : 'justify-start'}
+                    ${
+                    isActive
+                        ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/50'
+                        : 'text-indigo-200 hover:bg-indigo-700/50 hover:text-white'
+                } ${className}`}
+            >
+                <span className="font-medium order-2">{label}</span>
+                <Icon className={`w-6 h-6 ${isRTL ? 'mr-3 order-1' : 'ml-3 order-3'}`} />
+            </button>
+        );
+
+
+        // 2. Family Sides Selector - NOW FILTERS BY USER ACCESS
+        const FamilySideSelector = ({ db, onSelect, selectedSideId, userId }) => {
+            const { t, isRTL } = useTranslation();
+            const [sides, setSides] = useState([]);
+            const [isLoading, setIsLoading] = useState(true);
+
+            useEffect(() => {
+                if (!db || !userId) return setSides([]);
+                
+                setIsLoading(true);
+                // Query ALL family sides since we need to filter them client-side based on the 'allowedUserIds' array.
+                const q = collection(db, getPublicCollectionPath('familySides'));
+                
+                const unsubscribe = onSnapshot(q, (snapshot) => {
+                    const allSides = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    
+                    // Filter sides: only show sides where current userId is in allowedUserIds
+                    const userSides = allSides.filter(side => 
+                        side.allowedUserIds && side.allowedUserIds.includes(userId)
+                    );
+                    
+                    setSides(userSides);
+                    if (userSides.length > 0 && !selectedSideId) {
+                        onSelect(userSides[0].id);
+                    }
+                    setIsLoading(false);
+                });
+
+                return () => unsubscribe();
+            }, [db, userId, selectedSideId, onSelect]);
+            
+            // Memoize the side name based on the current language
+            const getSideName = useCallback((side) => {
+                // Fallback: try current lang (e.g., name_he), then English, then generic name.
+                const langCode = useTranslation().lang;
+                return side[`name_${langCode}`] || side.name_en || side.name;
+            }, [useTranslation().lang]);
+
+
+            if (isLoading) {
+                return <div className={`flex items-center ${isRTL ? 'justify-end' : 'justify-start'} text-indigo-600 text-lg mb-6`} dir={isRTL ? 'rtl' : 'ltr'}>
+                    <Loader2 className="w-5 h-5 animate-spin mr-2" /> Loading Sides...
+                </div>
+            }
+
+
+            return (
+                <div className="mb-6" dir={isRTL ? 'rtl' : 'ltr'}>
+                    <label htmlFor="family-side-select" className={`block text-sm font-medium text-gray-700 mb-2 ${isRTL ? 'text-right' : 'text-left'}`}>
+                        {t('selectSide')}
+                    </label>
+                    {sides.length === 0 ? (
+                        <p className={`text-sm text-red-500 bg-red-50 p-3 rounded-lg border border-red-200 flex items-center ${isRTL ? 'justify-end' : 'justify-start'}`}>
+                            <AlertTriangle className={`inline w-4 h-4 ${isRTL ? 'ml-1' : 'mr-1'}`}/> {t('noSidesFound')}
+                        </p>
+                    ) : (
+                        <select
+                            id="family-side-select"
+                            value={selectedSideId || ''}
+                            onChange={(e) => onSelect(e.target.value)}
+                            className={`w-full p-3 border border-gray-300 rounded-lg shadow-sm bg-white focus:ring-indigo-500 focus:border-indigo-500 appearance-none transition duration-150 ${isRTL ? 'text-right' : 'text-left'}`}
+                            dir={isRTL ? 'rtl' : 'ltr'}
+                        >
+                            {sides.map(side => (
+                                <option key={side.id} value={side.id}>{getSideName(side)}</option>
+                            ))}
+                        </select>
+                    )}
+                </div>
+            );
+        };
+
+        // 3. Family Gallery
+        const FamilyGallery = ({ db, userId }) => {
+            const { t, isRTL } = useTranslation();
+            const [galleryItems, setGalleryItems] = useState([]);
+            const [isAdding, setIsAdding] = useState(false);
+            const [newCaption, setNewCaption] = useState('');
+
+            useEffect(() => {
+                if (!db) return;
+                const q = collection(db, getPublicCollectionPath('gallery'));
+                const unsubscribe = onSnapshot(q, (snapshot) => {
+                    const items = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    setGalleryItems(items.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0)));
+                });
+                return () => unsubscribe();
+            }, [db]);
+
+            const handleAddItem = async () => {
+                if (!newCaption.trim()) return;
+
+                try {
+                    await addDoc(collection(db, getPublicCollectionPath('gallery')), {
+                        uploadedByUserId: userId,
+                        caption: newCaption.trim(),
+                        imageUrl: `https://placehold.co/400x300/6366f1/ffffff?text=${t('galleryAddTitle')}`, 
+                        timestamp: serverTimestamp(),
+                    });
+                    setNewCaption('');
+                    setIsAdding(false);
+                } catch (error) {
+                    console.error("Error adding gallery item: ", error);
+                }
+            };
+
+            return (
+                <Card title={t('galleryTitle')} className="min-h-[600px] flex flex-col" isRTL={isRTL}>
+                    <p className={`text-sm text-yellow-600 bg-yellow-50 p-2 rounded-lg mb-4 border border-yellow-200 ${isRTL ? 'text-right' : 'text-left'}`}>
+                        {t('galleryUploadNote')}
+                    </p>
+                    <div className={`mb-4 flex ${isRTL ? 'justify-start' : 'justify-end'}`}>
+                        <ActionButton icon={isAdding ? X : Plus} onClick={() => setIsAdding(!isAdding)} className='py-2' isRTL={isRTL}>
+                            {isAdding ? t('galleryCancelBtn') : t('galleryAddBtn')}
+                        </ActionButton>
+                    </div>
+                    {isAdding && (
+                        <div className={`p-4 mb-6 bg-indigo-50 rounded-xl shadow-inner border border-indigo-200 ${isRTL ? 'text-right' : 'text-left'}`}>
+                            <h3 className="font-semibold text-lg mb-3 text-indigo-800">{t('galleryAddTitle')}</h3>
+                            <input
+                                type="text"
+                                placeholder={t('galleryCaption')}
+                                value={newCaption}
+                                onChange={(e) => e.target.value.length <= 100 && setNewCaption(e.target.value)} 
+                                className={`w-full p-3 border border-gray-300 rounded-lg mb-3 focus:ring-indigo-500 focus:border-indigo-500 ${isRTL ? 'text-right' : 'text-left'}`}
+                                dir={isRTL ? 'rtl' : 'ltr'}
+                            />
+                            <ActionButton onClick={handleAddItem} className='w-full py-2' isRTL={isRTL}>
+                                {t('gallerySendBtn')}
+                            </ActionButton>
+                        </div>
+                    )}
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 flex-grow">
+                        {galleryItems.map(item => (
+                            <div key={item.id} className={`bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 transition duration-200 hover:shadow-xl hover:border-indigo-300 ${isRTL ? 'text-right' : 'text-left'}`}>
+                                <img 
+                                    src={item.imageUrl} 
+                                    alt={item.caption} 
+                                    className="w-full h-48 object-cover"
+                                    onError={(e) => e.target.src = 'https://placehold.co/400x300/d1d5db/374151?text=Image+Error'}
+                                />
+                                <div className="p-4">
+                                    <p className="text-gray-700 font-medium truncate">{item.caption}</p>
+                                    <p className={`text-xs text-gray-500 mt-1 flex items-center ${isRTL ? 'justify-end' : 'justify-start'}`}>
+                                        {item.timestamp ? new Date(item.timestamp.seconds * 1000).toLocaleDateString(isRTL ? 'he-IL' : 'en-US') : 'N/A'}
+                                        <Clock size={12} className={isRTL ? 'ml-1' : 'mr-1'}/> 
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    {galleryItems.length === 0 && !isAdding && (
+                        <p className="text-center text-gray-500 py-12 bg-gray-50 rounded-lg">{t('galleryEmpty')}</p>
+                    )}
+                </Card>
+            );
+        };
+
+        // 4. Family Calendar
+        const FamilyCalendar = ({ db, selectedSideId }) => {
+            const { t, isRTL } = useTranslation();
+            const [events, setEvents] = useState([]);
+            const [isAdding, setIsAdding] = useState(false);
+            const [newEvent, setNewEvent] = useState({ title: '', date: '', description: '' });
+
+            useEffect(() => {
+                if (!db || !selectedSideId) return setEvents([]);
+                const q = query(collection(db, getPublicCollectionPath('events')), where('familySideId', '==', selectedSideId));
+                const unsubscribe = onSnapshot(q, (snapshot) => {
+                    const items = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    setEvents(items.sort((a, b) => new Date(a.date) - new Date(b.date)));
+                });
+                return () => unsubscribe();
+            }, [db, selectedSideId]);
+
+            const handleInputChange = (e) => setNewEvent({ ...newEvent, [e.target.name]: e.target.value });
+
+            const handleAddEvent = async () => {
+                if (!newEvent.title.trim() || !newEvent.date) return;
+                try {
+                    await addDoc(collection(db, getPublicCollectionPath('events')), {
+                        ...newEvent,
+                        familySideId: selectedSideId,
+                        timestamp: serverTimestamp(),
+                    });
+                    setNewEvent({ title: '', date: '', description: '' });
+                    setIsAdding(false);
+                } catch (error) {
+                    console.error("Error adding event: ", error);
+                }
+            };
+
+            return (
+                <Card title={t('calendarTitle')} className="min-h-[600px] flex flex-col" isRTL={isRTL}>
+                    <div className={`mb-4 flex ${isRTL ? 'justify-start' : 'justify-end'}`}>
+                        <ActionButton icon={isAdding ? X : Plus} onClick={() => setIsAdding(!isAdding)} className='py-2' isRTL={isRTL}>
+                            {isAdding ? t('galleryCancelBtn') : t('calendarAddBtn')}
+                        </ActionButton>
+                    </div>
+                    {isAdding && (
+                        <div className={`p-4 mb-6 bg-indigo-50 rounded-xl shadow-inner border border-indigo-200 ${isRTL ? 'text-right' : 'text-left'}`}>
+                            <h3 className="font-semibold text-lg mb-3 text-indigo-800">{t('calendarNewTitle')}</h3>
+                            <input name="title" type="text" placeholder={t('calendarEventTitle')} value={newEvent.title} onChange={handleInputChange} className={`w-full p-3 border rounded-lg mb-2 focus:ring-indigo-500 focus:border-indigo-500 ${isRTL ? 'text-right' : 'text-left'}`} dir={isRTL ? 'rtl' : 'ltr'}/>
+                            <input name="date" type="date" value={newEvent.date} onChange={handleInputChange} className={`w-full p-3 border rounded-lg mb-2 focus:ring-indigo-500 focus:border-indigo-500 ${isRTL ? 'text-right' : 'text-left'}`} dir="ltr"/>
+                            <textarea name="description" placeholder={t('calendarDescription')} value={newEvent.description} onChange={handleInputChange} className={`w-full p-3 border rounded-lg mb-3 h-24 focus:ring-indigo-500 focus:border-indigo-500 ${isRTL ? 'text-right' : 'text-left'}`} dir={isRTL ? 'rtl' : 'ltr'}></textarea>
+                            <ActionButton onClick={handleAddEvent} className='w-full py-2' isRTL={isRTL}>{t('calendarCreateBtn')}</ActionButton>
+                        </div>
+                    )}
+
+                    <div className="space-y-4 flex-grow">
+                        {events.map(event => (
+                            <div key={event.id} className={`flex items-start p-4 bg-white rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition ${isRTL ? 'justify-end' : 'justify-start'}`}>
+                                <div className={isRTL ? 'text-right' : 'text-left'}>
+                                    <p className="text-lg font-semibold text-gray-800">{event.title}</p>
+                                    <p className="text-indigo-500 font-medium">{new Date(event.date).toLocaleDateString(isRTL ? 'he-IL' : 'en-US')}</p>
+                                    <p className="text-sm text-gray-600 mt-1">{event.description}</p>
+                                </div>
+                                <Calendar className={`text-indigo-600 ${isRTL ? 'ml-4' : 'mr-4'} mt-1 flex-shrink-0`} />
+                            </div>
+                        ))}
+                    </div>
+                    {events.length === 0 && !isAdding && (
+                        <p className="text-center text-gray-500 py-12 bg-gray-50 rounded-lg">{t('calendarEmpty', { sideId: selectedSideId })}</p>
+                    )}
+                </Card>
+            );
+        };
+
+        // 5. Family Timeline / Book / Tree (Generic Content List Component)
+        const ContentListComponent = ({ db, selectedSideId, collectionName, title, icon: Icon, placeholder, detailView }) => {
+            const { t, isRTL } = useTranslation();
+            const [items, setItems] = useState([]);
+            const [isAdding, setIsAdding] = useState(false);
+            const [newItem, setNewItem] = useState({ title: '', content: '' });
+            const [selectedItem, setSelectedItem] = useState(null);
+
+            useEffect(() => {
+                if (!db || !selectedSideId) return setItems([]);
+                const q = query(collection(db, getPublicCollectionPath(collectionName)), where('familySideId', '==', selectedSideId));
+                const unsubscribe = onSnapshot(q, (snapshot) => {
+                    const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    if (collectionName === 'timeline') {
+                        setItems(data.sort((a, b) => (b.year || 0) - (a.year || 0)));
+                    } else {
+                        setItems(data.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0)));
+                    }
+                });
+                return () => unsubscribe();
+            }, [db, selectedSideId, collectionName]);
+
+            const handleInputChange = (e) => setNewItem({ ...newItem, [e.target.name]: e.target.value });
+
+            const handleAddItem = async () => {
+                if (!newItem.title.trim() || !newItem.content.trim()) return;
+                try {
+                    await addDoc(collection(db, getPublicCollectionPath(collectionName)), {
+                        ...newItem,
+                        year: collectionName === 'timeline' ? parseInt(newItem.content, 10) : undefined,
+                        familySideId: selectedSideId,
+                        timestamp: serverTimestamp(),
+                    });
+                    setNewItem({ title: '', content: '' });
+                    setIsAdding(false);
+                } catch (error) {
+                    console.error(`Error adding ${collectionName} item: `, error);
+                }
+            };
+
+            if (selectedItem) {
+                return (
+                    <Card title={selectedItem.title} className="min-h-[600px]" isRTL={isRTL}>
+                        <ActionButton icon={X} onClick={() => setSelectedItem(null)} className="mb-6 bg-gray-500 hover:bg-gray-600 py-2" isRTL={isRTL}>
+                            {t('contentBackBtn')}
+                        </ActionButton>
+                        <div className={`prose max-w-none p-4 bg-gray-50 rounded-lg border border-gray-200 ${isRTL ? 'text-right' : 'text-left'}`}>
+                            {collectionName === 'timeline' && <p className="text-indigo-600 font-bold text-xl mb-4">{t('contentYear')}: {selectedItem.year}</p>}
+                            <p className="whitespace-pre-wrap text-gray-700">{selectedItem.content}</p>
+                        </div>
+                    </Card>
+                );
+            }
+            
+            const addButtonLabel = title.includes(t('bookTitle')) ? t('contentAddChapter') : t('contentAddEvent');
+
+            return (
+                <Card title={title} className="min-h-[600px] flex flex-col" isRTL={isRTL}>
+                    <div className={`mb-4 flex ${isRTL ? 'justify-start' : 'justify-end'}`}>
+                        <ActionButton icon={isAdding ? X : Plus} onClick={() => setIsAdding(!isAdding)} className='py-2' isRTL={isRTL}>
+                            {isAdding ? t('galleryCancelBtn') : addButtonLabel}
+                        </ActionButton>
+                    </div>
+
+                    {isAdding && (
+                        <div className={`p-4 mb-6 bg-indigo-50 rounded-xl shadow-inner border border-indigo-200 ${isRTL ? 'text-right' : 'text-left'}`}>
+                            <h3 className="font-semibold text-lg mb-3 text-indigo-800">{addButtonLabel}</h3>
+                            <input name="title" type="text" placeholder={t('contentTitle')} value={newItem.title} onChange={handleInputChange} className={`w-full p-3 border rounded-lg mb-2 focus:ring-indigo-500 focus:border-indigo-500 ${isRTL ? 'text-right' : 'text-left'}`} dir={isRTL ? 'rtl' : 'ltr'}/>
+                            {collectionName === 'timeline' ? (
+                                <input name="content" type="number" placeholder={t('contentYear')} value={newItem.content} onChange={handleInputChange} className={`w-full p-3 border rounded-lg mb-2 focus:ring-indigo-500 focus:border-indigo-500 ${isRTL ? 'text-right' : 'text-left'}`} dir="ltr"/>
+                            ) : (
+                                <textarea name="content" placeholder={placeholder} value={newItem.content} onChange={handleInputChange} className={`w-full p-3 border rounded-lg mb-3 h-24 focus:ring-indigo-500 focus:border-indigo-500 ${isRTL ? 'text-right' : 'text-left'}`} dir={isRTL ? 'rtl' : 'ltr'}></textarea>
+                            )}
+                            <ActionButton onClick={handleAddItem} className='w-full py-2' isRTL={isRTL}>{t('contentSaveBtn')}</ActionButton>
+                        </div>
+                    )}
+
+                    <div className="space-y-3 flex-grow">
+                        {items.map(item => (
+                            <div key={item.id} className={`flex justify-between items-center p-4 bg-white rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition ${isRTL ? 'text-right' : 'text-left'}`}>
+                                <div className={`flex items-center ${isRTL ? 'space-x-3 space-x-reverse' : 'space-x-3'}`}>
+                                    <Icon className="text-indigo-600 flex-shrink-0" size={24} />
+                                    <div>
+                                        <p className="text-lg font-semibold text-gray-800">{item.title}</p>
+                                        {collectionName === 'timeline' && <p className="text-indigo-500 font-medium text-sm">{t('contentYear')}: {item.year}</p>}
+                                    </div>
+                                </div>
+                                {detailView && (
+                                    <button onClick={() => setSelectedItem(item)} className="text-gray-500 hover:text-indigo-600 p-2 rounded-full hover:bg-indigo-50 transition" title="View Details">
+                                        <Eye size={20} />
+                                    </button>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                    {items.length === 0 && !isAdding && (
+                        <p className="text-center text-gray-500 py-12 bg-gray-50 rounded-lg">{t('contentEmpty', { sideId: selectedSideId })}</p>
+                    )}
+                </Card>
+            );
+        };
+
+        // 6. Family Tree (Placeholder)
+        const FamilyTree = ({ selectedSideId }) => {
+            const { t, isRTL } = useTranslation();
+            return (
+                <Card title={t('treeTitle')} className="min-h-[600px] bg-white" isRTL={isRTL}>
+                    <p className="text-lg text-gray-700 mb-6">
+                        {t('treeDesc')} <span className="font-semibold text-indigo-600">{selectedSideId}</span>.
+                    </p>
+                    <div className="p-10 bg-green-50 border-2 border-dashed border-green-400 rounded-2xl text-center shadow-lg">
+                        <Users size={64} className="mx-auto text-green-600 mb-6" />
+                        <h3 className="text-2xl font-bold text-green-800">{t('treePlaceholderTitle')}</h3>
+                        <p className="text-gray-600 mt-3 max-w-lg mx-auto">
+                            {t('treePlaceholderDesc')}
+                        </p>
+                        <div className={`mt-8 flex justify-center ${isRTL ? 'space-x-6 space-x-reverse' : 'space-x-6'}`}>
+                            <div className="p-4 bg-white rounded-xl shadow-xl transition hover:shadow-green-300/50">
+                                <p className="font-semibold text-gray-800">Root Member</p>
+                                <p className="text-lg text-green-600">The Founder</p>
+                            </div>
+                            <div className="p-4 bg-white rounded-xl shadow-xl transition hover:shadow-green-300/50">
+                                <p className="font-semibold text-gray-800">Total Records</p>
+                                <p className="text-lg text-green-600">~ 25 People</p>
+                            </div>
+                        </div>
+                    </div>
+                </Card>
+            );
+        };
+
+        // 7. Mailbox
+        const Mailbox = ({ db, userId, username, isAuthReady }) => {
+            const { t, isRTL } = useTranslation();
+            const [messages, setMessages] = useState([]);
+            const [isComposing, setIsComposing] = useState(false);
+            const [recipientUsername, setRecipientUsername] = useState('');
+            const [messageContent, setMessageContent] = useState('');
+            const [composeError, setComposeError] = useState(null);
+
+            // Get messages for the current user's private collection
+            useEffect(() => {
+                if (!db || !userId) return setMessages([]);
+                const q = collection(db, `artifacts/${appId}/users/${userId}/messages`);
+                const unsubscribe = onSnapshot(q, (snapshot) => {
+                    const items = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    setMessages(items.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0)));
+                }, (error) => {
+                    console.error("Error fetching messages:", error);
+                });
+                return () => unsubscribe();
+            }, [db, userId]);
+
+            const handleSendMessage = async () => {
+                const trimmedUsername = recipientUsername.trim().toLowerCase();
+                const content = messageContent.trim();
+                setComposeError(null);
+
+                if (!trimmedUsername || !content) {
+                    setComposeError(t('mailboxErrorRequired'));
+                    return;
+                }
+
+                if (trimmedUsername === username) {
+                    setComposeError(t('mailboxErrorSelf'));
+                    return;
+                }
+
+                try {
+                    const profilesRef = collection(db, getPublicCollectionPath('profiles'));
+                    const q = query(profilesRef, where('username', '==', trimmedUsername));
+                    const querySnapshot = await getDocs(q);
+
+                    if (querySnapshot.empty) {
+                        setComposeError(t('mailboxErrorUserNotFound', { username: trimmedUsername }));
+                        return;
+                    }
+
+                    const recipientDoc = querySnapshot.docs[0];
+                    const recipientUID = recipientDoc.data().uid;
+
+                    // Send message to the recipient's private collection
+                    const recipientMessagesRef = collection(db, `artifacts/${appId}/users/${recipientUID}/messages`);
+                    await addDoc(recipientMessagesRef, {
+                        senderUsername: username,
+                        recipientUsername: trimmedUsername,
+                        content: content,
+                        timestamp: serverTimestamp(),
+                        isRead: false,
+                    });
+
+                    setRecipientUsername('');
+                    setMessageContent('');
+                    setIsComposing(false);
+
+                } catch (error) {
+                    console.error("Error sending message: ", error);
+                    setComposeError("An error occurred while sending the message. Check console.");
+                }
+            };
+
+            const handleToggleRead = async (message) => {
+                try {
+                    const docRef = doc(db, `artifacts/${appId}/users/${userId}/messages`, message.id);
+                    await updateDoc(docRef, { isRead: !message.isRead });
+                } catch (error) {
+                    console.error("Error updating message status:", error);
+                }
+            };
+
+            const handleDeleteMessage = async (messageId) => {
+                try {
+                    const docRef = doc(db, `artifacts/${appId}/users/${userId}/messages`, messageId);
+                    await deleteDoc(docRef);
+                } catch (error) {
+                    console.error("Error deleting message:", error);
+                }
+            };
+
+            const unreadCount = messages.filter(m => !m.isRead).length;
+
+            return (
+                <Card title={t('mailboxTitle', { count: unreadCount })} className="min-h-[600px] flex flex-col" isRTL={isRTL}>
+                    <div className={`mb-4 flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-200 ${isRTL ? 'text-right' : 'text-left'}`}>
+                        <p className="text-sm text-gray-700">{t('mailboxYourUsername')} <span className="font-bold text-indigo-600">{username}</span></p>
+                        <ActionButton icon={isComposing ? X : MessageSquare} onClick={() => setIsComposing(!isComposing)} className='bg-green-600 hover:bg-green-700 py-2' isRTL={isRTL}>
+                            {isComposing ? t('mailboxCancelCompose') : t('mailboxComposeBtn')}
+                        </ActionButton>
+                    </div>
+
+                    {isComposing && (
+                        <div className={`p-4 mb-6 bg-indigo-50 rounded-xl shadow-inner border border-indigo-200 ${isRTL ? 'text-right' : 'text-left'}`}>
+                            <h3 className="font-semibold text-lg mb-3 text-indigo-800">{t('mailboxNewMessage')}</h3>
+                            {composeError && <p className={`text-sm text-red-600 bg-red-100 p-2 rounded-lg mb-3 flex items-center ${isRTL ? 'justify-end' : 'justify-start'}`}><X size={16} className={isRTL ? 'ml-1' : 'mr-1'}/> {composeError}</p>}
+                            <input
+                                type="text"
+                                placeholder={t('mailboxRecipient')}
+                                value={recipientUsername}
+                                onChange={(e) => setRecipientUsername(e.target.value)}
+                                className={`w-full p-3 border border-gray-300 rounded-lg mb-2 focus:ring-indigo-500 focus:border-indigo-500 ${isRTL ? 'text-right' : 'text-left'}`}
+                                dir="ltr" // Username is typically LTR (unless specifically stated)
+                            />
+                            <textarea
+                                placeholder={t('mailboxContent')}
+                                value={messageContent}
+                                onChange={(e) => setMessageContent(e.target.value)}
+                                className={`w-full p-3 border border-gray-300 rounded-lg mb-3 h-24 focus:ring-indigo-500 focus:border-indigo-500 ${isRTL ? 'text-right' : 'text-left'}`}
+                                dir={isRTL ? 'rtl' : 'ltr'}
+                            ></textarea>
+                            <ActionButton icon={Send} onClick={handleSendMessage} className='w-full py-2' isRTL={isRTL}>
+                                {t('mailboxSendBtn')}
+                            </ActionButton>
+                        </div>
+                    )}
+
+                    <div className="space-y-3 mt-4 flex-grow">
+                        {messages.length === 0 ? (
+                            <p className="text-center text-gray-500 py-12 bg-gray-50 rounded-lg">{t('mailboxEmpty')}</p>
+                        ) : (
+                            messages.map(msg => (
+                                <div key={msg.id} className={`p-4 rounded-xl shadow-md transition duration-150 ${isRTL ? 'text-right' : 'text-left'} ${msg.isRead ? 'bg-white hover:bg-gray-50 border border-gray-200' : 'bg-yellow-50 border-2 border-yellow-400/50 hover:bg-yellow-100'}`}>
+                                    <div className="flex justify-between items-start">
+                                        <div className={isRTL ? 'text-right' : 'text-left'}>
+                                            <p className={`font-bold text-gray-900 flex items-center ${isRTL ? 'justify-end' : 'justify-start'}`}>
+                                                {isRTL ? t('mailboxSentBy') : ''} <span className={`text-indigo-600 ${isRTL ? 'mr-2' : 'ml-2'}`}>{msg.senderUsername}</span> {isRTL ? '' : t('mailboxSentBy')}
+                                                {!msg.isRead && <span className={`text-xs bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full font-medium ${isRTL ? 'mr-3' : 'ml-3'}`}>{t('mailboxNew')}</span>}
+                                            </p>
+                                            <p className="text-xs text-gray-500 mt-1">
+                                                <Clock size={12} className={`inline ${isRTL ? 'ml-1' : 'mr-1'}`}/>
+                                                {msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleString(isRTL ? 'he-IL' : 'en-US') : 'Just now'}
+                                            </p>
+                                        </div>
+                                        <div className={`flex space-x-2 flex-shrink-0 ${isRTL ? 'space-x-reverse' : ''}`}>
+                                            <button onClick={() => handleToggleRead(msg)} className="text-sm text-indigo-500 hover:text-indigo-700 p-1 rounded-full hover:bg-indigo-100 transition" title={t('mailboxToggleRead')}>
+                                                <Eye size={18} />
+                                            </button>
+                                            <button onClick={() => handleDeleteMessage(msg.id)} className="text-sm text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-100 transition" title={t('mailboxDelete')}>
+                                                <Trash2 size={16} />
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <p className="mt-3 text-gray-700 whitespace-pre-wrap border-t border-gray-100 pt-3">{msg.content}</p>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </Card>
+            );
+        };
+
+        // 8. Admin Panel Component (With Side Access Control)
+        const AdminPanel = ({ db, userId }) => {
+            const { t, lang, isRTL } = useTranslation();
+            const [profiles, setProfiles] = useState([]);
+            const [familySides, setFamilySides] = useState([]);
+            const [selectedProfileIds, setSelectedProfileIds] = useState([]); // For new side creation
+            
+            const [newSideName, setNewSideName] = useState('');
+            const [newSideNameHe, setNewSideNameHe] = useState('');
+            const [newSideNameFr, setNewSideNameFr] = useState('');
+            const [newSideNameYi, setNewSideNameYi] = useState('');
+            const [newSideNameNl, setNewSideNameNl] = useState('');
+
+            const [newSideError, setNewSideError] = useState(null);
+
+            // Fetch all profiles (used for user assignment)
+            useEffect(() => {
+                if (!db) return;
+                const q = collection(db, getPublicCollectionPath('profiles'));
+                const unsubscribe = onSnapshot(q, (snapshot) => {
+                    const items = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    setProfiles(items.sort((a, b) => (b.lastLogin?.seconds || 0) - (a.lastLogin?.seconds || 0)));
+                });
+                return () => unsubscribe();
+            }, [db]);
+
+            // Fetch all family sides
+            useEffect(() => {
+                if (!db) return;
+                const q = collection(db, getPublicCollectionPath('familySides'));
+                const unsubscribe = onSnapshot(q, (snapshot) => {
+                    const items = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    setFamilySides(items.sort((a, b) => a.name_en.localeCompare(b.name_en, 'en')));
+                });
+                return () => unsubscribe();
+            }, [db]);
+
+            // --- Family Side Management Handlers ---
+            const handleAddFamilySide = async () => {
+                const nameEn = newSideName.trim();
+                const nameHe = newSideNameHe.trim();
+                
+                setNewSideError(null);
+
+                if (!nameEn || !nameHe) {
+                    setNewSideError(t('adminSideNameRequired') + ' (English and Hebrew names required).');
+                    return;
+                }
+                if (familySides.some(side => side.id === nameEn.toLowerCase().replace(/\s+/g, '-'))) {
+                    setNewSideError(t('adminSideExists'));
+                    return;
+                }
+
+                try {
+                    const sideId = nameEn.toLowerCase().replace(/\s+/g, '-');
+                    const initialUserIds = selectedProfileIds.length > 0 ? selectedProfileIds : [userId]; // Add creator by default
+
+                    await setDoc(doc(db, getPublicCollectionPath('familySides'), sideId), {
+                        id: sideId,
+                        name_en: nameEn,
+                        name_he: nameHe,
+                        name_fr: newSideNameFr.trim() || nameEn,
+                        name_yi: newSideNameYi.trim() || nameEn,
+                        name_nl: newSideNameNl.trim() || nameEn,
+                        allowedUserIds: initialUserIds, // Assign selected users
+                        timestamp: serverTimestamp(),
+                    });
+                    
+                    // Clear fields
+                    setNewSideName('');
+                    setNewSideNameHe('');
+                    setNewSideNameFr('');
+                    setNewSideNameYi('');
+                    setNewSideNameNl('');
+                    setSelectedProfileIds([]);
+
+                } catch (error) {
+                    console.error("Error adding family side:", error);
+                    setNewSideError(t('adminSideFail'));
+                }
+            };
+
+            const handleDeleteFamilySide = async (id) => {
+                try {
+                    await deleteDoc(doc(db, getPublicCollectionPath('familySides'), id));
+                } catch (error) {
+                    console.error("Error deleting family side:", error);
+                }
+            };
+
+            // --- User Assignment Handlers ---
+            const handleToggleUserAccess = async (sideId, profileUid, isCurrentlyAllowed) => {
+                const sideRef = doc(db, getPublicCollectionPath('familySides'), sideId);
+                
+                try {
+                    if (isCurrentlyAllowed) {
+                        await updateDoc(sideRef, {
+                            allowedUserIds: arrayRemove(profileUid)
+                        });
+                    } else {
+                        await updateDoc(sideRef, {
+                            allowedUserIds: arrayUnion(profileUid)
+                        });
+                    }
+                } catch (error) {
+                    console.error("Error updating side access:", error);
+                }
+            };
+
+            const handleToggleAdminStatus = async (profile) => {
+                if (profile.uid === userId || profile.username === SYSTEM_ADMIN_USERNAME) return;
+                
+                try {
+                    const docRef = doc(db, getPublicCollectionPath('profiles'), profile.uid);
+                    await updateDoc(docRef, { isAdmin: !profile.isAdmin });
+                } catch (error) {
+                    console.error("Error updating admin status:", error);
+                }
+            };
+            
+            // Function to get side name based on current language
+            const getSideName = (side) => {
+                const langCode = lang;
+                return side[`name_${langCode}`] || side.name_en || side.id;
+            };
+
+
+            return (
+                <Card title={t('adminTitle')} className="min-h-[600px] bg-white" isRTL={isRTL}>
+                    <p className="text-gray-600 mb-6">{t('adminDesc')}</p>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                        
+                        {/* 8a. Family Side Creation and Access */}
+                        <div className="p-5 bg-yellow-50 rounded-xl shadow-lg border border-yellow-300">
+                            <h3 className={`text-xl font-bold text-yellow-800 mb-4 flex items-center ${isRTL ? 'justify-end' : 'justify-start'}`}>
+                                <List className={isRTL ? 'ml-2' : 'mr-2'} /> {t('adminSidesTitle')}
+                            </h3>
+                            <div className="space-y-2 mb-4">
+                                <input type="text" placeholder={t('adminSidePlaceholder') + ' (English Name - ID)'} value={newSideName} onChange={(e) => setNewSideName(e.target.value)} className={`w-full p-3 border rounded-lg ${isRTL ? 'text-right' : 'text-left'}`} dir="ltr"/>
+                                <input type="text" placeholder={t('adminSidePlaceholder') + ' (שם עברי - חובה)'} value={newSideNameHe} onChange={(e) => setNewSideNameHe(e.target.value)} className={`w-full p-3 border rounded-lg ${isRTL ? 'text-right' : 'text-left'}`} dir="rtl"/>
+                                <input type="text" placeholder={t('adminSidePlaceholder') + ' (Fr. Name - Optional)'} value={newSideNameFr} onChange={(e) => setNewSideNameFr(e.target.value)} className={`w-full p-3 border rounded-lg ${isRTL ? 'text-right' : 'text-left'}`} dir="ltr"/>
+                                <input type="text" placeholder={t('adminSidePlaceholder') + ' (Yi. Name - Optional)'} value={newSideNameYi} onChange={(e) => setNewSideNameYi(e.target.value)} className={`w-full p-3 border rounded-lg ${isRTL ? 'text-right' : 'text-left'}`} dir="rtl"/>
+                                <input type="text" placeholder={t('adminSidePlaceholder') + ' (Nl. Name - Optional)'} value={newSideNameNl} onChange={(e) => setNewSideNameNl(e.target.value)} className={`w-full p-3 border rounded-lg ${isRTL ? 'text-right' : 'text-left'}`} dir="ltr"/>
+                            </div>
+                            
+                            <h4 className={`font-semibold text-gray-700 mt-6 mb-2 border-t pt-3 ${isRTL ? 'text-right' : 'text-left'}`}>{t('adminAccessTitle')}</h4>
+                            <div className="max-h-40 overflow-y-auto p-2 bg-white rounded-lg border border-gray-300">
+                                <p className="text-sm text-gray-500 mb-2">{t('adminAccessPlaceholder')}</p>
+                                {profiles.map(profile => (
+                                    <div key={profile.uid} className={`flex items-center justify-between p-1 hover:bg-gray-50 rounded transition ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+                                        <label className={`flex items-center cursor-pointer ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+                                            <input 
+                                                type="checkbox"
+                                                checked={selectedProfileIds.includes(profile.uid)}
+                                                onChange={(e) => {
+                                                    if (e.target.checked) {
+                                                        setSelectedProfileIds([...selectedProfileIds, profile.uid]);
+                                                    } else {
+                                                        setSelectedProfileIds(selectedProfileIds.filter(id => id !== profile.uid));
+                                                    }
+                                                }}
+                                                className={`w-4 h-4 text-indigo-600 border-gray-300 rounded ${isRTL ? 'ml-2' : 'mr-2'}`}
+                                            />
+                                            <span className="text-sm text-gray-700 font-medium">{profile.username} ({profile.email})</span>
+                                        </label>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {newSideError && <p className="text-sm text-red-600 bg-red-100 p-2 rounded-lg mt-3">{newSideError}</p>}
+                            <ActionButton icon={Plus} onClick={handleAddFamilySide} className='w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 mt-4' isRTL={isRTL} disabled={!newSideName.trim() || !newSideNameHe.trim()}>
+                                {t('adminSideAddBtn')}
+                            </ActionButton>
+
+                            <h4 className={`font-semibold text-gray-700 mt-6 mb-2 border-t pt-3 ${isRTL ? 'text-right' : 'text-left'}`}>{t('adminSideExisting', { count: familySides.length })}</h4>
+                            <div className="max-h-48 overflow-y-auto space-y-2">
+                                {familySides.length === 0 ? (
+                                    <p className="text-sm text-gray-500">No family sides defined.</p>
+                                ) : (
+                                    familySides.map(side => (
+                                        <div key={side.id} className={`flex justify-between items-center p-2 bg-white rounded-lg border border-gray-200 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+                                            <div className={isRTL ? 'text-right' : 'text-left'}>
+                                                <p className="text-sm font-medium text-gray-800">{getSideName(side)}</p>
+                                                <p className="text-xs text-gray-500">ID: {side.id}</p>
+                                            </div>
+                                            <button onClick={() => handleDeleteFamilySide(side.id)} className="text-red-500 hover:text-red-700 transition" title="Delete Side">
+                                                <Trash2 size={16} />
+                                            </button>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
+                        </div>
+
+                        {/* 8b. User Management and Role Toggling */}
+                        <div className="p-5 bg-gray-50 rounded-xl shadow-lg border border-gray-300">
+                            <h3 className={`text-xl font-bold text-gray-800 mb-4 flex items-center ${isRTL ? 'justify-end' : 'justify-start'}`}>
+                                <UserCheck className={isRTL ? 'ml-2' : 'mr-2'} /> {t('adminUsersTitle', { count: profiles.length })}
+                            </h3>
+                            <div className="max-h-[450px] overflow-y-auto space-y-3">
+                                {profiles.map(profile => (
+                                    <div key={profile.uid} className={`flex justify-between items-center p-3 bg-white rounded-lg shadow-sm border border-gray-100 transition hover:shadow-md ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+                                        <div className={isRTL ? 'text-right' : 'text-left'}>
+                                            <p className="font-bold text-gray-800">{profile.username}</p>
+                                            <p className="text-xs text-gray-500 truncate w-32">{profile.email}</p>
+                                        </div>
+                                        <div className={`flex items-center space-x-2 flex-shrink-0 ${isRTL ? 'space-x-reverse' : ''}`}>
+                                            {profile.isAdmin ? (
+                                                <span className={`text-xs font-semibold px-2 py-1 rounded-full ${profile.username === SYSTEM_ADMIN_USERNAME ? 'text-blue-700 bg-blue-100' : 'text-green-700 bg-green-100'}`}>
+                                                    {profile.username === SYSTEM_ADMIN_USERNAME ? t('adminSystemAdmin') : t('adminUserAdmin')}
+                                                </span>
+                                            ) : (
+                                                <span className="text-xs font-semibold px-2 py-1 rounded-full text-gray-700 bg-gray-100">{t('adminUserMember')}</span>
+                                            )}
+                                            <button 
+                                                onClick={() => handleToggleAdminStatus(profile)} 
+                                                disabled={profile.uid === userId || profile.username === SYSTEM_ADMIN_USERNAME}
+                                                className={`text-sm p-1 rounded-full transition ${profile.isAdmin ? 'text-orange-500 hover:bg-orange-100' : 'text-indigo-500 hover:bg-indigo-100'} disabled:opacity-50`}
+                                                title={t('adminToggleAdmin')}
+                                            >
+                                                <Settings size={18} />
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        
+                        {/* 8c. Side Access Management (Assign/Unassign users to existing sides) */}
+                        <div className="p-5 bg-indigo-50 rounded-xl shadow-lg border border-indigo-300">
+                            <h3 className={`text-xl font-bold text-indigo-800 mb-4 flex items-center ${isRTL ? 'justify-end' : 'justify-start'}`}>
+                                <Shield className={isRTL ? 'ml-2' : 'mr-2'} /> {t('adminAccessTitle')}
+                            </h3>
+                            {familySides.length === 0 ? (
+                                <p className="text-sm text-gray-700">{t('noSidesFound')}</p>
+                            ) : (
+                                <div className="space-y-4 max-h-[450px] overflow-y-auto">
+                                    {familySides.map(side => (
+                                        <div key={side.id} className="p-3 bg-white rounded-lg shadow-inner border border-indigo-200">
+                                            <h4 className="font-bold text-indigo-700 mb-2">{getSideName(side)}</h4>
+                                            <p className="text-xs text-gray-500 mb-2">{t('adminAccessUserList', { count: profiles.length })}</p>
+                                            <div className="space-y-1">
+                                                {profiles.map(profile => {
+                                                    const isAllowed = side.allowedUserIds?.includes(profile.uid);
+                                                    return (
+                                                        <div 
+                                                            key={profile.uid} 
+                                                            className={`flex items-center justify-between text-sm p-1 rounded transition ${isAllowed ? 'bg-green-50' : 'hover:bg-gray-50'} ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}
+                                                        >
+                                                            <span className="text-gray-700">{profile.username}</span>
+                                                            <button 
+                                                                onClick={() => handleToggleUserAccess(side.id, profile.uid, isAllowed)}
+                                                                className={`p-1 rounded-full transition ${isAllowed ? 'text-green-600 hover:bg-green-200' : 'text-gray-500 hover:bg-gray-200'}`}
+                                                                title={isAllowed ? 'Remove Access' : 'Grant Access'}
+                                                            >
+                                                                {isAllowed ? <Check size={16} /> : <Plus size={16} />}
+                                                            </button>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </Card>
+            );
+        };
+
+        // --- Main Application Component Wrapper ---
+
+        const AppContent = () => {
+            const { db, auth, userId, username, isAdmin, isAuthReady } = useFirebase();
+            const { t, isRTL, lang, setLang } = useTranslation();
+            const [view, setView] = useState('tree');
+            const [selectedFamilySide, setSelectedFamilySide] = useState(null);
+
+            const handleSignOut = () => {
+                if (auth) {
+                    signOut(auth).catch(e => console.error("Error signing out:", e));
+                    // Reset state upon sign out
+                    setSelectedFamilySide(null);
+                    setView('tree');
+                }
+            };
+
+            // Show the AuthScreen if authentication is not ready or failed/signed out.
+            if (!isAuthReady || !userId) {
+                return <AuthScreen auth={auth} isAuthReady={isAuthReady} />;
+            }
+
+            // Determine the content component based on the current view
+            const renderContent = () => {
+                if (!selectedFamilySide && ['tree', 'calendar', 'timeline', 'book'].includes(view)) {
+                    return (
+                        <Card title={t('selectSide')} className="min-h-[600px] flex items-center justify-center" isRTL={isRTL}>
+                            <p className={`text-center text-xl text-gray-600 p-8 bg-gray-50 rounded-xl border border-dashed border-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>
+                                <List className={`mx-auto w-8 h-8 text-indigo-500 mb-3 ${isRTL ? 'block' : 'block'}`} />
+                                {t('sideSelectorPlaceholder')}
+                            </p>
+                        </Card>
+                    );
+                }
+
+                switch (view) {
+                    case 'gallery':
+                        return <FamilyGallery db={db} userId={userId} />;
+                    case 'calendar':
+                        return <FamilyCalendar db={db} selectedSideId={selectedFamilySide} />;
+                    case 'timeline':
+                        return <ContentListComponent 
+                            db={db} 
+                            selectedSideId={selectedFamilySide} 
+                            collectionName="timeline" 
+                            title={t('navTimeline')} 
+                            icon={Clock} 
+                            placeholder={t('contentStory')}
+                            detailView={true}
+                        />;
+                    case 'book':
+                        return <ContentListComponent 
+                            db={db} 
+                            selectedSideId={selectedFamilySide} 
+                            collectionName="book" 
+                            title={t('navBook')} 
+                            icon={BookOpen} 
+                            placeholder={t('contentStory')}
+                            detailView={true}
+                        />;
+                    case 'tree':
+                        return <FamilyTree selectedSideId={selectedFamilySide} />;
+                    case 'mailbox':
+                        return <Mailbox db={db} userId={userId} username={username} isAuthReady={isAuthReady} />;
+                    case 'admin':
+                        if (isAdmin) {
+                            return <AdminPanel db={db} userId={userId} />;
+                        }
+                        return <Card title={t('adminLabel')} className="min-h-[600px]" isRTL={isRTL}><p className="text-red-600 font-semibold">{t('adminAccessTitle')}</p></Card>
+                    default:
+                        return <Card title={t('portalTitle')} className="min-h-[600px]" isRTL={isRTL}><p className="text-gray-700">{t('welcome')}. Use the sidebar to navigate.</p></Card>;
+                }
+            };
+
+            return (
+                <div className="min-h-screen bg-gray-100 font-sans p-4 md:p-8" dir={isRTL ? 'rtl' : 'ltr'}>
+                    <div className={`flex flex-col lg:flex-row max-w-7xl mx-auto rounded-3xl shadow-3xl bg-white/70 backdrop-blur-md ${isRTL ? 'lg:flex-row-reverse' : ''}`}>
+                        
+                        {/* Sidebar Navigation */}
+                        <div className={`w-full lg:w-64 bg-indigo-900 p-6 shadow-2xl flex-shrink-0 ${isRTL ? 'rounded-t-3xl lg:rounded-l-3xl lg:rounded-tr-none lg:rounded-br-3xl order-2 lg:order-1 text-right' : 'rounded-t-3xl lg:rounded-r-3xl lg:rounded-tl-none lg:rounded-bl-3xl order-2 lg:order-1 text-left'}`}>
+                            <div className="mb-8 border-b border-indigo-700 pb-4">
+                                <h1 className={`text-3xl font-extrabold text-white flex items-center ${isRTL ? 'justify-end' : 'justify-start'}`}>
+                                    {isRTL && <Home className="w-8 h-8 ml-2 text-indigo-300" />}
+                                    {t('portalTitle')}
+                                    {!isRTL && <Home className="w-8 h-8 mr-2 text-indigo-300" />}
+                                </h1>
+                                <p className="text-sm text-indigo-300 mt-1">
+                                    {t('welcome')} <span className="font-semibold capitalize">{username}</span>
+                                </p>
+                                {isAdmin && <span className="text-xs font-semibold text-yellow-300 bg-indigo-800/50 px-2 py-0.5 mt-1 inline-block rounded-full shadow-inner">{t('adminSystemAdmin')}</span>}
+                            </div>
+                            
+                            {/* Language Selector */}
+                            <div className="mb-6">
+                                <label className={`block text-xs font-medium text-indigo-300 mb-2 flex items-center ${isRTL ? 'justify-end' : 'justify-start'}`}>
+                                    <Globe className={`w-4 h-4 ${isRTL ? 'ml-1' : 'mr-1'}`} /> Language
+                                </label>
+                                <select 
+                                    value={lang} 
+                                    onChange={(e) => setLang(e.target.value)}
+                                    className="w-full p-2 bg-indigo-800 text-white border border-indigo-700 rounded-lg text-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                >
+                                    <option value="en">English</option>
+                                    <option value="he">עברית</option>
+                                    <option value="fr">Français</option>
+                                    <option value="yi">ייִדיש</option>
+                                    <option value="nl">Nederlands</option>
+                                </select>
+                            </div>
+
+                            <div className="space-y-2">
+                                <NavItem icon={Users} label={t('navTree')} isActive={view === 'tree'} onClick={() => setView('tree')} isRTL={isRTL} />
+                                <NavItem icon={GalleryHorizontal} label={t('navGallery')} isActive={view === 'gallery'} onClick={() => setView('gallery')} isRTL={isRTL} />
+                                <NavItem icon={Calendar} label={t('navCalendar')} isActive={view === 'calendar'} onClick={() => setView('calendar')} isRTL={isRTL} />
+                                <NavItem icon={Clock} label={t('navTimeline')} isActive={view === 'timeline'} onClick={() => setView('timeline')} isRTL={isRTL} />
+                                <NavItem icon={BookOpen} label={t('navBook')} isActive={view === 'book'} onClick={() => setView('book')} isRTL={isRTL} />
+                                <NavItem icon={Mail} label={t('navMailbox')} isActive={view === 'mailbox'} onClick={() => setView('mailbox')} isRTL={isRTL} />
+                                {isAdmin && (
+                                    <NavItem 
+                                        icon={Settings} 
+                                        label={t('adminLabel')} 
+                                        isActive={view === 'admin'} 
+                                        onClick={() => setView('admin')} 
+                                        className="border-t border-indigo-700 pt-3 mt-3 text-yellow-300 hover:text-white"
+                                        isRTL={isRTL}
+                                    />
+                                )}
+                            </div>
+
+                            <div className="mt-10 pt-4 border-t border-indigo-700">
+                                <ActionButton icon={LogOut} onClick={handleSignOut} className="w-full bg-red-600 hover:bg-red-700 shadow-md shadow-red-500/50" isRTL={isRTL}>
+                                    {t('signOut')}
+                                </ActionButton>
+                            </div>
+                        </div>
+
+                        {/* Main Content Area */}
+                        <div className={`flex-grow p-6 md:p-8 bg-white/80 shadow-xl ${isRTL ? 'rounded-b-3xl lg:rounded-r-3xl lg:rounded-tl-none' : 'rounded-b-3xl lg:rounded-l-3xl lg:rounded-tr-none'}`}>
+                            <div className="mb-6">
+                                {/* Family Side Selector only visible for side-specific content */}
+                                {['tree', 'calendar', 'timeline', 'book'].includes(view) && (
+                                    <FamilySideSelector 
+                                        db={db} 
+                                        onSelect={setSelectedFamilySide} 
+                                        selectedSideId={selectedFamilySide} 
+                                        userId={userId}
+                                    />
+                                )}
+                            </div>
+                            {renderContent()}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Main App component applying the Language Context
+        const App = () => {
+            const [lang, setLang] = useState('he'); // Start with Hebrew as requested in the latest prompt
+            return (
+                <LanguageContext.Provider value={{ lang, setLang }}>
+                    <AppContent />
+                </LanguageContext.Provider>
+            );
+        };
+
+        // Render the app
+        const root = createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
