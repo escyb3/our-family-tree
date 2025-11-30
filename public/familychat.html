@@ -1188,13 +1188,16 @@ async function loadChatUsers() {
     if (!list) return;
 
     const registeredUsers = await getRegisteredUsersUIDs();
+    const registeredUIDs = registeredUsers.map(u => u.uid);
 
     const chatSnapshot = await getDocs(collection(db, "chatUsers"));
     const filteredUsers = {};
 
     chatSnapshot.forEach(docSnap => {
-        const match = registeredUsers.find(u => u.uid === docSnap.id);
-        if (match) filteredUsers[docSnap.id] = docSnap.data();
+        // רק אם ה-UID נמצא ברשימת המשתמשים הרשומים
+        if (registeredUIDs.includes(docSnap.id)) {
+            filteredUsers[docSnap.id] = docSnap.data();
+        }
     });
 
     displayUsers(filteredUsers);
