@@ -1167,48 +1167,44 @@
         const root = ReactDOM.createRoot(container);
         root.render(React.createElement(App));
         
-  // 1️⃣ קבל רשימת UID של כל המשתמשים הרשומים ב-Auth
-  async function getRegisteredUsersUIDs() {
-    // Cloud Function או REST API של Firebase Admin דרוש כדי לקרוא את כל המשתמשים ב-Auth
-    // בצד client בלבד אין אפשרות לקבל את כל רשימת המשתמשים
-    // לכן הפתרון הנפוץ: שמירת 'users' collection ב-Firestore עם UID של כל משתמש רשום
-    const snapshot = await db.ref('users').once('value');
-    const usersObj = snapshot.val() || {};
-    // usersObj = { uid1: {name:..., email:...}, uid2: {...}, ... }
-    return Object.keys(usersObj);
-  }
+// 1️⃣ קבל רשימת UID של משתמשים רשומים
+async function getRegisteredUsersUIDs() {
+  const usersCol = collection(db, "users"); // collection בשם users
+  const usersSnapshot = await getDocs(usersCol);
+  const uids = usersSnapshot.docs.map(doc => doc.id); // UID = document ID
+  return uids;
+}
 
-  // 2️⃣ טען את רשימת המשתמשים בצ'אט וסנן
-  async function loadChatUsers() {
-    const registeredUIDs = await getRegisteredUsersUIDs();
+// 2️⃣ טען את רשימת המשתמשים בצ'אט וסנן
+async function loadChatUsers() {
+  const registeredUIDs = await getRegisteredUsersUIDs();
 
-    db.ref('chatUsers').on('value', snapshot => {
-      const allUsers = snapshot.val() || {};
-      const filteredUsers = {};
+  const chatCol = collection(db, "chatUsers");
+  const chatSnapshot = await getDocs(chatCol);
+  const filteredUsers = {};
 
-      for (const uid in allUsers) {
-        if (registeredUIDs.includes(uid)) {
-          filteredUsers[uid] = allUsers[uid];
-        }
-      }
-
-      displayUsers(filteredUsers);
-    });
-  }
-
-  // 3️⃣ פונקציה להצגת המשתמשים בצ'אט
-  function displayUsers(users) {
-    const usersList = document.getElementById('usersList');
-    usersList.innerHTML = '';
-    for (const uid in users) {
-      const li = document.createElement('li');
-      li.textContent = users[uid].name || uid;
-      usersList.appendChild(li);
+  chatSnapshot.forEach(doc => {
+    if (registeredUIDs.includes(doc.id)) {
+      filteredUsers[doc.id] = doc.data();
     }
-  }
+  });
 
-  // אתחול
-  loadChatUsers();
+  displayUsers(filteredUsers);
+}
+
+// 3️⃣ הצגת המשתמשים בצ'אט
+function displayUsers(users) {
+  const usersList = document.getElementById('usersList');
+  usersList.innerHTML = '';
+  for (const uid in users) {
+    const li = document.createElement('li');
+    li.textContent = users[uid].name || uid;
+    usersList.appendChild(li);
+  }
+}
+
+// קריאה ראשונית
+loadChatUsers();
     </script>
 </body>
 </html>
