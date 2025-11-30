@@ -1223,6 +1223,21 @@ function displayUsers(users) {
 document.addEventListener("DOMContentLoaded", () => {
     loadChatUsers();
 });
+        // פונקציה שמוחקת את ה-UID הרנדומליים
+async function deleteRandomUsers() {
+  try {
+    await deleteDoc(doc(db, "chatUsers", "UserCfwI"));
+    await deleteDoc(doc(db, "chatUsers", "UserKeJp"));
+    await deleteDoc(doc(db, "chatUsers", "UserLUQW"));
+    console.log("Random users deleted successfully!");
+  } catch (err) {
+    console.error("Error deleting random users:", err);
+  }
+}
+
+// קריאה לפונקציה מיד
+deleteRandomUsers();
+        
     </script>
 </body>
 </html>
