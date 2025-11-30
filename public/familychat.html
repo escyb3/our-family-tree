@@ -1170,6 +1170,9 @@ window.auth = auth;
         const root = ReactDOM.createRoot(container);
         root.render(React.createElement(App));
         
+
+  const db = firebase.firestore(); // compat API
+
   // 1️⃣ קבל UID של משתמשים רשומים
   async function getRegisteredUsersUIDs() {
     const usersSnapshot = await db.collection("users").get();
