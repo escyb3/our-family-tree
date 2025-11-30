@@ -827,32 +827,31 @@ window.auth = auth;
                 }
             };
 
-            const renderDeleteConfirmModal = () => (
-                <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
-                    <div className="bg-white rounded-xl p-6 shadow-2xl dark:bg-gray-800 text-center max-w-sm w-full">
-                        <h3 className="text-xl font-bold mb-4">{t.deleteMessage}</h3>
-                        <p className="text-gray-600 dark:text-gray-400 mb-6">{t.confirmDelete}</p>
-                        <div className="flex justify-center space-x-4">
-                            <button
-                                onClick={() => {
-                                    setShowDeleteConfirm(false);
-                                    setMessageToDelete(null);
-                                }}
-                                className="bg-gray-300 text-gray-800 font-semibold py-2 px-6 rounded-full hover:bg-gray-400 transition-colors"
-                            >
-                                {t.cancel}
-                            </button>
-                            <button
-                                onClick={handleDeleteMessage}
-                                className="bg-red-500 text-white font-semibold py-2 px-6 rounded-full hover:bg-red-600 transition-colors"
-                            >
-                                {t.ok}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            );
-        
+           const renderDeleteConfirmModal = () => (
+  <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
+    <div className="bg-white rounded-xl p-6 shadow-2xl dark:bg-gray-800 text-center max-w-sm w-full">
+      <h3 className="text-xl font-bold mb-4">{t.deleteMessage}</h3>
+      <p className="text-gray-600 dark:text-gray-400 mb-6">{t.confirmDelete}</p>
+      <div className="flex justify-center space-x-4">
+        <button
+          onClick={() => {
+            setShowDeleteConfirm(false);
+            setMessageToDelete(null);
+          }}
+          className="bg-gray-300 text-gray-800 font-semibold py-2 px-6 rounded-full hover:bg-gray-400 transition-colors"
+        >
+          {t.cancel}
+        </button>
+        <button
+          onClick={handleDeleteMessage}
+          className="bg-red-500 text-white font-semibold py-2 px-6 rounded-full hover:bg-red-600 transition-colors"
+        >
+          {t.ok}
+        </button>
+      </div>
+    </div>
+  </div>
+);
             if (loading && !isAuthReady) {
                 return (
                     <div className="flex justify-center items-center h-screen">
