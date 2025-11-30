@@ -23,7 +23,7 @@
         // Import Firebase modules for use in the script below
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithCustomToken, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot, collection, query, orderBy, addDoc, serverTimestamp, setDoc, updateDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, onSnapshot, collection, query, orderBy, addDoc, serverTimestamp, setDoc, updateDoc, deleteDoc, getDoc,getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         
         // Expose Firebase modules to the global scope for the React script
         window.firebase = {
@@ -1166,6 +1166,39 @@
         const container = document.getElementById('root');
         const root = ReactDOM.createRoot(container);
         root.render(React.createElement(App));
+        
+  // 1️⃣ קבל UID של משתמשים רשומים
+  async function getRegisteredUsersUIDs() {
+    const usersSnapshot = await db.collection("users").get();
+    const uids = [];
+    usersSnapshot.forEach(doc => uids.push(doc.id));
+    return uids;
+  }
+
+  // 2️⃣ טען משתמשים בצ'אט וסנן
+  async function loadChatUsers() {
+    const registeredUIDs = await getRegisteredUsersUIDs();
+    const chatSnapshot = await db.collection("chatUsers").get();
+
+    const filteredUsers = {};
+    chatSnapshot.forEach(doc => {
+      if (registeredUIDs.includes(doc.id)) filteredUsers[doc.id] = doc.data();
+    });
+
+    displayUsers(filteredUsers);
+  }
+
+  function displayUsers(users) {
+    const usersList = document.getElementById("usersList");
+    usersList.innerHTML = "";
+    for (const uid in users) {
+      const li = document.createElement("li");
+      li.textContent = users[uid].name || uid;
+      usersList.appendChild(li);
+    }
+  }
+
+  loadChatUsers();
     </script>
 </body>
 </html>
