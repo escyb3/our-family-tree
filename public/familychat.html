@@ -1172,59 +1172,54 @@ window.auth = auth;
         
 
 
-<script type="module">
-    const { collection, getDocs, doc } = window.firebaseModular;
+// ---------------------------------------------------------
+// 1️⃣ קבל UID של משתמשים רשומים
+// ---------------------------------------------------------
+async function getRegisteredUsersUIDs() {
+    const snapshot = await getDocs(collection(db, "users"));
+    return snapshot.docs.map(d => ({ uid: d.id, ...d.data() }));
+}
 
-    async function getRegisteredUsersUIDs() {
-        try {
-            const snapshot = await getDocs(collection(window.db, "users"));
-            const uids = snapshot.docs.map(d => ({ uid: d.id, ...d.data() }));
-            return uids;
-        } catch (err) {
-            console.error("Error fetching registered users:", err);
-            return [];
-        }
-    }
+// ---------------------------------------------------------
+// 2️⃣ טען משתמשים בצ'אט וסנן הרשומים בלבד
+// ---------------------------------------------------------
+async function loadChatUsers() {
+    const list = document.getElementById("usersList");
+    if (!list) return;
 
-    async function loadChatUsers() {
-        const list = document.getElementById("usersList");
-        if (!list) return;
+    const registeredUsers = await getRegisteredUsersUIDs();
 
-        const registeredUsers = await getRegisteredUsersUIDs();
+    const chatSnapshot = await getDocs(collection(db, "chatUsers"));
+    const filteredUsers = {};
 
-        const chatUsersSnapshot = await getDocs(collection(window.db, "chatUsers"));
-        const filteredUsers = {};
-
-        chatUsersSnapshot.forEach(docSnap => {
-            const match = registeredUsers.find(u => u.uid === docSnap.id);
-            if (match) filteredUsers[docSnap.id] = docSnap.data();
-        });
-
-        displayUsers(filteredUsers);
-    }
-
-    function displayUsers(users) {
-        const usersList = document.getElementById("usersList");
-        usersList.innerHTML = "";
-
-        Object.entries(users).forEach(([uid, data]) => {
-            const li = document.createElement("li");
-            li.innerHTML = `<strong>${data.name || "Unnamed User"}</strong><br><small>${uid}</small>`;
-            li.onclick = () => openChatWith(uid);
-            usersList.appendChild(li);
-        });
-    }
-
-    function openChatWith(uid) {
-        console.log("Opening chat with:", uid);
-        const header = document.getElementById("chat-header");
-        if (header) header.textContent = `Chat with ${uid}`;
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        loadChatUsers();
+    chatSnapshot.forEach(docSnap => {
+        const match = registeredUsers.find(u => u.uid === docSnap.id);
+        if (match) filteredUsers[docSnap.id] = docSnap.data();
     });
-</script>
+
+    displayUsers(filteredUsers);
+}
+
+// ---------------------------------------------------------
+// 3️⃣ הצגת המשתמשים
+// ---------------------------------------------------------
+function displayUsers(users) {
+    const usersList = document.getElementById("usersList");
+    usersList.innerHTML = "";
+
+    Object.entries(users).forEach(([uid, data]) => {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${data.name || "Unnamed User"}</strong><br><small>${uid}</small>`;
+        usersList.appendChild(li);
+    });
+}
+
+// ---------------------------------------------------------
+// 4️⃣ אתחול
+// ---------------------------------------------------------
+document.addEventListener("DOMContentLoaded", () => {
+    loadChatUsers();
+});
     </script>
 </body>
 </html>
