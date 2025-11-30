@@ -1171,40 +1171,87 @@ window.auth = auth;
         root.render(React.createElement(App));
         
 
-  const db = firebase.firestore(); // compat API
 
-  // 1️⃣ קבל UID של משתמשים רשומים
-  async function getRegisteredUsersUIDs() {
-    const usersSnapshot = await db.collection("users").get();
-    const uids = [];
-    usersSnapshot.forEach(doc => uids.push(doc.id));
-    return uids;
-  }
+<script type="text/babel">
+const { collection, getDocs, doc } = window.firebaseModular;
 
-  // 2️⃣ טען משתמשים בצ'אט וסנן
-  async function loadChatUsers() {
-    const registeredUIDs = await getRegisteredUsersUIDs();
-    const chatSnapshot = await db.collection("chatUsers").get();
+// ---------------------------------------------------------
+// 1️⃣ שליפת כל המשתמשים הרשומים
+// ---------------------------------------------------------
+async function getRegisteredUsersUIDs() {
+    try {
+        const snapshot = await getDocs(collection(window.db, "users"));
+        const uids = snapshot.docs.map(d => ({ uid: d.id, ...d.data() }));
+        return uids;
+    } catch (err) {
+        console.error("Error fetching registered users:", err);
+        return [];
+    }
+}
 
+// ---------------------------------------------------------
+// 2️⃣ טעינת משתמשים בצ'אט וסינון הרשומים בלבד
+// ---------------------------------------------------------
+async function loadChatUsers() {
+    const list = document.getElementById("usersList");
+    if (!list) return;
+
+    list.innerHTML = "<p>Loading users...</p>";
+
+    const registeredUsers = await getRegisteredUsersUIDs();
+
+    if (!registeredUsers.length) {
+        list.innerHTML = "<p>No registered users found.</p>";
+        return;
+    }
+
+    const chatUsersSnapshot = await getDocs(collection(window.db, "chatUsers"));
     const filteredUsers = {};
-    chatSnapshot.forEach(doc => {
-      if (registeredUIDs.includes(doc.id)) filteredUsers[doc.id] = doc.data();
+
+    chatUsersSnapshot.forEach(docSnap => {
+        const match = registeredUsers.find(u => u.uid === docSnap.id);
+        if (match) filteredUsers[docSnap.id] = docSnap.data();
     });
 
     displayUsers(filteredUsers);
-  }
+}
 
-  function displayUsers(users) {
+// ---------------------------------------------------------
+// 3️⃣ הצגת המשתמשים
+// ---------------------------------------------------------
+function displayUsers(users) {
     const usersList = document.getElementById("usersList");
     usersList.innerHTML = "";
-    for (const uid in users) {
-      const li = document.createElement("li");
-      li.textContent = users[uid].name || uid;
-      usersList.appendChild(li);
-    }
-  }
 
-  loadChatUsers();
+    Object.entries(users).forEach(([uid, data]) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <strong>${data.name || "Unnamed User"}</strong><br>
+            <small>${uid}</small>
+        `;
+        li.onclick = () => openChatWith(uid);
+        usersList.appendChild(li);
+    });
+}
+
+// ---------------------------------------------------------
+// 4️⃣ פתיחת צ'אט (placeholder, ניתן להרחיב)
+// ---------------------------------------------------------
+function openChatWith(uid) {
+    console.log("Opening chat with:", uid);
+    const header = document.getElementById("chat-header");
+    if (header) header.textContent = `Chat with ${uid}`;
+    // כאן אפשר להוסיף טעינת הודעות וכו'
+}
+
+// ---------------------------------------------------------
+// 5️⃣ אתחול אחרי טעינת הדף
+// ---------------------------------------------------------
+document.addEventListener("DOMContentLoaded", () => {
+    loadChatUsers();
+});
+
+</script>
     </script>
 </body>
 </html>
