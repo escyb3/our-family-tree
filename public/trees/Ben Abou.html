@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Tree: Descendants of Ben Abou/Sebag (Multi-Spouse)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+        }
+        /* Card Styles */
+        .person-card {
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            min-width: 150px;
+            max-width: 200px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .person-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+        /* Gender Colors */
+        .gender-M { background-color: #DBEAFE; border: 2px solid #3B82F6; } /* Blue for Male */
+        .gender-F { background-color: #FCE7F3; border: 2px solid #EC4899; } /* Pink for Female */
+        .gender-U { background-color: #E5E7EB; border: 2px solid #6B7280; } /* Grey for Unknown */
+
+        /* Tree Structure */
+        .tree-container {
+            display: inline-block;
+            white-space: nowrap;
+            padding: 2rem;
+            min-width: 100%;
+        }
+        .couple-node {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        /* Wrapper for the person/spouse cards */
+        .couple-card-wrapper {
+            display: flex;
+            align-items: stretch;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+        /* Line connecting two partners or a partner to the main person */
+        .spouse-line {
+            height: 2px;
+            width: 10px; /* Reduced width for multiple connections */
+            background-color: #1F2937;
+            align-self: center;
+        }
+        /* Vertical line connecting couple/multiple spouses to children */
+        .children-line-vertical {
+            position: relative;
+            width: 2px;
+            background-color: #1F2937;
+            height: 20px;
+            margin-bottom: 0;
+        }
+
+        /* Container for all children of a couple */
+        .descendants-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 0;
+            width: 100%;
+            /* Initially collapsed, handled by JS */
+        }
+
+        /* Horizontal line connecting all siblings */
+        .children-horizontal-connector {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            padding-top: 0;
+            margin-top: 0;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .children-horizontal-line {
+            position: absolute;
+            top: 0;
+            height: 2px;
+            background-color: #1F2937;
+            width: 100%;
+        }
+
+        /* Container for each child node, positioned horizontally */
+        .child-node-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 0 15px; /* Spacing between siblings */
+        }
+
+        /* Vertical line from horizontal connector to the child's couple node */
+        .child-vertical-line {
+            width: 2px;
+            height: 20px;
+            background-color: #1F2937;
+            position: relative;
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .tree-container {
+                overflow-x: scroll;
+            }
+            .person-card {
+                min-width: 100px;
+                max-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 p-4 md:p-8">
+    <header class="text-center mb-8">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800">🌳 Ben Abou/Sebag Family Tree</h1>
+        <p class="text-lg text-gray-600 mt-2">Introducing multiple generations with support for multiple spouses.</p>
+        <p class="text-sm text-green-700 mt-2 font-bold">The tree is updated to October 2025- 7/5785</p>
+    </header>
+
+    <div class="overflow-x-auto shadow-lg bg-white rounded-xl p-4">
+        <div id="familyTree" class="tree-container">
+            <!-- עץ המשפחה יוצג כאן באמצעות JavaScript -->
+        </div>
+    </div>
+
+    <div class="mt-8 p-6 bg-gray-100 rounded-xl shadow-md max-w-4xl mx-auto">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Key and instructions:</h2>
+        <div class="flex flex-col sm:flex-row justify-around gap-4 text-sm">
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-M mr-2"></div><span>Male (זכר)</span></div>
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-F mr-2"></div><span>Female (נקבה)</span></div>
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-U mr-2"></div><span>Unknown (לא ידוע)</span></div>
+        </div>
+        <p class="mt-4 text-gray-600 text-sm">Click on a person's card to **show/hide their descendants**.</p>
+        <p class="text-xs mt-2 text-gray-500 font-bold">Please note: A person with multiple partner cards linked  is a person who has had multiple documented partners.</p>
+    </div>
+
+    <script>
+        // Data containing all family members, structured with unique IDs.
+        // NOTE: The visualization requires children_ids and spouse_ids to build the tree structure.
+        const peopleData = [
+            // --- GEN 1: Yitzhak Ben Abou & Zohra Sebag (Root) ---
+            { id: 'P001', name: 'Yitzhak Ben Abou', gender: 'M', birth_year: null, death_year: 'Deceased', children_ids: ['P003', 'P006', 'P016', 'P021', 'P023'], spouse_ids: ['P002'] },
+            { id: 'P002', name: 'Zohra Sebag', gender: 'F', birth_year: null, death_year: null, children_ids: ['P003', 'P006', 'P016', 'P021', 'P023'] },
+
+            // --- GEN 2: Children of Yitzhak/Zohra ---
+            // 1. Messoda (Multiple Spouses)
+            { id: 'P003', name: 'Messoda Dite Marcelle Ben Abou', gender: 'F', birth_year: 1914, death_year: 2008, children_ids: [], spouse_ids: ['P004', 'P005'] },
+            { id: 'P004', name: 'Aron Serour', gender: 'M', birth_year: null, death_year: null },
+            { id: 'P005', name: 'Morris ??', gender: 'U', birth_year: null, death_year: null },
+            // 2. Shalom
+            { id: 'P006', name: 'Shalom Ben Abou', gender: 'M', birth_year: 1920, death_year: 2005, children_ids: ['P008', 'P011'], spouse_ids: ['P007'] },
+            { id: 'P007', name: 'Rachel Ben Hamou', gender: 'F', birth_year: null, death_year: null, children_ids: ['P008', 'P011'], notes: 'Married ~1943' },
+            // 3. Suzanne
+            { id: 'P016', name: 'Suzanne Abou', gender: 'F', birth_year: 1925, death_year: 2006, children_ids: ['P018', 'P019'], spouse_ids: ['P017'] },
+            { id: 'P017', name: 'Raymond Andre Greiss', gender: 'M', birth_year: null, death_year: null, children_ids: ['P018', 'P019'] },
+            // 4. Anina
+            { id: 'P021', name: 'Anina Anny Ben Abou', gender: 'F', birth_year: 1927, death_year: 2013, children_ids: ['P022_c1'], spouse_ids: ['P022'] },
+            { id: 'P022', name: 'Jacques Morand Baur', gender: 'M', birth_year: null, death_year: null, children_ids: ['P022_c1'] },
+            // 5. Chaim
+            { id: 'P023', name: 'Chaim Jano Ben Abou', gender: 'M', birth_year: 1931, death_year: null, children_ids: [], spouse_ids: [] },
+
+            // --- GEN 3: Children of Shalom Ben Abou & Rachel Ben Hamou ---
+            // 1. Salomon (Primary branch for deeper generations)
+            { id: 'P008', name: 'Salomon Ben Abou', gender: 'M', birth_year: 1944, death_year: 2023, children_ids: ['P010_1', 'P010_2', 'P010_4', 'P010_8', 'P010_13', 'P010_18', 'P010_21', 'P010_27'], spouse_ids: ['P009'], notes: 'Married 1965' },
+            { id: 'P009', name: 'Susan Mazal Ellharrar', gender: 'F', birth_year: null, death_year: null, children_ids: ['P010_1', 'P010_2', 'P010_4', 'P010_8', 'P010_13', 'P010_18', 'P010_21', 'P010_27'] },
+            // 2. Marie
+            { id: 'P011', name: 'Marie Ben Abou', gender: 'F', birth_year: 1947, death_year: 'Alive', children_ids: ['P013', 'P014', 'P015'], spouse_ids: ['P012'] },
+            { id: 'P012', name: 'Yehuda Uzan', gender: 'M', birth_year: null, death_year: null, children_ids: ['P013', 'P014', 'P015'] },
+
+            // --- GEN 3: Children of Suzanne Abou & Raymond Andre Greiss ---
+            // 1. Gabriel (Multiple Spouses)
+            { id: 'P018', name: 'Gabriel Greiss', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: ['P018_c1', 'P018_c2', 'P018_c3'], spouse_ids: ['P018_s1', 'P018_s2'] },
+            { id: 'P018_s1', name: 'Harris Reneman', gender: 'U', birth_year: null, death_year: null }, // Assuming no children with Harris based on list
+            { id: 'P018_s2', name: 'Unk Barralon', gender: 'U', birth_year: null, death_year: null, children_ids: ['P018_c1', 'P018_c2', 'P018_c3'] },
+            // 2. Chantal
+            { id: 'P019', name: 'Chantal Greiss', gender: 'F', birth_year: null, death_year: 'Alive', children_ids: ['P020_c1', 'P020_c2'], spouse_ids: ['P020'] },
+            { id: 'P020', name: 'Unknown Carpentier', gender: 'U', birth_year: null, death_year: null, children_ids: ['P020_c1', 'P020_c2'] },
+
+            // --- GEN 3: Child of Anina Anny Ben Abou & Jacques Morand Baur ---
+            { id: 'P022_c1', name: 'Jean Claude Baur', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 4: Children of Salomon Ben Abou & Susan Mazal Ellharrar (8 children) ---
+            { id: 'P010_1', name: 'Baby Ben Abou', gender: 'U', birth_year: 1966, death_year: null, children_ids: [], spouse_ids: [] }, // No death year, assumed no descendants
+            { id: 'P010_2', name: 'Nathalie Ben Abou', gender: 'F', birth_year: 1967, death_year: 'Alive', children_ids: [], spouse_ids: ['P010_3'], notes: 'Married 2019' },
+            { id: 'P010_3', name: 'Erez Gal', gender: 'M', birth_year: null, death_year: null, children_ids: [] },
+            { id: 'P010_4', name: 'Yitzhak Ben Avi', gender: 'M', birth_year: 1968, death_year: 'Alive', children_ids: ['P010_6', 'P010_7'], spouse_ids: ['P010_5'] },
+            { id: 'P010_5', name: 'Chagit ?', gender: 'F', birth_year: null, death_year: null, children_ids: ['P010_6', 'P010_7'] },
+            { id: 'P010_8', name: 'Ariela Ben Abou', gender: 'F', birth_year: 1972, death_year: 'Alive', children_ids: ['P010_10', 'P010_11', 'P010_12'], spouse_ids: ['P010_9'], notes: 'Married 1998' },
+            { id: 'P010_9', name: 'Max Keinan', gender: 'M', birth_year: null, death_year: null, children_ids: ['P010_10', 'P010_11', 'P010_12'] },
+            { id: 'P010_13', name: 'Yuval Ben Abou', gender: 'M', birth_year: 1973, death_year: 'Alive', children_ids: ['P010_15', 'P010_16', 'P010_17'], spouse_ids: ['P010_14'], notes: 'Married 2005' },
+            { id: 'P010_14', name: 'Bat Chen Teomim', gender: 'F', birth_year: null, death_year: null, children_ids: ['P010_15', 'P010_16', 'P010_17'] },
+            { id: 'P010_18', name: 'Gadi Ben Abou', gender: 'M', birth_year: 1978, death_year: 'Alive', children_ids: ['P010_20'], spouse_ids: ['P010_19'], notes: 'Married 2006' },
+            { id: 'P010_19', name: 'Anat Peretz', gender: 'F', birth_year: null, death_year: null, children_ids: ['P010_20'] },
+            { id: 'P010_21', name: 'Yanai Ben Abou', gender: 'M', birth_year: 1981, death_year: 'Alive', children_ids: ['P010_23', 'P010_24', 'P010_25', 'P010_26'], spouse_ids: ['P010_22'], notes: 'Married 2007' },
+            { id: 'P010_22', name: 'Merav Bromberg', gender: 'F', birth_year: null, death_year: null, children_ids: ['P010_23', 'P010_24', 'P010_25', 'P010_26'] },
+            { id: 'P010_27', name: 'Assi Ben Abou', gender: 'M', birth_year: 1984, death_year: 'Alive', children_ids: ['P010_29', 'P010_30', 'P010_31', 'P010_32'], spouse_ids: ['P010_28'], notes: 'Married 2011' },
+            { id: 'P010_28', name: 'Etti Sayag', gender: 'F', birth_year: null, death_year: null, children_ids: ['P010_29', 'P010_30', 'P010_31', 'P010_32'] },
+
+            // --- GEN 4: Children of Marie Ben Abou & Yehuda Uzan ---
+            { id: 'P013', name: 'Ram Uzan', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: ['P013_c1', 'P013_c2'], spouse_ids: ['P013_s'] },
+            { id: 'P013_s', name: 'Ravit Castiel', gender: 'F', birth_year: null, death_year: null, children_ids: ['P013_c1', 'P013_c2'] },
+            { id: 'P014', name: 'Yaron Uzan', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P015', name: 'Lior Uzan', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: ['P015_c1'], spouse_ids: ['P015_s'] },
+            { id: 'P015_s', name: 'Limor Alon', gender: 'F', birth_year: null, death_year: null, children_ids: ['P015_c1'] },
+
+            // --- GEN 4: Children of Suzanne Abou & Raymond Andre Greiss ---
+            // 1. Gabriel (Descendants)
+            { id: 'P018_c1', name: 'Benoit Greiss', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P018_c2', name: 'Laurielle Greiss', gender: 'F', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P018_c3', name: 'Romain Greiss', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            // 2. Chantal (Descendants)
+            { id: 'P020_c1', name: 'Cecile Carpentier', gender: 'F', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P020_c2', name: 'Carine Carpentier', gender: 'F', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 5: Children of Yitzhak Ben Avi & Chagit ? ---
+            { id: 'P010_6', name: 'Naama Ben Avi', gender: 'F', birth_year: 2003, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P010_7', name: 'Itamar Ben Avi', gender: 'M', birth_year: 2008, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 5: Children of Ariela Ben Abou & Max Keinan ---
+            { id: 'P010_10', name: 'Shira Keinan', gender: 'F', birth_year: 2000, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P010_11', name: 'Ori Keinan', gender: 'M', birth_year: 2003, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P010_12', name: 'Ilay Keinan', gender: 'M', birth_year: 2009, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 5: Children of Yuval Ben Abou & Bat Chen Teomim ---
+            { id: 'P010_15', name: 'Ayelet Ben Abou', gender: 'F', birth_year: 2009, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P010_16', name: 'Eynat Ben Abou', gender: 'F', birth_year: 2011, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P010_17', name: 'Yael Ben Abou', gender: 'F', birth_year: 2011, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 5: Child of Gadi Ben Abou & Anat Peretz ---
+            { id: 'P010_20', name: 'Lian Ben Abou', gender: 'F', birth_year: 2013, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 5: Children of Yanai Ben Abou & Merav Bromberg ---
+            { id: 'P010_23', name: 'Yair Moshe Ben Abou', gender: 'M', birth_year: 2013, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P010_24', name: 'Avishai Yosef Ben Abou', gender: 'M', birth_year: 2016, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P010_25', name: 'Beeri Ido Ben Abou', gender: 'M', birth_year: 2019, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P010_26', name: 'Omer Shlomo Ben Abou', gender: 'M', birth_year: 2025, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 5: Children of Assi Ben Abou & Etti Sayag ---
+            { id: 'P010_29', name: 'Tehila Miriam Ben Abou', gender: 'F', birth_year: 2012, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P010_30', name: 'Noya Fiby Ben Abou', gender: 'F', birth_year: 2014, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P010_31', name: 'Ye\'Ela Rachel Ben Abou', gender: 'F', birth_year: 2018, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P010_32', name: 'Yali Channa Ben Abou', gender: 'F', birth_year: 2020, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 5: Children of Ram Uzan & Ravit Castiel ---
+            { id: 'P013_c1', name: 'Itay Uzan', gender: 'M', birth_year: 2009, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P013_c2', name: 'Shahar Uzan', gender: 'U', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 5: Child of Lior Uzan & Limor Alon ---
+            { id: 'P015_c1', name: 'Romi Uzan', gender: 'U', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 4: Child of Anina Anny Ben Abou & Jacques Morand Baur ---
+            { id: 'P022_c1', name: 'Jean Claude Baur', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+        ];
+
+        // --- Core JavaScript Logic ---
+
+         // Create a map for quick lookup
+        const peopleMap = peopleData.reduce((map, person) => {
+            map[person.id] = person;
+            return map;
+        }, {});
+
+        const rootId = 'P001';
+        const rootPerson = peopleMap[rootId];
+
+        // Function to create the HTML for a single person card
+        function createPersonCard(person, isSpouse) {
+            const status = person.death_year === 'Alive' ? ' (Alive)' : (person.death_year ? ` (d. ${person.death_year})` : '');
+            const dates = (person.birth_year || person.death_year) ?
+                `<div class="text-xs text-gray-500 mt-1">${person.birth_year ? `b. ${person.birth_year}` : ''}${person.birth_year && person.death_year ? ' - ' : ''}${person.death_year || ''}</div>` :
+                '';
+            
+            const card = document.createElement('div');
+            card.className = `person-card gender-${person.gender} w-full`;
+            card.setAttribute('data-id', person.id);
+            
+            // Only the main lineage person should have the click event to prevent double-toggling
+            // If the person has children and is not just a spouse card, allow toggle
+            if (!isSpouse || (person.children_ids && person.children_ids.length > 0)) { 
+                 // Ensure only one click handler exists if this person is part of the main lineage
+                card.onclick = toggleChildren;
+            }
+
+            // Create an icon based on gender/status
+            let icon = '';
+            if (person.gender === 'M') icon = '♂️';
+            else if (person.gender === 'F') icon = '♀️';
+            else icon = '👤';
+            
+            // Determine the arrow/icon for the children toggle, only show if children exist
+            const childrenIndicator = person.children_ids && person.children_ids.length > 0 ? 
+                    '<div class="text-xs mt-1 font-bold text-gray-700">⬇️</div>' : 
+                    '<div class="text-xs mt-1 font-bold text-gray-400">⚫</div>';
+
+            card.innerHTML = `
+                <div class="text-xl mb-1">${icon}</div>
+                <div class="font-semibold text-sm leading-tight">${person.name}</div>
+                <div class="text-xs font-mono text-gray-700">${person.id}</div>
+                ${dates}
+                ${person.note ? `<div class="text-xs mt-1 text-pink-700 font-medium">${person.note}</div>` : ''}
+                ${childrenIndicator}
+            `;
+            return card;
+        }
+
+        // Toggles the visibility of the descendants container
+        function toggleChildren(event) {
+            // Find the immediate parent couple-node
+            const coupleNode = event.currentTarget.closest('.couple-node');
+            if (!coupleNode) return;
+
+            // The descendants container is the second child of couple-node
+            const descendantsContainer = coupleNode.querySelector('.descendants-container');
+            if (descendantsContainer) {
+                if (descendantsContainer.style.display === 'none' || descendantsContainer.style.display === '') {
+                    descendantsContainer.style.display = 'flex';
+                } else {
+                    descendantsContainer.style.display = 'none';
+                }
+            }
+        }
+
+        // Recursively renders a single person/couple node and its descendants
+        function renderNode(personId) {
+            const person = peopleMap[personId];
+            if (!person) return null;
+
+            const coupleNode = document.createElement('div');
+            coupleNode.className = 'couple-node';
+            
+            // 1. Couple Card Wrapper
+            const coupleCardWrapper = document.createElement('div');
+            coupleCardWrapper.className = 'couple-card-wrapper';
+
+            // Main person card (always displayed first)
+            const personCard = createPersonCard(person, false);
+            coupleCardWrapper.appendChild(personCard);
+            
+            // --- Handle Multiple Spouses (using spouse_ids array) ---
+            let spousesToRender = [];
+            
+            // Prioritize spouse_ids (array) if it exists and is an array
+            if (person.spouse_ids && Array.isArray(person.spouse_ids)) {
+                spousesToRender = person.spouse_ids;
+            } else if (person.spouse_id) { // Fallback/compatibility check for old single-string property
+                spousesToRender = [person.spouse_id];
+            }
+
+            spousesToRender.forEach(spouseId => {
+                const spouse = peopleMap[spouseId];
+                if (spouse) {
+                    const spouseLine = document.createElement('div');
+                    spouseLine.className = 'spouse-line';
+                    coupleCardWrapper.appendChild(spouseLine);
+                    // Pass true for isSpouse. They do not trigger the children toggle themselves.
+                    coupleCardWrapper.appendChild(createPersonCard(spouse, true));
+                }
+            });
+            
+            coupleNode.appendChild(coupleCardWrapper);
+
+            // 2. Children Connection (Vertical Line)
+            // This line connects the couple/multiple spouses group to the children's horizontal line
+            if (person.children_ids && person.children_ids.length > 0) {
+                const vertLine = document.createElement('div');
+                vertLine.className = 'children-line-vertical';
+                coupleNode.appendChild(vertLine);
+
+                // 3. Descendants Container (Horizontal line + children nodes)
+                const descendantsContainer = document.createElement('div');
+                descendantsContainer.className = 'descendants-container';
+                descendantsContainer.style.display = 'none'; // Initially collapsed
+
+                const childNodes = renderDescendants(person.children_ids);
+                descendantsContainer.appendChild(childNodes);
+                coupleNode.appendChild(descendantsContainer);
+            }
+
+            return coupleNode;
+        }
+
+        // Renders the list of siblings and the horizontal connector
+        function renderDescendants(childrenIds) {
+            const childrenHorizontalConnector = document.createElement('div');
+            childrenHorizontalConnector.className = 'children-horizontal-connector';
+
+            // Add horizontal line connecting all children
+            const horizontalLine = document.createElement('div');
+            horizontalLine.className = 'children-horizontal-line';
+            childrenHorizontalConnector.appendChild(horizontalLine);
+
+            // Render each child node recursively
+            childrenIds.forEach(childId => {
+                const childNodeWrapper = document.createElement('div');
+                childNodeWrapper.className = 'child-node-wrapper';
+
+                // Vertical line from horizontal connector to the child node
+                const childVertLine = document.createElement('div');
+                childVertLine.className = 'child-vertical-line';
+                childNodeWrapper.appendChild(childVertLine);
+
+                // The recursive call to render the child's own couple-node
+                const childNode = renderNode(childId);
+                if (childNode) {
+                    childNodeWrapper.appendChild(childNode);
+                }
+                
+                childrenHorizontalConnector.appendChild(childNodeWrapper);
+            });
+
+            return childrenHorizontalConnector;
+        }
+
+        // Main function to start rendering the tree
+        function initFamilyTree() {
+            const treeContainer = document.getElementById('familyTree');
+            if (treeContainer && rootPerson) {
+                const rootNode = renderNode(rootId);
+                if (rootNode) {
+                    treeContainer.appendChild(rootNode);
+                }
+            }
+
+            // Manually expand the root node for visibility on load
+            const rootNodeElement = document.querySelector(`.person-card[data-id="${rootId}"]`);
+            const rootCoupleNode = rootNodeElement ? rootNodeElement.closest('.couple-node') : null;
+
+            if (rootCoupleNode) {
+                const rootDescendants = rootCoupleNode.querySelector('.descendants-container');
+                if (rootDescendants) {
+                    rootDescendants.style.display = 'flex';
+                }
+            }
+        }
+
+        window.onload = initFamilyTree;
+    </script>
+</body>
+</html>
