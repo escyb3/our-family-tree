@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Tree: Descendants of Ellharrar (Multi-Spouse)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+        }
+        /* Card Styles */
+        .person-card {
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            min-width: 150px;
+            max-width: 200px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .person-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+        /* Gender Colors */
+        .gender-M { background-color: #DBEAFE; border: 2px solid #3B82F6; } /* Blue for Male */
+        .gender-F { background-color: #FCE7F3; border: 2px solid #EC4899; } /* Pink for Female */
+        .gender-U { background-color: #E5E7EB; border: 2px solid #6B7280; } /* Grey for Unknown */
+
+        /* Tree Structure */
+        .tree-container {
+            display: inline-block;
+            white-space: nowrap;
+            padding: 2rem;
+            min-width: 100%;
+        }
+        .couple-node {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        /* Wrapper for the person/spouse cards */
+        .couple-card-wrapper {
+            display: flex;
+            align-items: stretch;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+        /* Line connecting two partners or a partner to the main person */
+        .spouse-line {
+            height: 2px;
+            width: 10px; /* Reduced width for multiple connections */
+            background-color: #1F2937;
+            align-self: center;
+        }
+        /* Vertical line connecting couple/multiple spouses to children */
+        .children-line-vertical {
+            position: relative;
+            width: 2px;
+            background-color: #1F2937;
+            height: 20px;
+            margin-bottom: 0;
+        }
+
+        /* Container for all children of a couple */
+        .descendants-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 0;
+            width: 100%;
+            /* Initially collapsed, handled by JS */
+        }
+
+        /* Horizontal line connecting all siblings */
+        .children-horizontal-connector {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            padding-top: 0;
+            margin-top: 0;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .children-horizontal-line {
+            position: absolute;
+            top: 0;
+            height: 2px;
+            background-color: #1F2937;
+            width: 100%;
+        }
+
+        /* Container for each child node, positioned horizontally */
+        .child-node-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 0 15px; /* Spacing between siblings */
+        }
+
+        /* Vertical line from horizontal connector to the child's couple node */
+        .child-vertical-line {
+            width: 2px;
+            height: 20px;
+            background-color: #1F2937;
+            position: relative;
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .tree-container {
+                overflow-x: scroll;
+            }
+            .person-card {
+                min-width: 100px;
+                max-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 p-4 md:p-8">
+    <header class="text-center mb-8">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800">🌳 Ellharrar Family Tree</h1>
+        <p class="text-lg text-gray-600 mt-2">Introducing multiple generations with support for multiple spouses.</p>
+        <p class="text-sm text-green-700 mt-2 font-bold">The tree is updated to October 2025- 7/5785</p>
+    </header>
+
+    <div class="overflow-x-auto shadow-lg bg-white rounded-xl p-4">
+        <div id="familyTree" class="tree-container">
+            <!-- עץ המשפחה יוצג כאן באמצעות JavaScript -->
+        </div>
+    </div>
+
+    <div class="mt-8 p-6 bg-gray-100 rounded-xl shadow-md max-w-4xl mx-auto">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Key and instructions:</h2>
+        <div class="flex flex-col sm:flex-row justify-around gap-4 text-sm">
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-M mr-2"></div><span>Male (זכר)</span></div>
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-F mr-2"></div><span>Female (נקבה)</span></div>
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-U mr-2"></div><span>Unknown (לא ידוע)</span></div>
+        </div>
+        <p class="mt-4 text-gray-600 text-sm">Click on a person's card to **show/hide their descendants**.</p>
+        <p class="text-xs mt-2 text-gray-500 font-bold">Please note: A person with multiple partner cards linked  is a person who has had multiple documented partners.</p>
+    </div>
+
+    <script>
+        // Data containing all family members, structured with unique IDs.
+        const peopleData = [
+            // --- GEN 1: Firsh Ellharrar & ?? ? (Root) ---
+            { id: 'P001', name: 'Firsh Ellharrar', gender: 'M', birth_year: null, death_year: 'Deceased', children_ids: ['P003', 'P021', 'P049'], spouse_ids: ['P002'] },
+            { id: 'P002', name: '?? ?', gender: 'U', birth_year: null, death_year: null, children_ids: ['P003', 'P021', 'P049'] },
+
+            // --- GEN 2: Children of Firsh ---
+            { id: 'P003', name: 'Aharon Ellharrar', gender: 'M', birth_year: 1881, death_year: 1967, children_ids: ['P005', 'P019', 'P020'], spouse_ids: ['P004'], notes: 'Married ~1917' },
+            { id: 'P004', name: 'Mazal Elook', gender: 'F', birth_year: null, death_year: null, children_ids: ['P005', 'P019', 'P020'] },
+            { id: 'P021', name: 'Moshe Elharar', gender: 'M', birth_year: 1893, death_year: 1973, children_ids: ['P023', 'P029', 'P031', 'P036', 'P042', 'P047', 'P048'], spouse_ids: ['P022'] },
+            { id: 'P022', name: 'Hnina Levy', gender: 'F', birth_year: null, death_year: null, children_ids: ['P023', 'P029', 'P031', 'P036', 'P042', 'P047', 'P048'] },
+            { id: 'P049', name: 'Issa Ellharrar', gender: 'M', birth_year: null, death_year: 'Deceased', children_ids: ['P051'], spouse_ids: ['P050'] },
+            { id: 'P050', name: '?? ?', gender: 'U', birth_year: null, death_year: null, children_ids: ['P051'] },
+            
+            // --- GEN 3: Children of Aharon & Mazal ---
+            { id: 'P005', name: 'Yosef Ellharrar', gender: 'M', birth_year: 1918, death_year: 1983, children_ids: ['P007', 'P008', 'P010', 'P017'], spouse_ids: ['P006'] },
+            { id: 'P006', name: 'Fiby Parchiya Malka', gender: 'F', birth_year: null, death_year: null, children_ids: ['P007', 'P008', 'P010', 'P017'] },
+            { id: 'P019', name: 'Fiby Ellharrar', gender: 'F', birth_year: 1921, death_year: 1989, children_ids: ['P019_c1'], spouse_ids: ['P019_s1', 'P019_s2'] }, // Multi-spouse
+            { id: 'P019_s1', name: 'Chaim Moyal', gender: 'M', birth_year: null, death_year: null },
+            { id: 'P019_s2', name: 'Chaim Kadosh', gender: 'M', birth_year: null, death_year: null, children_ids: ['P019_c1'] }, // Assuming Jacob is with Chaim Kadosh
+            { id: 'P020', name: 'Rachel Ellharrar', gender: 'F', birth_year: 1924, death_year: 2008, children_ids: ['P020_c1'], spouse_ids: ['P020_s'] },
+            { id: 'P020_s', name: 'Nissim Simon Dahan', gender: 'M', birth_year: null, death_year: null, children_ids: ['P020_c1'] },
+
+            // --- GEN 3: Children of Moshe & Hnina (Elharar/Erar/Larar) ---
+            { id: 'P023', name: 'Charles Erar', gender: 'M', birth_year: 1922, death_year: 2007, children_ids: ['P025', 'P026', 'P027'], spouse_ids: ['P024'], notes: 'Married 1952' },
+            { id: 'P024', name: 'Jacqueline Meyerovitch', gender: 'F', birth_year: null, death_year: null, children_ids: ['P025', 'P026', 'P027'] },
+            { id: 'P029', name: 'Fabienne Ellharrar', gender: 'F', birth_year: 1923, death_year: 2010, children_ids: [], spouse_ids: ['P030'], notes: 'Married 1962' },
+            { id: 'P030', name: 'André Marcelle Hirschler', gender: 'M', birth_year: null, death_year: null },
+            { id: 'P031', name: 'Michel Elias Elharar', gender: 'M', birth_year: 1926, death_year: 2008, children_ids: ['P033', 'P034', 'P035'], spouse_ids: ['P032'], notes: 'Married 1957' },
+            { id: 'P032', name: 'Jeanette G Gittleman', gender: 'F', birth_year: null, death_year: null, children_ids: ['P033', 'P034', 'P035'] },
+            { id: 'P036', name: 'Max E Larar', gender: 'M', birth_year: 1926, death_year: 2007, children_ids: ['P038', 'P039', 'P040', 'P041'], spouse_ids: ['P037'] },
+            { id: 'P037', name: 'Josie ?', gender: 'F', birth_year: null, death_year: null, children_ids: ['P038', 'P039', 'P040', 'P041'] },
+            { id: 'P042', name: 'Stella Ellharrar', gender: 'F', birth_year: 1932, death_year: 'Alive', children_ids: ['P044', 'P045', 'P046', 'P046_b1'], spouse_ids: ['P043'], notes: 'Married 1958' },
+            { id: 'P043', name: 'Herman P Weingord', gender: 'M', birth_year: null, death_year: null, children_ids: ['P044', 'P045', 'P046', 'P046_b1'] },
+            { id: 'P047', name: 'Sonia Sara Ellharrar', gender: 'F', birth_year: 1933, death_year: 'Alive', children_ids: ['P047_c1', 'P047_c2', 'P047_c3'], spouse_ids: ['P047_s'], notes: 'Married 1955' },
+            { id: 'P047_s', name: 'Ronald G Knorr', gender: 'M', birth_year: null, death_year: null, children_ids: ['P047_c1', 'P047_c2', 'P047_c3'] },
+            { id: 'P048', name: 'Edward Elharrar', gender: 'M', birth_year: null, death_year: 'Deceased', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 3: Child of Issa Ellharrar ---
+            { id: 'P051', name: 'Ayda x', gender: 'F', birth_year: null, death_year: 'Deceased', children_ids: ['P053', 'P054'], spouse_ids: ['P052'] },
+            { id: 'P052', name: '?? ?', gender: 'U', birth_year: null, death_year: null, children_ids: ['P053', 'P054'] },
+
+            // --- GEN 4: Children of Yosef & Fiby ---
+            { id: 'P007', name: 'Marie Ellharrar', gender: 'F', birth_year: 1940, death_year: 1950, children_ids: [], spouse_ids: [] },
+            { id: 'P008', name: 'Estelle Ellharrar', gender: 'F', birth_year: 1942, death_year: 'Alive', children_ids: ['P008_c1', 'P008_c2'], spouse_ids: ['P009'], notes: 'Married 1960' },
+            { id: 'P009', name: 'David Lezmi', gender: 'M', birth_year: null, death_year: null, children_ids: ['P008_c1', 'P008_c2'] },
+            // Primary link to previous tree: Susan Mazal Ellharrar
+            { id: 'P010', name: 'Susan Mazal Ellharrar', gender: 'F', birth_year: 1947, death_year: 'Alive', children_ids: ['P012', 'P013', 'P014', 'P015', 'P016', 'P016_b1', 'P016_b2', 'P016_b3'], spouse_ids: ['P011'], notes: 'Married 1965' },
+            { id: 'P011', name: 'Salomon Ben Abou', gender: 'M', birth_year: null, death_year: null, children_ids: ['P012', 'P013', 'P014', 'P015', 'P016', 'P016_b1', 'P016_b2', 'P016_b3'] },
+            { id: 'P017', name: 'Rosa Ellharrar', gender: 'F', birth_year: 1951, death_year: 2013, children_ids: ['P017_c1', 'P017_c2', 'P017_c3', 'P017_c4'], spouse_ids: ['P018'] },
+            { id: 'P018', name: 'Yitzhak Sebag', gender: 'M', birth_year: null, death_year: null, children_ids: ['P017_c1', 'P017_c2', 'P017_c3', 'P017_c4'] },
+            
+            // --- GEN 4: Child of Fiby & Chaim Kadosh ---
+            { id: 'P019_c1', name: 'Jacob Kadosh', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: ['P019_c1_c1'], spouse_ids: ['P019_c1_s'] },
+            { id: 'P019_c1_s', name: 'Rivka ?', gender: 'F', birth_year: null, death_year: null, children_ids: ['P019_c1_c1'] },
+            
+            // --- GEN 4: Child of Rachel & Nissim Dahan ---
+            { id: 'P020_c1', name: 'Maurice Dahan', gender: 'M', birth_year: 1943, death_year: 2011, children_ids: ['P020_c1_c1', 'P020_c1_c2'], spouse_ids: ['P020_c1_s'] },
+            { id: 'P020_c1_s', name: 'Wife ?', gender: 'F', birth_year: null, death_year: null, children_ids: ['P020_c1_c1', 'P020_c1_c2'] },
+
+            // --- GEN 4: Children of Charles & Jacqueline Erar ---
+            { id: 'P025', name: 'Jean-Pierre Erar', gender: 'M', birth_year: 1959, death_year: 'Alive', children_ids: ['P025_c1', 'P025_c2', 'P025_c3'], spouse_ids: ['P025_s'] },
+            { id: 'P025_s', name: 'Deborah J ?', gender: 'F', birth_year: null, death_year: null, children_ids: ['P025_c1', 'P025_c2', 'P025_c3'] },
+            { id: 'P026', name: 'Gerald Erar', gender: 'M', birth_year: 1960, death_year: 'Alive', children_ids: [], spouse_ids: ['P026_s'] },
+            { id: 'P026_s', name: 'Erica ?', gender: 'F', birth_year: null, death_year: null },
+            { id: 'P027', name: 'Patricia Erar', gender: 'F', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            
+            // --- GEN 4: Children of Michel Elias & Jeanette Larar ---
+            { id: 'P033', name: 'Leslie Ann Larar', gender: 'F', birth_year: 1959, death_year: 'Alive', children_ids: [], spouse_ids: ['P033_s'], notes: 'Married 1984' },
+            { id: 'P033_s', name: 'Manual M Dr Mendez', gender: 'M', birth_year: null, death_year: null },
+            { id: 'P034', name: 'Gerald N Larar', gender: 'M', birth_year: 1960, death_year: 'Alive', children_ids: ['P034_c1', 'P034_c2', 'P034_c3', 'P034_c4'], spouse_ids: ['P034_s'] },
+            { id: 'P034_s', name: 'Susan Gamer', gender: 'F', birth_year: null, death_year: null, children_ids: ['P034_c1', 'P034_c2', 'P034_c3', 'P034_c4'] },
+            { id: 'P035', name: 'Allen M Larar', gender: 'M', birth_year: 1962, death_year: 'Alive', children_ids: ['P035_c1'], spouse_ids: ['P035_s'], notes: 'Married 1987' },
+            { id: 'P035_s', name: 'Barbara J. Williams', gender: 'F', birth_year: null, death_year: null, children_ids: ['P035_c1'] },
+
+            // --- GEN 4: Children of Max E & Josie Larar ---
+            { id: 'P038', name: 'Diana Danielle Larar', gender: 'F', birth_year: 1958, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P039', name: 'Gad N Larar', gender: 'M', birth_year: 1959, death_year: 'Alive', children_ids: ['P039_c1'], spouse_ids: ['P039_s'] },
+            { id: 'P039_s', name: 'Charlene Berry', gender: 'F', birth_year: null, death_year: null, children_ids: ['P039_c1'] },
+            { id: 'P040', name: 'Rebecca Elharar', gender: 'F', birth_year: 1961, death_year: 'Alive', children_ids: ['P040_c1'], spouse_ids: ['P040_s'] },
+            { id: 'P040_s', name: '? ?', gender: 'U', birth_year: null, death_year: null, children_ids: ['P040_c1'] },
+            { id: 'P041', name: 'Abraham A Elarar', gender: 'M', birth_year: 1966, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            
+            // --- GEN 4: Children of Stella & Herman Weingord ---
+            { id: 'P044', name: 'Harry Alan Weingord', gender: 'M', birth_year: 1959, death_year: 'Alive', children_ids: ['P044_c1'], spouse_ids: ['P044_s'], notes: 'Married 1998' },
+            { id: 'P044_s', name: 'Susan S. Suh', gender: 'F', birth_year: null, death_year: null, children_ids: ['P044_c1'] },
+            { id: 'P045', name: 'Philip Neil Weingord', gender: 'M', birth_year: 1961, death_year: 'Alive', children_ids: ['P045_c1', 'P045_c2', 'P045_c3'], spouse_ids: ['P045_s'], notes: 'Married 1986' },
+            { id: 'P045_s', name: 'Melanie I Rosen', gender: 'F', birth_year: null, death_year: null, children_ids: ['P045_c1', 'P045_c2', 'P045_c3'] },
+            { id: 'P046', name: 'Stewart Jay Weingord', gender: 'M', birth_year: 1962, death_year: 'Alive', children_ids: ['P046_c1', 'P046_c2', 'P046_c3'], spouse_ids: ['P046_s'], notes: 'Married 1991' },
+            { id: 'P046_s', name: 'Linda Phyllis Epstein', gender: 'F', birth_year: null, death_year: null, children_ids: ['P046_c1', 'P046_c2', 'P046_c3'] },
+            { id: 'P046_b1', name: 'Jerry Joseph Weingord', gender: 'M', birth_year: 1964, death_year: 'Alive', children_ids: ['P046_b1_c1', 'P046_b1_c2'], spouse_ids: ['P046_b1_s'], notes: 'Married 1995' },
+            { id: 'P046_b1_s', name: 'Cheryl Lynn Dembner', gender: 'F', birth_year: null, death_year: null, children_ids: ['P046_b1_c1', 'P046_b1_c2'] },
+
+            // --- GEN 4: Children of Sonia Sara & Ronald G Knorr ---
+            { id: 'P047_c1', name: 'Jeffrey Albert Knorr', gender: 'M', birth_year: 1956, death_year: 2024, children_ids: ['P047_c1_c1', 'P047_c1_c2', 'P047_c1_c3', 'P047_c1_c4'], spouse_ids: ['P047_c1_s'], notes: 'Married 1990' },
+            { id: 'P047_c1_s', name: 'Stephanie J Johnson', gender: 'F', birth_year: null, death_year: null, children_ids: ['P047_c1_c1', 'P047_c1_c2', 'P047_c1_c3', 'P047_c1_c4'] },
+            { id: 'P047_c2', name: 'Audrey Knorr', gender: 'F', birth_year: 1957, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P047_c3', name: 'Pamela Knorr', gender: 'F', birth_year: 1960, death_year: 'Alive', children_ids: ['P047_c3_c1'], spouse_ids: ['P047_c3_s'] },
+            { id: 'P047_c3_s', name: '? ?', gender: 'U', birth_year: null, death_year: null, children_ids: ['P047_c3_c1'] },
+
+            // --- GEN 4: Children of Ayda x ---
+            { id: 'P053', name: 'Chaim ?', gender: 'M', birth_year: null, death_year: 'Deceased', children_ids: [], spouse_ids: [] },
+            { id: 'P054', name: 'Magi ?', gender: 'F', birth_year: null, death_year: 'Deceased', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 5: Children of Estelle & David Lezmi ---
+            { id: 'P008_c1', name: 'Elizabeth Lezmi', gender: 'F', birth_year: null, death_year: 'Alive', children_ids: ['P008_c1_c1', 'P008_c1_c2', 'P008_c1_c3', 'P008_c1_c4'], spouse_ids: ['P008_c1_s'] },
+            { id: 'P008_c1_s', name: 'Ariel Delouya', gender: 'M', birth_year: null, death_year: null, children_ids: ['P008_c1_c1', 'P008_c1_c2', 'P008_c1_c3', 'P008_c1_c4'] },
+            { id: 'P008_c2', name: 'Igal Lezmi', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: ['P008_c2_s'] },
+            { id: 'P008_c2_s', name: 'X Zaaira', gender: 'U', birth_year: null, death_year: null },
+
+            // --- GEN 5: Children of Susan Mazal & Salomon Ben Abou (START OF BEN ABOU BRANCH) ---
+            { id: 'P012', name: 'Baby Ben Abou', gender: 'U', birth_year: 1966, death_year: null, children_ids: [], spouse_ids: [] },
+            { id: 'P013', name: 'Nathalie Ben Abou', gender: 'F', birth_year: 1967, death_year: 'Alive', children_ids: [], spouse_ids: ['P013_s'], notes: 'Married 2019' },
+            { id: 'P013_s', name: 'Erez Gal', gender: 'M', birth_year: null, death_year: null },
+            { id: 'P014', name: 'Yitzhak Ben Avi', gender: 'M', birth_year: 1968, death_year: 'Alive', children_ids: ['P014_c1', 'P014_c2'], spouse_ids: ['P014_s'] },
+            { id: 'P014_s', name: 'Chagit ?', gender: 'F', birth_year: null, death_year: null, children_ids: ['P014_c1', 'P014_c2'] },
+            { id: 'P015', name: 'Ariela Ben Abou', gender: 'F', birth_year: 1972, death_year: 'Alive', children_ids: ['P015_c1', 'P015_c2', 'P015_c3'], spouse_ids: ['P015_s'], notes: 'Married 1998' },
+            { id: 'P015_s', name: 'Max Keinan', gender: 'M', birth_year: null, death_year: null, children_ids: ['P015_c1', 'P015_c2', 'P015_c3'] },
+            { id: 'P016', name: 'Yuval Ben Abou', gender: 'M', birth_year: 1973, death_year: 'Alive', children_ids: ['P016_c1', 'P016_c2', 'P016_c3'], spouse_ids: ['P016_s'], notes: 'Married 2005' },
+            { id: 'P016_s', name: 'Bat Chen Teomim', gender: 'F', birth_year: null, death_year: null, children_ids: ['P016_c1', 'P016_c2', 'P016_c3'] },
+            { id: 'P016_b1', name: 'Gadi Ben Abou', gender: 'M', birth_year: 1978, death_year: 'Alive', children_ids: ['P016_b1_c1'], spouse_ids: ['P016_b1_s'], notes: 'Married 2006' },
+            { id: 'P016_b1_s', name: 'Anat Peretz', gender: 'F', birth_year: null, death_year: null, children_ids: ['P016_b1_c1'] },
+            { id: 'P016_b2', name: 'Yanai Ben Abou', gender: 'M', birth_year: 1981, death_year: 'Alive', children_ids: ['P016_b2_c1', 'P016_b2_c2', 'P016_b2_c3', 'P016_b2_c4'], spouse_ids: ['P016_b2_s'], notes: 'Married 2007' },
+            { id: 'P016_b2_s', name: 'Merav Bromberg', gender: 'F', birth_year: null, death_year: null, children_ids: ['P016_b2_c1', 'P016_b2_c2', 'P016_b2_c3', 'P016_b2_c4'] },
+            { id: 'P016_b3', name: 'Assi Ben Abou', gender: 'M', birth_year: 1984, death_year: 'Alive', children_ids: ['P016_b3_c1', 'P016_b3_c2', 'P016_b3_c3', 'P016_b3_c4'], spouse_ids: ['P016_b3_s'], notes: 'Married 2011' },
+            { id: 'P016_b3_s', name: 'Etti Sayag', gender: 'F', birth_year: null, death_year: null, children_ids: ['P016_b3_c1', 'P016_b3_c2', 'P016_b3_c3', 'P016_b3_c4'] },
+
+            // --- GEN 5: Children of Rosa & Yitzhak Sebag ---
+            { id: 'P017_c1', name: 'Patricia Sebag', gender: 'F', birth_year: 1979, death_year: 'Alive', children_ids: ['P017_c1_c1'], spouse_ids: ['P017_c1_s1', 'P017_c1_s2'], notes: 'Married Dror Arad 2025' }, // Multi-spouse
+            { id: 'P017_c1_s1', name: 'X ?', gender: 'U', birth_year: null, death_year: null, children_ids: ['P017_c1_c1'] },
+            { id: 'P017_c1_s2', name: 'Dror Arad', gender: 'M', birth_year: null, death_year: null },
+            { id: 'P017_c2', name: 'Jojian Sebag', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P017_c3', name: 'Lauren Sebag', gender: 'F', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: ['P017_c3_s'], notes: 'Married 2015' },
+            { id: 'P017_c3_s', name: 'Yanir ?', gender: 'M', birth_year: null, death_year: null },
+            { id: 'P017_c4', name: 'Noa Sebag', gender: 'F', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: ['P017_c4_s'] },
+            { id: 'P017_c4_s', name: 'X ?', gender: 'U', birth_year: null, death_year: null },
+
+            // --- GEN 5: Child of Jacob & Rivka Kadosh ---
+            { id: 'P019_c1_c1', name: 'Chaim Kadosh', gender: 'M', birth_year: null, death_year: 2021, children_ids: [], spouse_ids: [] },
+
+            // --- GEN 5: Children of Maurice & Wife ? Dahan ---
+            { id: 'P020_c1_c1', name: 'Sabrina Dahan', gender: 'F', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P020_c1_c2', name: 'Dustin Dahan', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 5: Children of Jean-Pierre & Deborah J Erar ---
+            { id: 'P025_c1', name: 'Jeremy Erar', gender: 'M', birth_year: 1981, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P025_c2', name: 'Rachel Marie Erar', gender: 'F', birth_year: 1982, death_year: 'Alive', children_ids: ['P025_c2_c1'], spouse_ids: ['P025_c2_s'] },
+            { id: 'P025_c2_s', name: 'Lewis Alexander Johnson', gender: 'M', birth_year: null, death_year: null, children_ids: ['P025_c2_c1'] },
+            { id: 'P025_c3', name: 'Jason Peter Erar', gender: 'M', birth_year: 1985, death_year: 'Alive', children_ids: [], spouse_ids: ['P025_c3_s'] },
+            { id: 'P025_c3_s', name: 'Linsey Rebekah McLain', gender: 'F', birth_year: null, death_year: null },
+
+            // --- GEN 5: Children of Gerald N & Susan Larar ---
+            { id: 'P034_c1', name: 'Brendon Larar', gender: 'M', birth_year: 1993, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P034_c2', name: 'Stephanie Larar', gender: 'F', birth_year: 1995, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P034_c3', name: 'Lauren Alexis Larar', gender: 'F', birth_year: 1996, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P034_c4', name: 'David Larar', gender: 'M', birth_year: 1998, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 5: Child of Allen M & Barbara J. Larar ---
+            { id: 'P035_c1', name: 'Jordan Tyler Larar', gender: 'M', birth_year: 1991, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 5: Children of Max E & Josie Larar ---
+            { id: 'P038', name: 'Diana Danielle Larar', gender: 'F', birth_year: 1958, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P039_c1', name: 'Sean Jacob Larar', gender: 'M', birth_year: 1998, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P040_c1', name: 'Jamie Pitts', gender: 'F', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P041', name: 'Abraham A Elarar', gender: 'M', birth_year: 1966, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            
+            // --- GEN 5: Children of Stella & Herman Weingord ---
+            { id: 'P044_c1', name: 'Wesley Weingord', gender: 'M', birth_year: 1998, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P045_c1', name: 'Erica Nicole Weingord', gender: 'F', birth_year: 1989, death_year: 'Alive', children_ids: [], spouse_ids: ['P045_c1_s'], notes: 'Married 2019' },
+            { id: 'P045_c1_s', name: 'Brett Rieders', gender: 'M', birth_year: null, death_year: null },
+            { id: 'P045_c2', name: 'Bari Alison Weingord', gender: 'F', birth_year: 1992, death_year: 'Alive', children_ids: [], spouse_ids: ['P045_c2_s'] },
+            { id: 'P045_c2_s', name: 'Eric Rosenbaum', gender: 'M', birth_year: null, death_year: null },
+            { id: 'P045_c3', name: 'Blake L Weingord', gender: 'M', birth_year: 1997, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P046_c1', name: 'Anna Weingord', gender: 'F', birth_year: 1993, death_year: 'Alive', children_ids: [], spouse_ids: ['P046_c1_s'], notes: 'Married 2024' },
+            { id: 'P046_c1_s', name: 'Zachary Goetz', gender: 'M', birth_year: null, death_year: null },
+            { id: 'P046_c2', name: 'Rayna Weingord', gender: 'F', birth_year: 1996, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P046_c3', name: 'Spencer Moise Weingord', gender: 'M', birth_year: 1999, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P046_b1_c1', name: 'Hailey Weingord', gender: 'F', birth_year: 2001, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P046_b1_c2', name: 'Elana Weingord', gender: 'F', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 5: Children of Sonia Sara & Ronald G Knorr ---
+            { id: 'P047_c1_c1', name: 'Joshua Knorr', gender: 'M', birth_year: 1982, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P047_c1_c2', name: 'Zachary Moshe Knorr', gender: 'M', birth_year: 1990, death_year: 'Alive', children_ids: [], spouse_ids: ['P047_c1_c2_s'], notes: 'Married 2024' },
+            { id: 'P047_c1_c2_s', name: 'Heather Robey', gender: 'F', birth_year: null, death_year: null },
+            { id: 'P047_c1_c3', name: 'Jacob Ronald Knorr', gender: 'M', birth_year: 1996, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P047_c1_c4', name: 'Jared Kenneth Knorr', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P047_c3_c1', name: 'Angela Coleen Knorr', gender: 'F', birth_year: 1991, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 6: Children of Elizabeth & Ariel Delouya ---
+            { id: 'P008_c1_c1', name: 'Elliot Delouya', gender: 'M', birth_year: 2002, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P008_c1_c2', name: 'Anaelle Delouya', gender: 'F', birth_year: null, death_year: 'Alive', children_ids: ['P008_c1_c2_c1'], spouse_ids: ['P008_c1_c2_s'] },
+            { id: 'P008_c1_c2_s', name: 'Nathanael Fergan', gender: 'M', birth_year: null, death_year: null, children_ids: ['P008_c1_c2_c1'] },
+            { id: 'P008_c1_c3', name: 'Yonathan Delouya', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: ['P008_c1_c3_c1', 'P008_c1_c3_c2'], spouse_ids: ['P008_c1_c3_s'] },
+            { id: 'P008_c1_c3_s', name: 'Sarah Courchia', gender: 'F', birth_year: null, death_year: null, children_ids: ['P008_c1_c3_c1', 'P008_c1_c3_c2'] },
+            { id: 'P008_c1_c4', name: 'Jeremie Delouya', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 6: Children of Yitzhak Ben Avi & Chagit ? (BEN ABOU BRANCH) ---
+            { id: 'P014_c1', name: 'Naama Ben Avi', gender: 'F', birth_year: 2003, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P014_c2', name: 'Itamar Ben Avi', gender: 'M', birth_year: 2008, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 6: Children of Ariela & Max Keinan (BEN ABOU BRANCH) ---
+            { id: 'P015_c1', name: 'Shira Keinan', gender: 'F', birth_year: 2000, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P015_c2', name: 'Ori Keinan', gender: 'M', birth_year: 2003, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P015_c3', name: 'Ilay Keinan', gender: 'M', birth_year: 2009, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 6: Children of Yuval & Bat Chen Teomim (BEN ABOU BRANCH) ---
+            { id: 'P016_c1', name: 'Ayelet Ben Abou', gender: 'F', birth_year: 2009, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P016_c2', name: 'Eynat Ben Abou', gender: 'F', birth_year: 2011, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P016_c3', name: 'Yael Ben Abou', gender: 'F', birth_year: 2011, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 6: Child of Gadi & Anat Peretz (BEN ABOU BRANCH) ---
+            { id: 'P016_b1_c1', name: 'Lian Ben Abou', gender: 'F', birth_year: 2013, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 6: Children of Yanai & Merav Bromberg (BEN ABOU BRANCH) ---
+            { id: 'P016_b2_c1', name: 'Yair Moshe Ben Abou', gender: 'M', birth_year: 2013, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P016_b2_c2', name: 'Avishai Yosef Ben Abou', gender: 'M', birth_year: 2016, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P016_b2_c3', name: 'Beeri Ido Ben Abou', gender: 'M', birth_year: 2019, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P016_b2_c4', name: 'Omer Shlomo Ben Abou', gender: 'M', birth_year: 2025, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 6: Children of Assi & Etti Sayag (BEN ABOU BRANCH) ---
+            { id: 'P016_b3_c1', name: 'Tehila Miriam Ben Abou', gender: 'F', birth_year: 2012, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P016_b3_c2', name: 'Noya Fiby Ben Abou', gender: 'F', birth_year: 2014, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P016_b3_c3', name: 'Ye\'Ela Rachel Ben Abou', gender: 'F', birth_year: 2018, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P016_b3_c4', name: 'Yali Channa Ben Abou', gender: 'F', birth_year: 2020, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 6: Child of Patricia & X ? Sebag ---
+            { id: 'P017_c1_c1', name: 'X ?', gender: 'U', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 6: Child of Rachel Marie & Lewis Alexander Johnson ---
+            { id: 'P025_c2_c1', name: 'Analise Jean Johnson', gender: 'F', birth_year: 2004, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 7: Child of Anaelle & Nathanael Fergan ---
+            { id: 'P008_c1_c2_c1', name: 'Son ?', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- GEN 7: Children of Yonathan & Sarah Courchia ---
+            { id: 'P008_c1_c3_c1', name: 'Noa Delouya', gender: 'F', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+            { id: 'P008_c1_c3_c2', name: 'Ethan Delouya', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: [] },
+
+            // --- Core JavaScript Logic ---
+            // The remaining code structure is identical to the previous version
+        ];
+
+         const peopleMap = peopleData.reduce((map, person) => {
+            map[person.id] = person;
+            return map;
+        }, {});
+
+        const rootId = 'P001';
+        const rootPerson = peopleMap[rootId];
+
+        // Function to create the HTML for a single person card
+        function createPersonCard(person, isSpouse) {
+            const status = person.death_year === 'Alive' ? ' (Alive)' : (person.death_year ? ` (d. ${person.death_year})` : '');
+            const dates = (person.birth_year || person.death_year) ?
+                `<div class="text-xs text-gray-500 mt-1">${person.birth_year ? `b. ${person.birth_year}` : ''}${person.birth_year && person.death_year ? ' - ' : ''}${person.death_year || ''}</div>` :
+                '';
+            
+            const card = document.createElement('div');
+            card.className = `person-card gender-${person.gender} w-full`;
+            card.setAttribute('data-id', person.id);
+            
+            // Only the main lineage person should have the click event to prevent double-toggling
+            // If the person has children and is not just a spouse card, allow toggle
+            if (!isSpouse || (person.children_ids && person.children_ids.length > 0)) { 
+                 // Ensure only one click handler exists if this person is part of the main lineage
+                card.onclick = toggleChildren;
+            }
+
+            // Create an icon based on gender/status
+            let icon = '';
+            if (person.gender === 'M') icon = '♂️';
+            else if (person.gender === 'F') icon = '♀️';
+            else icon = '👤';
+            
+            // Determine the arrow/icon for the children toggle, only show if children exist
+            const childrenIndicator = person.children_ids && person.children_ids.length > 0 ? 
+                    '<div class="text-xs mt-1 font-bold text-gray-700">⬇️</div>' : 
+                    '<div class="text-xs mt-1 font-bold text-gray-400">⚫</div>';
+
+            card.innerHTML = `
+                <div class="text-xl mb-1">${icon}</div>
+                <div class="font-semibold text-sm leading-tight">${person.name}</div>
+                <div class="text-xs font-mono text-gray-700">${person.id}</div>
+                ${dates}
+                ${person.note ? `<div class="text-xs mt-1 text-pink-700 font-medium">${person.note}</div>` : ''}
+                ${childrenIndicator}
+            `;
+            return card;
+        }
+
+        // Toggles the visibility of the descendants container
+        function toggleChildren(event) {
+            // Find the immediate parent couple-node
+            const coupleNode = event.currentTarget.closest('.couple-node');
+            if (!coupleNode) return;
+
+            // The descendants container is the second child of couple-node
+            const descendantsContainer = coupleNode.querySelector('.descendants-container');
+            if (descendantsContainer) {
+                if (descendantsContainer.style.display === 'none' || descendantsContainer.style.display === '') {
+                    descendantsContainer.style.display = 'flex';
+                } else {
+                    descendantsContainer.style.display = 'none';
+                }
+            }
+        }
+
+        // Recursively renders a single person/couple node and its descendants
+        function renderNode(personId) {
+            const person = peopleMap[personId];
+            if (!person) return null;
+
+            const coupleNode = document.createElement('div');
+            coupleNode.className = 'couple-node';
+            
+            // 1. Couple Card Wrapper
+            const coupleCardWrapper = document.createElement('div');
+            coupleCardWrapper.className = 'couple-card-wrapper';
+
+            // Main person card (always displayed first)
+            const personCard = createPersonCard(person, false);
+            coupleCardWrapper.appendChild(personCard);
+            
+            // --- Handle Multiple Spouses (using spouse_ids array) ---
+            let spousesToRender = [];
+            
+            // Prioritize spouse_ids (array) if it exists and is an array
+            if (person.spouse_ids && Array.isArray(person.spouse_ids)) {
+                spousesToRender = person.spouse_ids;
+            } else if (person.spouse_id) { // Fallback/compatibility check for old single-string property
+                spousesToRender = [person.spouse_id];
+            }
+
+            spousesToRender.forEach(spouseId => {
+                const spouse = peopleMap[spouseId];
+                if (spouse) {
+                    const spouseLine = document.createElement('div');
+                    spouseLine.className = 'spouse-line';
+                    coupleCardWrapper.appendChild(spouseLine);
+                    // Pass true for isSpouse. They do not trigger the children toggle themselves.
+                    coupleCardWrapper.appendChild(createPersonCard(spouse, true));
+                }
+            });
+            
+            coupleNode.appendChild(coupleCardWrapper);
+
+            // 2. Children Connection (Vertical Line)
+            // This line connects the couple/multiple spouses group to the children's horizontal line
+            if (person.children_ids && person.children_ids.length > 0) {
+                const vertLine = document.createElement('div');
+                vertLine.className = 'children-line-vertical';
+                coupleNode.appendChild(vertLine);
+
+                // 3. Descendants Container (Horizontal line + children nodes)
+                const descendantsContainer = document.createElement('div');
+                descendantsContainer.className = 'descendants-container';
+                descendantsContainer.style.display = 'none'; // Initially collapsed
+
+                const childNodes = renderDescendants(person.children_ids);
+                descendantsContainer.appendChild(childNodes);
+                coupleNode.appendChild(descendantsContainer);
+            }
+
+            return coupleNode;
+        }
+
+        // Renders the list of siblings and the horizontal connector
+        function renderDescendants(childrenIds) {
+            const childrenHorizontalConnector = document.createElement('div');
+            childrenHorizontalConnector.className = 'children-horizontal-connector';
+
+            // Add horizontal line connecting all children
+            const horizontalLine = document.createElement('div');
+            horizontalLine.className = 'children-horizontal-line';
+            childrenHorizontalConnector.appendChild(horizontalLine);
+
+            // Render each child node recursively
+            childrenIds.forEach(childId => {
+                const childNodeWrapper = document.createElement('div');
+                childNodeWrapper.className = 'child-node-wrapper';
+
+                // Vertical line from horizontal connector to the child node
+                const childVertLine = document.createElement('div');
+                childVertLine.className = 'child-vertical-line';
+                childNodeWrapper.appendChild(childVertLine);
+
+                // The recursive call to render the child's own couple-node
+                const childNode = renderNode(childId);
+                if (childNode) {
+                    childNodeWrapper.appendChild(childNode);
+                }
+                
+                childrenHorizontalConnector.appendChild(childNodeWrapper);
+            });
+
+            return childrenHorizontalConnector;
+        }
+
+        // Main function to start rendering the tree
+        function initFamilyTree() {
+            const treeContainer = document.getElementById('familyTree');
+            if (treeContainer && rootPerson) {
+                const rootNode = renderNode(rootId);
+                if (rootNode) {
+                    treeContainer.appendChild(rootNode);
+                }
+            }
+
+            // Manually expand the root node for visibility on load
+            const rootNodeElement = document.querySelector(`.person-card[data-id="${rootId}"]`);
+            const rootCoupleNode = rootNodeElement ? rootNodeElement.closest('.couple-node') : null;
+
+            if (rootCoupleNode) {
+                const rootDescendants = rootCoupleNode.querySelector('.descendants-container');
+                if (rootDescendants) {
+                    rootDescendants.style.display = 'flex';
+                }
+            }
+        }
+
+        window.onload = initFamilyTree;
+    </script>
+</body>
+</html>
