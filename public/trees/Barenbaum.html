@@ -155,106 +155,347 @@
     </div>
 
     <script>
-        // Data containing all family members
-        // NOTE: The 'spouse_id' property has been replaced with 'spouse_ids' (an array) for all primary lineage members.
+        // Data containing all family members.
+        // NOTE: The visualization requires children_ids and spouse_ids to build the tree structure.
         const peopleData = [
-         { "id": "1", "name": "Moshe Barenbaum", "gender": "M", "spouse_ids": ["2"], "parent_ids": [], "children_ids": ["3", "5", "14"], "birth_year": "c. 1850", "death_year": null },
-            { "id": "2", "name": "Rachel Barenbaum", "gender": "F", "spouse_ids": ["1"], "parent_ids": [], "children_ids": ["3", "5", "14"], "birth_year": "c. 1850", "death_year": null },
-         { "id": "3", "name": "Szejwa Barenbaum", "gender": "F", "spouse_ids": ["4"], "parent_ids": ["1","2"], "children_ids": ["90","94"], "birth_year": "c. 1870", "death_year": null },
-              { "id": "4", "name": "Aaron Galler", "gender": "M", "spouse_ids": ["3"], "parent_ids": [], "children_ids": ["90","94"], "birth_year": "c. 1880", "death_year": null },
-            { "id": "5", "name": "Rivka Barenbaum", "gender": "F", "spouse_ids": ["6"], "parent_ids": ["1","2"], "children_ids": ["7","9","11","12","13"], "birth_year": "c. 1880", "death_year": null },
-              { "id": "6", "name": "Shmuel Bromberg", "gender": "M", "spouse_ids": ["5"], "parent_ids": [], "children_ids": ["7","9","11","12","13"], "birth_year": "c. 1880", "death_year": null },
-             { "id": "7", "name": "Molly Bromberg", "gender": "F", "spouse_ids": ["8"], "parent_ids": ["5","6"], "children_ids": ["27","30"], "birth_year": "1912", "death_year": null },
-            { "id": "8", "name": "Hymie Myers", "gender": "M", "spouse_ids": ["7"], "parent_ids": [], "children_ids": ["27","30"], "birth_year": "1907", "death_year": null },
-             { "id": "9", "name": "Moshe Bromberg", "gender": "M", "spouse_ids": ["10"], "parent_ids": ["5","6"], "children_ids": ["40","51"], "birth_year": "1913", "death_year": null },
-             { "id": "10", "name": "Rachel Weinberger", "gender": "F", "spouse_ids": ["9"], "parent_ids": [], "children_ids": ["40","51"], "birth_year": "1923", "death_year": null },
-             { "id": "11", "name": "David Bromberg", "gender": "M", "spouse_ids": [], "parent_ids": ["5","6"], "children_ids": [], "birth_year": "1918", "death_year": null },
-              { "id": "12", "name": "Rachel Bromberg", "gender": "F", "spouse_ids": [], "parent_ids": ["5","6"], "children_ids": [], "birth_year": "1920", "death_year": null },
-             { "id": "13", "name": "Abba Bromberg", "gender": "M", "spouse_ids": [], "parent_ids": ["5","6"], "children_ids": [], "birth_year": "1922", "death_year": null },
-            { "id": "14", "name": "Unknown Barenbaum", "gender": "F", "spouse_ids": ["15"], "parent_ids": ["1","2"], "children_ids": ["16"], "birth_year": "c. 1880", "death_year": null },
-             { "id": "15", "name": "Moshe ?", "gender": "M", "spouse_ids": ["14"], "parent_ids": [], "children_ids": ["16"], "birth_year": "c. 1880", "death_year": null },
-              { "id": "16", "name": "Esther ?", "gender": "F", "spouse_ids": ["17"], "parent_ids": ["14","15"], "children_ids": ["18","20","22"], "birth_year": "c. 1900", "death_year": "1982"},
-              { "id": "17", "name": "Yesha'ayahu Hazan", "gender": "M", "spouse_ids": ["16"], "parent_ids": [], "children_ids": ["18","20","22"], "birth_year": "c.1900", "death_year": "1989"},
-            //Third Generation- Esther Hazan//
-            { "id": "18", "name": "Ahuva Hazan", "gender": "F", "spouse_ids": ["19"], "parent_ids": ["16","17"], "children_ids": [], "birth_year": "1925", "death_year": "2006"},
-                        { "id": "19", "name": "Moshe Zalezman", "gender": "M", "spouse_ids": ["18"], "parent_ids": [], "children_ids": [], "birth_year": "1922", "death_year": "2011"},
-                     { "id": "20", "name": "Ayala Hazan", "gender": "F", "spouse_ids": [], "parent_ids": ["16","17"], "children_ids": [], "birth_year": null, "death_year": "c.2020"},
+            // --- GEN 1 ---
+            { id: '231', name: 'Moshe Barenbaum', gender: 'M', birth_year: 1850, death_year: null, children_ids: ['232', '258', '267'], spouse_ids: ['234'] },
+            { id: '234', name: 'Rachel ?', gender: 'F', birth_year: null, death_year: null, children_ids: ['232', '258', '267'] },
 
-                      { "id": "22", "name": "Zipporah Hazan", "gender": "F", "spouse_ids": ["23"], "parent_ids": ["16","17"], "children_ids": [], "birth_year": "Alive", "death_year": null},
-                        { "id": "23", "name": "Moshe Zohar", "gender": "M", "spouse_ids": ["22"], "parent_ids": [], "children_ids": [], "birth_year": null, "death_year": null},
-            //Third Generation- Molly Myers//
-                         { "id": "27", "name": "Martin Myers", "gender": "M", "spouse_ids": ["28","29"], "parent_ids": ["7","8"], "children_ids": ["32","34"], "birth_year": null, "death_year": null },
-                            { "id": "28", "name": "Nancy Johnson", "gender": "F", "spouse_ids": ["27"], "parent_ids": [], "children_ids": ["31","33"], "birth_year": null, "death_year": null },
-                              { "id": "29", "name": "Patty Beltran", "gender": "F", "spouse_ids": ["27"], "parent_ids": [], "children_ids": [], "birth_year": null, "death_year": null },
-                         { "id": "30", "name": "Karen Myers", "gender": "F", "spouse_ids": ["31"], "parent_ids": ["7","8"], "children_ids": ["39"], "birth_year": null, "death_year": null },
-                         { "id": "31", "name": "Bob Yukich", "gender": "M", "spouse_ids": ["30"], "parent_ids": [], "children_ids": ["39"], "birth_year": null, "death_year": null },
-            //-Forth Generation- Molly Myers-//
-                         { "id": "32", "name": "Carla Myers", "gender": "F", "spouse_ids": [], "parent_ids": ["27","28"], "children_ids": ["33"], "birth_year": null, "death_year": null },
-                             { "id": "33", "name": "Peter Myers", "gender": "M", "spouse_ids": [], "parent_ids": ["32"], "children_ids": [], "birth_year": null, "death_year": null },
-                           { "id": "34", "name": "Rebecca Myers", "gender": "F", "spouse_ids": ["35","37"], "parent_ids": ["27","28"], "children_ids": ["36","38"], "birth_year": null, "death_year": null },
-                         { "id": "35", "name": "Seth Frader-Thompson", "gender": "M", "spouse_ids": ["34"], "parent_ids": [], "children_ids": ["36"], "birth_year": null, "death_year": null },
-                          { "id": "36", "name": "Sam Frader Thompson", "gender": "M", "spouse_ids": [], "parent_ids": ["34","35"], "children_ids": [], "birth_year": null, "death_year": null },
-                                 { "id": "37", "name": "Scott Labby", "gender": "M", "spouse_ids": [], "parent_ids": ["34","37"], "children_ids": ["38"], "birth_year": null, "death_year": null },
-                                      { "id": "38", "name": "Maren Labby", "gender": "F", "spouse_ids": [], "parent_ids": ["34","37"], "children_ids": [], "birth_year": null, "death_year": null },
-                                         { "id": "39", "name": "Aaron Yukich", "gender": "M", "spouse_ids": [], "parent_ids": ["30","31"], "children_ids": [], "birth_year": null, "death_year": null },
-            //-Third Generation-Moshe Yosef Bromberg-//
-                         { "id": "40", "name": "Rivka Bromberg", "gender": "F", "spouse_ids": ["41"], "parent_ids": ["9","10"], "children_ids": ["42","47","50"], "birth_year": null, "death_year": null },
-                         { "id": "41", "name": "Nissim Pilosof", "gender": "M", "spouse_ids": ["40"], "parent_ids": [], "children_ids": ["42","47","50"], "birth_year": null, "death_year": null },
-                         { "id": "42", "name": "Shai Pilosof", "gender": "M", "spouse_ids": ["43"], "parent_ids": ["41","40"], "children_ids": ["44","45","46"], "birth_year": null, "death_year": null },
-                          { "id": "43", "name": "Unkown", "gender": "F", "spouse_ids": ["42"], "parent_ids": [], "children_ids": ["44","45","46"], "birth_year": null, "death_year": null },
-                            { "id": "44", "name": "Gal Pilosof", "gender": "M", "spouse_ids": [], "parent_ids": ["42","43"], "children_ids": [], "birth_year": null, "death_year": null },
-                         { "id": "45", "name": "Ofek Pilosof", "gender": "F", "spouse_ids": [], "parent_ids": ["42","43"], "children_ids": [], "birth_year": null, "death_year": null },
-                         { "id": "46", "name": "Agam Pilosof", "gender": "F", "spouse_ids": [], "parent_ids": ["42","43"], "children_ids": [], "birth_year": null, "death_year": null },
-                         { "id": "47", "name": "Oren Pilosof", "gender": "M", "spouse_ids": ["48"], "parent_ids": ["41","40"], "children_ids": ["49"], "birth_year": null, "death_year": null },
-                        { "id": "48", "name": "Aya Pilosof", "gender": "F", "spouse_ids": ["47"], "parent_ids": [], "children_ids": ["49"], "birth_year": null, "death_year": null },
-                         { "id": "49", "name": "Ayala Pilosof", "gender": "F", "spouse_ids": [], "parent_ids": ["47","48"], "children_ids": [], "birth_year": null, "death_year": null },
-                         { "id": "50", "name": "Noah Pilosof", "gender": "F", "spouse_ids": [], "parent_ids": ["41","40"], "children_ids": [], "birth_year": null, "death_year": null},
-                          { "id": "51", "name": "Nesya Bromberg", "gender": "F", "spouse_ids": [], "parent_ids": ["9","10"], "children_ids": [], "birth_year": null, "death_year": null },
+            // --- GEN 2 (Children of Moshe Barenbaum & Rachel ?) ---
+            // Child 1: Rivka Barenbaum
+            { id: '232', name: 'Rivka Barenbaum', gender: 'F', birth_year: 1889, death_year: 1943, children_ids: ['235', '241', '251', '252', '253'], spouse_ids: ['233'] },
+            { id: '233', name: 'Shmuel Bromberg', gender: 'M', birth_year: null, death_year: null, children_ids: ['235', '241', '251', '252', '253'] },
+            // Child 2: Szejwa Barenbaum
+            { id: '258', name: 'Szejwa Barenbaum', gender: 'F', birth_year: null, death_year: null, children_ids: ['259', '261', '264', '265', '266'], spouse_ids: ['257'] },
+            { id: '257', name: 'Aaron Galler', gender: 'M', birth_year: null, death_year: null, children_ids: ['259', '261', '264', '265', '266'] },
+            // Child 3: Unknown Barenbaum
+            { id: '267', name: 'Unknown Barenbaum', gender: 'U', birth_year: 1870, death_year: null, children_ids: ['268'], spouse_ids: ['269'] },
+            { id: '269', name: 'Moshe ?', gender: 'M', birth_year: null, death_year: null, children_ids: ['268'] },
 
-            //-Second Generation-Galler Family-//
-                 { "id": "90", "name": "Malka Galler", "gender": "F", "spouse_ids": ["91"], "parent_ids": ["3","4"], "children_ids": ["92","93"], "birth_year": null, "death_year": null},
-                 { "id": "91", "name": "Malke's Husband ", "gender": "M", "spouse_ids": ["90"], "parent_ids": ["3","4"], "children_ids": [], "birth_year": null, "death_year": null},
-                  { "id": "92", "name": "Malke's dauughter", "gender": "F", "spouse_ids": [], "parent_ids": ["90","91"], "children_ids": [], "birth_year": null, "death_year": null},
-                 { "id": "93", "name": "Malke's son", "gender": "M", "spouse_ids": [], "parent_ids": ["90","91"], "children_ids": [], "birth_year": null, "death_year": null},
-                { "id": "94", "name": "Minnie Galler", "gender": "F", "spouse_ids": ["91"], "parent_ids": ["3","4"], "children_ids": ["92","93"], "birth_year": null, "death_year": null},
-                  { "id": "95", "name": "Jacob Sims", "gender": "M", "spouse_ids": ["91"], "parent_ids": ["3","4"], "children_ids": ["92","93"], "birth_year": null, "death_year": null},
+            // --- GEN 3 (Children of Rivka Barenbaum & Shmuel Bromberg) ---
+            // Child 1: Molly Bromberg
+            { id: '235', name: 'Molly Bromberg', gender: 'F', birth_year: 1912, death_year: 2007, children_ids: ['237', '239'], spouse_ids: ['236'] },
+            { id: '236', name: 'Hymie Myers', gender: 'M', birth_year: null, death_year: null, children_ids: ['237', '239'] },
+            // Child 2: Moshe Yosef Bromberg
+            { id: '241', name: 'Moshe Yosef Bromberg', gender: 'M', birth_year: 1913, death_year: 1996, children_ids: ['242', '246', '250'], spouse_ids: ['240'] },
+            { id: '240', name: 'Rachel Witta Weinberger', gender: 'F', birth_year: null, death_year: null, children_ids: ['242', '246', '250'] },
+            // Child 3-5: David, Rachel, Abraham (no descendants in the list)
+            { id: '251', name: 'David Bromberg', gender: 'M', birth_year: 1918, death_year: 1945 },
+            { id: '252', name: 'Rachel Bromberg', gender: 'F', birth_year: 1920, death_year: 1943 },
+            { id: '253', name: 'Abraham Abba Bromberg', gender: 'M', birth_year: 1922, death_year: 1943 },
 
+            // --- GEN 3 (Children of Szejwa Barenbaum & Aaron Galler) ---
+            // Child 1: Minnie Galler
+            { id: '259', name: 'Minnie Galler', gender: 'F', birth_year: 1900, death_year: 1980, children_ids: ['260', '292'], spouse_ids: ['270'] },
+            { id: '270', name: 'Jacob Sims', gender: 'M', birth_year: null, death_year: null, children_ids: ['260', '292'] },
+            // Child 2: Eva Galler
+            { id: '261', name: 'Eva Galler', gender: 'F', birth_year: 1904, death_year: 1997, children_ids: ['262'], spouse_ids: ['271'] },
+            { id: '271', name: 'Samuel Treiger', gender: 'M', birth_year: 1927, death_year: null, children_ids: ['262'] },
+            // Child 3: Steve Galler (no children)
+            { id: '264', name: 'Steve Galler', gender: 'M', birth_year: 1905, death_year: 1982, spouse_ids: ['272', '273'] },
+            { id: '272', name: 'Sadie Levin', gender: 'F', birth_year: null, death_year: null },
+            { id: '273', name: 'First Wife ?', gender: 'F', birth_year: null, death_year: null },
+            // Child 4: Sausi Galler (no children)
+            { id: '265', name: 'Sausi Galler', gender: 'U', birth_year: null, death_year: null, spouse_ids: ['274', '275'] },
+            { id: '274', name: 'Dinnia ?', gender: 'U', birth_year: null, death_year: null },
+            { id: '275', name: 'Aaron ?', gender: 'M', birth_year: null, death_year: null },
+            // Child 5: Malke Galler
+            { id: '266', name: 'Malke Galler', gender: 'F', birth_year: null, death_year: null, children_ids: ['276', '277'], spouse_ids: ['278'] },
+            { id: '278', name: 'Husband of Malke Unknown', gender: 'M', birth_year: null, death_year: null, children_ids: ['276', '277'] },
+            { id: '276', name: 'Son of Malke Unknown', gender: 'M', birth_year: null, death_year: null },
+            { id: '277', name: 'Daughter of Malke Unknown', gender: 'F', birth_year: null, death_year: null },
 
-                 { "id": "96", "name": "Eva Galler", "gender": "F", "spouse_ids": ["95"], "parent_ids": ["3","4"], "children_ids": ["98"], "birth_year": null, "death_year": null},
-                  { "id": "97", "name": "Samuel Treiger", "gender": "M", "spouse_ids": ["94"], "parent_ids": [], "children_ids": ["98"], "birth_year": null, "death_year": null}
-                  { "id": "98", "name": "Marvin Treiger", "gender": "M", "spouse_ids": ["99","100"], "parent_ids": ["96","97"], "children_ids": ["10"], "birth_year": null, "death_year": null}
-                    { "id": "99", "name": "Wendy Lee Dare", "gender": "F", "spouse_ids": ["96"], "parent_ids": [], "children_ids": ["99"], "birth_year": null, "death_year": null}
-                     { "id": "100", "name": "Cathy Milite", "gender": "F", "spouse_ids": ["96"], "parent_ids": [], "children_ids": [], "birth_year": null, "death_year": null}
-                      { "id": "101", "name": "Stefan Treiger", "gender": "M", "spouse_ids": ["100"], "parent_ids": ["96","97"], "children_ids": ["101","102"], "birth_year": null, "death_year": null}
-                    { "id": "102", "name": "Stacey Richman", "gender": "F", "spouse_ids": ["99"], "parent_ids": [], "children_ids": ["103","104"], "birth_year": null, "death_year": null}
-                    { "id": "103", "name": "Lex Treiger", "gender": "M", "spouse_ids": [], "parent_ids": ["101","102"], "children_ids": [], "birth_year": null, "death_year": null}
-                    { "id": "104", "name": "Asher Treiger", "gender": "M", "spouse_ids": [], "parent_ids": ["101","102"], "children_ids": [], "birth_year": null, "death_year": null}
-                    { "id": "105", "name": "Steve Galler", "gender": "M", "spouse_ids": ["106"], "parent_ids": ["3","4"], "children_ids": [], "birth_year": null, "death_year": null},
-                    { "id": "106", "name": "Sadie Levin", "gender": "F", "spouse_ids": ["105"], "parent_ids": [], "children_ids": ["107"], "birth_year": null, "death_year": null},
-                     { "id": "107", "name": "Sandra Levin", "gender": "F", "spouse_ids": [], "parent_ids": ["106"], "children_ids": [], "birth_year": null, "death_year": "1954"},
+            // --- GEN 3 (Children of Unknown Barenbaum & Moshe ?) ---
+            // Child 1: Esther Barenbaum
+            { id: '268', name: 'Esther Barenbaum', gender: 'F', birth_year: 1900, death_year: 1982, children_ids: ['279', '281', '284'], spouse_ids: ['280'] },
+            { id: '280', name: 'Yesha\'Ayahu Hazan', gender: 'M', birth_year: null, death_year: null, children_ids: ['279', '281', '284'] },
 
+            // --- GEN 4 (Children of Molly Bromberg & Hymie Myers) ---
+            // Child 1: Martin Myers
+            { id: '237', name: 'Martin Myers', gender: 'M', birth_year: 1945, death_year: 'Alive', children_ids: ['286', '288'], spouse_ids: ['287', '289'] }, 
+            { id: '287', name: 'Nancy Myers', gender: 'F', birth_year: 1972, death_year: null, children_ids: ['286', '288'] },
+            { id: '289', name: 'Patty Beltran', gender: 'F', birth_year: 1995, death_year: null }, 
+            // Child 2: Karen Myers
+            { id: '239', name: 'Karen Myers', gender: 'F', birth_year: 1949, death_year: 'Alive', children_ids: ['243'], spouse_ids: ['238'] },
+            { id: '238', name: 'Bob Yukich', gender: 'M', birth_year: 1979, death_year: null, children_ids: ['243'] },
 
-                     
-                     
+            // --- GEN 4 (Children of Moshe Yosef Bromberg & Rachel Witta Weinberger) ---
+            // Child 1: Rivka Bromberg
+            { id: '242', name: 'Rivka Bromberg', gender: 'F', birth_year: 1948, death_year: 'Alive', children_ids: ['294', '296', '298'], spouse_ids: ['293'] },
+            { id: '293', name: 'Nissim Pilosof', gender: 'M', birth_year: 1977, death_year: null, children_ids: ['294', '296', '298'] },
+            // Child 2: Nesya Bromberg
+            { id: '246', name: 'Nesya Bromberg', gender: 'F', birth_year: 1950, death_year: 'Alive', children_ids: ['303', '311', '315', '318', '321_younger'], spouse_ids: ['302'] },
+            { id: '302', name: 'Aryeh Junger', gender: 'M', birth_year: null, death_year: null, children_ids: ['303', '311', '315', '318', '321_younger'] },
+            // Child 3: Shmuel Bromberg
+            { id: '250', name: 'Shmuel Bromberg', gender: 'M', birth_year: 1953, death_year: 'Alive', children_ids: ['322', '326', '330'], spouse_ids: ['320'] },
+            { id: '320', name: 'Chana Noa Izaks', gender: 'F', birth_year: 1978, death_year: null, children_ids: ['322', '326', '330'] },
 
+            // --- GEN 4 (Children of Minnie Galler & Jacob Sims) ---
+            // Child 1: Bernice Marlene Sims
+            { id: '260', name: 'Bernice Marlene Sims', gender: 'F', birth_year: 1919, death_year: 1995, children_ids: ['333', '337'], spouse_ids: ['332'] },
+            { id: '332', name: 'Morris Brown', gender: 'M', birth_year: null, death_year: null, children_ids: ['333', '337'] },
+            // Child 2: Rae Sims
+            { id: '292', name: 'Rae Sims', gender: 'F', birth_year: 1927, death_year: 1984 },
 
-                     
+            // --- GEN 4 (Children of Eva Galler & Samuel Treiger) ---
+            // Child 1: Marvin Treiger
+            { id: '262', name: 'Marvin Treiger', gender: 'M', birth_year: 1938, death_year: 'Alive', children_ids: ['263'], spouse_ids: ['342', '343'] },
+            { id: '342', name: 'Catherine Milite', gender: 'F', birth_year: null, death_year: null },
+            { id: '343', name: 'Wendy Lee Dare', gender: 'F', birth_year: null, death_year: null },
 
-                       
+            // --- GEN 4 (Children of Esther Barenbaum & Yesha\'Ayahu Hazan) ---
+            // Child 1: Ahuva Hazan
+            { id: '279', name: 'Ahuva Hazan', gender: 'F', birth_year: 1925, death_year: 2006, children_ids: ['344', '345'], spouse_ids: ['346'] },
+            { id: '346', name: 'Moshe Zazelman', gender: 'M', birth_year: null, death_year: null, children_ids: ['344', '345'] },
+            // Child 2: Zipporah Hazan
+            { id: '281', name: 'Zipporah Hazan', gender: 'F', birth_year: null, death_year: 'Alive', children_ids: ['347', '348', '349'], spouse_ids: ['350'] },
+            { id: '350', name: 'Moshe Zohar', gender: 'M', birth_year: null, death_year: null, children_ids: ['347', '348', '349'] },
+            // Child 3: Ayala Hazan
+            { id: '284', name: 'Ayala Hazan', gender: 'F', birth_year: null, death_year: 2020, children_ids: ['351'], spouse_ids: ['352'] },
+            { id: '352', name: '?? Vasiman', gender: 'M', birth_year: null, death_year: null, children_ids: ['351'] },
 
-                       
+            // --- GEN 5 (Children of Martin Myers & Nancy Myers) ---
+            // Child 1 (with Nancy): Carla Myers
+            { id: '286', name: 'Carla Myers', gender: 'F', birth_year: 1974, death_year: 'Alive', children_ids: ['353'], spouse_ids: ['354'] },
+            { id: '354', name: '? ?', gender: 'U', birth_year: null, death_year: null, children_ids: ['353'] },
+            // Child 2 (with Nancy): Rebecca Myers
+            { id: '288', name: 'Rebecca Myers', gender: 'F', birth_year: 1976, death_year: 'Alive', children_ids: ['355', '356'], spouse_ids: ['357', '358'] },
+            { id: '357', name: 'Scott Labby', gender: 'M', birth_year: 2013, death_year: null, children_ids: ['355'] },
+            { id: '358', name: 'Seth Frader-Thompson', gender: 'M', birth_year: null, death_year: null, children_ids: ['356'] },
 
+            // --- GEN 5 (Children of Karen Myers & Bob Yukich) ---
+            // Child 1: Aaron Yukich
+            { id: '243', name: 'Aaron Yukich', gender: 'M', birth_year: 1981, death_year: 'Alive', children_ids: [], spouse_ids: ['244'] },
+            { id: '244', name: 'Ana ?', gender: 'F', birth_year: null, death_year: null },
 
+            // --- GEN 5 (Children of Rivka Bromberg & Nissim Pilosof) ---
+            // Child 1: Noah Pilosof
+            { id: '294', name: 'Noah Pilosof', gender: 'M', birth_year: 1986, death_year: 'Alive' },
+            // Child 2: Oren Pilosof
+            { id: '296', name: 'Oren Pilosof', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: ['295'], spouse_ids: ['297'] },
+            { id: '297', name: 'Aya ?', gender: 'F', birth_year: null, death_year: null, children_ids: ['295'] },
+            // Child 3: Shai Pilosof
+            { id: '298', name: 'Shai Pilosof', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: ['299', '300', '301'], spouse_ids: ['304_spouse'] },
+            { id: '304_spouse', name: '?? ?', gender: 'U', birth_year: null, death_year: null, children_ids: ['299', '300', '301'] },
 
+            // --- GEN 5 (Children of Nesya Bromberg & Aryeh Junger) ---
+            // Child 1: Eran Junger
+            { id: '303', name: 'Eran Junger', gender: 'M', birth_year: 1972, death_year: 'Alive', children_ids: ['305', '306', '307', '308', '309', '310', '361_a', '397_a'], spouse_ids: ['304_spouse_2'] },
+            { id: '304_spouse_2', name: 'Anat ?', gender: 'F', birth_year: 1996, death_year: null, children_ids: ['305', '306', '307', '308', '309', '310', '361_a', '397_a'] },
+            // Child 2: Ohad Junger
+            { id: '311', name: 'Ohad Junger', gender: 'M', birth_year: 1977, death_year: 'Alive', children_ids: ['312', '313', '314', '362_a', '363_a'], spouse_ids: ['364'] },
+            { id: '364', name: 'Yael ?', gender: 'F', birth_year: null, death_year: null, children_ids: ['312', '313', '314', '362_a', '363_a'] },
+            // Child 3: Alon Junger
+            { id: '315', name: 'Alon Junger', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: ['316', '317'], spouse_ids: ['365'] },
+            { id: '365', name: 'Sivan ?', gender: 'F', birth_year: null, death_year: null, children_ids: ['316', '317'] },
+            // Child 4: Michal Junger
+            { id: '318', name: 'Michal Junger', gender: 'F', birth_year: null, death_year: 'Alive', children_ids: ['366', '367', '368', '369', '370', '371', '372', '373', '374', '375'], spouse_ids: ['376'] },
+            { id: '376', name: 'Natti Ben Moshe', gender: 'M', birth_year: null, death_year: null, children_ids: ['366', '367', '368', '369', '370', '371', '372', '373', '374', '375'] },
+            // Child 5: Yael Junger (no spouse/children)
+            { id: '321_younger', name: 'Yael Junger', gender: 'F', birth_year: null, death_year: 'Alive' },
+
+            // --- GEN 5 (Children of Shmuel Bromberg & Chana Noa Izaks) ---
+            // Child 1: Noga Bromberg
+            { id: '322', name: 'Noga Bromberg', gender: 'F', birth_year: 1980, death_year: 'Alive', children_ids: ['323', '324', '325', '380', '381'], spouse_ids: ['327'] },
+            { id: '327', name: 'Avi Grossman', gender: 'M', birth_year: 2003, death_year: null, children_ids: ['323', '324', '325', '380', '381'] },
+            // Child 2: Merav Bromberg
+            { id: '326', name: 'Merav Bromberg', gender: 'F', birth_year: 1982, death_year: 'Alive', children_ids: ['328', '329', '382', '383'], spouse_ids: ['321_spouse'] },
+            { id: '321_spouse', name: 'Yanai Ben Abou', gender: 'M', birth_year: 2007, death_year: null, children_ids: ['328', '329', '382', '383'] },
+            // Child 3: Amitai Bromberg
+            { id: '330', name: 'Amitai Bromberg', gender: 'M', birth_year: 1988, death_year: 'Alive', children_ids: ['331', '384', '385'], spouse_ids: ['386'] },
+            { id: '386', name: 'Noga Amran', gender: 'F', birth_year: 2016, death_year: null, children_ids: ['331', '384', '385'] },
+
+            // --- GEN 5 (Children of Bernice Marlene Sims & Morris Brown) ---
+            // Child 1: Alan Brown
+            { id: '333', name: 'Alan Brown', gender: 'M', birth_year: 1942, death_year: 'Alive', children_ids: ['334', '335', '336'], spouse_ids: ['387', '388'] },
+            { id: '387', name: 'Jacqueline Sue Levine', gender: 'F', birth_year: 1965, death_year: null, children_ids: ['334', '335', '336'] },
+            { id: '388', name: 'Lori Sue Gilberg', gender: 'F', birth_year: 1983, death_year: null }, // No children listed with Lori
+            // Child 2: Adrienne Brown
+            { id: '337', name: 'Adrienne Brown', gender: 'F', birth_year: 1948, death_year: 'Alive', children_ids: ['338', '339'], spouse_ids: ['390'] },
+            { id: '390', name: 'Joseph Breen', gender: 'M', birth_year: null, death_year: null, children_ids: ['338', '339'] },
+
+            // --- GEN 5 (Children of Marvin Treiger) ---
+            // Child 1: Stefan Wolf Arnold (Assuming child with Catherine Milite or Wendy Lee Dare)
+            { id: '263', name: 'Stefan Wolf Arnold', gender: 'M', birth_year: 1960, death_year: 'Alive', children_ids: ['391', '392'], spouse_ids: ['393'] },
+            { id: '393', name: 'Stacey Lynn Richman', gender: 'F', birth_year: null, death_year: null, children_ids: ['391', '392'] },
+
+            // --- GEN 5 (Children of Ahuva Hazan & Moshe Zazelman) ---
+            // Child 1-2: Yossie, Chaim
+            { id: '344', name: 'Yossie Zazelman', gender: 'M', birth_year: null, death_year: 'Alive' },
+            { id: '345', name: 'Chaim Zazelman', gender: 'M', birth_year: null, death_year: 'Alive' },
+
+            // --- GEN 5 (Children of Zipporah Hazan & Moshe Zohar) ---
+            // Child 1-3: Tal, Mor, Liora
+            { id: '347', name: 'Tal Zohar', gender: 'U', birth_year: null, death_year: 'Alive' },
+            { id: '348', name: 'Mor Zohar', gender: 'U', birth_year: null, death_year: 'Alive' },
+            { id: '349', name: 'Liora Zohar', gender: 'F', birth_year: null, death_year: 'Alive' },
+
+            // --- GEN 5 (Children of Ayala Hazan & ?? Vasiman) ---
+            // Child 1: Omri Vasiman
+            { id: '351', name: 'Omri Vasiman', gender: 'M', birth_year: null, death_year: 'Alive' },
+
+            // --- GEN 6 (Children of Carla Myers) ---
+            // Child 1: Peter Myers
+            { id: '353', name: 'Peter Myers', gender: 'M', birth_year: 1996, death_year: 'Alive' },
+
+            // --- GEN 6 (Children of Rebecca Myers) ---
+            // Child 1 (with Scott Labby): Maren Labby
+            { id: '355', name: 'Maren Labby', gender: 'F', birth_year: 2015, death_year: 'Alive' },
+            // Child 2 (with Seth Frader-Thompson): Sam Frader-Thompson
+            { id: '356', name: 'Sam Frader-Thompson', gender: 'U', birth_year: 2010, death_year: 'Alive' },
+
+            // --- GEN 6 (Children of Oren Pilosof) ---
+            // Child 1: Ayala Pilosof
+            { id: '295', name: 'Ayala Pilosof', gender: 'F', birth_year: null, death_year: 'Alive' },
+
+            // --- GEN 6 (Children of Shai Pilosof) ---
+            // Child 1-3: Ofek, Gal, Agam
+            { id: '299', name: 'Ofek Pilosof', gender: 'U', birth_year: null, death_year: 'Alive' },
+            { id: '300', name: 'Gal Pilosof', gender: 'U', birth_year: null, death_year: 'Alive' },
+            { id: '301', name: 'Agam Pilosof', gender: 'U', birth_year: null, death_year: 'Alive' },
+
+            // --- GEN 6 (Children of Eran Junger) ---
+            // Child 1-5: Moshe Eitan, Ayala, Naomi, Talya, Levi Yitzhak
+            { id: '305', name: 'Moshe Eitan Junger', gender: 'M', birth_year: 1997, death_year: 'Alive' },
+            { id: '306', name: 'Ayala Junger', gender: 'F', birth_year: 2000, death_year: 'Alive' },
+            { id: '307', name: 'Naomi Junger', gender: 'F', birth_year: 2003, death_year: 'Alive' },
+            { id: '308', name: 'Talya Junger', gender: 'F', birth_year: 2005, death_year: 'Alive' },
+            { id: '309', name: 'Levi Yitzhak Junger', gender: 'M', birth_year: null, death_year: 'Alive' },
+            // Child 6: Eshdat Junger
+            { id: '310', name: 'Eshdat Junger', gender: 'U', birth_year: null, death_year: 'Alive', children_ids: ['394'], spouse_ids: ['395'] },
+            { id: '395', name: 'Srael ?', gender: 'U', birth_year: null, death_year: null, children_ids: ['394'] },
+            // Child 7-8: Zion, Ma\'Ayan
+            { id: '361_a', name: 'Zion Junger', gender: 'U', birth_year: null, death_year: 'Alive' },
+            { id: '397_a', name: 'Ma\'Ayan Junger', gender: 'U', birth_year: null, death_year: 'Alive' },
+
+            // --- GEN 6 (Children of Ohad Junger) ---
+            // Child 1: Binyamin Junger
+            { id: '312', name: 'Binyamin Junger', gender: 'M', birth_year: 2003, death_year: 'Alive' },
+            // Child 2: Oriya Matan Junger
+            { id: '313', name: 'Oriya Matan Junger', gender: 'U', birth_year: null, death_year: 'Alive' },
+            // Child 3: Tal Junger
+            { id: '314', name: 'Tal Junger', gender: 'F', birth_year: null, death_year: 'Alive', children_ids: ['396'], spouse_ids: ['398'] },
+            { id: '398', name: 'Maor Barjel', gender: 'M', birth_year: null, death_year: null, children_ids: ['396'] },
+            // Child 4-5: Noam, Chen
+            { id: '362_a', name: 'Noam Junger', gender: 'U', birth_year: null, death_year: 'Alive' },
+            { id: '363_a', name: 'Chen Junger', gender: 'U', birth_year: null, death_year: 'Alive' },
+
+            // --- GEN 6 (Children of Alon Junger) ---
+            // Child 1-2: Mia, Gal
+            { id: '316', name: 'Mia Junger', gender: 'F', birth_year: null, death_year: 'Alive' },
+            { id: '317', name: 'Gal Junger', gender: 'U', birth_year: null, death_year: 'Alive' },
+
+            // --- GEN 6 (Children of Michal Junger & Natti Ben Moshe) ---
+            // Child 1: Yonatan Ben Moshe
+            { id: '366', name: 'Yonatan Ben Moshe', gender: 'M', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: ['399'] },
+            { id: '399', name: 'Malchut ?', gender: 'F', birth_year: null, death_year: null },
+            // Child 2: Inon Ben Moshe
+            { id: '367', name: 'Inon Ben Moshe', gender: 'M', birth_year: null, death_year: 'Alive' },
+            // Child 3: Malchut Ben Moshe
+            { id: '368', name: 'Malchut Ben Moshe', gender: 'F', birth_year: null, death_year: 'Alive' },
+            // Child 4: Ori Ben Moshe
+            { id: '369', name: 'Ori Ben Moshe', gender: 'U', birth_year: null, death_year: 'Alive' },
+            // Child 5: Shir Ben Moshe
+            { id: '370', name: 'Shir Ben Moshe', gender: 'U', birth_year: null, death_year: 'Alive' },
+            // Child 6: Yehuda Ben Moshe
+            { id: '371', name: 'Yehuda Ben Moshe', gender: 'M', birth_year: null, death_year: 'Alive' },
+            // Child 7: Noa Ben Moshe
+            { id: '372', name: 'Noa Ben Moshe', gender: 'F', birth_year: null, death_year: 'Alive' },
+            // Child 8: Noam Ben Moshe
+            { id: '373', name: 'Noam Ben Moshe', gender: 'U', birth_year: null, death_year: 'Alive', children_ids: [], spouse_ids: ['400'] },
+            { id: '400', name: 'Hadas ?', gender: 'F', birth_year: null, death_year: null },
+            // Child 9: Arie Ben Moshe
+            { id: '374', name: 'Arie Ben Moshe', gender: 'M', birth_year: null, death_year: 'Alive' },
+            // Child 10: Tamar Ben Moshe
+            { id: '375', name: 'Tamar Ben Moshe', gender: 'F', birth_year: null, death_year: 'Alive' },
+
+            // --- GEN 6 (Children of Noga Bromberg & Avi Grossman) ---
+            // Child 1-5: Roi Baruch, Maayan Ziva, Yishai Ido, Eyal Moshe, Yael Tziyon
+            { id: '323', name: 'Roi Baruch Grossman', gender: 'M', birth_year: 2004, death_year: 'Alive' },
+            { id: '324', name: 'Maayan Ziva Grossman', gender: 'F', birth_year: 2006, death_year: 'Alive' },
+            { id: '325', name: 'Yishai Ido Grossman', gender: 'M', birth_year: 2008, death_year: 'Alive' },
+            { id: '380', name: 'Eyal Moshe Grossman', gender: 'M', birth_year: 2011, death_year: 'Alive' },
+            { id: '381', name: 'Yael Tziyon Grossman', gender: 'F', birth_year: 2014, death_year: 'Alive' },
+
+            // --- GEN 6 (Children of Merav Bromberg & Yanai Ben Abou) ---
+            // Child 1-4: Yair Moshe, Avishai Yosef, Beeri Ido, Omer Shlomo
+            { id: '328', name: 'Yair Moshe Ben Abou', gender: 'M', birth_year: 2013, death_year: 'Alive' },
+            { id: '329', name: 'Avishai Yosef Ben Abou', gender: 'M', birth_year: 2016, death_year: 'Alive' },
+            { id: '382', name: 'Beeri Ido Ben Abou', gender: 'M', birth_year: 2019, death_year: 'Alive' },
+            { id: '383', name: 'Omer Shlomo Ben Abou', gender: 'M', birth_year: 2025, death_year: 'Alive' },
+
+            // --- GEN 6 (Children of Amitai Bromberg & Noga Amran) ---
+            // Child 1-3: Ido Baruch, Hadas Rachel, Ariel Moshe
+            { id: '331', name: 'Ido Baruch Bromberg', gender: 'M', birth_year: 2019, death_year: 'Alive' },
+            { id: '384', name: 'Hadas Rachel Bromberg', gender: 'F', birth_year: 2022, death_year: 'Alive' },
+            { id: '385', name: 'Ariel Moshe Bromberg', gender: 'M', birth_year: 2024, death_year: 'Alive' },
+
+            // --- GEN 6 (Children of Alan Brown & Jacqueline Sue Levine) ---
+            // Child 1: Sheryl Rachel Brown
+            { id: '334', name: 'Sheryl Rachel Brown', gender: 'F', birth_year: 1967, death_year: 'Alive', children_ids: ['401', '403', '405'], spouse_ids: ['402'] },
+            { id: '402', name: 'Mark Seef', gender: 'M', birth_year: 1994, death_year: null, children_ids: ['401', '403', '405'] },
+            // Child 2: Deborah Beth Brown
+            { id: '335', name: 'Deborah Beth Brown', gender: 'F', birth_year: 1968, death_year: 'Alive' },
+            // Child 3: Janice Lynne Brown
+            { id: '336', name: 'Janice Lynne Brown', gender: 'F', birth_year: 1972, death_year: 'Alive', children_ids: ['406', '407', '408', '409'], spouse_ids: ['410'] },
+            { id: '410', name: 'Barry Jonathan Gork', gender: 'M', birth_year: 1998, death_year: null, children_ids: ['406', '407', '408', '409'] },
+
+            // --- GEN 6 (Children of Adrienne Brown & Joseph Breen) ---
+            // Child 1: Michael Breen
+            { id: '338', name: 'Michael Breen', gender: 'M', birth_year: 1985, death_year: 'Alive', children_ids: ['411', '412'], spouse_ids: ['413'] },
+            { id: '413', name: 'Miranda Blaine Borkan', gender: 'F', birth_year: 2018, death_year: null, children_ids: ['411', '412'] },
+            // Child 2: Scott Breen
+            { id: '339', name: 'Scott Breen', gender: 'M', birth_year: 1988, death_year: 'Alive', children_ids: [], spouse_ids: ['414'] },
+            { id: '414', name: 'Shannon Fineran', gender: 'F', birth_year: 2024, death_year: null },
+
+            // --- GEN 6 (Children of Stefan Wolf Arnold & Stacey Lynn Richman) ---
+            // Child 1-2: Lex, Asher
+            { id: '391', name: 'Lex Arnold', gender: 'U', birth_year: null, death_year: 'Alive' },
+            { id: '392', name: 'Asher Arnold', gender: 'U', birth_year: null, death_year: 'Alive' },
+
+            // --- GEN 7 (Children of Eshdat Junger) ---
+            // Child 1: X ?
+            { id: '394', name: 'X ?', gender: 'U', birth_year: null, death_year: 'Alive' },
+
+            // --- GEN 7 (Children of Tal Junger) ---
+            // Child 1: Yonatan Barjel
+            { id: '396', name: 'Yonatan Barjel', gender: 'M', birth_year: null, death_year: 'Alive' },
+
+            // --- GEN 7 (Children of Sheryl Rachel Brown & Mark Seef) ---
+            // Child 1: Abigail Seef
+            { id: '401', name: 'Abigail Seef', gender: 'F', birth_year: 1996, death_year: 'Alive', children_ids: ['415'], spouse_ids: ['416'] },
+            { id: '416', name: 'Grant Greenberg', gender: 'M', birth_year: 2022, death_year: null, children_ids: ['415'] },
+            // Child 2: Joshua Seef
+            { id: '403', name: 'Joshua Seef', gender: 'M', birth_year: 1999, death_year: 'Alive', children_ids: [], spouse_ids: ['404'] },
+            { id: '404', name: 'Ally Rae', gender: 'F', birth_year: 2021, death_year: null },
+            // Child 3: David Seef
+            { id: '405', name: 'David Seef', gender: 'M', birth_year: 2001, death_year: 'Alive' },
+
+            // --- GEN 7 (Children of Janice Lynne Brown & Barry Jonathan Gork) ---
+            // Child 1-4: Nathan, Mia, Ethan, Jacob
+            { id: '406', name: 'Nathan Gork', gender: 'M', birth_year: 2000, death_year: 'Alive' },
+            { id: '407', name: 'Mia Gork', gender: 'F', birth_year: 2002, death_year: 'Alive' },
+            { id: '408', name: 'Ethan Gork', gender: 'M', birth_year: 2005, death_year: 'Alive' },
+            { id: '409', name: 'Jacob Gork', gender: 'M', birth_year: 2008, death_year: 'Alive' },
+
+            // --- GEN 7 (Children of Michael Breen & Miranda Blaine Borkan) ---
+            // Child 1-2: Emma, Charlie
+            { id: '411', name: 'Emma Breen', gender: 'F', birth_year: 2020, death_year: 'Alive' },
+            { id: '412', name: 'Charlie Breen', gender: 'U', birth_year: 2022, death_year: 'Alive' },
+
+            // --- GEN 8 (Children of Abigail Seef & Grant Greenberg) ---
+            // Child 1: Elara Greenberg
+            { id: '415', name: 'Elara Greenberg', gender: 'F', birth_year: 2024, death_year: 'Alive' }
         ];
 
-        // Create a map for quick lookup
+     // Create a map for quick lookup
         const peopleMap = peopleData.reduce((map, person) => {
             map[person.id] = person;
             return map;
         }, {});
 
-        const rootId = '1';
+        const rootId = '231';
         const rootPerson = peopleMap[rootId];
 
         // Function to create the HTML for a single person card
