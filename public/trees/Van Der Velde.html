@@ -1,1 +1,484 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Tree: Descendants of Van Der Velde)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+        }
+        /* Card Styles */
+        .person-card {
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            min-width: 150px;
+            max-width: 200px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .person-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+        /* Gender Colors */
+        .gender-M { background-color: #DBEAFE; border: 2px solid #3B82F6; } /* Blue for Male */
+        .gender-F { background-color: #FCE7F3; border: 2px solid #EC4899; } /* Pink for Female */
+        .gender-U { background-color: #E5E7EB; border: 2px solid #6B7280; } /* Grey for Unknown */
 
+        /* Tree Structure */
+        .tree-container {
+            display: inline-block;
+            white-space: nowrap;
+            padding: 2rem;
+            min-width: 100%;
+        }
+        .couple-node {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        /* Wrapper for the person/spouse cards */
+        .couple-card-wrapper {
+            display: flex;
+            align-items: stretch;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+        /* Line connecting two partners or a partner to the main person */
+        .spouse-line {
+            height: 2px;
+            width: 10px; /* Reduced width for multiple connections */
+            background-color: #1F2937;
+            align-self: center;
+        }
+        /* Vertical line connecting couple/multiple spouses to children */
+        .children-line-vertical {
+            position: relative;
+            width: 2px;
+            background-color: #1F2937;
+            height: 20px;
+            margin-bottom: 0;
+        }
+
+        /* Container for all children of a couple */
+        .descendants-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 0;
+            width: 100%;
+            /* Initially collapsed, handled by JS */
+        }
+
+        /* Horizontal line connecting all siblings */
+        .children-horizontal-connector {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            padding-top: 0;
+            margin-top: 0;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .children-horizontal-line {
+            position: absolute;
+            top: 0;
+            height: 2px;
+            background-color: #1F2937;
+            width: 100%;
+        }
+
+        /* Container for each child node, positioned horizontally */
+        .child-node-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 0 15px; /* Spacing between siblings */
+        }
+
+        /* Vertical line from horizontal connector to the child's couple node */
+        .child-vertical-line {
+            width: 2px;
+            height: 20px;
+            background-color: #1F2937;
+            position: relative;
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .tree-container {
+                overflow-x: scroll;
+            }
+            .person-card {
+                min-width: 100px;
+                max-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 p-4 md:p-8">
+    <header class="text-center mb-8">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800">🌳 Izaks Family Tree</h1>
+        <p class="text-lg text-gray-600 mt-2">Introducing multiple generations with support for multiple spouses.</p>
+        <p class="text-sm text-green-700 mt-2 font-bold">The tree is updated to October 2025- 7/5785</p>
+    </header>
+
+    <div class="overflow-x-auto shadow-lg bg-white rounded-xl p-4">
+        <div id="familyTree" class="tree-container">
+            <!-- עץ המשפחה יוצג כאן באמצעות JavaScript -->
+        </div>
+    </div>
+
+    <div class="mt-8 p-6 bg-gray-100 rounded-xl shadow-md max-w-4xl mx-auto">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Key and instructions:</h2>
+        <div class="flex flex-col sm:flex-row justify-around gap-4 text-sm">
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-M mr-2"></div><span>Male (זכר)</span></div>
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-F mr-2"></div><span>Female (נקבה)</span></div>
+            <div class="flex items-center"><div class="w-4 h-4 rounded-full gender-U mr-2"></div><span>Unknown (לא ידוע)</span></div>
+        </div>
+        <p class="mt-4 text-gray-600 text-sm">Click on a person's card to **show/hide their descendants**.</p>
+        <p class="text-xs mt-2 text-gray-500 font-bold">Please note: A person with multiple partner cards linked  is a person who has had multiple documented partners.</p>
+    </div>
+
+    <script>
+        // Data containing all family members
+        // NOTE: The 'spouse_id' property has been replaced with 'spouse_ids' (an array) for all primary lineage members.
+        const peopleData = [
+      [
+{ "id": "1", "name": "Yaakov Van der Velde", "gender": "M", "spouse_ids": ["2"], "parent_ids": [], "children_ids": ["3"], "birth_year": "1673" },
+{ "id": "2", "name": "Unknown Spouse", "gender": "F", "spouse_ids": ["1"], "children_ids": ["3"] },
+{ "id": "3", "name": "Alexander van der Velde", "gender": "M", "spouse_ids": ["4"], "parent_ids": ["1", "2"], "children_ids": ["5"], "birth_year": "1711" },
+{ "id": "4", "name": "X Hengel", "gender": "F", "spouse_ids": ["3"], "children_ids": ["5"] },
+{ "id": "5", "name": "Marcus Meijer Alexander", "gender": "M", "spouse_ids": ["6", "7"], "parent_ids": ["3", "4"], "children_ids": ["8", "15", "18"], "birth_year": "1736", "death_year": "1806" },
+{ "id": "6", "name": "Ester Marcus Mordechai van Norden", "gender": "F", "spouse_ids": ["5"], "children_ids": ["8"] },
+{ "id": "7", "name": "Rebekka Hartog Italiaander", "gender": "F", "spouse_ids": ["5"], "children_ids": ["15", "18"] },
+{ "id": "8", "name": "Alexander Marcus Meyer van Der Velde", "gender": "M", "spouse_ids": ["9"], "parent_ids": ["5", "6"], "children_ids": ["10", "11", "12"], "birth_year": "1772", "death_year": "1856" },
+{ "id": "9", "name": "Fijtje Jacob Polak Levie", "gender": "F", "spouse_ids": ["8"], "children_ids": ["10", "11", "12"] },
+{ "id": "10", "name": "Louis Alexander van der Velde", "gender": "M", "parent_ids": ["8", "9"], "birth_year": "1802", "death_year": "1847" },
+{ "id": "11", "name": "Mietje Alexander van der Velde", "gender": "F", "parent_ids": ["8", "9"], "birth_year": "1805" },
+{ "id": "12", "name": "Sara Alexanders Van Der Velde", "gender": "F", "parent_ids": ["8", "9"], "birth_year": "1806" },
+{ "id": "15", "name": "Sara Meijer van der Velde Hengel", "gender": "F", "spouse_ids": ["16"], "parent_ids": ["5", "7"], "children_ids": ["17"], "birth_year": "1774", "death_year": "1868" },
+{ "id": "16", "name": "Samson Hartog Frank", "gender": "M", "spouse_ids": ["15"], "children_ids": ["17"] },
+{ "id": "17", "name": "Rebecka Roosje Samson Frank", "gender": "F", "spouse_ids": ["17s"], "parent_ids": ["15", "16"], "children_ids": ["17c"], "birth_year": "1806", "death_year": "1893" },
+{ "id": "17s", "name": "Salomon Koopman van der Sluis", "gender": "M", "spouse_ids": ["17"], "children_ids": ["17c"] },
+{ "id": "17c", "name": "Simon van der Sluis", "gender": "M", "parent_ids": ["17", "17s"], "birth_year": "1840", "death_year": "1889" },
+{ "id": "18", "name": "Moses Meijer van der Velde", "gender": "M", "spouse_ids": ["19"], "parent_ids": ["5", "7"], "children_ids": ["20", "200", "300"], "birth_year": "1785", "death_year": "1863" },
+{ "id": "19", "name": "Betje Emanuel Aron Blitz", "gender": "F", "spouse_ids": ["18"], "children_ids": ["20", "200", "300"] },
+{ "id": "20", "name": "Hijman Meijer van der Velde", "gender": "M", "spouse_ids": ["21"], "parent_ids": ["18", "19"], "children_ids": ["22"], "birth_year": "1817", "death_year": "1899" },
+{ "id": "21", "name": "Betje Samson Frank", "gender": "F", "spouse_ids": ["20"], "children_ids": ["22"] },
+{ "id": "22", "name": "Benjamin van der Velde", "gender": "M", "spouse_ids": ["23"], "parent_ids": ["20", "21"], "children_ids": ["24", "180", "181", "182", "183", "190", "195", "198", "199"], "birth_year": "1849", "death_year": "1924" },
+{ "id": "23", "name": "Flora Italiaander", "gender": "F", "spouse_ids": ["22"], "children_ids": ["24", "180", "181", "182", "183", "190", "195", "198", "199"] },
+{ "id": "24", "name": "Jonas Jacob van der Velde", "gender": "M", "spouse_ids": ["25", "26"], "parent_ids": ["22", "23"], "children_ids": ["27", "80", "120", "140"], "birth_year": "1887", "death_year": "1980" },
+{ "id": "25", "name": "Frouke Frank", "gender": "F", "spouse_ids": ["24"], "children_ids": ["27"] },
+{ "id": "26", "name": "Rosalie Lea van der velde", "gender": "F", "spouse_ids": ["24"], "children_ids": ["80", "120", "140"] },
+{ "id": "27", "name": "Bernard van der Velde", "gender": "M", "spouse_ids": ["28"], "parent_ids": ["24", "25"], "children_ids": ["29", "50", "65", "70"], "birth_year": "1911", "death_year": "1997" },
+{ "id": "28", "name": "Eleanor Alice Waterston", "gender": "F", "spouse_ids": ["27"], "children_ids": ["29", "50", "65", "70"] },
+{ "id": "29", "name": "Robert James van der Velde", "gender": "M", "spouse_ids": ["30", "31"], "parent_ids": ["27", "28"], "children_ids": ["32", "40", "43", "46"], "birth_year": "1941" },
+{ "id": "30", "name": "Margaret Kennedy Crookshank", "gender": "F", "spouse_ids": ["29"], "children_ids": ["32", "40", "43", "46"] },
+{ "id": "31", "name": "Christine Nielson", "gender": "F", "spouse_ids": ["29"] },
+{ "id": "32", "name": "Jennifer Van der velde", "gender": "F", "spouse_ids": ["33"], "parent_ids": ["29", "30"], "children_ids": ["34", "35", "36"], "birth_year": "1969" },
+{ "id": "33", "name": "Bradley John Rees", "gender": "M", "spouse_ids": ["32"], "children_ids": ["34", "35", "36"] },
+{ "id": "34", "name": "Tawny Lou Rees", "gender": "F", "parent_ids": ["32", "33"], "birth_year": "1995" },
+{ "id": "35", "name": "Thomas Keaton Rees", "gender": "M", "parent_ids": ["32", "33"], "birth_year": "1998" },
+{ "id": "36", "name": "Tegan Grace Rees", "gender": "F", "parent_ids": ["32", "33"], "birth_year": "2001" },
+{ "id": "40", "name": "Andrew Van der velde", "gender": "M", "spouse_ids": ["41", "42"], "parent_ids": ["29", "30"], "children_ids": ["40a", "40b", "40c"], "birth_year": "1971" },
+{ "id": "41", "name": "Sarah Souter", "gender": "F", "spouse_ids": ["40"], "children_ids": ["40a", "40b", "40c"] },
+{ "id": "40a", "name": "Michael Van der Velde", "gender": "M", "parent_ids": ["40", "41"], "birth_year": "1996" },
+{ "id": "40b", "name": "Kevan Van der Velde", "gender": "M", "parent_ids": ["40", "41"], "birth_year": "1997" },
+{ "id": "40c", "name": "Megan Van der Velde", "gender": "F", "parent_ids": ["40", "41"], "birth_year": "2000" },
+{ "id": "43", "name": "Katherine Van der velde", "gender": "F", "spouse_ids": ["44"], "parent_ids": ["29", "30"], "children_ids": ["44a", "44b"], "birth_year": "1976" },
+{ "id": "44", "name": "Stewart Taggart", "gender": "M", "spouse_ids": ["43"], "children_ids": ["44a", "44b"] },
+{ "id": "44a", "name": "Jack Taggart", "gender": "M", "parent_ids": ["43", "44"], "birth_year": "2009" },
+{ "id": "44b", "name": "Jessica Taggart", "gender": "F", "parent_ids": ["43", "44"], "birth_year": "2010" },
+{ "id": "46", "name": "Suzanne Van der velde", "gender": "F", "spouse_ids": ["47"], "parent_ids": ["29", "30"], "children_ids": ["47a", "47b"], "birth_year": "1979" },
+{ "id": "47", "name": "Simon de Geus", "gender": "M", "spouse_ids": ["46"], "children_ids": ["47a", "47b"] },
+{ "id": "47a", "name": "Bram de Geus", "gender": "M", "parent_ids": ["46", "47"], "birth_year": "2013" },
+{ "id": "47b", "name": "Merle de Geus", "gender": "F", "parent_ids": ["46", "47"], "birth_year": "2015" },
+{ "id": "50", "name": "Frank van der Velde", "gender": "M", "spouse_ids": ["51", "52"], "parent_ids": ["27", "28"], "children_ids": ["53", "57", "61"], "birth_year": "1943", "death_year": "2025" },
+{ "id": "51", "name": "Marianne S. Van Vollenhoven", "gender": "F", "spouse_ids": ["50"], "children_ids": ["53", "57", "61"] },
+{ "id": "52", "name": "Mieke de Vries", "gender": "F", "spouse_ids": ["50"] },
+{ "id": "53", "name": "Mark Van der Velde", "gender": "M", "spouse_ids": ["54", "55", "56"], "parent_ids": ["50", "51"], "children_ids": ["54a", "55a", "55b"], "birth_year": "1970" },
+{ "id": "54", "name": "Yael Maandag", "gender": "F", "spouse_ids": ["53"], "children_ids": ["54a"] },
+{ "id": "54a", "name": "Levi Van der Velde", "gender": "M", "parent_ids": ["53", "54"], "birth_year": "1994" },
+{ "id": "55", "name": "Nanda Berendsen", "gender": "F", "spouse_ids": ["53"], "children_ids": ["55a", "55b"] },
+{ "id": "55a", "name": "Roan Van der Velde", "gender": "M", "parent_ids": ["53", "55"], "birth_year": "2000" },
+{ "id": "55b", "name": "Kyra Van der Velde", "gender": "F", "parent_ids": ["53", "55"], "birth_year": "2002" },
+{ "id": "56", "name": "Jacqueline Deen", "gender": "F", "spouse_ids": ["53"] },
+{ "id": "57", "name": "Peter Bernard Van der Velde", "gender": "M", "spouse_ids": ["58", "59", "60"], "parent_ids": ["50", "51"], "children_ids": ["58a", "58b"], "birth_year": "1972" },
+{ "id": "58", "name": "Monique van Egteren", "gender": "F", "spouse_ids": ["57"], "children_ids": ["58a", "58b"] },
+{ "id": "58a", "name": "Esmay Van der Velde", "gender": "F", "parent_ids": ["57", "58"], "birth_year": "2000" },
+{ "id": "58b", "name": "Lars Van der Velde", "gender": "M", "parent_ids": ["57", "58"], "birth_year": "2003" },
+{ "id": "61", "name": "Jason James van der Velde", "gender": "M", "spouse_ids": ["62", "63", "64"], "parent_ids": ["50", "51"], "children_ids": ["62a", "62b", "62c", "62d", "62e"], "birth_year": "1976" },
+{ "id": "62", "name": "Yvonne van Doorn", "gender": "F", "spouse_ids": ["61"], "children_ids": ["62a", "62b", "62c"] },
+{ "id": "62a", "name": "Tessa Van der Velde", "gender": "F", "parent_ids": ["61", "62"], "birth_year": "2003" },
+{ "id": "62b", "name": "Niels Van der Velde", "gender": "M", "parent_ids": ["61", "62"], "birth_year": "2006" },
+{ "id": "62c", "name": "Merel Van der Velde", "gender": "F", "parent_ids": ["61", "62"], "birth_year": "2009" },
+{ "id": "63", "name": "Marije den Ouden", "gender": "F", "spouse_ids": ["61"], "children_ids": ["62d", "62e"] },
+{ "id": "62d", "name": "Bas Van der Velde", "gender": "M", "parent_ids": ["61", "63"], "birth_year": "2013" },
+{ "id": "62e", "name": "Gijs Van der Velde", "gender": "M", "parent_ids": ["61", "63"], "birth_year": "2016" },
+{ "id": "64", "name": "Carolin van Doorn", "gender": "F", "spouse_ids": ["61"] },
+{ "id": "65", "name": "Yvonne Eleonore van der Velde", "gender": "F", "spouse_ids": ["66"], "parent_ids": ["27", "28"], "children_ids": ["67", "68", "69"], "birth_year": "1946" },
+{ "id": "66", "name": "Herman Versteeg", "gender": "M", "spouse_ids": ["65"], "children_ids": ["67", "68", "69"] },
+{ "id": "67", "name": "Eleanor Versteeg", "gender": "F", "parent_ids": ["65", "66"], "birth_year": "1972" },
+{ "id": "68", "name": "Yvonne Versteeg", "gender": "F", "parent_ids": ["65", "66"], "birth_year": "1975" },
+{ "id": "69", "name": "Herman Versteeg", "gender": "M", "parent_ids": ["65", "66"], "birth_year": "1977" },
+{ "id": "70", "name": "Irene van der Velde", "gender": "F", "spouse_ids": ["71"], "parent_ids": ["27", "28"], "children_ids": ["72"], "birth_year": "1951" },
+{ "id": "71", "name": "Kees Goudzwaard", "gender": "M", "spouse_ids": ["70"], "children_ids": ["72"] },
+{ "id": "72", "name": "Saskia Goudzwaard", "gender": "F", "parent_ids": ["70", "71"], "birth_year": "1975" },
+{ "id": "80", "name": "Betty van der Velde", "gender": "F", "spouse_ids": ["81", "82"], "parent_ids": ["24", "26"], "children_ids": ["83", "86", "87"], "birth_year": "1919", "death_year": "2011" },
+{ "id": "81", "name": "Samuel Waterman", "gender": "M", "spouse_ids": ["80"], "children_ids": ["83"] },
+{ "id": "83", "name": "Rob Waterman", "gender": "M", "spouse_ids": ["84", "85"], "parent_ids": ["80", "81"], "children_ids": ["84a", "84b", "85a"], "birth_year": "1942" },
+{ "id": "84a", "name": "Rob Jr. Waterman", "gender": "M", "parent_ids": ["83", "84"] },
+{ "id": "84b", "name": "Ilona Waterman", "gender": "F", "parent_ids": ["83", "84"] },
+{ "id": "85a", "name": "Zilver Waterman", "gender": "M", "parent_ids": ["83", "85"] },
+{ "id": "82", "name": "Barend de Leeuw", "gender": "M", "spouse_ids": ["80"], "children_ids": ["86", "87"] },
+{ "id": "86", "name": "Tineke de Leeuw", "gender": "F", "parent_ids": ["80", "82"], "birth_year": "1948" },
+{ "id": "87", "name": "Irene de Leeuw", "gender": "F", "parent_ids": ["80", "82"], "birth_year": "1949" },
+{ "id": "120", "name": "Rita Flora van der Velde", "gender": "F", "spouse_ids": ["121"], "parent_ids": ["24", "26"], "children_ids": ["122", "123", "124", "128"], "birth_year": "1920", "death_year": "1980" },
+{ "id": "121", "name": "Mose Menno Kan", "gender": "M", "spouse_ids": ["120"], "children_ids": ["122", "123", "124", "128"] },
+{ "id": "122", "name": "Menno Kan", "gender": "M", "parent_ids": ["120", "121"], "birth_year": "1944" },
+{ "id": "123", "name": "Loes Kan", "gender": "F", "parent_ids": ["120", "121"], "birth_year": "1946" },
+{ "id": "124", "name": "Baukje Kan", "gender": "F", "spouse_ids": ["125"], "parent_ids": ["120", "121"], "children_ids": ["126", "127"], "birth_year": "1948" },
+{ "id": "128", "name": "Mose Kan", "gender": "M", "spouse_ids": ["129"], "parent_ids": ["120", "121"], "children_ids": ["129a", "129b"], "birth_year": "1952" },
+{ "id": "140", "name": "Jacqueline van der Velde", "gender": "F", "spouse_ids": ["141"], "parent_ids": ["24", "26"], "children_ids": ["142", "143"], "birth_year": "1926", "death_year": "1983" },
+{ "id": "141", "name": "P. C. W. (Pier) van Noorden", "gender": "M", "spouse_ids": ["140"], "children_ids": ["142", "143"] },
+{ "id": "142", "name": "Rosalie van Noorden", "gender": "F", "parent_ids": ["140", "141"], "birth_year": "1954" },
+{ "id": "143", "name": "Jonas Jacob van Noorden", "gender": "M", "parent_ids": ["140", "141"], "birth_year": "1957" },
+{ "id": "180", "name": "Mietje van der Velde", "gender": "F", "parent_ids": ["22", "23"], "birth_year": "1888", "death_year": "1943" },
+{ "id": "181", "name": "Rebekka van der Velde", "gender": "F", "parent_ids": ["22", "23"], "birth_year": "1889", "death_year": "1943" },
+{ "id": "182", "name": "Hester van der Velde", "gender": "F", "parent_ids": ["22", "23"], "birth_year": "1893", "death_year": "1943" },
+{ "id": "183", "name": "Mozes Jesaja van der Velde", "gender": "M", "spouse_ids": ["184"], "parent_ids": ["22", "23"], "children_ids": ["185", "186", "187"], "birth_year": "1895", "death_year": "1943" },
+{ "id": "184", "name": "Maria de Vries", "gender": "F", "spouse_ids": ["183"], "children_ids": ["185", "186", "187"] },
+{ "id": "185", "name": "Benjamin (Ben) van der Velde", "gender": "M", "parent_ids": ["183", "184"], "birth_year": "1926", "death_year": "1943" },
+{ "id": "186", "name": "Izaak Jesaja van der Velde", "gender": "M", "parent_ids": ["183", "184"], "birth_year": "1927", "death_year": "1943" },
+{ "id": "187", "name": "Julia Van der velde", "gender": "F", "spouse_ids": ["188"], "parent_ids": ["183", "184"], "children_ids": ["189", "191", "193", "196", "197"], "birth_year": "1930" },
+{ "id": "188", "name": "Eduard Ido Izaks", "gender": "M", "spouse_ids": ["187"], "children_ids": ["189", "191", "193", "196", "197"] },
+{ "id": "189", "name": "Miriam Izaks", "gender": "F", "spouse_ids": ["189a", "189b"], "parent_ids": ["187", "188"], "children_ids": ["189c1", "189c2", "189c3"], "birth_year": "1953" },
+{ "id": "189a", "name": "Amiram Caspi", "gender": "M", "spouse_ids": ["189"], "children_ids": ["189c1", "189c2", "189c3"] },
+{ "id": "189c1", "name": "Eduard (Edo) Caspi", "gender": "M", "spouse_ids": ["189c1s"], "parent_ids": ["189", "189a"], "children_ids": ["C1", "C2", "C3"], "birth_year": "1975" },
+{ "id": "189c2", "name": "Maya Caspi", "gender": "F", "parent_ids": ["189", "189a"], "birth_year": "1977" },
+{ "id": "189c3", "name": "Talia Caspi", "gender": "F", "parent_ids": ["189", "189a"], "birth_year": "1983" },
+{ "id": "191", "name": "Channa Noa Izaks", "gender": "F", "spouse_ids": ["192"], "parent_ids": ["187", "188"], "children_ids": ["192c1", "192c2", "192c3"], "birth_year": "1955" },
+{ "id": "192", "name": "Shmuel Bromberg", "gender": "M", "spouse_ids": ["191"], "children_ids": ["192c1", "192c2", "192c3"] },
+{ "id": "192c1", "name": "Noga Bromberg", "gender": "F", "spouse_ids": ["192c1s"], "parent_ids": ["191", "192"], "children_ids": ["B1", "B2", "B3", "B4", "B5"], "birth_year": "1980" },
+{ "id": "193", "name": "Maria Izaks", "gender": "F", "spouse_ids": ["194"], "parent_ids": ["187", "188"], "children_ids": ["194a", "194b"], "birth_year": "1959" },
+{ "id": "196", "name": "Benjamin Izaks", "gender": "M", "parent_ids": ["187", "188"], "birth_year": "1963" },
+{ "id": "197", "name": "Izaak Jesaja Izaks", "gender": "M", "parent_ids": ["187", "188"], "birth_year": "1964" },
+{ "id": "190", "name": "Jesaja van der Velde", "gender": "M", "parent_ids": ["22", "23"], "birth_year": "1897", "death_year": "1943" },
+{ "id": "195", "name": "Alexander van der Velde", "gender": "M", "parent_ids": ["22", "23"], "birth_year": "1899", "death_year": "1942" },
+{ "id": "198", "name": "Hijman van der Velde", "gender": "M", "parent_ids": ["22", "23"], "birth_year": "1901", "death_year": "1943" },
+{ "id": "199", "name": "David Hartog van der Velde", "gender": "M", "spouse_ids": ["199s"], "parent_ids": ["22", "23"], "children_ids": ["199b", "199c"], "birth_year": "1904", "death_year": "1944" },
+{ "id": "199s", "name": "Rachel Snijders", "gender": "F", "spouse_ids": ["199"], "children_ids": ["199b", "199c"] },
+{ "id": "199b", "name": "Benno van der Velde", "gender": "M", "spouse_ids": ["199bs"], "parent_ids": ["199", "199s"], "children_ids": ["199bc"], "birth_year": "1933" },
+{ "id": "199bc", "name": "Davied Zwi van der Velde", "gender": "M", "spouse_ids": ["V_s"], "parent_ids": ["199b", "199bs"], "children_ids": ["V1", "V2", "V3", "V4", "V5"], "birth_year": "1964" },
+{ "id": "199c", "name": "Elisheva van der Velde", "gender": "F", "spouse_ids": ["199cs"], "parent_ids": ["199", "199s"], "children_ids": ["A1", "A2", "A3", "A4", "A5"], "birth_year": "1937" },
+{ "id": "A2", "name": "Batya Abrahams", "gender": "F", "spouse_ids": ["A2s"], "parent_ids": ["199c", "199cs"], "children_ids": ["L1", "L2"], "birth_year": "1960" },
+{ "id": "L1", "name": "Nechama Levi", "gender": "F", "spouse_ids": ["L1s"], "parent_ids": ["A2", "A2s"], "children_ids": ["BE1", "BE2", "BE3", "BE4", "BE5"], "birth_year": "1981" },
+{ "id": "300", "name": "Aaltje Mozes van der Velde", "gender": "F", "spouse_ids": ["301"], "parent_ids": ["18", "19"], "children_ids": ["302", "305", "306", "307", "308", "309"], "birth_year": "1820", "death_year": "1901" },
+{ "id": "301", "name": "Izaak Elias Mesritz", "gender": "M", "spouse_ids": ["300"], "children_ids": ["302", "305", "306", "307", "308", "309"] },
+{ "id": "302", "name": "Betje Mesritz", "gender": "F", "spouse_ids": ["303"], "parent_ids": ["300", "301"], "children_ids": ["304"], "birth_year": "1845", "death_year": "1903" },
+{ "id": "304", "name": "Sara Eliasar", "gender": "F", "spouse_ids": ["304s"], "parent_ids": ["302", "303"], "children_ids": ["304c1", "304c2", "304c3"], "birth_year": "1882", "death_year": "1943" },
+{ "id": "305", "name": "Elias Mesritz", "gender": "M", "spouse_ids": ["305s"], "parent_ids": ["300", "301"], "children_ids": ["305c1", "305c2", "305c3", "305c4", "305c5", "305c6", "305c7"], "birth_year": "1847", "death_year": "1912" },
+{ "id": "305c2", "name": "Dina Mesritz", "gender": "F", "spouse_ids": ["305c2s"], "parent_ids": ["305", "305s"], "children_ids": ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10"], "birth_year": "1878", "death_year": "1936" },
+{ "id": "309", "name": "Esther Mesritz", "gender": "F", "spouse_ids": ["309s"], "parent_ids": ["300", "301"], "children_ids": ["DE1", "DE2", "DE3", "DE4", "DE5", "DE6"], "birth_year": "1857", "death_year": "1930" },
+{ "id": "DE1", "name": "Joël Israel Denneboom", "gender": "M", "spouse_ids": ["DE1s"], "parent_ids": ["309", "309s"], "children_ids": ["DE1c1", "DE1c2", "DE1c3"], "birth_year": "1888", "death_year": "1942" }
+]
+        ];
+
+        // Create a map for quick lookup
+        const peopleMap = peopleData.reduce((map, person) => {
+            map[person.id] = person;
+            return map;
+        }, {});
+
+        const rootId = '1';
+        const rootPerson = peopleMap[rootId];
+
+        // Function to create the HTML for a single person card
+        function createPersonCard(person, isSpouse) {
+            const status = person.death_year === 'Alive' ? ' (Alive)' : (person.death_year ? ` (d. ${person.death_year})` : '');
+            const dates = (person.birth_year || person.death_year) ?
+                `<div class="text-xs text-gray-500 mt-1">${person.birth_year ? `b. ${person.birth_year}` : ''}${person.birth_year && person.death_year ? ' - ' : ''}${person.death_year || ''}</div>` :
+                '';
+            
+            const card = document.createElement('div');
+            card.className = `person-card gender-${person.gender} w-full`;
+            card.setAttribute('data-id', person.id);
+            
+            // Only the main lineage person should have the click event to prevent double-toggling
+            // If the person has children and is not just a spouse card, allow toggle
+            if (!isSpouse || (person.children_ids && person.children_ids.length > 0)) { 
+                 // Ensure only one click handler exists if this person is part of the main lineage
+                card.onclick = toggleChildren;
+            }
+
+            // Create an icon based on gender/status
+            let icon = '';
+            if (person.gender === 'M') icon = '♂️';
+            else if (person.gender === 'F') icon = '♀️';
+            else icon = '👤';
+            
+            // Determine the arrow/icon for the children toggle, only show if children exist
+            const childrenIndicator = person.children_ids && person.children_ids.length > 0 ? 
+                    '<div class="text-xs mt-1 font-bold text-gray-700">⬇️</div>' : 
+                    '<div class="text-xs mt-1 font-bold text-gray-400">⚫</div>';
+
+            card.innerHTML = `
+                <div class="text-xl mb-1">${icon}</div>
+                <div class="font-semibold text-sm leading-tight">${person.name}</div>
+                <div class="text-xs font-mono text-gray-700">${person.id}</div>
+                ${dates}
+                ${person.note ? `<div class="text-xs mt-1 text-pink-700 font-medium">${person.note}</div>` : ''}
+                ${childrenIndicator}
+            `;
+            return card;
+        }
+
+        // Toggles the visibility of the descendants container
+        function toggleChildren(event) {
+            // Find the immediate parent couple-node
+            const coupleNode = event.currentTarget.closest('.couple-node');
+            if (!coupleNode) return;
+
+            // The descendants container is the second child of couple-node
+            const descendantsContainer = coupleNode.querySelector('.descendants-container');
+            if (descendantsContainer) {
+                if (descendantsContainer.style.display === 'none' || descendantsContainer.style.display === '') {
+                    descendantsContainer.style.display = 'flex';
+                } else {
+                    descendantsContainer.style.display = 'none';
+                }
+            }
+        }
+
+        // Recursively renders a single person/couple node and its descendants
+        function renderNode(personId) {
+            const person = peopleMap[personId];
+            if (!person) return null;
+
+            const coupleNode = document.createElement('div');
+            coupleNode.className = 'couple-node';
+            
+            // 1. Couple Card Wrapper
+            const coupleCardWrapper = document.createElement('div');
+            coupleCardWrapper.className = 'couple-card-wrapper';
+
+            // Main person card (always displayed first)
+            const personCard = createPersonCard(person, false);
+            coupleCardWrapper.appendChild(personCard);
+            
+            // --- Handle Multiple Spouses (using spouse_ids array) ---
+            let spousesToRender = [];
+            
+            // Prioritize spouse_ids (array) if it exists and is an array
+            if (person.spouse_ids && Array.isArray(person.spouse_ids)) {
+                spousesToRender = person.spouse_ids;
+            } else if (person.spouse_id) { // Fallback/compatibility check for old single-string property
+                spousesToRender = [person.spouse_id];
+            }
+
+            spousesToRender.forEach(spouseId => {
+                const spouse = peopleMap[spouseId];
+                if (spouse) {
+                    const spouseLine = document.createElement('div');
+                    spouseLine.className = 'spouse-line';
+                    coupleCardWrapper.appendChild(spouseLine);
+                    // Pass true for isSpouse. They do not trigger the children toggle themselves.
+                    coupleCardWrapper.appendChild(createPersonCard(spouse, true));
+                }
+            });
+            
+            coupleNode.appendChild(coupleCardWrapper);
+
+            // 2. Children Connection (Vertical Line)
+            // This line connects the couple/multiple spouses group to the children's horizontal line
+            if (person.children_ids && person.children_ids.length > 0) {
+                const vertLine = document.createElement('div');
+                vertLine.className = 'children-line-vertical';
+                coupleNode.appendChild(vertLine);
+
+                // 3. Descendants Container (Horizontal line + children nodes)
+                const descendantsContainer = document.createElement('div');
+                descendantsContainer.className = 'descendants-container';
+                descendantsContainer.style.display = 'none'; // Initially collapsed
+
+                const childNodes = renderDescendants(person.children_ids);
+                descendantsContainer.appendChild(childNodes);
+                coupleNode.appendChild(descendantsContainer);
+            }
+
+            return coupleNode;
+        }
+
+        // Renders the list of siblings and the horizontal connector
+        function renderDescendants(childrenIds) {
+            const childrenHorizontalConnector = document.createElement('div');
+            childrenHorizontalConnector.className = 'children-horizontal-connector';
+
+            // Add horizontal line connecting all children
+            const horizontalLine = document.createElement('div');
+            horizontalLine.className = 'children-horizontal-line';
+            childrenHorizontalConnector.appendChild(horizontalLine);
+
+            // Render each child node recursively
+            childrenIds.forEach(childId => {
+                const childNodeWrapper = document.createElement('div');
+                childNodeWrapper.className = 'child-node-wrapper';
+
+                // Vertical line from horizontal connector to the child node
+                const childVertLine = document.createElement('div');
+                childVertLine.className = 'child-vertical-line';
+                childNodeWrapper.appendChild(childVertLine);
+
+                // The recursive call to render the child's own couple-node
+                const childNode = renderNode(childId);
+                if (childNode) {
+                    childNodeWrapper.appendChild(childNode);
+                }
+                
+                childrenHorizontalConnector.appendChild(childNodeWrapper);
+            });
+
+            return childrenHorizontalConnector;
+        }
+
+        // Main function to start rendering the tree
+        function initFamilyTree() {
+            const treeContainer = document.getElementById('familyTree');
+            if (treeContainer && rootPerson) {
+                const rootNode = renderNode(rootId);
+                if (rootNode) {
+                    treeContainer.appendChild(rootNode);
+                }
+            }
+
+            // Manually expand the root node for visibility on load
+            const rootNodeElement = document.querySelector(`.person-card[data-id="${rootId}"]`);
+            const rootCoupleNode = rootNodeElement ? rootNodeElement.closest('.couple-node') : null;
+
+            if (rootCoupleNode) {
+                const rootDescendants = rootCoupleNode.querySelector('.descendants-container');
+                if (rootDescendants) {
+                    rootDescendants.style.display = 'flex';
+                }
+            }
+        }
+
+        window.onload = initFamilyTree;
+    </script>
+</body>
+</html>
