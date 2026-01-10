@@ -47,14 +47,15 @@
                 orderBy, addDoc, serverTimestamp, setDoc, updateDoc, deleteDoc, getDoc
             } = window.firebase;
 
-            const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-                apiKey: "", 
-                authDomain: "family-chat-c5f57.firebaseapp.com",
-                projectId: "family-chat-c5f57",
-                storageBucket: "family-chat-c5f57.firebasestorage.app",
-                messagingSenderId: "735954675901",
-                appId: "1:735954675901:web:8f70eb1d08f760b2b1efd4"
-            };
+         const firebaseConfig = {
+  apiKey: "AIzaSyD7XV7PQek6SXZ_fj900GFDbnh8gOMercU",
+  authDomain: "famchat1check.firebaseapp.com",
+  projectId: "famchat1check",
+  storageBucket: "famchat1check.firebasestorage.app",
+  messagingSenderId: "966637643210",
+  appId: "1:966637643210:web:d30c768fdbcfdff2a75b33",
+  measurementId: "G-4CP679QP7X"
+};
             const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
             const app = initializeApp(firebaseConfig);
