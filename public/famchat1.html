@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-language Global Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .typing-indicator {
+            font-style: italic;
+            font-size: 0.8rem;
+            color: #10b981;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+    </style>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously, signOut, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, onSnapshot, collection, query, orderBy, addDoc, serverTimestamp, setDoc, updateDoc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        window.firebase = {
+            initializeApp, getAuth, signInWithCustomToken, signInAnonymously, signOut, onAuthStateChanged,
+            createUserWithEmailAndPassword, signInWithEmailAndPassword, getFirestore, doc, onSnapshot, collection, query,
+            orderBy, addDoc, serverTimestamp, setDoc, updateDoc, deleteDoc, getDoc
+        };
+    </script>
+</head>
+<body class="bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
+    <div id="root"></div>
+    <script type="text/babel">
+        const App = () => {
+            const { useState, useEffect, useRef } = React;
+            const {
+                initializeApp, getAuth, signInWithCustomToken, signInAnonymously, signOut, onAuthStateChanged,
+                createUserWithEmailAndPassword, signInWithEmailAndPassword, getFirestore, doc, onSnapshot, collection, query,
+                orderBy, addDoc, serverTimestamp, setDoc, updateDoc, deleteDoc, getDoc
+            } = window.firebase;
+
+            const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+                apiKey: "", 
+                authDomain: "family-chat-c5f57.firebaseapp.com",
+                projectId: "family-chat-c5f57",
+                storageBucket: "family-chat-c5f57.firebasestorage.app",
+                messagingSenderId: "735954675901",
+                appId: "1:735954675901:web:8f70eb1d08f760b2b1efd4"
+            };
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+            const auth = getAuth(app);
+
+            const [user, setUser] = useState(null);
+            const [loading, setLoading] = useState(true);
+            const [displayName, setDisplayName] = useState('');
+            const [message, setMessage] = useState('');
+            const [messages, setMessages] = useState([]);
+            const [users, setUsers] = useState([]);
+            const [statusMessage, setStatusMessage] = useState('');
+            const [isAuthReady, setIsAuthReady] = useState(false);
+            const [isPublicChat, setIsPublicChat] = useState(true);
+            const [selectedChatPartner, setSelectedChatPartner] = useState(null);
+            const [editingMessage, setEditingMessage] = useState(null);
+            const [language, setLanguage] = useState('he');
+            const [darkMode, setDarkMode] = useState(false);
+            const [email, setEmail] = useState('');
+            const [password, setPassword] = useState('');
+            const [username, setUsername] = useState('');
+            const [isLoginMode, setIsLoginMode] = useState(true);
+            const [loadingGemini, setLoadingGemini] = useState(false);
+            const [isRecording, setIsRecording] = useState(false);
+            const [typingStatus, setTypingStatus] = useState({});
+            
+            const messageContainerRef = useRef(null);
+            const mediaRecorderRef = useRef(null);
+            const audioChunksRef = useRef([]);
+
+            const translations = {
+                he: {
+                    title: 'אפליקציית צ׳אט',
+                    connectedUsers: 'משתמשים מחוברים',
+                    publicChat: 'צ׳אט ציבורי',
+                    privateChats: 'צ׳אטים פרטיים',
+                    noOtherUsers: 'אין משתמשים אחרים זמינים.',
+                    connectedAs: 'מחובר כ:',
+                    uid: 'UID:',
+                    chatWith: 'צ\'אט עם',
+                    startConversation: 'התחל שיחה.',
+                    isTyping: 'מקליד...',
+                    editMessagePlaceholder: 'ערוך הודעה...',
+                    typeMessagePlaceholder: 'הקלד הודעה...',
+                    sendMessage: 'שלח הודעה',
+                    logout: 'התנתק',
+                    confirmDelete: 'בטוח שברצונך למחוק את ההודעה?',
+                    edit: 'ערוך',
+                    delete: 'מחק',
+                    edited: '(נערך)',
+                    loading: 'טוען...',
+                    login: 'התחבר',
+                    signup: 'הירשם',
+                    or: 'או',
+                    toggleLogin: 'התחבר עם חשבון קיים',
+                    toggleSignup: 'צור חשבון חדש',
+                    email: 'אימייל',
+                    password: 'סיסמה',
+                    username: 'שם משתמש',
+                    loginSuccess: 'התחברת בהצלחה!',
+                    signupSuccess: 'נרשמת בהצלחה!',
+                    loginError: 'שגיאת התחברות: ',
+                    signupError: 'שגיאת הרשמה: ',
+                    welcome: 'ברוכים הבאים! אנא התחבר או הירשם כדי להתחיל.',
+                    generateSmartReply: '✨ הצע תגובה חכמה',
+                    generateSmartRewrite: '✨ שכתב חכם',
+                    smartReplyLoading: 'מייצר תגובה חכמה...',
+                    smartRewriteLoading: 'מייצר שכתוב חכם...',
+                    online: 'מחובר',
+                    lastSeen: 'נראה לאחרונה: ',
+                    recordAudio: 'הקלט הודעה',
+                    cancel: 'ביטול',
+                    recordingNow: 'מקליט כעת...'
+                },
+                en: {
+                    title: 'Chat Application',
+                    connectedUsers: 'Connected Users',
+                    publicChat: 'Public Chat',
+                    privateChats: 'Private Chats',
+                    noOtherUsers: 'No other users available.',
+                    connectedAs: 'Connected as:',
+                    uid: 'UID:',
+                    chatWith: 'Chat with',
+                    startConversation: 'Start a conversation.',
+                    isTyping: 'is typing...',
+                    editMessagePlaceholder: 'Edit message...',
+                    typeMessagePlaceholder: 'Type a message...',
+                    sendMessage: 'Send Message',
+                    logout: 'Logout',
+                    confirmDelete: 'Are you sure you want to delete this message?',
+                    edit: 'Edit',
+                    delete: 'Delete',
+                    edited: '(edited)',
+                    loading: 'Loading...',
+                    login: 'Log In',
+                    signup: 'Sign Up',
+                    or: 'or',
+                    toggleLogin: 'Log in with an existing account',
+                    toggleSignup: 'Create a new account',
+                    email: 'Email',
+                    password: 'Password',
+                    username: 'Username',
+                    loginSuccess: 'Logged in successfully!',
+                    signupSuccess: 'Signed up successfully!',
+                    loginError: 'Login Error: ',
+                    signupError: 'Signup Error: ',
+                    welcome: 'Welcome! Please log in or sign up to get started.',
+                    generateSmartReply: '✨ Generate Smart Reply',
+                    generateSmartRewrite: '✨ Smart Rewrite',
+                    smartReplyLoading: 'Generating smart reply...',
+                    smartRewriteLoading: 'Generating smart rewrite...',
+                    online: 'Online',
+                    lastSeen: 'Last seen: ',
+                    recordAudio: 'Record Voice',
+                    cancel: 'Cancel',
+                    recordingNow: 'Recording...'
+                },
+                fr: {
+                    title: 'Application de chat',
+                    connectedUsers: 'Utilisateurs connectés',
+                    publicChat: 'Chat public',
+                    privateChats: 'Chats privés',
+                    noOtherUsers: 'Aucun autre utilisateur disponible.',
+                    connectedAs: 'Connecté en tant que :',
+                    uid: 'UID :',
+                    chatWith: 'Discuter avec',
+                    startConversation: 'Commencez une conversation.',
+                    isTyping: 'écrit...',
+                    editMessagePlaceholder: 'Modifier le message...',
+                    typeMessagePlaceholder: 'Tapez un message...',
+                    sendMessage: 'Envoyer le message',
+                    logout: 'Déconnexion',
+                    confirmDelete: 'Supprimer ce message ?',
+                    edit: 'Modifier',
+                    delete: 'Supprimer',
+                    edited: '(modifié)',
+                    loading: 'Chargement...',
+                    login: 'Connexion',
+                    signup: 'Inscription',
+                    or: 'ou',
+                    toggleLogin: 'Connectez-vous avec un compte existant',
+                    toggleSignup: 'Créer un nouveau compte',
+                    email: 'E-mail',
+                    password: 'Mot de passe',
+                    username: 'Nom d\'utilisateur',
+                    loginSuccess: 'Connecté avec succès!',
+                    signupSuccess: 'Inscrit avec succès!',
+                    loginError: 'Erreur de connexion: ',
+                    signupError: 'Erreur d\'inscription: ',
+                    welcome: 'Bienvenue! Connectez-vous.',
+                    generateSmartReply: '✨ Réponse intelligente',
+                    generateSmartRewrite: '✨ Réécriture intelligente',
+                    smartReplyLoading: 'Génération...',
+                    smartRewriteLoading: 'Réécriture...',
+                    online: 'En ligne',
+                    lastSeen: 'Vu : ',
+                    recordAudio: 'Enregistrer l\'audio',
+                    cancel: 'Annuler',
+                    recordingNow: 'Enregistrement...'
+                },
+                yi: {
+                    title: 'שמועס אַפּליקאַציע',
+                    connectedUsers: 'פֿאַרבונדענע באַניצערס',
+                    publicChat: 'עפֿנטלעכע שמועס',
+                    privateChats: 'פּריוואַטע שמועסן',
+                    noOtherUsers: 'קיין אַנדערע באַניצערס זײַנען נישט בנימצא.',
+                    connectedAs: 'פֿאַרבונדן אַלס:',
+                    uid: 'באַנוצער-קאָד:',
+                    chatWith: 'שמועס מיט',
+                    startConversation: 'הייבט אָן אַ שמועס.',
+                    isTyping: 'שרײַבט...',
+                    editMessagePlaceholder: 'רעדאַקטירן מעלדונג...',
+                    typeMessagePlaceholder: 'שרײַבט אַ מעלדונג...',
+                    sendMessage: 'שיק מעלדונג',
+                    logout: 'אױסלאָגן',
+                    confirmDelete: 'זענט איר זיכער צו לײַשן די מעלדונג?',
+                    edit: 'רעדאַקטירן',
+                    delete: 'לײַשן',
+                    edited: '(רעדאַקטירט)',
+                    loading: 'לוידן...',
+                    login: 'אײַנלאָגן',
+                    signup: 'רעגיסטרירן',
+                    or: 'אָדער',
+                    toggleLogin: 'אײַנלאָגן מיט אַן עקזיסטירנדיקן קאנטע',
+                    toggleSignup: 'שאַפֿן אַ נײַעם קאנטע',
+                    email: 'בליצפּאָסט',
+                    password: 'פּאַראָל',
+                    username: 'באַניצער נאָמען',
+                    loginSuccess: 'געראָטן אײַנלאָגן!',
+                    signupSuccess: 'געראָטן רעגיסטרירט!',
+                    loginError: 'אײַנלאָגן פֿעלער: ',
+                    signupError: 'רעגיסטראַציע פֿעלער: ',
+                    welcome: 'ברוכים הבאים! ביטע אײַנלאָגן.',
+                    generateSmartReply: '✨ קלוגע ענטפֿער',
+                    generateSmartRewrite: '✨ קלוג איבערשרײַבן',
+                    smartReplyLoading: 'שאַפֿן ענטפֿער...',
+                    smartRewriteLoading: 'איבערשרײַבן...',
+                    online: 'אָנליין',
+                    lastSeen: 'געזען: ',
+                    recordAudio: 'רעקאָרדירן',
+                    cancel: 'דורכפֿאַל',
+                    recordingNow: 'רעקאָרדירט איצט...'
+                },
+                de: {
+                    title: 'Chat-Anwendung',
+                    connectedUsers: 'Verbundene Benutzer',
+                    publicChat: 'Öffentlicher Chat',
+                    privateChats: 'Private Chats',
+                    noOtherUsers: 'Keine anderen Benutzer verfügbar.',
+                    connectedAs: 'Verbunden als:',
+                    uid: 'UID:',
+                    chatWith: 'Chatten mit',
+                    startConversation: 'Beginnen Sie eine Unterhaltung.',
+                    isTyping: 'tippt...',
+                    editMessagePlaceholder: 'Nachricht bearbeiten...',
+                    typeMessagePlaceholder: 'Nachricht eingeben...',
+                    sendMessage: 'Nachricht senden',
+                    logout: 'Abmelden',
+                    confirmDelete: 'Löschen?',
+                    edit: 'Bearbeiten',
+                    delete: 'Löschen',
+                    edited: '(bearbeitet)',
+                    loading: 'Lädt...',
+                    login: 'Anmelden',
+                    signup: 'Registrieren',
+                    or: 'oder',
+                    toggleLogin: 'Anmelden mit Konto',
+                    toggleSignup: 'Konto erstellen',
+                    email: 'E-Mail',
+                    password: 'Passwort',
+                    username: 'Benutzername',
+                    loginSuccess: 'Angemeldet!',
+                    signupSuccess: 'Registriert!',
+                    loginError: 'Fehler: ',
+                    signupError: 'Fehler: ',
+                    welcome: 'Willkommen!',
+                    generateSmartReply: '✨ Antwort',
+                    generateSmartRewrite: '✨ Umschreiben',
+                    smartReplyLoading: 'Generiere...',
+                    smartRewriteLoading: 'Schreibe um...',
+                    online: 'Online',
+                    lastSeen: 'Zuletzt gesehen: ',
+                    recordAudio: 'Aufnehmen',
+                    cancel: 'Abbrechen',
+                    recordingNow: 'Aufnahme läuft...'
+                },
+                nl: {
+                    title: 'Chat-applicatie',
+                    connectedUsers: 'Verbonden gebruikers',
+                    publicChat: 'Openbare chat',
+                    privateChats: 'Privé-chats',
+                    noOtherUsers: 'Geen andere gebruikers beschikbaar.',
+                    connectedAs: 'Verbonden als:',
+                    uid: 'UID:',
+                    chatWith: 'Chat met',
+                    startConversation: 'Start een gesprek.',
+                    isTyping: 'typt...',
+                    editMessagePlaceholder: 'Bericht bewerken...',
+                    typeMessagePlaceholder: 'Typ een bericht...',
+                    sendMessage: 'Verzend bericht',
+                    logout: 'Uitloggen',
+                    confirmDelete: 'Verwijderen?',
+                    edit: 'Bewerken',
+                    delete: 'Verwijderen',
+                    edited: '(bewerkt)',
+                    loading: 'Laden...',
+                    login: 'Inloggen',
+                    signup: 'Aanmelden',
+                    or: 'of',
+                    toggleLogin: 'Inloggen met account',
+                    toggleSignup: 'Account aanmaken',
+                    email: 'E-mail',
+                    password: 'Wachtwoord',
+                    username: 'Gebruikersnaam',
+                    loginSuccess: 'Ingelogd!',
+                    signupSuccess: 'Aangemeld!',
+                    loginError: 'Fout: ',
+                    signupError: 'Fout: ',
+                    welcome: 'Welkom!',
+                    generateSmartReply: '✨ Antwoord',
+                    generateSmartRewrite: '✨ Herschrijven',
+                    smartReplyLoading: 'Genereren...',
+                    smartRewriteLoading: 'Herschrijven...',
+                    online: 'Online',
+                    lastSeen: 'Gezien: ',
+                    recordAudio: 'Opnemen',
+                    cancel: 'Annuleren',
+                    recordingNow: 'Opnemen...'
+                }
+            };
+
+            const t = translations[language] || translations['en'];
+            const isRTL = language === 'he' || language === 'yi';
+
+            useEffect(() => {
+                if (darkMode) document.documentElement.classList.add('dark');
+                else document.documentElement.classList.remove('dark');
+            }, [darkMode]);
+
+            useEffect(() => {
+                const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+                    if (currentUser) {
+                        setUser(currentUser);
+                        const userDocRef = doc(db, `/artifacts/${appId}/public/data/users`, currentUser.uid);
+                        const userDocSnap = await getDoc(userDocRef);
+                        const newDisplayName = username || (userDocSnap.exists() ? userDocSnap.data().displayName : `User${currentUser.uid.substring(0, 4)}`);
+                        
+                        await setDoc(userDocRef, {
+                            uid: currentUser.uid,
+                            displayName: newDisplayName,
+                            lastSeen: serverTimestamp(),
+                            isOnline: true
+                        }, { merge: true });
+                        
+                        setDisplayName(newDisplayName);
+
+                        const presenceInterval = setInterval(() => {
+                            updateDoc(userDocRef, { lastSeen: serverTimestamp(), isOnline: true });
+                        }, 60000);
+
+                        return () => clearInterval(presenceInterval);
+                    } else {
+                        setUser(null);
+                    }
+                    setIsAuthReady(true);
+                    setLoading(false);
+                });
+                return () => unsubscribe();
+            }, [username]);
+
+            useEffect(() => {
+                if (!isAuthReady || !user) return;
+
+                const usersCol = collection(db, `/artifacts/${appId}/public/data/users`);
+                const unsubUsers = onSnapshot(usersCol, (snap) => {
+                    setUsers(snap.docs.map(d => d.data()));
+                });
+
+                const chatId = isPublicChat ? 'public' : [user.uid, selectedChatPartner?.uid].sort().join('_');
+                const typingRef = doc(db, `/artifacts/${appId}/public/data/typing`, chatId);
+                const unsubTyping = onSnapshot(typingRef, (docSnap) => {
+                    if (docSnap.exists()) setTypingStatus(docSnap.data());
+                    else setTypingStatus({});
+                }, () => {});
+
+                let path = isPublicChat 
+                    ? `/artifacts/${appId}/public/data/messages` 
+                    : `/artifacts/${appId}/public/data/chats/${chatId}/messages`;
+                
+                const qMsgs = query(collection(db, path), orderBy('timestamp'));
+                const unsubMsgs = onSnapshot(qMsgs, (snap) => {
+                    setMessages(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+                }, (err) => console.error(err));
+
+                return () => {
+                    unsubUsers();
+                    unsubTyping();
+                    unsubMsgs();
+                };
+            }, [isAuthReady, user, isPublicChat, selectedChatPartner]);
+
+            useEffect(() => {
+                if (messageContainerRef.current) {
+                    messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+                }
+            }, [messages]);
+
+            const handleTyping = async (isTyping) => {
+                if (!user) return;
+                const chatId = isPublicChat ? 'public' : [user.uid, selectedChatPartner?.uid].sort().join('_');
+                const typingRef = doc(db, `/artifacts/${appId}/public/data/typing`, chatId);
+                await setDoc(typingRef, { [user.uid]: isTyping ? displayName : false }, { merge: true });
+            };
+
+            const callGeminiAPI = async (payload) => {
+                const apiKey = ""; 
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                let retryCount = 0;
+                while (retryCount < 5) {
+                    try {
+                        const res = await fetch(apiUrl, { method: 'POST', body: JSON.stringify(payload) });
+                        if (res.ok) {
+                            const data = await res.json();
+                            return data.candidates?.[0]?.content?.parts?.[0]?.text;
+                        }
+                        await new Promise(r => setTimeout(r, 1000 * Math.pow(2, retryCount++)));
+                    } catch (e) { return null; }
+                }
+                return null;
+            };
+
+            const handleGenerateSmartReply = async () => {
+                if (!user || messages.length === 0) return;
+                setLoadingGemini(true);
+                const history = messages.slice(-5).map(m => `${m.senderDisplayName}: ${m.text}`).join('\n');
+                const prompt = `Based on this chat, provide a short response in ${language}:\n${history}`;
+                const reply = await callGeminiAPI({ contents: [{ parts: [{ text: prompt }] }] });
+                if (reply) setMessage(reply);
+                setLoadingGemini(false);
+            };
+
+            const handleGenerateSmartRewrite = async () => {
+                if (!message.trim()) return;
+                setLoadingGemini(true);
+                const prompt = `Rewrite this message in ${language} to be more polite and natural: "${message}"`;
+                const rewrite = await callGeminiAPI({ contents: [{ parts: [{ text: prompt }] }] });
+                if (rewrite) setMessage(rewrite);
+                setLoadingGemini(false);
+            };
+
+            const startRecording = async () => {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorderRef.current = new MediaRecorder(stream);
+                    audioChunksRef.current = [];
+                    mediaRecorderRef.current.ondataavailable = (e) => audioChunksRef.current.push(e.data);
+                    mediaRecorderRef.current.onstop = async () => {
+                        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+                        const reader = new FileReader();
+                        reader.readAsDataURL(audioBlob);
+                        reader.onloadend = async () => {
+                            await sendAudioMessage(reader.result);
+                        };
+                    };
+                    mediaRecorderRef.current.start();
+                    setIsRecording(true);
+                } catch (err) { console.error("Mic error:", err); }
+            };
+
+            const stopRecording = () => {
+                if (mediaRecorderRef.current && isRecording) {
+                    mediaRecorderRef.current.stop();
+                    setIsRecording(false);
+                }
+            };
+
+            const sendAudioMessage = async (base64) => {
+                const chatId = isPublicChat ? 'public' : [user.uid, selectedChatPartner?.uid].sort().join('_');
+                const path = isPublicChat 
+                    ? `/artifacts/${appId}/public/data/messages` 
+                    : `/artifacts/${appId}/public/data/chats/${chatId}/messages`;
+                await addDoc(collection(db, path), {
+                    audio: base64,
+                    senderUid: user.uid,
+                    senderDisplayName: displayName,
+                    timestamp: serverTimestamp()
+                });
+            };
+
+            const handleSendMessage = async (e) => {
+                e.preventDefault();
+                if (!message.trim() || !user) return;
+                const chatId = isPublicChat ? 'public' : [user.uid, selectedChatPartner?.uid].sort().join('_');
+                const path = isPublicChat 
+                    ? `/artifacts/${appId}/public/data/messages` 
+                    : `/artifacts/${appId}/public/data/chats/${chatId}/messages`;
+                
+                if (editingMessage) {
+                    await updateDoc(doc(db, path, editingMessage.id), { text: message, editedAt: serverTimestamp() });
+                    setEditingMessage(null);
+                } else {
+                    await addDoc(collection(db, path), {
+                        text: message,
+                        senderUid: user.uid,
+                        senderDisplayName: displayName,
+                        timestamp: serverTimestamp()
+                    });
+                }
+                setMessage('');
+                handleTyping(false);
+            };
+
+            const formatLastSeen = (ts) => {
+                if (!ts) return "";
+                const date = new Date(ts.toMillis());
+                return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            };
+
+            if (loading && !isAuthReady) return <div className="flex h-screen items-center justify-center font-bold">{t.loading}</div>;
+
+            if (!user) {
+                return (
+                    <div dir={isRTL ? "rtl" : "ltr"} className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-4">
+                        <div className="w-full max-w-sm bg-white/95 backdrop-blur rounded-3xl shadow-2xl p-8 dark:bg-gray-800/95">
+                            <h1 className="text-3xl font-extrabold text-center mb-6 text-gray-900 dark:text-white">{isLoginMode ? t.login : t.signup}</h1>
+                            <form onSubmit={async (e)=>{
+                                e.preventDefault(); 
+                                setStatusMessage('');
+                                try {
+                                    if(isLoginMode) await signInWithEmailAndPassword(auth, email, password);
+                                    else await createUserWithEmailAndPassword(auth, email, password);
+                                } catch(err) { setStatusMessage((isLoginMode ? t.loginError : t.signupError) + err.message); }
+                            }} className="space-y-4">
+                                <div>
+                                    <label className="block text-xs font-bold mb-1 opacity-70">{t.email}</label>
+                                    <input type="email" placeholder="email@example.com" onChange={e=>setEmail(e.target.value)} className="w-full p-3 rounded-xl border dark:bg-gray-700 dark:border-gray-600 outline-none focus:ring-2 focus:ring-indigo-500" required />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold mb-1 opacity-70">{t.password}</label>
+                                    <input type="password" placeholder="••••••••" onChange={e=>setPassword(e.target.value)} className="w-full p-3 rounded-xl border dark:bg-gray-700 dark:border-gray-600 outline-none focus:ring-2 focus:ring-indigo-500" required />
+                                </div>
+                                {!isLoginMode && (
+                                    <div>
+                                        <label className="block text-xs font-bold mb-1 opacity-70">{t.username}</label>
+                                        <input type="text" placeholder={t.username} onChange={e=>setUsername(e.target.value)} className="w-full p-3 rounded-xl border dark:bg-gray-700 dark:border-gray-600 outline-none focus:ring-2 focus:ring-indigo-500" required />
+                                    </div>
+                                )}
+                                <button type="submit" className="w-full py-3 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 transition transform active:scale-95">{isLoginMode ? t.login : t.signup}</button>
+                            </form>
+                            <button onClick={()=>setIsLoginMode(!isLoginMode)} className="w-full mt-4 text-sm text-indigo-600 dark:text-indigo-400 hover:underline">{isLoginMode ? t.toggleSignup : t.toggleLogin}</button>
+                            {statusMessage && <p className="mt-4 text-red-500 text-center text-xs bg-red-50 p-2 rounded-lg">{statusMessage}</p>}
+                        </div>
+                    </div>
+                );
+            }
+
+            const activeTypers = Object.entries(typingStatus)
+                .filter(([uid, name]) => uid !== user.uid && name)
+                .map(([_, name]) => name);
+
+            return (
+                <div dir={isRTL ? "rtl" : "ltr"} className="flex flex-col h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden text-gray-900 dark:text-gray-100">
+                    <header className="flex items-center justify-between p-4 bg-white dark:bg-gray-800 shadow-md z-10">
+                        <div className="flex items-center gap-3">
+                            <div className="bg-indigo-600 text-white p-2 rounded-lg font-bold">🌐</div>
+                            <h1 className="text-xl font-bold tracking-tight">{t.title}</h1>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <select 
+                                value={language} 
+                                onChange={(e) => setLanguage(e.target.value)}
+                                className="bg-gray-100 dark:bg-gray-700 p-1.5 rounded-lg text-xs font-bold border-none outline-none"
+                            >
+                                <option value="he">עברית</option>
+                                <option value="en">English</option>
+                                <option value="fr">Français</option>
+                                <option value="yi">ייִדיש</option>
+                                <option value="de">Deutsch</option>
+                                <option value="nl">Nederlands</option>
+                            </select>
+                            <button onClick={() => setDarkMode(!darkMode)} className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700">
+                                {darkMode ? "☀️" : "🌙"}
+                            </button>
+                            <button onClick={() => signOut(auth)} className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl">
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                            </button>
+                        </div>
+                    </header>
+
+                    <div className="flex flex-1 overflow-hidden">
+                        <aside className="hidden md:flex flex-col w-72 bg-white dark:bg-gray-800 border-l dark:border-gray-700 p-4 shadow-sm">
+                            <h2 className="text-xs font-black uppercase tracking-widest text-gray-400 mb-4">{t.connectedUsers}</h2>
+                            <button 
+                                onClick={() => {setIsPublicChat(true); setSelectedChatPartner(null)}} 
+                                className={`w-full text-right p-3 rounded-xl mb-4 flex items-center gap-3 transition ${isPublicChat ? 'bg-indigo-600 text-white shadow-lg' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}`}
+                            >
+                                <span className="text-xl">🌍</span>
+                                <span className="font-bold">{t.publicChat}</span>
+                            </button>
+                            
+                            <div className="flex-1 overflow-y-auto pr-1">
+                                {users.filter(u => u.uid !== user.uid).map(u => {
+                                    const isNow = u.isOnline && (Date.now() - (u.lastSeen?.toMillis() || 0) < 180000);
+                                    return (
+                                        <button 
+                                            key={u.uid} 
+                                            onClick={() => {setIsPublicChat(false); setSelectedChatPartner(u)}} 
+                                            className={`w-full text-right p-3 rounded-xl mb-1 transition ${selectedChatPartner?.uid === u.uid ? 'bg-indigo-500 text-white' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}`}
+                                        >
+                                            <div className="flex justify-between items-center">
+                                                <span className="font-bold">{u.displayName}</span>
+                                                <span className={`h-2.5 w-2.5 rounded-full ${isNow ? 'bg-green-500 border-2 border-white' : 'bg-gray-400'}`}></span>
+                                            </div>
+                                            <div className="text-[10px] opacity-70 mt-1">
+                                                {isNow ? t.online : `${t.lastSeen} ${formatLastSeen(u.lastSeen)}`}
+                                            </div>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </aside>
+
+                        <main className="flex-1 flex flex-col bg-gray-50 dark:bg-gray-900 relative">
+                            <div className="p-4 border-b dark:border-gray-700 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md flex justify-between items-center z-10">
+                                <div>
+                                    <h2 className="font-bold text-lg">{isPublicChat ? t.publicChat : t.chatWith + " " + (selectedChatPartner?.displayName || "...")}</h2>
+                                    {activeTypers.length > 0 && <p className="typing-indicator animate-pulse">{activeTypers.join(', ')} {t.isTyping}</p>}
+                                </div>
+                                <button onClick={handleGenerateSmartReply} disabled={loadingGemini} className="text-xs font-bold bg-purple-100 text-purple-700 px-3 py-1.5 rounded-full dark:bg-purple-900/50 dark:text-purple-200">
+                                    {loadingGemini ? t.smartReplyLoading : t.generateSmartReply}
+                                </button>
+                            </div>
+
+                            <div className="flex-1 overflow-y-auto p-4 space-y-4" ref={messageContainerRef}>
+                                {messages.map(msg => (
+                                    <div key={msg.id} className={`flex ${msg.senderUid === user.uid ? 'justify-start' : 'justify-end'}`}>
+                                        <div className={`group relative max-w-[85%] md:max-w-[70%] p-3 rounded-2xl shadow-sm ${msg.senderUid === user.uid ? 'bg-indigo-600 text-white rounded-tr-none' : 'bg-white dark:bg-gray-800 rounded-tl-none border dark:border-gray-700'}`}>
+                                            {isPublicChat && msg.senderUid !== user.uid && (
+                                                <div className="text-[10px] font-black opacity-60 mb-1 uppercase tracking-tighter">{msg.senderDisplayName}</div>
+                                            )}
+                                            {msg.audio ? <audio src={msg.audio} controls className="h-8 w-full max-w-[200px]" /> : <div className="text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</div>}
+                                            <div className="flex items-center justify-end gap-1 mt-1 opacity-50 text-[9px]">
+                                                {msg.timestamp?.toMillis ? new Date(msg.timestamp.toMillis()).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : ''}
+                                                {msg.editedAt && <span>• {t.edited}</span>}
+                                            </div>
+                                            {msg.senderUid === user.uid && (
+                                                <div className={`absolute -top-2 ${isRTL ? '-left-2' : '-right-2'} flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity`}>
+                                                    {!msg.audio && <button onClick={() => {setEditingMessage(msg); setMessage(msg.text);}} className="p-1 bg-white dark:bg-gray-700 shadow rounded-full text-[10px]">✏️</button>}
+                                                    <button onClick={async () => {
+                                                        const chatId = isPublicChat ? 'public' : [user.uid, selectedChatPartner?.uid].sort().join('_');
+                                                        const path = isPublicChat ? `/artifacts/${appId}/public/data/messages` : `/artifacts/${appId}/public/data/chats/${chatId}/messages`;
+                                                        if(confirm(t.confirmDelete)) await deleteDoc(doc(db, path, msg.id));
+                                                    }} className="p-1 bg-white dark:bg-gray-700 shadow rounded-full text-[10px]">🗑️</button>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="p-4 bg-white dark:bg-gray-800 border-t dark:border-gray-700 shadow-lg">
+                                {editingMessage && (
+                                    <div className="flex justify-between items-center mb-2 px-3 py-1 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg text-xs">
+                                        <span className="font-bold text-indigo-600 dark:text-indigo-400">{t.edit}: {editingMessage.text.substring(0,20)}...</span>
+                                        <button onClick={() => {setEditingMessage(null); setMessage('');}} className="text-red-500 font-bold">{t.cancel}</button>
+                                    </div>
+                                )}
+                                {isRecording && (
+                                    <div className="flex items-center gap-2 mb-2 px-3 py-1 bg-red-50 dark:bg-red-900/30 rounded-lg text-xs animate-pulse">
+                                        <span className="h-2 w-2 rounded-full bg-red-500"></span>
+                                        <span className="font-bold text-red-600 dark:text-red-400">{t.recordingNow}</span>
+                                    </div>
+                                )}
+                                <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+                                    <div className="flex-1 relative flex items-center">
+                                        <input 
+                                            type="text" 
+                                            value={message}
+                                            onFocus={() => handleTyping(true)}
+                                            onBlur={() => handleTyping(false)}
+                                            onChange={e => setMessage(e.target.value)} 
+                                            placeholder={t.typeMessagePlaceholder}
+                                            className="w-full p-3 pr-4 pl-12 rounded-2xl bg-gray-100 dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 outline-none transition"
+                                        />
+                                        <div className={`absolute ${isRTL ? 'left-2' : 'right-2'} flex items-center gap-1`}>
+                                             <button type="button" onClick={handleGenerateSmartRewrite} disabled={!message.trim() || loadingGemini} className="p-1.5 text-lg hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full transition disabled:opacity-30" title={t.generateSmartRewrite}>✨</button>
+                                        </div>
+                                    </div>
+                                    <button 
+                                        type="button"
+                                        onMouseDown={startRecording} onMouseUp={stopRecording}
+                                        onTouchStart={(e) => {e.preventDefault(); startRecording();}} onTouchEnd={(e) => {e.preventDefault(); stopRecording();}}
+                                        className={`p-3.5 rounded-full shadow-md transition ${isRecording ? 'bg-red-500 text-white ring-4 ring-red-200 scale-110' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'}`}
+                                        title={t.recordAudio}
+                                    >
+                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                                    </button>
+                                    <button type="submit" className="p-3.5 bg-indigo-600 text-white rounded-full shadow-lg hover:bg-indigo-700 transition">
+                                        <svg className={`w-6 h-6 ${isRTL ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
