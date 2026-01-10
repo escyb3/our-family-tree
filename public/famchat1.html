@@ -356,36 +356,62 @@
                 else document.documentElement.classList.remove('dark');
             }, [darkMode]);
 
-            useEffect(() => {
-                const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-                    if (currentUser) {
-                        setUser(currentUser);
-                        const userDocRef = doc(db, `/artifacts/${appId}/public/data/users`, currentUser.uid);
-                        const userDocSnap = await getDoc(userDocRef);
-                        const newDisplayName = username || (userDocSnap.exists() ? userDocSnap.data().displayName : `User${currentUser.uid.substring(0, 4)}`);
-                        
-                        await setDoc(userDocRef, {
-                            uid: currentUser.uid,
-                            displayName: newDisplayName,
-                            lastSeen: serverTimestamp(),
-                            isOnline: true
-                        }, { merge: true });
-                        
-                        setDisplayName(newDisplayName);
+          useEffect(() => {
+    // 1. ניסיון התחברות עם טוקן (אם הסביבה מספקת כזה)
+    const initAuth = async () => {
+        try {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            }
+        } catch (e) { 
+            console.error("Auth error", e); 
+        }
+    };
+    initAuth();
 
-                        const presenceInterval = setInterval(() => {
-                            updateDoc(userDocRef, { lastSeen: serverTimestamp(), isOnline: true });
-                        }, 60000);
+    // 2. מאזין למצב התחברות
+    let presenceInterval;
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+        if (currentUser) {
+            setUser(currentUser);
+            const userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', currentUser.uid);
+            
+            try {
+                const userDocSnap = await getDoc(userDocRef);
+                const newDisplayName = username || (userDocSnap.exists() ? userDocSnap.data().displayName : `User${currentUser.uid.substring(0, 4)}`);
+                
+                await setDoc(userDocRef, {
+                    uid: currentUser.uid,
+                    displayName: newDisplayName,
+                    lastSeen: serverTimestamp(),
+                    isOnline: true
+                }, { merge: true });
+                
+                setDisplayName(newDisplayName);
 
-                        return () => clearInterval(presenceInterval);
-                    } else {
-                        setUser(null);
-                    }
-                    setIsAuthReady(true);
-                    setLoading(false);
-                });
-                return () => unsubscribe();
-            }, [username]);
+                // ניהול נוכחות
+                presenceInterval = setInterval(() => {
+                    updateDoc(userDocRef, { lastSeen: serverTimestamp(), isOnline: true }).catch(() => {});
+                }, 60000);
+
+            } catch (err) { 
+                console.error("Firestore user sync error:", err); 
+            }
+        } else {
+            setUser(null);
+            if (presenceInterval) clearInterval(presenceInterval);
+        }
+        
+        // **חובה:** אלו תמיד חייבים לרוץ כדי להעלים את מסך ה"טוען"
+        setIsAuthReady(true);
+        setLoading(false);
+    });
+
+    return () => {
+        unsubscribe();
+        if (presenceInterval) clearInterval(presenceInterval);
+    };
+}, [username]);
 
             useEffect(() => {
                 if (!isAuthReady || !user) return;
