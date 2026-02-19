@@ -487,3 +487,704 @@ const updateContent = (lang, isLoggedIn, user) => {
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="docTitle">עלון המשפחה</title>
+    <!-- Load Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Heebo font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Heebo', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .ai-result {
+            white-space: pre-wrap; /* Maintains line breaks from the API */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="min-h-screen flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8">
+        <!-- Main Newsletter Header -->
+        <header class="text-center mb-10 w-full max-w-4xl relative">
+            <div class="bg-white rounded-3xl shadow-xl p-6 relative">
+                <!-- Language Selector (Dropdown) -->
+                <div class="absolute top-4 left-4 p-1 bg-indigo-600 rounded-full shadow-lg text-sm font-semibold transition-transform duration-200 hover:scale-105">
+                    <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-transparent text-white p-2 rounded-full cursor-pointer appearance-none outline-none focus:ring-2 focus:ring-indigo-300">
+                        <option value="he">עברית (Hebrew)</option>
+                        <option value="en">English</option>
+                        <option value="yi">יידיש (Yiddish)</option>
+                        <option value="fr">Français (French)</option>
+                        <option value="nl">Nederlands (Dutch)</option>
+                    </select>
+                </div>
+                
+                <h1 id="mainTitle" class="text-5xl font-extrabold text-gray-900 mb-2">טוען...</h1>
+                <p id="mainSubtitle" class="text-lg text-gray-500">מהדורה חודשית</p>
+            </div>
+        </header>
+
+        <main class="w-full max-w-4xl space-y-10">
+            <!-- Main Section: Important Update -->
+            <section class="bg-white rounded-3xl shadow-2xl overflow-hidden">
+                <div class="p-8">
+                    <h2 id="websiteTitle" class="text-3xl font-bold text-indigo-700 mb-4 flex items-center">
+                        <span class="mr-2">🎉</span>
+                    </h2>
+                    <p id="websiteText" class="text-gray-700 leading-relaxed text-lg">
+                        <!-- Content will be inserted here -->
+                    </p>
+                </div>
+            </section>
+
+            <!-- Holiday Section (Dynamic based on date) -->
+            <section id="holidaySection" class="bg-indigo-600 rounded-3xl shadow-2xl p-8 text-center text-white transition-all duration-500" style="display: none;">
+                <h2 id="holidayTitle" class="text-4xl font-extrabold mb-4 flex items-center justify-center"></h2>
+                <p id="holidayText" class="text-xl leading-relaxed font-light"></p>
+            </section>
+            
+            <!-- --- GEMINI AI Feature Section --- -->
+            <section class="bg-gray-200 rounded-3xl shadow-2xl p-8 border-4 border-fuchsia-400">
+                <h2 id="aiTitle" class="text-3xl font-bold text-fuchsia-700 mb-4 flex items-center border-r-4 border-fuchsia-700 pr-3">
+                    <span class="ml-2">✨</span>
+                </h2>
+                <p id="aiDescription" class="text-gray-700 mb-6 text-lg"></p>
+
+                <button id="generateIdeaBtn" class="w-full px-6 py-3 text-lg font-bold text-white bg-fuchsia-500 rounded-xl shadow-lg hover:bg-fuchsia-600 transition-all duration-300 transform hover:scale-[1.02]">
+                    <span id="generateIdeaText">טוען...</span>
+                </button>
+                
+                <div id="aiResultContainer" class="mt-6 p-4 bg-white rounded-xl shadow-inner border border-fuchsia-200 hidden">
+                    <p id="aiResult" class="ai-result text-gray-800 text-lg mb-2"></p>
+                    <div id="aiSources" class="text-xs text-gray-500 mt-3 border-t border-gray-100 pt-2"></div>
+                </div>
+            </section>
+            <!-- --------------------------------- -->
+
+            <!-- In Loving Memory Section -->
+            <section class="bg-gray-800 rounded-3xl shadow-2xl overflow-hidden text-center p-8 text-white">
+                <h2 id="inMemoryTitle" class="text-3xl font-bold mb-4 flex items-center justify-center border-b border-gray-700 pb-3">
+                    <span class="ml-2">🕯️</span>
+                </h2>
+                <p id="inMemoryText1" class="text-gray-300"></p>
+                <p id="inMemoryName" class="mt-2 text-2xl font-extrabold text-gray-100"></p>
+                <p id="inMemoryDate" class="text-sm text-gray-400"></p>
+                <p id="inMemoryText2" class="text-gray-400 mt-4"></p>
+            </section>
+
+            <!-- Good News Section -->
+            <section class="bg-white rounded-3xl shadow-2xl p-8">
+                <h2 id="goodNewsTitle" class="text-3xl font-bold text-teal-600 mb-4 flex items-center border-r-4 border-teal-600 pr-3">
+                    <span class="ml-2">🌟</span>
+                </h2>
+                <p id="goodNewsText" class="text-gray-700 leading-relaxed text-lg">
+                </p>
+            </section>
+
+            <!-- Recommendations Section -->
+            <section class="bg-white rounded-3xl shadow-2xl p-8">
+                <h2 id="recommendationsTitle" class="text-3xl font-bold text-orange-600 mb-6 flex items-center border-r-4 border-orange-600 pr-3">
+                    <span class="ml-2">💡</span>
+                </h2>
+                <div class="space-y-4 text-lg">
+                    <div id="recommendation1" class="p-3 bg-yellow-50 rounded-lg border border-yellow-200"></div>
+                    <div id="recommendation2" class="p-3 bg-yellow-50 rounded-lg border border-yellow-200"></div>
+                    <div id="recommendation3" class="p-3 bg-yellow-50 rounded-lg border border-yellow-200"></div>
+                </div>
+            </section>
+
+            <!-- Family Photos Section -->
+            <section class="bg-white rounded-3xl shadow-2xl p-8">
+                <h2 id="photosTitle" class="text-3xl font-bold text-pink-600 mb-4 flex items-center border-r-4 border-pink-600 pr-3">
+                    <span class="ml-2">📸</span>
+                </h2>
+                <p id="photosText" class="text-gray-700 mb-6 text-lg"></p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    <img src="https://placehold.co/300x300/e9d5ff/8b5cf6?text=תמונה+1" alt="Family Photo" class="w-full h-auto rounded-xl shadow-md object-cover aspect-square">
+                    <img src="https://placehold.co/300x300/fecaca/ef4444?text=תמונה+2" alt="Family Photo" class="w-full h-auto rounded-xl shadow-md object-cover aspect-square">
+                    <img src="https://placehold.co/300x300/dbeafe/3b82f6?text=תמונה+3" alt="Family Photo" class="w-full h-auto rounded-xl shadow-md object-cover aspect-square">
+                    <img src="https://placehold.co/300x300/dcfce7/22c55e?text=תמונה+4" alt="Family Photo" class="w-full h-auto rounded-xl shadow-md object-cover aspect-square">
+                </div>
+            </section>
+
+            <!-- Birthdays and Events Section -->
+            <section class="bg-white rounded-3xl shadow-2xl p-8">
+                <h2 id="eventsTitle" class="text-3xl font-bold text-purple-600 mb-4 flex items-center border-r-4 border-purple-600 pr-3">
+                    <span class="ml-2">🎂</span>
+                </h2>
+                <ul id="eventsList" class="space-y-3 text-gray-700 text-lg">
+                    <!-- Content loaded from static data -->
+                </ul>
+            </section>
+            
+            <!-- Contact Section -->
+            <section class="bg-white rounded-3xl shadow-2xl p-8 text-center border-t border-gray-100">
+                <h2 id="contactTitle" class="text-3xl font-bold text-gray-900 mb-4 flex items-center justify-center">
+                    <span class="ml-2">✍️</span>
+                </h2>
+                <p id="contactText" class="text-gray-700 leading-relaxed text-lg">
+                </p>
+            </section>
+
+            <!-- Footer Section -->
+            <footer class="text-center mt-10 text-gray-500">
+                <p id="footerText1" class="text-base"></p>
+                <p id="footerText2" class="mt-2 text-sm"></p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Modal for Messages/Errors (replaces alert) -->
+    <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 transition-opacity duration-300 items-center justify-center p-4 opacity-0">
+        <div id="messageModal" class="bg-white rounded-xl shadow-2xl max-w-sm w-full p-6 transform transition-all duration-300 scale-95" style="display: none;">
+            <h3 id="messageTitle" class="text-xl font-bold text-gray-900 mb-4"></h3>
+            <p id="messageContent" class="text-gray-700 mb-6"></p>
+            <button onclick="hideModal('messageModal')" class="w-full bg-indigo-600 text-white font-semibold py-2 rounded-lg hover:bg-indigo-700 transition duration-150">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Gemini API Configuration ---
+        const API_KEY = "AIzaSyBGDa5M-uIX2fkJ4yYjFjVHhe2WTNc8uaQ"; // משתנה גלובלי
+        const API_MODEL = "gemini-2.5-flash-preview-09-2025";
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${API_MODEL}:generateContent?key=${API_KEY}`;
+        const MAX_RETRIES = 5;
+
+        // ----------------------------------------------------
+        // Static Data and Language Control (Updated for 5 Languages)
+        // ----------------------------------------------------
+        
+        const defaultContent = {
+            'he': {
+                'docTitle': 'עלון המשפחה',
+                'mainTitle': 'עלון המשפחה',
+                'mainSubtitle': 'מהדורה חודשית - נובמבר 2025',
+                'websiteTitle': '🎉 פתחנו אתר משפחתי חדש!',
+                'websiteText': 'אנחנו נרגשים להכריז שהאתר המשפחתי החדש שלנו כבר באוויר! האתר הוא מרכז אחד לכל הדברים המשפחתיים: גלריית תמונות, לוח אירועים, ועדכונים שוטפים. היכנסו לבקר, להתעדכן ולשתף.',
+                
+                'aiTitle': '✨ פינת הרעיונות המשפחתיים',
+                'aiDescription': 'לחצו על הכפתור כדי לקבל רעיון לפעילות משפחתית מומלצת, כיפית ועדכנית לסוף השבוע הקרוב! הרעיון נוצר באמצעות בינה מלאכותית (Gemini) וכולל מידע רלוונטי מהרשת.',
+                'generateIdeaText': '✨ הציעו לי רעיון משפחתי!',
+                'aiLoadingText': 'טוען רעיון יצירתי...',
+                'aiSourcesTitle': 'מקורות מידע (חיפוש גוגל):',
+                
+                'inMemoryTitle': '🕯️ לזכר יקירנו',
+                'inMemoryText1': 'אנו זוכרים את כל אלה שכבר אינם איתנו, ומוקירים את הזיכרונות שהשאירו.',
+                'inMemoryName': 'באהבה, פרנק ון דר ולדה ז"ל',
+                'inMemoryDate': 'נפטר ב-6 ביולי 2025, בקייפטאון.',
+                'inMemoryText2': 'יהי זכרו ברוך.',
+                'goodNewsTitle': '🌟 חדשות טובות!',
+                'goodNewsText': 'עדכונים טובים יגיעו בקרוב! מחכים לשמוע את החדשות שלכם.',
+                'recommendationsTitle': '💡 פינת ההמלצות',
+                'recommendation1': '<strong class="font-semibold text-gray-900">ספר:</strong> <span class="text-gray-700">סדרת הארי פוטר - סדרת הספרים האהובה על כל המשפחה. קסם ודמיון בכל עמוד!</span>',
+                'recommendation2': '<strong class="font-semibold text-gray-900">סרט:</strong> <span class="text-gray-700">הקול בראש (Inside Out) - סרט אנימציה של דיסני/פיקסאר שמרגש ומצחיק גם ילדים וגם מבוגרים.</span>',
+                'recommendation3': '<strong class="font-semibold text-gray-900">מקום לבקר בו:</strong> <span class="text-gray-700">גן החיות התנ"כי בירושלים - חוויה לימודית וכיפית לכל הגילאים.</span>',
+                'photosTitle': '📸 רגעי הקיץ שלנו',
+                'photosText': 'כמה תמונות שצולמו לאחרונה, כדי להזכיר לכולנו את הרגעים היפים שאנו חולקים יחד.',
+                'eventsTitle': '🎂 ימי הולדת ואירועים קרובים',
+                'eventsList': `
+                    <li class="flex items-center"><span class="ml-2 text-indigo-500">🎉</span><strong class="font-semibold ml-2">15 בנובמבר:</strong> יום הולדת 12 להלל כספי!</li>
+                    <li class="flex items-center"><span class="ml-2 text-indigo-500">🎉</span><strong class="font-semibold ml-2">15 בנובמבר:</strong> יום הולדת 21 לאנליז ג'ין ג'ונסון!</li>
+                    <li class="flex items-center"><span class="ml-2 text-indigo-500">💍</span><strong class="font-semibold ml-2">15 בנובמבר:</strong> יום נישואין 38 לאלן ובאני מרלין פישר!</li>
+                    <li class="flex items-center"><span class="ml-2 text-indigo-500">🎉</span><strong class="font-semibold ml-2">19 בנובמבר:</strong> יום הולדת 85 לאניטה בסקין!</li>
+                    <li class="flex items-center"><span class="ml-2 text-indigo-500">🎉</span><strong class="font-semibold ml-2">20 בנובמבר:</strong> יום הולדת 39 ללורה ברוקוויי פרגוסון!</li>
+                `,
+                'contactTitle': '✍️ רוצים לשתף?',
+                'contactText': 'יש לכם חדשות מרגשות, המלצות או תמונות מהטיול המשפחתי? פשוט שלחו לנו את העדכונים שלכם למייל: <strong>familysite@gmx.com</strong>.',
+                'footerText1': 'תודה שקראתם! נתראה במהדורה הבאה.',
+                'footerText2': '&copy; 2025 עלון המשפחה. כל הזכויות שמורות.',
+                'modalTitleSuccess': 'רעיון חדש!',
+                'modalTitleError': 'שגיאה',
+                'modalContentError': 'אירעה שגיאה בטעינת הרעיון המשפחתי. אנא נסה שוב מאוחר יותר.'
+            },
+            'en': {
+                'docTitle': 'The Family Newsletter',
+                'mainTitle': 'The Family Newsletter',
+                'mainSubtitle': 'Monthly Edition - November 2025',
+                'websiteTitle': '🎉 New Family Website is Live!',
+                'websiteText': 'We are excited to announce that our new family website is now live! The site is a central hub for all things family: a photo gallery, an events calendar, and regular updates. Come visit, get updated, and share!',
+                
+                'aiTitle': '✨ Family Idea Corner',
+                'aiDescription': 'Click the button to get a fun, recommended, and current family activity idea for the upcoming weekend! The idea is generated using Artificial Intelligence (Gemini) and includes relevant information from the web.',
+                'generateIdeaText': '✨ Suggest a Family Idea!',
+                'aiLoadingText': 'Loading creative idea...',
+                'aiSourcesTitle': 'Information Sources (Google Search):',
+                
+                'inMemoryTitle': '🕯️ In Loving Memory',
+                'inMemoryText1': 'We remember all those who are no longer with us, and cherish the memories they left behind.',
+                'inMemoryName': 'In loving memory of Frank van der Velde z"l',
+                'inMemoryDate': 'Died in Cape Town on July 6, 2025.',
+                'inMemoryText2': 'May his memory be a blessing.',
+                'goodNewsTitle': '🌟 Good News!',
+                'goodNewsText': 'Good news coming soon! We are waiting to hear your updates.',
+                'recommendationsTitle': '💡 Recommendations Corner',
+                'recommendation1': '<strong class="font-semibold text-gray-900">Book:</strong> <span class="text-gray-700">The Harry Potter series - The beloved book series for the whole family. Magic and imagination on every page!</span>',
+                'recommendation2': '<strong class="font-semibold text-gray-900">Movie:</strong> <span class="text-gray-700">Inside Out - A Disney/Pixar animated film that is both touching and funny for kids and adults alike.</span>',
+                'recommendation3': '<strong class="font-semibold text-gray-900">Place to Visit:</strong> <span class="text-gray-700">The Biblical Zoo in Jerusalem - A fun and educational experience for all ages.</span>',
+                'photosTitle': '📸 Our Summer Moments',
+                'photosText': 'A few recent photos, to remind us all of the beautiful moments we share together.',
+                'eventsTitle': '🎂 Upcoming Birthdays & Events',
+                'eventsList': `
+                    <li class="flex items-center"><span class="mr-2 text-indigo-500">🎉</span><strong class="font-semibold mr-2">November 15:</strong> 12th birthday of Halel Caspi!</li>
+                    <li class="flex items-center"><span class="mr-2 text-indigo-500">🎉</span><strong class="font-semibold mr-2">November 15:</strong> 21st birthday of Analise Jean Johnson!</li>
+                    <li class="flex items-center"><span class="mr-2 text-indigo-500">💍</span><strong class="font-semibold mr-2">November 15:</strong> 38th wedding anniversary of Alan and Bunny Marlene Fisher!</li>
+                    <li class="flex items-center"><span class="mr-2 text-indigo-500">🎉</span><strong class="font-semibold mr-2">November 19:</strong> 85th birthday of Anita Baskin!</li>
+                    <li class="flex items-center"><span class="mr-2 text-indigo-500">🎉</span><strong class="font-semibold mr-2">November 20:</strong> 39th birthday of Laura Brockway Ferguson!</li>
+                `,
+                'contactTitle': '✍️ Want to Share?',
+                'contactText': 'Have exciting news, recommendations, or photos from a family trip? Simply send us your updates to this email: <strong>familysite@gmx.com</strong>.',
+                'footerText1': 'Thanks for reading! See you in the next edition.',
+                'footerText2': '&copy; 2025 The Family Newsletter. All rights reserved.',
+                'modalTitleSuccess': 'New Idea!',
+                'modalTitleError': 'Error',
+                'modalContentError': 'An error occurred while loading the family idea. Please try again later.'
+            },
+            'yi': {
+                'docTitle': 'דער פאַמיליע נייעסלייטער',
+                'mainTitle': 'דער פאַמיליע נייעסלייטער',
+                'mainSubtitle': 'מאָנאַטליכע אויסגאַבע - נאָוועמבער 2025',
+                'websiteTitle': '🎉 מיר האָבן געעפֿנט אַ נײַעם פאַמיליע וועבזייטל!',
+                'websiteText': 'מיר זענען באַגייסטערט צו מעלדן אַז אונדזער נײַער פאַמיליע וועבזייטל איז שוין אױף! דער זײַטל איז אַ צענטראַלער פּונקט פֿאַר אַלע זאַכן פֿון דער פאַמיליע: אַ בילדער גאַלעריע, אַן אָווענט קאַלענדאַר, און שטענדיגע דערהייַנטיקונגען. קומט באַזוכן, זיך איבערצייגן, און טיילן!',
+                
+                'aiTitle': '✨ פאַמיליע געדאַנק ווינקל',
+                'aiDescription': 'דריקט אויפן קנעפּל צו קריגן אַ לוסטיקע, רעקאָמענדירטע, און אַקטיעלע פאַמיליע טעטיקייט אידעע פֿאַר דעם קומענדיקן סוף-וואָך! די אידעע ווערט געשאַפֿן מיט קינסטליכע אינטעליגענץ (Gemini) און שליסט אײַן רעלעוואַנטע אינפֿאָרמאַציע פֿונעם נעץ.',
+                'generateIdeaText': '✨ פאָרשלאָג מיר אַ פאַמיליע געדאַנק!',
+                'aiLoadingText': 'ליידט אַ שעפערישן געדאַנק...',
+                'aiSourcesTitle': 'אינפֿאָרמאַציע קוועלער (גוגל זוך):',
+                
+                'inMemoryTitle': '🕯️ צו דעם זכר פֿון אונדזערע ליבסטע',
+                'inMemoryText1': 'מיר געדענקען אַלע יענע וואָס זענען מער ניט מיט אונדז, און שעצן די זכרונות וואָס זיי האָבן איבערגעלאָזט.',
+                'inMemoryName': 'מיט ליבשאַפֿט, פראַנק וואַן דער וועלדע ז"ל',
+                'inMemoryDate': 'געשטאָרבן אין קאַפּשטאַד דעם 6טן יולי 2025.',
+                'inMemoryText2': 'זאָל זיין זכרונו לברכה.',
+                'goodNewsTitle': '🌟 גוטע נײַעס!',
+                'goodNewsText': 'גוטע נײַעס קומט באַלד! מיר וואַרטן צו הערן אייערע דערהייַנטיקונגען.',
+                'recommendationsTitle': '💡 רעקאָמענדאַציע ווינקל',
+                'recommendation1': '<strong class="font-semibold text-gray-900">בוך:</strong> <span class="text-gray-700">די האַרי פּאָטער סעריע - די באַליבטע בוך סעריע פֿאַר דער גאַנצער פאַמיליע. כישוף און פאַנטאַזיע אויף יעדער בלאַט!</span>',
+                'recommendation2': '<strong class="font-semibold text-gray-900">פילם:</strong> <span class="text-gray-700">אינסײַד אױט (Inside Out) - אַן אַנימאַציע פֿילם פֿון דיסני/פּיקסאַר וואָס איז סײַ רירנדיק און סײַ הומאָריסטיש פֿאַר קינדער און ערוואַקסענע גלײַך.</span>',
+                'recommendation3': '<strong class="font-semibold text-gray-900">אָרט צו באַזוכן:</strong> <span class="text-gray-700">דער תּנ"כישער זאָאָ אין ירושלים - אַ לערנעדיקע און לוסטיקע דערפאַרונג פֿאַר אַלע עלטערן.</span>',
+                'photosTitle': '📸 אונדזערע זומער מאָמענטן',
+                'photosText': 'עטלעכע לעצטיקע בילדער, צו דערמאָנען אונדז אַלע פֿון די שיינע מאָמענטן וואָס מיר טיילן צוזאַמען.',
+                'eventsTitle': '🎂 קומענדיקע געבורטס-טעג און געשעענישן',
+                'eventsList': `
+                    <li class="flex items-center"><span class="ml-2 text-indigo-500">🎉</span><strong class="font-semibold ml-2">נאָוועמבער 15:</strong> 12טער געבורטסטאָג פֿון הלל כספי!</li>
+                    <li class="flex items-center"><span class="ml-2 text-indigo-500">🎉</span><strong class="font-semibold ml-2">נאָוועמבער 15:</strong> 21טער געבורטסטאָג פֿון אַנאַליז דזשין דזשאָנסאָן!</li>
+                    <li class="flex items-center"><span class="ml-2 text-indigo-500">💍</span><strong class="font-semibold ml-2">נאָוועמבער 15:</strong> 38טער חתונה יאָרטאָג פֿון אַלאַן און באַני מאַרלין פֿישער!</li>
+                    <li class="flex items-center"><span class="ml-2 text-indigo-500">🎉</span><strong class="font-semibold ml-2">נאָוועמבער 19:</strong> 85טער געבורטסטאָג פֿון אַניטאַ באַסקין!</li>
+                    <li class="flex items-center"><span class="ml-2 text-indigo-500">🎉</span><strong class="font-semibold ml-2">נאָוועמבער 20:</strong> 39טער געבורטסטאָג פֿון לאַוראַ בראָקוויי פֿערגוסאָן!</li>
+                `,
+                'contactTitle': '✍️ ווילט איר זיך טיילן?',
+                'contactText': 'האָט איר שפּאַנענדע נײַעס, רעקאָמענדאַציעס אָדער בילדער פֿון אַ פאַמיליע רײַזע? שיקט אונדז אייערע דערהייַנטיקונגען צו דעם אימעיל: <strong>familysite@gmx.com</strong>.',
+                'footerText1': 'אַ דאַנק פֿאַרן לייענען! זעט זיך אין דער נעקסטער אויסגאַבע.',
+                'footerText2': '&copy; 2025 דער פאַמיליע נייעסלייטער. אַלע רעכטן רעזערווירט.',
+                'modalTitleSuccess': 'נייַער געדאַנק!',
+                'modalTitleError': 'טעות',
+                'modalContentError': 'עס איז געשען אַ טעות בשעתן ליידן דעם פאַמיליע געדאַנק. פּרוּווט נאָכאַמאָל שפּעטער.'
+            },
+            'fr': {
+                'docTitle': 'La Newsletter Familiale',
+                'mainTitle': 'La Newsletter Familiale',
+                'mainSubtitle': 'Édition Mensuelle - Novembre 2025',
+                'websiteTitle': '🎉 Notre Nouveau Site Web Familial est en Ligne!',
+                'websiteText': 'Nous sommes ravis d\'annoncer que notre nouveau site web familial est désormais en ligne! Le site est un centre central pour tout ce qui concerne la famille: une galerie de photos, un calendrier d\'événements et des mises à jour régulières. Venez nous rendre visite, vous informer et partager!',
+                
+                'aiTitle': '✨ Coin des Idées Familiales',
+                'aiDescription': 'Cliquez sur le bouton pour obtenir une idée d\'activité familiale amusante, recommandée et actuelle pour le week-end à venir! L\'idée est générée à l\'aide de l\'intelligence artificielle (Gemini) et comprend des informations pertinentes provenant du web.',
+                'generateIdeaText': '✨ Suggérez-moi une idée de famille!',
+                'aiLoadingText': 'Chargement d\'une idée créative...',
+                'aiSourcesTitle': 'Sources d\'Information (Recherche Google):',
+                
+                'inMemoryTitle': '🕯️ En Mémoire de Nos Êtres Chers',
+                'inMemoryText1': 'Nous nous souvenons de tous ceux qui ne sont plus parmi nous et chérissons les souvenirs qu\'ils ont laissés.',
+                'inMemoryName': 'À la mémoire de Frank van der Velde z"l',
+                'inMemoryDate': 'Décédé au Cap le 6 juillet 2025.',
+                'inMemoryText2': 'Que sa mémoire soit bénie.',
+                'goodNewsTitle': '🌟 Bonnes Nouvelles!',
+                'goodNewsText': 'De bonnes nouvelles arrivent bientôt! Nous attendons avec impatience de connaître vos mises à jour.',
+                'recommendationsTitle': '💡 Coin des Recommandations',
+                'recommendation1': '<strong class="font-semibold text-gray-900">Livre:</strong> <span class="text-gray-700">La série Harry Potter - La série de livres bien-aimée pour toute la famille. Magie et imagination à chaque page!</span>',
+                'recommendation2': '<strong class="font-semibold text-gray-900">Film:</strong> <span class="text-gray-700">Vice-Versa (Inside Out) - Un film d\'animation Disney/Pixar à la fois touchant et amusant pour les enfants et les adultes.</span>',
+                'recommendation3': '<strong class="font-semibold text-gray-900">Lieu à Visiter:</strong> <span class="text-gray-700">Le zoo biblique de Jérusalem - Une expérience éducative et amusante pour tous les âges.</span>',
+                'photosTitle': '📸 Nos Moments d\'Été',
+                'photosText': 'Quelques photos récentes, pour nous rappeler les beaux moments que nous partageons ensemble.',
+                'eventsTitle': '🎂 Anniversaires et Événements à Venir',
+                'eventsList': `
+                    <li class="flex items-center"><span class="mr-2 text-indigo-500">🎉</span><strong class="font-semibold mr-2">15 novembre:</strong> 12ème anniversaire de Halel Caspi!</li>
+                    <li class="flex items-center"><span class="mr-2 text-indigo-500">🎉</span><strong class="font-semibold mr-2">15 novembre:</strong> 21ème anniversaire d\'Analise Jean Johnson!</li>
+                    <li class="flex items-center"><span class="mr-2 text-indigo-500">💍</span><strong class="font-semibold mr-2">15 novembre:</strong> 38ème anniversaire de mariage d\'Alan et Bunny Marlene Fisher!</li>
+                    <li class="flex items-center"><span class="mr-2 text-indigo-500">🎉</span><strong class="font-semibold mr-2">19 novembre:</strong> 85ème anniversaire d\'Anita Baskin!</li>
+                    <li class="flex items-center"><span class="mr-2 text-indigo-500">🎉</span><strong class="font-semibold mr-2">20 novembre:</strong> 39ème anniversaire de Laura Brockway Ferguson!</li>
+                `,
+                'contactTitle': '✍️ Envie de Partager?',
+                'contactText': 'Avez-vous des nouvelles passionnantes, des recommandations ou des photos d\'un voyage en famille? Envoyez-nous simplement vos mises à jour à cette adresse e-mail: <strong>familysite@gmx.com</strong>.',
+                'footerText1': 'Merci de votre lecture! Rendez-vous dans la prochaine édition.',
+                'footerText2': '&copy; 2025 La Newsletter Familiale. Tous droits réservés.',
+                'modalTitleSuccess': 'Nouvelle Idée!',
+                'modalTitleError': 'Erreur',
+                'modalContentError': 'Une erreur s\'est produite lors du chargement de l\'idée familiale. Veuillez réessayer plus tard.'
+            },
+            'nl': {
+                'docTitle': 'De Familieuwsbrief',
+                'mainTitle': 'De Familieuwsbrief',
+                'mainSubtitle': 'Maandelijkse Editie - November 2025',
+                'websiteTitle': '🎉 Nieuwe Familiewebsite is Live!',
+                'websiteText': 'We zijn verheugd om aan te kondigen dat onze nieuwe familiewebsite nu live is! De site is een centraal knooppunt voor alles wat met familie te maken heeft: een fotogalerij, een evenementenkalender en regelmatige updates. Kom langs, blijf op de hoogte en deel mee!',
+                
+                'aiTitle': '✨ Familie Ideeënhoek',
+                'aiDescription': 'Klik op de knop om een leuk, aanbevolen en actueel familie-activiteitidee voor het komende weekend te krijgen! Het idee wordt gegenereerd met behulp van kunstmatige intelligentie (Gemini) en bevat relevante informatie van het web.',
+                'generateIdeaText': '✨ Stel een familie-idee voor!',
+                'aiLoadingText': 'Creatief idee aan het laden...',
+                'aiSourcesTitle': 'Informatiebronnen (Google Zoeken):',
+                
+                'inMemoryTitle': '🕯️ Ter Nagedachtenis aan Onze Geliefden',
+                'inMemoryText1': 'Wij gedenken allen die niet meer bij ons zijn en koesteren de herinneringen die zij hebben achtergelaten.',
+                'inMemoryName': 'Ter nagedachtenis aan Frank van der Velde z"l',
+                'inMemoryDate': 'Overleden in Kaapstad op 6 juli 2025.',
+                'inMemoryText2': 'Moge zijn nagedachtenis tot zegen zijn.',
+                'goodNewsTitle': '🌟 Goed Nieuws!',
+                'goodNewsText': 'Goed nieuws komt binnenkort! We wachten op jullie updates.',
+                'recommendationsTitle': '💡 Aanbevelingenhoek',
+                'recommendation1': '<strong class="font-semibold text-gray-900">Boek:</strong> <span class="text-gray-700">De Harry Potter-serie - De geliefde boekenreeks voor het hele gezin. Magie en verbeelding op elke pagina!</span>',
+                'recommendation2': '<strong class="font-semibold text-gray-900">Film:</strong> <span class="text-gray-700">Binnenstebuiten (Inside Out) - Een Disney/Pixar animatiefilm die zowel ontroerend als grappig is voor zowel kinderen als volwassenen.</span>',
+                'recommendation3': '<strong class="font-semibold text-gray-900">Te Bezoeken Plaats:</strong> <span class="text-gray-700">De Bijbelse Dierentuin in Jeruzalem - Een leerzame en leuke ervaring voor alle leeftijden.</span>',
+                'photosTitle': '📸 Onze Zomerse Momenten',
+                'photosText': 'Enkele recente foto\'s, om ons allemaal te herinneren aan de mooie momenten die we samen delen.',
+                'eventsTitle': '🎂 Aankomende Verjaardagen en Evenementen',
+                'eventsList': `
+                    <li class="flex items-center"><span class="mr-2 text-indigo-500">🎉</span><strong class="font-semibold mr-2">15 november:</strong> 12e verjaardag van Halel Caspi!</li>
+                    <li class="flex items-center"><span class="mr-2 text-indigo-500">🎉</span><strong class="font-semibold mr-2">15 november:</strong> 21e verjaardag van Analise Jean Johnson!</li>
+                    <li class="flex items-center"><span class="mr-2 text-indigo-500">💍</span><strong class="font-semibold mr-2">15 november:</strong> 38e huwelijksverjaardag van Alan en Bunny Marlene Fisher!</li>
+                    <li class="flex items-center"><span class="mr-2 text-indigo-500">🎉</span><strong class="font-semibold mr-2">19 november:</strong> 85e verjaardag van Anita Baskin!</li>
+                    <li class="flex items-center"><span class="mr-2 text-indigo-500">🎉</span><strong class="font-semibold mr-2">20 november:</strong> 39e verjaardag van Laura Brockway Ferguson!</li>
+                `,
+                'contactTitle': '✍️ Wilt u Delen?',
+                'contactText': 'Heeft u spannend nieuws, aanbevelingen of foto\'s van een familiereis? Stuur ons uw updates naar dit e-mailadres: <strong>familysite@gmx.com</strong>.',
+                'footerText1': 'Bedankt voor het lezen! Tot ziens in de volgende editie.',
+                'footerText2': '&copy; 2025 De Familieuwsbrief. Alle rechten voorbehouden.',
+                'modalTitleSuccess': 'Nieuw Idee!',
+                'modalTitleError': 'Fout',
+                'modalContentError': 'Er is een fout opgetreden bij het laden van het familie-idee. Probeer het later opnieuw.'
+            }
+        };
+
+        // Static holiday data
+        const holidays = [
+            { id: 'roshHashanah', name: { he: 'ראש השנה', en: 'Rosh Hashanah', yi: 'ראש השנה', fr: 'Roch Hachana', nl: 'Rosj Hasjana' }, message: { he: '🍎 שנה טובה!', en: '🍎 Happy New Year!', yi: '🍎 גוט יאָר!', fr: '🍎 Bonne Année!', nl: '🍎 Gelukkig Nieuwjaar!' }, detailed_message: { he: 'אנו רוצים לאחל לכל משפחתנו שנה טובה ומבורכת. שתהא זו שנה של התחלות חדשות, בריאות, אושר ושגשוג.', en: 'We want to wish our entire family a good and blessed year. May this be a year of new beginnings, health, happiness, and prosperity.', yi: 'מיר ווילן ווינטשן אונדזער גאַנצער פאַמיליע אַ גוט און בענטשט יאָר. זאָל דאָס זײַן אַ יאָר פֿון נײַע אָנהייבן, געזונט, גליק און הצלחה.', fr: 'Nous souhaitons à toute notre famille une bonne et heureuse année. Que cette année soit celle de nouveaux départs, de santé, de bonheur et de prospérité.', nl: 'Wij wensen ons hele gezin een goed en gezegend jaar. Moge dit een jaar zijn van een nieuw begin, gezondheid, geluk en voorspoed.' }, startDate: new Date('2025-09-22T00:00:00'), endDate: new Date('2025-10-04T23:59:59') },
+            { id: 'hanukkah', name: { he: 'חנוכה', en: 'Hanukkah', yi: 'חנוכה', fr: 'Hanoucca', nl: 'Chanoeka' }, message: { he: '🕯️ חנוכה שמח!', en: '🕯️ Happy Hanukkah!', yi: '🕯️ אַ פֿריילעכן חנוכה!', fr: '🕯️ Joyeux Hanoucca!', nl: '🕯️ Fijne Chanoeka!' }, detailed_message: { he: 'חג חנוכה שמח ומלא באור! שיהיה לכם חג של ניסים, הדלקת נרות משותפת, סופגניות חמות וזמן איכות משפחתי.', en: 'Happy and light-filled Hanukkah! May you have a holiday of miracles, shared candle lighting, warm sufganiyot, and quality family time.', yi: 'אַ פֿריילעכן און ליכטיקן חנוכה! זאָלן אײַך זײַן אַ יום-טובֿ פֿון נסים, געמיינזאַם ליכט צינדן, וואַרעמע פּאָנטשקעס און פאַמיליע צײַט.', fr: 'Joyeux Hanoucca et plein de lumière ! Que cette fête soit celle des miracles, de l\'allumage des bougies, des beignets chauds et du temps de qualité en famille.', nl: 'Fijne en lichte Chanoeka! Moge het een feest van wonderen, gezamenlijk kaarsen aansteken, warme soefganiyot en quality time met het gezin zijn.' }, startDate: new Date('2025-12-15T00:00:00'), endDate: new Date('2025-12-23T23:59:59')},
+        ];
+
+        let currentLang = 'he'; // Default: Hebrew
+        const now = new Date();
+        
+        // Element map
+        const elementsToTranslate = {
+            'docTitle': document.getElementById('docTitle'),
+            'mainTitle': document.getElementById('mainTitle'),
+            'mainSubtitle': document.getElementById('mainSubtitle'),
+            'websiteTitle': document.getElementById('websiteTitle'),
+            'websiteText': document.getElementById('websiteText'),
+
+            'aiTitle': document.getElementById('aiTitle'),
+            'aiDescription': document.getElementById('aiDescription'),
+            'generateIdeaText': document.getElementById('generateIdeaText'),
+
+            'inMemoryTitle': document.getElementById('inMemoryTitle'),
+            'inMemoryText1': document.getElementById('inMemoryText1'),
+            'inMemoryName': document.getElementById('inMemoryName'),
+            'inMemoryDate': document.getElementById('inMemoryDate'),
+            'inMemoryText2': document.getElementById('inMemoryText2'),
+            'goodNewsTitle': document.getElementById('goodNewsTitle'),
+            'goodNewsText': document.getElementById('goodNewsText'),
+            'recommendationsTitle': document.getElementById('recommendationsTitle'),
+            'recommendation1': document.getElementById('recommendation1'),
+            'recommendation2': document.getElementById('recommendation2'),
+            'recommendation3': document.getElementById('recommendation3'),
+            'photosTitle': document.getElementById('photosTitle'),
+            'photosText': document.getElementById('photosText'),
+            'eventsTitle': document.getElementById('eventsTitle'),
+            'eventsList': document.getElementById('eventsList'),
+            'contactTitle': document.getElementById('contactTitle'),
+            'contactText': document.getElementById('contactText'),
+            'footerText1': document.getElementById('footerText1'),
+            'footerText2': document.getElementById('footerText2'),
+            'holidayTitle': document.getElementById('holidayTitle'),
+            'holidayText': document.getElementById('holidayText')
+        };
+
+        /**
+         * Displays the custom modal (replaces alert)
+         */
+        function showModal(modalId, title, content) {
+            document.getElementById('messageTitle').textContent = title;
+            document.getElementById('messageContent').textContent = content;
+            document.getElementById('modalOverlay').style.display = 'flex';
+            document.getElementById('modalOverlay').classList.remove('opacity-0');
+            
+            const modalElement = document.getElementById(modalId);
+            modalElement.style.display = 'block';
+            modalElement.classList.add('scale-100');
+            modalElement.classList.remove('scale-95');
+            // Update button text for the modal
+            const closeButton = modalElement.querySelector('button');
+            closeButton.textContent = currentLang === 'he' ? 'סגור' : (currentLang === 'yi' ? 'פֿאַרמאַכן' : 'Close');
+        }
+
+        /**
+         * Hides the custom modal
+         */
+        function hideModal(modalId) {
+            const modalElement = document.getElementById(modalId);
+            modalElement.classList.add('scale-95');
+            modalElement.classList.remove('scale-100');
+            document.getElementById('modalOverlay').classList.add('opacity-0');
+
+            setTimeout(() => {
+                modalElement.style.display = 'none';
+                document.getElementById('modalOverlay').style.display = 'none';
+            }, 300); // Match transition duration
+        }
+
+        /**
+         * Updates all texts according to the current language.
+         */
+        function updateLanguage() {
+            const langData = defaultContent[currentLang];
+            const isRTL = (currentLang === 'he' || currentLang === 'yi');
+
+            // Update language and direction
+            document.documentElement.lang = currentLang;
+            document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+
+            // Update text elements
+            for (const key in elementsToTranslate) {
+                const element = elementsToTranslate[key];
+                if (element) {
+                    const content = langData[key] || defaultContent['he'][key]; // Fallback to Hebrew
+
+                    if (key === 'eventsList' || key.includes('recommendation') || key === 'contactText') {
+                        element.innerHTML = content; // Use innerHTML for HTML tags
+                    } else if (key !== 'generateIdeaText') {
+                        element.textContent = content; // Use textContent otherwise
+                    }
+                }
+            }
+            
+            // Update AI button text
+            elementsToTranslate['generateIdeaText'].textContent = langData.generateIdeaText;
+
+            // Update directional classes for AI section for RTL alignment
+            const aiTitleElement = document.getElementById('aiTitle');
+            const goodNewsTitleElement = document.getElementById('goodNewsTitle');
+            const recommendationsTitleElement = document.getElementById('recommendationsTitle');
+            const photosTitleElement = document.getElementById('photosTitle');
+            const eventsTitleElement = document.getElementById('eventsTitle');
+
+            [aiTitleElement, goodNewsTitleElement, recommendationsTitleElement, photosTitleElement, eventsTitleElement].forEach(el => {
+                if (isRTL) {
+                    el.classList.add('border-r-4', 'pr-3');
+                    el.classList.remove('border-l-4', 'pl-3');
+                    // Swap margin for icon alignment
+                    const icon = el.querySelector('span');
+                    if (icon) {
+                        icon.classList.add('ml-2');
+                        icon.classList.remove('mr-2');
+                    }
+                } else {
+                    el.classList.add('border-l-4', 'pl-3');
+                    el.classList.remove('border-r-4', 'pr-3');
+                    // Swap margin for icon alignment
+                    const icon = el.querySelector('span');
+                    if (icon) {
+                        icon.classList.add('mr-2');
+                        icon.classList.remove('ml-2');
+                    }
+                }
+            });
+
+            // Update holiday message
+            updateHolidaySection();
+        }
+
+        /**
+         * Checks for a current holiday and displays the appropriate message.
+         */
+        function updateHolidaySection() {
+            const holidaySection = document.getElementById('holidaySection');
+            let currentHoliday = null;
+
+            for (const holiday of holidays) {
+                if (now >= holiday.startDate && now <= holiday.endDate) {
+                    currentHoliday = holiday;
+                    break;
+                }
+            }
+            
+            if (currentHoliday) {
+                holidayTitle.textContent = currentHoliday.message[currentLang] || currentHoliday.message['en'];
+                holidayText.textContent = currentHoliday.detailed_message[currentLang] || currentHoliday.detailed_message['en'];
+                
+                // Color change logic (e.g., for fasting days, removed for brevity, keeping only standard colors)
+                holidaySection.classList.add('bg-indigo-600');
+                holidaySection.classList.remove('bg-gray-700'); // Ensure it's not set to the mourning color
+                
+                holidaySection.style.display = 'block';
+            } else {
+                holidaySection.style.display = 'none';
+            }
+        }
+
+        /**
+         * Changes the language based on the selection (called by the dropdown).
+         */
+        function changeLanguage(newLang) {
+            currentLang = newLang;
+            updateLanguage();
+        }
+
+        // ----------------------------------------------------
+        // --- Gemini API Logic (Family Idea Generator) ---
+        // ----------------------------------------------------
+
+        /**
+         * Utility to convert language code to full language name for the API prompt.
+         */
+        function getLangName(code) {
+            switch (code) {
+                case 'he': return 'Hebrew';
+                case 'en': return 'English';
+                case 'yi': return 'Yiddish';
+                case 'fr': return 'French';
+                case 'nl': return 'Dutch';
+                default: return 'English';
+            }
+        }
+
+        /**
+         * Calls the Gemini API to generate a family activity idea.
+         */
+        async function fetchGeminiContent(retryCount = 0) {
+            const btn = document.getElementById('generateIdeaBtn');
+            const resultContainer = document.getElementById('aiResultContainer');
+            const resultElement = document.getElementById('aiResult');
+            const sourcesElement = document.getElementById('aiSources');
+            const langData = defaultContent[currentLang];
+            const originalButtonText = langData.generateIdeaText;
+            const loadingText = langData.aiLoadingText;
+            const langName = getLangName(currentLang);
+
+
+            // Prompt generation
+            const systemPrompt = `You are a friendly, enthusiastic, and creative family activity planner. Your goal is to suggest ONE highly specific, fun, and engaging activity idea suitable for a family with mixed ages (kids and adults) for the upcoming weekend. The activity should be fresh and relevant to the current date and local context (general, not location-specific). Provide the response in ${langName}. Your response must be formatted as a short paragraph or a list of steps.`;
+            const userQuery = `Suggest a creative, fun, and up-to-date family activity or trip idea for the coming weekend.`;
+
+            // Prepare UI for loading
+            btn.disabled = true;
+            btn.textContent = loadingText;
+            resultContainer.classList.add('hidden');
+            resultElement.textContent = '';
+            sourcesElement.innerHTML = '';
+            
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                tools: [{ "google_search": {} }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    const text = candidate.content.parts[0].text;
+                    let sources = [];
+                    const groundingMetadata = candidate.groundingMetadata;
+
+                    if (groundingMetadata && groundingMetadata.groundingAttributions) {
+                        sources = groundingMetadata.groundingAttributions
+                            .map(attribution => ({
+                                uri: attribution.web?.uri,
+                                title: attribution.web?.title,
+                            }))
+                            .filter(source => source.uri && source.title);
+                    }
+
+                    // Display result
+                    resultElement.textContent = text;
+                    if (sources.length > 0) {
+                        const sourcesTitle = langData.aiSourcesTitle;
+                        sourcesElement.innerHTML = `<p class="font-semibold mb-1">${sourcesTitle}</p>`;
+                        
+                        sources.forEach((source) => {
+                            const link = document.createElement('a');
+                            link.href = source.uri;
+                            link.target = '_blank';
+                            link.textContent = `${source.title} (${source.uri.substring(0, 30)}...)`;
+                            link.className = 'block hover:text-indigo-600 transition-colors duration-150';
+                            sourcesElement.appendChild(link);
+                        });
+                    }
+
+                    resultContainer.classList.remove('hidden');
+
+                } else {
+                    throw new Error("No generated text found in response.");
+                }
+
+            } catch (error) {
+                if (retryCount < MAX_RETRIES) {
+                    const delay = Math.pow(2, retryCount) * 1000; // Exponential backoff
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return fetchGeminiContent(retryCount + 1); // Retry
+                } else {
+                    console.error("Gemini API Error after retries:", error);
+                    showModal('messageModal', langData.modalTitleError, langData.modalContentError);
+                }
+            } finally {
+                // Reset button state
+                btn.disabled = false;
+                btn.textContent = originalButtonText;
+            }
+        }
+
+
+        // ----------------------------------------------------
+        // App Initialization
+        // ----------------------------------------------------
+        window.onload = function() {
+            // Set initial language from HTML element's lang attribute, falling back to 'he'
+            currentLang = document.documentElement.lang || 'he';
+            
+            // Set the dropdown to the current language
+            document.getElementById('lang-select').value = currentLang;
+
+            // Load content
+            updateLanguage();
+
+            // Add event listener for the AI button
+            document.getElementById('generateIdeaBtn').addEventListener('click', () => {
+                fetchGeminiContent();
+            });
+        }
+    </script>
+</body>
+</html>
