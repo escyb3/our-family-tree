@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>מורשת משפחתית - Ben Abou, Bromberg, Elharrar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Assistant', sans-serif; scroll-behavior: smooth; }
+        .hero-section {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&q=80&w=2070');
+            background-size: cover; background-position: center; background-attachment: fixed;
+        }
+        .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .card-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .card-hover:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade { animation: fadeIn 0.8s ease-out forwards; }
+    </style>
+</head>
+
+<body class="bg-[#f8fafc] text-slate-900 overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="bg-white/80 backdrop-blur-xl sticky top-0 z-[100] border-b border-slate-100 h-20 flex items-center">
+        <div class="max-w-7xl mx-auto px-6 w-full flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-gradient-to-tr from-blue-700 to-indigo-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-extrabold text-lg tracking-tight block leading-none">Family Portal</span>
+                    <span class="text-[9px] text-blue-600 uppercase font-bold tracking-widest">Digital Archive</span>
+                </div>
+            </div>
+            
+            <div class="hidden lg:flex items-center gap-8 menu-bar">
+                <a href="index.html" class="font-bold text-blue-600 border-b-2 border-blue-600 pb-1" id="menuHome">ראשי</a>
+                <a href="tree.html" class="font-semibold text-slate-500 hover:text-blue-600 transition-colors" id="menuTree">עץ המשפחה</a>
+                <a href="gallery.html" class="font-semibold text-slate-500 hover:text-blue-600 transition-colors" id="menuGallery">גלריה</a>
+                <a href="archive.html" class="font-semibold text-slate-500 hover:text-blue-600 transition-colors" id="menuArchive">ארכיון</a>
+                <a href="events.html" class="font-semibold text-slate-500 hover:text-blue-600 transition-colors" id="menuEvents">אירועים</a>
+                <a href="login.html" class="font-semibold text-slate-500 hover:text-blue-600 transition-colors" id="menuLogin">התחברות</a>
+                <a href="#" class="font-semibold text-red-500 hover:text-red-700 transition-colors hidden" id="menuLogout">התנתקות</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <!-- Language -->
+                <select id="langSelector" class="bg-slate-50 px-2 py-1 rounded-lg text-xs font-bold text-slate-600 border border-slate-200 outline-none cursor-pointer">
+                    <option value="he">HE</option>
+                    <option value="en">EN</option>
+                </select>
+
+                <div class="h-8 w-[1px] bg-slate-200"></div>
+
+                <!-- User Details Container -->
+                <div id="user-profile-details" class="hidden md:block min-w-[120px]">
+                    <!-- שפיכת מידע מה-API לכאן -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero-section h-[500px] flex flex-col items-center justify-center text-center px-6 relative">
+        <div class="animate-fade">
+            <h1 class="text-white text-4xl md:text-6xl font-black mb-6 drop-shadow-2xl">המקום בו הסיפור שלנו מתחיל</h1>
+            <p class="text-white/90 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light">
+                שימור מורשת משפחות <span class="font-bold border-b-2 border-amber-400">בן אבו, ברומברג ואלהרר</span>.
+            </p>
+            
+            <div class="w-full max-w-2xl mx-auto glass p-1.5 rounded-2xl shadow-2xl flex items-center group focus-within:ring-4 ring-blue-500/20 transition-all">
+                <input type="text" id="ai-search" placeholder="שאלו את ה-AI על ההיסטוריה המשפחתית..." 
+                    class="w-full bg-transparent py-3 px-5 text-base outline-none placeholder:text-slate-400">
+                <button class="bg-blue-600 text-white p-3.5 rounded-xl shadow-lg hover:bg-blue-700 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 -mt-24">
+            <!-- Widgets -->
+            <div class="lg:col-span-8 space-y-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass p-8 rounded-[2rem] shadow-xl card-hover group animate-fade stagger-1">
+                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-2xl mb-6">🌳</div>
+                        <h3 class="text-xl font-extrabold mb-2">עץ משפחה</h3>
+                        <p class="text-slate-500 text-sm mb-6">גלו את השורשים שלכם בממשק ויזואלי מתקדם.</p>
+                        <a href="tree.html" class="text-blue-600 font-bold text-sm">לצפייה בעץ ←</a>
+                    </div>
+                    <div class="glass p-8 rounded-[2rem] shadow-xl card-hover group animate-fade stagger-2">
+                        <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-2xl mb-6">🖼️</div>
+                        <h3 class="text-xl font-extrabold mb-2">גלריית תמונות</h3>
+                        <p class="text-slate-500 text-sm mb-6">זכרונות רגעי הקסם של המשפחה לאורך השנים.</p>
+                        <a href="gallery.html" class="text-amber-600 font-bold text-sm">לגלריה ←</a>
+                    </div>
+                </div>
+
+                <!-- Live Feed Simulation -->
+                <section class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100">
+                    <h2 class="text-xl font-black mb-6">עדכונים אחרונים</h2>
+                    <div id="latest-content" class="text-slate-400 text-sm italic">טוען נתונים מהארכיון...</div>
+                </section>
+            </div>
+
+            <aside class="lg:col-span-4 space-y-6">
+                 <!-- Memorial Candle -->
+                 <section class="bg-slate-900 p-8 rounded-[2.5rem] text-white text-center">
+                    <span class="text-3xl block mb-4 animate-pulse">🕯️</span>
+                    <h3 class="text-lg font-bold mb-1">לזכרם</h3>
+                    <p id="yahrzeit-date" class="text-slate-400 text-[10px] uppercase tracking-widest mb-4">טוען תאריך...</p>
+                    <div class="bg-white/5 p-4 rounded-2xl border border-white/10">
+                        <p class="text-amber-400 font-bold">יעקב שנק ז"ל</p>
+                        <p class="text-[10px] opacity-60 italic mt-1 font-light">נלב"ע ח' בניסן</p>
+                    </div>
+                </section>
+            </aside>
+        </div>
+    </main>
+
+    <script>
+        // מילון תרגומים
+        const translations = {
+            he: {
+                menus: ["ראשי", "עץ המשפחה", "גלריה", "ארכיון", "אירועים", "התחברות", "התנתקות"],
+                loggedInAs: "מחובר כ:",
+                role: "תפקיד:",
+                familySide: "צד משפחה:",
+                yahrzeit: "היום, ח' בניסן ה'תשפ\"ד"
+            },
+            en: {
+                menus: ["Home", "Family Tree", "Gallery", "Archive", "Events", "Login", "Logout"],
+                loggedInAs: "User:",
+                role: "Role:",
+                familySide: "Side:",
+                yahrzeit: "Today, 8th of Nissan"
+            }
+        };
+
+        /**
+         * עדכון תוכן העמוד בהתאם למצב API
+         */
+        function updateContent(lang, isLoggedIn, user) {
+            const texts = translations[lang] || translations['he'];
+            localStorage.setItem("lang", lang);
+
+            // 1. עדכון תפריט הניווט
+            const menuLogin = document.getElementById('menuLogin');
+            const menuLogout = document.getElementById('menuLogout');
+            const menuItems = document.querySelectorAll('.menu-bar a');
+
+            // עדכון טקסטים בתפריט
+            menuItems.forEach((link, index) => {
+                if (index < 5) link.innerHTML = texts.menus[index];
+            });
+
+            // ניהול כפתורי התחברות/התנתקות
+            if (isLoggedIn) {
+                menuLogin?.classList.add('hidden');
+                menuLogout?.classList.remove('hidden');
+                menuLogout.innerHTML = texts.menus[6];
+            } else {
+                menuLogin?.classList.remove('hidden');
+                menuLogout?.classList.add('hidden');
+                menuLogin.innerHTML = texts.menus[5];
+            }
+
+            // 2. עדכון פרטי פרופיל משתמש
+            const profileDiv = document.getElementById('user-profile-details');
+            if (profileDiv) {
+                if (isLoggedIn && user) {
+                    let familySideHTML = user.familySide || "";
+                    if (user.familySideLink) {
+                        familySideHTML = `<a href="${user.familySideLink}" target="_blank" class="text-blue-500 font-bold hover:underline">${user.familySide}</a>`;
+                    }
+                    
+                    profileDiv.innerHTML = `
+                        <div class="flex flex-col text-right">
+                            <div class="flex items-center gap-1 leading-none">
+                                <span class="text-[10px] text-slate-400 font-bold">${texts.loggedInAs}</span>
+                                <span class="text-xs font-black text-slate-800">${user.username}</span>
+                            </div>
+                            <div class="flex items-center gap-1 mt-1 leading-none">
+                                <span class="text-[10px] text-slate-400">${texts.familySide}</span>
+                                <span class="text-[10px] font-semibold text-slate-600">${familySideHTML}</span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    profileDiv.innerHTML = `
+                        <a href="login.html" class="text-xs font-extrabold text-blue-600 hover:text-blue-800 transition-colors uppercase tracking-tight">
+                            ${texts.menus[5]}
+                        </a>`;
+                }
+            }
+
+            // עדכון תאריך יארצייט
+            const yahrzeitEl = document.getElementById('yahrzeit-date');
+            if(yahrzeitEl) yahrzeitEl.innerText = texts.yahrzeit;
+        }
+
+        /**
+         * אתחול האתר וקריאות ל-API
+         */
+        document.addEventListener("DOMContentLoaded", () => {
+            const langSelector = document.getElementById("langSelector");
+            const logoutButton = document.getElementById('menuLogout');
+            let currentLang = localStorage.getItem("lang") || "he";
+            
+            langSelector.value = currentLang;
+
+            // פונקציית עזר לבדיקת סטטוס משתמש
+            const fetchUserData = () => {
+                fetch("/api/user")
+                    .then(res => res.ok ? res.json() : Promise.reject("Unauthorized"))
+                    .then(data => {
+                        updateContent(currentLang, true, data.user);
+                    })
+                    .catch(() => {
+                        updateContent(currentLang, false, null);
+                    });
+            };
+
+            // לוגיקה להתנתקות אמיתית
+            if (logoutButton) {
+                logoutButton.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    try {
+                        const response = await fetch('/api/logout', { method: 'POST' });
+                        if (response.ok) {
+                            window.location.href = '/'; // חזרה לדף הבית
+                        } else {
+                            console.error('Logout API failed');
+                            window.location.reload(); // Fallback
+                        }
+                    } catch (error) {
+                        console.error('Logout error:', error);
+                    }
+                });
+            }
+
+            // האזנה לשינוי שפה
+            langSelector.addEventListener("change", (e) => {
+                currentLang = e.target.value;
+                fetchUserData();
+            });
+
+            // הרצת הבדיקה הראשונית
+            fetchUserData();
+        });
+    </script>
+</body>
+</html>
