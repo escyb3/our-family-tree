@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>אתר המשפחה - Ben Abou, Elharrar ועוד</title>
+    
+    <!-- טעינת Tailwind CSS וגופן Inter -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome לאייקונים -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg {
+            background: linear-gradient(135deg, #0057a3 0%, #002244 100%);
+            position: relative;
+        }
+        .hero-pattern {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+    <!-- Hero Section -->
+    <header class="hero-bg text-white p-8 md:p-12 text-center rounded-b-[2.5rem] shadow-2xl relative overflow-hidden">
+        <div class="hero-pattern"></div>
+        <div class="relative z-10 max-w-4xl mx-auto">
+            
+            <!-- בורר שפות -->
+            <div class="absolute top-0 right-0 md:right-4 flex items-center space-x-2 z-20 rtl:space-x-reverse">
+                <select id="langSelector" class="p-2 rounded-xl bg-white/10 text-white cursor-pointer font-semibold backdrop-blur-md border border-white/20 transition-colors hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                    <option value="he">עברית</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="yi">יידיש</option>
+                    <option value="nl">Nederlands</option>
+                </select>
+            </div>
+
+            <div class="w-24 h-24 mx-auto mb-6 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-4 border-white/30 shadow-lg transition-transform duration-500 hover:scale-110">
+                <i class="fa-solid fa-people-roof text-4xl text-white"></i>
+            </div>
+            
+            <h1 id="welcomeTitle" class="text-4xl md:text-6xl font-bold drop-shadow-lg tracking-tight mb-2 text-white">אתר המשפחה המאוחד</h1>
+            <h2 id="welcomeSubtitle" class="text-xl md:text-2xl mt-3 font-medium text-blue-100 drop-shadow-md">Ben Abou • Elharrar • Malca • ועוד</h2>
+            
+            <p id="siteDesc" class="mt-6 text-lg text-blue-50 max-w-2xl mx-auto leading-relaxed">
+                הבית הדיגיטלי של המשפחה המורחבת. מקום לשמור על הקשר, לתעד את ההיסטוריה, לשתף זיכרונות ולבנות את עץ המשפחה שלנו יחד לדברי הימים.
+            </p>
+
+            <div class="mt-8">
+                <a href="/tree-viewer.html" class="inline-flex items-center gap-3 bg-white text-blue-900 font-bold text-lg px-8 py-4 rounded-full shadow-xl transition-all duration-300 hover:bg-blue-50 hover:scale-105 hover:shadow-2xl group">
+                    <i class="fa-solid fa-sitemap text-blue-600 transition-transform group-hover:scale-110"></i>
+                    <span id="enterTreeBtn">כניסה לעץ המשפחה</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- אזור חיפוש ופרופיל -->
+    <section class="max-w-7xl mx-auto -mt-8 p-4 md:p-6 bg-white rounded-3xl shadow-xl relative z-20 border border-gray-100 mx-4 md:mx-auto">
+        <div class="flex flex-col lg:flex-row gap-6 items-center justify-between">
+            
+            <!-- מיני פרופיל משתמש - נתונים אמיתיים מה-API -->
+            <div id="user-profile" class="w-full lg:w-1/3 bg-blue-50/50 p-4 rounded-2xl border border-blue-100 transition-all hover:shadow-md min-h-[120px] flex items-center">
+                <div id="user-profile-details" class="text-sm w-full">
+                    <div class="flex items-center gap-3 text-gray-500 justify-center lg:justify-start">
+                        <i class="fa-solid fa-circle-notch fa-spin"></i> 
+                        <span id="loadingText">מתחבר לשרת...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- שורת חיפוש -->
+            <div class="w-full lg:w-2/3 relative">
+                <h3 id="searchTitle" class="text-lg font-bold mb-2 text-gray-700 hidden lg:block">חיפוש מהיר בעץ</h3>
+                <div class="relative group">
+                    <input type="text" id="search-input" placeholder="חפש אדם בעץ (למשל: דוד אלחרר)..." autocomplete="off" class="w-full p-4 pl-12 pr-12 text-lg border-2 border-gray-200 rounded-2xl focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all shadow-sm group-hover:shadow-md" />
+                    <i class="fa-solid fa-magnifying-glass absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl group-focus-within:text-blue-500"></i>
+                    <button class="absolute left-2 top-1/2 -translate-y-1/2 bg-blue-100 text-blue-700 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-200 transition-colors">חיפוש</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- תפריט ניווט -->
+    <nav class="max-w-7xl mx-auto mt-6 px-4 flex flex-wrap justify-center gap-2">
+        <a id="menuChat" href="/chat.html" class="flex items-center gap-2 bg-white text-gray-600 border border-gray-200 text-sm px-4 py-2 rounded-full hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200 transition-all"><i class="fa-solid fa-robot"></i> צ'אט AI</a>
+        <a id="menuContact" href="/contact-ways.html" class="flex items-center gap-2 bg-white text-gray-600 border border-gray-200 text-sm px-4 py-2 rounded-full hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200 transition-all"><i class="fa-solid fa-address-book"></i> קשר משפחתי</a>
+        <a id="menuCalendar" href="/calendar.html" class="flex items-center gap-2 bg-white text-gray-600 border border-gray-200 text-sm px-4 py-2 rounded-full hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200 transition-all"><i class="fa-solid fa-calendar-days"></i> לוח שנה</a>
+        <a id="menuLogout" href="/logout" class="flex items-center gap-2 bg-red-50 text-red-600 border border-red-200 text-sm px-4 py-2 rounded-full hover:bg-red-100 transition-all hidden"><i class="fa-solid fa-right-from-bracket"></i> התנתקות</a>
+    </nav>
+
+    <main class="max-w-7xl mx-auto mt-8 px-4 space-y-10 flex-grow">
+        <!-- כרטיסי ניווט -->
+        <section>
+            <h3 id="navCardsTitle" class="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-2">
+                <i class="fa-solid fa-compass text-blue-600"></i> ניווט מהיר
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <a href="/tree-viewer.html" class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 group">
+                    <div class="w-14 h-14 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-sitemap"></i></div>
+                    <span id="cardTree" class="font-bold text-gray-700 group-hover:text-blue-700 transition-colors text-sm">עץ משפחה</span>
+                </a>
+                <a href="/biographies.html" class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 group">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-users"></i></div>
+                    <span id="cardPeople" class="font-bold text-gray-700 group-hover:text-blue-700 transition-colors text-sm">אנשים וסיפורים</span>
+                </a>
+                <a href="/gallery.html" class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 group">
+                    <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-images"></i></div>
+                    <span id="cardGallery" class="font-bold text-gray-700 group-hover:text-blue-700 transition-colors text-sm">גלריה</span>
+                </a>
+                <a href="/memorial.html" class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 group">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-hand-holding-hand"></i></div>
+                    <span id="cardMemorial" class="font-bold text-gray-700 group-hover:text-blue-700 transition-colors text-sm">קיר זיכרון</span>
+                </a>
+                <a href="/migration-map.html" class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 group">
+                    <div class="w-14 h-14 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-earth-americas"></i></div>
+                    <span id="cardMap" class="font-bold text-gray-700 group-hover:text-blue-700 transition-colors text-sm">מפת נדודים</span>
+                </a>
+                <a href="/stats.html" class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-blue-200 group">
+                    <div class="w-14 h-14 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-chart-pie"></i></div>
+                    <span id="cardStats" class="font-bold text-gray-700 group-hover:text-blue-700 transition-colors text-sm">סטטיסטיקות</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- מה חדש + מספרים -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-12">
+            <section class="lg:col-span-2 bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden">
+                <div class="bg-blue-50/50 p-6 border-b border-gray-100">
+                    <h3 id="newsTitle" class="text-xl font-bold text-blue-900 flex items-center gap-2">
+                        <i class="fa-regular fa-bell"></i> מה חדש במשפחה?
+                    </h3>
+                </div>
+                <div class="p-6">
+                    <ul class="space-y-5">
+                        <li class="flex gap-4 items-start p-3 hover:bg-gray-50 rounded-2xl transition-colors">
+                            <div class="bg-pink-100 text-pink-500 w-10 h-10 rounded-full flex items-center justify-center shrink-0 mt-1"><i class="fa-solid fa-cake-candles"></i></div>
+                            <div>
+                                <p class="font-bold text-gray-800">מזל טוב!</p>
+                                <p class="text-xs text-gray-500 mt-1">בדקו את לוח השנה לימי הולדת קרובים</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="bg-gradient-to-br from-blue-900 to-blue-800 rounded-3xl shadow-lg p-6 text-white relative overflow-hidden h-fit">
+                <i class="fa-solid fa-chart-simple absolute -right-6 -bottom-6 text-8xl text-white/10"></i>
+                <h3 id="statsTitle" class="text-lg font-bold mb-6 relative z-10">המשפחה במספרים</h3>
+                <div class="grid grid-cols-3 gap-4 relative z-10">
+                    <div class="text-center">
+                        <div class="text-2xl font-black text-blue-200 mb-1">1,245</div>
+                        <div id="statPeople" class="text-[9px] font-medium text-blue-100 uppercase">אנשים</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-black text-blue-200 mb-1">9</div>
+                        <div id="statGen" class="text-[9px] font-medium text-blue-100 uppercase">דורות</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-black text-blue-200 mb-1">14</div>
+                        <div id="statCountries" class="text-[9px] font-medium text-blue-100 uppercase">מדינות</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-white text-center p-8 rounded-t-[2.5rem] mt-auto">
+        <div class="max-w-4xl mx-auto opacity-90">
+            <i class="fa-solid fa-heart text-red-500 mb-3 text-xl"></i>
+            <p id="footerText" class="text-sm font-medium">
+                © 2026 אתר המשפחה המאוחד • נבנה עבור הדורות הבאים
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // ==========================================
+        // תרגומים
+        // ==========================================
+        const translations = {
+            he: {
+                welcomeTitle: "אתר המשפחה המאוחד",
+                welcomeSubtitle: "Ben Abou • Elharrar • Malca • ועוד",
+                siteDesc: "הבית הדיגיטלי של המשפחה המורחבת. מקום לשמור על הקשר, לתעד את ההיסטוריה, לשתף זיכרונות ולבנות את עץ המשפחה שלנו יחד לדברי הימים.",
+                enterTreeBtn: "כניסה לעץ המשפחה",
+                loggedInAs: "שלום,",
+                emailLabel: "אימייל:",
+                roleLabel: "תפקיד:",
+                sideLabel: "צד משפחתי:",
+                myProfile: "הפרופיל שלי",
+                loading: "טוען נתונים...",
+                notLoggedIn: "אורח, אנא התחבר למערכת",
+                loginLink: "התחברות"
+            },
+            en: {
+                welcomeTitle: "United Family Site",
+                welcomeSubtitle: "Ben Abou • Elharrar • Malca • & more",
+                siteDesc: "The digital home for the extended family. A place to stay connected, document history, and build our legacy together.",
+                enterTreeBtn: "Enter Family Tree",
+                loggedInAs: "Hello,",
+                emailLabel: "Email:",
+                roleLabel: "Role:",
+                sideLabel: "Branch:",
+                myProfile: "My Profile",
+                loading: "Loading...",
+                notLoggedIn: "Guest, please sign in",
+                loginLink: "Login"
+            }
+        };
+
+        // ==========================================
+        // לוגיקת המשתמש וה-API (אמיתי)
+        // ==========================================
+        async function fetchUserData() {
+            const profileDetails = document.getElementById('user-profile-details');
+            const lang = document.getElementById('langSelector').value;
+            const t = translations[lang] || translations.he;
+
+            try {
+                // קריאה אמיתית ל-Endpoint שלך
+                const response = await fetch('/api/user');
+                
+                if (!response.ok) throw new Error('Not logged in');
+                
+                const user = await response.json();
+                renderProfile(user, t);
+                
+                // הצגת כפתור התנתקות
+                document.getElementById('menuLogout')?.classList.remove('hidden');
+
+            } catch (err) {
+                profileDetails.innerHTML = `
+                    <div class="text-center w-full">
+                        <p class="text-gray-500 mb-2">${t.notLoggedIn}</p>
+                        <a href="/login" class="text-blue-600 font-bold underline">${t.loginLink}</a>
+                    </div>
+                `;
+            }
+        }
+
+        function renderProfile(user, t) {
+            const profileDetails = document.getElementById('user-profile-details');
+            const initials = user.username ? user.username.substring(0, 2).toUpperCase() : "??";
+
+            profileDetails.innerHTML = `
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-sm shrink-0">
+                        ${initials}
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-bold text-gray-800 text-base">${t.loggedInAs} <span class="text-blue-700">${user.username}</span></h4>
+                        <div class="text-[11px] text-gray-600 mt-1 space-y-0.5">
+                            <p><span class="font-semibold text-gray-800">${t.emailLabel}</span> ${user.email || 'N/A'}</p>
+                            <p><span class="font-semibold text-gray-800">${t.roleLabel}</span> ${user.role || 'User'}</p>
+                            <p><span class="font-semibold text-gray-800">${t.sideLabel}</span> <a href="${user.familySideLink || '#'}" class="text-blue-500 hover:underline">${user.familySide || 'Family'}</a></p>
+                        </div>
+                        <div class="mt-2">
+                            <a href="/profile.html" class="inline-block bg-white text-blue-600 border border-blue-200 text-[10px] font-bold px-3 py-1 rounded-lg hover:bg-blue-50 transition-colors shadow-sm">
+                                <i class="fa-regular fa-id-card ml-1"></i> ${t.myProfile}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // שינוי שפה
+        document.getElementById('langSelector').addEventListener('change', (e) => {
+            const lang = e.target.value;
+            const isRtl = (lang === 'he' || lang === 'yi');
+            document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+            fetchUserData(); 
+        });
+
+        // הפעלה ראשונית
+        window.onload = fetchUserData;
+
+    </script>
+</body>
+</html>
