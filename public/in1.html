@@ -24,141 +24,193 @@
             background-size: 20px 20px;
             opacity: 0.5;
         }
+        /* מניעת קטיעה של הפרופיל במובייל */
+        .profile-container {
+            max-width: 100%;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .profile-container::-webkit-scrollbar {
+            display: none;
+        }
         * { transition: background-color 0.3s ease, border-color 0.3s ease; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
-    <header class="hero-bg text-white p-8 md:p-12 text-center rounded-b-[2.5rem] shadow-2xl relative overflow-hidden">
+    <!-- Header Section -->
+    <header class="hero-bg text-white p-8 md:p-16 text-center rounded-b-[3rem] shadow-2xl relative overflow-hidden">
         <div class="hero-pattern"></div>
-        <div class="relative z-10 max-w-4xl mx-auto">
+        <div class="relative z-10 max-w-5xl mx-auto">
             
-            <div class="absolute top-0 right-0 md:right-4 flex items-center space-x-2 z-20 rtl:space-x-reverse">
-                <select id="langSelector" class="p-2 rounded-xl bg-white/10 text-white cursor-pointer font-semibold backdrop-blur-md border border-white/20 transition-colors hover:bg-white/20 focus:outline-none">
-                    <option value="he">עברית</option>
-                    <option value="en">English</option>
-                    <option value="fr">Français</option>
-                    <option value="yi">ייִדיש</option>
-                    <option value="nl">Nederlands</option>
+            <div class="absolute top-0 right-0 flex items-center space-x-2 z-20 rtl:space-x-reverse">
+                <select id="langSelector" class="p-2 rounded-xl bg-white/10 text-white cursor-pointer font-semibold backdrop-blur-md border border-white/20 transition-colors hover:bg-white/20 focus:outline-none text-xs md:text-sm">
+                    <option value="he" class="text-black">עברית</option>
+                    <option value="en" class="text-black">English</option>
+                    <option value="fr" class="text-black">Français</option>
+                    <option value="yi" class="text-black">ייִדיש</option>
+                    <option value="nl" class="text-black">Nederlands</option>
                 </select>
             </div>
 
-            <div class="w-24 h-24 mx-auto mb-6 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-4 border-white/30 shadow-lg transition-transform duration-500 hover:scale-110">
-                <i class="fa-solid fa-people-roof text-4xl text-white"></i>
+            <div class="w-20 h-20 md:w-24 md:h-24 mx-auto mb-6 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-4 border-white/30 shadow-lg">
+                <i class="fa-solid fa-people-roof text-3xl md:text-4xl text-white"></i>
             </div>
             
-            <h1 id="welcomeTitle" class="text-4xl md:text-6xl font-bold drop-shadow-lg tracking-tight mb-2 text-white">אתר המשפחה המאוחד</h1>
-            <h2 id="welcomeSubtitle" class="text-xl md:text-2xl mt-3 font-medium text-blue-100 drop-shadow-md">Ben Abou • Elharrar • Malca • ועוד</h2>
+            <h1 id="welcomeTitle" class="text-3xl md:text-6xl font-bold drop-shadow-lg tracking-tight mb-2">אתר המשפחה המאוחד</h1>
+            <h2 id="welcomeSubtitle" class="text-lg md:text-2xl mt-3 font-medium text-blue-100 opacity-90">Ben Abou • Elharrar • Malca • & more</h2>
             
-            <p id="siteDesc" class="mt-6 text-lg text-blue-50 max-w-2xl mx-auto leading-relaxed">
-                הבית הדיגיטלי של המשפחה המורחבת. מקום לשמור על הקשר, לתעד את ההיסטוריה, לשתף זיכרונות ולבנות את עץ המשפחה שלנו יחד לדברי הימים.
+            <p id="siteDesc" class="mt-6 text-sm md:text-lg text-blue-50/80 max-w-2xl mx-auto leading-relaxed">
+                הבית הדיגיטלי של המשפחה המורחבת. מקום לשמור על הקשר, לתעד את ההיסטוריה, לשתף זיכרונות ולבנות את עץ המשפחה שלנו יחד.
             </p>
 
             <div class="mt-8">
-                <a href="/tree-viewer.html" class="inline-flex items-center gap-3 bg-white text-blue-900 font-bold text-lg px-8 py-4 rounded-full shadow-xl transition-all duration-300 hover:bg-blue-50 hover:scale-105 group">
-                    <i class="fa-solid fa-sitemap text-blue-600 transition-transform group-hover:scale-110"></i>
+                <a href="/tree-viewer.html" class="inline-flex items-center gap-3 bg-white text-blue-900 font-bold text-sm md:text-lg px-6 py-3 md:px-8 md:py-4 rounded-full shadow-xl transition-all hover:scale-105">
+                    <i class="fa-solid fa-sitemap text-blue-600"></i>
                     <span id="enterTreeBtn">כניסה לעץ המשפחה</span>
                 </a>
             </div>
         </div>
     </header>
 
-    <section class="max-w-7xl mx-auto -mt-8 p-4 md:p-6 bg-white rounded-3xl shadow-xl relative z-20 border border-gray-100 mx-4 md:mx-auto">
-        <div class="flex flex-col lg:flex-row gap-6 items-center justify-between">
-            <div id="user-profile" class="w-full lg:w-1/3 bg-blue-50/50 p-4 rounded-2xl border border-blue-100 min-h-[120px] flex items-center">
-                <div id="user-profile-details" class="text-sm w-full text-center lg:text-right">
-                    <div class="flex items-center gap-3 text-gray-500 justify-center lg:justify-start">
+    <!-- Main Profile & Search Card -->
+    <section class="max-w-4xl mx-auto -mt-12 p-4 md:p-8 bg-white rounded-[2.5rem] shadow-2xl relative z-20 border border-gray-100 mx-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            
+            <!-- User Profile -->
+            <div id="user-profile" class="profile-container bg-blue-50/30 p-5 rounded-3xl border border-blue-100/50">
+                <div id="user-profile-details" class="flex items-center gap-4 min-w-[280px]">
+                    <div class="flex items-center gap-3 text-gray-400">
                         <i class="fa-solid fa-circle-notch fa-spin"></i> 
-                        <span id="loadingText">מתחבר לשרת...</span>
+                        <span id="loadingText" class="text-sm font-medium">מתחבר...</span>
                     </div>
                 </div>
             </div>
 
-            <div class="w-full lg:w-2/3 relative">
-                <h3 id="searchTitle" class="text-lg font-bold mb-2 text-gray-700 hidden lg:block">חיפוש מהיר בעץ</h3>
+            <!-- Quick Search -->
+            <div class="w-full">
+                <h3 id="searchTitle" class="text-sm font-bold mb-3 text-gray-500 uppercase tracking-wider">חיפוש מהיר</h3>
                 <div class="relative group">
-                    <input type="text" id="search-input" placeholder="חפש אדם בעץ..." autocomplete="off" class="w-full p-4 pl-12 pr-12 text-lg border-2 border-gray-200 rounded-2xl focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all shadow-sm" />
-                    <i class="fa-solid fa-magnifying-glass absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></i>
-                    <button id="searchBtn" class="absolute left-2 top-1/2 -translate-y-1/2 bg-blue-100 text-blue-700 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-200 transition-colors">חיפוש</button>
+                    <input type="text" id="search-input" placeholder="חפש בן משפחה..." class="w-full p-4 pl-12 pr-4 text-sm md:text-base border-2 border-gray-100 rounded-2xl focus:outline-none focus:border-blue-400 transition-all bg-gray-50/50" />
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-300"></i>
+                    <button id="searchBtn" class="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-blue-700 shadow-md">חיפוש</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <nav class="max-w-7xl mx-auto mt-6 px-4 flex flex-wrap justify-center gap-2">
-        <a href="/chat.html" class="flex items-center gap-2 bg-white text-gray-600 border border-gray-200 text-sm px-4 py-2 rounded-full hover:bg-blue-50 transition-all"><i class="fa-solid fa-robot"></i> <span id="menuChat">צ'אט AI</span></a>
-        <a href="/contact-ways.html" class="flex items-center gap-2 bg-white text-gray-600 border border-gray-200 text-sm px-4 py-2 rounded-full hover:bg-blue-50 transition-all"><i class="fa-solid fa-address-book"></i> <span id="menuContact">קשר משפחתי</span></a>
-        <a href="/calendar.html" class="flex items-center gap-2 bg-white text-gray-600 border border-gray-200 text-sm px-4 py-2 rounded-full hover:bg-blue-50 transition-all"><i class="fa-solid fa-calendar-days"></i> <span id="menuCalendar">לוח שנה</span></a>
-        <a id="menuLogout" href="/logout" class="flex items-center gap-2 bg-red-50 text-red-600 border border-red-200 text-sm px-4 py-2 rounded-full hover:bg-red-100 transition-all hidden"><i class="fa-solid fa-right-from-bracket"></i> התנתקות</a>
+    <!-- Nav Links -->
+    <nav class="max-w-5xl mx-auto mt-10 px-4 flex flex-wrap justify-center gap-3">
+        <a href="/chat.html" class="flex items-center gap-2 bg-white text-gray-700 border border-gray-200 text-xs md:text-sm px-5 py-2.5 rounded-full hover:shadow-md transition-all"><i class="fa-solid fa-robot text-blue-500"></i> <span id="menuChat">צ'אט AI</span></a>
+        <a href="/contact-ways.html" class="flex items-center gap-2 bg-white text-gray-700 border border-gray-200 text-xs md:text-sm px-5 py-2.5 rounded-full hover:shadow-md transition-all"><i class="fa-solid fa-address-book text-green-500"></i> <span id="menuContact">קשר</span></a>
+        <a href="/calendar.html" class="flex items-center gap-2 bg-white text-gray-700 border border-gray-200 text-xs md:text-sm px-5 py-2.5 rounded-full hover:shadow-md transition-all"><i class="fa-solid fa-calendar text-orange-500"></i> <span id="menuCalendar">לוח שנה</span></a>
+        <a id="menuLogout" href="/logout" class="flex items-center gap-2 bg-red-50 text-red-600 border border-red-100 text-xs md:text-sm px-5 py-2.5 rounded-full hover:bg-red-100 hidden"><i class="fa-solid fa-right-from-bracket"></i> התנתקות</a>
     </nav>
 
-    <main class="max-w-7xl mx-auto mt-8 px-4 space-y-10 flex-grow">
-        <section>
-            <h3 id="navCardsTitle" class="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-2">
-                <i class="fa-solid fa-compass text-blue-600"></i> ניווט מהיר
-            </h3>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-sm font-bold">
-                <a href="/tree-viewer.html" class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center text-center transition-all hover:-translate-y-2 hover:shadow-xl group">
-                    <div class="w-14 h-14 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-sitemap"></i></div>
-                    <span id="cardTree">עץ משפחה</span>
-                </a>
-                <a href="/biographies.html" class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center text-center transition-all hover:-translate-y-2 hover:shadow-xl group">
-                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-users"></i></div>
-                    <span id="cardPeople">אנשים וסיפורים</span>
-                </a>
-                <a href="/gallery.html" class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center text-center transition-all hover:-translate-y-2 hover:shadow-xl group">
-                    <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-images"></i></div>
-                    <span id="cardGallery">גלריה</span>
-                </a>
-                <a href="/memorial.html" class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center text-center transition-all hover:-translate-y-2 hover:shadow-xl group">
-                    <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-hand-holding-hand"></i></div>
-                    <span id="cardMemorial">קיר זיכרון</span>
-                </a>
-                <a href="/migration-map.html" class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center text-center transition-all hover:-translate-y-2 hover:shadow-xl group">
-                    <div class="w-14 h-14 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-earth-americas"></i></div>
-                    <span id="cardMap">מפת נדודים</span>
-                </a>
-                <a href="/stats.html" class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col items-center text-center transition-all hover:-translate-y-2 hover:shadow-xl group">
-                    <div class="w-14 h-14 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-chart-pie"></i></div>
-                    <span id="cardStats">סטטיסטיקות</span>
-                </a>
+    <!-- Grid Navigation -->
+    <main class="max-w-6xl mx-auto mt-12 px-4 pb-16 flex-grow">
+        <h3 id="navCardsTitle" class="text-xl font-bold mb-8 text-gray-800 flex items-center gap-2">
+            <i class="fa-solid fa-compass text-blue-600"></i> ניווט מהיר
+        </h3>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
+            <a href="/tree-viewer.html" class="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-50 flex flex-col items-center text-center transition-all hover:-translate-y-1 hover:shadow-xl">
+                <div class="w-14 h-14 bg-green-50 text-green-500 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-sitemap"></i></div>
+                <span id="cardTree" class="text-sm font-bold text-gray-700">עץ משפחה</span>
+            </a>
+            <a href="/biographies.html" class="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-50 flex flex-col items-center text-center transition-all hover:-translate-y-1 hover:shadow-xl">
+                <div class="w-14 h-14 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-users"></i></div>
+                <span id="cardPeople" class="text-sm font-bold text-gray-700">סיפורים</span>
+            </a>
+            <a href="/gallery.html" class="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-50 flex flex-col items-center text-center transition-all hover:-translate-y-1 hover:shadow-xl">
+                <div class="w-14 h-14 bg-purple-50 text-purple-500 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-images"></i></div>
+                <span id="cardGallery" class="text-sm font-bold text-gray-700">גלריה</span>
+            </a>
+            <a href="/memorial.html" class="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-50 flex flex-col items-center text-center transition-all hover:-translate-y-1 hover:shadow-xl">
+                <div class="w-14 h-14 bg-amber-50 text-amber-500 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-hand-holding-hand"></i></div>
+                <span id="cardMemorial" class="text-sm font-bold text-gray-700">קיר זיכרון</span>
+            </a>
+            <a href="/migration-map.html" class="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-50 flex flex-col items-center text-center transition-all hover:-translate-y-1 hover:shadow-xl">
+                <div class="w-14 h-14 bg-teal-50 text-teal-500 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-earth-americas"></i></div>
+                <span id="cardMap" class="text-sm font-bold text-gray-700">מפת נדודים</span>
+            </a>
+            <a href="/stats.html" class="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-50 flex flex-col items-center text-center transition-all hover:-translate-y-1 hover:shadow-xl">
+                <div class="w-14 h-14 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center text-2xl mb-4"><i class="fa-solid fa-chart-pie"></i></div>
+                <span id="cardStats" class="text-sm font-bold text-gray-700">סטטיסטיקה</span>
+            </a>
+        </div>
+
+        <!-- News & Stats -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-16">
+            <div class="lg:col-span-2 bg-white rounded-[2.5rem] shadow-lg border border-gray-50 p-8">
+                <h4 id="newsTitle" class="text-lg font-bold mb-6 flex items-center gap-2"><i class="fa-regular fa-bell text-blue-600"></i> מה חדש במשפחה?</h4>
+                <div class="space-y-4">
+                    <div class="flex gap-4 p-4 hover:bg-gray-50 rounded-2xl transition-colors">
+                        <div class="w-10 h-10 bg-pink-100 text-pink-500 rounded-full flex items-center justify-center shrink-0"><i class="fa-solid fa-cake-candles"></i></div>
+                        <p id="newsItem" class="text-sm text-gray-600">מזל טוב לימי הולדת השבוע! (לחצו לראות את כולם)</p>
+                    </div>
+                </div>
             </div>
-        </section>
+            
+            <div class="bg-gray-900 rounded-[2.5rem] p-8 text-white relative overflow-hidden">
+                <i class="fa-solid fa-chart-line absolute -right-4 -bottom-4 text-7xl text-white/5"></i>
+                <h4 id="statsTitle" class="text-lg font-bold mb-6">המשפחה במספרים</h4>
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                        <span id="statPeople" class="text-xs text-gray-400 uppercase">אנשים בעץ</span>
+                        <span class="text-xl font-bold text-blue-400">1,245</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                        <span id="statGen" class="text-xs text-gray-400 uppercase">דורות מתועדים</span>
+                        <span class="text-xl font-bold text-green-400">9</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span id="statCountries" class="text-xs text-gray-400 uppercase">מדינות</span>
+                        <span class="text-xl font-bold text-purple-400">14</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <footer class="bg-gray-900 text-white text-center p-8 rounded-t-[2.5rem] mt-auto">
-        <p id="footerText" class="text-sm">© 2026 אתר המשפחה המאוחד • נבנה עבור הדורות הבאים</p>
+    <footer class="bg-white border-t border-gray-100 text-gray-400 text-center p-8 mt-auto">
+        <p id="footerText" class="text-xs">© 2026 United Family Site • Built for future generations</p>
     </footer>
 
     <script>
-        // מילון תרגומים
         const translations = {
             he: {
                 welcomeTitle: "אתר המשפחה המאוחד",
-                welcomeSubtitle: "Ben Abou • Elharrar • Malca • ועוד",
-                siteDesc: "הבית הדיגיטלי של המשפחה המורחבת. מקום לשמור על הקשר, לתעד את ההיסטוריה, לשתף זיכרונות ולבנות את עץ המשפחה שלנו יחד לדברי הימים.",
+                welcomeSubtitle: "Ben Abou • Elharrar • Malca • & more",
+                siteDesc: "הבית הדיגיטלי של המשפחה המורחבת. מקום לשמור על הקשר, לתעד את ההיסטוריה, לשתף זיכרונות ולבנות את עץ המשפחה שלנו יחד.",
                 enterTreeBtn: "כניסה לעץ המשפחה",
-                searchPlaceholder: "חפש אדם בעץ...",
+                searchPlaceholder: "חפש בן משפחה...",
                 searchBtn: "חיפוש",
-                searchTitle: "חיפוש מהיר בעץ",
+                searchTitle: "חיפוש מהיר",
                 menuChat: "צ'אט AI",
-                menuContact: "קשר משפחתי",
+                menuContact: "קשר",
                 menuCalendar: "לוח שנה",
                 navCardsTitle: "ניווט מהיר",
                 cardTree: "עץ משפחה",
-                cardPeople: "אנשים וסיפורים",
+                cardPeople: "סיפורים",
                 cardGallery: "גלריה",
                 cardMemorial: "קיר זיכרון",
                 cardMap: "מפת נדודים",
-                cardStats: "סטטיסטיקות",
-                footerText: "© 2026 אתר המשפחה המאוחד • נבנה עבור הדורות הבאים",
+                cardStats: "סטטיסטיקה",
+                newsTitle: "מה חדש במשפחה?",
+                newsItem: "מזל טוב לימי הולדת השבוע! (לחצו לראות את כולם)",
+                statsTitle: "המשפחה במספרים",
+                statPeople: "אנשים בעץ",
+                statGen: "דורות מתועדים",
+                statCountries: "מדינות",
+                footerText: "© 2026 United Family Site • נבנה עבור הדורות הבאים",
                 loggedInAs: "שלום,",
-                emailLabel: "אימייל:",
-                roleLabel: "תפקיד:",
-                sideLabel: "צד משפחתי:",
-                myProfile: "הפרופיל שלי",
-                loading: "מתחבר לשרת...",
-                notLoggedIn: "אורח, אנא התחבר למערכת",
+                emailLabel: "Email:",
+                roleLabel: "Role:",
+                sideLabel: "Branch:",
+                myProfile: "My Profile",
+                loading: "מתחבר...",
+                notLoggedIn: "אורח, אנא התחבר",
                 loginLink: "התחברות"
             },
             en: {
@@ -179,6 +231,12 @@
                 cardMemorial: "Memorial",
                 cardMap: "Migration Map",
                 cardStats: "Statistics",
+                newsTitle: "What's New?",
+                newsItem: "Happy birthday to members celebrating this week!",
+                statsTitle: "Family in Numbers",
+                statPeople: "People in tree",
+                statGen: "Generations",
+                statCountries: "Countries",
                 footerText: "© 2026 United Family Site • Built for future generations",
                 loggedInAs: "Hello,",
                 emailLabel: "Email:",
@@ -188,6 +246,74 @@
                 loading: "Connecting...",
                 notLoggedIn: "Guest, please sign in",
                 loginLink: "Login"
+            },
+            yi: {
+                welcomeTitle: "פאַראייניקטע משפּחה פּלאַץ",
+                welcomeSubtitle: "Ben Abou • Elharrar • Malca • און מער",
+                siteDesc: "דער דיגיטאַל היים פֿאַר דער ברייט משפּחה. אָרט צו האַלטן קאָנטאַקט און בויען אונדזער לעגאַט צוזאַמען.",
+                enterTreeBtn: "אַרייַן אין משפּחה בוים",
+                searchPlaceholder: "זוכן משפּחה מיטגליד...",
+                searchBtn: "זוכן",
+                searchTitle: "גיך זוכן",
+                menuChat: "AI טשאַט",
+                menuContact: "קאָנטאַקט",
+                menuCalendar: "קאַלענדאַר",
+                navCardsTitle: "גיך נאַוויגאַציע",
+                cardTree: "משפּחה בוים",
+                cardPeople: "מעשיות",
+                cardGallery: "גאַלעריע",
+                cardMemorial: "יזכור וואַנט",
+                cardMap: "נסיעה מאַפּע",
+                cardStats: "סטאַטיסטיק",
+                newsTitle: "וואָס איז נײַ?",
+                newsItem: "מזל טוב פֿאַר געבורטסטאָג דעם וואָך!",
+                statsTitle: "משפּחה אין נומערן",
+                statPeople: "מענטשן",
+                statGen: "דורות",
+                statCountries: "לענדער",
+                footerText: "© 2026 משפּחה פּלאַץ • געבויט פֿאַר קומענדיקע דורות",
+                loggedInAs: "שלום,",
+                emailLabel: "Email:",
+                roleLabel: "Role:",
+                sideLabel: "Branch:",
+                myProfile: "מיין פּראָפיל",
+                loading: "בינדן זיך...",
+                notLoggedIn: "גאַסט, ביטע לאָג פֿאַרבינדונג",
+                loginLink: "לאָג פֿאַרבינדונג"
+            },
+            nl: {
+                welcomeTitle: "Verenigde Familiesite",
+                welcomeSubtitle: "Ben Abou • Elharrar • Malca • & meer",
+                siteDesc: "Het digitale thuis voor de uitgebreide familie. Een plek om verbonden te blijven en samen aan ons erfgoed te bouwen.",
+                enterTreeBtn: "Naar Stamboom",
+                searchPlaceholder: "Zoek familielid...",
+                searchBtn: "Zoeken",
+                searchTitle: "Snel Zoeken",
+                menuChat: "AI Chat",
+                menuContact: "Contact",
+                menuCalendar: "Kalender",
+                navCardsTitle: "Snelmenu",
+                cardTree: "Stamboom",
+                cardPeople: "Verhalen",
+                cardGallery: "Galerij",
+                cardMemorial: "Gedenkmuur",
+                cardMap: "Migratiekaart",
+                cardStats: "Statistieken",
+                newsTitle: "Wat is nieuw?",
+                newsItem: "Gefeliciteerd met de verjaardagen deze week!",
+                statsTitle: "Familie in Cijfers",
+                statPeople: "Personen",
+                statGen: "Generaties",
+                statCountries: "Landen",
+                footerText: "© 2026 Familiesite • Gebouwd voor toekomstige generaties",
+                loggedInAs: "Hallo,",
+                emailLabel: "E-mail:",
+                roleLabel: "Rol:",
+                sideLabel: "Tak:",
+                myProfile: "Mijn Profiel",
+                loading: "Verbinden...",
+                notLoggedIn: "Gast, log a.u.b. in",
+                loginLink: "Inloggen"
             }
         };
 
@@ -196,19 +322,10 @@
         function updateLanguage() {
             const lang = document.getElementById('langSelector').value;
             const t = translations[lang] || translations.he;
-
-            const isRtl = (lang === 'he' || lang === 'yi');
-            document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
-            document.documentElement.lang = lang;
-
-            const elements = [
-                'welcomeTitle', 'welcomeSubtitle', 'siteDesc', 'enterTreeBtn', 
-                'searchBtn', 'searchTitle', 'menuChat', 'menuContact', 'menuCalendar',
-                'cardTree', 'cardPeople', 'cardGallery', 'cardMemorial', 'cardMap', 
-                'cardStats', 'footerText'
-            ];
-
-            elements.forEach(id => {
+            document.documentElement.dir = (lang === 'he' || lang === 'yi') ? 'rtl' : 'ltr';
+            
+            const ids = ['welcomeTitle', 'welcomeSubtitle', 'siteDesc', 'enterTreeBtn', 'searchBtn', 'searchTitle', 'menuChat', 'menuContact', 'menuCalendar', 'cardTree', 'cardPeople', 'cardGallery', 'cardMemorial', 'cardMap', 'cardStats', 'newsTitle', 'newsItem', 'statsTitle', 'statPeople', 'statGen', 'statCountries', 'footerText'];
+            ids.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.innerText = t[id];
             });
@@ -216,75 +333,58 @@
             const searchInput = document.getElementById('search-input');
             if (searchInput) searchInput.placeholder = t.searchPlaceholder;
 
-            const navTitleEl = document.getElementById('navCardsTitle');
-            if (navTitleEl) navTitleEl.innerHTML = `<i class="fa-solid fa-compass text-blue-600"></i> ${t.navCardsTitle}`;
-
             if (currentUserData) {
                 renderProfile(currentUserData, t);
             } else {
-                const loadingText = document.getElementById('loadingText');
-                if (loadingText) loadingText.innerText = t.loading;
+                const lt = document.getElementById('loadingText');
+                if (lt) lt.innerText = t.loading;
             }
         }
 
         async function fetchUserData() {
-            const profileDetails = document.getElementById('user-profile-details');
-            const lang = document.getElementById('langSelector').value;
-            const t = translations[lang] || translations.he;
-
             try {
-                // קריאה לנתיב המשתמש המחובר
                 const response = await fetch('/api/user');
-                if (!response.ok) throw new Error('Unauthorized');
-                
+                if (!response.ok) throw new Error();
                 const data = await response.json();
-                
-                // השרת שלך מחזיר אובייקט { success: true, user: safeUser }
-                // לכן ניגש ל-data.user
-                currentUserData = data.user || data; 
-                
-                renderProfile(currentUserData, t);
+                currentUserData = data.user || data;
+                renderProfile(currentUserData, translations[document.getElementById('langSelector').value]);
                 document.getElementById('menuLogout')?.classList.remove('hidden');
             } catch (err) {
-                console.error("Auth check failed:", err);
-                profileDetails.innerHTML = `
-                    <div class="text-center w-full">
-                        <p class="text-gray-500 mb-2">${t.notLoggedIn}</p>
-                        <a href="/login.html" class="text-blue-600 font-bold underline hover:text-blue-800 transition-colors">${t.loginLink}</a>
-                    </div>
-                `;
+                const profile = document.getElementById('user-profile-details');
+                const t = translations[document.getElementById('langSelector').value];
+                profile.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center"><i class="fa-solid fa-user text-gray-400"></i></div>
+                        <div><p class="text-xs font-bold text-gray-500">${t.notLoggedIn}</p><a href="/login.html" class="text-xs text-blue-600 underline">${t.loginLink}</a></div>
+                    </div>`;
             }
         }
 
         function renderProfile(user, t) {
-            const profileDetails = document.getElementById('user-profile-details');
-            if (!profileDetails) return;
-
-            // --- מיפוי השדות בהתאם לקוד השרת שלך ---
-            // השרת מחזיר: username, email, role, familySide
-            const userName = user.username || "משתמש";
-            const userEmail = user.email || "---";
-            const userRole = user.role || "user";
-            const familyBranch = user.familySide || "לא מוגדר";
+            const profile = document.getElementById('user-profile-details');
+            const name = user.username || "משתמש";
+            const initials = name.substring(0, 2).toUpperCase();
+            const dir = document.documentElement.dir;
             
-            const initials = userName.substring(0, 2).toUpperCase();
-            const alignment = document.documentElement.dir === 'ltr' ? 'text-left' : 'text-right';
-
-            profileDetails.innerHTML = `
-                <div class="flex items-start gap-4 ${alignment}">
-                    <div class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-sm shrink-0">
+            profile.innerHTML = `
+                <div class="flex items-center gap-4 w-full ${dir === 'rtl' ? 'text-right' : 'text-left'}">
+                    <div class="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center font-bold text-xl shadow-lg shrink-0">
                         ${initials}
                     </div>
-                    <div class="flex-1 overflow-hidden">
-                        <h4 class="font-bold text-gray-800 text-base truncate">${t.loggedInAs} <span class="text-blue-700">${userName}</span></h4>
-                        <div class="text-[11px] text-gray-600 mt-1 space-y-0.5">
-                            <p class="truncate"><span class="font-semibold text-gray-800">${t.emailLabel}</span> ${userEmail}</p>
-                            <p><span class="font-semibold text-gray-800">${t.roleLabel}</span> ${userRole}</p>
-                            <p><span class="font-semibold text-gray-800">${t.sideLabel}</span> <span class="text-blue-500">${familyBranch}</span></p>
+                    <div class="min-w-0 flex-1">
+                        <h4 class="font-bold text-gray-800 text-sm md:text-base truncate">
+                            ${t.loggedInAs} <span class="text-blue-600">@${name}</span>
+                        </h4>
+                        <div class="grid grid-cols-1 gap-x-4 mt-1">
+                            <p class="text-[10px] text-gray-500 truncate"><span class="font-bold text-gray-700">${t.emailLabel}</span> ${user.email || 'N/A'}</p>
+                            <div class="flex gap-3">
+                                <p class="text-[10px] text-gray-500"><span class="font-bold text-gray-700">${t.roleLabel}</span> ${user.role || 'user'}</p>
+                                <p class="text-[10px] text-gray-500"><span class="font-bold text-gray-700">${t.sideLabel}</span> <span class="text-blue-500">${user.familySide || 'All'}</span></p>
+                            </div>
                         </div>
                         <div class="mt-2">
-                            <a href="/profile.html" class="inline-block bg-white text-blue-600 border border-blue-200 text-[10px] font-bold px-3 py-1 rounded-lg hover:bg-blue-50 shadow-sm transition-all">
-                                <i class="fa-regular fa-id-card ml-1"></i> ${t.myProfile}
+                            <a href="/profile.html" class="inline-flex items-center gap-1 bg-white border border-gray-200 text-[10px] font-bold px-3 py-1 rounded-lg hover:bg-gray-50 transition-all shadow-sm">
+                                <i class="fa-regular fa-user"></i> ${t.myProfile}
                             </a>
                         </div>
                     </div>
@@ -293,11 +393,7 @@
         }
 
         document.getElementById('langSelector').addEventListener('change', updateLanguage);
-
-        window.addEventListener('DOMContentLoaded', () => {
-            updateLanguage();
-            fetchUserData();
-        });
+        window.onload = () => { updateLanguage(); fetchUserData(); };
     </script>
 </body>
 </html>
