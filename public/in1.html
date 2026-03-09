@@ -24,7 +24,6 @@
             background-size: 20px 20px;
             opacity: 0.5;
         }
-        /* Smooth transitions for language switching */
         * { transition: background-color 0.3s ease, border-color 0.3s ease; }
     </style>
 </head>
@@ -36,11 +35,11 @@
             
             <div class="absolute top-0 right-0 md:right-4 flex items-center space-x-2 z-20 rtl:space-x-reverse">
                 <select id="langSelector" class="p-2 rounded-xl bg-white/10 text-white cursor-pointer font-semibold backdrop-blur-md border border-white/20 transition-colors hover:bg-white/20 focus:outline-none">
-                    <option value="he" class="text-gray-800">עברית</option>
-                    <option value="en" class="text-gray-800">English</option>
-                    <option value="fr" class="text-gray-800">Français</option>
-                    <option value="yi" class="text-gray-800">ייִדיש</option>
-                    <option value="nl" class="text-gray-800">Nederlands</option>
+                    <option value="he">עברית</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="yi">ייִדיש</option>
+                    <option value="nl">Nederlands</option>
                 </select>
             </div>
 
@@ -346,40 +345,49 @@
 
         function updateLanguage() {
             const lang = document.getElementById('langSelector').value;
-            const t = translations[lang];
+            const t = translations[lang] || translations.he;
 
-            // Update Direction (Hebrew and Yiddish are RTL)
             const isRtl = (lang === 'he' || lang === 'yi');
             document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
             document.documentElement.lang = lang;
 
-            // Static Text Updates
-            document.getElementById('welcomeTitle').innerText = t.welcomeTitle;
-            document.getElementById('welcomeSubtitle').innerText = t.welcomeSubtitle;
-            document.getElementById('siteDesc').innerText = t.siteDesc;
-            document.getElementById('enterTreeBtn').innerText = t.enterTreeBtn;
-            document.getElementById('search-input').placeholder = t.searchPlaceholder;
-            document.getElementById('searchBtn').innerText = t.searchBtn;
-            document.getElementById('searchTitle').innerText = t.searchTitle;
-            document.getElementById('menuChat').innerText = t.menuChat;
-            document.getElementById('menuContact').innerText = t.menuContact;
-            document.getElementById('menuCalendar').innerText = t.menuCalendar;
-            document.getElementById('navCardsTitle').innerHTML = `<i class="fa-solid fa-compass text-blue-600"></i> ${t.navCardsTitle}`;
-            document.getElementById('cardTree').innerText = t.cardTree;
-            document.getElementById('cardPeople').innerText = t.cardPeople;
-            document.getElementById('cardGallery').innerText = t.cardGallery;
-            document.getElementById('cardMemorial').innerText = t.cardMemorial;
-            document.getElementById('cardMap').innerText = t.cardMap;
-            document.getElementById('cardStats').innerText = t.cardStats;
-            document.getElementById('newsTitle').innerText = t.newsTitle;
-            document.getElementById('newsItem').innerText = t.newsItem;
-            document.getElementById('statsTitle').innerText = t.statsTitle;
-            document.getElementById('statPeople').innerText = t.statPeople;
-            document.getElementById('statGen').innerText = t.statGen;
-            document.getElementById('statCountries').innerText = t.statCountries;
-            document.getElementById('footerText').innerText = t.footerText;
+            // Updates
+            const elements = {
+                welcomeTitle: t.welcomeTitle,
+                welcomeSubtitle: t.welcomeSubtitle,
+                siteDesc: t.siteDesc,
+                enterTreeBtn: t.enterTreeBtn,
+                searchBtn: t.searchBtn,
+                searchTitle: t.searchTitle,
+                menuChat: t.menuChat,
+                menuContact: t.menuContact,
+                menuCalendar: t.menuCalendar,
+                cardTree: t.cardTree,
+                cardPeople: t.cardPeople,
+                cardGallery: t.cardGallery,
+                cardMemorial: t.cardMemorial,
+                cardMap: t.cardMap,
+                cardStats: t.cardStats,
+                newsTitle: t.newsTitle,
+                newsItem: t.newsItem,
+                statsTitle: t.statsTitle,
+                statPeople: t.statPeople,
+                statGen: t.statGen,
+                statCountries: t.statCountries,
+                footerText: t.footerText
+            };
 
-            // Profile rendering
+            for (let id in elements) {
+                const el = document.getElementById(id);
+                if (el) el.innerText = elements[id];
+            }
+
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) searchInput.placeholder = t.searchPlaceholder;
+
+            const navTitleEl = document.getElementById('navCardsTitle');
+            if (navTitleEl) navTitleEl.innerHTML = `<i class="fa-solid fa-compass text-blue-600"></i> ${t.navCardsTitle}`;
+
             if (currentUserData) {
                 renderProfile(currentUserData, t);
             } else {
@@ -391,20 +399,25 @@
         async function fetchUserData() {
             const profileDetails = document.getElementById('user-profile-details');
             const lang = document.getElementById('langSelector').value;
-            const t = translations[lang];
+            const t = translations[lang] || translations.he;
 
             try {
+                // Fetch from the real API endpoint
                 const response = await fetch('/api/user');
                 if (!response.ok) throw new Error('Unauthorized');
                 
-                currentUserData = await response.json();
+                const data = await response.json();
+                // If the response is { user: {...} } vs {...}
+                currentUserData = data.user || data; 
+                
                 renderProfile(currentUserData, t);
                 document.getElementById('menuLogout')?.classList.remove('hidden');
             } catch (err) {
+                console.error("Auth check failed:", err);
                 profileDetails.innerHTML = `
                     <div class="text-center w-full">
                         <p class="text-gray-500 mb-2">${t.notLoggedIn}</p>
-                        <a href="/login" class="text-blue-600 font-bold underline">${t.loginLink}</a>
+                        <a href="/login.html" class="text-blue-600 font-bold underline hover:text-blue-800 transition-colors">${t.loginLink}</a>
                     </div>
                 `;
             }
@@ -412,7 +425,15 @@
 
         function renderProfile(user, t) {
             const profileDetails = document.getElementById('user-profile-details');
-            const initials = user.username ? user.username.substring(0, 2).toUpperCase() : "??";
+            if (!profileDetails) return;
+
+            // Mapping server fields to display (fallback to 'Guest' or 'N/A' if missing)
+            const userName = user.name || user.username || "משתמש";
+            const userEmail = user.email || "---";
+            const userRole = user.role || "User";
+            const familyBranch = user.familySide || "Family";
+            
+            const initials = userName.substring(0, 2).toUpperCase();
             const alignment = document.documentElement.dir === 'ltr' ? 'text-left' : 'text-right';
 
             profileDetails.innerHTML = `
@@ -420,15 +441,15 @@
                     <div class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-sm shrink-0">
                         ${initials}
                     </div>
-                    <div class="flex-1">
-                        <h4 class="font-bold text-gray-800 text-base">${t.loggedInAs} <span class="text-blue-700">${user.username}</span></h4>
+                    <div class="flex-1 overflow-hidden">
+                        <h4 class="font-bold text-gray-800 text-base truncate">${t.loggedInAs} <span class="text-blue-700">${userName}</span></h4>
                         <div class="text-[11px] text-gray-600 mt-1 space-y-0.5">
-                            <p><span class="font-semibold text-gray-800">${t.emailLabel}</span> ${user.email || 'N/A'}</p>
-                            <p><span class="font-semibold text-gray-800">${t.roleLabel}</span> ${user.role || 'User'}</p>
-                            <p><span class="font-semibold text-gray-800">${t.sideLabel}</span> <a href="${user.familySideLink || '#'}" class="text-blue-500 hover:underline">${user.familySide || 'Family'}</a></p>
+                            <p class="truncate"><span class="font-semibold text-gray-800">${t.emailLabel}</span> ${userEmail}</p>
+                            <p><span class="font-semibold text-gray-800">${t.roleLabel}</span> ${userRole}</p>
+                            <p><span class="font-semibold text-gray-800">${t.sideLabel}</span> <span class="text-blue-500">${familyBranch}</span></p>
                         </div>
                         <div class="mt-2">
-                            <a href="/profile.html" class="inline-block bg-white text-blue-600 border border-blue-200 text-[10px] font-bold px-3 py-1 rounded-lg hover:bg-blue-50 shadow-sm">
+                            <a href="/profile.html" class="inline-block bg-white text-blue-600 border border-blue-200 text-[10px] font-bold px-3 py-1 rounded-lg hover:bg-blue-50 shadow-sm transition-all">
                                 <i class="fa-regular fa-id-card ml-1"></i> ${t.myProfile}
                             </a>
                         </div>
@@ -439,10 +460,10 @@
 
         document.getElementById('langSelector').addEventListener('change', updateLanguage);
 
-        window.onload = () => {
+        window.addEventListener('DOMContentLoaded', () => {
             updateLanguage();
             fetchUserData();
-        };
+        });
     </script>
 </body>
 </html>
