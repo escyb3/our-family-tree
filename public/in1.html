@@ -124,43 +124,6 @@
                 </a>
             </div>
         </section>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-12">
-            <section class="lg:col-span-2 bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden">
-                <div class="bg-blue-50/50 p-6 border-b border-gray-100 font-bold text-blue-900 flex items-center gap-2">
-                    <i class="fa-regular fa-bell"></i> <span id="newsTitle">מה חדש במשפחה?</span>
-                </div>
-                <div class="p-6">
-                    <ul class="space-y-4">
-                        <li class="flex gap-4 items-start p-3 hover:bg-gray-50 rounded-2xl transition-colors">
-                            <div class="bg-pink-100 text-pink-500 w-10 h-10 rounded-full flex items-center justify-center shrink-0"><i class="fa-solid fa-cake-candles"></i></div>
-                            <div>
-                                <p class="font-bold text-gray-800" id="newsItem">מזל טוב לימי הולדת השבוע!</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </section>
-
-            <section class="bg-gradient-to-br from-blue-900 to-blue-800 rounded-3xl shadow-lg p-6 text-white relative overflow-hidden h-fit">
-                <i class="fa-solid fa-chart-simple absolute -right-6 -bottom-6 text-8xl text-white/10"></i>
-                <h3 id="statsTitle" class="text-lg font-bold mb-6">המשפחה במספרים</h3>
-                <div class="grid grid-cols-3 gap-2">
-                    <div class="text-center">
-                        <div class="text-2xl font-black text-blue-200">1,245</div>
-                        <div id="statPeople" class="text-[9px] uppercase">אנשים</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-black text-blue-200">9</div>
-                        <div id="statGen" class="text-[9px] uppercase">דורות</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-black text-blue-200">14</div>
-                        <div id="statCountries" class="text-[9px] uppercase">מדינות</div>
-                    </div>
-                </div>
-            </section>
-        </div>
     </main>
 
     <footer class="bg-gray-900 text-white text-center p-8 rounded-t-[2.5rem] mt-auto">
@@ -168,6 +131,7 @@
     </footer>
 
     <script>
+        // מילון תרגומים
         const translations = {
             he: {
                 welcomeTitle: "אתר המשפחה המאוחד",
@@ -187,12 +151,6 @@
                 cardMemorial: "קיר זיכרון",
                 cardMap: "מפת נדודים",
                 cardStats: "סטטיסטיקות",
-                newsTitle: "מה חדש במשפחה?",
-                newsItem: "מזל טוב לימי הולדת השבוע!",
-                statsTitle: "המשפחה במספרים",
-                statPeople: "אנשים",
-                statGen: "דורות",
-                statCountries: "מדינות",
                 footerText: "© 2026 אתר המשפחה המאוחד • נבנה עבור הדורות הבאים",
                 loggedInAs: "שלום,",
                 emailLabel: "אימייל:",
@@ -206,13 +164,13 @@
             en: {
                 welcomeTitle: "United Family Site",
                 welcomeSubtitle: "Ben Abou • Elharrar • Malca • & more",
-                siteDesc: "The digital home for the extended family. A place to stay connected, document history, and build our legacy together for generations to come.",
+                siteDesc: "The digital home for the extended family. A place to stay connected and build our legacy together.",
                 enterTreeBtn: "Enter Family Tree",
                 searchPlaceholder: "Search family member...",
                 searchBtn: "Search",
                 searchTitle: "Quick Search",
                 menuChat: "AI Chat",
-                menuContact: "Family Contact",
+                menuContact: "Contact",
                 menuCalendar: "Calendar",
                 navCardsTitle: "Quick Navigation",
                 cardTree: "Family Tree",
@@ -221,12 +179,6 @@
                 cardMemorial: "Memorial",
                 cardMap: "Migration Map",
                 cardStats: "Statistics",
-                newsTitle: "What's New?",
-                newsItem: "Happy birthday to members celebrating this week!",
-                statsTitle: "Family in Numbers",
-                statPeople: "People",
-                statGen: "Generations",
-                statCountries: "Countries",
                 footerText: "© 2026 United Family Site • Built for future generations",
                 loggedInAs: "Hello,",
                 emailLabel: "Email:",
@@ -236,108 +188,6 @@
                 loading: "Connecting...",
                 notLoggedIn: "Guest, please sign in",
                 loginLink: "Login"
-            },
-            fr: {
-                welcomeTitle: "Site de la Famille Unie",
-                welcomeSubtitle: "Ben Abou • Elharrar • Malca • et plus",
-                siteDesc: "La maison numérique de la famille élargie. Un lieu pour rester connecté, documenter l'histoire et construire notre héritage ensemble.",
-                enterTreeBtn: "Entrer dans l'Arbre",
-                searchPlaceholder: "Chercher un membre...",
-                searchBtn: "Chercher",
-                searchTitle: "Recherche Rapide",
-                menuChat: "Chat IA",
-                menuContact: "Contact Familial",
-                menuCalendar: "Calendrier",
-                navCardsTitle: "Navigation Rapide",
-                cardTree: "Arbre Généalogique",
-                cardPeople: "Histoires",
-                cardGallery: "Galerie",
-                cardMemorial: "Mémorial",
-                cardMap: "Carte de Migration",
-                cardStats: "Statistiques",
-                newsTitle: "Quoi de Neuf?",
-                newsItem: "Bon anniversaire aux membres cette semaine!",
-                statsTitle: "La Famille en Chiffres",
-                statPeople: "Membres",
-                statGen: "Générations",
-                statCountries: "Pays",
-                footerText: "© 2026 Site de la Famille Unie • Bâti pour les générations futures",
-                loggedInAs: "Bonjour,",
-                emailLabel: "Email:",
-                roleLabel: "Rôle:",
-                sideLabel: "Branche:",
-                myProfile: "Mon Profil",
-                loading: "Connexion...",
-                notLoggedIn: "Invité, veuillez vous connecter",
-                loginLink: "Connexion"
-            },
-            yi: {
-                welcomeTitle: "די פאַראייניקטע משפּחה פּלאַץ",
-                welcomeSubtitle: "בן אבו • אלחרר • מלכה • און מער",
-                siteDesc: "דער דיגיטאַלער היים פֿאַר די ברייטע משפּחה. אָרט צו האַלטן קאָנטאַקט און בויען אונדזער ירושה צוזאַמען.",
-                enterTreeBtn: "אַרייַן אין משפּחה בוים",
-                searchPlaceholder: "זוכן אַ משפּחה מיטגליד...",
-                searchBtn: "זוכן",
-                searchTitle: "גיך זוכן",
-                menuChat: "קינסטלעך אינטעליגענץ",
-                menuContact: "משפּחה קאָנטאַקט",
-                menuCalendar: "קאַלענדאַר",
-                navCardsTitle: "גיך נאַוויגאַציע",
-                cardTree: "משפּחה בוים",
-                cardPeople: "מעשׂיות",
-                cardGallery: "גאַלעריע",
-                cardMemorial: "יזכור וואַנט",
-                cardMap: "מאַפּע",
-                cardStats: "סטאַטיסטיק",
-                newsTitle: "וואָס איז נײַ?",
-                newsItem: "מזל טוב צו די געבורטסטאָג פֿייערונגען די וואָך!",
-                statsTitle: "די משפּחה אין נומערן",
-                statPeople: "מענטשן",
-                statGen: "דורות",
-                statCountries: "לענדער",
-                footerText: "© 2026 די פאַראייניקטע משפּחה פּלאַץ • געבויט פֿאַר קומענדיקע דורות",
-                loggedInAs: "שלום,",
-                emailLabel: "בליצפּאָסט:",
-                roleLabel: "ראָלע:",
-                sideLabel: "צווייג:",
-                myProfile: "מיין פּראָפיל",
-                loading: "פֿאַרבינדונג...",
-                notLoggedIn: "גאַסט, ביטע לאָג אין",
-                loginLink: "לאָגין"
-            },
-            nl: {
-                welcomeTitle: "Verenigde Familie Site",
-                welcomeSubtitle: "Ben Abou • Elharrar • Malca • & meer",
-                siteDesc: "Het digitale thuis voor de uitgebreide familie. Een plek om verbonden te blijven en samen aan onze geschiedenis te bouwen.",
-                enterTreeBtn: "Bekijk de Stamboom",
-                searchPlaceholder: "Zoek familielid...",
-                searchBtn: "Zoeken",
-                searchTitle: "Snel Zoeken",
-                menuChat: "AI Chat",
-                menuContact: "Contact",
-                menuCalendar: "Kalender",
-                navCardsTitle: "Snelle Navigatie",
-                cardTree: "Stamboom",
-                cardPeople: "Verhalen",
-                cardGallery: "Galerij",
-                cardMemorial: "Gedenkmuur",
-                cardMap: "Migratie Kaart",
-                cardStats: "Statistieken",
-                newsTitle: "Wat is er nieuw?",
-                newsItem: "Gefeliciteerd met de verjaardagen deze week!",
-                statsTitle: "Familie in Cijfers",
-                statPeople: "Mensen",
-                statGen: "Generaties",
-                statCountries: "Landen",
-                footerText: "© 2026 Verenigde Familie Site • Gebouwd voor toekomstige generaties",
-                loggedInAs: "Hallo,",
-                emailLabel: "Email:",
-                roleLabel: "Rol:",
-                sideLabel: "Tak:",
-                myProfile: "Mijn Profiel",
-                loading: "Verbinden...",
-                notLoggedIn: "Gast, log a.u.b. in",
-                loginLink: "Inloggen"
             }
         };
 
@@ -351,36 +201,17 @@
             document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
             document.documentElement.lang = lang;
 
-            // Updates
-            const elements = {
-                welcomeTitle: t.welcomeTitle,
-                welcomeSubtitle: t.welcomeSubtitle,
-                siteDesc: t.siteDesc,
-                enterTreeBtn: t.enterTreeBtn,
-                searchBtn: t.searchBtn,
-                searchTitle: t.searchTitle,
-                menuChat: t.menuChat,
-                menuContact: t.menuContact,
-                menuCalendar: t.menuCalendar,
-                cardTree: t.cardTree,
-                cardPeople: t.cardPeople,
-                cardGallery: t.cardGallery,
-                cardMemorial: t.cardMemorial,
-                cardMap: t.cardMap,
-                cardStats: t.cardStats,
-                newsTitle: t.newsTitle,
-                newsItem: t.newsItem,
-                statsTitle: t.statsTitle,
-                statPeople: t.statPeople,
-                statGen: t.statGen,
-                statCountries: t.statCountries,
-                footerText: t.footerText
-            };
+            const elements = [
+                'welcomeTitle', 'welcomeSubtitle', 'siteDesc', 'enterTreeBtn', 
+                'searchBtn', 'searchTitle', 'menuChat', 'menuContact', 'menuCalendar',
+                'cardTree', 'cardPeople', 'cardGallery', 'cardMemorial', 'cardMap', 
+                'cardStats', 'footerText'
+            ];
 
-            for (let id in elements) {
+            elements.forEach(id => {
                 const el = document.getElementById(id);
-                if (el) el.innerText = elements[id];
-            }
+                if (el) el.innerText = t[id];
+            });
 
             const searchInput = document.getElementById('search-input');
             if (searchInput) searchInput.placeholder = t.searchPlaceholder;
@@ -402,12 +233,14 @@
             const t = translations[lang] || translations.he;
 
             try {
-                // Fetch from the real API endpoint
+                // קריאה לנתיב המשתמש המחובר
                 const response = await fetch('/api/user');
                 if (!response.ok) throw new Error('Unauthorized');
                 
                 const data = await response.json();
-                // If the response is { user: {...} } vs {...}
+                
+                // השרת שלך מחזיר אובייקט { success: true, user: safeUser }
+                // לכן ניגש ל-data.user
                 currentUserData = data.user || data; 
                 
                 renderProfile(currentUserData, t);
@@ -427,11 +260,12 @@
             const profileDetails = document.getElementById('user-profile-details');
             if (!profileDetails) return;
 
-            // Mapping server fields to display (fallback to 'Guest' or 'N/A' if missing)
-            const userName = user.name || user.username || "משתמש";
+            // --- מיפוי השדות בהתאם לקוד השרת שלך ---
+            // השרת מחזיר: username, email, role, familySide
+            const userName = user.username || "משתמש";
             const userEmail = user.email || "---";
-            const userRole = user.role || "User";
-            const familyBranch = user.familySide || "Family";
+            const userRole = user.role || "user";
+            const familyBranch = user.familySide || "לא מוגדר";
             
             const initials = userName.substring(0, 2).toUpperCase();
             const alignment = document.documentElement.dir === 'ltr' ? 'text-left' : 'text-right';
