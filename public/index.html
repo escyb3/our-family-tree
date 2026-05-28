@@ -484,6 +484,127 @@ const updateContent = (lang, isLoggedIn, user) => {
             });
         });
 
+        
+        <!-- מדור עלון המשפחה החדש -->
+<section class="mb-8 bg-gradient-to-br from-blue-600 to-indigo-800 text-white p-6 md:p-8 rounded-3xl shadow-xl relative overflow-hidden">
+    <!-- קישוטים מעוצבים של בועה ברקע ואייקון מכתב -->
+    <div class="absolute -bottom-8 -left-8 w-32 h-32 bg-white/10 rounded-full pointer-events-none"></div>
+    <div class="absolute top-4 left-4 text-4xl opacity-20 pointer-events-none">✉️</div>
+    
+    <span id="newsletterBadge" class="bg-blue-500/50 text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-blue-400/30">גיליון החודש</span>
+    <h3 id="newsletterTitle" class="text-2xl md:text-3xl font-bold mt-3 mb-1">עלון המשפחה</h3>
+    <p id="newsletterEdition" class="text-xs text-blue-200 mb-4">גיליון סתיו • מאת מערכת האתר</p>
+    
+    <div class="bg-white/10 backdrop-blur-sm p-5 rounded-2xl border border-white/10 mb-5 text-right">
+        <h4 id="newsletterFeaturedTitle" class="font-bold text-base md:text-lg text-yellow-300 mb-1">סיפור השבוע: מתכונים של פעם</h4>
+        <p id="newsletterFeaturedDesc" class="text-sm text-white/95 leading-relaxed">איך סבתא שרה וסבא דוד משלבים את הניחוחות של קזבלנקה ואירופה במטבח אחד קטן, ומהו הסוד לחלה המתוקה המושלמת שמחברת את כולנו.</p>
+    </div>
+    
+    <button id="open-newsletter-btn" class="bg-white text-blue-700 hover:bg-blue-50 font-bold py-3 px-6 rounded-xl transition-all text-sm shadow-md active:scale-95">
+        לקריאת הגיליון המלא 📖
+    </button>
+</section>
+
+#### שלב 2: הוספת חלונית הקריאה הצצה (Modal HTML)
+רד לתחתית הקובץ, וממש מעל לתגית ה-`</body>`, הוסף את הבלוק הבא שישמש כחלונית קופצת נקייה ומזמינה לקריאת העלון המלא:
+```html
+<!-- מודל קריאת עלון המשפחה -->
+<div id="newsletterModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-gray-100 flex flex-col">
+        <!-- Modal Header -->
+        <div class="p-6 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white/90 backdrop-blur-md z-10 rounded-t-3xl">
+            <div>
+                <h3 id="modalNewsTitle" class="text-2xl font-bold text-gray-900">עלון המשפחה</h3>
+                <p id="modalNewsSubtitle" class="text-sm text-gray-500">סיפורים, מתכונים וזיכרונות חמים מהעץ המשפחתי</p>
+            </div>
+            <button id="close-newsletter-btn" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 font-bold transition-colors">✕</button>
+        </div>
+        <!-- Modal Content (מיושר לפי כיוון השפה בצורה דינמית) -->
+        <div class="p-6 space-y-6 text-gray-700 text-base leading-relaxed text-right" id="modal-content-body">
+            <!-- התוכן המלא יוזרק לכאן אוטומטית ע"י ה-JavaScript -->
+        </div>
+        <!-- Modal Footer -->
+        <div class="p-4 border-t border-gray-100 bg-gray-50 flex justify-end rounded-b-3xl">
+            <button id="close-newsletter-btn-footer" class="bg-gray-800 text-white font-semibold px-6 py-2 rounded-xl hover:bg-gray-700 transition-colors">סגור</button>
+        </div>
+    </div>
+</div>
+
+#### שלב 3: עדכון מילון התרגומים (JavaScript Translations)
+בתוך תגית ה-`<script>`, תחת אובייקט ה-`translations` הגדול, הוסף לכל שפה (לדוגמה תחת `he: { ... }`) את הנתונים החדשים עבור העלון:
+```javascript
+// לדוגמה בתוך 'he':
+newsletterBadge: "גיליון החודש",
+newsletterTitle: "עלון המשפחה",
+newsletterEdition: "גיליון סתיו • מאת מערכת האתר",
+newsletterFeaturedTitle: "סיפור השבוע: מתכונים של פעם",
+newsletterFeaturedDesc: "איך סבתא שרה וסבא דוד משלבים את הניחוחות של קזבלנקה ואירופה...",
+newsletterBtnRead: "לקריאת הגיליון המלא 📖",
+modalNewsTitle: "עלון המשפחה - הגיליון המלא",
+modalNewsSubtitle: "גיליון סתיו • סיפורים, מתכונים וזיכרונות",
+modalContent: `
+    <div class="space-y-4 text-right">
+        <div class="p-4 bg-yellow-50 rounded-2xl border border-yellow-200">
+            <h4 class="font-bold text-lg text-yellow-800 mb-2">🥖 מתכון מנצח: החלה המפורסמת של סבתא שרה</h4>
+            <p class="text-sm text-gray-700">בכל יום שישי הריח מתפשט בכל הרחוב...</p>
+        </div>
+        <!-- תוכן נוסף... -->
+    </div>
+`,
+*(שכפל זאת בהתאמה גם עבור האנגלית `en`, צרפתית `fr`, יידיש `yi`, והולנדית `nl` כפי שמוצג בקובץ המלא למעלה)*.
+
+#### שלב 4: עדכון פונקציית עדכון התוכן והמאזינים (Script Update)
+1. בתוך הפונקציה `updateContent = (lang, isLoggedIn, user) => { ... }`, הוסף את המפתחות החדשים לתוך אובייקט הקישורים `textElementsMap`:
+   ```javascript
+   "newsletterBadge": "newsletterBadge",
+   "newsletterTitle": "newsletterTitle",
+   "newsletterEdition": "newsletterEdition",
+   "newsletterFeaturedTitle": "newsletterFeaturedTitle",
+   "newsletterFeaturedDesc": "newsletterFeaturedDesc",
+   "open-newsletter-btn": "newsletterBtnRead",
+   "modalNewsTitle": "modalNewsTitle",
+   "modalNewsSubtitle": "modalNewsSubtitle"
+   2. בתוך אותה פונקציה, הזרק את תוכן העלון לתוך המודל והגדר את כיוון הטקסט המתאים:
+   ```javascript
+   const modalContentBody = document.getElementById("modal-content-body");
+   if (modalContentBody && texts.modalContent) {
+       modalContentBody.innerHTML = texts.modalContent;
+       if (lang === "he" || lang === "yi") {
+           modalContentBody.className = "p-6 space-y-6 text-gray-700 text-base leading-relaxed text-right";
+       } else {
+           modalContentBody.className = "p-6 space-y-6 text-gray-700 text-base leading-relaxed text-left";
+       }
+   }
+   3. בתוך המאזין של פתיחת הדף `document.addEventListener("DOMContentLoaded", () => { ... })`, הוסף את לוגיקת הפתיחה והסגירה של המודל:
+   ```javascript
+   // אלמנטים של המודל
+   const newsletterModal = document.getElementById("newsletterModal");
+   const openNewsletterBtn = document.getElementById("open-newsletter-btn");
+   const closeNewsletterBtn = document.getElementById("close-newsletter-btn");
+   const closeNewsletterBtnFooter = document.getElementById("close-newsletter-btn-footer");
+
+   if (openNewsletterBtn) {
+       openNewsletterBtn.addEventListener("click", () => {
+           newsletterModal.classList.remove("hidden");
+       });
+   }
+
+   const closeModal = () => {
+       newsletterModal.classList.add("hidden");
+   };
+
+   if (closeNewsletterBtn) closeNewsletterBtn.addEventListener("click", closeModal);
+   if (closeNewsletterBtnFooter) closeNewsletterBtnFooter.addEventListener("click", closeModal);
+
+   // סגירת החלונית בעת לחיצה מחוץ לה
+   window.addEventListener("click", (e) => {
+       if (e.target === newsletterModal) {
+           closeModal();
+       }
+   });
+
+   
+
     </script>
 </body>
 </html>
