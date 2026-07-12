@@ -1,169 +1,294 @@
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
+
+                  <!DOCTYPE html>
+<html lang="he" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>אתר המשפחה - Ben Abou, Elharrar ועוד</title>
-    <!-- טעינת Tailwind CSS וגופן Inter לטקסט מודרני ונקי -->
+    
+    <!-- Tailwind CSS & Modern Web Fonts (Heebo for Hebrew/Yiddish, Inter for Latin characters) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Heebo', 'Inter', system-ui, -apple-system, sans-serif;
         }
         .hero-bg {
-            background: linear-gradient(to bottom right, #0057a3, #003366);
+            background: linear-gradient(135deg, #0f4c81 0%, #0a2540 100%);
         }
         .menu-item.hidden {
             display: none !important;
         }
-        /* The @apply directive is not supported in style tags without a build process. 
-           Styling is applied directly using Tailwind classes on the elements. */
+        /* Custom scrollbar styling for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
     </style>
-    <!-- NOTE: It's best to use only one chat widget. I'm keeping Chatway and commenting out the others. -->
+
+    <!-- Chat widgets and script loading (Cleaned and preserved) -->
     <!--<script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=vJrCwuXPSFOm"></script>-->
     <script src="//code.tidio.co/wnmxintabp8xi2frtmizt5q9sopbk32o.js" async></script>
-    <!-- <script type="text/javascript">
-    (function(d, m){
-        var kommunicateSettings = 
-            {"appId":"bc088f1083ad1ac15179ce64f6b0dccb","popupWidget":true,"automaticChatOpenOnNavigation":true};
-        var s = document.createElement("script"); s.type = "text/javascript"; s.async = true;
-        s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
-        var h = document.getElementsByTagName("head")[0]; h.appendChild(s);
-        window.kommunicate = m; m._globals = kommunicateSettings;
-    })(document, window.kommunicate || {});
-    </script> -->
- <!---<script>--//
-  window.addEventListener('mouseover', initLandbot, { once: true });
-  window.addEventListener('touchstart', initLandbot, { once: true });
-  var myLandbot;
-  function initLandbot() {
-    if (!myLandbot) {
-      var s = document.createElement('script');
-      s.type = "module"
-      s.async = true;
-      s.addEventListener('load', function() {
-        var myLandbot = new Landbot.Livechat({
-          configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-3273530-Y5W1QU9ZFOA18SDC/index.json',
-        });
-      });
-      s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
-      var x = document.getElementsByTagName('script')[0];
-      x.parentNode.insertBefore(s, x);
-    }
-  }-//
-</script>---!>
 </head>
-<body class="bg-gray-50 text-gray-800">
-    <!-- Hero Section with Gradient -->
-    <header class="hero-bg text-white p-6 text-center font-bold rounded-b-3xl shadow-lg relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-full bg-blue-800 opacity-20"></div>
-        <div class="relative z-10">
-            <div class="absolute top-4 right-4 flex items-center space-x-2 z-20">
-                <select id="langSelector" class="p-2 rounded-lg bg-blue-700/50 text-white cursor-pointer font-semibold backdrop-blur-sm transition-colors hover:bg-blue-600/70">
-                    <option value="he">עברית</option>
-                    <option value="en">English</option>
-                    <option value="fr">Français</option>
-                    <option value="yi">יידיש</option>
-                    <option value="nl">Nederlands</option>
-                    <option value="rl">Request Language</option>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col pb-20">
+
+    <!-- Global Toast Container for Sleek UI Message Boxes -->
+    <div id="toast-container" class="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] pointer-events-none flex flex-col gap-2"></div>
+
+    <!-- Request Language Modal Container (Hidden by default) -->
+    <div id="langRequestModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9000] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl p-6 md:p-8 max-w-md w-[90%] shadow-2xl border border-slate-100 transform scale-95 transition-transform duration-300">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modalTitle" class="text-xl font-extrabold text-blue-950 flex items-center gap-2">
+                    <span>🌐</span> בקשת שפה חדשה
+                </h3>
+                <button onclick="closeRequestModal()" class="text-slate-400 hover:text-slate-600 transition-colors text-2xl font-bold">&times;</button>
+            </div>
+            <p id="modalDescription" class="text-sm text-slate-600 mb-4 leading-relaxed">
+                שלום! כאן תוכל לבקש להוסיף שפה חדשה לאתר המשפחה. מנהל המערכת יקבל את הבקשה שלך.
+            </p>
+            <div class="space-y-4">
+                <div>
+                    <label id="modalInputLabel" class="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">שם השפה המבוקשת</label>
+                    <input type="text" id="requestedLangInput" placeholder="לדוגמה: ספרדית, גרמנית..." class="w-full py-3 px-4 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-sm" />
+                </div>
+                <div class="flex gap-3 justify-end pt-2">
+                    <button onclick="closeRequestModal()" id="modalCancelBtn" class="px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 font-semibold text-slate-600 text-sm transition-all">ביטול</button>
+                    <button onclick="submitLanguageRequest()" id="modalSubmitBtn" class="px-5 py-2.5 rounded-xl bg-blue-600 text-white font-bold text-sm shadow-md hover:bg-blue-700 hover:shadow-lg hover:scale-[1.02] transition-all">שלח בקשה</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section with Premium Gradient & Wave Accents -->
+    <header class="hero-bg text-white p-8 md:p-12 text-center font-bold rounded-b-[2rem] shadow-xl relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent"></div>
+        
+        <div class="relative z-10 max-w-6xl mx-auto">
+            <!-- Language Selector (Aligned neatly) -->
+            <div class="absolute top-0 right-0 left-0 md:left-auto md:right-4 flex justify-end p-2 z-20">
+                <select id="langSelector" class="p-2.5 rounded-xl bg-white/10 text-white cursor-pointer font-medium text-sm border border-white/20 backdrop-blur-md outline-none transition-all hover:bg-white/20 focus:ring-2 focus:ring-blue-400">
+                    <option value="he" class="text-slate-900">עברית</option>
+                    <option value="en" class="text-slate-900">English</option>
+                    <option value="fr" class="text-slate-900">Français</option>
+                    <option value="yi" class="text-slate-900">יידיש</option>
+                    <option value="nl" class="text-slate-900">Nederlands</option>
+                    <option value="rl" class="text-slate-900">Request Language</option>
                 </select>
             </div>
-            <!-- FIX: Replaced broken image link with a placeholder -->
-            <img src="/assets/logo.png" alt="לוגו משפחתי" class="logo mx-auto mb-4 w-24 h-24 rounded-full" />
-            <h1 id="welcomeTitle" class="text-3xl md:text-5xl drop-shadow-lg animate-fade-in-down">ברוכים הבאים לאתר המשפחה</h1>
-            <h2 id="welcomeSubtitle" class="text-lg md:text-xl mt-2 drop-shadow-md animate-fade-in-up">Ben Abou • Elharrar • Malca • ועוד</h2>
+
+            <!-- Logo (Sleek design treatment) -->
+            <div class="mt-8 md:mt-4 mb-4 relative inline-block">
+                <div class="absolute inset-0 rounded-full bg-white/10 blur-md scale-110"></div>
+                <img src="/assets/logo.png" alt="לוגו משפחתי" class="logo relative mx-auto w-24 h-24 rounded-full object-cover border-2 border-white/30 shadow-inner" onerror="this.src='https://images.unsplash.com/photo-1511895426328-dc8714191300?w=150&auto=format&fit=crop&q=60'" />
+            </div>
+
+            <!-- Welcome Text with modern responsive sizes -->
+            <h1 id="welcomeTitle" class="text-3xl md:text-5xl font-extrabold tracking-tight drop-shadow-md animate-fade-in-down mb-2">
+                ברוכים הבאים לאתר המשפחה
+            </h1>
+            <h2 id="welcomeSubtitle" class="text-base md:text-xl font-light opacity-90 tracking-wide drop-shadow max-w-2xl mx-auto">
+                Ben Abou • Elharrar • Malca • ועוד
+            </h2>
         </div>
     </header>
 
-    <section class="max-w-6xl mx-auto -mt-6 p-6 md:p-8 bg-white rounded-3xl shadow-xl relative z-20">
-        <div class="flex flex-col md:flex-row items-center justify-between mb-4">
-            <h3 id="search-title" class="text-2xl font-bold mb-4 md:mb-0">🔍 חיפוש באתר</h3>
-            <!-- Container for user profile details -->
-            <div id="user-profile" class="text-sm font-medium">
+    <!-- Search Section Card (Floating slightly over Hero) -->
+    <section class="max-w-5xl w-[92%] mx-auto -mt-8 p-6 md:p-8 bg-white rounded-3xl shadow-xl border border-slate-100 relative z-20 transition-all duration-300">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+            <h3 id="search-title" class="text-xl md:text-2xl font-extrabold text-slate-800 flex items-center gap-2">
+                <span>🔍</span> חיפוש באתר
+            </h3>
+            
+            <!-- User Profile Details Wrapper -->
+            <div id="user-profile" class="text-sm font-medium bg-slate-50 border border-slate-100 p-3 rounded-2xl w-full md:w-auto shadow-sm">
                 <div id="user-profile-details"></div>
             </div>
         </div>
-        <div class="search-wrapper relative max-w-xl mx-auto">
-            <input type="text" id="search-input" placeholder="הקלד שם או תיאור..." autocomplete="off" class="w-full p-3 pl-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow" />
-            <span class="search-icon absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
-            <ul id="results" class="search-results absolute top-full right-0 left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto z-10 hidden"></ul>
+        
+        <div class="search-wrapper relative max-w-xl mx-auto w-full">
+            <input type="text" id="search-input" placeholder="הקלד שם או תיאור..." autocomplete="off" class="w-full py-3.5 px-5 pr-12 pl-5 border border-slate-200 rounded-full text-slate-700 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-inner transition-all duration-200" />
+            <span class="search-icon absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-lg">🔍</span>
+            <ul id="results" class="search-results absolute top-full right-0 left-0 mt-3 bg-white border border-slate-100 rounded-2xl shadow-2xl max-h-60 overflow-y-auto z-50 hidden transition-all"></ul>
         </div>
     </section>
 
-    <!-- Sticky Navigation Bar with backdrop-blur effect -->
-    <!-- FIX: Applied Tailwind classes directly to each menu item, as @apply is not supported here. -->
-    <nav class="menu-bar bg-white/80 backdrop-blur-md sticky top-0 z-50 flex flex-wrap justify-center p-2 md:p-4 gap-2 md:gap-4 shadow-lg rounded-b-2xl transition-all duration-300">
-        <a id="menuHome" href="/" class="flex items-center gap-1 bg-blue-50 text-blue-900 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-105 shadow-md">🏠 עמוד ראשי</a>
-        <a id="menuTree" href="/tree-viewer.html" class="flex items-center gap-1 bg-blue-50 text-blue-900 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-105 shadow-md"><span>🧬</span> עץ המשפחה</a>
-        <a id="menuBooks" href="/book.html" class="flex items-center gap-1 bg-blue-50 text-blue-900 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-105 shadow-md"><span>📖</span>ספר משפחתי</a>
-        <a id="menuChat" href="/chat.html" class="flex items-center gap-1 bg-blue-50 text-blue-900 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-105 shadow-md"><span>🧑‍💻</span> צ'אט AI</a>
-        <a id="menuContact" href="/contact-ways.html" class="flex items-center gap-1 bg-blue-50 text-blue-900 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-105 shadow-md"><span>📩</span> אמצעי תקשורת משפחתיים</a>
-        <a id="menuGallery" href="/gallery.html" class="flex items-center gap-1 bg-blue-50 text-blue-900 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-105 shadow-md"><span>🖼️</span> גלריית תמונות</a>
-        <a id="menuMemorial" href="/memorial.html" class="flex items-center gap-1 bg-blue-50 text-blue-900 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-105 shadow-md"><span>🕯️</span> קיר זיכרון</a>
-        <a id="menuTimeline" href="/timeline.html" class="flex items-center gap-1 bg-blue-50 text-blue-900 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-105 shadow-md"><span>🗓️</span> ציר זמן</a>
-        <a id="menuCalendar" href="/calendar.html" class="flex items-center gap-1 bg-blue-50 text-blue-900 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-105 shadow-md"><span>📆</span> לוח שנה</a>
-        <a id="menuForum" href="/forum.html" class="flex items-center gap-1 bg-blue-50 text-blue-900 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-105 shadow-md"><span>👪</span> פורום משפחתי</a>
-        <a id="menuBio" href="/biographies.html" class="flex items-center gap-1 bg-blue-50 text-blue-900 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-105 shadow-md"><span>📖</span> ביוגרפיות</a>
-        <a id="menuStats" href="/a.html" class="flex items-center gap-1 bg-blue-50 text-blue-900 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-105 shadow-md"><span>📊</span> סטטיסטיקות</a>
-        <a id="menuUpdate" href="/update-request.html" class="flex items-center gap-1 bg-blue-50 text-blue-900 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-105 shadow-md">עדכון פרטים</a>
-        <a id="menuMigration" href="/migration-map.html" class="flex items-center gap-1 bg-blue-50 text-blue-900 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-105 shadow-md">מפת נדודים</a>
-        <a id="menuNewsletter" href="/newsletter.html" class="flex items-center gap-1 bg-blue-50 text-blue-900 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-105 shadow-md"><span>📰</span> עלון</a>
-        <a id="menuLogin" href="/login.html" class="flex items-center gap-1 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 shadow-md bg-blue-500 text-white hover:bg-blue-600 hover:scale-105"><span>🔐</span> כניסת משתמשים</a>
-        <a id="menuLogout" href="/logout" class="flex items-center gap-1 font-semibold text-sm md:text-base px-3 py-2 rounded-xl transition-all duration-200 shadow-md bg-red-500 text-white hover:bg-red-600 hover:scale-105 hidden">התנתקות</a>
+    <!-- Navigation Bar (Sticky glassmorphic container with horizontal-scroll guard) -->
+    <nav class="menu-bar bg-white/90 backdrop-blur-md border-b border-slate-100 sticky top-0 z-40 flex flex-wrap justify-center p-3 md:p-4 gap-2 md:gap-3 shadow-md rounded-b-2xl transition-all duration-300 max-w-6xl mx-auto w-[96%] mt-4">
+        <a id="menuHome" href="/" class="flex items-center gap-1.5 bg-blue-50 text-blue-900 font-semibold text-xs md:text-sm px-3.5 py-2.5 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-[1.03] shadow-sm">🏠 עמוד ראשי</a>
+        <a id="menuTree" href="/tree-viewer.html" class="flex items-center gap-1.5 bg-blue-50 text-blue-900 font-semibold text-xs md:text-sm px-3.5 py-2.5 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-[1.03] shadow-sm"><span>🧬</span> עץ המשפחה</a>
+        <a id="menuBooks" href="/book.html" class="flex items-center gap-1.5 bg-blue-50 text-blue-900 font-semibold text-xs md:text-sm px-3.5 py-2.5 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-[1.03] shadow-sm"><span>📖</span> ספר משפחתי</a>
+        <a id="menuChat" href="/chat.html" class="flex items-center gap-1.5 bg-blue-50 text-blue-900 font-semibold text-xs md:text-sm px-3.5 py-2.5 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-[1.03] shadow-sm"><span>🧑‍💻</span> צ'אט AI</a>
+        <a id="menuContact" href="/contact-ways.html" class="flex items-center gap-1.5 bg-blue-50 text-blue-900 font-semibold text-xs md:text-sm px-3.5 py-2.5 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-[1.03] shadow-sm"><span>📩</span> אמצעי תקשורת משפחתיים</a>
+        <a id="menuGallery" href="/gallery.html" class="flex items-center gap-1.5 bg-blue-50 text-blue-900 font-semibold text-xs md:text-sm px-3.5 py-2.5 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-[1.03] shadow-sm"><span>🖼️</span> גלריית תמונות</a>
+        <a id="menuMemorial" href="/memorial.html" class="flex items-center gap-1.5 bg-blue-50 text-blue-900 font-semibold text-xs md:text-sm px-3.5 py-2.5 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-[1.03] shadow-sm"><span>🕯️</span> קיר זיכרון</a>
+        <a id="menuTimeline" href="/timeline.html" class="flex items-center gap-1.5 bg-blue-50 text-blue-900 font-semibold text-xs md:text-sm px-3.5 py-2.5 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-[1.03] shadow-sm"><span>🗓️</span> ציר זמן</a>
+        <a id="menuCalendar" href="/calendar.html" class="flex items-center gap-1.5 bg-blue-50 text-blue-900 font-semibold text-xs md:text-sm px-3.5 py-2.5 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-[1.03] shadow-sm"><span>📆</span> לוח שנה</a>
+        <a id="menuForum" href="/forum.html" class="flex items-center gap-1.5 bg-blue-50 text-blue-900 font-semibold text-xs md:text-sm px-3.5 py-2.5 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-[1.03] shadow-sm"><span>👪</span> פורום משפחתי</a>
+        <a id="menuBio" href="/biographies.html" class="flex items-center gap-1.5 bg-blue-50 text-blue-900 font-semibold text-xs md:text-sm px-3.5 py-2.5 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-[1.03] shadow-sm"><span>📖</span> ביוגרפיות</a>
+        <a id="menuStats" href="/a.html" class="flex items-center gap-1.5 bg-blue-50 text-blue-900 font-semibold text-xs md:text-sm px-3.5 py-2.5 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-[1.03] shadow-sm"><span>📊</span> סטטיסטיקות</a>
+        <a id="menuUpdate" href="/update-request.html" class="flex items-center gap-1.5 bg-blue-50 text-blue-900 font-semibold text-xs md:text-sm px-3.5 py-2.5 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-[1.03] shadow-sm">עדכון פרטים</a>
+        <a id="menuMigration" href="/migration-map.html" class="flex items-center gap-1.5 bg-blue-50 text-blue-900 font-semibold text-xs md:text-sm px-3.5 py-2.5 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-[1.03] shadow-sm">מפת נדודים</a>
+        <a id="menuNewsletter" href="/newsletter.html" class="flex items-center gap-1.5 bg-blue-50 text-blue-900 font-semibold text-xs md:text-sm px-3.5 py-2.5 rounded-xl transition-all duration-200 hover:bg-blue-100 hover:scale-[1.03] shadow-sm"><span>📰</span> עלון</a>
+        <a id="menuLogin" href="/login.html" class="flex items-center gap-1.5 font-bold text-xs md:text-sm px-4 py-2.5 rounded-xl transition-all duration-200 shadow-md bg-blue-600 text-white hover:bg-blue-700 hover:scale-[1.03]"><span>🔐</span> כניסת משתמשים</a>
+        <a id="menuLogout" href="/logout" class="flex items-center gap-1.5 font-bold text-xs md:text-sm px-4 py-2.5 rounded-xl transition-all duration-200 shadow-md bg-rose-600 text-white hover:bg-rose-700 hover:scale-[1.03] hidden">התנתקות</a>
     </nav>
 
-
-    <main class="max-w-6xl mx-auto mt-8 p-6 md:p-8 bg-white rounded-3xl shadow-xl">
-        <section class="mb-8 p-6 bg-blue-50 rounded-2xl shadow-inner">
-            <h3 id="sectionWelcome" class="text-xl md:text-2xl font-bold mb-4 text-blue-900">🌟 ברוכים הבאים למרכז המשפחתי</h3>
-            <p id="intro1" class="text-base md:text-lg text-gray-700 leading-relaxed mb-4">אתר זה נבנה עבור משפחות: בן אבו, אלחרר, מלכה, בן דוד, ברומברג, ברנבאום, פאס-שנק, ויינברגר, לייבנר, ואן דר ולדה, בהר, דה פריס, איטליאנדר, איזקס, שפון, ועוד – לשיתוף תמונות, הנצחות, עץ משפחה, הודעות ועוד.</p>
-            <p id="intro2" class="text-base md:text-lg text-gray-700 leading-relaxed">ניתן להיכנס לפי צד משפחתי, לעדכן פרטים, לשוחח עם צ׳אט AI משפחתי ולחוות יחד היסטוריה מתועדת.</p>
+    <!-- Main Content Container -->
+    <main class="max-w-5xl w-[92%] mx-auto mt-6 flex-grow flex flex-col gap-6">
+        
+        <!-- Welcome Message Panel -->
+        <section class="p-6 md:p-8 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 border border-blue-100/50 rounded-3xl shadow-inner">
+            <h3 id="sectionWelcome" class="text-xl md:text-2xl font-extrabold mb-3 text-blue-950 flex items-center gap-2">
+                <span>🌟</span> ברוכים הבאים למרכז המשפחתי
+            </h3>
+            <p id="intro1" class="text-sm md:text-base text-slate-700 leading-relaxed mb-3">
+                אתר זה נבנה עבור משפחות: בן אבו, אלחרר, מלכה, בן דוד, ברומברג, ברנבאום, פאס-שנק, ויינברגר, לייבנר, ואן דר ולדה, בהר, דה פריס, איטליאנדר, איזקס, שפון, ועוד – לשיתוף תמונות, הנצחות, עץ משפחה, הודעות ועוד.
+            </p>
+            <p id="intro2" class="text-sm md:text-base text-slate-700 leading-relaxed font-medium">
+                ניתן להיכנס לפי צד משפחתי, לעדכן פרטים, לשוחח עם צ׳אט AI משפחתי ולחוות יחד היסטוריה מתועדת.
+            </p>
         </section>
 
-        <section class="mb-8">
-            <h3 id="sectionTree" class="text-2xl md:text-3xl font-bold mb-4 text-blue-900">ברוכים הבאים לעץ המשפחה שלנו</h3>
-            <ul class="features grid grid-cols-1 md:grid-cols-2 gap-4" id="featuresList">
-                <li class="p-4 bg-gray-100 rounded-lg shadow-sm transition-all duration-300 hover:bg-blue-50 hover:shadow-md">🌳 עץ משפחה אינטראקטיבי</li>
-                <li class="p-4 bg-gray-100 rounded-lg shadow-sm transition-all duration-300 hover:bg-blue-50 hover:shadow-md">🔐 כניסת משתמשים והרשאות לפי צד משפחתי</li>
-                <li class="p-4 bg-gray-100 rounded-lg shadow-sm transition-all duration-300 hover:bg-blue-50 hover:shadow-md">💬 קיר משפחתי לפוסטים ותגובות</li>
-                <li class="p-4 bg-gray-100 rounded-lg shadow-sm transition-all duration-300 hover:bg-blue-50 hover:shadow-md">📨 מערכת הודעות פנימית</li>
-                <li class="p-4 bg-gray-100 rounded-lg shadow-sm transition-all duration-300 hover:bg-blue-50 hover:shadow-md">🖼️ תצוגת גלריה למסמכים ותמונות</li>
-                <li class="p-4 bg-gray-100 rounded-lg shadow-sm transition-all duration-300 hover:bg-blue-50 hover:shadow-md">🕯️ עמודי הנצחה עם נר דיגיטלי</li>
-                <li class="p-4 bg-gray-100 rounded-lg shadow-sm transition-all duration-300 hover:bg-blue-50 hover:shadow-md">🌐 תפריט רב-לשוני</li>
-                <li class="p-4 bg-gray-100 rounded-lg shadow-sm transition-all duration-300 hover:bg-blue-50 hover:shadow-md">🔍 חיפוש חכם</li>
-                <!-- FIX: Replaced broken character with the correct emoji -->
-                <li class="p-4 bg-gray-100 rounded-lg shadow-sm transition-all duration-300 hover:bg-blue-50 hover:shadow-md">📧ניוזליטור משפחתי</li>
-                <li class="p-4 bg-gray-100 rounded-lg shadow-sm transition-all duration-300 hover:bg-blue-50 hover:shadow-md">🤖 צ’אט AI משפחתי עם תמיכה בנתוני משפחה</li>
-                <li class="p-4 bg-gray-100 rounded-lg shadow-sm transition-all duration-300 hover:bg-blue-50 hover:shadow-md">📱 תמיכה בעיצוב רספונסיבי לנייד</li>
+        <!-- Features Grid -->
+        <section class="p-2 md:p-4">
+            <h3 id="sectionTree" class="text-xl md:text-2xl font-extrabold mb-6 text-slate-900 border-b pb-2 border-slate-100">
+                ברוכים הבאים לעץ המשפחה שלנו
+            </h3>
+            <ul class="features grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="featuresList">
+                <li class="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm transition-all duration-300 hover:bg-blue-50/50 hover:shadow-md hover:border-blue-200">🌳 עץ משפחה אינטראקטיבי</li>
+                <li class="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm transition-all duration-300 hover:bg-blue-50/50 hover:shadow-md hover:border-blue-200">🔐 כניסת משתמשים והרשאות לפי צד משפחתי</li>
+                <li class="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm transition-all duration-300 hover:bg-blue-50/50 hover:shadow-md hover:border-blue-200">💬 קיר משפחתי לפוסטים ותגובות</li>
+                <li class="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm transition-all duration-300 hover:bg-blue-50/50 hover:shadow-md hover:border-blue-200">📨 מערכת הודעות פנימית</li>
+                <li class="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm transition-all duration-300 hover:bg-blue-50/50 hover:shadow-md hover:border-blue-200">🖼️ תצוגת גלריה למסמכים ותמונות</li>
+                <li class="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm transition-all duration-300 hover:bg-blue-50/50 hover:shadow-md hover:border-blue-200">🕯️ עמודי הנצחה עם נר דיגיטלי</li>
+                <li class="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm transition-all duration-300 hover:bg-blue-50/50 hover:shadow-md hover:border-blue-200">🌐 תפריט רב-לשוני</li>
+                <li class="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm transition-all duration-300 hover:bg-blue-50/50 hover:shadow-md hover:border-blue-200">🔍 חיפוש חכם</li>
+                <li class="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm transition-all duration-300 hover:bg-blue-50/50 hover:shadow-md hover:border-blue-200">📧 ניוזליטור משפחתי</li>
+                <li class="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm transition-all duration-300 hover:bg-blue-50/50 hover:shadow-md hover:border-blue-200">🤖 צ’אט AI משפחתי עם תמיכה בנתוני משפחה</li>
+                <li class="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm transition-all duration-300 hover:bg-blue-50/50 hover:shadow-md hover:border-blue-200">📱 תמיכה בעיצוב רספונסיבי לנייד</li>
             </ul>
         </section>
 
-        <section class="mb-8 p-6 bg-gray-50 rounded-2xl shadow-inner">
-            <h3 id="newsTitle" class="text-xl md:text-2xl font-bold mb-4 text-blue-900">חדשות ועדכונים</h3>
-            <ul id="newsList" class="list-disc list-inside space-y-3">
-                <li class="text-gray-700 transition-transform duration-300 hover:translate-x-2">הוספנו יכולת העלאת תמונות לעץ המשפחה.</li>
-                <li class="text-gray-700 transition-transform duration-300 hover:translate-x-2">נפתחה מערכת ההודעות הפנימית לכל המשתמשים.</li>
-                <li class="text-gray-700 transition-transform duration-300 hover:translate-x-2">ניתן להדליק נר דיגיטלי לעילוי נשמת יקיריכם.</li>
+        <!-- News & Updates Container -->
+        <section class="p-6 md:p-8 bg-slate-100/50 border border-slate-200/50 rounded-3xl">
+            <h3 id="newsTitle" class="text-lg md:text-xl font-extrabold mb-4 text-blue-950">חדשות ועדכונים</h3>
+            <ul id="newsList" class="space-y-3">
+                <li class="text-slate-700 flex items-start gap-2 transition-transform duration-300 hover:translate-x-2">
+                    <span class="text-blue-500">•</span>
+                    <span>הוספנו יכולת העלאת תמונות לעץ המשפחה.</span>
+                </li>
+                <li class="text-slate-700 flex items-start gap-2 transition-transform duration-300 hover:translate-x-2">
+                    <span class="text-blue-500">•</span>
+                    <span>נפתחה מערכת ההודעות הפנימית לכל המשתמשים.</span>
+                </li>
+                <li class="text-slate-700 flex items-start gap-2 transition-transform duration-300 hover:translate-x-2">
+                    <span class="text-blue-500">•</span>
+                    <span>ניתן להדליק נר דיגיטלי לעילוי נשמת יקיריכם.</span>
+                </li>
             </ul>
         </section>
 
-        <section class="hero-image">
-            <!-- FIX: Replaced broken image link with a placeholder -->
-            <img src="/assets/family-heroo.png" alt="תמונת משפחה" class="w-full h-auto rounded-3xl shadow-xl transition-transform duration-500 hover:scale-[1.01]" />
+        <!-- Hero bottom image -->
+        <section class="hero-image mb-4">
+            <img src="/assets/family-heroo.png" alt="תמונת משפחה" class="w-full h-auto rounded-3xl shadow-xl border border-slate-100 object-cover max-h-[350px] transition-transform duration-500 hover:scale-[1.005]" onerror="this.src='https://images.unsplash.com/photo-1543269865-cbf427effbad?w=1000&auto=format&fit=crop&q=80'" />
         </section>
     </main>
 
-    <footer class="bg-gray-900 text-white text-center p-6 rounded-t-3xl shadow-inner mt-8">
-        <p class="text-sm md:text-base opacity-90">
-            <span id="footerText">© 2025 אתר המשפחה • נבנה באהבה ע"י המשפחה •</span>
-            <a id="adminLink" href="/admin.html" class="text-blue-300 hover:underline transition-colors">🛠️ ניהול</a>
-        </p>
+    <!-- Superadmin Pull-up Down Panel Drawer -->
+    <div id="superadminPanel" class="fixed bottom-0 right-0 left-0 bg-slate-900 text-white z-[8000] border-t border-slate-800 shadow-[0_-8px_30px_rgb(0,0,0,0.4)] rounded-t-[2rem] transform translate-y-[calc(100%-3.5rem)] transition-transform duration-500 ease-in-out hidden">
+        <div class="max-w-5xl mx-auto px-6">
+            <!-- Header/Trigger Bar of the Panel -->
+            <div onclick="toggleSuperadminPanel()" class="flex items-center justify-between h-14 cursor-pointer">
+                <div class="flex items-center gap-2">
+                    <span class="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <h4 id="panelMainTitle" class="text-sm font-extrabold tracking-wide text-slate-200">פאנל ניהול על: בקשות שפה פתוחות</h4>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span id="requestsCountBadge" class="bg-blue-600 text-white font-extrabold text-xs px-2.5 py-1 rounded-full shadow-inner">0 בקשות</span>
+                    <button id="panelToggleBtn" class="text-slate-400 hover:text-white transition-all text-sm font-bold bg-slate-800/80 px-3 py-1 rounded-lg">פתח פאנל ↑</button>
+                </div>
+            </div>
+            
+            <!-- Panel Content Area (Visible when expanded) -->
+            <div class="pb-8 pt-2 max-h-[320px] overflow-y-auto custom-scrollbar">
+                <div id="requestsTableContainer" class="border border-slate-800 rounded-2xl overflow-hidden bg-slate-950/50">
+                    <table class="w-full text-right text-xs md:text-sm">
+                        <thead class="bg-slate-900 border-b border-slate-800 text-slate-400 font-bold">
+                            <tr>
+                                <th class="p-3">משתמש</th>
+                                <th class="p-3">אימייל</th>
+                                <th class="p-3">שפה מבוקשת</th>
+                                <th class="p-3 text-center">פעולות</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requestsTableBody" class="divide-y divide-slate-800/60">
+                            <!-- Populated dynamically via JS -->
+                        </tbody>
+                    </table>
+                    <div id="emptyRequestsMessage" class="p-8 text-center text-slate-500 font-medium hidden">
+                        אין בקשות שפה חדשות כרגע 🎉
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Footer -->
+    <footer class="bg-slate-900 text-white text-center p-8 mt-12 rounded-t-[2.5rem] shadow-inner">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm md:text-base opacity-90 text-slate-400">
+                <span id="footerText">© 2025 אתר המשפחה • נבנה באהבה ע"י המשפחה •</span>
+                <a id="adminLink" href="/admin.html" class="text-blue-400 font-semibold hover:text-blue-300 hover:underline transition-colors ml-1">🛠️ ניהול</a>
+            </p>
+            <div class="flex gap-4 text-xs text-slate-500">
+                <span>v2.1.0</span>
+                <span>•</span>
+                <span>Ben Abou & Elharrar Family</span>
+            </div>
+        </div>
     </footer>
 
     <script>
+        // Custom message box popup system (toast) to avoid browser alert blockages
+        const showToast = (message, type = 'error') => {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            
+            const toast = document.createElement('div');
+            toast.className = `p-4 rounded-xl shadow-lg font-semibold border text-sm transition-all transform translate-y-2 opacity-0 pointer-events-auto flex items-center gap-2 duration-300 ${
+                type === 'success' 
+                    ? 'bg-emerald-50 border-emerald-200 text-emerald-800' 
+                    : 'bg-rose-50 border-rose-200 text-rose-800'
+            }`;
+            toast.innerHTML = `<span>${type === 'success' ? '✅' : '⚠️'}</span> <span>${message}</span>`;
+            
+            container.appendChild(toast);
+            
+            // Trigger animation
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+            
+            // Remove after 4 seconds
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-[-10px]');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        };
+
         const translations = {
             he: {
                 title: "אתר המשפחה - Ben Abou, Elharrar ועוד",
@@ -180,9 +305,20 @@
                 news: ["הוספנו יכולת העלאת תמונות לעץ המשפחה.", "נפתחה מערכת ההודעות הפנימית לכל המשתמשים.", "ניתן להדליק נר דיגיטלי לעילוי נשמת יקיריכם."],
                 footerText: "© 2025 אתר המשפחה • נבנה באהבה ע\"י המשפחה •",
                 adminLink: "🛠️ ניהול",
-                // FIX: Corrected syntax errors (missing commas, misplaced characters) in the menus array.
                 menus: ["🏠 עמוד ראשי", "🧬 עץ המשפחה", "📖 ספר משפחתי", "🧑‍💻 צ'אט AI", "📩 אמצעי תקשורת משפחתיים", "🖼️ גלריית תמונות", "🕯️ קיר זיכרון", "🗓️ ציר זמן", "📆 לוח שנה", "👪 פורום משפחתי", "📖 ביוגרפיות", "📊 סטטיסטיקות", "עדכון פרטים", "מפת נדודים", "📰 עלון", "🔐 כניסת משתמשים", "התנתקות"],
-                loggedInAs: "מחובר/ת כ:", role: "תפקיד:", familySide: "צד משפחתי:", guest: "אורח"
+                loggedInAs: "מחובר/ת כ:", role: "תפקיד:", familySide: "צד משפחתי:", guest: "אורח",
+                email: "אימייל:",
+                notLoggedInRl: "עליך להיות מחובר כדי לבקש שפה חדשה.",
+                reqModalTitle: "🌐 בקשת שפה חדשה",
+                reqModalDesc: "כאן תוכל לבקש להוסיף שפה חדשה לאתר המשפחה. מנהל המערכת יקבל את הבקשה שלך.",
+                reqModalInput: "שם השפה המבוקשת",
+                reqModalCancel: "ביטול",
+                reqModalSubmit: "שלח בקשה",
+                reqToastSuccess: "בקשתך לשפה הוגשה בהצלחה!",
+                reqToastEmpty: "נא להזין שם שפה תקין.",
+                superTitle: "פאנל ניהול על: בקשות שפה פתוחות",
+                superClose: "סגור פאנל ↓",
+                superOpen: "פתח פאנל ↑"
             },
             en: {
                 title: "Family Website - Ben Abou, Elharrar & more",
@@ -199,9 +335,20 @@
                 news: ["Photo upload to the family tree is now available.", "Internal messaging system is open to all users.", "You can light a digital candle in memory of loved ones."],
                 footerText: "© 2025 Family Website • Built with love by the family •",
                 adminLink: "🛠️ Admin",
-                 // FIX: Corrected syntax errors (missing commas) in the menus array.
                 menus: ["🏠 Home", "🧬 Family Tree", "📖 Family Book", "🧑‍💻 AI Chat", "📩 Family Contacts", "🖼️ Gallery", "🕯️ Memorial Wall", "🗓️ Timeline", "📆 Calendar", "👪 Family Forum", "📖 Biographies", "📊 Statistics", "Update Details", "Migration Map", "📰 Newsletter", "🔐 Login", "Logout"],
-                loggedInAs: "Logged in as:", role: "Role:", familySide: "Family Side:", guest: "Guest"
+                loggedInAs: "Logged in as:", role: "Role:", familySide: "Family Side:", guest: "Guest",
+                email: "Email:",
+                notLoggedInRl: "You must be logged in to request a new language.",
+                reqModalTitle: "🌐 Request New Language",
+                reqModalDesc: "Here you can request to add a new language to the family site. The superadmin will review your request.",
+                reqModalInput: "Requested Language Name",
+                reqModalCancel: "Cancel",
+                reqModalSubmit: "Submit Request",
+                reqToastSuccess: "Your language request has been submitted successfully!",
+                reqToastEmpty: "Please enter a valid language name.",
+                superTitle: "Superadmin Panel: Open Language Requests",
+                superClose: "Close Panel ↓",
+                superOpen: "Open Panel ↑"
             },
             fr: {
                 title: "Site de la Famille - Ben Abou, Elharrar et plus",
@@ -218,9 +365,20 @@
                 news: ["Ajout de l’option de téléverser des photos dans l’arbre généalogique.", "Le système de messagerie interne est ouvert à tous les utilisateurs.", "Vous pouvez allumer une bougie numérique en mémoire de vos proches."],
                 footerText: "© 2025 Site de la famille • Construit avec amour par la famille •",
                 adminLink: "🛠️ Admin",
-                 // FIX: Corrected syntax errors (missing commas) in the menus array.
                 menus: ["🏠 Accueil",  "🧬 Arbre généalogique", "📖 livre de famille", "🧑‍💻 Chat IA", "📩 Contacts familiaux", "🖼️ Galerie", "🕯️ Mur commémoratif", "🗓️ Chronologie", "📆 Calendrier", "👪 Forum familial", "📖 Biographies", "📊 Statistiques", "Mettre à jour", "Carte migrations", "📰 Bulletin", "🔐 Connexion", "Déconnexion"],
-                loggedInAs: "Connecté(e) en tant que:", role: "Rôle:", familySide: "Côté de la famille:", guest: "Invité"
+                loggedInAs: "Connecté(e) en tant que:", role: "Rôle:", familySide: "Côté de la famille:", guest: "Invité",
+                email: "Email:",
+                notLoggedInRl: "Vous devez être connecté pour demander une nouvelle langue.",
+                reqModalTitle: "🌐 Demander une nouvelle langue",
+                reqModalDesc: "Ici, vous pouvez demander à ajouter une nouvelle langue au site familial. Le superadmin examinera votre demande.",
+                reqModalInput: "Nom de la langue demandée",
+                reqModalCancel: "Annuler",
+                reqModalSubmit: "Soumettre",
+                reqToastSuccess: "Votre demande de langue a été soumise avec succès !",
+                reqToastEmpty: "Veuillez entrer un nom de langue valide.",
+                superTitle: "Panneau Superadmin: Demandes de langue ouvertes",
+                superClose: "Fermer le panneau ↓",
+                superOpen: "Ouvrir le panneau ↑"
             },
             yi: {
                 title: "פאמיליע וועבזייט - בן אבו, אלהרר און מער",
@@ -237,375 +395,431 @@
                 news: ["צוגעגעבן די מעגלעכקייט צו דערהייבן בילדער צו דער פאמיליע בוים.", "דער אינערלעך מעסעדזשינג סיסטעם איז אפן פאר אלע באנוצער.", "איר קענט אָנצינדן א דיגיטאלישע ליכט לזכות אייערע ליבע פריינד."],
                 footerText: "© 2025 פאמיליע וועבזייט • געבויט מיט ליבע דורך די פאמיליע •",
                 adminLink: "🛠️ אדמין",
-                // FIX: Corrected syntax errors (missing commas) in the menus array.
                 menus: ["🏠 הויפּט בלאַט"," 🧬 פאמיליע בוים", "📖 משפּחה בוך", "🧑‍💻 אינטעליגענט טשאַט", "📩 פאמיליע קאנטאקטן", "🖼️ גאלעריע", "🕯️ אנדענק וואנט", "🗓️ צייט-ליניע", "📆 קאלענדאר", "👪 פאמיליע פארום", "📖 ביאגראפיעס", "📊 סטאטיסטיק", "דערהייבן דעטאלן", "מאַפּע פון וואַנדערונגען", "📰 נייַבלאַט", "🔐 אריינלאגן", "אויסלאגן"],
-                loggedInAs: "אריינגעזען ווי:", role: "ראָלע:", familySide: "פאמיליע זייט:", guest: "גאַסט"
+                loggedInAs: "אריינגעזען ווי:", role: "ראָלע:", familySide: "פאמיליע זייט:", guest: "גאַסט",
+                email: "אימייל:",
+                notLoggedInRl: "איר מוזט זיין אריינגעזען צו בעטן א נייע שפראך.",
+                reqModalTitle: "🌐 בעטן א נייע שפּראַך",
+                reqModalDesc: "דאָ קענט איר בעטן צו לייגן א נייע שפּראַך צו די משפּחה זייט. דער סופּעראַדמין וועט באַטראַכטן אייער בקשה.",
+                reqModalInput: "געבעטן שפּראַך נאָמען",
+                reqModalCancel: "אקאנסעלירן",
+                reqModalSubmit: "שיקן בקשה",
+                reqToastSuccess: "אייער בקשה איז געשיקט געווארן מיט הצלחה!",
+                reqToastEmpty: "ביטע אריינשרייבן א ריכטיגן שפראך נאמען.",
+                superTitle: "סופּעראַדמין פּאַנעל: אָפֿן שפּראַך בקשות",
+                superClose: "שליסן פּאַנעל ↓",
+                superOpen: "עפֿענען פּאַנעל ↑"
             },
-    nl: {
-"title": "Familiewebsite - Ben Abou, Elharrar & meer",
-"welcomeTitle": "Welkom op de Familiewebsite",
-"welcomeSubtitle": "Ben Abou • Bromberg • Ellharrar • en meer",
-"searchTitle": "🔍 Zoek op de site",
-"searchPlaceholder": "Typ een naam of beschrijving...",
-"sectionWelcome": "🌟 Welkom bij het Familiecentrum",
-"intro1": "Deze website is gebouwd voor alle families: Ben Abou, Elharrar, Malka, Ben David, Elook, Bromberg, Barenbaum, Fass, Schneck, Weinberger, Leibner, van der Velde, Izaks en meer – om foto's, gedenktekens, stambomen, aankondigingen en meer te delen.",
-"intro2": "Je kunt je aansluiten via een familielijn, gegevens bijwerken, chatten met de Familie AI Chatbot en samen gedocumenteerde geschiedenis beleven.",
-"sectionTree": "Welkom bij onze Stamboom",
-"features": [
-"🌳 Interactieve Stamboom",
-"🔐 Gebruikerslogin & rechten per familielijn",
-"💬 Familiewand voor berichten & opmerkingen",
-"📨 Intern berichtensysteem",
-"🖼️ Galerijweergave voor documenten & foto's",
-"🕯️ Herdenkingspagina's met digitale kaarsen",
-"🌐 Meertalig Menu",
-"🔍 Slim zoeken",
-"📧 Nieuwsbriefondersteuning",
-"🤖 Familie AI Chat met familiegegevens",
-"📱 Responsief ontwerp voor mobiel"
-],
-"newsTitle": "Nieuws & Updates",
-"news": [
-"Foto's uploaden naar de stamboom is nu beschikbaar.",
-"Het interne berichtensysteem is geopend voor alle gebruikers.",
-"Je kunt een digitale kaars aansteken ter nagedachtenis van dierbaren."
-],
-"footerText": "© 2025 Familiewebsite • Gebouwd met liefde door de familie •",
-"adminLink": "🛠️ Beheer",
-"menus": [
-"🏠 Home",
-"🧬 Stamboom",
-"📖 Familieboek",
-"🧑‍💻 AI Chat",
-"📩 Familiecontacten",
-"🖼️ Galerij",
-"🕯️ Herdenkingsmuur",
-"🗓️ Tijdlijn",
-"📆 Kalender",
-"👪 Familieforum",
-"📖 Biografieën",
-"📊 Statistieken",
-"Gegevens Bijwerken",
-"Migratiekaart",
-"📰 Nieuwsbrief",
-"🔐 Inloggen",
-"Uitloggen"
-],
-"loggedInAs": "Ingelogd als:",
-"role": "Rol:",
-"familySide": "Familielijn:",
-"guest": "Gast"
-}
+            nl: {
+                title: "Familiewebsite - Ben Abou, Elharrar & meer",
+                welcomeTitle: "Welkom op de Familiewebsite",
+                welcomeSubtitle: "Ben Abou • Bromberg • Ellharrar • en meer",
+                searchTitle: "🔍 Zoek op de site",
+                searchPlaceholder: "Typ een naam of beschrijving...",
+                sectionWelcome: "🌟 Welkom bij het Familiecentrum",
+                intro1: "Deze website is gebouwd voor alle families: Ben Abou, Elharrar, Malka, Ben David, Elook, Bromberg, Barenbaum, Fass, Schneck, Weinberger, Leibner, van der Velde, Izaks en meer – om foto's, gedenktekens, stambomen, aankondigingen en meer te delen.",
+                intro2: "Je kunt je aansluiten via een familielijn, gegevens bijwerken, chatten met de Familie AI Chatbot en samen gedocumenteerde geschiedenis beleven.",
+                sectionTree: "Welkom bij onze Stamboom",
+                features: ["🌳 Interactieve Stamboom","🔐 Gebruikerslogin & rechten per familielijn","💬 Familiewand voor berichten & opmerkingen","📨 Intern berichtensysteem","🖼️ Galerijweergave voor documenten & foto's","🕯️ Herdenkingspagina's met digitale kaarsen","🌐 Meertalig Menu","🔍 Slim zoeken","📧 Nieuwsbriefondersteuning","🤖 Familie AI Chat met familiegegevens","📱 Responsief ontwerp voor mobiel"],
+                newsTitle: "Nieuws & Updates",
+                news: ["Foto's uploaden naar de stamboom is nu beschikbaar.","Het interne berichtensysteem is geopend voor alle gebruikers.","Je kunt een digitale kaars aansteken ter nagedachtenis van dierbaren."],
+                footerText: "© 2025 Familiewebsite • Gebouwd met liefde door de familie •",
+                adminLink: "🛠️ Beheer",
+                menus: ["🏠 Home","🧬 Stamboom","📖 Familieboek","🧑‍💻 AI Chat","📩 Familiecontacten","🖼️ Galerij","🕯️ Herdenkingsmuur","🗓️ Tijdlijn","📆 Kalender","👪 Familieforum","📖 Biografieën","📊 Statistieken","Gegevens Bijwerken","Migratiekaart","📰 Nieuwsbrief","🔐 Inloggen","Uitloggen"],
+                loggedInAs: "Ingelogd als:", role: "Rol:", familySide: "Familielijn:", guest: "Gast",
+                email: "E-mail:",
+                notLoggedInRl: "U moet ingelogd zijn om een nieuwe taal aan te vragen.",
+                reqModalTitle: "🌐 Nieuwe taal aanvragen",
+                reqModalDesc: "Hier kunt u een aanvraag indienen om een nieuwe taal toe te voegen aan de familiesite. De superadmin zal uw aanvraag beoordelen.",
+                reqModalInput: "Naam aangevraagde taal",
+                reqModalCancel: "Annuleren",
+                reqModalSubmit: "Verzenden",
+                reqToastSuccess: "Uw taalaanvraag is succesvol ingediend!",
+                reqToastEmpty: "Voer een geldige taalnaam in.",
+                superTitle: "Superadmin Panel: Openstaande taalaanvragen",
+                superClose: "Sluit Paneel ↓",
+                superOpen: "Open Paneel ↑"
+            }
+        };
 
-              };
+        // UI and Authentication State Keepers
+        let globalIsLoggedIn = false;
+        let globalCurrentUser = null;
+        let previousSelectedLang = "he";
+        let isSuperadminPanelExpanded = false;
 
-const updateContent = (lang, isLoggedIn, user) => {
-  console.log("🔍 updateContent called with:", lang);
+        const updateContent = (lang, isLoggedIn, user) => {
+            console.log("🔍 updateContent called with:", lang);
+            
+            const texts = translations[lang];
+            if (!texts) {
+                console.warn("⚠️ No translation found for language:", lang);
+                return;
+            }
 
-  // נבדוק אם השפה קיימת באובייקט התרגומים
-  console.log("🌐 translation found:", translations[lang]);
-  
-  const texts = translations[lang];
-  if (!texts) {
-    console.warn("⚠️ No translation found for language:", lang);
-    return;
-  }
+            // Update DOM properties
+            document.documentElement.lang = lang;
+            document.documentElement.setAttribute("dir", (lang === "he" || lang === "yi") ? "rtl" : "ltr");
+            document.title = texts.title;
 
-            // עדכון HTML, dir ו-title
+            const textElementsMap = {
+                "welcomeTitle": "welcomeTitle",
+                "welcomeSubtitle": "welcomeSubtitle",
+                "search-title": "searchTitle",
+                "search-input": "searchPlaceholder",
+                "sectionWelcome": "sectionWelcome",
+                "intro1": "intro1",
+                "intro2": "intro2",
+                "sectionTree": "sectionTree",
+                "newsTitle": "newsTitle",
+                "footerText": "footerText",
+                "adminLink": "adminLink",
+                
+                // Modal Request language localizations
+                "modalTitle": "reqModalTitle",
+                "modalDescription": "reqModalDesc",
+                "modalInputLabel": "reqModalInput",
+                "modalCancelBtn": "reqModalCancel",
+                "modalSubmitBtn": "reqModalSubmit"
+            };
 
-            document.documentElement.lang = lang;
-            document.documentElement.setAttribute("dir", (lang === "he" || lang === "yi") ? "rtl" : "ltr");
-            document.title = texts.title;
-    
-            const textElementsMap = {
-                "welcomeTitle": "welcomeTitle",
-                "welcomeSubtitle": "welcomeSubtitle",
-                "search-title": "searchTitle",
-                "search-input": "searchPlaceholder",
-                "sectionWelcome": "sectionWelcome",
-                "intro1": "intro1",
-                "intro2": "intro2",
-                "sectionTree": "sectionTree",
-                "newsTitle": "newsTitle",
-                "footerText": "footerText",
-                "adminLink": "adminLink"
-            };
+            // Update individual element texts
+            for (const id in textElementsMap) {
+                const key = textElementsMap[id];
+                const element = document.getElementById(id);
+                if (element) {
+                    if (element.tagName === "INPUT") {
+                        element.placeholder = texts[key];
+                    } else {
+                        element.textContent = texts[key];
+                    }
+                }
+            }
 
+            // Update lists beautifully
+            const featuresList = document.getElementById("featuresList");
+            if (featuresList) {
+                featuresList.innerHTML = texts.features.map(item => `
+                    <li class="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm transition-all duration-300 hover:bg-blue-50/50 hover:shadow-md hover:border-blue-200">
+                        ${item}
+                    </li>
+                `).join('');
+            }
 
+            const newsList = document.getElementById("newsList");
+            if (newsList) {
+                newsList.innerHTML = texts.news.map(item => `
+                    <li class="text-slate-700 flex items-start gap-2 transition-all duration-300 hover:translate-x-2">
+                        <span class="text-blue-500">•</span>
+                        <span>${item}</span>
+                    </li>
+                `).join('');
+            }
 
-            // עדכון אלמנטים לפי ID
+            // Update Navigation menus safely
+            const menuLogin = document.getElementById('menuLogin');
+            const menuLogout = document.getElementById('menuLogout');
+            const menuItems = document.querySelectorAll('.menu-bar a');
+            
+            menuItems.forEach((link, index) => {
+                const linkId = link.id;
+                if (linkId === 'menuLogin') {
+                    if (isLoggedIn) {
+                        link.classList.add('hidden');
+                    } else {
+                        link.classList.remove('hidden');
+                    }
+                    link.innerHTML = `<span>🔐</span> ${texts.menus[texts.menus.length - 2]}`;
+                } else if (linkId === 'menuLogout') {
+                    if (isLoggedIn) {
+                        link.classList.remove('hidden');
+                    } else {
+                        link.classList.add('hidden');
+                    }
+                    link.innerHTML = `<span>👋</span> ${texts.menus[texts.menus.length - 1]}`;
+                } else if (texts.menus[index]) {
+                    link.innerHTML = texts.menus[index];
+                }
+            });
 
-            for (const id in textElementsMap) {
-                const key = textElementsMap[id];
-                const element = document.getElementById(id);
-                if (element) {
-                    if (element.tagName === "INPUT") {
-                        element.placeholder = texts.searchPlaceholder;
-                    } else {
-                        element.textContent = texts[key];
-                    }
-                }
-            }
+            // Update User Profiles details
+            const profileDiv = document.getElementById('user-profile-details');
+            if (profileDiv) {
+                if (isLoggedIn && user) {
+                    let familySideHTML = user.familySide || "לא מוגדר";
+                    if (user.familySideLink) {
+                        familySideHTML = `<a href="${user.familySideLink}" target="_blank" class="text-blue-600 font-semibold hover:underline transition-all hover:text-blue-800">${user.familySide}</a>`;
+                    }
+                    
+                    // Generate a modern visual avatar from the first letter of their username
+                    const initial = (user.username || user.email || 'U').charAt(0).toUpperCase();
 
+                    profileDiv.innerHTML = `
+                        <div class="flex items-start gap-3 text-slate-700">
+                            <!-- Premium Avatar Badge -->
+                            <div class="w-10 h-10 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center text-blue-800 font-extrabold text-base shadow-sm shrink-0">
+                                ${initial}
+                            </div>
+                            <div class="flex flex-col gap-1 min-w-[150px]">
+                                <div class="text-sm font-extrabold text-blue-950">${user.username}</div>
+                                <div class="text-xs text-slate-500 font-medium">${user.email}</div>
+                                <div class="flex flex-wrap gap-1.5 mt-1.5">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-800 border border-blue-100/50">
+                                        ${texts.role} ${user.role}
+                                    </span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200/50">
+                                        ${texts.familySide} ${familySideHTML}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    profileDiv.innerHTML = `
+                        <a href="/login.html" class="font-bold text-blue-600 hover:text-blue-800 transition-colors flex items-center gap-1.5">
+                            <span>🔐</span> ${texts.menus[texts.menus.length - 2]}
+                        </a>
+                    `;
+                }
+            }
 
+            // Handle the superadmin "down panel" logic depending on active user roles
+            const superadminPanel = document.getElementById("superadminPanel");
+            if (superadminPanel) {
+                if (isLoggedIn && user && user.role === "superadmin") {
+                    superadminPanel.classList.remove("hidden");
+                    updateSuperPanelTexts(lang);
+                    renderLanguageRequests();
+                } else {
+                    superadminPanel.classList.add("hidden");
+                }
+            }
+        };
 
-            // עדכון רשימות
+        const updateSuperPanelTexts = (lang) => {
+            const texts = translations[lang] || translations.he;
+            const panelMainTitle = document.getElementById("panelMainTitle");
+            const panelToggleBtn = document.getElementById("panelToggleBtn");
+            if (panelMainTitle) panelMainTitle.textContent = texts.superTitle;
+            if (panelToggleBtn) panelToggleBtn.textContent = isSuperadminPanelExpanded ? texts.superClose : texts.superOpen;
+        };
 
-            const featuresList = document.getElementById("featuresList");
-            if (featuresList) {
-                featuresList.innerHTML = texts.features.map(item => `<li class="feature-item">${item}</li>`).join('');
-            }
+        const toggleSuperadminPanel = () => {
+            const panel = document.getElementById("superadminPanel");
+            const currentLang = localStorage.getItem("lang") || "he";
+            if (!panel) return;
+            
+            isSuperadminPanelExpanded = !isSuperadminPanelExpanded;
+            if (isSuperadminPanelExpanded) {
+                panel.classList.remove("translate-y-[calc(100%-3.5rem)]");
+            } else {
+                panel.classList.add("translate-y-[calc(100%-3.5rem)]");
+            }
+            updateSuperPanelTexts(currentLang);
+        };
 
-            const newsList = document.getElementById("newsList");
-            if (newsList) {
-                newsList.innerHTML = texts.news.map(item => `<li class="text-gray-700 transition-transform duration-300 hover:translate-x-2">${item}</li>`).join('');
-            }
+        // Open Request language Dialog Box
+        const openRequestModal = () => {
+            const modal = document.getElementById("langRequestModal");
+            const input = document.getElementById("requestedLangInput");
+            if (!modal) return;
+            
+            input.value = "";
+            modal.classList.remove("hidden");
+            // Tiny timeout to trigger transition animations
+            setTimeout(() => {
+                modal.classList.remove("opacity-0");
+                modal.querySelector("div").classList.remove("scale-95");
+            }, 10);
+        };
 
+        // Close Request language Dialog Box
+        const closeRequestModal = () => {
+            const modal = document.getElementById("langRequestModal");
+            if (!modal) return;
+            
+            modal.classList.add("opacity-0");
+            modal.querySelector("div").classList.add("scale-95");
+            
+            setTimeout(() => {
+                modal.classList.add("hidden");
+                // Revert lang selector to previous selected language cleanly
+                const langSelector = document.getElementById("langSelector");
+                if (langSelector) langSelector.value = previousSelectedLang;
+            }, 300);
+        };
 
+        const getLanguageRequests = () => {
+            try {
+                return JSON.parse(localStorage.getItem("family_portal_lang_requests")) || [];
+            } catch (e) {
+                return [];
+            }
+        };
 
-            // עדכון תפריט הניווט
+        const saveLanguageRequest = (requests) => {
+            localStorage.setItem("family_portal_lang_requests", JSON.stringify(requests));
+        };
 
-            const menuLogin = document.getElementById('menuLogin');
-            const menuLogout = document.getElementById('menuLogout');
-            const menuItems = document.querySelectorAll('.menu-bar a');
-            menuItems.forEach((link, index) => {
-                const linkId = link.id;
-                if (linkId === 'menuLogin') {
-                    if (isLoggedIn) {
-                        link.classList.add('hidden');
-                    } else {
-                        link.classList.remove('hidden');
-                    }
-                    link.innerHTML = texts.menus[texts.menus.length - 2];
-                } else if (linkId === 'menuLogout') {
-                    if (isLoggedIn) {
-                        link.classList.remove('hidden');
-                    } else {
-                        link.classList.add('hidden');
-                    }
-                    link.innerHTML = texts.menus[texts.menus.length - 1];
-                } else if (texts.menus[index]) {
-                    link.innerHTML = texts.menus[index];
-                }
-            });
+        // Submit requested language and fire webhook to server if ready
+        const submitLanguageRequest = async () => {
+            const input = document.getElementById("requestedLangInput");
+            const currentLang = localStorage.getItem("lang") || "he";
+            const texts = translations[currentLang] || translations.he;
+            
+            if (!input || !input.value.trim()) {
+                showToast(texts.reqToastEmpty, "error");
+                return;
+            }
 
+            const requestedLanguageName = input.value.trim();
+            const username = globalCurrentUser ? globalCurrentUser.username : "אורח";
+            const email = globalCurrentUser ? globalCurrentUser.email : "לא מוגדר";
 
+            const newRequest = {
+                id: Date.now(),
+                username: username,
+                email: email,
+                requestedLang: requestedLanguageName,
+                date: new Date().toLocaleDateString('he-IL')
+            };
 
-           // עדכון פרטי משתמש
-            const profileDiv = document.getElementById('user-profile-details');
-            if (profileDiv) {
-                if (isLoggedIn) {
-                    let familySideHTML = user.familySide || "";
-                    if (user.familySideLink) {
-                        familySideHTML = `<a href="${user.familySideLink}" target="_blank" class="text-blue-500 hover:underline transition-colors">${user.familySide}</a>`;
-                    }
-                    profileDiv.innerHTML = `
-                        <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                            <span class="font-bold text-sm text-gray-800">${texts.loggedInAs}</span>
-                            <span class="text-sm font-semibold text-blue-800">${user.username}</span>
-                        </div>
-                        <div class="flex items-center space-x-2 rtl:space-x-reverse mt-1">
-                            <span class="font-bold text-sm text-gray-800">${texts.role}</span>
-                            <span class="text-sm font-medium text-gray-600">${user.role}</span>
-                        </div>
+            // Local fallback persistence
+            const requests = getLanguageRequests();
+            requests.push(newRequest);
+            saveLanguageRequest(requests);
 
-                        <div class="flex items-center space-x-2 rtl:space-x-reverse mt-1">
-                            <span class="font-bold text-sm text-gray-800">${texts.familySide}</span>
-                            <span class="text-sm font-medium text-gray-600">${familySideHTML}</span>
-                        </div>
-                    `;
-                } else {
-                    profileDiv.innerHTML = `<a href="/login.html" class="font-bold text-blue-900 hover:underline transition-colors">${texts.menus[texts.menus.length - 2]}</a>`;
-                }
-            }
-        };
+            // Optional Backend Server API Request
+            try {
+                await fetch('/api/language-requests', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newRequest)
+                });
+            } catch (err) {
+                console.info("Simulated API dispatch: Language Request recorded via frontend storage.");
+            }
 
+            showToast(texts.reqToastSuccess, "success");
+            closeRequestModal();
+            renderLanguageRequests();
+        };
 
+        // Render Language requests for superadmin
+        const renderLanguageRequests = () => {
+            const tableBody = document.getElementById("requestsTableBody");
+            const emptyMsg = document.getElementById("emptyRequestsMessage");
+            const badge = document.getElementById("requestsCountBadge");
+            if (!tableBody) return;
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const langSelector = document.getElementById("langSelector");
-            const logoutButton = document.getElementById('menuLogout');
-            let currentLang = localStorage.getItem("lang") || "he";
+            const requests = getLanguageRequests();
+            badge.textContent = `${requests.length} בקשות`;
 
-            
+            if (requests.length === 0) {
+                tableBody.innerHTML = "";
+                emptyMsg.classList.remove("hidden");
+                return;
+            }
 
-            // עדכון השפה הראשונית של ה-select
-            langSelector.value = currentLang;
+            emptyMsg.classList.add("hidden");
+            tableBody.innerHTML = requests.map(req => `
+                <tr class="hover:bg-slate-900/40 transition-colors">
+                    <td class="p-3 font-semibold text-slate-100">${req.username}</td>
+                    <td class="p-3 text-slate-400">${req.email}</td>
+                    <td class="p-3 text-blue-400 font-bold">${req.requestedLang}</td>
+                    <td class="p-3 text-center">
+                        <button onclick="deleteLanguageRequest(${req.id})" class="bg-rose-500/10 hover:bg-rose-500 text-rose-500 hover:text-white border border-rose-500/20 px-3 py-1 rounded-xl font-semibold text-xs transition-all">
+                            סמן כבוצע / מחק
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        };
 
-            // לוגיקה להתנתקות
+        const deleteLanguageRequest = async (id) => {
+            let requests = getLanguageRequests();
+            requests = requests.filter(req => req.id !== id);
+            saveLanguageRequest(requests);
+            
+            // Optional backend request
+            try {
+                await fetch(`/api/language-requests/${id}`, { method: 'DELETE' });
+            } catch (e) {}
 
-            if (logoutButton) {
-                logoutButton.addEventListener('click', async (event) => {
-                    event.preventDefault();
-                    try {
-                        const response = await fetch('/api/logout', {
-                            method: 'POST'
-                        });
-                        if (response.ok) {
-                            window.location.href = '/'; // ניווט לעמוד הראשי לאחר התנתקות
-                        } else {
-                            alert('שגיאה בהתנתקות.');
-                        }
+            renderLanguageRequests();
+            showToast("הבקשה טופלה ונמחקה בהצלחה!", "success");
+        };
 
-                    } catch (error) {
-                        console.error('Logout failed:', error);
-                        alert('שגיאה בהתנתקות.');
-                    }
-                });
-            }
+        document.addEventListener("DOMContentLoaded", () => {
+            const langSelector = document.getElementById("langSelector");
+            const logoutButton = document.getElementById('menuLogout');
+            let currentLang = localStorage.getItem("lang") || "he";
+            
+            // Set initial selector values
+            langSelector.value = currentLang;
+            previousSelectedLang = currentLang;
 
+            // Handle clean logout interactions
+            if (logoutButton) {
+                logoutButton.addEventListener('click', async (event) => {
+                    event.preventDefault();
+                    try {
+                        const response = await fetch('/api/logout', {
+                            method: 'POST'
+                        });
+                        if (response.ok) {
+                            window.location.href = '/'; 
+                        } else {
+                            showToast('שגיאה בתהליך ההתנתקות. נסה שנית.', 'error');
+                        }
+                    } catch (error) {
+                        console.error('Logout failed:', error);
+                        showToast('חיבור השרת נכשל במהלך ההתנתקות.', 'error');
+                    }
+                });
+            }
 
+            // Simulate server query details cleanly
+            fetch("/api/user")
+                .then(res => res.ok ? res.json() : Promise.reject("User not logged in"))
+                .then(data => {
+                    globalIsLoggedIn = true;
+                    globalCurrentUser = data.user;
+                    
+                    // TO TEST THE SUPERADMIN VIEW: Uncomment the line below to simulate superadmin locally
+                    // globalCurrentUser.role = "superadmin";
 
-            // סימולציה של קריאה לשרת
-            fetch("/api/user")
-                .then(res => res.ok ? res.json() : Promise.reject("User not logged in"))
-                .then(data => {
-                    updateContent(currentLang, true, data.user);
-                })
-                .catch(error => {
-                    console.error("Error fetching user data:", error);
-                    updateContent(currentLang, false, null);
-                });
+                    updateContent(currentLang, true, globalCurrentUser);
+                })
+                .catch(error => {
+                    console.info("User session profile fetch complete (Unauthenticated guest active):", error);
+                    globalIsLoggedIn = false;
+                    globalCurrentUser = null;
+                    updateContent(currentLang, false, null);
+                });
 
+            // Handle language change actions
+            langSelector.addEventListener("change", (event) => {
+                const selectedValue = event.target.value;
+                const texts = translations[currentLang] || translations.he;
 
+                if (selectedValue === "rl") {
+                    if (globalIsLoggedIn) {
+                        openRequestModal();
+                    } else {
+                        showToast(texts.notLoggedInRl, "error");
+                        langSelector.value = previousSelectedLang;
+                    }
+                    return;
+                }
 
-            // האזנה לשינוי שפה
-            langSelector.addEventListener("change", (event) => {
-                currentLang = event.target.value;
-                localStorage.setItem("lang", currentLang);
-                fetch("/api/user")
-                    .then(res => res.ok ? res.json() : Promise.reject("User not logged in"))
-                    .then(data => {
-                        updateContent(currentLang, true, data.user);
-                    })
-                    .catch(error => {
-                        updateContent(currentLang, false, null);
-                    });
-            });
-        });
-
-        
-        <!-- מדור עלון המשפחה החדש -->
-<section class="mb-8 bg-gradient-to-br from-blue-600 to-indigo-800 text-white p-6 md:p-8 rounded-3xl shadow-xl relative overflow-hidden">
-    <!-- קישוטים מעוצבים של בועה ברקע ואייקון מכתב -->
-    <div class="absolute -bottom-8 -left-8 w-32 h-32 bg-white/10 rounded-full pointer-events-none"></div>
-    <div class="absolute top-4 left-4 text-4xl opacity-20 pointer-events-none">✉️</div>
-    
-    <span id="newsletterBadge" class="bg-blue-500/50 text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-blue-400/30">גיליון החודש</span>
-    <h3 id="newsletterTitle" class="text-2xl md:text-3xl font-bold mt-3 mb-1">עלון המשפחה</h3>
-    <p id="newsletterEdition" class="text-xs text-blue-200 mb-4">June Newslatter- 5786/2026</p>
-    
-    <div class="bg-white/10 backdrop-blur-sm p-5 rounded-2xl border border-white/10 mb-5 text-right">
-        <h4 id="newsletterFeaturedTitle" class="font-bold text-base md:text-lg text-yellow-300 mb-1">סיפור השבוע: מתכונים של פעם</h4>
-        <p id="newsletterFeaturedDesc" class="text-sm text-white/95 leading-relaxed">איך סבתא שרה וסבא דוד משלבים את הניחוחות של קזבלנקה ואירופה במטבח אחד קטן, ומהו הסוד לחלה המתוקה המושלמת שמחברת את כולנו.</p>
-    </div>
-    
-    <button id="open-newsletter-btn" class="bg-white text-blue-700 hover:bg-blue-50 font-bold py-3 px-6 rounded-xl transition-all text-sm shadow-md active:scale-95">
-        לקריאת הגיליון המלא 📖
-    </button>
-</section>
-
-#### שלב 2: הוספת חלונית הקריאה הצצה (Modal HTML)
-רד לתחתית הקובץ, וממש מעל לתגית ה-`</body>`, הוסף את הבלוק הבא שישמש כחלונית קופצת נקייה ומזמינה לקריאת העלון המלא:
-```html
-<!-- מודל קריאת עלון המשפחה -->
-<div id="newsletterModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-gray-100 flex flex-col">
-        <!-- Modal Header -->
-        <div class="p-6 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white/90 backdrop-blur-md z-10 rounded-t-3xl">
-            <div>
-                <h3 id="modalNewsTitle" class="text-2xl font-bold text-gray-900">עלון המשפחה</h3>
-                <p id="modalNewsSubtitle" class="text-sm text-gray-500">סיפורים, מתכונים וזיכרונות חמים מהעץ המשפחתי</p>
-            </div>
-            <button id="close-newsletter-btn" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 font-bold transition-colors">✕</button>
-        </div>
-        <!-- Modal Content (מיושר לפי כיוון השפה בצורה דינמית) -->
-        <div class="p-6 space-y-6 text-gray-700 text-base leading-relaxed text-right" id="modal-content-body">
-            <!-- התוכן המלא יוזרק לכאן אוטומטית ע"י ה-JavaScript -->
-        </div>
-        <!-- Modal Footer -->
-        <div class="p-4 border-t border-gray-100 bg-gray-50 flex justify-end rounded-b-3xl">
-            <button id="close-newsletter-btn-footer" class="bg-gray-800 text-white font-semibold px-6 py-2 rounded-xl hover:bg-gray-700 transition-colors">סגור</button>
-        </div>
-    </div>
-</div>
-
-#### שלב 3: עדכון מילון התרגומים (JavaScript Translations)
-בתוך תגית ה-`<script>`, תחת אובייקט ה-`translations` הגדול, הוסף לכל שפה (לדוגמה תחת `he: { ... }`) את הנתונים החדשים עבור העלון:
-```javascript
-// לדוגמה בתוך 'he':
-newsletterBadge: "גיליון החודש",
-newsletterTitle: "עלון המשפחה",
-newsletterEdition: "גיליון סתיו • מאת מערכת האתר",
-newsletterFeaturedTitle: "סיפור השבוע: מתכונים של פעם",
-newsletterFeaturedDesc: "איך סבתא שרה וסבא דוד משלבים את הניחוחות של קזבלנקה ואירופה...",
-newsletterBtnRead: "לקריאת הגיליון המלא 📖",
-modalNewsTitle: "עלון המשפחה - הגיליון המלא",
-modalNewsSubtitle: "גיליון סתיו • סיפורים, מתכונים וזיכרונות",
-modalContent: `
-    <div class="space-y-4 text-right">
-        <div class="p-4 bg-yellow-50 rounded-2xl border border-yellow-200">
-            <h4 class="font-bold text-lg text-yellow-800 mb-2">🥖 מתכון מנצח: החלה המפורסמת של סבתא שרה</h4>
-            <p class="text-sm text-gray-700">בכל יום שישי הריח מתפשט בכל הרחוב...</p>
-        </div>
-        <!-- תוכן נוסף... -->
-    </div>
-`,
-*(שכפל זאת בהתאמה גם עבור האנגלית `en`, צרפתית `fr`, יידיש `yi`, והולנדית `nl` כפי שמוצג בקובץ המלא למעלה)*.
-
-#### שלב 4: עדכון פונקציית עדכון התוכן והמאזינים (Script Update)
-1. בתוך הפונקציה `updateContent = (lang, isLoggedIn, user) => { ... }`, הוסף את המפתחות החדשים לתוך אובייקט הקישורים `textElementsMap`:
-   ```javascript
-   "newsletterBadge": "newsletterBadge",
-   "newsletterTitle": "newsletterTitle",
-   "newsletterEdition": "newsletterEdition",
-   "newsletterFeaturedTitle": "newsletterFeaturedTitle",
-   "newsletterFeaturedDesc": "newsletterFeaturedDesc",
-   "open-newsletter-btn": "newsletterBtnRead",
-   "modalNewsTitle": "modalNewsTitle",
-   "modalNewsSubtitle": "modalNewsSubtitle"
-   2. בתוך אותה פונקציה, הזרק את תוכן העלון לתוך המודל והגדר את כיוון הטקסט המתאים:
-   ```javascript
-   const modalContentBody = document.getElementById("modal-content-body");
-   if (modalContentBody && texts.modalContent) {
-       modalContentBody.innerHTML = texts.modalContent;
-       if (lang === "he" || lang === "yi") {
-           modalContentBody.className = "p-6 space-y-6 text-gray-700 text-base leading-relaxed text-right";
-       } else {
-           modalContentBody.className = "p-6 space-y-6 text-gray-700 text-base leading-relaxed text-left";
-       }
-   }
-   3. בתוך המאזין של פתיחת הדף `document.addEventListener("DOMContentLoaded", () => { ... })`, הוסף את לוגיקת הפתיחה והסגירה של המודל:
-   ```javascript
-   // אלמנטים של המודל
-   const newsletterModal = document.getElementById("newsletterModal");
-   const openNewsletterBtn = document.getElementById("open-newsletter-btn");
-   const closeNewsletterBtn = document.getElementById("close-newsletter-btn");
-   const closeNewsletterBtnFooter = document.getElementById("close-newsletter-btn-footer");
-
-   if (openNewsletterBtn) {
-       openNewsletterBtn.addEventListener("click", () => {
-           newsletterModal.classList.remove("hidden");
-       });
-   }
-
-   const closeModal = () => {
-       newsletterModal.classList.add("hidden");
-   };
-
-   if (closeNewsletterBtn) closeNewsletterBtn.addEventListener("click", closeModal);
-   if (closeNewsletterBtnFooter) closeNewsletterBtnFooter.addEventListener("click", closeModal);
-
-   // סגירת החלונית בעת לחיצה מחוץ לה
-   window.addEventListener("click", (e) => {
-       if (e.target === newsletterModal) {
-           closeModal();
-       }
-   });
-
-   
-
-    </script>
+                currentLang = selectedValue;
+                previousSelectedLang = currentLang;
+                localStorage.setItem("lang", currentLang);
+                
+                updateContent(currentLang, globalIsLoggedIn, globalCurrentUser);
+            });
+        });
+    </script>
 </body>
 </html>
-
