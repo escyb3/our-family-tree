@@ -28,10 +28,17 @@
     <div id="app-container" class="w-full max-w-6xl mx-auto py-8 px-4" dir="rtl">
         <header class="p-4 md:p-8 bg-white shadow-xl rounded-xl mb-12">
             <div class="flex items-start justify-between">
-                <button id="lang-toggle-button" class="px-5 py-2 rounded-lg font-semibold text-sm transition-colors duration-300
-                                                     bg-blue-600 hover:bg-blue-700 text-white shadow-md
-                                                     focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
-                        data-he="English" data-en="עברית">English</button>
+                <div class="flex gap-2">
+                    <button id="lang-toggle-button" class="px-5 py-2 rounded-lg font-semibold text-sm transition-colors duration-300
+                                                         bg-blue-600 hover:bg-blue-700 text-white shadow-md
+                                                         focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
+                            data-he="English" data-en="עברית">English</button>
+                    <!-- לחצן בקשת עדכון חדש -->
+                    <button id="update-request-button" class="px-5 py-2 rounded-lg font-semibold text-sm transition-colors duration-300
+                                                         bg-green-600 hover:bg-green-700 text-white shadow-md
+                                                         focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50"
+                            data-he="בקשת עדכון" data-en="Update Request">בקשת עדכון</button>
+                </div>
                 <div class="flex flex-col items-center flex-grow text-center">
                     <h1 class="text-4xl md:text-5xl font-extrabold text-blue-800 mb-2" data-he="אילן היוחסין" data-en="Family Tree">אילן היוחסין</h1>
                     <p id="status-message" class="text-lg md:text-xl text-gray-600 font-medium mb-4"></p>
@@ -55,6 +62,17 @@
             <p id="error-dynamic-message" class="mt-3 text-sm font-mono p-2 bg-red-50 rounded-md border border-red-200"></p> 
         </div>
     </div>
+
+    <!-- רכיב המודאל החדש שיפתח מעל הדף -->
+    <div id="update-modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl h-5/6 flex flex-col overflow-hidden relative">
+            <!-- כפתור סגירה X -->
+            <button id="close-modal-button" class="absolute top-4 left-4 bg-gray-200 hover:bg-gray-300 text-gray-700 w-8 h-8 rounded-full flex items-center justify-center font-bold transition-colors z-10">&times;</button>
+            <!-- ה-iframe שמציג את הדף המבוקש -->
+            <iframe src="/update-request.html" class="w-full h-full border-0 pt-12"></iframe>
+        </div>
+    </div>
+
     <script>
         const statusMessageEl = document.getElementById('status-message');
         const contentContainerEl = document.getElementById('content-container');
@@ -64,6 +82,27 @@
         const langToggleButton = document.getElementById('lang-toggle-button');
         const appContainerEl = document.getElementById('app-container');
         const loadedFamiliesBadgesEl = document.getElementById('loaded-families-badges');
+        
+        // אלמנטים חדשים למודאל
+        const updateRequestButton = document.getElementById('update-request-button');
+        const updateModal = document.getElementById('update-modal');
+        const closeModalButton = document.getElementById('close-modal-button');
+
+        // לוגיקה לפתיחה וסגירה של המודאל
+        updateRequestButton.addEventListener('click', () => {
+            updateModal.classList.remove('hidden');
+        });
+
+        closeModalButton.addEventListener('click', () => {
+            updateModal.classList.add('hidden');
+        });
+
+        // סגירה בלחיצה מחוץ למודאל
+        updateModal.addEventListener('click', (e) => {
+            if (e.target === updateModal) {
+                updateModal.classList.add('hidden');
+            }
+        });
 
         // Global state object
         let appState = {
@@ -78,7 +117,7 @@
                 'loading_family': (family) => `טוען נתונים עבור משפחת ${family}`,
                 'success_summary': (loaded, total) => `סיכום טעינה: ${loaded} מתוך ${total} משפחות נטענו בהצלחה!`,
                 'success_message': 'הטעינה הושלמה בהצלחה.',
-                'success_details': 'כל הצדדים שנטענו מפורטים למעלה עם קישורים ישירים לקבצים המקוריים.',
+                'success_details': 'כל הצדדים שנטענו מפורטים למעלה WITH קישורים ישירים לקבצים המקוריים.',
                 'no_user_family': 'שגיאה: לא ניתן לזהות את צד/צדדי המשפחה. יש לוודא שהינך מחובר.',
                 'network_error': 'שגיאת רשת או שהמשתמש לא מחובר',
                 'no_user_details': 'לא ניתן לטעון את פרטי המשתמש. אנא התחבר/י ונסה/י שוב.',
